@@ -1,3 +1,7 @@
-import ComponentTest from './components/component-test/index.js';
+import Button from './components/button/';
+import Dialog from './components/dialog/';
 
-export { ComponentTest };
+export {
+  Button,
+  Dialog,
+};

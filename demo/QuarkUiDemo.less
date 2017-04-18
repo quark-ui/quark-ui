@@ -2,5 +2,19 @@
  * QuarkUi Component Demo Style
  * @author 
  */
-
-@import "../src/index.less";
+.app {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row-reverse;
+  
+  .head {
+    width: 100%;
+    height: 60px;
+  }
+  .aside {
+    flex: 0 0 120px;
+  }
+  .content {
+    flex: 1;
+  }
+}

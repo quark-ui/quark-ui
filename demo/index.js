@@ -8,7 +8,7 @@ import React from 'react';
 /* eslint-disable import/no-unresolved, import/extensions */
 import { AppContainer } from 'react-hot-loader';
 
-import Demo from './QuarkUiDemo';
+import App from './QuarkUiDemo';
 import './QuarkUiDemo.less';
 
 const render = (Component) => {
@@ -16,15 +16,15 @@ const render = (Component) => {
     <AppContainer>
       <Component />
     </AppContainer>,
-    document.getElementById('Demo'),
+    document.getElementById('App'),
   );
 };
 
-render(Demo);
+render(App);
 
 if (module.hot) {
   module.hot.accept('./QuarkUiDemo', () => {
-    render(Demo);
+    render(App);
   });
 }
 

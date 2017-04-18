@@ -25,6 +25,7 @@
     "babel-preset-env": "^1.4.0",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-1": "^6.24.1",
+    "bundle-loader": "^0.5.5",
     "css-loader": "^0.28.0",
     "es5-shim": "^4.5.8",
     "eslint": "^3.19.0",
@@ -37,16 +38,19 @@
     "less": "^2.7.2",
     "less-loader": "^4.0.3",
     "react-hot-loader": "^3.0.0-beta.6",
+    "react-router-dom": "^4.1.1",
     "style-loader": "^0.16.1",
     "svg-react-loader": "^0.3.7",
     "webpack": "^2.4.1",
     "webpack-dev-server": "^2.4.2"
   },
   "dependencies": {
-    "react": "^15.5.0",
-    "react-dom": "^15.5.0",
     "classnames": "^2.2.5",
-    "object-assign": "^4.1.0"
+    "object-assign": "^4.1.0",
+    "prop-types": "^15.5.8",
+    "rc-dialog": "^6.5.8",
+    "react": "^15.5.0",
+    "react-dom": "^15.5.0"
   },
   "contributors": [],
   "license": "MIT"

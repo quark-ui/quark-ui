@@ -103,6 +103,7 @@ module.exports = () => {
       ],
       publicPath: '/',
       host,
+      historyApiFallback: true,
     },
   };
 };
