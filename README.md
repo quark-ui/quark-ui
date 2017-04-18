@@ -30,20 +30,9 @@ npm start
 #### 发布提交
 
 ```sh
-npm run pack
+npm run build
 git add .
 git commit -m 'publish ready'
 npm version patch/minor/major
 npm run publish
 ```
-
-## Demo
-
-http://quark-ui.github.io/components/quark-ui
-
-## API
-
-## Props
-
-| Name | Type | Required | Default | Comments |
-|---|---|---|---|---|
