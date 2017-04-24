@@ -27,8 +27,8 @@ class Bundle extends Component {
   }
 }
 
-export default (componentLoader) => () => (
+export default componentLoader => () => (
   <Bundle load={componentLoader}>
-    {(Comp) => Comp ? <Comp /> : null}
+    {Comp => (Comp ? <Comp /> : null)}
   </Bundle>
 );

@@ -1,11 +1,9 @@
 const path = require('path');
 const webpack = require('webpack');
 const ip = require('ip');
+const values = require('postcss-modules-values');
 
 const MODULES_PATH = path.resolve(__dirname, '../node_modules');
-const preset_env_path = path.resolve(MODULES_PATH, 'babel-preset-env');
-const preset_react_path = path.resolve(MODULES_PATH, 'babel-preset-react');
-const preset_stage1_path = path.resolve(MODULES_PATH, 'babel-preset-stage-1');
 
 module.exports = () => {
 
@@ -36,27 +34,51 @@ module.exports = () => {
             options: {
               presets: [
                 [
-                  preset_env_path,
+                  'env',
                   {
                     modules: false,
                   },
                 ],
-                preset_react_path,
-                preset_stage1_path,
+                'react',
+                'stage-1',
+              ],
+              plugins: [
+                'transform-decorators-legacy',
+                // [
+                //   'react-css-modules',
+                //   {
+                //     webpackHotModuleReloading: true,
+                //   },
+                // ],
               ],
             },
           },
         },
         {
-          test: /\.less$/,
+          test: /\.css$/,
           use: [
             { loader: 'style-loader' },
-            { loader: 'css-loader' },
-            { loader: 'less-loader',
+            {
+              loader: 'css-loader',
               options: {
-                strictMath: true,
+                importLoaders: 1,
+                modules: true,
+                localIdentName: '[path]___[name]__[local]___[hash:base64:5]',
               },
             },
+            {
+              loader: 'postcss-loader',
+              options: {
+                plugins: () => [
+                  values,
+                ],
+              },
+            },
+            // { loader: 'less-loader',
+            //   options: {
+            //     strictMath: true,
+            //   },
+            // },
           ],
         },
         {
@@ -67,11 +89,11 @@ module.exports = () => {
               options: {
                 presets: [
                   [
-                    preset_env_path, {
+                    'env', {
                       modules: false,
                     },
                   ],
-                  preset_react_path,
+                  'react',
                 ],
               },
             },

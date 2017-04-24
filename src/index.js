@@ -1,7 +1,6 @@
-import Button from './components/button/';
-import Dialog from './components/dialog/';
-
-export {
-  Button,
-  Dialog,
-};
+/**
+ * QUARK-UI Components
+ * @author ryan.bian
+ */
+export { Button } from './components/button/';
+export { Modal } from './components/modal/';

@@ -1,0 +1,81 @@
+/**
+ * Button Style
+ * @author ryan.bian
+ */
+@value theme: '../../styles/theme.css';
+@value brand-primary, border-color from theme;
+
+.base {
+  border-style: solid;
+  border-width: 1px;
+  outline: 0 none;
+  cursor: pointer;
+}
+.small {
+  padding: 0 10px;
+  height: 26px;
+  border-radius: 3px;
+  font-size: 12px;
+  line-height: 2;
+}
+.normal {
+  padding: 0 15px;
+  height: 30px;
+  border-radius: 3px;
+  font-size: 14px;
+  line-height: 2;
+}
+.large {
+  padding: 0 18px;
+  height: 34px;
+  border-radius: 3px;
+  font-size: 16px;
+  line-height: 2;
+}
+.primary {
+  background: brand-primary;
+  border-color: brand-primary;
+  color: #fff;
+}
+.secondary {
+  background: #fff;
+  border-color: border-color;
+  color: #666;
+}
+.outline {
+  background: #fff;
+  border-color: brand-primary;
+  color: brand-primary;
+}
+.disabled {
+  background: #ccc;
+  border-color: border-color;
+  color: #999;
+  cursor: not-allowed;
+}
+
+.button--primary {
+  composes: base;
+  composes: primary;
+}
+.button--secondary {
+  composes: base;
+  composes: secondary;
+}
+.button--outline {
+  composes: base;
+  composes: outline;
+}
+.button--disabled {
+  composes: base;
+  composes: disabled;
+}
+.button--large {
+  composes: large;
+}
+.button--normal {
+  composes: normal;
+}
+.button--small {
+  composes: small;
+}

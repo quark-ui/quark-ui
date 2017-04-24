@@ -3,25 +3,24 @@
  * Button Component
  * @author ryan.bian
  */
-import { Component } from 'react';
+import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
+import CSSModules from 'react-css-modules';
+import { allowMultiple } from '../../constants';
+import styles from './Button.css';
 
-class Button extends Component {
+@CSSModules(styles, { allowMultiple })
+class Button extends PureComponent {
 
   static displayName = 'Button'
 
   static defaultProps = {
-    prefixCls: 'quark-button',
-    className: '',
     type: 'primary',
     size: 'normal',
   }
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
   static propTypes = {
-    prefixCls: PropTypes.string.isRequired,
-    className: PropTypes.string,
     type: PropTypes.oneOf([
       'primary',
       'secondary',
@@ -40,16 +39,10 @@ class Button extends Component {
   }
 
   render() {
-    const { prefixCls, className, children, type, size } = this.props;
+    const { children, type, size, disabled, ...otherProps } = this.props;
     const btnProps = {
-      className: classnames(
-        prefixCls,
-        className,
-        `${prefixCls}-${type}`,
-        {
-          [`${prefixCls}-${size}`]: size !== 'normal',
-        },
-      ),
+      ...otherProps,
+      styleName: `button--${disabled ? 'disabled' : type} button--${size}`,
     };
     return (
       <button {...btnProps}>{children}</button>

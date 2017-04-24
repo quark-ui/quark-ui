@@ -1,2 +1,2 @@
-import './src/index.less';
+// import './src/index.less';
 import * as QuarkUI from './src/';

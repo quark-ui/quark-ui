@@ -70,6 +70,7 @@ module.exports = () => {
                   ],
                   preset_react_path,
                 ],
+                plugins: ['transform-decorators-legacy'],
               },
             },
             {
