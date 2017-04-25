@@ -9,8 +9,14 @@ import {
   Route,
   Link,
 } from 'react-router-dom';
+import CSSModules from 'react-css-modules';
 import componentWrapper from './tools/componentWrapper';
 import demoWrapper from './tools/demoWrapper';
+import styles from './QuarkUiDemo.css';
+import { allowMultiple } from '../src/constants';
+
+import QuarkUI from '../index';
+const ComponentList = Object.keys(QuarkUI).map(c => c);
 
 import loadButtonDemo from 'bundle-loader?lazy!../src/components/button/demo/';
 import loadModalDemo from 'bundle-loader?lazy!../src/components/modal/demo/';
@@ -18,6 +24,8 @@ import loadModalDemo from 'bundle-loader?lazy!../src/components/modal/demo/';
 const ButtonDemo = demoWrapper(componentWrapper(loadButtonDemo));
 const ModalDemo = demoWrapper(componentWrapper(loadModalDemo));
 
+
+@CSSModules(styles, { allowMultiple })
 class App extends Component {
 
   constructor(props) {
@@ -26,21 +34,32 @@ class App extends Component {
     };
   }
 
+  renderComponentList() {
+    return (
+      <ul styleName="aside__nav">
+        {
+          ComponentList.map(c => <li styleName="aside__navItem" key={c}>
+            <Link to={`/${c}`}>{c}</Link>
+          </li>)
+        }
+      </ul>
+    );
+  }
+
   render() {
     return (
       <Router>
-        <div className="app">
-          <header className="head">Quark UI</header>
-          <div className="content">
-            <Route path="/button" component={ButtonDemo} />
-            <Route path="/modal" component={ModalDemo} />
-          </div>
-          <aside className="aside">
-            <ul>
-              <li><Link to="/button">Button</Link></li>
-              <li><Link to="/modal">Modal</Link></li>
-            </ul>
-          </aside>
+        <div styleName="app">
+          <header styleName="head">Quark UI</header>
+          <main styleName="main">
+            <div styleName="content">
+              <Route path="/button" component={ButtonDemo} />
+              <Route path="/modal" component={ModalDemo} />
+            </div>
+            <aside styleName="aside">
+              { this.renderComponentList() }
+            </aside>
+          </main>
         </div>
       </Router>
     );
