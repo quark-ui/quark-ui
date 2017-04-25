@@ -15,24 +15,3 @@ Component for quark-ui.
 [devdep-url]: https://david-dm.org/uxcore/quark-ui#info=devDependencies
 [downloads-image]: https://img.shields.io/npm/dm/quark-ui.svg
 
-
-### 本地开发
-
-#### 初次开发
-
-```sh
-git clone https://github.com/quark-ui/quark-ui
-cd quark-ui
-npm install
-npm start
-```
-
-#### 发布提交
-
-```sh
-npm run build
-git add .
-git commit -m 'publish ready'
-npm version patch/minor/major
-npm run publish
-```
