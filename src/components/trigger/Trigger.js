@@ -1,9 +1,9 @@
-## Modal
+# Modal
 
 Modal Component.
 
-### Props
+## Props
 |name|type|default|description|
 |---|---|---|---|
 
-### Api
+## Api

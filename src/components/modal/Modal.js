@@ -1,4 +1,3 @@
-
 /**
  * Modal Component
  * @author ryan.bian

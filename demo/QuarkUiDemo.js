@@ -20,9 +20,11 @@ const ComponentList = Object.keys(QuarkUI).map(c => c);
 
 import loadButtonDemo from 'bundle-loader?lazy!../src/components/button/demo/';
 import loadModalDemo from 'bundle-loader?lazy!../src/components/modal/demo/';
+import loadDatePickerDemo from 'bundle-loader?lazy!../src/components/datepicker/demo/';
 
 const ButtonDemo = demoWrapper(componentWrapper(loadButtonDemo));
 const ModalDemo = demoWrapper(componentWrapper(loadModalDemo));
+const DatePickerDemo = demoWrapper(componentWrapper(loadDatePickerDemo));
 
 
 @CSSModules(styles, { allowMultiple })
@@ -55,6 +57,7 @@ class App extends Component {
             <div styleName="content">
               <Route path="/button" component={ButtonDemo} />
               <Route path="/modal" component={ModalDemo} />
+              <Route path="/datepicker" component={DatePickerDemo} />
             </div>
             <aside styleName="aside">
               { this.renderComponentList() }

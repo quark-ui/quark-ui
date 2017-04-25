@@ -3,11 +3,11 @@
  * render Component into target node
  * @author: ryan.bian
  */
-import { Component } from 'react';
+import { PureComponent } from 'react';
 import ReactDOM from 'react-dom';
 
 export default function renderTo(target = document.body) {
-  return WrappedComponent => class extends Component {
+  return WrappedComponent => class extends PureComponent {
     componentWillMount() {
       this.wrapNode = document.createElement('div');
       target.appendChild(this.wrapNode);

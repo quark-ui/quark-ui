@@ -51,6 +51,7 @@
   "dependencies": {
     "babel-plugin-react-css-modules": "^2.6.1",
     "classnames": "^2.2.5",
+    "moment": "^2.18.1",
     "object-assign": "^4.1.0",
     "prop-types": "^15.5.8",
     "react": "^15.5.0",

@@ -1,4 +1,3 @@
-
 /**
  * Button Component
  * @author ryan.bian

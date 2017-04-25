@@ -1,6 +1,6 @@
-## Modal
+## Trigger
 
-Modal Component.
+Trigger Component.
 
 ### Props
 |name|type|default|description|

@@ -1,6 +1,6 @@
-## Modal
+## DatePicker
 
-Modal Component.
+DatePicker Component.
 
 ### Props
 |name|type|default|description|
