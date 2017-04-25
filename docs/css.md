@@ -3,17 +3,27 @@
 QuarkUI 库选择使用 [css-modules](https://github.com/css-modules/css-modules) 作为 CSS 组织方案，有以下考虑：
 - 避免组件之间的命名冲突
 - 避免全局污染
-- 更简单的样式依赖管理，使用组件不需要额外饮用 CSS 样式
+- 更简单的样式依赖管理，使用组件不需要额外引用 CSS 样式
 
 ### 使用文档
 
-css-modules 和 CSS 非常类似。
-除了常规语法，还引入以下概念：
+以下对 css-modules 在组件库中常用特性做说明，完整用法请查阅[官方文档](https://github.com/css-modules/css-modules)
+语法本身，css-modules 和 CSS 非常类似，同时还引入了几个新特性：
 
 #### 作用域(scope)
 
 `:global(.className)`(全局) 和 `:local(.className)`(局部)
-默认的类名写法，也是局部作用域
+如果不加限定的类名写法，默认为局部作用域
+
+#### composes
+```css
+.base {
+  border-style: solid;
+}
+.button--primary {
+  composes: base;
+}
+```
 
 #### 变量
 使用 `postcss-modules-values` 提供处理变量能力，公共和主题相关 CSS 文件放在 `styles` 目录下
@@ -35,6 +45,7 @@ css-modules 和 CSS 非常类似。
 ```
 
 ### 用例
+在 js 中使用，通过 import 导入 css 文件，即可在 jsx 中使用对应的样式名。
 
 ```js
 import CSSModules from 'react-css-modules';
