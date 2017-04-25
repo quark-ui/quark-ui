@@ -18,6 +18,7 @@ npm i -g yo generator-quarkui
   ```
 5. 按提示输入
 6. `src/components` 下会生成对应组件目录
+7. 修改 `demo/QuarkUiDemo.js`, 把你的组件加到 demo 列表里
 
 ### 开始开发
 ```
