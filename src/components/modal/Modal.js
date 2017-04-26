@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
 import { allowMultiple } from '../../constants';
 import styles from './Modal.css';
-import renderTo from '../../utils/render-to';
+import renderTo from '../../enhancer/render-to';
 import Button from '../button/';
 import Mask from './Mask';
 
