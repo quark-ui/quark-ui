@@ -1,0 +1,19 @@
+/**
+ * Breadcrumb Style
+ * @author grootfish
+ */
+
+@value theme: '../../styles/theme.css';
+@value brand-primary from theme;
+.breadcrumb {}
+
+.breadcrumb--link {}
+
+.breadcrumb--separator {
+    margin: 0 8px;
+    color: rgba(0, 0, 0, .4);
+}
+
+.breadcrumb>span:last-child .breadcrumb--separator {
+    display: none;
+}

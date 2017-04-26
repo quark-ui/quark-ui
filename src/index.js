@@ -11,3 +11,5 @@ export { Modal } from './components/modal/';
 
 export { Trigger } from './components/trigger/';
 
+export { Breadcrumb } from './components/breadcrumb/'
+
