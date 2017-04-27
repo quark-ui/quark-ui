@@ -58,7 +58,8 @@
     "prop-types": "^15.5.8",
     "react": "^15.5.0",
     "react-css-modules": "^4.2.1",
-    "react-dom": "^15.5.0"
+    "react-dom": "^15.5.0",
+    "react-moment-proptypes": "^1.4.0"
   },
   "contributors": [],
   "license": "MIT"

@@ -28,7 +28,6 @@ export default class Mask extends Component {
 
   render() {
     const { visible, children } = this.props;
-    console.log(visible)
     const maskProps = {
       styleName: `mask${visible ? '--visible' : ''}`,
     };
