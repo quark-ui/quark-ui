@@ -14,13 +14,11 @@ class Breadcrumb extends PureComponent {
     static displayName = 'Breadcrumb'
 
     static defaultProps = {
-        prefixCls: 'breadcrumb',
         separator: '/'
     }
 
     // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
     static propTypes = {
-        prefixCls: PropTypes.string,
         separator: PropTypes.node,
     }
 
@@ -30,7 +28,7 @@ class Breadcrumb extends PureComponent {
     }
 
     render() {
-        const { prefixCls, children, separator } = this.props;
+        const { children, separator } = this.props;
         let crumbs;
         crumbs = React.Children.map(children, (ele, index) => {
             if (!ele) {
@@ -41,7 +39,7 @@ class Breadcrumb extends PureComponent {
         });
 
         return (
-            <div styleName='breadcrumb'>{crumbs}</div>
+            <div styleName={'breadcrumb'}>{crumbs}</div>
         );
     }
 }

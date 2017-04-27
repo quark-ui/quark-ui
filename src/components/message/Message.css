@@ -1,0 +1,10 @@
+/**
+ * Message Style
+ * @author grootfish
+ */
+@value theme: '../../styles/theme.css';
+@value brand-primary from theme;
+
+.message {
+
+}

@@ -14,13 +14,11 @@ class BreadcrumbItem extends PureComponent {
   static displayName = 'BreadcrumbItem'
 
   static defaultProps = {
-      prefixCls:'breadcrumb',
       separator:'/'
   }
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
   static propTypes = {
-    prefixCls: PropTypes.string,
     separator: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.element,
@@ -34,11 +32,11 @@ class BreadcrumbItem extends PureComponent {
   }
 
   render() {
-    const { prefixCls,children,separator,...restProps} = this.props;
+    const {children,separator,...restProps} = this.props;
 
     const breadcrumbItemProps ={
       ...restProps,
-      styleName:`${prefixCls}--link`
+      styleName:'breadcrumb--link'
     }
 
     let link;
@@ -52,7 +50,7 @@ class BreadcrumbItem extends PureComponent {
       return (
         <span>
           {link}
-          <span styleName='breadcrumb--separator'>{separator}</span>
+          <span styleName={'breadcrumb--separator'}>{separator}</span>
         </span>
       );
     }
