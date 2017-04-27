@@ -8,7 +8,7 @@ import CSSModules from 'react-css-modules';
 import { allowMultiple } from '../../constants';
 import styles from './DatePicker.css';
 
-import DayPicker from './DayPicker';
+import Picker from './Picker';
 
 @CSSModules(styles, { allowMultiple })
 class DatePicker extends PureComponent {
@@ -29,10 +29,9 @@ class DatePicker extends PureComponent {
 
   render() {
     return (
-      <div>
+      <Picker>
         <input />
-        <DayPicker />
-      </div>
+      </Picker>
     );
   }
 }

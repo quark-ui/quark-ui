@@ -1,5 +1,5 @@
 /**
- * DayPicker Component
+ * Picker Component
  * @author ryan.bian
  */
 import { PureComponent } from 'react';
@@ -7,9 +7,10 @@ import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
 import { allowMultiple } from '../../constants';
 import styles from './DatePicker.css';
+import Trigger from '../trigger/';
 
 @CSSModules(styles, { allowMultiple })
-class DayPicker extends PureComponent {
+class Picker extends PureComponent {
 
   static displayName = 'DayPicker'
 
@@ -26,12 +27,16 @@ class DayPicker extends PureComponent {
   }
 
   render() {
+    const { children } = this.props;
     return (
-      <div>
-        DayPicker
-      </div>
+      <Trigger
+        popup={'dayPicker'}
+        action={'click'}
+      >
+        {children}
+      </Trigger>
     );
   }
 }
 
-export default DayPicker;
+export default Picker;

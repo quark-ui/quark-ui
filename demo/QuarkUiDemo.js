@@ -22,9 +22,11 @@ import loadButtonDemo from 'bundle-loader?lazy!../src/components/button/demo/';
 import loadModalDemo from 'bundle-loader?lazy!../src/components/modal/demo/';
 import loadDatePickerDemo from 'bundle-loader?lazy!../src/components/datepicker/demo/';
 import loadBreadcrumbDemo from 'bundle-loader?lazy!../src/components/breadcrumb/demo/';
+import loadTriggerDemo from 'bundle-loader?lazy!../src/components/trigger/demo/';
 
 const ButtonDemo = demoWrapper(componentWrapper(loadButtonDemo));
 const ModalDemo = demoWrapper(componentWrapper(loadModalDemo));
+const TriggerDemo = demoWrapper(componentWrapper(loadTriggerDemo));
 const DatePickerDemo = demoWrapper(componentWrapper(loadDatePickerDemo));
 const BreadcrumbDemo = demoWrapper(componentWrapper(loadBreadcrumbDemo));
 
@@ -58,6 +60,7 @@ class App extends Component {
             <div styleName="content">
               <Route path="/button" component={ButtonDemo} />
               <Route path="/modal" component={ModalDemo} />
+              <Route path="/trigger" component={TriggerDemo} />
               <Route path="/datepicker" component={DatePickerDemo} />
               <Route path="/breadcrumb" component={BreadcrumbDemo}></Route>
             </div>
