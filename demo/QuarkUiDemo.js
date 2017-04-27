@@ -20,7 +20,7 @@ const ComponentList = Object.keys(QuarkUI).map(c => c);
 
 import loadButtonDemo from 'bundle-loader?lazy!../src/components/button/demo/';
 import loadModalDemo from 'bundle-loader?lazy!../src/components/modal/demo/';
-import loadDatePickerDemo from 'bundle-loader?lazy!../src/components/datepicker/demo/';
+import loadDatePickerDemo from 'bundle-loader?lazy!../src/components/datePicker/demo/';
 import loadBreadcrumbDemo from 'bundle-loader?lazy!../src/components/breadcrumb/demo/';
 import loadTriggerDemo from 'bundle-loader?lazy!../src/components/trigger/demo/';
 
