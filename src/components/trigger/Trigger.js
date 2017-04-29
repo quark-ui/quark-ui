@@ -2,7 +2,7 @@
  * Trigger Component
  * @author ryan.bian
  */
-import { PureComponent } from 'react';
+import { PureComponent, cloneElement, Children } from 'react';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
 import assign from 'object-assign';
@@ -54,7 +54,7 @@ class Trigger extends PureComponent {
   }
 
   checkClosable = (e) => {
-    if (this.node.contains(e.target)) return;
+    if (!this.node || this.node.contains(e.target)) return;
     if (!this.popNode.contains(e.target)) {
       this.handleClickTrigger();
     }

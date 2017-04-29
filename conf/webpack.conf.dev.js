@@ -27,6 +27,10 @@ module.exports = () => {
     module: {
       rules: [
         {
+          test: /\.md$/,
+          use: 'raw-loader',
+        },
+        {
           test: /\.jsx?$/,
           exclude: /node_modules/,
           use: {
@@ -44,12 +48,6 @@ module.exports = () => {
               ],
               plugins: [
                 'transform-decorators-legacy',
-                // [
-                //   'react-css-modules',
-                //   {
-                //     webpackHotModuleReloading: true,
-                //   },
-                // ],
               ],
             },
           },
@@ -74,29 +72,11 @@ module.exports = () => {
                 ],
               },
             },
-            // { loader: 'less-loader',
-            //   options: {
-            //     strictMath: true,
-            //   },
-            // },
           ],
         },
         {
           test: /\.svg$/,
           use: [
-            {
-              loader: 'babel-loader',
-              options: {
-                presets: [
-                  [
-                    'env', {
-                      modules: false,
-                    },
-                  ],
-                  'react',
-                ],
-              },
-            },
             {
               loader: 'svg-react-loader',
             },

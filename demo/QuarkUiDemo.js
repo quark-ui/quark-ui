@@ -10,27 +10,13 @@ import {
   Link,
 } from 'react-router-dom';
 import CSSModules from 'react-css-modules';
-import componentWrapper from './tools/componentWrapper';
-import demoWrapper from './tools/demoWrapper';
+import lowerFirst from 'lodash/lowerFirst';
 import styles from './QuarkUiDemo.css';
 import { allowMultiple } from '../src/constants';
+import ComponentPage from './pages/ComponentPage';
 
 import QuarkUI from '../index';
 const ComponentList = Object.keys(QuarkUI).map(c => c);
-
-import loadButtonDemo from 'bundle-loader?lazy!../src/components/button/demo/';
-import loadModalDemo from 'bundle-loader?lazy!../src/components/modal/demo/';
-import loadDatePickerDemo from 'bundle-loader?lazy!../src/components/datepicker/demo/';
-import loadBreadcrumbDemo from 'bundle-loader?lazy!../src/components/breadcrumb/demo/';
-import loadTriggerDemo from 'bundle-loader?lazy!../src/components/trigger/demo/';
-import loadMessageDemo from 'bundle-loader?lazy!../src/components/message/demo/';
-
-const ButtonDemo = demoWrapper(componentWrapper(loadButtonDemo));
-const ModalDemo = demoWrapper(componentWrapper(loadModalDemo));
-const TriggerDemo = demoWrapper(componentWrapper(loadTriggerDemo));
-const DatePickerDemo = demoWrapper(componentWrapper(loadDatePickerDemo));
-const BreadcrumbDemo = demoWrapper(componentWrapper(loadBreadcrumbDemo));
-const MessageDemo = demoWrapper(componentWrapper(loadMessageDemo));
 
 @CSSModules(styles, { allowMultiple })
 class App extends Component {
@@ -46,7 +32,7 @@ class App extends Component {
       <ul styleName="aside__nav">
         {
           ComponentList.map(c => <li styleName="aside__navItem" key={c}>
-            <Link to={`/${c}`}>{c}</Link>
+            <Link to={`/component/${lowerFirst(c)}`}>{c}</Link>
           </li>)
         }
       </ul>
@@ -60,12 +46,13 @@ class App extends Component {
           <header styleName="head">Quark UI</header>
           <main styleName="main">
             <div styleName="content">
-              <Route path="/button" component={ButtonDemo} />
-              <Route path="/modal" component={ModalDemo} />
-              <Route path="/trigger" component={TriggerDemo} />
-              <Route path="/datepicker" component={DatePickerDemo} />
-              <Route path="/breadcrumb" component={BreadcrumbDemo}></Route>
-              <Route path="/message" component={MessageDemo}></Route>
+              <Route
+                path="/component/:name"
+                component={(data) => {
+                  const { match } = data;
+                  return <ComponentPage key={match.params.name} {...data} />;
+                }}
+              />
             </div>
             <aside styleName="aside">
               { this.renderComponentList() }

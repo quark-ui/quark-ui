@@ -9,9 +9,13 @@ export { Button } from './components/button/';
 
 export { DatePicker } from './components/datePicker/';
 
-export { Modal } from './components/modal/';
-
-export { Trigger } from './components/trigger/';
+export { Icon } from './components/icon/';
 
 export { Message } from './components/message/';
+
+export { Modal } from './components/modal/';
+
+export { Pagination } from './components/pagination/';
+
+export { Trigger } from './components/trigger/';
 

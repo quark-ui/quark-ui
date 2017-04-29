@@ -1,0 +1,20 @@
+/**
+ * Pagination Style
+ * @author ryan.bian
+ */
+@value theme: '../../styles/theme.css';
+@value brand-primary from theme;
+
+.pagination {
+
+}
+.pagination__ctrl {}
+.pagination__ctrl--prev {}
+.pagination__ctrl--next {}
+
+.pagination__item {
+
+}
+.pagination__item--active {
+  background-color: brand-primary;
+}
