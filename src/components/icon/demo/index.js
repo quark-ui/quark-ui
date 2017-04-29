@@ -14,7 +14,7 @@ export default class IconDemo extends Component {
         {
           IconList.map(name => (
             <div className={styles['Icon--grid']} key={name}>
-              <Icon size="48" name={name} />
+              <Icon size={48} name={name} />
               <span className={styles['Icon-name']}>{name}</span>
             </div>
           ))

@@ -78,7 +78,23 @@ module.exports = () => {
           test: /\.svg$/,
           use: [
             {
-              loader: 'svg-react-loader',
+              loader: 'babel-loader',
+              options: {
+                presets: [
+                  'react',
+                ],
+              },
+            },
+            {
+              loader: 'react-svg-loader',
+              options: {
+                svgo: {
+                  plugins: [
+                    { cleanupIDs: false },
+                  ],
+                  floatPrecision: 3,
+                },
+              },
             },
           ],
         },

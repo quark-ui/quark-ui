@@ -1,8 +1,7 @@
 import { Component, createElement } from 'react';
-import ReactMarkdown from 'react-markdown';
+import MDReactComponent from 'markdown-react-js';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { darcula } from 'react-syntax-highlighter/dist/styles';
-
 
 export default class ComponentPage extends Component {
   state = {
@@ -30,12 +29,12 @@ export default class ComponentPage extends Component {
     const { readme, demo, demoSourceCode } = this.state;
     return (
       <div>
-        <ReactMarkdown source={readme} />
+        <MDReactComponent text={readme} />
         {
           demo ? createElement(demo) : null
         }
         <SyntaxHighlighter
-          language='javascript'
+          language={'javascript'}
           style={darcula}
         >{demoSourceCode}</SyntaxHighlighter>
       </div>

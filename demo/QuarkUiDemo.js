@@ -5,7 +5,6 @@
 import { Component } from 'react';
 import {
   BrowserRouter as Router,
-  Redirect,
   Route,
   Link,
 } from 'react-router-dom';
@@ -16,6 +15,7 @@ import { allowMultiple } from '../src/constants';
 import ComponentPage from './pages/ComponentPage';
 
 import QuarkUI from '../index';
+
 const ComponentList = Object.keys(QuarkUI).map(c => c);
 
 @CSSModules(styles, { allowMultiple })

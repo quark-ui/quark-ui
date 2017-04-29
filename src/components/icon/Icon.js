@@ -9,7 +9,7 @@ import CSSModules from 'react-css-modules';
 import { allowMultiple } from '../../constants';
 import styles from './Icon.css';
 
-import IconSvg from './iconfont.svg?props[]=id:quark-icons';
+import IconSvg from './iconfont.svg';
 
 @CSSModules(styles, { allowMultiple })
 class Icon extends PureComponent {
@@ -36,13 +36,15 @@ class Icon extends PureComponent {
 
   componentWillMount() {
     if (document.getElementById('quark-icons')) return;
-    const fragmentNode = document.createDocumentFragment();
+    const wrapNode = document.createElement('div');
+    wrapNode.style.cssText = 'display:none';
+    wrapNode.setAttribute('id', 'quark-icons');
     ReactDOM.unstable_renderSubtreeIntoContainer(
       this,
       <IconSvg />,
-      fragmentNode,
+      wrapNode,
     );
-    document.body.insertBefore(fragmentNode, document.body.firstChild);
+    document.body.insertBefore(wrapNode, document.body.firstChild);
   }
 
   render() {
