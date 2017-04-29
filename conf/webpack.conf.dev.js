@@ -78,19 +78,6 @@ module.exports = () => {
           test: /\.svg$/,
           use: [
             {
-              loader: 'babel-loader',
-              options: {
-                presets: [
-                  [
-                    'env', {
-                      modules: false,
-                    },
-                  ],
-                  'react',
-                ],
-              },
-            },
-            {
               loader: 'svg-react-loader',
             },
           ],

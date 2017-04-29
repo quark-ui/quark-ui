@@ -43,11 +43,11 @@
     "postcss-modules-values": "^1.2.2",
     "raw-loader": "^0.5.1",
     "react-hot-loader": "^3.0.0-beta.6",
-    "react-markdown": "^2.5.0",    
+    "react-markdown": "^2.5.0",
     "react-router-dom": "^4.1.1",
     "react-syntax-highlighter": "^5.5.0",
     "style-loader": "^0.16.1",
-    "svg-react-loader": "^0.3.7",
+    "svg-react-loader": "^0.4.0-beta.2",
     "webpack": "^2.4.1",
     "webpack-dev-server": "^2.4.2"
   },

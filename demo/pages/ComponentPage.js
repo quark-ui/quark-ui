@@ -30,6 +30,7 @@ export default class ComponentPage extends Component {
     const { readme, demo, demoSourceCode } = this.state;
     return (
       <div>
+        <ReactMarkdown source={readme} />
         {
           demo ? createElement(demo) : null
         }
@@ -37,7 +38,6 @@ export default class ComponentPage extends Component {
           language='javascript'
           style={darcula}
         >{demoSourceCode}</SyntaxHighlighter>
-        <ReactMarkdown source={readme} />
       </div>
     );
   }
