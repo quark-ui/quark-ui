@@ -1,5 +1,5 @@
-import Trigger from '../Trigger';
 import { Component } from 'react';
+import Trigger from '../Trigger';
 
 const PLACEMENT_ENUM = {
   left: {

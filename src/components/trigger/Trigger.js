@@ -2,11 +2,10 @@
  * Trigger Component
  * @author ryan.bian
  */
-import { PureComponent, cloneElement, Children } from 'react';
+import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
 import assign from 'object-assign';
-import isEqual from 'lodash/isEqual';
 import { allowMultiple, ALIGN_ENUM } from '../../constants';
 import Popup from './Popup';
 import styles from './Trigger.css';
@@ -33,6 +32,8 @@ class Trigger extends PureComponent {
     ]),
   }
 
+  static getTargetRect = target => target.getBoundingClientRect()
+
   constructor(props) {
     super(props);
     this.state = {
@@ -58,10 +59,6 @@ class Trigger extends PureComponent {
     if (!this.popNode.contains(e.target)) {
       this.handleClickTrigger();
     }
-  }
-
-  getTargetRect(target) {
-    return target.getBoundingClientRect();
   }
 
   handleMouseEnter = () => {
@@ -94,32 +91,34 @@ class Trigger extends PureComponent {
   applyPlacement(props) {
     if (!this.node || !this.popNode) return;
     const [popupAlign, selfAlign] = props.placement;
-    const selfRect = this.getTargetRect(this.node);
-    const popupRect = this.getTargetRect(this.popNode);
-    let x;
-    let y;
+    const selfRect = Trigger.getTargetRect(this.node);
+    const popupRect = Trigger.getTargetRect(this.popNode);
+    const scrollX = window.pageXOffset || document.documentElement.scrollLeft;
+    const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+    let x = scrollX;
+    let y = scrollY;
     switch (selfAlign[0]) {
       case 't':
-        y = selfRect.top;
+        y += selfRect.top;
         break;
       case 'b':
-        y = selfRect.bottom;
+        y += selfRect.bottom;
         break;
       case 'c':
       default:
-        y = selfRect.top + (selfRect.height / 2);
+        y += selfRect.top + (selfRect.height / 2);
         break;
     }
     switch (selfAlign[1]) {
       case 'l':
-        x = selfRect.left;
+        x += selfRect.left;
         break;
       case 'r':
-        x = selfRect.right;
+        x += selfRect.right;
         break;
       case 'c':
       default:
-        x = selfRect.left + (selfRect.width / 2);
+        x += selfRect.left + (selfRect.width / 2);
         break;
     }
     switch (popupAlign[0]) {
