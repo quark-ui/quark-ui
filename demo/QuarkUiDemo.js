@@ -23,12 +23,14 @@ import loadModalDemo from 'bundle-loader?lazy!../src/components/modal/demo/';
 import loadDatePickerDemo from 'bundle-loader?lazy!../src/components/datepicker/demo/';
 import loadBreadcrumbDemo from 'bundle-loader?lazy!../src/components/breadcrumb/demo/';
 import loadTriggerDemo from 'bundle-loader?lazy!../src/components/trigger/demo/';
+import loadMessageDemo from 'bundle-loader?lazy!../src/components/message/demo/';
 
 const ButtonDemo = demoWrapper(componentWrapper(loadButtonDemo));
 const ModalDemo = demoWrapper(componentWrapper(loadModalDemo));
 const TriggerDemo = demoWrapper(componentWrapper(loadTriggerDemo));
 const DatePickerDemo = demoWrapper(componentWrapper(loadDatePickerDemo));
 const BreadcrumbDemo = demoWrapper(componentWrapper(loadBreadcrumbDemo));
+const MessageDemo = demoWrapper(componentWrapper(loadMessageDemo));
 
 @CSSModules(styles, { allowMultiple })
 class App extends Component {
@@ -63,6 +65,7 @@ class App extends Component {
               <Route path="/trigger" component={TriggerDemo} />
               <Route path="/datepicker" component={DatePickerDemo} />
               <Route path="/breadcrumb" component={BreadcrumbDemo}></Route>
+              <Route path="/message" component={MessageDemo}></Route>
             </div>
             <aside styleName="aside">
               { this.renderComponentList() }

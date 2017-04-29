@@ -14,10 +14,16 @@ class Message extends PureComponent {
   static displayName = 'Message'
 
   static defaultProps = {
+    onClose(){},
+    duration:1.5,
+    type:'info'
   }
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
   static propTypes = {
+    duration:PropTypes.number,
+    onClose:PropTypes.func,
+    type:PropTypes.oneOf(['info','success','error','warning']),
   }
 
   constructor(props) {
@@ -25,9 +31,40 @@ class Message extends PureComponent {
     this.state = {};
   }
 
+  componentDidMount() {
+    if (this.props.duration) {
+      this.closeTimer = setTimeout(() => {
+        this.close();
+      }, this.props.duration * 1000);
+    }
+  }
+
+  componentWillUnmount() {
+    this.clearCloseTimer();
+  }
+
+  clearCloseTimer = () => {
+    if (this.closeTimer) {
+      clearTimeout(this.closeTimer);
+      this.closeTimer = null;
+    }
+  }
+
+  close = () => {
+    this.clearCloseTimer();
+    this.props.onClose();
+  }
+
+
   render() {
+    const props = this.props;
+
     return (
-      <div styleName={'message'}>Message</div>
+      <div styleName={'message '+`message--${props.type}`}>
+        <div styleName={'message--content'}>
+          {props.children}
+        </div>
+      </div>
     );
   }
 }
