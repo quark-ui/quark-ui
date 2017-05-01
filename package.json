@@ -8,7 +8,7 @@
   "scripts": {
     "start": "webpack-dev-server --config ./conf/webpack.conf.dev.js --port 3000 --open",
     "build": "webpack --config ./conf/webpack.conf.production.js",
-    "publish": "git push origin master & npm publish",
+    "pub": "git push origin master & npm publish",
     "new": "yo quarkui",
     "lint": "eslint --color -f table ./src",
     "lint-c": "eslint --color -f table"
