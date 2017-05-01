@@ -25,6 +25,10 @@ npm i -g yo generator-quarkui
 npm start
 ```
 
+### 注意事项
+1. 组件中需要依赖其它 quark-ui 组件，使用 `import ComponentName from 'quark-ui/componentName'` 形式，不要使用相对路径。
+
+
 ### 提交代码
 1. git 命令正常提交代码
 2. 使用 PR 方式提交你的组件

@@ -11,7 +11,7 @@ import assign from 'object-assign';
 import partialRight from 'lodash/partialRight';
 import { allowMultiple } from '../../constants';
 import styles from './DatePicker.css';
-import Trigger from '../trigger/';
+import Trigger from 'quark-ui/trigger';
 import DatePane from './panes/DatePane';
 import MonthPane from './panes/MonthPane';
 import YearPane from './panes/YearPane';

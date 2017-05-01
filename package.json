@@ -1,6 +1,6 @@
 {
   "name": "quark-ui",
-  "version": "0.0.1-beta0",
+  "version": "0.0.1-beta1",
   "description": "Quark UI, Components base on react.",
   "repository": "https://github.com/quark-ui/quark-ui.git",
   "author": "",
@@ -9,7 +9,9 @@
     "start": "webpack-dev-server --config ./conf/webpack.conf.dev.js --port 3000 --open",
     "build": "webpack --config ./conf/webpack.conf.production.js",
     "publish": "git push origin master & npm publish",
-    "new": "yo quarkui"
+    "new": "yo quarkui",
+    "lint": "eslint --color -f table ./src",
+    "lint-c": "eslint --color -f table"
   },
   "bugs": {
     "url": "http://github.com/quark-ui/quark-ui/issues"
@@ -19,7 +21,11 @@
     "react-component",
     "quark-ui"
   ],
+  "files": [
+    "build"
+  ],
   "devDependencies": {
+    "animejs": "^2.0.2",
     "babel-core": "^6.24.1",
     "babel-eslint": "^7.2.2",
     "babel-loader": "^6.4.1",
@@ -45,13 +51,14 @@
     "raw-loader": "^0.5.1",
     "react-hot-loader": "^3.0.0-beta.6",
     "react-router-dom": "^4.1.1",
+    "react-svg-loader": "^1.1.1",
     "react-syntax-highlighter": "^5.5.0",
     "style-loader": "^0.16.1",
+    "text-to-svg": "^3.1.0",
     "webpack": "^2.4.1",
     "webpack-dev-server": "^2.4.2"
   },
   "dependencies": {
-    "babel-plugin-react-css-modules": "^2.6.1",
     "classnames": "^2.2.5",
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
@@ -60,8 +67,7 @@
     "react": "^15.5.0",
     "react-css-modules": "^4.2.1",
     "react-dom": "^15.5.0",
-    "react-moment-proptypes": "^1.4.0",
-    "react-svg-loader": "^1.1.1"
+    "react-moment-proptypes": "^1.4.0"
   },
   "contributors": [],
   "license": "MIT"

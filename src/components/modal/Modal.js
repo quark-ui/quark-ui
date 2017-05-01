@@ -8,7 +8,7 @@ import CSSModules from 'react-css-modules';
 import { allowMultiple } from '../../constants';
 import styles from './Modal.css';
 import renderTo from '../../enhancer/render-to';
-import Button from '../button/';
+import Button from 'quark-ui/button';
 import Mask from './Mask';
 
 @renderTo()

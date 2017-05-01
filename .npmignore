@@ -19,7 +19,6 @@ Thumbs.db
 .svn/
 *.swp
 out/
-.build
 node_modules
 _site
 .cache

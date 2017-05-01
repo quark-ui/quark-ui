@@ -11,11 +11,11 @@ module.exports = () => {
 
   return {
     entry: {
-      demo: [
+      site: [
         'react-hot-loader/patch',
         `webpack-dev-server/client?http://${host}:3000`,
         'webpack/hot/only-dev-server',
-        './demo/index',
+        './site/index',
       ],
     },
     output: {
@@ -100,6 +100,11 @@ module.exports = () => {
         },
       ],
     },
+    resolve: {
+      alias: {
+        'quark-ui': path.resolve(__dirname, '../src/components/'),
+      },
+    },
     externals: {
       react: 'var React',
       'react-dom': 'var ReactDOM',
@@ -116,7 +121,7 @@ module.exports = () => {
     devServer: {
       hot: true,
       contentBase: [
-        path.join(__dirname, '../demo'),
+        path.join(__dirname, '../site'),
         MODULES_PATH,
       ],
       publicPath: '/',

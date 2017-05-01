@@ -14,16 +14,16 @@ class Message extends PureComponent {
   static displayName = 'Message'
 
   static defaultProps = {
-    onClose(){},
-    duration:1.5,
-    type:'info'
+    onClose() {},
+    duration: 1.5,
+    type: 'info',
   }
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
   static propTypes = {
-    duration:PropTypes.number,
-    onClose:PropTypes.func,
-    type:PropTypes.oneOf(['info','success','error','warning']),
+    duration: PropTypes.number,
+    onClose: PropTypes.func,
+    type: PropTypes.oneOf(['info', 'success', 'error', 'warning']),
   }
 
   constructor(props) {
@@ -60,7 +60,7 @@ class Message extends PureComponent {
     const props = this.props;
 
     return (
-      <div styleName={'message '+`message--${props.type}`}>
+      <div styleName={'message ' + `message--${props.type}`}>
         <div styleName={'message--content'}>
           {props.children}
         </div>

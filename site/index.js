@@ -1,5 +1,5 @@
 /**
- * QuarkUi Component Demo
+ * QuarkUi Site
  * @author ryan.bian
  */
 import ReactDOM from 'react-dom';
@@ -8,7 +8,7 @@ import React from 'react';
 /* eslint-disable import/no-unresolved, import/extensions */
 import { AppContainer } from 'react-hot-loader';
 
-import App from './QuarkUiDemo';
+import App from './Site';
 
 const render = (Component) => {
   ReactDOM.render(
@@ -22,7 +22,7 @@ const render = (Component) => {
 render(App);
 
 if (module.hot) {
-  module.hot.accept('./QuarkUiDemo', () => {
+  module.hot.accept('./Site', () => {
     render(App);
   });
 }

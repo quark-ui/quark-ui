@@ -1,27 +1,36 @@
 const path = require('path');
+const fs = require('fs');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const values = require('postcss-modules-values');
 
 const MODULES_PATH = path.resolve(__dirname, '../node_modules');
-const preset_env_path = path.resolve(MODULES_PATH, 'babel-preset-env');
-const preset_react_path = path.resolve(MODULES_PATH, 'babel-preset-react');
-const preset_stage1_path = path.resolve(MODULES_PATH, 'babel-preset-stage-1');
 
 const extractCSS = new ExtractTextPlugin({
-  filename: 'index.css',
+  filename: '[name].css',
 });
 
 module.exports = () => {
 
+  const componentsList = fs.readdirSync(path.resolve(__dirname, '../src/components'));
+  const componentEntries = {
+    index: './src/index',
+  };
+  componentsList.forEach((name) => {
+    Object.assign(componentEntries, {
+      [`${name}`]: `./src/components/${name}/`,
+    });
+  });
+
   return {
-    entry: {
-      index: './index',
-    },
+    entry: componentEntries,
     output: {
       path: path.join(__dirname, '../build'),
       filename: '[name].js',
-      sourceMapFilename: '[name].js.map',
+      // sourceMapFilename: '[name].js.map',
       publicPath: '/',
+      library: 'QuarkUI',
+      libraryTarget: 'umd',
     },
     module: {
       rules: [
@@ -33,28 +42,42 @@ module.exports = () => {
             options: {
               presets: [
                 [
-                  preset_env_path,
+                  'env',
                   {
                     modules: false,
                   },
                 ],
-                preset_react_path,
-                preset_stage1_path,
+                'react',
+                'stage-1',
+              ],
+              plugins: [
+                'transform-decorators-legacy',
               ],
             },
           },
         },
         {
-          test: /\.less$/,
-          use: extractCSS.extract([
-            'css-loader',
-            {
-              loader: 'less-loader',
-              options: {
-                strictMath: true,
+          test: /\.css$/,
+          use: extractCSS.extract(
+            [
+              {
+                loader: 'css-loader',
+                options: {
+                  importLoaders: 1,
+                  modules: true,
+                  localIdentName: '[hash:base64:7]',
+                },
               },
-            },
-          ]),
+              {
+                loader: 'postcss-loader',
+                options: {
+                  plugins: () => [
+                    values,
+                  ],
+                },
+              },
+            ]
+          ),
         },
         {
           test: /\.svg$/,
@@ -63,27 +86,65 @@ module.exports = () => {
               loader: 'babel-loader',
               options: {
                 presets: [
-                  [
-                    preset_env_path, {
-                      modules: false,
-                    },
-                  ],
-                  preset_react_path,
+                  'react',
                 ],
-                plugins: ['transform-decorators-legacy'],
               },
             },
             {
-              loader: 'svg-react-loader',
+              loader: 'react-svg-loader',
+              options: {
+                svgo: {
+                  plugins: [
+                    { cleanupIDs: false },
+                  ],
+                  floatPrecision: 3,
+                },
+              },
             },
           ],
         },
       ],
     },
-    externals: {
-      react: 'var React',
-      'react-dom': 'var ReactDOM',
+    resolve: {
+      alias: {
+        'quark-ui': path.resolve(__dirname, '../src/components/'),
+      },
     },
+    externals: [
+      {
+        react: {
+          root: 'React',
+          commonjs2: 'react',
+          commonjs: 'react',
+        },
+        'react-dom': {
+          root: 'ReactDOM',
+          commonjs2: 'react-dom',
+          commonjs: 'react-dom',
+        },
+        'prop-types': {
+          root: 'PropTypes',
+          commonjs2: 'prop-types',
+          commonjs: 'prop-types',
+        },
+        lodash: {
+          commonjs: 'lodash',
+          commonjs2: 'lodash',
+          root: '_',
+        },
+        moment: {
+          commonjs: 'moment',
+          commonjs2: 'moment',
+          root: 'moment',
+        },
+      },
+      /^lodash\//,
+      /^quark-ui\//,
+      'react-css-modules',
+      'object-assign',
+      'classnames',
+      'react-moment-proptypes',
+    ],
     plugins: [
       // SourceMap plugin will define process.env.NODE_ENV as development
       new webpack.SourceMapDevToolPlugin({

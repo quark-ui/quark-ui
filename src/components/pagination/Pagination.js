@@ -9,6 +9,7 @@ import classnames from 'classnames';
 import assign from 'object-assign';
 import { allowMultiple } from '../../constants';
 import styles from './Pagination.css';
+import Icon from 'quark-ui/icon';
 
 @CSSModules(styles, { allowMultiple })
 class Pagination extends PureComponent {
@@ -114,7 +115,13 @@ class Pagination extends PureComponent {
       styleName: classnames('pagination__ctrl', `pagination__ctrl--${direction}`),
       onClick: direction === 'prev' ? this.handleClickPrev : this.handleClickNext,
     };
-    return <button {...ctrlProps}>{direction}</button>;
+    let content;
+    if (direction === 'prev') {
+      content = <Icon name="arrow-left" size={12} />;
+    } else {
+      content = <Icon name="arrow-right" size={12} />;
+    }
+    return <button {...ctrlProps}>{content}</button>;
   }
 
   render() {
