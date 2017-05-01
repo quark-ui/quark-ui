@@ -1,0 +1,42 @@
+/**
+ * Modal Style
+ * @author ryan.bian
+ */
+
+.DCMRwkz {
+  display: none;
+}
+._1iw3_Tl {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, .3);
+}
+._2N4dO9C {
+  display: none;
+}
+._23S10Ht {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  margin: 0 auto;
+  display: block;
+  background-color: #fff;
+  border: 1px solid #999;
+  transform: translateY(-50%);
+}
+._2Fxr3he {
+  position: relative;
+  height: 40px;
+}
+._2RrFae2 {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+._1OTqLj0 {}
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibW9kYWwuY3NzIiwic291cmNlcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Iiwic291cmNlUm9vdCI6IiJ9*/
+/*# sourceMappingURL=modal.css.map*/

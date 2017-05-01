@@ -26,3 +26,4 @@ build
 assets/**/*.css
 .yo-rc.json
 yarn.lock
+build

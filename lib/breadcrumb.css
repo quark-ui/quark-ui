@@ -1,0 +1,19 @@
+/**
+ * Breadcrumb Style
+ * @author grootfish
+ */
+._15DqQC7 {}
+
+._2knYGjk {}
+
+._24xT_Vo {
+    margin: 0 8px;
+    color: rgba(0, 0, 0, .4);
+}
+
+._15DqQC7>span:last-child ._24xT_Vo {
+    display: none;
+}
+
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYnJlYWRjcnVtYi5jc3MiLCJzb3VyY2VzIjpbXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7Iiwic291cmNlUm9vdCI6IiJ9*/
+/*# sourceMappingURL=breadcrumb.css.map*/

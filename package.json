@@ -1,6 +1,6 @@
 {
   "name": "quark-ui",
-  "version": "0.0.1-beta1",
+  "version": "0.0.1-beta2",
   "description": "Quark UI, Components base on react.",
   "repository": "https://github.com/quark-ui/quark-ui.git",
   "author": "",
@@ -22,7 +22,8 @@
     "quark-ui"
   ],
   "files": [
-    "build"
+    "src",
+    "lib"
   ],
   "devDependencies": {
     "animejs": "^2.0.2",

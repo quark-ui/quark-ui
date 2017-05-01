@@ -25,7 +25,7 @@ module.exports = () => {
   return {
     entry: componentEntries,
     output: {
-      path: path.join(__dirname, '../build'),
+      path: path.join(__dirname, '../lib'),
       filename: '[name].js',
       // sourceMapFilename: '[name].js.map',
       publicPath: '/',
@@ -139,7 +139,12 @@ module.exports = () => {
         },
       },
       /^lodash\//,
-      /^quark-ui\//,
+      (context, request, callback) => {
+        if (/^quark-ui\//.test(request)) {
+          return callback(null, 'commonjs ' + request.replace('quark-ui', 'quark-ui/lib'));
+        }
+        callback();
+      },
       'react-css-modules',
       'object-assign',
       'classnames',
