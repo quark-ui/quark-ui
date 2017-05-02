@@ -1,0 +1,48 @@
+/**
+ * Alert Style
+ * @author grootfish
+ */
+@value theme: '../../styles/theme.css';
+@value brand-primary from theme;
+
+.alert {
+     position: relative;
+    padding: 8px 48px 8px 16px;
+    border-radius: 4px;
+    color: rgba(0,0,0,.65);
+    line-height: 16px;
+    margin-bottom: 10px;
+}
+.alert--message{
+  display:block;
+}
+.alert--description{
+  display:block;
+  font-size:12px;
+}
+.alert--close{
+    font-size: 12px;
+    position: absolute;
+    right: 16px;
+    top: 10px;
+    height: 12px;
+    line-height: 12px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.alert__info{
+  background-color: #ecf6fd;
+}
+
+.alert__success{
+  background-color: #ebf8f2;
+}
+
+.alert__error{
+  background-color: #fef0ef;
+}
+
+.alert__warning{
+  background-color: #fffaeb;
+}

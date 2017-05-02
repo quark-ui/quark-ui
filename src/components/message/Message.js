@@ -4,6 +4,7 @@
  */
 import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 import CSSModules from 'react-css-modules';
 import { allowMultiple } from '../../constants';
 import styles from './Message.css';
@@ -60,7 +61,7 @@ class Message extends PureComponent {
     const props = this.props;
 
     return (
-      <div styleName={'message ' + `message--${props.type}`}>
+      <div styleName={classnames('message',`message__${props.type}`)}>
         <div styleName={'message--content'}>
           {props.children}
         </div>

@@ -3,19 +3,21 @@
  * @author ryan.bian
  */
 
-export { default as Breadcrumb } from './components/breadcrumb/';
+export { Breadcrumb } from './components/breadcrumb/';
 
-export { default as Button } from './components/button/';
+export { Button } from './components/button/';
 
-export { default as DatePicker } from './components/datePicker/';
+export { DatePicker } from './components/datePicker/';
 
-export { default as Icon } from './components/icon/';
+export { Icon } from './components/icon/';
 
-export { default as Message } from './components/message/';
+export { Message } from './components/message/';
 
-export { default as Modal } from './components/modal/';
+export { Alert } from './components/alert/';
 
-export { default as Pagination } from './components/pagination/';
+export { Modal } from './components/modal/';
 
-export { default as Trigger } from './components/trigger/';
+export { Pagination } from './components/pagination/';
+
+export { Trigger } from './components/trigger/';
 

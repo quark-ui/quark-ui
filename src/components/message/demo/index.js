@@ -9,7 +9,7 @@ export default class MessageDemo extends Component {
     this.state = {};
   }
   openMsg() {
-    message.error('error我马上消失', 1, () => { message.info('info我又回来了', 0.5); });
+    message.error('error我马上消失', () => { message.info('info我又回来了') },2);
   }
   render() {
     return (

@@ -16,6 +16,7 @@ const now = Date.now();
 function getUuid() {
   return `${now}_${seed++}`;
 }
+function noop() { }
 
 @CSSModules(styles, { allowMultiple })
 class MessageBox extends PureComponent {
@@ -39,16 +40,18 @@ class MessageBox extends PureComponent {
       const messages = preState.messages;
       if (!messages.filter(v => v.key === key).length) {
         return {
-          messages: messages.concat(message),
-        };
+          messages: messages.concat(message)
+        }
       }
     });
   }
 
   remove = (key) => {
-    this.setState(preState => ({
-      messages: preState.messages.filter(message => message.key !== key),
-    }));
+    this.setState((preState) => {
+      return {
+        messages: preState.messages.filter(message => message.key !== key)
+      }
+    });
   }
 
   render() {
@@ -57,7 +60,7 @@ class MessageBox extends PureComponent {
       const onClose = () => {
         message.onClose && message.onClose();
         this.remove(message.key);
-      };
+      }
 
       return (
         <Message {...message} onClose={onClose}>
@@ -67,15 +70,16 @@ class MessageBox extends PureComponent {
     });
 
     return (
-      <div styleName="message--box">
+      <div styleName='message--box'>
         {Nodes}
       </div>
     );
   }
 }
 
-Message.newInstance = function (props = {}) {
+MessageBox.newInstance = function (props = {}) {
   const { container, ...msgProps } = props;
+
   let div;
   if (container) {
     div = container;
@@ -84,28 +88,25 @@ Message.newInstance = function (props = {}) {
     document.body.appendChild(div);
   }
 
-  const message = ReactDom.render(<MessageBox {...msgProps} />, div);
+  const message = ReactDom.render(<MessageBox {...msgProps}></MessageBox>, div);
   return {
-    info(content = '', duration = 1.5, onClose) {
+    info(content = '', onClose = noop, duration = 1.5) {
       message.add({ type: 'info', content, duration, onClose });
     },
-    success(content = '', duration = 1.5, onClose) {
-      message.add({ type: 'success', content, duration, onClose });
+    success(content = '', onClose = noop, duration = 1.5) {
+      message.add({ type: 'success', content, duration, onClose })
     },
-    error(content = '', duration = 1.5, onClose) {
+    error(content = '', onClose = noop, duration = 1.5) {
       message.add({ type: 'error', content, duration, onClose });
     },
-    warning(content = '', duration = 1.5, onClose) {
+    warning(content = '', onClose = noop, duration = 1.5) {
       message.add({ type: 'warning', content, duration, onClose });
-    },
-    remove(key) {
-      message.remove(key);
     },
     destroy() {
       ReactDOM.unmountComponentAtNode(div);
       document.body.removeChild(div);
-    },
-  };
-};
+    }
+  }
+}
 
-export default Message;
+export default MessageBox;
