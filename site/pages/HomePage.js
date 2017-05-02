@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import { NavLink } from 'react-router-dom';
 import TextToSVG from 'text-to-svg';
 import assign from 'object-assign';
 
@@ -65,7 +66,8 @@ export default class Home extends Component {
     const { paths, width, height } = this.state;
     return (
       <div>
-        Home
+        <NavLink to="/">home</NavLink>
+        <NavLink to="/component/">component</NavLink>
         <div>
           <div id="lineDrawing">
             <svg viewBox={`0 0 ${width} ${height}`} dangerouslySetInnerHTML={{ __html: paths.join('') }} />
