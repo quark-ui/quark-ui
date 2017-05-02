@@ -10,7 +10,7 @@ import styles from '../Site.css';
 import { allowMultiple } from '../../src/constants';
 
 import ComponentPage from '../pages/ComponentPage';
-import QuarkUI from '../../index';
+import * as QuarkUI from '../../src/index';
 
 const ComponentList = Object.keys(QuarkUI).map(c => c);
 
