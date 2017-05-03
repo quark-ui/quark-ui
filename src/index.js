@@ -13,6 +13,8 @@ export { default as Icon } from './components/icon/';
 
 export { default as Message } from './components/message/';
 
+export { default as Alert } from './components/alert/';
+
 export { default as Modal } from './components/modal/';
 
 export { default as Pagination } from './components/pagination/';

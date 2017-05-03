@@ -28,15 +28,15 @@
 }
 
 .message--content {}
-.message--info{
+.message__info{
     color:blue;
 }
-.message--success{
+.message__success{
     color:green;
 }
-.message--error{
+.message__error{
     color:red;
 }
-.message--warning{
+.message__warning{
     color:yellow;
 }
