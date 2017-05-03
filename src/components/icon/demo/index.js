@@ -5,6 +5,7 @@ import styles from './index.css';
 const IconList = [
   'arrow-left',
   'arrow-right',
+  'check',
 ];
 
 export default class IconDemo extends Component {
