@@ -8,13 +8,36 @@
 .pagination {
 
 }
-.pagination__ctrl {}
+.pagination__ctrl {
+  display: inline-block;
+}
 .pagination__ctrl--prev {}
 .pagination__ctrl--next {}
 
-.pagination__item {
+.pagination__pages {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+}
+.pagination__pages > li {
+  display: inline-block;
+}
 
+.pagination__item {
 }
 .pagination__item--active {
   background-color: brand-primary;
+}
+.pagination__total {
+  
+}
+
+.pagination__jumper {
+
+}
+.pagination__jumperField {
+}
+
+.pagination--small {
+
 }

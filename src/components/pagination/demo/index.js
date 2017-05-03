@@ -21,6 +21,19 @@ export default class PaginationDemo extends Component {
         />
         <h3>非受控方式</h3>
         <Pagination defaultCurrent={1} total={50} />
+        <h3>更多分页</h3>
+        <Pagination
+          defaultCurrent={1}
+          total={500}
+          showSizeChanger
+          onSizeChange={(size, current) => {
+            console.log(`size: ${size} current: ${current}`);
+          }}
+        />
+        <h3>跳转</h3>
+        <Pagination showTotal total={100} showQuickJumper />
+        <h3>迷你</h3>
+        <Pagination total={50} size="small" />
       </div>
     );
   }
