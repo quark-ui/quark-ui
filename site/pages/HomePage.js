@@ -5,6 +5,7 @@ import assign from 'object-assign';
 
 // import QuarkUI from '../../index';
 // const ComponentList = Object.keys(QuarkUI).map(c => c);
+import Layout from '../layouts/Layout';
 
 export default class Home extends Component {
 
@@ -65,15 +66,11 @@ export default class Home extends Component {
   render() {
     const { paths, width, height } = this.state;
     return (
-      <div>
-        <NavLink to="/">home</NavLink>
-        <NavLink to="/component/">component</NavLink>
-        <div>
-          <div id="lineDrawing">
-            <svg viewBox={`0 0 ${width} ${height}`} dangerouslySetInnerHTML={{ __html: paths.join('') }} />
-          </div>
+      <Layout {...this.props}>
+        <div id="lineDrawing">
+          <svg viewBox={`0 0 ${width} ${height}`} dangerouslySetInnerHTML={{ __html: paths.join('') }} />
         </div>
-      </div>
+      </Layout>
     );
   }
 }

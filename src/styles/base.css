@@ -393,24 +393,21 @@ table {
   border-spacing: 0;
 }
 
-// ------------------------------END-------------------//
 body {
   background-color: #fff;
   font: 12px/1.5 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', Arial, sans-serif;
   color: #000;
 }
 
-ol, ul, dl {
-  li {
-    list-style: none;
-  }
+ol, ul, dl, li {
+  list-style: none;
 }
 
 a {
   text-decoration: none;
-  &:hover {
-    text-decoration: underline;
-  }
+}
+a:hover {
+  text-decoration: underline;
 }
 
 :focus {

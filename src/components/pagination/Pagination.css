@@ -16,8 +16,6 @@
 
 .pagination__pages {
   display: inline-block;
-  margin: 0;
-  padding: 0;
 }
 .pagination__pages > li {
   display: inline-block;
