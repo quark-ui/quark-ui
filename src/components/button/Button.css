@@ -11,25 +11,25 @@
   cursor: pointer;
 }
 .small {
-  padding: 0 10px;
+  padding: 0 8px;
   height: 26px;
   border-radius: 3px;
-  font-size: 12px;
-  line-height: 2;
+  font-size: 14px;
+  line-height: 24px;
 }
 .normal {
-  padding: 0 15px;
-  height: 30px;
-  border-radius: 3px;
-  font-size: 14px;
-  line-height: 2;
-}
-.large {
-  padding: 0 18px;
+  padding: 0 12px;
   height: 34px;
   border-radius: 3px;
+  font-size: 14px;
+  line-height: 32px;
+}
+.large {
+  padding: 0 14px;
+  height: 40px;
+  border-radius: 3px;
   font-size: 16px;
-  line-height: 2;
+  line-height: 38px;
 }
 .primary {
   background: var(--brand-primary);
@@ -38,17 +38,23 @@
 }
 .secondary {
   background: #fff;
-  border-color: border-color;
-  color: #666;
+  border-color: var(--brand-primary);
+  color: var(--brand-primary);
 }
-.outline {
+.dashed {
+  background: #fff;
+  border-color: var(--brand-primary);
+  border-style: dashed;
+  color: var(--brand-primary);
+}
+.danger {
   background: #fff;
   border-color: var(--brand-primary);
   color: var(--brand-primary);
 }
 .disabled {
-  background: #ccc;
-  border-color: border-color;
+  background: #f5f5f5;
+  border-color: var(--border-color);
   color: #999;
   cursor: not-allowed;
 }
@@ -61,9 +67,13 @@
   composes: base;
   composes: secondary;
 }
-.button--outline {
+.button--dashed {
   composes: base;
-  composes: outline;
+  composes: dashed;
+}
+.button--danger {
+  composes: base;
+  composes: danger;
 }
 .button--disabled {
   composes: base;

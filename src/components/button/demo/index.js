@@ -12,7 +12,8 @@ export default class ButtonDemo extends Component {
         type:
         <Button type="primary">primary</Button>
         <Button type="secondary">normal</Button>
-        <Button type="outline">outline</Button>
+        <Button type="dashed">dashed</Button>
+        <Button type="danger">danger</Button>
         <Button disabled>disabled</Button>
       </div>
     );
