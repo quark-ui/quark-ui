@@ -49,8 +49,8 @@
 }
 .danger {
   background: #fff;
-  border-color: var(--brand-primary);
-  color: var(--brand-primary);
+  border-color: var(--border-color);
+  color: var(--warn-color);
 }
 .disabled {
   background: #f5f5f5;

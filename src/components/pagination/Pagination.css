@@ -4,11 +4,16 @@
  */
 @import '../../styles/theme.css';
 
-.pagination {
-
+.grid {
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--border-color);
 }
+
+.pagination {}
 .pagination__ctrl {
   display: inline-block;
+  composes: grid;
 }
 .pagination__ctrl--prev {}
 .pagination__ctrl--next {}
@@ -21,6 +26,7 @@
 }
 
 .pagination__item {
+  composes: grid;
 }
 .pagination__item--active {
   background-color: var(--brand-primary);

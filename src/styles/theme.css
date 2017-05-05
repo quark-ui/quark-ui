@@ -5,7 +5,7 @@
   --border-color: #e6e6e6;
 
   /* 中性色 */
-  --neutral: #fff;
+  --neutral-color: #fff;
 
   /* 标题 主要文字 */
   --text-color-dark: #333;
@@ -20,7 +20,7 @@
   /* 警告 */
   --warn-color: #fe3824;
   /* 失败 */
-  --fail-color: #f00;
+  --fail-color: #fe3824;
   /* 成功 */
   --success-color: #6ac10a;
 
