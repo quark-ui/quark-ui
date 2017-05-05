@@ -169,7 +169,7 @@ class Pagination extends PureComponent {
       </li>
     );
     if (start !== firstPage + 1 && start !== firstPage) {
-      items.push(<li key={'front'}>...</li>);
+      items.push(<li key={'front'}><Icon name="ellipsis" size={12} /></li>);
     }
     for (let i = start; i <= end; i += 1) {
       const btnProps = this.getItemProps(i);
@@ -180,7 +180,7 @@ class Pagination extends PureComponent {
       );
     }
     if (end !== lastPage - 1 && end !== lastPage) {
-      items.push(<li key={'back'}>...</li>);
+      items.push(<li key={'back'}><Icon name="ellipsis" size={12} /></li>);
     }
     items.push(
       <li key={lastPage}>
@@ -192,7 +192,7 @@ class Pagination extends PureComponent {
 
   renderControl(direction) {
     const ctrlProps = {
-      styleName: classnames('pagination__ctrl', `pagination__ctrl--${direction}`),
+      styleName: classnames('pagination__ctrl'),
       onClick: direction === 'prev' ? this.handleClickPrev : this.handleClickNext,
     };
     let content;
@@ -209,8 +209,12 @@ class Pagination extends PureComponent {
     const { pageSize } = this.state;
     if (showSizeChanger) {
       return (
-        <select value={pageSize} onChange={this.handleChangeIndexPageSize}>
-          {pageSizeOptions.map(size => <option key={size} value={size}>{`${size} / page`}</option>)}
+        <select
+          styleName="pagination__sizeChanger"
+          value={pageSize}
+          onChange={this.handleChangeIndexPageSize}
+        >
+          {pageSizeOptions.map(size => <option key={size} value={size}>{`${size} / 页`}</option>)}
         </select>
       );
     }
@@ -245,9 +249,11 @@ class Pagination extends PureComponent {
   render() {
     console.info('render');
     const { size } = this.props;
+    const smallSize = size === 'small';
     const wrapProps = {
       styleName: classnames('pagination', {
-        'pagination--small': size === 'small',
+        'pagination--small': smallSize,
+        'pagination--normal': !smallSize,
       }),
     };
     return (

@@ -33,7 +33,7 @@ export default class PaginationDemo extends Component {
         <h3>跳转</h3>
         <Pagination showTotal total={100} showQuickJumper />
         <h3>迷你</h3>
-        <Pagination total={50} size="small" />
+        <Pagination total={100} showQuickJumper showSizeChanger size="small" />
       </div>
     );
   }
