@@ -1,2 +1,27 @@
-@value brand-primary: #6ec0ee;
-@value border-color: #999;
+:root {
+  /* 品牌色 */
+  --brand-primary: #6ec0ee;
+  /* 边框色 */
+  --border-color: #e6e6e6;
+
+  /* 中性色 */
+  --neutral-color: #fff;
+
+  /* 标题 主要文字 */
+  --text-color-dark: #333;
+  /* 正文 说明 */
+  --text-color: #666;
+  /* 辅助 次级文字 */
+  --text-color-light: #999;
+
+  /* 链接色 */
+  --link-color: #3b98e0;
+
+  /* 警告 */
+  --warn-color: #fe3824;
+  /* 失败 */
+  --fail-color: #fe3824;
+  /* 成功 */
+  --success-color: #6ac10a;
+
+}

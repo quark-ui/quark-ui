@@ -24,7 +24,7 @@ class Pagination extends PureComponent {
     defaultPageSize: 10,
     onChange() {},
     showSizeChanger: false,
-    onSizeChanger() {},
+    onSizeChange() {},
     pageSizeOptions: [10, 20, 30, 40],
     showQuickJumper: false,
     size: '',
@@ -40,7 +40,7 @@ class Pagination extends PureComponent {
     defaultPageSize: PropTypes.number,
     onChange: PropTypes.func,
     showSizeChanger: PropTypes.bool,
-    onSizeChanger: PropTypes.func,
+    onSizeChange: PropTypes.func,
     pageSizeOptions: PropTypes.arrayOf(PropTypes.number),
     showQuickJumper: PropTypes.bool,
     size: PropTypes.string,
@@ -70,6 +70,17 @@ class Pagination extends PureComponent {
     this.setState(state);
   }
 
+  getItemProps(index) {
+    const { current } = this.state;
+    const active = current === index;
+    return {
+      styleName: classnames('pagination__item', {
+        'pagination__item--active': active,
+      }),
+      onClick: active ? null : () => this.handleChangeIndex(index),
+    };
+  }
+
   handleClickPrev = () => {
     if (this.state.current > 1) {
       this.handleChangeIndex(this.state.current - 1);
@@ -90,29 +101,98 @@ class Pagination extends PureComponent {
     this.props.onChange(index, this.state.pageSize);
   }
 
+  handleChangeIndexPageSize = (e) => {
+    const newPageSize = +e.target.value;
+    const { total } = this.props;
+    const { current } = this.state;
+    const maxPages = Math.ceil(total / newPageSize);
+    let newCurrent;
+    if (current > maxPages) {
+      newCurrent = maxPages;
+    } else {
+      newCurrent = current;
+    }
+    if (typeof this.props.pageSize === 'undefined') {
+      this.setState({
+        pageSize: newPageSize,
+        current: newCurrent,
+      });
+    }
+    this.props.onSizeChange(newPageSize, newCurrent);
+  }
+
+  handleJumper = (e) => {
+    if (e.key === 'Enter') {
+      const { total } = this.props;
+      const { pageSize } = this.state;
+      const maxPage = Math.ceil(total / pageSize);
+      let value = e.target.value;
+      if (/^[1-9]+[0-9]*$/.test(value)) {
+        value = Number(value);
+        if (value <= maxPage) {
+          this.handleChangeIndex(value);
+        }
+      }
+    }
+  }
+
   renderItems() {
     const { total } = this.props;
     const { current, pageSize } = this.state;
     const items = [];
-    for (let i = 1; i <= total; i += pageSize) {
-      const pageIndex = Math.ceil(i / pageSize);
-      const active = current === pageIndex;
-      const btnProps = {
-        styleName: classnames('pagination__item', {
-          'pagination__item--active': active,
-        }),
-        onClick: active ? null : () => this.handleChangeIndex(pageIndex),
-      };
+    const firstPage = 1;
+    const lastPage = Math.ceil(total / pageSize);
+
+    let start;
+    let end;
+    if (current === firstPage) {
+      start = firstPage + 1;
+      end = firstPage + 1;
+    } else if (current === lastPage) {
+      start = lastPage - 1;
+      end = lastPage - 1;
+    } else {
+      start = current;
+      end = current;
+    }
+    while (true) {
+      if (end - start >= 3
+        || (start <= firstPage + 1 && end >= lastPage - 1)
+      ) break;
+      if (start > firstPage + 1) start -= 1;
+      if (end < lastPage - 1) end += 1;
+    }
+    
+    items.push(
+      <li key={firstPage}>
+        <button {...this.getItemProps(firstPage)}>{firstPage}</button>
+      </li>
+    );
+    if (start !== firstPage + 1 && start !== firstPage) {
+      items.push(<li key={'front'}><Icon name="ellipsis" size={12} /></li>);
+    }
+    for (let i = start; i <= end; i += 1) {
+      const btnProps = this.getItemProps(i);
       items.push(
-        <li key={i}><button data-index={pageIndex} {...btnProps}>{pageIndex}</button></li>,
+        <li key={i}>
+          <button {...btnProps}>{i}</button>
+        </li>,
       );
     }
-    return <ul>{items}</ul>;
+    if (end !== lastPage - 1 && end !== lastPage) {
+      items.push(<li key={'back'}><Icon name="ellipsis" size={12} /></li>);
+    }
+    items.push(
+      <li key={lastPage}>
+        <button {...this.getItemProps(lastPage)}>{lastPage}</button>
+      </li>
+    );
+    return <ul styleName="pagination__pages">{items}</ul>;
   }
 
   renderControl(direction) {
     const ctrlProps = {
-      styleName: classnames('pagination__ctrl', `pagination__ctrl--${direction}`),
+      styleName: classnames('pagination__ctrl'),
       onClick: direction === 'prev' ? this.handleClickPrev : this.handleClickNext,
     };
     let content;
@@ -124,13 +204,66 @@ class Pagination extends PureComponent {
     return <button {...ctrlProps}>{content}</button>;
   }
 
+  renderSizeChanger() {
+    const { showSizeChanger, pageSizeOptions } = this.props;
+    const { pageSize } = this.state;
+    if (showSizeChanger) {
+      return (
+        <select
+          styleName="pagination__sizeChanger"
+          value={pageSize}
+          onChange={this.handleChangeIndexPageSize}
+        >
+          {pageSizeOptions.map(size => <option key={size} value={size}>{`${size} / 页`}</option>)}
+        </select>
+      );
+    }
+    return null;
+  }
+
+  renderQuickJumper() {
+    const { showQuickJumper } = this.props;
+    const textFieldProps = {
+      type: 'text',
+      styleName: 'pagination__jumperField',
+      onKeyPress: this.handleJumper,
+    };
+    if (showQuickJumper) {
+      return (
+        <span styleName="pagination__jumper">
+          跳至 <input {...textFieldProps} /> 页
+        </span>
+      );  
+    }
+    return null;
+  }
+
+  renderTotal() {
+    const { showTotal, total } = this.props;
+    if (showTotal) {
+      return <span styleName="pagination__total">{`共计 ${total} 条`}</span>;
+    }
+    return null;
+  }
+
   render() {
     console.info('render');
+    const { size } = this.props;
+    const smallSize = size === 'small';
+    const wrapProps = {
+      styleName: classnames('pagination', {
+        'pagination--small': smallSize,
+        'pagination--normal': !smallSize,
+      }),
+    };
     return (
-      <div styleName={'pagination'}>
+      <div {...wrapProps}>
+        { this.renderTotal() }
         { this.renderControl('prev') }
         { this.renderItems() }
         { this.renderControl('next') }
+        { this.renderSizeChanger() }
+        { this.renderQuickJumper() }
       </div>
     );
   }

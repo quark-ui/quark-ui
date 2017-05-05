@@ -1,43 +1,54 @@
-import { Component, createElement } from 'react';
-import MDReactComponent from 'markdown-react-js';
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { darcula } from 'react-syntax-highlighter/dist/styles';
+import { PureComponent } from 'react';
+import {
+  Route,
+  Link,
+  NavLink,
+} from 'react-router-dom';
+import lowerFirst from 'lodash/lowerFirst';
+import CSSModules from 'react-css-modules';
+import styles from '../Site.css';
+import { allowMultiple } from '../../src/constants';
 
-export default class ComponentPage extends Component {
-  state = {
-    readme: '',
-    demo: undefined,
-    demoSourceCode: '',
-  };
-  componentWillMount() {
-    const { match } = this.props;
-    this.load(match.params.name);
-  }
-  load(name) {
-    require.ensure([], (require) => {
-      const readme = require(`!raw-loader!../../src/components/${name}/README.md`);
-      const demoSourceCode = require(`!raw-loader!../../src/components/${name}/demo/index`);
-      const demo = require(`../../src/components/${name}/demo/index`).default;
-      this.setState({
-        readme,
-        demo,
-        demoSourceCode,
-      });
-    });
-  }
-  render() {
-    const { readme, demo, demoSourceCode } = this.state;
+import ComponentBlock from '../partials/Component';
+import * as QuarkUI from '../../src/index';
+
+import Layout from '../layouts/Layout';
+
+const ComponentList = Object.keys(QuarkUI).map(c => c);
+
+@CSSModules(styles, { allowMultiple })
+export default class ComponentPage extends PureComponent {
+
+  renderComponentList() {
     return (
-      <div>
-        <MDReactComponent text={readme} />
+      <ul styleName="aside__nav">
         {
-          demo ? createElement(demo) : null
+          ComponentList.map(c => <li styleName="aside__navItem" key={c}>
+            <NavLink to={`/component/${lowerFirst(c)}`}>{c}</NavLink>
+          </li>)
         }
-        <SyntaxHighlighter
-          language={'javascript'}
-          style={darcula}
-        >{demoSourceCode}</SyntaxHighlighter>
-      </div>
+      </ul>
+    );
+  }
+
+  render() {
+    return (
+      <Layout {...this.props}>
+        <main styleName="main">
+          <div styleName="content">
+            <Route
+              path="/component/:name"
+              component={(data) => {
+                const { match } = data;
+                return <ComponentBlock key={match.params.name} {...data} />;
+              }}
+            />
+          </div>
+          <aside styleName="aside">
+            { this.renderComponentList() }
+          </aside>
+        </main>
+      </Layout>
     );
   }
 }

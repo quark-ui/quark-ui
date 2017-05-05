@@ -12,7 +12,7 @@ Pagination Component.
 | defaultPageSize | number | 10 | 默认每页条数 |
 | onChange | function(page, pageSize) | noop | 页码改变回调，参数 |
 | showSizeChanger | boolean | false | 显示分页条数选择 |
-| onSizeChanger | function(current, size) | noop | pageSize 变化回调 |
+| onSizeChange | function(size, current) | noop | pageSize 变化回调 |
 | pageSizeOptions| number[] | [10, 20, 30, 40] | 指定每页可以显示多少条 |
 | showQuickJumper| boolean | false | 是否展示跳转输入框 |
 | size| string | '' | `small` 指定小尺寸分页  |
