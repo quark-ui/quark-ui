@@ -19,6 +19,8 @@
 
   /* 警告 */
   --warn-color: #fe3824;
+  /* 失败 */
+  --fail-color: #f00;
   /* 成功 */
   --success-color: #6ac10a;
 
