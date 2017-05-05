@@ -2,8 +2,7 @@
  * Modal Style
  * @author ryan.bian
  */
-@value theme: '../../styles/theme.css';
-@value brand-primary, border-color from theme;
+@import '../../styles/theme.css';
 
 .mask {
   display: none;

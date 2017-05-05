@@ -2,7 +2,6 @@ const path = require('path');
 const fs = require('fs');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const values = require('postcss-modules-values');
 
 const MODULES_PATH = path.resolve(__dirname, '../node_modules');
 
@@ -72,7 +71,8 @@ module.exports = () => {
                 loader: 'postcss-loader',
                 options: {
                   plugins: () => [
-                    values,
+                    require('postcss-import'),
+                    require('postcss-cssnext'),
                   ],
                 },
               },

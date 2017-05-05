@@ -1,2 +1,4 @@
-@value brand-primary: #6ec0ee;
-@value border-color: #999;
+:root {
+  --brand-primary: #6ec0ee;
+  --border-color: #999;
+}

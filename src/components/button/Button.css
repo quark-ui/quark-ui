@@ -2,8 +2,7 @@
  * Button Style
  * @author ryan.bian
  */
-@value theme: '../../styles/theme.css';
-@value brand-primary, border-color from theme;
+@import '../../styles/theme.css';
 
 .base {
   border-style: solid;
@@ -33,8 +32,8 @@
   line-height: 2;
 }
 .primary {
-  background: brand-primary;
-  border-color: brand-primary;
+  background: var(--brand-primary);
+  border-color: var(--brand-primary);
   color: #fff;
 }
 .secondary {
@@ -44,8 +43,8 @@
 }
 .outline {
   background: #fff;
-  border-color: brand-primary;
-  color: brand-primary;
+  border-color: var(--brand-primary);
+  color: var(--brand-primary);
 }
 .disabled {
   background: #ccc;

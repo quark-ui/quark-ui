@@ -3,8 +3,8 @@
  * @author grootfish
  */
 
-@value theme: '../../styles/theme.css';
-@value brand-primary from theme;
+@import '../../styles/theme.css';
+
 .message--box {
     position: fixed;
     z-index: 1000;

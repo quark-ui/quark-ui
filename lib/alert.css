@@ -2,24 +2,22 @@
  * Alert Style
  * @author grootfish
  */
-@import '../../styles/theme.css';
-
-.alert {
+._39kAAFy {
      position: relative;
     padding: 8px 48px 8px 16px;
     border-radius: 4px;
-    color: rgba(0,0,0,.65);
+    color: rgba(0, 0, 0, .65);
     line-height: 16px;
     margin-bottom: 10px;
 }
-.alert--message{
+._2PlM57S{
   display:block;
 }
-.alert--description{
+._2WVGGAD{
   display:block;
   font-size:12px;
 }
-.alert--close{
+._2mpL-C1{
     font-size: 12px;
     position: absolute;
     right: 16px;
@@ -29,19 +27,17 @@
     overflow: hidden;
     cursor: pointer;
 }
-
-.alert__info{
+._2zbvGEj{
   background-color: #ecf6fd;
 }
-
-.alert__success{
+._1G-i0lm{
   background-color: #ebf8f2;
 }
-
-.alert__error{
+._2IstVeW{
   background-color: #fef0ef;
 }
-
-.alert__warning{
+._1RLd9u1{
   background-color: #fffaeb;
 }
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYWxlcnQuY3NzIiwic291cmNlcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OyIsInNvdXJjZVJvb3QiOiIifQ==*/
+/*# sourceMappingURL=alert.css.map*/

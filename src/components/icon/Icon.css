@@ -2,8 +2,7 @@
  * Icon Style
  * @author ryan.bian
  */
-@value theme: '../../styles/theme.css';
-@value brand-primary from theme;
+@import '../../styles/theme.css';
 
 .Icon {
   width: 1em;

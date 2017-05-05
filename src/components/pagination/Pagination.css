@@ -2,8 +2,7 @@
  * Pagination Style
  * @author ryan.bian
  */
-@value theme: '../../styles/theme.css';
-@value brand-primary from theme;
+@import '../../styles/theme.css';
 
 .pagination {
 
@@ -24,7 +23,7 @@
 .pagination__item {
 }
 .pagination__item--active {
-  background-color: brand-primary;
+  background-color: var(--brand-primary);
 }
 .pagination__total {
   
