@@ -8,13 +8,14 @@ export default class MessageDemo extends Component {
     super(props);
     this.state = {};
   }
-  openMsg() {
-    message.error('error我马上消失', () => { message.info('info我又回来了') },2);
-  }
+ 
   render() {
     return (
       <div>
-        <Button onClick={this.openMsg}>msg</Button>
+        <Button onClick={()=>{message.info('info信息');}}>info</Button>
+        <Button type="secondary" onClick={()=>{message.success('info信息');}}>success</Button>
+        <Button type="secondary" onClick={()=>{message.error('info信息');}}>error</Button>
+        <Button type="secondary" onClick={()=>{message.warning('info信息');}}>warning</Button>
       </div>
     );
   }

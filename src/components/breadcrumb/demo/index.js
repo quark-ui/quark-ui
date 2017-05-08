@@ -14,7 +14,7 @@ export default class BreadcrumbDemo extends Component {
         <Crumb>bbb</Crumb>
       </Breadcrumb>
 
-      <Breadcrumb>
+      <Breadcrumb hasBackIcon>
         <Crumb href="/">home</Crumb>
         <Crumb href='/component/Button'>Button</Crumb>
         <Crumb href='/component/Modal'>Modal</Crumb>
