@@ -1,0 +1,48 @@
+/**
+ * Dropdown Style
+ * @author ryan.bian
+ */
+@import "../../styles/theme.css";
+
+.dropdown {
+
+}
+.dropdown--menu {
+  background: var(--neutral-color);
+  border-color: 1px solid var(--border-color);
+  border-radius: 3px;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, .13);
+  overflow: hidden;
+}
+.dropdown--menuItem {
+  padding: 0 19px;
+  height: 39px;
+  line-height: 39px;
+  cursor: pointer;
+  &:hover {
+    background-color: var(--border-color);
+    & > a {
+      color: var(--brand-primary);
+    }
+  }
+  & > a {
+    color: var(--text-color-dark);
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+.dropdown--buttonWrap {
+  & > button {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  & > div {
+    display: inline-block;
+    margin-left: -1px;
+    & button {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
+}

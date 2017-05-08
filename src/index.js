@@ -12,6 +12,8 @@ export { default as Button } from './components/button/';
 
 export { default as DatePicker } from './components/datePicker/';
 
+export { default as Dropdown } from './components/dropdown/';
+
 export { default as Icon } from './components/icon/';
 
 export { default as Message } from './components/message/';

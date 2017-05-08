@@ -7,6 +7,9 @@
 .trigger {
 
 }
+.trigger--wrap {
+  display: inline-block;
+}
 .popup {
   position: absolute;
 }
