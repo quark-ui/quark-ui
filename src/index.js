@@ -6,8 +6,6 @@ export { default as Steps } from './components/steps/';
 
 export { default as Alert } from './components/alert/';
 
-export { default as Alert } from './components/alert/';
-
 export { default as Breadcrumb } from './components/breadcrumb/';
 
 export { default as Button } from './components/button/';
