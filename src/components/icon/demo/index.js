@@ -13,6 +13,7 @@ const IconList = [
   'check',
   'arrow-left',
   'arrow-right',
+  'check',
 ];
 
 export default class IconDemo extends Component {
