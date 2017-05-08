@@ -19,6 +19,8 @@ export default class Popup extends PureComponent {
     position: [0, 0],
     popupRef: null,
     visible: false,
+    onMouseEnter() {},
+    onMouseLeave() {},
   }
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
@@ -26,6 +28,8 @@ export default class Popup extends PureComponent {
     position: PropTypes.arrayOf(PropTypes.number),
     popupRef: PropTypes.any,
     visible: PropTypes.bool,
+    onMouseEnter: PropTypes.func,
+    onMouseLeave: PropTypes.func,
   }
 
   constructor(props) {
@@ -34,17 +38,20 @@ export default class Popup extends PureComponent {
   }
 
   render() {
-    const { children, popupRef, position, visible } = this.props;
+    const { children, popupRef, position, visible, onMouseEnter, onMouseLeave } = this.props;
     const stylePos = {
       left: position[0],
       top: position[1],
     };
+    const wrapProps = {
+      ref: popupRef,
+      styleName: 'popup',
+      style: stylePos,
+      onMouseEnter,
+      onMouseLeave,
+    };
     return (
-      visible ? <div
-        ref={popupRef}
-        styleName={'popup'}
-        style={stylePos}
-      >{children}</div> : null
+      visible ? <div {...wrapProps}>{children}</div> : null
     );
   }
 }

@@ -91,8 +91,9 @@ export default class TriggerDemo extends Component {
             <div style={{ border: '1px solid #000', padding: 10, background: '#fff' }}>popup content</div>
           }
           placement={PLACEMENT_ENUM[placement].points}
+          mouseLeaveDelay={100}
         >
-          hover me
+          {`${action} me`}
         </Trigger>
       </div>
     );
