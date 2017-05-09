@@ -29,14 +29,14 @@
 
 .message--content {}
 .message__info{
-    color:blue;
+    color:var(--brand-primary);
 }
 .message__success{
-    color:green;
+    color:var(--success-color);
 }
 .message__error{
-    color:red;
+    color:var(--fail-color);
 }
 .message__warning{
-    color:yellow;
+    color:var(--warn-color);
 }

@@ -1,6 +1,11 @@
 :root {
   /* 品牌色 */
-  --brand-primary: #6ec0ee;
+  --brand-primary: hsb(206, 74, 88);
+  /* 品牌色——浅 */
+  --brand-primary-light: hsb(206, calc(74 - 17), calc(88 + 3));
+  /* 品牌色——深 */
+  --brand-primary-dark: hsb(206, calc(74 + 20), calc(88 - 5));
+  
   /* 边框色 */
   --border-color: #e6e6e6;
 

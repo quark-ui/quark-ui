@@ -69,6 +69,10 @@ module.exports = () => {
                 plugins: () => [
                   // values,
                   require('postcss-import'),
+                  require('postcss-calc')(),
+                  require('postcss-hsb-color')({
+                    output: 'rgb',
+                  }),
                   require('postcss-cssnext'),
                 ],
               },
