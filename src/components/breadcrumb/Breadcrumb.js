@@ -60,10 +60,10 @@ class Breadcrumb extends PureComponent {
 
         return (
             <div styleName={'breadcrumb'} {...restProps}>
-                <div styleName={'breadcrumb--icon'}>
+                <span styleName={'breadcrumb--icon'}>
                 {hasHomeIcon?<span><Icon name="home" size={12} onClick={this.onHome}></Icon></span>:null}
                 {hasBackIcon?<span><Icon name="arrow-left" size={12} onClick={this.onBack}></Icon></span>:null}
-                </div>
+                </span>
                 {crumbs}
             </div>
         );
