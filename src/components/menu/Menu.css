@@ -1,0 +1,57 @@
+/**
+ * Menu Style
+ * @author heifade
+ */
+@import "../../styles/theme.css";
+
+.menu {
+    outline: none;
+    margin-bottom: 0;
+    padding-left: 0;
+    list-style: none;
+    z-index: 1050;
+    box-shadow: 0 1px 6px rgba(0,0,0,.2);
+    /*color: rgba(0,0,0,.65);*/
+    background: #404040;
+    line-height: 46px;
+}
+
+.menu>.menu--submenu{
+    padding-left: 0;
+}
+/*.menu :global(.icon) {
+    margin-right: 8px;
+}*/
+
+.menu--submenu {
+    /*padding-left: 36px;*/
+}
+
+.menu--submenutitle{
+    line-height: 42px;
+    padding: 0 16px;
+    height: 42px;
+    cursor: pointer;
+    color: hsla(0,0%,100%,.67);
+}
+.menu--submenutitle__normal{
+    composes: menu--submenutitle;
+}
+.menu--submenutitle__active{
+    composes: menu--submenutitle;
+    color: #fff;
+}
+
+.menu--menuitem{
+    padding-left: 36px;
+    cursor: pointer;
+    color: hsla(0,0%,100%,.67);
+    background-color: #333;
+}
+.menu--menuitem__normal{
+    composes: menu--menuitem;
+}
+.menu--menuitem__active{
+    composes: menu--menuitem;
+    color: #fff;
+}

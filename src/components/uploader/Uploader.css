@@ -1,0 +1,10 @@
+/**
+ * Uploader Style
+ * @author heifade
+ */
+@value theme: '../../styles/theme.css';
+@value brand-primary from theme;
+
+.uploader {
+
+}
