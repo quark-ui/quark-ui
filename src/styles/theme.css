@@ -23,10 +23,10 @@
   --link-color: #3b98e0;
 
   /* 警告 */
-  --warn-color: #fe3824;
+  --warn-color: #ffc71b;
   /* 失败 */
   --fail-color: #fe3824;
   /* 成功 */
-  --success-color: #6ac10a;
+  --success-color: #6ac00b;
 
 }
