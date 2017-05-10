@@ -3,112 +3,134 @@
  * @author heifade
  */
 import { PureComponent } from 'react';
+import RcMenu, { Item, Divider, SubMenu, ItemGroup } from 'rc-menu';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
 import { allowMultiple } from '../../constants';
 import styles from './Menu.css';
 
+
+
+
+
 @CSSModules(styles, { allowMultiple })
 class Menu extends PureComponent {
+
+  static SubMenu = SubMenu;
+  static Item = Item;
 
   static displayName = 'Menu'
 
   static defaultProps = {
+    prefixCls: 'menu',
+    className: '',
+    mode: 'inline'
   }
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
   static propTypes = {
+    mode: PropTypes.oneOf([
+      'horizontal',//水平的顶部导航菜单。
+      'vertical',//垂直菜单,子菜单是弹出的
+      "inline"//垂直菜单，子菜单内嵌在菜单区域。
+    ]),
   }
 
   constructor(props) {
     super(props);
-    this.state = {};
-  }
 
-  onClick = (e, key) => {
-    this.props.onClick(e, key);
-  }
-
-  render() {
-    const { children, style, defaultOpenKeys, selectedKeys, ...otherProps } = this.props;
-
-
-    let newChildren = React.Children.map(children, child => {
-      let isOpen = false;
-      React.Children.forEach(defaultOpenKeys, key => {
-        if(key == child.key){
-          isOpen = true;
-        }
-      });
-
-      return React.cloneElement(child, {
-        isOpen: isOpen,
-        defaultOpenKeys: defaultOpenKeys,
-        onClick: this.onClick,
-        mkey: child.key ? child.key.replace(/\.\$/g, '') : '',
-        pLeft: 16
-      });
-    });
-
-    return (
-      <ul styleName={'menu'} style={style}>
-        {newChildren}
-      </ul>
-    );
-  }
-}
-
-@CSSModules(styles, { allowMultiple })
-class MenuItem extends PureComponent {
-
-  static displayName = 'Menu.Item'
-
-  static defaultProps = {
-  }
-
-  // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
-  static propTypes = {
-  }
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      isMouseOver: false
-    };
-  }
-
-  onMouseOver = (e) => {
-    this.setState({
-      isMouseOver: true
-    })
-  }
-  onMouseOut = (e) => {
-    this.setState({
-      isMouseOver: false
-    })
-  }
-
-  render() {
-    const { children, pLeft, ...otherProps } = this.props;
-
-    let divStyle = {
-      paddingLeft: pLeft
+    let openKeys;
+    if ('defaultOpenKeys' in props) {
+      openKeys = props.defaultOpenKeys;
+    } else if ('openKeys' in props) {
+      openKeys = props.openKeys;
     }
 
+    this.state = {
+      openKeys: openKeys || [],
+    };
+    
+  }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.mode === 'inline' && nextProps.mode !== 'inline') {
+      this.switchModeFromInline = true;
+    }
+    if ('openKeys' in nextProps) {
+      this.setState({ openKeys: nextProps.openKeys });
+    }
+  }
+
+  handleClick = (e) => {
+    this.setOpenKeys([]);
+    const { onClick } = this.props;
+    if (onClick) {
+      onClick(e);
+    }
+  }
+  handleOpenChange = (openKeys) => {
+    this.setOpenKeys(openKeys);
+
+    const { onOpenChange } = this.props;
+    if (onOpenChange) {
+      onOpenChange(openKeys);
+    }
+  }
+  setOpenKeys(openKeys) {
+    if (!('openKeys' in this.props)) {
+      this.setState({ openKeys });
+    }
+  }
+
+  render() {
+    // let openAnimation = this.props.openAnimation || this.props.openTransitionName;
+    // if (this.props.openAnimation === undefined && this.props.openTransitionName === undefined) {
+    //   switch (this.props.mode) {
+    //     case 'horizontal':
+    //       openAnimation = 'slide-up';
+    //       break;
+    //     case 'vertical':
+    //       // When mode switch from inline
+    //       // submenu should hide without animation
+    //       if (this.switchModeFromInline) {
+    //         openAnimation = '';
+    //         this.switchModeFromInline = false;
+    //       } else {
+    //         openAnimation = 'zoom-big';
+    //       }
+    //       break;
+    //     case 'inline':
+    //       openAnimation = animation;
+    //       break;
+    //     default:
+    //   }
+    // }
+
+    
+
+    let props = {};
+    const className = `${this.props.className} ${this.props.prefixCls}-${this.props.theme}`;
+    if (this.props.mode !== 'inline') {//垂直菜单，子菜单内嵌在菜单区域。
+      // There is this.state.openKeys for
+      // closing vertical popup submenu after click it
+      props = {
+        openKeys: this.state.openKeys,
+        onClick: this.handleClick,
+        onOpenChange: this.handleOpenChange,
+        //openTransitionName: openAnimation,
+        className,
+      };
+    } else {
+      props = {
+        //openAnimation,
+        className,
+      };
+    }
     return (
-      <li onMouseOver={this.onMouseOver}
-          onMouseOut={this.onMouseOut}
-          styleName={`menu--menuitem__${this.state.isMouseOver?'active':'normal'}`}
-          style={divStyle}>
-        {children}
-      </li>
+      <RcMenu {...this.props} {...props} />
     );
   }
 }
-
-Menu.Item = MenuItem;
-
 
 
 export default Menu;
