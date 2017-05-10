@@ -29,12 +29,13 @@ a {
   display: flex;
   align-items: center;
   font-size: 14px;
-}
-.head__navigation a {
-  margin: 0 20px;
-}
-.head__navigation :global(.active) {
-  color: #f00;
+  & a {
+    margin: 0 20px;
+    color: var(--text-color-dark);
+  }
+  & :global(.active) {
+    color: var(--brand-primary);
+  }
 }
 .main {
   flex: 1;
@@ -54,9 +55,12 @@ a {
 }
 .aside__navItem {
   padding: 0 10px;
-  font-size: 18px;
-  line-height: 1.5;
-}
-.aside__navItem :global(.active) {
-  color: #f00;
+  font-size: 16px;
+  line-height: 2;
+  & a {
+    color: var(--text-color);
+  }
+  & :global(.active) {
+    color: var(--brand-primary);
+  }
 }

@@ -1,10 +1,14 @@
 import { Component, createElement } from 'react';
 import MDReactComponent from 'markdown-react-js';
 import SyntaxHighlighter from 'react-syntax-highlighter';
+import CSSModules from 'react-css-modules';
 import { darcula } from 'react-syntax-highlighter/dist/styles';
+import { allowMultiple } from '../../src/constants';
 
 import Layout from '../layouts/Layout';
+import styles from './Component.css';
 
+@CSSModules(styles, { allowMultiple })
 export default class ComponentBlock extends Component {
   state = {
     readme: '',
@@ -30,10 +34,10 @@ export default class ComponentBlock extends Component {
   render() {
     const { readme, demo, demoSourceCode } = this.state;
     return (
-      <div>
-        <MDReactComponent text={readme} />
+      <div styleName="Component__wrap">
+        <MDReactComponent text={readme} styleName="Component__doc" />
         {
-          demo ? createElement(demo) : null
+          demo ? <div styleName="Component__demoBox">{createElement(demo)}</div> : null
         }
         <SyntaxHighlighter
           language={'javascript'}

@@ -2,14 +2,6 @@
 
 Alert Component.
 
-type:'info',
-    closable:false,
-    closeText:'X',
-    message:'',
-    description:'',
-    onClose(){},
-    showIcon:false,
-
 ### Props
 |name|type|default|description|
 |---|---|---|---|

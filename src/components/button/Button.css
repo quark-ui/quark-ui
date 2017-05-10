@@ -74,10 +74,10 @@
 .danger {
   background-color: var(--neutral-color);
   border-color: var(--border-color);
-  color: var(--warn-color);
+  color: var(--fail-color);
   &:hover {
-    background-color: var(--warn-color);
-    border-color: var(--warn-color);
+    background-color: var(--fail-color);
+    border-color: var(--fail-color);
     color: var(--neutral-color);
   }
   &:active {
