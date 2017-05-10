@@ -7,7 +7,7 @@ export default class BreadcrumbDemo extends Component {
   render() {
     return (
       <div>
-       <Breadcrumb separator=">" hasBackIcon hasHomeIcon>
+       <Breadcrumb separator=">" hasBackIcon>
         <Crumb>home</Crumb>
         <Crumb href='/component/Button'>Button</Crumb>
         <Crumb href='/component/Modal'>Modal</Crumb>
