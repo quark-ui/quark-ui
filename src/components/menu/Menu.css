@@ -111,10 +111,7 @@
             text-transform: none;
             text-rendering: auto;
             position: absolute;
-            -webkit-transition: -webkit-transform .3s;
-            transition: -webkit-transform .3s;
             transition: transform .3s;
-            transition: transform .3s,-webkit-transform .3s;
             content: "＞";
             right: 16px;
         }
@@ -148,10 +145,7 @@
         text-transform: none;
         text-rendering: auto;
         position: absolute;
-        -webkit-transition: -webkit-transform .3s;
-        transition: -webkit-transform .3s;
         transition: transform .3s;
-        transition: transform .3s,-webkit-transform .3s;
         content: "＞";
         right: 16px;
     }
@@ -187,10 +181,7 @@
         text-transform: none;
         text-rendering: auto;
         position: absolute;
-        -webkit-transition: -webkit-transform .3s;
-        transition: -webkit-transform .3s;
         transition: transform .3s;
-        transition: transform .3s,-webkit-transform .3s;
         content: "＞";
         transform: rotate(90deg);
         right: 16px;

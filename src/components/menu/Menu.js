@@ -22,18 +22,24 @@ class Menu extends PureComponent {
   static displayName = 'Menu'
 
   static defaultProps = {
-    prefixCls: 'menu',
+    styleName: 'menu',
     className: '',
-    mode: 'inline'
+    mode: 'inline',
+    selectedKeys: [],
+    defaultOpenKeys: [],
   }
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
   static propTypes = {
+    styleName: PropTypes.string,
+    className: PropTypes.string,
     mode: PropTypes.oneOf([
       'horizontal',//水平的顶部导航菜单。
       'vertical',//垂直菜单,子菜单是弹出的
       "inline"//垂直菜单，子菜单内嵌在菜单区域。
     ]),
+    selectedKeys: PropTypes.arrayOf(PropTypes.string),
+    defaultOpenKeys: PropTypes.arrayOf(PropTypes.string)
   }
 
   constructor(props) {
@@ -109,7 +115,7 @@ class Menu extends PureComponent {
     
 
     let props = {};
-    const className = `${this.props.className} ${this.props.prefixCls}-${this.props.theme}`;
+    const className = `${this.props.className} ${this.props.styleName}-${this.props.theme}`;
     if (this.props.mode !== 'inline') {//垂直菜单，子菜单内嵌在菜单区域。
       // There is this.state.openKeys for
       // closing vertical popup submenu after click it
@@ -126,6 +132,10 @@ class Menu extends PureComponent {
         className,
       };
     }
+
+    props.prefixCls = this.props.styleName;
+
+
     return (
       <RcMenu {...this.props} {...props} />
     );

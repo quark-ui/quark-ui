@@ -7,7 +7,7 @@ export default class MenuDemo extends Component {
 
   state = {
     theme: 'dark',
-    current: '.$m0',
+    current: '.$m11',
   }
 
   handleClick = (e) => {
@@ -58,7 +58,7 @@ export default class MenuDemo extends Component {
             onClick={this.handleClick}
             style={{ width: 240, height: 500 }}
             styleName={"menu"}
-            defaultOpenKeys={['m1']}
+            defaultOpenKeys={['.$m1']}
             selectedKeys={[this.state.current]}
             mode="vertical">
 
@@ -92,7 +92,7 @@ export default class MenuDemo extends Component {
             onClick={this.handleClick}
             style={{ width: 240, height: 500 }}
             styleName={"menu"}
-            defaultOpenKeys={['m1']}
+            defaultOpenKeys={['.$m1']}
             selectedKeys={[this.state.current]}
             mode="inline">
 
