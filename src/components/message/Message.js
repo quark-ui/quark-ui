@@ -4,7 +4,9 @@
  */
 import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 import CSSModules from 'react-css-modules';
+import Icon from '../icon'
 import { allowMultiple } from '../../constants';
 import styles from './Message.css';
 
@@ -60,7 +62,8 @@ class Message extends PureComponent {
     const props = this.props;
 
     return (
-      <div styleName={'message ' + `message--${props.type}`}>
+      <div styleName={classnames('message',`message__${props.type}`)}>
+        <span styleName={'message--icon'}><Icon name="caution" size={12}></Icon></span>
         <div styleName={'message--content'}>
           {props.children}
         </div>

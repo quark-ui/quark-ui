@@ -19,17 +19,23 @@ class Trigger extends PureComponent {
   static defaultProps = {
     action: 'hover',
     placement: ['tl', 'bl'],
+    offset: [0, 0],
     popup: '',
+    mouseEnterDelay: 0,
+    mouseLeaveDelay: 100,
   }
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
   static propTypes = {
     action: PropTypes.oneOf(['hover', 'click']),
     placement: PropTypes.arrayOf(PropTypes.oneOf(Array.from(ALIGN_ENUM))),
+    offset: PropTypes.arrayOf(PropTypes.number),
     popup: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.element,
     ]),
+    mouseEnterDelay: PropTypes.number,
+    mouseLeaveDelay: PropTypes.number,
   }
 
   static getTargetRect = target => target.getBoundingClientRect()
@@ -62,15 +68,29 @@ class Trigger extends PureComponent {
   }
 
   handleMouseEnter = () => {
-    this.setState({
-      active: true,
-    });
+    if (this.leaveTimer) {
+      clearTimeout(this.leaveTimer);
+      this.leaveTimer = null;
+    }
+    const { mouseEnterDelay } = this.props;
+    this.enterTimer = setTimeout(() => {
+      this.setState({
+        active: true,
+      });
+    }, mouseEnterDelay);
   }
 
   handleMouseLeave = () => {
-    this.setState({
-      active: false,
-    });
+    if (this.enterTimer) {
+      clearTimeout(this.enterTimer);
+      this.enterTimer = null;
+    }
+    const { mouseLeaveDelay } = this.props;
+    this.leaveTimer = setTimeout(() => {
+      this.setState({
+        active: false,
+      });
+    }, mouseLeaveDelay);
   }
 
   handleClickTrigger = (e) => {
@@ -143,8 +163,9 @@ class Trigger extends PureComponent {
         x -= popupRect.width / 2;
         break;
     }
+    const { offset } = this.props;
     this.setState({
-      position: [x, y],
+      position: [x + offset[0], y + offset[1]],
     });
   }
 
@@ -156,6 +177,8 @@ class Trigger extends PureComponent {
         popupRef={n => (this.popNode = n)}
         position={position}
         visible={active}
+        onMouseEnter={this.handleMouseEnter}
+        onMouseLeave={this.handleMouseLeave}
       >{this.props.popup}</Popup>
     );
   }
@@ -164,6 +187,7 @@ class Trigger extends PureComponent {
     const { action, children } = this.props;
     const triggerProps = {
       ref: n => (this.node = n),
+      styleName: 'trigger--wrap',
     };
     if (action === 'hover') {
       assign(triggerProps, {

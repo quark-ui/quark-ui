@@ -3,6 +3,8 @@
  * @author ryan.bian
  */
 
+@import './theme.css';
+
 
 /**
  * 1. Set default font family to sans-serif.
@@ -50,6 +52,7 @@ body, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset,
 
 a {
   background-color: transparent;
+  color: var(--link-color);
 }
 
 
@@ -393,24 +396,21 @@ table {
   border-spacing: 0;
 }
 
-// ------------------------------END-------------------//
 body {
   background-color: #fff;
   font: 12px/1.5 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', Arial, sans-serif;
   color: #000;
 }
 
-ol, ul, dl {
-  li {
-    list-style: none;
-  }
+ol, ul, dl, li {
+  list-style: none;
 }
 
 a {
   text-decoration: none;
-  &:hover {
-    text-decoration: underline;
-  }
+}
+a:hover {
+  text-decoration: underline;
 }
 
 :focus {

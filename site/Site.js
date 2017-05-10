@@ -9,13 +9,13 @@ import {
 import styles from './Site.css';
 
 import HomePage from './pages/HomePage';
-import ComponentLayout from './layouts/ComponentLayout';
+import ComponentPage from './pages/ComponentPage';
 
 export default () => (
   <Router>
     <div className={styles.app}>
       <Route path="/" component={HomePage} exact />
-      <Route path="/component" component={ComponentLayout} />
+      <Route path="/component" component={ComponentPage} />
     </div>
   </Router>
 );

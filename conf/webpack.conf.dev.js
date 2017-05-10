@@ -1,7 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
 const ip = require('ip');
-const values = require('postcss-modules-values');
 
 const MODULES_PATH = path.resolve(__dirname, '../node_modules');
 
@@ -68,7 +67,13 @@ module.exports = () => {
               loader: 'postcss-loader',
               options: {
                 plugins: () => [
-                  values,
+                  // values,
+                  require('postcss-import'),
+                  require('postcss-calc')(),
+                  require('postcss-hsb-color')({
+                    output: 'rgb',
+                  }),
+                  require('postcss-cssnext'),
                 ],
               },
             },

@@ -1,20 +1,20 @@
-import Message from '../index';
+import message from '../index';
 import Button from 'quark-ui/button';
 import { Component } from 'react';
-const message = Message.newInstance({});
 
 export default class MessageDemo extends Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
-  openMsg() {
-    message.error('error我马上消失', 1, () => { message.info('info我又回来了', 0.5); });
-  }
+ 
   render() {
     return (
       <div>
-        <Button onClick={this.openMsg}>msg</Button>
+        <Button onClick={()=>{message.info('这是一条提示信息（信息内容）。');}}>info</Button>
+        <Button type="secondary" onClick={()=>{message.success('这是一条提示信息（信息内容）。');}}>success</Button>
+        <Button type="secondary" onClick={()=>{message.error('这是一条提示信息（信息内容）。');}}>error</Button>
+        <Button type="secondary" onClick={()=>{message.warning('这是一条提示信息（信息内容）。');}}>warning</Button>
       </div>
     );
   }

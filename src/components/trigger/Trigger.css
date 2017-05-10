@@ -2,11 +2,13 @@
  * Trigger Style
  * @author ryan.bian
  */
-@value theme: '../../styles/theme.css';
-@value brand-primary from theme;
+@import '../../styles/theme.css';
 
 .trigger {
 
+}
+.trigger--wrap {
+  display: inline-block;
 }
 .popup {
   position: absolute;

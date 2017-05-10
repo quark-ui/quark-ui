@@ -26,15 +26,13 @@ QuarkUI 库选择使用 [css-modules](https://github.com/css-modules/css-modules
 ```
 
 #### 变量
-使用 `postcss-modules-values` 提供处理变量能力，公共和主题相关 CSS 文件放在 `styles` 目录下
+变量定义在 'src/styles/theme.css' 中
 
 ```css
-@value theme: '../../styles/theme.css';
-@value brand-primary, border-color from theme;
+@import "../src/styles/theme.css";
 
 .primary {
-  background: brand-primary;
-  border-color: brand-primary;
+  background: var(--brand-primary);
 }
 ```
 

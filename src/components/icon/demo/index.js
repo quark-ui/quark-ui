@@ -3,8 +3,18 @@ import { Component } from 'react';
 import styles from './index.css';
 
 const IconList = [
+  'ellipsis',
+  'caution',
+  'question',
+  'account',
+  'setting',
+  'paper',
+  'finance',
+  'check',
   'arrow-left',
   'arrow-right',
+  'check',
+  'home',
 ];
 
 export default class IconDemo extends Component {

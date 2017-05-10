@@ -23,7 +23,8 @@ class Button extends PureComponent {
     type: PropTypes.oneOf([
       'primary',
       'secondary',
-      'outline',
+      'dashed',
+      'danger',
     ]),
     size: PropTypes.oneOf([
       'normal',

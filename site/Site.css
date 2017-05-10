@@ -2,10 +2,14 @@
  * QuarkUi Site Style
  * @author 
  */
+@import "../src/styles/theme.css";
+@import "../src/styles/base.css";
+
 html, body {
-  margin: 0;
-  padding: 0;
   height: 100%;
+}
+a {
+  color: var(--brand-primary);
 }
 .app {
   display: flex;
@@ -13,9 +17,25 @@ html, body {
   height: 100%;
 }
 .head {
-  flex: 0 0 40px;
-  font-size: 40px;
-  line-height: 1;
+  flex: 0 0 48px;
+  display: flex;
+  line-height: 1.5;
+}
+.head__brandTitle {
+  margin: 0;
+  font-size: 32px;
+}
+.head__navigation {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  & a {
+    margin: 0 20px;
+    color: var(--text-color-dark);
+  }
+  & :global(.active) {
+    color: var(--brand-primary);
+  }
 }
 .main {
   flex: 1;
@@ -35,6 +55,12 @@ html, body {
 }
 .aside__navItem {
   padding: 0 10px;
-  font-size: 18px;
-  line-height: 1.5;
+  font-size: 16px;
+  line-height: 2;
+  & a {
+    color: var(--text-color);
+  }
+  & :global(.active) {
+    color: var(--brand-primary);
+  }
 }

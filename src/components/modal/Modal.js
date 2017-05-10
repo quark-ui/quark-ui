@@ -2,6 +2,7 @@
  * Modal Component
  * @author ryan.bian
  */
+import ReactDOM from 'react-dom';
 import { Component } from 'react';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
@@ -10,6 +11,35 @@ import styles from './Modal.css';
 import renderTo from '../../enhancer/render-to';
 import Button from 'quark-ui/button';
 import Mask from './Mask';
+
+const renderNoticeModal = (type, config = {
+  title: '',
+  content: '',
+}) => {
+  const wrapNode = document.createElement('div');
+  document.body.appendChild(wrapNode);
+  const modalProps = {
+    title: config.title || type,
+    visible: true,
+    closable: false,
+    footer: (
+      <Button
+        key="confirm"
+        type="primary"
+        size="small"
+        onClick={() => {
+          ReactDOM.unmountComponentAtNode(wrapNode);
+          document.body.removeChild(wrapNode);
+        }}
+      >确定</Button>
+    ),
+  };
+  ReactDOM.render(
+    <Modal {...modalProps}>
+      {config.content}
+    </Modal>
+  , wrapNode);
+};
 
 @renderTo()
 @CSSModules(styles, { allowMultiple })
@@ -43,6 +73,19 @@ class Modal extends Component {
     onOk: PropTypes.func,
     onCancel: PropTypes.func,
     afterClose: PropTypes.func,
+  }
+
+  static info(config) {
+    renderNoticeModal('info', config);
+  }
+  static success(config) {
+    renderNoticeModal('success', config);
+  }
+  static error(config) {
+    renderNoticeModal('error', config);
+  }
+  static warning(config) {
+    renderNoticeModal('warning', config);
   }
 
   constructor(props) {
@@ -118,7 +161,7 @@ class Modal extends Component {
     ];
     return footer === undefined ? (
       <div styleName="modal__footer">{defaultFooter}</div>
-    ) : null;
+    ) : <div styleName="modal__footer">{footer}</div>;
   }
 
   render() {

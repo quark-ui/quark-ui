@@ -1,5 +1,5 @@
 import Modal from '../Modal';
-import Button from '../../button/Button';
+import Button from 'quark-ui/button';
 import { Component } from 'react';
 
 export default class ModalDemo extends Component {
@@ -30,10 +30,40 @@ export default class ModalDemo extends Component {
     };
     return (
       <div>
-        <Button onClick={this.openModal}>open modal</Button>
+        <h3>基本</h3>
+        <Button type="secondary" onClick={this.openModal}>open modal</Button>
         <Modal {...modalProps}>
           <p>first Modal</p>
         </Modal>
+        <h3>信息提示</h3>
+        <Button
+          type="secondary"
+          onClick={() => {
+            Modal.info({
+              content: '这是提示信息',
+            });
+          }}>info</Button>
+        <Button
+          type="secondary"
+          onClick={() => {
+            Modal.success({
+              content: '这是成功消息',
+            });
+          }}>success</Button>
+        <Button
+          type="secondary"
+          onClick={() => {
+            Modal.error({
+              content: '这是错误提示',
+            });
+          }}>error</Button>
+        <Button
+          type="secondary"
+          onClick={() => {
+            Modal.warning({
+              content: '这是警告信息',
+            });
+          }}>warning</Button>
       </div>
     );
   }
