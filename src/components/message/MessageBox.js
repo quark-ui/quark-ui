@@ -4,7 +4,6 @@
  */
 
 import { PureComponent } from 'react';
-import ReactDom from 'react-dom';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
 import { allowMultiple } from '../../constants';
@@ -16,7 +15,6 @@ const now = Date.now();
 function getUuid() {
   return `${now}_${seed++}`;
 }
-function noop() { }
 
 @CSSModules(styles, { allowMultiple })
 class MessageBox extends PureComponent {
@@ -74,38 +72,6 @@ class MessageBox extends PureComponent {
         {Nodes}
       </div>
     );
-  }
-}
-
-MessageBox.newInstance = function (props = {}) {
-  const { container, ...msgProps } = props;
-
-  let div;
-  if (container) {
-    div = container;
-  } else {
-    div = document.createElement('div');
-    document.body.appendChild(div);
-  }
-
-  const message = ReactDom.render(<MessageBox {...msgProps}></MessageBox>, div);
-  return {
-    info(content = '', onClose = noop, duration = 1.5) {
-      message.add({ type: 'info', content, duration, onClose });
-    },
-    success(content = '', onClose = noop, duration = 1.5) {
-      message.add({ type: 'success', content, duration, onClose })
-    },
-    error(content = '', onClose = noop, duration = 1.5) {
-      message.add({ type: 'error', content, duration, onClose });
-    },
-    warning(content = '', onClose = noop, duration = 1.5) {
-      message.add({ type: 'warning', content, duration, onClose });
-    },
-    destroy() {
-      ReactDOM.unmountComponentAtNode(div);
-      document.body.removeChild(div);
-    }
   }
 }
 

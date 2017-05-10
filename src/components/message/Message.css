@@ -5,38 +5,62 @@
 
 @import '../../styles/theme.css';
 
+:root{
+    --message-info-bg:hsba(206,calc(74 - 17), calc(88 + 3),0.2);
+    --message-success-bg:hsba(89,calc(94 - 17), calc(75 + 3),0.2);
+    --message-error-bg:hsba(6,calc(86 - 17), 100,0.2);
+    --message-warning-bg:hsba(45,calc(89 - 17),100,0.2);
+}
+
 .message--box {
     position: fixed;
     z-index: 1000;
     top: 20px;
     left: 50%;
+    transform:translate(-50%,0);
+    pointer-events: none;
 }
 
 .message {
-    padding: 7px 20px 7px 10px;
+    padding: 7px 24px 7px 10px;
     border-radius: 3px 3px;
     box-shadow: 0 0 10px #999;
     border: 1px solid #999;
     border: 0px solid rgba(0, 0, 0, 0);
     background: #fff;
     display: block;
-    width: auto;
     line-height: 1.5;
     vertical-align: middle;
     position: relative;
     margin: 10px 0;
 }
-
-.message--content {}
+.message--content{
+    display:inline-block;
+        vertical-align: middle;
+        font-size:14px;
+}
+.message--icon{
+    display:inline-block;
+    margin-right:7px;
+    vertical-align: middle;
+}
 .message__info{
-    color:var(--brand-primary);
+    color:var(--link-color);
+    background-color:var(--message-info-bg);
+    box-shadow: 0 0 1px var(--link-color);
 }
 .message__success{
     color:var(--success-color);
+    background-color:var(--message-success-bg);
+    box-shadow: 0 0 1px var(--success-color);
 }
 .message__error{
     color:var(--fail-color);
+    background-color:var(--message-error-bg);
+    box-shadow: 0 0 1px var(--fail-color);
 }
 .message__warning{
     color:var(--warn-color);
+    background-color:var(--message-warning-bg);
+    box-shadow: 0 0 1px var(--warn-color);
 }

@@ -20,13 +20,13 @@
   --text-color-light: #999;
 
   /* 链接色 */
-  --link-color: #3b98e0;
+  --link-color: hsb(206,74,88);
 
   /* 警告 */
-  --warn-color: #fe3824;
+  --warn-color: hsb(45,89,100);
   /* 失败 */
-  --fail-color: #fe3824;
+  --fail-color: hsb(6,86,100);
   /* 成功 */
-  --success-color: #6ac10a;
+  --success-color: hsb(89,94,75);
 
 }

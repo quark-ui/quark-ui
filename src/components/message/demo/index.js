@@ -1,7 +1,6 @@
-import Message from '../index';
+import message from '../index';
 import Button from 'quark-ui/button';
 import { Component } from 'react';
-const message = Message.newInstance({});
 
 export default class MessageDemo extends Component {
   constructor(props) {
@@ -12,10 +11,10 @@ export default class MessageDemo extends Component {
   render() {
     return (
       <div>
-        <Button onClick={()=>{message.info('info信息');}}>info</Button>
-        <Button type="secondary" onClick={()=>{message.success('info信息');}}>success</Button>
-        <Button type="secondary" onClick={()=>{message.error('info信息');}}>error</Button>
-        <Button type="secondary" onClick={()=>{message.warning('info信息');}}>warning</Button>
+        <Button onClick={()=>{message.info('这是一条提示信息（信息内容）。');}}>info</Button>
+        <Button type="secondary" onClick={()=>{message.success('这是一条提示信息（信息内容）。');}}>success</Button>
+        <Button type="secondary" onClick={()=>{message.error('这是一条提示信息（信息内容）。');}}>error</Button>
+        <Button type="secondary" onClick={()=>{message.warning('这是一条提示信息（信息内容）。');}}>warning</Button>
       </div>
     );
   }
