@@ -18,4 +18,3 @@ export { default as Modal } from './components/modal/';
 export { default as Pagination } from './components/pagination/';
 
 export { default as Trigger } from './components/trigger/';
-
