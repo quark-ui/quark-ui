@@ -24,3 +24,7 @@ export { default as Pagination } from './components/pagination/';
 
 export { default as Trigger } from './components/trigger/';
 
+export { default as Menu } from './components/menu/';
+
+//export { default as Uploader } from './components/uploader/';
+
