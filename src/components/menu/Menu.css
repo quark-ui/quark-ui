@@ -47,25 +47,94 @@
     & :global(.menu-item-group-list) :global(.menu-submenu-title) {
         padding: 0 16px 0 28px;
     }
+
+    & :global(.menu-hidden){
+        display: none;
+    }
+
+    & :global(.menu-item),
+    & :global(.menu-submenu-title){
+        margin: 0;
+        padding: 0 20px;
+        position: relative;
+        display: block;
+        white-space: nowrap;
+        cursor: pointer;
+    }
 }
 
-.menu :global(.menu-item), .menu :global(.menu-submenu-title){
-    margin: 0;
-    padding: 0 20px;
-    position: relative;
-    display: block;
-    white-space: nowrap;
-    cursor: pointer;
+
+
+
+
+
+/*水平菜单，子菜单水平*/
+.menu:global(.menu-horizontal-h){
+
+    border-bottom: solid 1px #e9e9e9;
+
+    & :global(.menu-submenu) :global(.menu-item-selected){
+        background-color: #ecf6fd;
+    }
+
+    & > :global(.menu-item-active), 
+    & > :global(.menu-item-selected), 
+    & > :global(.menu-submenu-active), 
+    & > :global(.menu-submenu-selected){
+        border-bottom: solid 2px #108ee9;
+    }
+
+    & > :global(.menu-item) {
+        float: left;
+    }
+
+    &:after{
+        content: " ";
+        display: block;
+        height: 0;
+        clear: both;
+    }
+
+    /*一级菜单*/
+    & :global(.menu-submenu-horizontal-h){
+        float: left;
+
+        &:global(.menu-submenu-open){
+            display: table;
+        }
+
+        /*二级菜单弹出层*/
+        &  > :global(.menu) {
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            position: absolute;
+            
+            margin-top: 7px;
+            border: solid 1px #ccc;
+            background-color: #fff;
+            border-radius: 4px;
+            z-index: 10;
+        }
+
+        &  > :global(.menu) :global(.menu-item){
+            position: relative;
+            display: table-cell;
+        }
+    }
+
+    
+
+    
+
+    
 }
 
 
 
-.menu :global(.menu-hidden){
-    display: none;
-}
 
 
-/*水平菜单*/
+/*水平菜单，子菜单垂直*/
 .menu:global(.menu-horizontal){
 
     border-bottom: solid 1px #e9e9e9;
@@ -115,7 +184,7 @@
             z-index: 10;
         }
 
-        & :global(.menu-submenu-title):after{
+        & :global(.menu-vertical) :global(.menu-submenu-title):after{
             font-style: normal;
             vertical-align: baseline;
             text-align: center;
@@ -144,7 +213,7 @@
 }
 
 
-/*垂直菜单,子菜单是右边弹出的*/
+/*垂直菜单，子菜单水平向右弹出*/
 .menu:global(.menu-vertical){
     box-shadow: 0 1px 6px rgba(0,0,0,.2);
 

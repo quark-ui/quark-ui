@@ -25,7 +25,7 @@ class Menu extends PureComponent {
   static defaultProps = {
     styleName: 'menu',
     className: '',
-    mode: 'inline',
+    type: 'inline',
     selectedKeys: [],
     defaultOpenKeys: [],
   }
@@ -34,10 +34,11 @@ class Menu extends PureComponent {
   static propTypes = {
     styleName: PropTypes.string,
     className: PropTypes.string,
-    mode: PropTypes.oneOf([
-      'horizontal',//水平的顶部导航菜单。
-      'vertical',//垂直菜单,子菜单是弹出的
-      "inline"//垂直菜单，子菜单内嵌在菜单区域。
+    type: PropTypes.oneOf([
+      'horizontal-h',//水平菜单，子菜单水平
+      'horizontal-v',//水平菜单，子菜单垂直
+      'vertical-h',//垂直菜单，子菜单水平向右弹出
+      "vertical-v"//垂直菜单，子菜单内嵌在菜单区域
     ]),
     selectedKeys: PropTypes.arrayOf(PropTypes.string),
     defaultOpenKeys: PropTypes.arrayOf(PropTypes.string)
@@ -56,11 +57,10 @@ class Menu extends PureComponent {
     this.state = {
       openKeys: openKeys || [],
     };
-    
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.mode === 'inline' && nextProps.mode !== 'inline') {
+    if (this.props.type === 'vertical-v' && nextProps.type !== 'vertical-v') {
       this.switchModeFromInline = true;
     }
     if ('openKeys' in nextProps) {
@@ -117,25 +117,40 @@ class Menu extends PureComponent {
 
     let props = {};
     const className = `${this.props.className} ${this.props.styleName}-${this.props.theme}`;
-    if (this.props.mode !== 'inline') {//垂直菜单，子菜单内嵌在菜单区域。
-      // There is this.state.openKeys for
-      // closing vertical popup submenu after click it
+    let mode = '';
+    switch(this.props.type){
+      case 'horizontal-h':
+        mode = 'horizontal-h';
+        break;
+      case 'horizontal-v':
+        mode = 'horizontal';
+        break;
+      case 'vertical-h':
+        mode = 'vertical';
+        break;
+      case 'vertical-v':
+        mode = 'inline';
+        break;
+    }
+
+    if (mode === 'inline') {//垂直菜单，子菜单内嵌在菜单区域。
+      props = {
+        //openAnimation,
+        className: className,
+        mode,
+      };
+    } else {
       props = {
         openKeys: this.state.openKeys,
         onClick: this.handleClick,
         onOpenChange: this.handleOpenChange,
         //openTransitionName: openAnimation,
-        className,
-      };
-    } else {
-      props = {
-        //openAnimation,
-        className,
+        className: className,
+        mode,
       };
     }
 
     props.prefixCls = this.props.styleName;
-
 
     return (
       <RcMenu {...this.props} {...props} />
