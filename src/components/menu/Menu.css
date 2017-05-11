@@ -16,8 +16,8 @@
         position: relative;
     }
 
-    & :global(.menu-item):hover,
-    & :global(.menu-submenu-title):hover{
+    & :global(.menu-item-active),
+    & :global(.menu-submenu-active) > :global(.menu-submenu-title){
         color: #108ee9;
     }
 
@@ -30,10 +30,9 @@
 
     & :global(.menu-item-disabled), 
     & :global(.menu-submenu-disabled) :global(.menu-submenu-title) {
-        color: rgba(0,0,0,.25)!important;
+        color: rgba(0,0,0,.25);
         cursor: not-allowed;
         background: none;
-        border-color: transparent!important;
     }
 }
 
@@ -104,7 +103,6 @@
         }
 
         & :global(.menu-submenu-title):after{
-            font-family: anticon!important;
             font-style: normal;
             vertical-align: baseline;
             text-align: center;
@@ -138,7 +136,6 @@
     box-shadow: 0 1px 6px rgba(0,0,0,.2);
 
     & :global(.menu-submenu-title):after{
-        font-family: anticon!important;
         font-style: normal;
         vertical-align: baseline;
         text-align: center;
@@ -148,6 +145,10 @@
         transition: transform .3s;
         content: "＞";
         right: 16px;
+    }
+
+    & :global(.menu-item-selected){
+        background-color: #ecf6fd;
     }
 
     
@@ -174,7 +175,6 @@
     box-shadow: 0 1px 6px rgba(0,0,0,.2);
 
     & :global(.menu-submenu-title):after{
-        font-family: anticon!important;
         font-style: normal;
         vertical-align: baseline;
         text-align: center;

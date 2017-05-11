@@ -35,16 +35,25 @@ export default class MenuDemo extends Component {
               <Menu.Item key="m11">二级菜单1</Menu.Item>
               <Menu.Item key="m12">二级菜单2</Menu.Item>
               <Menu.Item key="m13">二级菜单3</Menu.Item>
-              <Menu.SubMenu key="m23" title="三级菜单">
-                <Menu.Item key="m231">三级菜单1</Menu.Item>
-                <Menu.Item key="m232">三级菜单2</Menu.Item>
+              <Menu.SubMenu key="m14" title="三级菜单">
+                <Menu.Item key="m141">三级菜单1</Menu.Item>
+                <Menu.Item key="m142">三级菜单2</Menu.Item>
               </Menu.SubMenu>
             </Menu.SubMenu>
-            <Menu.SubMenu key="m2" disabled title={<span><Icon className="icon" size={14} name={"finance"}/><span>不可用下拉菜单</span></span>}>
-              <Menu.Item key="m21">二级菜单4</Menu.Item>
-              <Menu.Item key="m22">二级菜单5</Menu.Item>
+            <Menu.SubMenu key="m2" title={<span><Icon className="icon" size={14} name={"paper"}/><span>下拉菜单</span></span>}>
+              <Menu.Item key="m21">二级菜单1</Menu.Item>
+              <Menu.Item key="m22">二级菜单2</Menu.Item>
+              <Menu.Item key="m23">二级菜单3</Menu.Item>
+              <Menu.SubMenu key="m24" title="三级菜单">
+                <Menu.Item key="m241">三级菜单1</Menu.Item>
+                <Menu.Item key="m242">三级菜单2</Menu.Item>
+              </Menu.SubMenu>
             </Menu.SubMenu>
-            <Menu.Item key="m3" disabled>
+            <Menu.SubMenu key="m3" disabled title={<span><Icon className="icon" size={14} name={"finance"}/><span>不可用下拉菜单</span></span>}>
+              <Menu.Item key="m31">二级菜单4</Menu.Item>
+              <Menu.Item key="m32">二级菜单5</Menu.Item>
+            </Menu.SubMenu>
+            <Menu.Item key="m4" disabled>
               <Icon className="icon" size={14} name={"paper"}/>不可用菜单按钮
             </Menu.Item>
         </Menu>
@@ -70,16 +79,25 @@ export default class MenuDemo extends Component {
               <Menu.Item key="m11">二级菜单1</Menu.Item>
               <Menu.Item key="m12">二级菜单2</Menu.Item>
               <Menu.Item key="m13">二级菜单3</Menu.Item>
-              <Menu.SubMenu key="m23" title="三级菜单">
-                <Menu.Item key="m231">三级菜单1</Menu.Item>
-                <Menu.Item key="m232">三级菜单2</Menu.Item>
+              <Menu.SubMenu key="m14" title="三级菜单">
+                <Menu.Item key="m141">三级菜单1</Menu.Item>
+                <Menu.Item key="m142">三级菜单2</Menu.Item>
               </Menu.SubMenu>
             </Menu.SubMenu>
-            <Menu.SubMenu key="m2" disabled title={<span><Icon className="icon" size={14} name={"finance"}/><span>不可用下拉菜单</span></span>}>
-              <Menu.Item key="m21">二级菜单4</Menu.Item>
-              <Menu.Item key="m22">二级菜单5</Menu.Item>
+            <Menu.SubMenu key="m2" title={<span><Icon className="icon" size={14} name={"paper"}/><span>下拉菜单</span></span>}>
+              <Menu.Item key="m21">二级菜单1</Menu.Item>
+              <Menu.Item key="m22">二级菜单2</Menu.Item>
+              <Menu.Item key="m23">二级菜单3</Menu.Item>
+              <Menu.SubMenu key="m24" title="三级菜单">
+                <Menu.Item key="m241">三级菜单1</Menu.Item>
+                <Menu.Item key="m242">三级菜单2</Menu.Item>
+              </Menu.SubMenu>
             </Menu.SubMenu>
-            <Menu.Item key="m3" disabled>
+            <Menu.SubMenu key="m3" disabled title={<span><Icon className="icon" size={14} name={"finance"}/><span>不可用下拉菜单</span></span>}>
+              <Menu.Item key="m31">二级菜单4</Menu.Item>
+              <Menu.Item key="m32">二级菜单5</Menu.Item>
+            </Menu.SubMenu>
+            <Menu.Item key="m4" disabled>
               <Icon className="icon" size={14} name={"paper"}/>不可用菜单按钮
             </Menu.Item>
         </Menu>
@@ -104,16 +122,25 @@ export default class MenuDemo extends Component {
               <Menu.Item key="m11">二级菜单1</Menu.Item>
               <Menu.Item key="m12">二级菜单2</Menu.Item>
               <Menu.Item key="m13">二级菜单3</Menu.Item>
-              <Menu.SubMenu key="m23" title="三级菜单">
-                <Menu.Item key="m231">三级菜单1</Menu.Item>
-                <Menu.Item key="m232">三级菜单2</Menu.Item>
+              <Menu.SubMenu key="m14" title="三级菜单">
+                <Menu.Item key="m141">三级菜单1</Menu.Item>
+                <Menu.Item key="m142">三级菜单2</Menu.Item>
               </Menu.SubMenu>
             </Menu.SubMenu>
-            <Menu.SubMenu key="m2" disabled title={<span><Icon className="icon" size={14} name={"finance"}/><span>不可用下拉菜单</span></span>}>
-              <Menu.Item key="m21">二级菜单4</Menu.Item>
-              <Menu.Item key="m22">二级菜单5</Menu.Item>
+            <Menu.SubMenu key="m2" title={<span><Icon className="icon" size={14} name={"paper"}/><span>下拉菜单</span></span>}>
+              <Menu.Item key="m21">二级菜单1</Menu.Item>
+              <Menu.Item key="m22">二级菜单2</Menu.Item>
+              <Menu.Item key="m23">二级菜单3</Menu.Item>
+              <Menu.SubMenu key="m24" title="三级菜单">
+                <Menu.Item key="m241">三级菜单1</Menu.Item>
+                <Menu.Item key="m242">三级菜单2</Menu.Item>
+              </Menu.SubMenu>
             </Menu.SubMenu>
-            <Menu.Item key="m3" disabled>
+            <Menu.SubMenu key="m3" disabled title={<span><Icon className="icon" size={14} name={"finance"}/><span>不可用下拉菜单</span></span>}>
+              <Menu.Item key="m31">二级菜单4</Menu.Item>
+              <Menu.Item key="m32">二级菜单5</Menu.Item>
+            </Menu.SubMenu>
+            <Menu.Item key="m4" disabled>
               <Icon className="icon" size={14} name={"paper"}/>不可用菜单按钮
             </Menu.Item>
         </Menu>
