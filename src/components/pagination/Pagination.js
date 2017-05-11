@@ -162,11 +162,11 @@ class Pagination extends PureComponent {
       if (start > firstPage + 1) start -= 1;
       if (end < lastPage - 1) end += 1;
     }
-    
+
     items.push(
       <li key={firstPage}>
         <button {...this.getItemProps(firstPage)}>{firstPage}</button>
-      </li>
+      </li>,
     );
     if (start !== firstPage + 1 && start !== firstPage) {
       items.push(<li key={'front'}><Icon name="ellipsis" size={12} /></li>);
@@ -185,7 +185,7 @@ class Pagination extends PureComponent {
     items.push(
       <li key={lastPage}>
         <button {...this.getItemProps(lastPage)}>{lastPage}</button>
-      </li>
+      </li>,
     );
     return <ul styleName="pagination__pages">{items}</ul>;
   }
@@ -233,7 +233,7 @@ class Pagination extends PureComponent {
         <span styleName="pagination__jumper">
           跳至 <input {...textFieldProps} /> 页
         </span>
-      );  
+      );
     }
     return null;
   }

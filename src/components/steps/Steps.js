@@ -2,7 +2,7 @@
  * Steps Component
  * @author grootfish
  */
-import { PureComponent } from 'react';
+import { PureComponent, Children, cloneElement } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
@@ -18,14 +18,15 @@ class Steps extends PureComponent {
   static defaultProps = {
     direction: 'horizontal',
     current: 0,
-    status:'process',
+    status: 'process',
   }
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
   static propTypes = {
-    direction: PropTypes.oneOf(['horizontal','vertical']),
+    direction: PropTypes.oneOf(['horizontal', 'vertical']),
     current: PropTypes.number,
-    status:PropTypes.string,
+    status: PropTypes.string,
+    children: PropTypes.isRequired,
   }
 
   constructor(props) {
@@ -48,15 +49,15 @@ class Steps extends PureComponent {
   }
 
   calcStepOffsetWidth = () => {
-    const domNode = ReactDOM.findDOMNode(this);
-    if (domNode.children.length > 0) {
+    if (this.domNode.children.length > 0) {
       if (this.calcTimeout) {
         clearTimeout(this.calcTimeout);
       }
       this.calcTimeout = setTimeout(() => {
-        const lastStepOffsetWidth = (domNode.lastChild.offsetWidth || 0) + 1;
+        const lastStepOffsetWidth = (this.domNode.lastChild.offsetWidth || 0) + 1;
 
-        if (this.state.lastStepOffsetWidth === lastStepOffsetWidth || Math.abs(this.state.lastStepOffsetWidth - lastStepOffsetWidth) <= 3) { return; }
+        if (this.state.lastStepOffsetWidth === lastStepOffsetWidth
+          || Math.abs(this.state.lastStepOffsetWidth - lastStepOffsetWidth) <= 3) { return; }
         this.setState({ lastStepOffsetWidth });
       });
     }
@@ -67,33 +68,33 @@ class Steps extends PureComponent {
     const lastIndex = children.length - 1;
     const reLayouted = this.state.lastStepOffsetWidth > 0;
     const classString = classnames({
-      ['steps']:true,
-      [`steps__${direction}`]:true,
+      steps: true,
+      [`steps__${direction}`]: true,
     });
     return (
-      <div styleName={classString} {...restProps}>
+      <div styleName={classString} ref={node => (this.domNode = node)} {...restProps}>
         {
-          React.Children.map(children, (ele, idx) => {
+          Children.map(children, (ele, idx) => {
             const itemWidth = (direction === 'vertical' || idx === lastIndex || !reLayouted)
               ? null : `${100 / lastIndex}%`;
             const adjustMarginRight = (direction === 'vertical' || idx === lastIndex)
-              ? null : -Math.round(this.state.lastStepOffsetWidth / lastIndex + 1);
-            let np = {
+              ? null : -Math.round((this.state.lastStepOffsetWidth / lastIndex) + 1);
+            const np = {
               stepNumber: (idx + 1).toString(),
               itemWidth,
               adjustMarginRight,
             };
-            if(!ele.props.status){
-              if(idx===current){
+            if (!ele.props.status) {
+              if (idx === current) {
                 np.status = status;
-              }else if(idx<current){
+              } else if (idx < current) {
                 np.status = 'finish';
-              }else{
+              } else {
                 np.status = 'wait';
               }
             }
-            return React.cloneElement(ele,np);
-          },this)
+            return cloneElement(ele, np);
+          }, this)
         }
       </div>
     );

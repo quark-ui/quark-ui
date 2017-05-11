@@ -42,28 +42,32 @@ export default class ModalDemo extends Component {
             Modal.info({
               content: '这是提示信息',
             });
-          }}>info</Button>
+          }}
+        >info</Button>
         <Button
           type="secondary"
           onClick={() => {
             Modal.success({
               content: '这是成功消息',
             });
-          }}>success</Button>
+          }}
+        >success</Button>
         <Button
           type="secondary"
           onClick={() => {
             Modal.error({
               content: '这是错误提示',
             });
-          }}>error</Button>
+          }}
+        >error</Button>
         <Button
           type="secondary"
           onClick={() => {
             Modal.warning({
               content: '这是警告信息',
             });
-          }}>warning</Button>
+          }}
+        >warning</Button>
       </div>
     );
   }

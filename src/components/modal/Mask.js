@@ -19,6 +19,7 @@ export default class Mask extends Component {
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
   static propTypes = {
     visible: PropTypes.bool,
+    children: PropTypes.isRequired,
   }
 
   constructor(props) {

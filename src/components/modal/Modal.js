@@ -6,10 +6,10 @@ import ReactDOM from 'react-dom';
 import { Component } from 'react';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
+import Button from 'quark-ui/button';
 import { allowMultiple } from '../../constants';
 import styles from './Modal.css';
 import renderTo from '../../enhancer/render-to';
-import Button from 'quark-ui/button';
 import Mask from './Mask';
 
 const renderNoticeModal = (type, config = {
@@ -73,6 +73,7 @@ class Modal extends Component {
     onOk: PropTypes.func,
     onCancel: PropTypes.func,
     afterClose: PropTypes.func,
+    children: PropTypes.isRequired,
   }
 
   static info(config) {

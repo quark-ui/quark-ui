@@ -6,15 +6,11 @@
 import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
+import uniqueId from 'lodash/uniqueId';
+import assign from 'object-assign';
 import { allowMultiple } from '../../constants';
 import Message from './Message';
 import styles from './Message.css';
-
-let seed = 0;
-const now = Date.now();
-function getUuid() {
-  return `${now}_${seed++}`;
-}
 
 @CSSModules(styles, { allowMultiple })
 class MessageBox extends PureComponent {
@@ -33,32 +29,34 @@ class MessageBox extends PureComponent {
   }
 
   add = (message) => {
-    const key = message.key = message.key || getUuid();
+    const key = message.key || uniqueId();
+    assign(message, {
+      key,
+    });
     this.setState((preState) => {
       const messages = preState.messages;
       if (!messages.filter(v => v.key === key).length) {
         return {
-          messages: messages.concat(message)
-        }
+          messages: messages.concat(message),
+        };
       }
     });
   }
 
   remove = (key) => {
-    this.setState((preState) => {
-      return {
-        messages: preState.messages.filter(message => message.key !== key)
-      }
-    });
+    this.setState(preState => ({
+      messages: preState.messages.filter(message => message.key !== key),
+    }));
   }
 
   render() {
-    const props = this.props;
     const Nodes = this.state.messages.map((message) => {
       const onClose = () => {
-        message.onClose && message.onClose();
+        if (message.onClose) {
+          message.onClose();
+        }
         this.remove(message.key);
-      }
+      };
 
       return (
         <Message {...message} onClose={onClose}>
@@ -68,7 +66,7 @@ class MessageBox extends PureComponent {
     });
 
     return (
-      <div styleName='message--box'>
+      <div styleName="message--box">
         {Nodes}
       </div>
     );

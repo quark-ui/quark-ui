@@ -42,6 +42,7 @@ class Picker extends PureComponent {
     type: PropTypes.oneOf(['date', 'month', 'range']),
     changeDate: PropTypes.func,
     disabledDate: PropTypes.func,
+    children: PropTypes.isRequired,
   }
 
   constructor(props) {
@@ -203,9 +204,7 @@ class Picker extends PureComponent {
       default:
         let disabledDate;
         if (type === 'range') {
-          disabledDate = (current) => {
-            return position === 1 ? current.isBefore(rangeDate[0]) : current.isAfter(rangeDate[1]);
-          };
+          disabledDate = (current) => position === 1 ? current.isBefore(rangeDate[0]) : current.isAfter(rangeDate[1]);
           assign(paneProps, {
             inRange: current => current.isBetween(rangeDate[0], rangeDate[1]),
           });
