@@ -34,6 +34,19 @@
         cursor: not-allowed;
         background: none;
     }
+
+    & :global(.menu-item-group-title){
+        padding-left: 32px;
+        color: rgba(0,0,0,.43);
+        font-size: 12px;
+        line-height: 1.5;
+        padding: 8px 16px;
+    }
+
+    & :global(.menu-item-group-list) :global(.menu-item), 
+    & :global(.menu-item-group-list) :global(.menu-submenu-title) {
+        padding: 0 16px 0 28px;
+    }
 }
 
 .menu :global(.menu-item), .menu :global(.menu-submenu-title){

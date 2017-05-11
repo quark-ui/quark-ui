@@ -18,6 +18,7 @@ class Menu extends PureComponent {
 
   static SubMenu = SubMenu;
   static Item = Item;
+  static ItemGroup = ItemGroup;
 
   static displayName = 'Menu'
 
