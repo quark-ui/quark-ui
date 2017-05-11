@@ -31,6 +31,7 @@ class Button extends PureComponent {
       'large',
       'small',
     ]),
+    children: PropTypes.isRequired,
   }
 
   constructor(props) {

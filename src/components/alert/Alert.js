@@ -22,7 +22,6 @@ class Alert extends PureComponent {
     message: '',
     description: '',
     onClose() {},
-    showIcon: false,
   }
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
@@ -42,7 +41,6 @@ class Alert extends PureComponent {
       PropTypes.element,
     ]),
     onClose: PropTypes.func,
-    showIcon: PropTypes.bool,
   }
 
   constructor(props) {
@@ -64,12 +62,9 @@ class Alert extends PureComponent {
   }
 
   render() {
-    let { closable, description, type, message, closeText, showIcon } = this.props;
-    if (closeText) {
-      closable = true;
-    }
+    const { closable, description, type, message, closeText } = this.props;
 
-    const closeIcon = closable ? (<a onClick={this.handleClose} styleName={'alert--close'}>
+    const closeIcon = closeText || closable ? (<a href="" onClick={this.handleClose} styleName={'alert--close'}>
       {closeText}
     </a>) : null;
 

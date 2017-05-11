@@ -26,18 +26,26 @@ function noop() {}
 export default {
   info(content = '', duration = 2, onClose = noop) {
     const message = getMessageInstance();
-    message && message.add({ type: 'info', content, duration, onClose });
+    if (message) {
+      message.add({ type: 'info', content, duration, onClose });
+    }
   },
   success(content = '', duration = 2, onClose = noop) {
     const message = getMessageInstance();
-    message && message.add({ type: 'success', content, duration, onClose });
+    if (message) {
+      message.add({ type: 'success', content, duration, onClose });
+    }
   },
   error(content = '', duration = 2, onClose = noop) {
     const message = getMessageInstance();
-    message && message.add({ type: 'error', content, duration, onClose });
+    if (message) {
+      message.add({ type: 'error', content, duration, onClose });
+    }
   },
   warning(content = '', duration = 2, onClose = noop) {
     const message = getMessageInstance();
-    message && message.add({ type: 'warning', content, duration, onClose });
+    if (message) {
+      message.add({ type: 'warning', content, duration, onClose });
+    }
   },
 };

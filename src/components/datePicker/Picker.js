@@ -9,9 +9,9 @@ import moment from 'moment';
 import momentPropTypes from 'react-moment-proptypes';
 import assign from 'object-assign';
 import partialRight from 'lodash/partialRight';
+import Trigger from 'quark-ui/trigger';
 import { allowMultiple } from '../../constants';
 import styles from './DatePicker.css';
-import Trigger from 'quark-ui/trigger';
 import DatePane from './panes/DatePane';
 import MonthPane from './panes/MonthPane';
 import YearPane from './panes/YearPane';
@@ -57,6 +57,73 @@ class Picker extends PureComponent {
 
   componentWillReceiveProps(nextProps) {
     this.setState(this.getDateFromProps(nextProps));
+  }
+
+  onSetDecade = (decadeYear, e, nativeEvent, position) => {
+    if (this.props.type === 'range') {
+      const currentRangePane = [...this.state.currentRangePane];
+      const decadeYears = [...this.state.decadeYears];
+      currentRangePane[position] = 'decade';
+      decadeYears[position] = decadeYear;
+      this.setState({
+        currentRangePane,
+        decadeYears,
+      });
+    } else {
+      this.setState({
+        currentPane: 'decade',
+        decadeYear,
+      });
+    }
+  }
+
+  onSetYear = (...args) => {
+    if (this.props.type === 'range') {
+      const currentRangePane = [...this.state.currentRangePane];
+      currentRangePane[args[args.length - 1]] = 'year';
+      this.setState({
+        currentRangePane,
+      });
+    } else {
+      this.setState({
+        currentPane: 'year',
+      });
+    }
+  }
+
+  onSetMonth = (...args) => {
+    if (this.props.type === 'range') {
+      const currentRangePane = [...this.state.currentRangePane];
+      currentRangePane[args[args.length - 1]] = 'month';
+      this.setState({
+        currentRangePane,
+      });
+    } else {
+      this.setState({
+        currentPane: 'month',
+      });
+    }
+  }
+
+  onSetDate = (...args) => {
+    let currentRangePane;
+    switch (this.props.type) {
+      case 'range':
+        currentRangePane = [...this.state.currentRangePane];
+        currentRangePane[args[args.length - 1]] = 'date';
+        this.setState({
+          currentRangePane,
+        });
+        break;
+      case 'month':
+        break;
+      case 'date':
+      default:
+        this.setState({
+          currentPane: 'date',
+        });
+        break;
+    }
   }
 
   getDateFromProps(props) {
@@ -126,72 +193,6 @@ class Picker extends PureComponent {
     }
   }
 
-  onSetDecade = (decadeYear, e, nativeEvent, position) => {
-    if (this.props.type === 'range') {
-      const currentRangePane = [...this.state.currentRangePane];
-      const decadeYears = [...this.state.decadeYears];
-      currentRangePane[position] = 'decade';
-      decadeYears[position] = decadeYear;
-      this.setState({
-        currentRangePane,
-        decadeYears,
-      });
-    } else {
-      this.setState({
-        currentPane: 'decade',
-        decadeYear,
-      });
-    }
-  }
-
-  onSetYear = (...args) => {
-    if (this.props.type === 'range') {
-      const currentRangePane = [...this.state.currentRangePane];
-      currentRangePane[args[args.length - 1]] = 'year';
-      this.setState({
-        currentRangePane,
-      });
-    } else {
-      this.setState({
-        currentPane: 'year',
-      });
-    }
-  }
-
-  onSetMonth = (...args) => {
-    if (this.props.type === 'range') {
-      const currentRangePane = [...this.state.currentRangePane];
-      currentRangePane[args[args.length - 1]] = 'month';
-      this.setState({
-        currentRangePane,
-      });
-    } else {
-      this.setState({
-        currentPane: 'month',
-      });
-    }
-  }
-
-  onSetDate = (...args) => {
-    switch (this.props.type) {
-      case 'range':
-        const currentRangePane = [...this.state.currentRangePane];
-        currentRangePane[args[args.length - 1]] = 'date';
-        this.setState({
-          currentRangePane,
-        });
-        break;
-      case 'month':
-        break;
-      case 'date':
-      default:
-        this.setState({
-          currentPane: 'date',
-        });
-        break;
-    }
-  }
-
   renderPane(date, currentPane, decadeYear, position) {
     const { type, rangeDate } = this.props;
     const paneProps = {
@@ -199,12 +200,14 @@ class Picker extends PureComponent {
       manipulateDate: partialRight(this.manipulateDate, position),
     };
     let pane;
+    let disabledDate;
     switch (currentPane) {
       case 'date':
       default:
-        let disabledDate;
         if (type === 'range') {
-          disabledDate = (current) => position === 1 ? current.isBefore(rangeDate[0]) : current.isAfter(rangeDate[1]);
+          disabledDate = current => (position === 1 ?
+            current.isBefore(rangeDate[0])
+            : current.isAfter(rangeDate[1]));
           assign(paneProps, {
             inRange: current => current.isBetween(rangeDate[0], rangeDate[1]),
           });
