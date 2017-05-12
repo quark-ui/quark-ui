@@ -11,5 +11,4 @@ Alert Component.
 |message|string or ReactNode|无|警告提示内容|
 |description|string or ReactNode|无|警告提示的辅助性文字介绍|
 |onClose|Function|无|关闭时触发的回调函数|
-|showIcon|boolean|false|是否显示辅助图标|
 ### Api

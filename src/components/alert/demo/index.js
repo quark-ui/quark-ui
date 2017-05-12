@@ -1,5 +1,5 @@
-import Alert from '../Alert';
 import { Component } from 'react';
+import Alert from '../Alert';
 
 export default class AlertDemo extends Component {
   constructor(props) {
@@ -13,19 +13,19 @@ export default class AlertDemo extends Component {
       closeText: 'X',
       message: 'info信息',
       description: 'info描述',
-      onClose() { console.log('info') },
+      onClose() { console.log('info'); },
     };
     const errorProps = {
       type: 'error',
       closable: true,
       closeText: '关闭',
       message: 'error信息',
-      onClose() { console.log('error') },
-    }
+      onClose() { console.log('error'); },
+    };
     return (
-      <div style = {{width:400}}>
-        <Alert {...infoProps}></Alert>
-        <Alert {...errorProps}></Alert>
+      <div style={{ width: 400 }}>
+        <Alert {...infoProps} />
+        <Alert {...errorProps} />
       </div>
     );
   }
