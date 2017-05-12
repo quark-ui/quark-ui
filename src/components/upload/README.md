@@ -1,6 +1,6 @@
-## Uploader
+## Upload
 
-Uploader Component.
+Upload Component.
 
 ### Props
 |name|type|default|description|
