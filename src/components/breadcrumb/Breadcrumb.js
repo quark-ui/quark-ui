@@ -4,8 +4,9 @@
  */
 import React, { PureComponent, cloneElement } from 'react';
 import PropTypes from 'prop-types';
-import Icon from '../icon';
 import CSSModules from 'react-css-modules';
+import Icon from '../icon';
+
 import { allowMultiple } from '../../constants';
 import styles from './Breadcrumb.css';
 

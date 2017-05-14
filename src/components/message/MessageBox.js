@@ -4,7 +4,6 @@
  */
 
 import { PureComponent } from 'react';
-import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
 import uniqueId from 'lodash/uniqueId';
 import assign from 'object-assign';
@@ -40,6 +39,7 @@ class MessageBox extends PureComponent {
           messages: messages.concat(message),
         };
       }
+      return { messages };
     });
   }
 

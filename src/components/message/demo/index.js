@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import Button from 'quark-ui/button';
+import Button from '../../button';
 import message from '../index';
 
 export default class MessageDemo extends Component {

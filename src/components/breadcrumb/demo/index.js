@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import Breadcrumb from '../index';
+import Breadcrumb from '../../breadcrumb';
 
 const Crumb = Breadcrumb.Item;
 

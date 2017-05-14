@@ -3,7 +3,6 @@
  * @author grootfish
  */
 import { PureComponent, Children, cloneElement } from 'react';
-import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
 import classnames from 'classnames';
