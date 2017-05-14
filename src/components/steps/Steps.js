@@ -25,7 +25,6 @@ class Steps extends PureComponent {
     direction: PropTypes.oneOf(['horizontal', 'vertical']),
     current: PropTypes.number,
     status: PropTypes.string,
-    children: PropTypes.isRequired,
   }
 
   constructor(props) {
@@ -83,6 +82,7 @@ class Steps extends PureComponent {
               itemWidth,
               adjustMarginRight,
             };
+            
             if (!ele.props.status) {
               if (idx === current) {
                 np.status = status;

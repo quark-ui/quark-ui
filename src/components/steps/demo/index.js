@@ -10,7 +10,7 @@ const StepDemo = () => (
       <Step title="In Progress" />
       <Step title="Waiting" />
     </Steps>
-    <Steps current={0}>
+    <Steps current={2}>
       <Step title="Finished" description="This is a description." />
       <Step title="In Progress" />
       <Step title="Waiting" description="This is a description." />

@@ -26,7 +26,6 @@ class Breadcrumb extends PureComponent {
     separator: PropTypes.node,
     hasBackIcon: PropTypes.bool,
     hasHomeIcon: PropTypes.bool,
-    children: PropTypes.isRequired,
   }
 
   constructor(props) {

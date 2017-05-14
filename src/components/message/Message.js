@@ -64,7 +64,7 @@ class Message extends PureComponent {
 
     return (
       <div styleName={classnames('message', `message__${type}`)}>
-        <span styleName={'message--icon'}><Icon name="caution" size={12} /></span>
+        <span styleName={'message--icon'}><Icon name={type} size={14} /></span>
         <div styleName={'message--content'}>
           {children}
         </div>

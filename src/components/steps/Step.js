@@ -16,7 +16,7 @@ class Step extends PureComponent {
   static displayName = 'Step'
 
   static defaultProps = {
-    status: 'wait',
+    status: '',
     title: '',
     description: '',
     stepNumber: '',
@@ -30,8 +30,14 @@ class Step extends PureComponent {
     title: PropTypes.string,
     description: PropTypes.string,
     stepNumber: PropTypes.string,
-    itemWidth: PropTypes.number,
-    adjustMarginRight: PropTypes.number,
+    itemWidth: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string,
+  ]),
+    adjustMarginRight: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string,
+  ]),
   }
 
   constructor(props) {
@@ -41,7 +47,7 @@ class Step extends PureComponent {
 
   render() {
     const {
-      status,
+      status='wait',
       description,
       title,
       stepNumber,

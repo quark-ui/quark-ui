@@ -9,15 +9,15 @@ export default class BreadcrumbDemo extends Component {
       <div>
         <Breadcrumb separator=">" hasBackIcon>
           <Crumb>home</Crumb>
-          <Crumb href="/component/Button">Button</Crumb>
-          <Crumb href="/component/Modal">Modal</Crumb>
+          <Crumb href="/component/button">Button</Crumb>
+          <Crumb href="/component/steps">Steps</Crumb>
           <Crumb>bbb</Crumb>
         </Breadcrumb>
 
         <Breadcrumb hasBackIcon>
           <Crumb href="/">home</Crumb>
-          <Crumb href="/component/Button">Button</Crumb>
-          <Crumb href="/component/Modal">Modal</Crumb>
+          <Crumb href="/component/button">Button</Crumb>
+          <Crumb href="/component/steps">Steps</Crumb>
           <Crumb>bbb</Crumb>
         </Breadcrumb>
       </div>
