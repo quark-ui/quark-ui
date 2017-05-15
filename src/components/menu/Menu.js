@@ -3,7 +3,7 @@
  * @author heifade
  */
 import { PureComponent } from 'react';
-import RcMenu, { Item, SubMenu } from 'rc-menu';
+import RcMenu, { Item, SubMenu, ItemGroup } from 'rc-menu';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
 import assign from 'object-assign';
@@ -36,10 +36,10 @@ class Menu extends PureComponent {
     styleName: PropTypes.string,
     className: PropTypes.string,
     type: PropTypes.oneOf([
-      'horizontal-h',//水平菜单，子菜单水平
-      'horizontal-v',//水平菜单，子菜单垂直
-      'vertical-h',//垂直菜单，子菜单水平向右弹出
-      "vertical-v"//垂直菜单，子菜单内嵌在菜单区域
+      'horizontal-h', //水平菜单，子菜单水平
+      'horizontal-v', //水平菜单，子菜单垂直
+      'vertical-h', //垂直菜单，子菜单水平向右弹出
+      'vertical-v', //垂直菜单，子菜单内嵌在菜单区域
     ]),
     selectedKeys: PropTypes.arrayOf(PropTypes.string),
     defaultSelectedKeys: PropTypes.arrayOf(PropTypes.string),
@@ -113,7 +113,8 @@ class Menu extends PureComponent {
         break;
     }
 
-    if (mode === 'inline') {//垂直菜单，子菜单内嵌在菜单区域。
+    if (mode === 'inline') {
+      //垂直菜单，子菜单内嵌在菜单区域。
       props = {
         //openAnimation,
         className: className,
@@ -124,8 +125,7 @@ class Menu extends PureComponent {
         openKeys: this.state.openKeys,
         onClick: this.handleClick,
         onOpenChange: this.handleOpenChange,
-        //openTransitionName: openAnimation,
-        className: className,
+        className,
         mode,
       };
     }

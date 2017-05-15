@@ -1,6 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
 const ip = require('ip');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 
 const MODULES_PATH = path.resolve(__dirname, '../node_modules');
 
@@ -18,13 +20,17 @@ module.exports = () => {
       ],
     },
     output: {
-      path: path.join(__dirname, './build'),
+      path: path.join(__dirname, '../build'),
       filename: '[name].js',
       sourceMapFilename: '[name].js.map',
       publicPath: '/',
     },
     module: {
       rules: [
+        {
+          test: /\.(woff|woff2|eot|ttf|otf)$/,
+          use: 'file-loader',
+        },
         {
           test: /\.md$/,
           use: 'raw-loader',
@@ -121,14 +127,23 @@ module.exports = () => {
       new webpack.SourceMapDevToolPlugin({
         columns: false,
       }),
+      new HtmlWebpackPlugin({
+        title: 'Quark UI',
+        filename: 'index.html',
+        template: './site/index.html',
+        inject: 'head',
+      }),
+      new ScriptExtHtmlWebpackPlugin({
+        defaultAttribute: 'defer',
+      }),
     ],
     devtool: 'cheap-eval-source-map',
     devServer: {
       hot: true,
-      contentBase: [
-        path.join(__dirname, '../site'),
-        MODULES_PATH,
-      ],
+      // contentBase: [
+      //   path.join(__dirname, '../site'),
+      //   MODULES_PATH,
+      // ],
       publicPath: '/',
       host,
       historyApiFallback: true,
