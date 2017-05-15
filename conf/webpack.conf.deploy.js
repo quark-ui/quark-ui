@@ -17,7 +17,7 @@ module.exports = () => {
       path: path.join(__dirname, '../docs'),
       filename: '[name].js',
       sourceMapFilename: '[name].js.map',
-      publicPath: '/',
+      publicPath: '/quark-ui/',
     },
     module: {
       rules: [
