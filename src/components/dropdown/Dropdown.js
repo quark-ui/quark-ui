@@ -7,11 +7,11 @@ import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
 import assign from 'object-assign';
 import Trigger from 'quark-ui/trigger';
+import Button from 'quark-ui/button';
 import { allowMultiple } from '../../constants';
 import styles from './Dropdown.css';
 import Menu from './Menu';
-import Button from 'quark-ui/button';
-import placements from './placements';
+import * as placements from './placements';
 
 @CSSModules(styles, { allowMultiple })
 class Dropdown extends PureComponent {

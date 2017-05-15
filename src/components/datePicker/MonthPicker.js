@@ -4,7 +4,6 @@
  */
 import { PureComponent } from 'react';
 import CSSModules from 'react-css-modules';
-import moment from 'moment';
 import assign from 'object-assign';
 import { allowMultiple } from '../../constants';
 import styles from './DatePicker.css';

@@ -67,14 +67,14 @@ export default class TriggerDemo extends Component {
     } = this.state;
     return (
       <div>
-        <label htmlFor="">对齐方式</label>
+        <label htmlFor="placement">对齐方式</label>
         {
           this.renderPlacementSelector()
         }
-        <label htmlFor="">触发方式</label>
+        <label htmlFor="action">触发方式</label>
         {
           ActionType.map(type => (
-            <label key={type}>
+            <label htmlFor="action" key={type}>
               <input
                 type="radio"
                 onChange={this.onChangeActionType}

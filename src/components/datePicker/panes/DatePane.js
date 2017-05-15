@@ -7,10 +7,10 @@ import PropTypes from 'prop-types';
 import assign from 'object-assign';
 import CSSModules from 'react-css-modules';
 import classnames from 'classnames';
-import { allowMultiple } from '../../../constants';
-import styles from '../DatePicker.css';
 import moment from 'moment';
 import momentPropTypes from 'react-moment-proptypes';
+import { allowMultiple } from '../../../constants';
+import styles from '../DatePicker.css';
 
 @CSSModules(styles, { allowMultiple })
 class DatePane extends PureComponent {
@@ -146,8 +146,8 @@ class DatePane extends PureComponent {
       i += 1;
     }
     return (
-      weeks.map((w, k) => (
-        <div key={k} styleName="datePicker__weekRow">{w}</div>
+      weeks.map(w => (
+        <div key={w} styleName="datePicker__weekRow">{w}</div>
       ))
     );
   }

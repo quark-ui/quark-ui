@@ -6,7 +6,7 @@ import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import CSSModules from 'react-css-modules';
-import Icon from '../icon'
+import Icon from '../icon';
 import { allowMultiple } from '../../constants';
 import styles from './Message.css';
 
@@ -26,6 +26,7 @@ class Message extends PureComponent {
     duration: PropTypes.number,
     onClose: PropTypes.func,
     type: PropTypes.oneOf(['info', 'success', 'error', 'warning']),
+    children: PropTypes.isRequired,
   }
 
   constructor(props) {
@@ -59,13 +60,13 @@ class Message extends PureComponent {
 
 
   render() {
-    const props = this.props;
+    const { type, children } = this.props;
 
     return (
-      <div styleName={classnames('message',`message__${props.type}`)}>
-        <span styleName={'message--icon'}><Icon name="caution" size={12}></Icon></span>
+      <div styleName={classnames('message', `message__${type}`)}>
+        <span styleName={'message--icon'}><Icon name={type} size={14} /></span>
         <div styleName={'message--content'}>
-          {props.children}
+          {children}
         </div>
       </div>
     );

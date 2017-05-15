@@ -30,8 +30,9 @@ npm start
 
 
 ### 提交代码
-1. git 命令正常提交代码
-2. 使用 PR 方式提交你的组件
+1. 执行命令 `npm run lint`, 把你对应开发的组件错误改掉
+2. git 命令正常提交代码
+3. 使用 PR 方式提交你的组件
 
 >> [创建一个PR](https://github.com/geeeeeeeeek/git-recipes/wiki/3.3-%E5%88%9B%E5%BB%BAPull-Request)
 

@@ -1,7 +1,6 @@
+import { Component } from 'react';
 import Menu from '../Menu';
 import Icon from '../../icon/Icon';
-import { Component } from 'react';
-import styles from './index.css';
 
 export default class MenuDemo extends Component {
 
@@ -29,8 +28,8 @@ export default class MenuDemo extends Component {
             selectedKeys={[this.state.current]}
             type="horizontal-h">
 
-            <Menu.Item key="m0">
-              <Icon className="icon" size={14} name={"paper"}/>
+          <Menu.Item key="m0">
+            <Icon className="icon" size={14} name={'paper'} />
               菜单按钮
             </Menu.Item>
             <Menu.SubMenu key="m1" title={<span><Icon className="icon" size={14} name={"paper"}/><span>下拉菜单</span></span>}>
@@ -109,8 +108,7 @@ export default class MenuDemo extends Component {
             </Menu.Item>
         </Menu>
 
-        <br/><br/><br/>
-
+        <br /><br /><br />
 
         3、垂直菜单，子菜单水平向右弹出
         <Menu
@@ -122,8 +120,8 @@ export default class MenuDemo extends Component {
             selectedKeys={[this.state.current]}
             type="vertical-h">
 
-            <Menu.Item key="m0">
-              <Icon className="icon" size={14} name={"paper"}/>
+          <Menu.Item key="m0">
+            <Icon className="icon" size={14} name={'paper'} />
               菜单按钮
             </Menu.Item>
             <Menu.SubMenu key="m1" title={<span><Icon className="icon" size={14} name={"paper"}/><span>下拉菜单</span></span>}>
@@ -166,7 +164,7 @@ export default class MenuDemo extends Component {
             </Menu.Item>
         </Menu>
 
-        <br/><br/><br/>
+        <br /><br /><br />
 
         4、垂直菜单，子菜单内嵌在菜单区域
         <Menu
@@ -177,9 +175,8 @@ export default class MenuDemo extends Component {
             defaultOpenKeys={['.$m1']}
             selectedKeys={[this.state.current]}
             type="vertical-v">
-
-            <Menu.Item key="m0">
-              <Icon className="icon" size={14} name={"paper"}/>
+          <Menu.Item key="m0">
+            <Icon className="icon" size={14} name={'paper'} />
               菜单按钮
             </Menu.Item>
             <Menu.SubMenu key="m1" title={<span><Icon className="icon" size={14} name={"paper"}/><span>下拉菜单</span></span>}>
@@ -221,7 +218,7 @@ export default class MenuDemo extends Component {
               <Icon className="icon" size={14} name={"paper"}/>不可用菜单按钮
             </Menu.Item>
         </Menu>
-        
+
       </div>
     );
   }

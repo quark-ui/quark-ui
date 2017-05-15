@@ -18,6 +18,7 @@ class Menu extends PureComponent {
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
   static propTypes = {
+    children: PropTypes.isRequired,
   }
 
   constructor(props) {
@@ -45,6 +46,7 @@ class Item extends PureComponent {
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
   static propTypes = {
+    children: PropTypes.isRequired,
   }
 
   constructor(props) {

@@ -26,10 +26,11 @@ export default class Popup extends PureComponent {
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
   static propTypes = {
     position: PropTypes.arrayOf(PropTypes.number),
-    popupRef: PropTypes.any,
+    popupRef: PropTypes.func,
     visible: PropTypes.bool,
     onMouseEnter: PropTypes.func,
     onMouseLeave: PropTypes.func,
+    children: PropTypes.isRequired,
   }
 
   constructor(props) {

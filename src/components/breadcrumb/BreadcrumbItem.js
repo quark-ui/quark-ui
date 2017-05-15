@@ -14,7 +14,7 @@ class BreadcrumbItem extends PureComponent {
   static displayName = 'BreadcrumbItem'
 
   static defaultProps = {
-      separator:'/'
+    separator: '/',
   }
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
@@ -23,7 +23,7 @@ class BreadcrumbItem extends PureComponent {
       PropTypes.string,
       PropTypes.element,
     ]),
-    href:PropTypes.string,
+    href: PropTypes.string,
   }
 
   constructor(props) {
@@ -32,21 +32,21 @@ class BreadcrumbItem extends PureComponent {
   }
 
   render() {
-    const {children,separator,...restProps} = this.props;
+    const { children, separator, ...restProps } = this.props;
 
-    const breadcrumbItemProps ={
+    const breadcrumbItemProps = {
       ...restProps,
-      styleName:'breadcrumb--link'
-    }
+      styleName: 'breadcrumb--link',
+    };
 
     let link;
-    if('href' in this.props){
-      link = <a {...breadcrumbItemProps}>{children}</a>
-    }else{
-      link = <span {...breadcrumbItemProps}>{children}</span>
+    if ('href' in this.props) {
+      link = <a {...breadcrumbItemProps}>{children}</a>;
+    } else {
+      link = <span {...breadcrumbItemProps}>{children}</span>;
     }
 
-    if(children){
+    if (children) {
       return (
         <span>
           {link}
