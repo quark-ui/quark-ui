@@ -147,13 +147,15 @@ module.exports = () => {
         filename: 'style.css',
       }),
       new UglifyJSPlugin(),
-      new HtmlWebpackPlugin({
-        title: 'Quark UI',
-        filename: 'index.html',
-        template: './site/index.html',
-        inject: 'head',
-        version: 'min.',
-      }),
+      ...['index.html', '404.html'].map(page => (
+        new HtmlWebpackPlugin({
+          title: 'Quark UI',
+          filename: page,
+          template: './site/index.html',
+          inject: 'head',
+          version: 'min.',
+        })
+      )),
       new ScriptExtHtmlWebpackPlugin({
         defaultAttribute: 'defer',
       }),
