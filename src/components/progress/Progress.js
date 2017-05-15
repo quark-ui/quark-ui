@@ -2,19 +2,18 @@
  * Progress Component
  * @author heifade
  */
-import { PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
 import { allowMultiple } from '../../constants';
-import classNames from 'classnames';
 import Icon from '../icon/Icon';
 import styles from './Progress.css';
 
-const statusColorMap = {
-  normal: '#108ee9',
-  exception: '#ff5500',
-  success: '#87d068',
-};
+// const statusColorMap = {
+//   normal: '#108ee9',
+//   exception: '#ff5500',
+//   success: '#87d068',
+// };
 
 @CSSModules(styles, { allowMultiple })
 class Progress extends PureComponent {
@@ -29,7 +28,11 @@ class Progress extends PureComponent {
     percent: 0,
     showInfo: true,
     strokeWidth: 10,
-    //trailColor: '#f3f3f3',
+    width: 0,
+    // trailColor: '#f3f3f3',
+    status: 'normal',
+    format: null,
+    gapDegree: 0,
   }
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
@@ -40,7 +43,7 @@ class Progress extends PureComponent {
     percent: PropTypes.number,
     width: PropTypes.number,
     strokeWidth: PropTypes.number,
-    //trailColor: PropTypes.string,
+    // trailColor: PropTypes.string,
     format: PropTypes.func,
     gapDegree: PropTypes.number,
   }
@@ -51,13 +54,13 @@ class Progress extends PureComponent {
   }
 
   render() {
-    let prefixCls = 'progress';
-    let styleName = prefixCls + '--line';
+    const prefixCls = 'progress';
+    let styleName = `${prefixCls}--line`;
 
     const props = this.props;
     const {
-      className, percent = 0, status, format, //trailColor,
-      type, strokeWidth, width, showInfo, gapDegree = 0, gapPosition, ...restProps,
+      className, percent = 0, status, format, // trailColor,
+      type, strokeWidth, width, showInfo, gapDegree, gapPosition, ...restProps
     } = props;
     const progressStatus = parseInt(percent.toString(), 10) >= 100 && !('status' in props) ? 'success' : (status || 'normal');
     let progressInfo;
@@ -66,11 +69,11 @@ class Progress extends PureComponent {
 
     if (showInfo) {
       let text;
-      //const iconType = (type === 'circle' || type === 'dashboard') ? '' : '-circle';
+      // const iconType = (type === 'circle' || type === 'dashboard') ? '' : '-circle';
       if (progressStatus === 'exception') {
-        text = format ? textFormatter(percent) : <Icon size={14} name={`setting`} />;
+        text = format ? textFormatter(percent) : <Icon size={14} name={'setting'} />;
       } else if (progressStatus === 'success') {
-        text = format ? textFormatter(percent) : <Icon size={14} name={`setting`} />;
+        text = format ? textFormatter(percent) : <Icon size={14} name={'setting'} />;
       } else {
         text = textFormatter(percent);
       }
@@ -78,7 +81,7 @@ class Progress extends PureComponent {
     }
 
     if (type === 'line') {
-      styleName = prefixCls + '--line';
+      styleName = `${prefixCls}--line`;
       const percentStyle = {
         width: `${percent}%`,
         height: strokeWidth || 10,
@@ -94,7 +97,7 @@ class Progress extends PureComponent {
         </div>
       );
     } else if (type === 'circle' || type === 'dashboard') {
-      /*const circleSize = width || 132;
+      /* const circleSize = width || 132;
       const circleStyle = {
         width: circleSize,
         height: circleSize,
@@ -129,12 +132,11 @@ class Progress extends PureComponent {
 
     let styleNameStr = `${prefixCls} ${styleName}`;
 
-    if(showInfo){
-      styleNameStr += ' ' + `${prefixCls + '--show-info'}`;
+    if (showInfo) {
+      styleNameStr = styleNameStr.concat(` ${`${prefixCls}--show-info`}`);
     }
 
-    styleNameStr += ' ' + `${prefixCls + '--status-' + progressStatus}`;
-
+    styleNameStr = styleNameStr.concat(` ${`${prefixCls}--status-${progressStatus}`}`);
 
 
     return (
