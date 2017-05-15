@@ -146,7 +146,7 @@ module.exports = () => {
       new ExtractTextPlugin({
         filename: 'style.css',
       }),
-      // new UglifyJSPlugin(),
+      new UglifyJSPlugin(),
       new HtmlWebpackPlugin({
         title: 'Quark UI',
         filename: 'index.html',
