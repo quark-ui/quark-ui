@@ -132,7 +132,7 @@ module.exports = () => {
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
       new webpack.NamedModulesPlugin(),
       new webpack.DefinePlugin({
-        BASEPATH: '/',
+        BASEPATH: JSON.stringify('/'),
       }),
       // SourceMap plugin will define process.env.NODE_ENV as development
       new webpack.SourceMapDevToolPlugin({

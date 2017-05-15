@@ -132,7 +132,7 @@ module.exports = () => {
       new webpack.NamedModulesPlugin(),
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
       new webpack.DefinePlugin({
-        BASEPATH: '/quark-ui',
+        BASEPATH: JSON.stringify('/quark-ui'),
       }),
       // SourceMap plugin will define process.env.NODE_ENV as development
       new webpack.SourceMapDevToolPlugin({
