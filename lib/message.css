@@ -1,47 +1,116 @@
 /**
+ * Icon Style
+ * @author ryan.bian
+ */
+:root {
+  /* 品牌色 */
+  /* 品牌色——浅 */
+  /* 品牌色——深 */
+  
+  /* 边框色 */
+
+  /* 中性色 */
+
+  /* 标题 主要文字 */
+  /* 正文 说明 */
+  /* 辅助 次级文字 */
+
+  /* 链接色 */
+
+  /* 警告 */
+  /* 失败 */
+  /* 成功 */
+}
+._2jSl5RJ {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}/**
  * Message Style
  * @author grootfish
  */
+
+:root {
+  /* 品牌色 */
+  /* 品牌色——浅 */
+  /* 品牌色——深 */
+  
+  /* 边框色 */
+
+  /* 中性色 */
+
+  /* 标题 主要文字 */
+  /* 正文 说明 */
+  /* 辅助 次级文字 */
+
+  /* 链接色 */
+
+  /* 警告 */
+  /* 失败 */
+  /* 成功 */
+}
 
 ._3_LyTzy {
     position: fixed;
     z-index: 1000;
     top: 20px;
     left: 50%;
+    -webkit-transform:translate(-50%,0);
+            transform:translate(-50%,0);
+    pointer-events: none;
 }
 
 .rvYOolG {
-    padding: 7px 20px 7px 10px;
+    padding: 7px 24px 7px 10px;
     border-radius: 3px 3px;
     box-shadow: 0 0 10px #999;
     border: 1px solid #999;
     border: 0px solid rgba(0, 0, 0, 0);
     background: #fff;
     display: block;
-    width: auto;
     line-height: 1.5;
     vertical-align: middle;
     position: relative;
     margin: 10px 0;
 }
 
-._2VEwa73 {}
+._2VEwa73{
+    display:inline-block;
+        vertical-align: middle;
+        font-size:14px;
+}
+
+._1o8wQ0I{
+    display:inline-block;
+    margin-right:7px;
+    vertical-align: middle;
+}
 
 ._23xuyLQ{
-    color:blue;
+    color: rgb(58, 152, 224);
+    background-color: rgba(100, 175, 232, .2);
+    box-shadow: 0 0 1px rgb(58, 152, 224);
 }
 
 ._22HZ3wd{
-    color:green;
+    color: rgb(104, 191, 11);
+    background-color: rgba(125, 199, 46, .2);
+    box-shadow: 0 0 1px rgb(104, 191, 11);
 }
 
 ._1XT6zY1{
-    color:red;
+    color: rgb(255, 58, 36);
+    background-color: rgba(255, 97, 79, .2);
+    box-shadow: 0 0 1px rgb(255, 58, 36);
 }
 
 ._3SWQ13b{
-    color:yellow;
+    color: rgb(255, 198, 28);
+    background-color: rgba(255, 209, 71, .2);
+    box-shadow: 0 0 1px rgb(255, 198, 28);
 }
 
-/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibWVzc2FnZS5jc3MiLCJzb3VyY2VzIjpbXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OyIsInNvdXJjZVJvb3QiOiIifQ==*/
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibWVzc2FnZS5jc3MiLCJzb3VyY2VzIjpbXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OyIsInNvdXJjZVJvb3QiOiIifQ==*/
 /*# sourceMappingURL=message.css.map*/
