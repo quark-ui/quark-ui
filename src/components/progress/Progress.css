@@ -1,0 +1,95 @@
+/**
+ * Progress Style
+ * @author heifade
+ */
+@import "../../styles/theme.css";
+
+.progress {
+    display: inline-block;
+}
+
+.progress--line{
+    /*margin-right: 8px;*/
+    margin-bottom: 8px;
+    width: 100%;
+    font-size: 12px;
+    position: relative;
+}
+
+.progress--outer{
+    display: inline-block;
+    width: 100%;
+    margin-right: 0;
+    padding-right: 0;
+    box-sizing: border-box;
+}
+
+.progress--inner{
+    display: inline-block;
+    width: 100%;
+    background-color: #f7f7f7;
+    border-radius: 100px;
+    vertical-align: middle;
+}
+.progress--bg{
+    border-radius: 100px;
+    background-color: #108ee9;
+    transition: all .4s cubic-bezier(.08,.82,.17,1) 0s;
+    position: relative;
+}
+
+.progress--show-info .progress--outer{
+    padding-right: 45px;
+    margin-right: -45px;
+}
+
+.progress--text {
+    width: 35px;
+    text-align: left;
+    font-size: 1em;
+    margin-left: 10px;
+    vertical-align: middle;
+    display: inline-block;
+    position: relative;
+}
+
+.progress--status-active .progress--bg:before {
+    content: "";
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #fff;
+    border-radius: 10px;
+    animation: progress--active 2.4s cubic-bezier(.23,1,.32,1) infinite;
+}
+.progress--status-exception .progress--bg {
+    background-color: #f04134;
+}
+
+.progress--status-normal .progress--bg:before {
+    
+}
+.progress--status-exception .progress--bg:before {
+    
+}
+.progress--status-success .progress--bg:before {
+    
+}
+
+@keyframes progress--active {
+  0% {
+    opacity: 0.1;
+    width: 0;
+  }
+  20% {
+    opacity: 0.5;
+    width: 0;
+  }
+  100% {
+    opacity: 0;
+    width: 100%;
+  }
+}
