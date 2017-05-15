@@ -1,5 +1,5 @@
+import React, { Component } from 'react';
 import Progress from '../Progress';
-import { Component } from 'react';
 
 export default class ProgressDemo extends Component {
   render() {
