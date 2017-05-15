@@ -63,7 +63,7 @@ class Trigger extends PureComponent {
 
   checkClosable = (e) => {
     if (!this.node || this.node.contains(e.target)) return;
-    if (!this.popNode.contains(e.target)) {
+    if (this.popNode && !this.popNode.contains(e.target)) {
       this.handleClickTrigger();
     }
   }

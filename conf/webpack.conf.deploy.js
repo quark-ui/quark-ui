@@ -3,9 +3,10 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
-const MODULES_PATH = path.resolve(__dirname, '../node_modules');
+// const MODULES_PATH = path.resolve(__dirname, '../node_modules');
 
 module.exports = () => {
 
@@ -129,6 +130,7 @@ module.exports = () => {
     },
     plugins: [
       new webpack.NamedModulesPlugin(),
+      new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
       // SourceMap plugin will define process.env.NODE_ENV as development
       new webpack.SourceMapDevToolPlugin({
         columns: false,
@@ -147,11 +149,17 @@ module.exports = () => {
         filename: 'index.html',
         template: './site/index.html',
         inject: 'head',
+        version: 'min.',
       }),
       new ScriptExtHtmlWebpackPlugin({
         defaultAttribute: 'defer',
       }),
+      new BundleAnalyzerPlugin({
+        analyzerMode: 'server',
+        analyzerPort: 8888,
+      }),
     ],
     devtool: 'cheap-source-map',
+    profile: true,
   };
 };

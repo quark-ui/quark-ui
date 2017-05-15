@@ -146,8 +146,8 @@ class DatePane extends PureComponent {
       i += 1;
     }
     return (
-      weeks.map(w => (
-        <div key={w} styleName="datePicker__weekRow">{w}</div>
+      weeks.map((w, r) => (
+        <div key={r} styleName="datePicker__weekRow">{w}</div>
       ))
     );
   }

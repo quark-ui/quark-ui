@@ -1,12 +1,14 @@
 import { Component, createElement } from 'react';
 import MDReactComponent from 'markdown-react-js';
-import SyntaxHighlighter from 'react-syntax-highlighter';
+import SyntaxHighlighter, { registerLanguage } from 'react-syntax-highlighter/dist/light';
+import js from 'highlight.js/lib/languages/javascript';
 import CSSModules from 'react-css-modules';
-import { darcula } from 'react-syntax-highlighter/dist/styles';
+import darcula from 'react-syntax-highlighter/dist/styles/darcula';
 import { allowMultiple } from '../../src/constants';
 
-import Layout from '../layouts/Layout';
 import styles from './Component.css';
+
+registerLanguage('javascript', js);
 
 @CSSModules(styles, { allowMultiple })
 export default class ComponentBlock extends Component {
