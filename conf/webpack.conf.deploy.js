@@ -2,6 +2,8 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 const MODULES_PATH = path.resolve(__dirname, '../node_modules');
 
@@ -18,6 +20,7 @@ module.exports = () => {
       filename: '[name].js',
       sourceMapFilename: '[name].js.map',
       publicPath: '/quark-ui/',
+      // publicPath: '/',
     },
     module: {
       rules: [
@@ -53,31 +56,34 @@ module.exports = () => {
         },
         {
           test: /\.css$/,
-          use: [
-            { loader: 'style-loader' },
-            {
-              loader: 'css-loader',
-              options: {
-                importLoaders: 1,
-                modules: true,
-                localIdentName: '[hash:base64:7]',
+          use: ExtractTextPlugin.extract({
+            fallback: 'style-loader',
+            use: [
+              {
+                loader: 'css-loader',
+                options: {
+                  importLoaders: 1,
+                  modules: true,
+                  localIdentName: '[hash:base64:7]',
+                  minimize: true,
+                },
               },
-            },
-            {
-              loader: 'postcss-loader',
-              options: {
-                plugins: () => [
-                  // values,
-                  require('postcss-import'),
-                  require('postcss-calc')(),
-                  require('postcss-hsb-color')({
-                    output: 'rgb',
-                  }),
-                  require('postcss-cssnext'),
-                ],
+              {
+                loader: 'postcss-loader',
+                options: {
+                  plugins: () => [
+                    // values,
+                    require('postcss-import'),
+                    require('postcss-calc')(),
+                    require('postcss-hsb-color')({
+                      output: 'rgb',
+                    }),
+                    require('postcss-cssnext'),
+                  ],
+                },
               },
-            },
-          ],
+            ],
+          }),
         },
         {
           test: /\.svg$/,
@@ -86,7 +92,14 @@ module.exports = () => {
               loader: 'babel-loader',
               options: {
                 presets: [
+                  [
+                    'env',
+                    {
+                      modules: false,
+                    },
+                  ],
                   'react',
+                  'stage-1',
                 ],
               },
             },
@@ -120,6 +133,15 @@ module.exports = () => {
       new webpack.SourceMapDevToolPlugin({
         columns: false,
       }),
+      new webpack.optimize.CommonsChunkPlugin({
+        name: 'commons',
+        filename: 'commons.js',
+        // async: true,
+      }),
+      new ExtractTextPlugin({
+        filename: 'style.css',
+      }),
+      new UglifyJSPlugin(),
       new HtmlWebpackPlugin({
         title: 'Quark UI',
         filename: 'index.html',

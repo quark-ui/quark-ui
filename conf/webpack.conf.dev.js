@@ -92,7 +92,14 @@ module.exports = () => {
               loader: 'babel-loader',
               options: {
                 presets: [
+                  [
+                    'env',
+                    {
+                      modules: false,
+                    },
+                  ],
                   'react',
+                  'stage-1',
                 ],
               },
             },
