@@ -21,7 +21,7 @@ module.exports = () => {
       filename: '[name].js',
       sourceMapFilename: '[name].js.map',
       publicPath: '/quark-ui/',
-      // publicPath: '/',
+      // publicPath: '/docs/',
     },
     module: {
       rules: [
@@ -131,6 +131,9 @@ module.exports = () => {
     plugins: [
       new webpack.NamedModulesPlugin(),
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+      new webpack.DefinePlugin({
+        BASEPATH: '/quark-ui',
+      }),
       // SourceMap plugin will define process.env.NODE_ENV as development
       new webpack.SourceMapDevToolPlugin({
         columns: false,
@@ -143,7 +146,7 @@ module.exports = () => {
       new ExtractTextPlugin({
         filename: 'style.css',
       }),
-      new UglifyJSPlugin(),
+      // new UglifyJSPlugin(),
       new HtmlWebpackPlugin({
         title: 'Quark UI',
         filename: 'index.html',

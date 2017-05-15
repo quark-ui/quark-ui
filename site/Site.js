@@ -12,7 +12,7 @@ import HomePage from './pages/HomePage';
 import ComponentPage from './pages/ComponentPage';
 
 export default () => (
-  <Router>
+  <Router basename="BASEPATH">
     <div className={styles.app}>
       <Route path="/" component={HomePage} exact />
       <Route path="/component" component={ComponentPage} />

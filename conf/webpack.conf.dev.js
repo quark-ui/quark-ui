@@ -131,6 +131,9 @@ module.exports = () => {
       new webpack.HotModuleReplacementPlugin(),
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
       new webpack.NamedModulesPlugin(),
+      new webpack.DefinePlugin({
+        BASEPATH: '/',
+      }),
       // SourceMap plugin will define process.env.NODE_ENV as development
       new webpack.SourceMapDevToolPlugin({
         columns: false,
