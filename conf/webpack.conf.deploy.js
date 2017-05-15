@@ -3,9 +3,10 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
-const MODULES_PATH = path.resolve(__dirname, '../node_modules');
+// const MODULES_PATH = path.resolve(__dirname, '../node_modules');
 
 module.exports = () => {
 
@@ -20,7 +21,7 @@ module.exports = () => {
       filename: '[name].js',
       sourceMapFilename: '[name].js.map',
       publicPath: '/quark-ui/',
-      // publicPath: '/',
+      // publicPath: '/docs/',
     },
     module: {
       rules: [
@@ -129,6 +130,10 @@ module.exports = () => {
     },
     plugins: [
       new webpack.NamedModulesPlugin(),
+      new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+      new webpack.DefinePlugin({
+        BASEPATH: JSON.stringify('/quark-ui'),
+      }),
       // SourceMap plugin will define process.env.NODE_ENV as development
       new webpack.SourceMapDevToolPlugin({
         columns: false,
@@ -142,16 +147,24 @@ module.exports = () => {
         filename: 'style.css',
       }),
       new UglifyJSPlugin(),
-      new HtmlWebpackPlugin({
-        title: 'Quark UI',
-        filename: 'index.html',
-        template: './site/index.html',
-        inject: 'head',
-      }),
+      ...['index.html', '404.html'].map(page => (
+        new HtmlWebpackPlugin({
+          title: 'Quark UI',
+          filename: page,
+          template: './site/index.html',
+          inject: 'head',
+          version: 'min.',
+        })
+      )),
       new ScriptExtHtmlWebpackPlugin({
         defaultAttribute: 'defer',
       }),
+      new BundleAnalyzerPlugin({
+        analyzerMode: 'server',
+        analyzerPort: 8888,
+      }),
     ],
     devtool: 'cheap-source-map',
+    profile: true,
   };
 };

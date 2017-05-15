@@ -3,7 +3,7 @@ const fs = require('fs');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-const MODULES_PATH = path.resolve(__dirname, '../node_modules');
+// const MODULES_PATH = path.resolve(__dirname, '../node_modules');
 
 const extractCSS = new ExtractTextPlugin({
   filename: '[name].css',
@@ -72,6 +72,10 @@ module.exports = () => {
                 options: {
                   plugins: () => [
                     require('postcss-import'),
+                    require('postcss-calc')(),
+                    require('postcss-hsb-color')({
+                      output: 'rgb',
+                    }),
                     require('postcss-cssnext'),
                   ],
                 },
@@ -86,7 +90,14 @@ module.exports = () => {
               loader: 'babel-loader',
               options: {
                 presets: [
+                  [
+                    'env',
+                    {
+                      modules: false,
+                    },
+                  ],
                   'react',
+                  'stage-1',
                 ],
               },
             },

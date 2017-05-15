@@ -129,7 +129,11 @@ module.exports = () => {
     },
     plugins: [
       new webpack.HotModuleReplacementPlugin(),
+      new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
       new webpack.NamedModulesPlugin(),
+      new webpack.DefinePlugin({
+        BASEPATH: JSON.stringify('/'),
+      }),
       // SourceMap plugin will define process.env.NODE_ENV as development
       new webpack.SourceMapDevToolPlugin({
         columns: false,
@@ -139,6 +143,7 @@ module.exports = () => {
         filename: 'index.html',
         template: './site/index.html',
         inject: 'head',
+        version: '',
       }),
       new ScriptExtHtmlWebpackPlugin({
         defaultAttribute: 'defer',

@@ -1,6 +1,6 @@
 {
   "name": "quark-ui",
-  "version": "0.0.1-beta3",
+  "version": "0.0.1-beta4",
   "description": "Quark UI, Components base on react.",
   "repository": "https://github.com/quark-ui/quark-ui.git",
   "author": "",
@@ -65,6 +65,7 @@
     "text-to-svg": "^3.1.0",
     "uglifyjs-webpack-plugin": "^0.4.3",
     "webpack": "^2.4.1",
+    "webpack-bundle-analyzer": "^2.8.1",
     "webpack-dev-server": "^2.4.2"
   },
   "dependencies": {
