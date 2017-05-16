@@ -1,0 +1,27 @@
+/**
+ * Upload Style
+ * @author heifade
+ */
+@import "../../styles/theme.css";
+
+
+.upload {
+
+}
+
+.upload .upload-list-item {
+    overflow: hidden;
+    margin-top: 8px;
+    font-size: 12px;
+    position: relative;
+    height: 24px;
+}
+
+.upload .upload-list-item-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-left: 16px;
+    width: 100%;
+    display: inline-block;
+}
