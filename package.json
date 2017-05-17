@@ -7,8 +7,8 @@
   "main": "lib/index.js",
   "scripts": {
     "start": "webpack-dev-server --config ./conf/webpack.conf.dev.js --port 3000 --open",
-    "build": "webpack --config ./conf/webpack.conf.production.js",
-    "gh-pages": "webpack --config ./conf/webpack.conf.deploy.js",
+    "build": "webpack --config ./conf/webpack.conf.production.js -p",
+    "gh-pages": "webpack --config ./conf/webpack.conf.deploy.js -p",
     "pub": "git push origin master & npm publish",
     "new": "yo quarkui",
     "lint": "eslint --color -f table ./src",
@@ -66,6 +66,7 @@
     "uglifyjs-webpack-plugin": "^0.4.3",
     "webpack": "^2.4.1",
     "webpack-bundle-analyzer": "^2.8.1",
+    "webpack-chunk-hash": "^0.4.0",
     "webpack-dev-server": "^2.4.2"
   },
   "dependencies": {
