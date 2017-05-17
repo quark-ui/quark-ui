@@ -6,10 +6,10 @@
 @import '../../styles/theme.css';
 
 :root{
-    --message-info-bg:hsba(206,calc(74 - 17), calc(88 + 3),0.2);
-    --message-success-bg:hsba(89,calc(94 - 17), calc(75 + 3),0.2);
-    --message-error-bg:hsba(6,calc(86 - 17), 100,0.2);
-    --message-warning-bg:hsba(45,calc(89 - 17),100,0.2);
+    --message-info-bg:#E8F6FF;
+    --message-success-bg:#F5FFE9;
+    --message-error-bg:#FFEBE8;
+    --message-warning-bg:#FFFAE8;
 }
 
 .message--box {
@@ -42,6 +42,7 @@
 .message--icon{
     display:inline-block;
     margin-right:7px;
+    margin-left:1px;
     vertical-align: middle;
 }
 .message__info{
