@@ -2,11 +2,10 @@
  * Menu Component
  * @author heifade
  */
-import { PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import RcMenu, { Item, SubMenu, ItemGroup } from 'rc-menu';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
-import assign from 'object-assign';
 import { allowMultiple } from '../../constants';
 import styles from './Menu.css';
 
@@ -24,11 +23,10 @@ class Menu extends PureComponent {
     className: '',
     type: 'inline',
     selectedKeys: [],
-    defaultSelectedKeys: [],
-    openKeys: [],
     defaultOpenKeys: [],
-    onClick() {},
-    onOpenChange() {},
+    // openKeys: undefined,
+    onClick: null,
+    // onOpenChange: function() {},
   }
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
@@ -36,15 +34,15 @@ class Menu extends PureComponent {
     styleName: PropTypes.string,
     className: PropTypes.string,
     type: PropTypes.oneOf([
-      'horizontal-h', //水平菜单，子菜单水平
-      'horizontal-v', //水平菜单，子菜单垂直
-      'vertical-h', //垂直菜单，子菜单水平向右弹出
-      'vertical-v', //垂直菜单，子菜单内嵌在菜单区域
+      'horizontal-h', // 水平菜单，子菜单水平
+      'horizontal-v', // 水平菜单，子菜单垂直
+      'vertical-h', // 垂直菜单，子菜单水平向右弹出
+      'vertical-v', // 垂直菜单，子菜单内嵌在菜单区域
     ]),
+
     selectedKeys: PropTypes.arrayOf(PropTypes.string),
-    defaultSelectedKeys: PropTypes.arrayOf(PropTypes.string),
-    openKeys: PropTypes.arrayOf(PropTypes.string),
     defaultOpenKeys: PropTypes.arrayOf(PropTypes.string),
+    openKeys: PropTypes.arrayOf(PropTypes.string),
     onClick: PropTypes.func,
     onOpenChange: PropTypes.func,
   }
@@ -52,13 +50,12 @@ class Menu extends PureComponent {
   constructor(props) {
     super(props);
 
-    let openKeys;
+    let openKeys = null;
     if ('defaultOpenKeys' in props) {
       openKeys = props.defaultOpenKeys;
     } else if ('openKeys' in props) {
       openKeys = props.openKeys;
     }
-
     this.state = {
       openKeys: openKeys || [],
     };
@@ -72,17 +69,10 @@ class Menu extends PureComponent {
       this.setState({ openKeys: nextProps.openKeys });
     }
   }
+
   setOpenKeys(openKeys) {
     if (!('openKeys' in this.props)) {
       this.setState({ openKeys });
-    }
-  }
-  handleClick = (e) => {
-    this.setOpenKeys([]);
-
-    const { onClick } = this.props;
-    if (onClick) {
-      onClick(e);
     }
   }
   handleOpenChange = (openKeys) => {
@@ -93,12 +83,44 @@ class Menu extends PureComponent {
       onOpenChange(openKeys);
     }
   }
+  handleClick = (e) => {
+    this.setOpenKeys([]);
+    const { onClick } = this.props;
+    if (onClick) {
+      onClick(e);
+    }
+  }
 
   render() {
+    // let openAnimation = this.props.openAnimation || this.props.openTransitionName;
+    // if (this.props.openAnimation === undefined && this.props.openTransitionName === undefined) {
+    //   switch (this.props.mode) {
+    //     case 'horizontal':
+    //       openAnimation = 'slide-up';
+    //       break;
+    //     case 'vertical':
+    //       // When mode switch from inline
+    //       // submenu should hide without animation
+    //       if (this.switchModeFromInline) {
+    //         openAnimation = '';
+    //         this.switchModeFromInline = false;
+    //       } else {
+    //         openAnimation = 'zoom-big';
+    //       }
+    //       break;
+    //     case 'inline':
+    //       openAnimation = animation;
+    //       break;
+    //     default:
+    //   }
+    // }
+
+
     let props = {};
-    const className = `${this.props.className} ${this.props.styleName}-${this.props.theme}`;
+    // const className = `${this.props.className} ${this.props.styleName}-${this.props.theme}`;
+    const className = `${this.props.className}`;
     let mode = '';
-    switch(this.props.type){
+    switch (this.props.type) {
       case 'horizontal-h':
         mode = 'horizontal-h';
         break;
@@ -111,13 +133,14 @@ class Menu extends PureComponent {
       case 'vertical-v':
         mode = 'inline';
         break;
+      default:
+        break;
     }
 
-    if (mode === 'inline') {
-      //垂直菜单，子菜单内嵌在菜单区域。
+    if (mode === 'inline') { // 垂直菜单，子菜单内嵌在菜单区域。
       props = {
-        //openAnimation,
-        className: className,
+        // openAnimation,
+        className,
         mode,
       };
     } else {
@@ -125,12 +148,14 @@ class Menu extends PureComponent {
         openKeys: this.state.openKeys,
         onClick: this.handleClick,
         onOpenChange: this.handleOpenChange,
+        // openTransitionName: openAnimation,
         className,
         mode,
       };
     }
 
     props.prefixCls = this.props.styleName;
+
     return (
       <RcMenu {...this.props} {...props} />
     );
