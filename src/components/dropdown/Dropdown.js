@@ -11,7 +11,7 @@ import Button from 'quark-ui/button';
 import { allowMultiple } from '../../constants';
 import styles from './Dropdown.css';
 import Menu from './Menu';
-import * as placements from './placements';
+import placements from './placements';
 
 @CSSModules(styles, { allowMultiple })
 class Dropdown extends PureComponent {

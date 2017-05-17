@@ -44,6 +44,9 @@ a {
 }
 .content {
   flex: 1;
+  padding: 0 20px;
+  width: calc(100% - 120px);
+  box-sizing: border-box;
 }
 .aside {
   flex: 0 0 120px;
