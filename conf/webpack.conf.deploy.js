@@ -5,6 +5,7 @@ const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const WebpackChunkHash = require('webpack-chunk-hash');
 
 // const MODULES_PATH = path.resolve(__dirname, '../node_modules');
 
@@ -18,8 +19,8 @@ module.exports = () => {
     },
     output: {
       path: path.join(__dirname, '../docs'),
-      filename: '[name].js',
-      sourceMapFilename: '[name].js.map',
+      filename: '[name].[chunkhash].js',
+      sourceMapFilename: '[name].[chunkhash].js.map',
       publicPath: '/quark-ui/',
       // publicPath: '/docs/',
     },
@@ -129,24 +130,22 @@ module.exports = () => {
       'react-dom': 'var ReactDOM',
     },
     plugins: [
-      new webpack.NamedModulesPlugin(),
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
       new webpack.DefinePlugin({
         BASEPATH: JSON.stringify('/quark-ui'),
       }),
-      // SourceMap plugin will define process.env.NODE_ENV as development
-      new webpack.SourceMapDevToolPlugin({
-        columns: false,
-      }),
       new webpack.optimize.CommonsChunkPlugin({
-        name: 'commons',
-        filename: 'commons.js',
-        // async: true,
+        name: 'vendor',
+        minChunks: Infinity,
       }),
+      new webpack.HashedModuleIdsPlugin(),
+      new WebpackChunkHash(),
       new ExtractTextPlugin({
         filename: 'style.css',
       }),
-      new UglifyJSPlugin(),
+      new UglifyJSPlugin({
+        sourceMap: true,
+      }),
       ...['index.html', '404.html'].map(page => (
         new HtmlWebpackPlugin({
           title: 'Quark UI',
@@ -164,7 +163,7 @@ module.exports = () => {
         analyzerPort: 8888,
       }),
     ],
-    devtool: 'cheap-source-map',
+    devtool: 'source-map',
     profile: true,
   };
 };
