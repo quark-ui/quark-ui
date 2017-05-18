@@ -1,27 +1,64 @@
+import Button from '../../button';
+import { Component } from 'react';
 import Steps from '../Steps';
 
 const Step = Steps.Step;
 
-const StepDemo = () => (
-  <div>
+export default class StepDemo extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      current:0
+    };
+    this.handleNext = this.handleNext.bind(this);
+    this.handlePrev = this.handlePrev.bind(this);
+  }
+
+  handleNext(){
+    this.setState((preState)=>{
+      if(preState.current<3){
+        return {current:preState.current+1};
+      }
+      return {current:3};
+    });
+  }
+
+  handlePrev(){
+    this.setState((preState)=>{
+      if(preState.current>0){
+        return {current:preState.current-1};
+      }
+      return {current:0};
+    });
+  }
+
+  render() {
+    return (
+      <div>
+      <Button disabled={this.state.current<=0} onClick={this.handlePrev}>上一步</Button>&nbsp;
+      <Button disabled={this.state.current>=3} onClick={this.handleNext}>下一步</Button>
     <h3>横向步骤条</h3>
-    <Steps current={1}>
+    <Steps current={this.state.current}>
       <Step title="Finished" description="This is a description." />
       <Step title="In Progress" />
       <Step title="Waiting" />
+      <Step title="In Progress" />
     </Steps>
-    <Steps current={2}>
+    <Steps current={this.state.current}>
       <Step title="Finished" description="This is a description." />
       <Step title="In Progress" />
       <Step title="Waiting" description="This is a description." />
+      <Step title="In Progress" />
     </Steps>
     <h3>竖向步骤条</h3>
-    <Steps current={1} direction="vertical">
+    <Steps current={this.state.current} direction="vertical">
       <Step title="Finished" description="This is a description." />
       <Step title="In Progress" description="This is a description." />
       <Step title="Waiting" description="This is a description." />
+      <Step title="In Progress" />
     </Steps>
   </div>
-);
+    );
+  }
 
-export default StepDemo;
+}
