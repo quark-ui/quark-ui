@@ -19,7 +19,10 @@ a {
 .head {
   flex: 0 0 48px;
   display: flex;
-  line-height: 1.5;
+  height: 80px;
+  line-height: 80px;
+  width: 90%;
+  margin: 0 auto;
 }
 .head__brandTitle {
   margin: 0;
@@ -41,6 +44,12 @@ a {
   flex: 1;
   display: flex;
   flex-direction: row-reverse;
+
+  background: #fff;
+  width: 90%;
+  margin: 30px auto 20px;
+  border-radius: 6px;
+
 }
 .content {
   flex: 1;
@@ -49,7 +58,8 @@ a {
   box-sizing: border-box;
 }
 .aside {
-  flex: 0 0 120px;
+  flex: 0 0 240px;
+  border-right: solid 1px #f7f7f7;
 }
 .aside__nav {
   margin: 0;
@@ -57,13 +67,23 @@ a {
   list-style: none;
 }
 .aside__navItem {
-  padding: 0 10px;
+  padding: 14px 24px;
   font-size: 16px;
-  line-height: 2;
+  cursor: pointer;
+  z-index: 1;
+  transition: all .2s ease-in-out;
+
   & a {
     color: var(--text-color);
+  }
+  & a:hover {
+    text-decoration: none;
   }
   & :global(.active) {
     color: var(--brand-primary);
   }
+}
+
+.aside__navItem:hover{
+    background-color: #f7f7f7;
 }
