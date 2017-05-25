@@ -101,9 +101,6 @@ const siteConfig = {
   },
   plugins: [
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-    new webpack.DefinePlugin({
-      BASEPATH: JSON.stringify('/'),
-    }),
   ],
 };
 
@@ -161,6 +158,9 @@ if (TARGET === 'start') {
     },
     plugins: [
       new webpack.HotModuleReplacementPlugin(),
+      new webpack.DefinePlugin({
+        BASEPATH: JSON.stringify('/'),
+      }),
       new webpack.NamedModulesPlugin(),
       // SourceMap plugin will define process.env.NODE_ENV as development
       new webpack.SourceMapDevToolPlugin({
