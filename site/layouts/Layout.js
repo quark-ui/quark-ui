@@ -6,6 +6,7 @@ import {
 import CSSModules from 'react-css-modules';
 import styles from '../Site.css';
 import { allowMultiple } from '../../src/constants';
+import ThemePicker from '../partials/ThemePicker';
 
 @CSSModules(styles, { allowMultiple })
 export default class Layout extends PureComponent {
@@ -22,6 +23,7 @@ export default class Layout extends PureComponent {
             <NavLink to="/" exact>首页</NavLink>
             <NavLink to="/component/">组件</NavLink>
           </nav>
+          <ThemePicker />
         </header>
         {
           Children.map(this.props.children, Comp => cloneElement(Comp))

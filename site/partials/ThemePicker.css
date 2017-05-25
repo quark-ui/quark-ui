@@ -1,0 +1,15 @@
+.ThemePicker {
+  align-self: center;
+}
+
+.ThemePicker__palette {
+  height: 24px;
+  border: 1px solid var(--border-color);
+}
+
+.ThemePicker__colorGrid {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}

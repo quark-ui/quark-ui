@@ -2,72 +2,64 @@
  * Input Style
  * @author yan
  */
-.base{
+._3d8Ip3y{
   width: 200px;
   margin: 0 8px 8px 0;
   height: 28px;
   cursor: text;
   font-size: 12px;
   line-height: 1.5;
-  color: rgba(0,0,0,.65);
+  color: rgba(0, 0, 0, .65);
   background-color: #fff;
   background-image: none;
   border: 1px solid #d9d9d9;
   border-radius: 4px;
-  -webkit-transition: all .3s;
   transition: all .3s;
 }
 
-.base:focus, .base:hover {
+._3d8Ip3y:focus, ._3d8Ip3y:hover {
     border-color: #49a9ee;
 }
 
-.disabled {
+._23bMeMN {
   background: #f5f5f5;
-  border-color: var(--border-color);
+  border-color: #e6e6e6;
   color: #999;
   cursor: not-allowed;
 }
-.normal{
+._2zTE3Ne{
   padding: 6px 7px;
   height: 24px;
 }
 
-.large{
+._3XuYOM0{
   padding: 6px 7px;
   height: 30px;
 }
 
-.small{
+._2t3xTWo{
   padding: 1px 7px;
   height: 22px;
 }
 
-.input__text{
-  composes: base;
+._3hkY6oH{
 }
 
-.input__textarea{
-  composes: base;
+._1whAjSd{
 }
 
-.input__disabled{
-  composes: base;
-  composes: disabled;
+._1SNztTO{
 }
 
-.input__large{
-  composes: base;
-  composes: large;
+._3PBNxgP{
 }
 
-.input__normal{
-	composes: base;
-  composes: normal;
+._1Ulh8TU{
 }
 
-.input__small{
-  composes: base;
-  composes: small;
+.jvPBoLu{
 }
 
+
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5wdXQuY3NzIiwic291cmNlcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OzsiLCJzb3VyY2VSb290IjoiIn0=*/
+/*# sourceMappingURL=input.css.map*/

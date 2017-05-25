@@ -1,6 +1,6 @@
 :root {
   /* 品牌色 */
-  --brand-primary: hsb(206, 74, 88);
+  --brand-primary: hsb(28, 79, 100);
   /* 品牌色——浅 */
   --brand-primary-light: hsb(206, calc(74 - 17), calc(88 + 3));
   /* 品牌色——深 */
@@ -20,12 +20,12 @@
   --text-color-light: #999;
 
   /* 链接色 */
-  --link-color: hsb(206,74,88);
+  --link-color: hsb(206, 74, 88);
 
   /* 警告 */
-  --warn-color: hsb(45,89,100);
+  --warn-color: hsb(45, 89, 100);
   /* 失败 */
-  --fail-color: hsb(6,86,100);
+  --fail-color: hsb(6, 86, 100);
   /* 成功 */
-  --success-color: hsb(89,94,75);
+  --success-color: hsb(89, 94, 75);
 }

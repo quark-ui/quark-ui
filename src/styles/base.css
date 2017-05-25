@@ -3,9 +3,6 @@
  * @author ryan.bian
  */
 
-@import './theme.css';
-
-
 /**
  * 1. Set default font family to sans-serif.
  * 2. Prevent iOS and IE text size adjust after device orientation change,
@@ -398,7 +395,9 @@ table {
 
 body {
   background-color: #fff;
-  font: 12px/1.5 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', Arial, sans-serif;
+  font-size: 12px;
+  line-height: 1.5;
+  font-family: system-ui;
   color: #000;
 }
 
