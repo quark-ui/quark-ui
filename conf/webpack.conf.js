@@ -216,6 +216,7 @@ if (TARGET === 'gh-pages') {
                 options: {
                   plugins: () => [
                     cssnext({
+                      browsers: ['last 5 Chrome versions'],
                       features: {
                         customProperties: {
                           variables: THEME,
@@ -231,6 +232,9 @@ if (TARGET === 'gh-pages') {
       ],
     },
     plugins: [
+      new webpack.DefinePlugin({
+        BASEPATH: JSON.stringify('/quark-ui'),
+      }),
       new webpack.optimize.CommonsChunkPlugin({
         name: 'vendor',
         minChunks: Infinity,
