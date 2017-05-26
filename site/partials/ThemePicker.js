@@ -38,6 +38,14 @@ export default class ThemePicker extends Component {
           s: brandColor.s - 17,
           v: brandColor.v + 3,
         })),
+        'brand-primary-lighter': hsv(assign({}, brandColor, {
+          s: brandColor.s - 30,
+          v: brandColor.v + 5,
+        })),
+        'brand-primary-lightest': hsv(assign({}, brandColor, {
+          s: brandColor.s - 50,
+          v: brandColor.v + 6,
+        })),
         'brand-primary-dark': hsv(assign({}, brandColor, {
           s: brandColor.s + 20,
           v: brandColor.v - 5,

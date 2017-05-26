@@ -7,10 +7,12 @@ import PropTypes from 'prop-types';
 import assign from 'object-assign';
 import CSSModules from 'react-css-modules';
 import classnames from 'classnames';
-import { allowMultiple } from '../../../constants';
-import styles from '../DatePicker.css';
+import Icon from 'quark-ui/icon';
 import moment from 'moment';
 import momentPropTypes from 'react-moment-proptypes';
+
+import { allowMultiple } from '../../../constants';
+import styles from '../DatePicker.css';
 
 @CSSModules(styles, { allowMultiple })
 class YearPane extends PureComponent {
@@ -18,6 +20,7 @@ class YearPane extends PureComponent {
   static displayName = 'YearPane'
 
   static defaultProps = {
+    className: '',
     date: moment(),
     showDecadePane() {},
     showMonthPane() {},
@@ -27,6 +30,7 @@ class YearPane extends PureComponent {
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
   static propTypes = {
+    className: PropTypes.string,
     date: momentPropTypes.momentObj,
     showDecadePane: PropTypes.func,
     showMonthPane: PropTypes.func,
@@ -113,7 +117,7 @@ class YearPane extends PureComponent {
       );
     }
     return (
-      <div>{years}</div>
+      <div styleName="datePicker__yearBody">{years}</div>
     );
   }
 
@@ -123,16 +127,21 @@ class YearPane extends PureComponent {
     const decade = [startYear + 1, endYear - 1];
     return (
       <div styleName="datePicker__yearPaneHead">
-        <button onClick={this.handleSubtractDecade}>&#9664;</button>
-        <button onClick={showDecadePane.bind(this, currentYear)}>{decade.join('-')}</button>
-        <button onClick={this.handleAddDecade}>&#9654;</button>
+        <button styleName="datePicker__headControlBtn" onClick={this.handleSubtractDecade}>
+          <Icon name="arrow-left" size={14} />
+        </button>
+        <button styleName="datePicker__headJumpBtn" onClick={showDecadePane.bind(this, currentYear)}>{decade.join('-')}</button>
+        <button styleName="datePicker__headControlBtn" onClick={this.handleAddDecade}>
+          <Icon name="arrow-right" size={14} />
+        </button>
       </div>
     );
   }
 
   render() {
+    const { className } = this.props;
     return (
-      <div styleName="datePicker__picker datePicker__yearPane">
+      <div styleName="datePicker__picker datePicker__yearPane" className={className}>
         { this.renderYearHead() }
         { this.renderYears() }
       </div>

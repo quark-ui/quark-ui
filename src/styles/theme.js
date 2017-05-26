@@ -10,6 +10,14 @@ const BRAND_COLOR_LIGHT = assign({}, BRAND_COLOR, {
   s: BRAND_COLOR.s - 17,
   v: BRAND_COLOR.v + 3,
 });
+const BRAND_COLOR_LIGHTER = assign({}, BRAND_COLOR, {
+  s: BRAND_COLOR.s - 30,
+  v: BRAND_COLOR.v + 5,
+});
+const BRAND_COLOR_LIGHTEST = assign({}, BRAND_COLOR, {
+  s: BRAND_COLOR.s - 50,
+  v: BRAND_COLOR.v + 6,
+});
 const BRAND_COLOR_DARK = assign({}, BRAND_COLOR, {
   s: BRAND_COLOR.s + 20,
   v: BRAND_COLOR.v - 5,
@@ -27,6 +35,10 @@ module.exports = {
   'brand-primary': hsv(BRAND_COLOR),
   /* 品牌色——浅 */
   'brand-primary-light': hsv(BRAND_COLOR_LIGHT),
+  /* 品牌色——浅2 */
+  'brand-primary-lighter': hsv(BRAND_COLOR_LIGHTER),
+  /* 品牌色——浅3 */
+  'brand-primary-lightest': hsv(BRAND_COLOR_LIGHTEST),
   /* 品牌色——深 */
   'brand-primary-dark': hsv(BRAND_COLOR_DARK),
 
