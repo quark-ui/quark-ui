@@ -1,5 +1,7 @@
 import Input from './Input';
-// import Search from './Search';
+// import Group from './Group';
+import Search from './Search';
 
-// Input.Search = Search;
+// Input.Group = Group;
+Input.Search = Search;
 export default Input;

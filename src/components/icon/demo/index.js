@@ -15,6 +15,7 @@ const IconList = [
   'check',
   'home',
   'info',
+  'search',
 ];
 
 const IconDemo = () => (

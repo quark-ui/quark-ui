@@ -1,0 +1,262 @@
+/**
+ * InputNumber Style
+ * @author yan
+ */
+@import "../../styles/theme.css";
+
+.handler-disabled {
+  opacity: 0.72;
+  color: #ccc !important;
+  cursor: not-allowed;
+}
+:global(.rc-input-number) {
+    position: relative;
+	padding: 4px 7px;
+	width: 100%;
+	cursor: text;
+	line-height: 1.5;
+	color: rgba(0,0,0,.65);
+	background-color: #fff;
+	background-image: none;
+	-webkit-transition: all .3s;
+	transition: all .3s;
+	margin: 0;
+	padding: 0;
+	font-size: 12px;
+	height: 28px;
+	display: inline-block;
+	border: 1px solid #d9d9d9;
+	border-radius: 4px;
+	width: 80px
+}
+
+:global(.rc-input-number:focus) {
+	border-color: #49a9ee;
+	outline: 0;
+	box-shadow: 0 0 0 2px rgba(16,142,233,.2)
+}
+
+:global(.rc-input-number[disabled]) {
+	background-color: #f7f7f7;
+	opacity: 1;
+	cursor: not-allowed;
+	color: rgba(0,0,0,.25)
+}
+
+:global(.rc-input-number[disabled]:hover){
+	border-color: #e2e2e2
+}
+
+.rc-input-number-lg {
+	padding: 6px 7px;
+	height: 32px
+}
+
+.rc-input-number-sm {
+	padding: 1px 7px;
+	height: 22px
+}
+
+:global(.rc-input-number-handler) {
+	text-align: center;
+	line-height: 0;
+	height: 50%;
+	overflow: hidden;
+	color: rgba(0,0,0,.43);
+	position: relative;
+	-webkit-transition: all .1s linear;
+	transition: all .1s linear;
+	display: block;
+	width: 100%;
+	font-weight: 700
+}
+
+:global(.rc-input-number-handler:active) {
+	background: #f4f4f4
+}
+
+:global(.rc-input-number-handler:hover .rc-input-number-handler-down-inner),
+:global(.rc-input-number-handler:hover .rc-input-number-handler-up-inner) {
+	color: #49a9ee
+}
+
+:global(.rc-input-number-handler-down-inner),
+:global(.rc-input-number-handler-up-inner) {
+	font-style: normal;
+	vertical-align: baseline;
+	text-align: center;
+	text-transform: none;
+	line-height: 1;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	line-height: 12px;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	position: absolute;
+	width: 12px;
+	height: 12px;
+	-webkit-transition: all .1s linear;
+	transition: all .1s linear;
+	display: inline-block;
+	font-size: 12px;
+	font-size: 7px\9;
+	-webkit-transform: scale(.58333333) rotate(0deg);
+	-ms-transform: scale(.58333333) rotate(0deg);
+	transform: scale(.58333333) rotate(0deg);
+	-ms-filter: "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=1, M12=0, M21=0, M22=1)";
+	zoom: 1;
+	right: 4px;
+	color: rgba(0,0,0,.43)
+}
+
+:global(.rc-input-number-handler-down-inner:before),
+:global(.rc-input-number-handler-up-inner:before) {
+	display: block;
+	font-family: anticon!important
+}
+
+:root .rc-input-number-handler-down-inner,:root .rc-input-number-handler-up-inner {
+	-webkit-filter: none;
+	filter: none;
+	font-size: 12px
+}
+
+:global(.rc-input-number:hover) {
+	border-color: #49a9ee
+}
+
+:global(.rc-input-number-focused) {
+	border-color: #49a9ee;
+	outline: 0;
+	box-shadow: 0 0 0 2px rgba(16,142,233,.2)
+}
+
+:global(.rc-input-number-disabled) {
+	background-color: #f7f7f7;
+	opacity: 1;
+	cursor: not-allowed;
+	color: rgba(0,0,0,.25)
+}
+
+:global(.rc-input-number-disabled:hover) {
+	border-color: #e2e2e2
+}
+
+:global(.rc-input-number-input) {
+	width: 80%;
+	text-align: left;
+	outline: 0;
+	-moz-appearance: textfield;
+	height: 26px;
+	-webkit-transition: all .3s linear;
+	transition: all .3s linear;
+	color: rgba(0,0,0,.65);
+	background-color: #fff;
+	border: 0;
+	border-radius: 4px;
+	padding: 0 7px
+}
+
+:global(.rc-input-number-input[disabled]) {
+	background-color: #f7f7f7;
+	opacity: 1;
+	cursor: not-allowed;
+	color: rgba(0,0,0,.25)
+}
+
+:global(.rc-input-number-input[disabled]:hover) {
+	border-color: #e2e2e2
+}
+
+:global(.rc-input-number-handler-wrap) {
+	border-left: 1px solid #d9d9d9;
+	width: 22px;
+	height: 100%;
+	background: #fff;
+	position: absolute;
+	top: 0;
+	right: 0;
+	opacity: 0;
+	border-radius: 0 4px 4px 0;
+	-webkit-transition: opacity .24s linear .1s;
+	transition: opacity .24s linear .1s
+}
+
+:global(.rc-input-number-handler-wrap:hover .rc-input-number-handler) {
+	height: 40%
+}
+
+:global(.rc-input-number:hover .rc-input-number-handler-wrap) {
+	opacity: 1
+}
+
+:global(.rc-input-number-handler-up) {
+	cursor: pointer
+}
+
+:global(.rc-input-number-handler-up-inner) {
+	top: 50%;
+	margin-top: -6px
+}
+
+:global(.rc-input-number-handler-up-inner:before) {
+	text-align: center;
+	content: "\E61E"
+}
+
+:global(.rc-input-number-handler-up:hover) {
+	height: 60%!important
+}
+
+:global(.rc-input-number-handler-down) {
+	border-top: 1px solid #d9d9d9;
+	top: -1px;
+	cursor: pointer
+}
+
+:global(.rc-input-number-handler-down-inner) {
+	top: 50%;
+	margin-top: -6px
+}
+
+:global(.rc-input-number-handler-down-inner:before) {
+	text-align: center;
+	content: "\E61D"
+}
+
+:global(.rc-input-number-handler-down:hover) {
+	height: 60%!important
+}
+
+:global(.rc-input-number-disabled .rc-input-number-handler-down-inner),
+:global(.rc-input-number-disabled .rc-input-number-handler-up-inner),
+:global(.rc-input-number-handler-down-disabled .rc-input-number-handler-down-inner),
+:global(.rc-input-number-handler-down-disabled .rc-input-number-handler-up-inner),
+:global(.rc-input-number-handler-up-disabled .rc-input-number-handler-down-inner),
+:global(.rc-input-number-handler-up-disabled .rc-input-number-handler-up-inner) {
+	opacity: .72;
+	color: #ccc!important;
+	cursor: not-allowed
+}
+
+:global(.rc-input-number-disabled .rc-input-number-input) {
+	opacity: .72;
+	cursor: not-allowed;
+	background-color: #f7f7f7
+}
+
+:global(.rc-input-number-disabled .rc-input-number-handler-wrap) {
+	display: none
+}
+
+:global(.rc-input-number-disabled .rc-input-number-handler) {
+	opacity: .72;
+	color: #ccc!important;
+	cursor: not-allowed
+}
+
+
+
