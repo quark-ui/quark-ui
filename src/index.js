@@ -30,3 +30,9 @@ export { default as Trigger } from './components/trigger/';
 // export { default as Upload } from './components/upload/';
 
 export { default as Progress } from './components/progress/';
+
+export { default as Checkbox } from './components/checkbox/';
+
+export { default as Radio } from './components/radio/';
+
+
