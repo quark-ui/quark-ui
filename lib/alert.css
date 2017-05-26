@@ -1,3 +1,52 @@
+<<<<<<< HEAD
 ._1GB2-JB{position:relative;padding:8px 48px 8px 16px;border-radius:4px;color:rgba(0,0,0,.65);line-height:16px;margin-bottom:10px}._1xsSoXb,._3pVZZaC{display:block}._1xsSoXb,._2nQsLw9{font-size:12px}._2nQsLw9{position:absolute;right:16px;top:10px;height:12px;line-height:12px;overflow:hidden;cursor:pointer}._26sdxhi{background-color:#ecf6fd}._1CwPGBp{background-color:#ebf8f2}._3QhKkZ8{background-color:#fef0ef}._3BUd41-{background-color:#fffaeb}
 /*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYWxlcnQuY3NzIiwic291cmNlcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlUm9vdCI6IiJ9*/
+=======
+/**
+ * Alert Style
+ * @author grootfish
+ */
+._39kAAFy {
+     position: relative;
+    padding: 8px 48px 8px 16px;
+    border-radius: 4px;
+    color: rgba(0, 0, 0, .65);
+    line-height: 16px;
+    margin-bottom: 10px;
+}
+._2PlM57S{
+  display:block;
+}
+._2WVGGAD{
+  display:block;
+  font-size:12px;
+}
+._2mpL-C1{
+    font-size: 12px;
+    position: absolute;
+    right: 16px;
+    top: 10px;
+    height: 12px;
+    line-height: 12px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+._2zbvGEj{
+  background-color: #ecf6fd;
+}
+
+._1G-i0lm{
+  background-color: #ebf8f2;
+}
+
+._2IstVeW{
+  background-color: #fef0ef;
+}
+
+._1RLd9u1{
+  background-color: #fffaeb;
+}
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYWxlcnQuY3NzIiwic291cmNlcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OzsiLCJzb3VyY2VSb290IjoiIn0=*/
+>>>>>>> upstream/master
 /*# sourceMappingURL=alert.css.map*/

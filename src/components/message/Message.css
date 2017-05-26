@@ -2,9 +2,6 @@
  * Message Style
  * @author grootfish
  */
-
-@import '../../styles/theme.css';
-
 :root{
     --message-info-bg:#E8F6FF;
     --message-success-bg:#F5FFE9;

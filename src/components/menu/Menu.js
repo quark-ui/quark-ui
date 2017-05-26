@@ -92,32 +92,7 @@ class Menu extends PureComponent {
   }
 
   render() {
-    // let openAnimation = this.props.openAnimation || this.props.openTransitionName;
-    // if (this.props.openAnimation === undefined && this.props.openTransitionName === undefined) {
-    //   switch (this.props.mode) {
-    //     case 'horizontal':
-    //       openAnimation = 'slide-up';
-    //       break;
-    //     case 'vertical':
-    //       // When mode switch from inline
-    //       // submenu should hide without animation
-    //       if (this.switchModeFromInline) {
-    //         openAnimation = '';
-    //         this.switchModeFromInline = false;
-    //       } else {
-    //         openAnimation = 'zoom-big';
-    //       }
-    //       break;
-    //     case 'inline':
-    //       openAnimation = animation;
-    //       break;
-    //     default:
-    //   }
-    // }
-
-
     let props = {};
-    // const className = `${this.props.className} ${this.props.styleName}-${this.props.theme}`;
     const className = `${this.props.className}`;
     let mode = '';
     switch (this.props.type) {
@@ -139,7 +114,6 @@ class Menu extends PureComponent {
 
     if (mode === 'inline') { // 垂直菜单，子菜单内嵌在菜单区域。
       props = {
-        // openAnimation,
         className,
         mode,
       };
@@ -148,7 +122,6 @@ class Menu extends PureComponent {
         openKeys: this.state.openKeys,
         onClick: this.handleClick,
         onOpenChange: this.handleOpenChange,
-        // openTransitionName: openAnimation,
         className,
         mode,
       };

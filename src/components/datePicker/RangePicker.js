@@ -51,7 +51,6 @@ class RangePicker extends PureComponent {
   }
 
   render() {
-    console.log('RangePicker rerender');
     const { disabled, format } = this.props;
     const { rangeValue } = this.state;
     const pickerProps = {

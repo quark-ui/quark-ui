@@ -69,7 +69,6 @@ class DatePicker extends PureComponent {
   }
 
   render() {
-    console.log('DatePicker rerender');
     const { value } = this.state;
     const { pickerType, disabled, format, disabledDate } = this.props;
     const pickerProps = {

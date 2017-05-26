@@ -9,6 +9,8 @@ import CSSModules from 'react-css-modules';
 import classnames from 'classnames';
 import moment from 'moment';
 import momentPropTypes from 'react-moment-proptypes';
+import Icon from 'quark-ui/icon';
+
 import { allowMultiple } from '../../../constants';
 import styles from '../DatePicker.css';
 
@@ -18,6 +20,7 @@ class DecadePane extends PureComponent {
   static displayName = 'DecadePane'
 
   static defaultProps = {
+    className: '',
     date: moment(),
     decadeYear: undefined,
     changeYear() {},
@@ -26,6 +29,7 @@ class DecadePane extends PureComponent {
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
   static propTypes = {
+    className: PropTypes.string,
     date: momentPropTypes.momentObj,
     decadeYear: PropTypes.number,
     changeYear: PropTypes.func,
@@ -88,10 +92,14 @@ class DecadePane extends PureComponent {
     const from = Math.floor(decadeYear / 10) * 10;
     const currentDecade = [from, from + 9];
     return (
-      <div>
-        <button onClick={this.handleSubtractCentury}>&#9664;</button>
-        <span>{currentDecade.join('-')}</span>
-        <button onClick={this.handleAddCentury}>&#9654;</button>
+      <div styleName="datePicker__decadePaneHead">
+        <button styleName="datePicker__headControlBtn" onClick={this.handleSubtractCentury}>
+          <Icon name="arrow-left" size={14} />
+        </button>
+        <span styleName="datePicker__decadePane--current">{currentDecade.join('-')}</span>
+        <button styleName="datePicker__headControlBtn" onClick={this.handleAddCentury}>
+          <Icon name="arrow-right" size={14} />
+        </button>
       </div>
     );
   }
@@ -121,12 +129,13 @@ class DecadePane extends PureComponent {
         <button {...decadeProps}>{[i, i + 9].join('-')}</button>
       );
     }
-    return <div>{decades}</div>;
+    return <div styleName="datePicker__decadeBody">{decades}</div>;
   }
 
   render() {
+    const { className } = this.props;
     return (
-      <div styleName="datePicker__picker datePicker__decadePane">
+      <div styleName="datePicker__picker datePicker__decadePane" className={className}>
         { this.renderDecadeHead() }
         { this.renderDecades() }
       </div>

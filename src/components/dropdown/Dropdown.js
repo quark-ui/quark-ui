@@ -5,13 +5,12 @@
 import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
-import assign from 'object-assign';
 import Trigger from 'quark-ui/trigger';
 import Button from 'quark-ui/button';
 import { allowMultiple } from '../../constants';
 import styles from './Dropdown.css';
 import Menu from './Menu';
-import placements from './placements';
+import Placements from './placements';
 
 @CSSModules(styles, { allowMultiple })
 class Dropdown extends PureComponent {
@@ -45,7 +44,7 @@ class Dropdown extends PureComponent {
 
   render() {
     const { trigger, overlay, placement, children } = this.props;
-    const { points, offset } = placements[placement];
+    const { points, offset } = Placements[placement];
     return (
       <Trigger
         action={trigger}
@@ -62,15 +61,16 @@ class DropdownButton extends PureComponent {
 
   static displayName = 'DropdownButton'
 
-  static defaultProps = assign({}, Dropdown.defaultProps, {
+  static defaultProps = {
+    ...Dropdown.defaultProps,
     type: Button.defaultProps.type,
     placement: 'bottomRight',
-  })
+  }
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
   static propTypes = {
-    type: Button.propTypes.type,
     ...Dropdown.propTypes,
+    type: Button.propTypes.type,
   }
 
   constructor(props) {
