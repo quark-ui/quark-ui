@@ -18,7 +18,6 @@ class InputNumber extends PureComponent {
     step: 1,
   }
 
-  // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
   static propTypes = {
     min: PropTypes.number,
     max: PropTypes.number,
@@ -50,12 +49,10 @@ class InputNumber extends PureComponent {
   render() {
 
     const { className, size, ...otherProps } = this.props;
-    // const inputNumberClass = classNames({
-    //   [`${this.props.prefixCls}-lg`]: size === 'large',
-    //   [`${this.props.prefixCls}-sm`]: size === 'small',
-    // }, className);
 
-    return <RcInputNumber className={'rc-input-number'} {...otherProps} />;
+    const inputNumberClass =  `rc-input-number-${size}`;
+
+    return <RcInputNumber className={inputNumberClass} {...otherProps} />;
 
   }
 }

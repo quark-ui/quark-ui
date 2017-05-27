@@ -2,7 +2,7 @@
  * InputNumber Style
  * @author yan
  */
-@import "../../styles/theme.css";
+/*@import "../../styles/theme.css";*/
 
 .handler-disabled {
   opacity: 0.72;
@@ -27,11 +27,11 @@
 	display: inline-block;
 	border: 1px solid #d9d9d9;
 	border-radius: 4px;
-	width: 80px
+	width:80px;
 }
 
 :global(.rc-input-number:focus) {
-	border-color: #49a9ee;
+	border-color: var(--brand-primary-light);
 	outline: 0;
 	box-shadow: 0 0 0 2px rgba(16,142,233,.2)
 }
@@ -44,17 +44,16 @@
 }
 
 :global(.rc-input-number[disabled]:hover){
-	border-color: #e2e2e2
+	border-color:var(--brand-primary-light);
 }
 
-.rc-input-number-lg {
+:global(.rc-input-number-large) {
 	padding: 6px 7px;
 	height: 32px
 }
 
-.rc-input-number-sm {
-	padding: 1px 7px;
-	height: 22px
+:global(.rc-input-number-small) {
+	height: 26px
 }
 
 :global(.rc-input-number-handler) {
@@ -77,7 +76,7 @@
 
 :global(.rc-input-number-handler:hover .rc-input-number-handler-down-inner),
 :global(.rc-input-number-handler:hover .rc-input-number-handler-up-inner) {
-	color: #49a9ee
+	color: var(--brand-primary-light)
 }
 
 :global(.rc-input-number-handler-down-inner),
@@ -125,11 +124,11 @@
 }
 
 :global(.rc-input-number:hover) {
-	border-color: #49a9ee
+	border-color: var(--brand-primary-light)
 }
 
 :global(.rc-input-number-focused) {
-	border-color: #49a9ee;
+	border-color: var(--brand-primary-light);
 	outline: 0;
 	box-shadow: 0 0 0 2px rgba(16,142,233,.2)
 }
@@ -204,7 +203,7 @@
 
 :global(.rc-input-number-handler-up-inner:before) {
 	text-align: center;
-	content: "\E61E"
+	content: "^"
 }
 
 :global(.rc-input-number-handler-up:hover) {
@@ -224,7 +223,7 @@
 
 :global(.rc-input-number-handler-down-inner:before) {
 	text-align: center;
-	content: "\E61D"
+	content: "∨"
 }
 
 :global(.rc-input-number-handler-down:hover) {

@@ -14,5 +14,6 @@ InputNumber Component.
 |disabled|boolean|false|禁用|
 |formatter|function(value: number | string): string||指定输入框展示值的格式|
 |parser|function( string): number||指定从 formatter 里转换回数字的方式，和 formatter 搭配使用|
+|style|CSSProperties|||
 
 ### Api
