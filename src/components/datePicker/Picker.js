@@ -193,7 +193,7 @@ class Picker extends PureComponent {
     }
   }
 
-  renderPane(date, currentPane, decadeYear, position) {
+  renderPane(date, currentPane, decadeYear, position, className = '') {
     const { type, rangeDate } = this.props;
     const paneProps = {
       date,
@@ -210,6 +210,7 @@ class Picker extends PureComponent {
             : current.isAfter(rangeDate[1]));
           assign(paneProps, {
             inRange: current => current.isBetween(rangeDate[0], rangeDate[1]),
+            alwaysShowEqualWeeks: true,
           });
         } else {
           disabledDate = this.props.disabledDate;
@@ -219,6 +220,7 @@ class Picker extends PureComponent {
           showYearPane: partialRight(this.onSetYear, position),
           showMonthPane: partialRight(this.onSetMonth, position),
           disabledDate,
+          className,
         });
         pane = DatePane;
         break;
@@ -247,11 +249,7 @@ class Picker extends PureComponent {
         pane = DecadePane;
         break;
     }
-    return (
-      <div>
-        {createElement(pane, paneProps)}
-      </div>
-    );
+    return createElement(pane, paneProps);
   }
 
   render() {
@@ -260,9 +258,9 @@ class Picker extends PureComponent {
     let popup;
     if (type === 'range') {
       popup = (
-        <div>
-          {this.renderPane(rangeDate[0], currentRangePane[0], decadeYears[0], 0)}
-          {this.renderPane(rangeDate[1], currentRangePane[1], decadeYears[1], 1)}
+        <div className={styles.rangePicker}>
+          {this.renderPane(rangeDate[0], currentRangePane[0], decadeYears[0], 0, styles['picker--start'])}
+          {this.renderPane(rangeDate[1], currentRangePane[1], decadeYears[1], 1, styles['picker--end'])}
         </div>
       );
     } else {

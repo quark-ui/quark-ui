@@ -35,6 +35,11 @@ class Checkbox extends PureComponent {
     onClick: PropTypes.func,
   }
 
+  static contextTypes = {
+    checkboxGroup: PropTypes.any,
+  };
+
+
   constructor(props) {
     super(props);
 
@@ -44,6 +49,7 @@ class Checkbox extends PureComponent {
       checked,
     };
   }
+
 
   componentWillReceiveProps(nextProps){
     if('checked' in nextProps){
@@ -79,8 +85,16 @@ class Checkbox extends PureComponent {
   };
 
   render() {
-    const {children,name,type,disabled,readOnly,onClick,onFocus,onBlur,...otherProps} = this.props;
-    let {checked} = this.state;
+    const {context,props} = this;
+    const {children,name,type,disabled,readOnly,onClick,onFocus,onBlur,...otherProps} = props;
+    let checkboxProps = {...otherProps};
+    // let {checked} = this.state;
+    const {checkboxGroup} = context;
+    if(checkboxGroup){
+      checkboxProps.onChange =()=>checkboxGroup.toggleOption({label:children,value:props.value});
+      // checkboxProps.checked = checkboxGroup.value.indexOf(props.value) !==-1;
+      checkboxProps.disabled = 'disabled' in props ? props.disabled:checkboxGroup.disabled;
+    }
     return (
       <label>
         <span styleName={'checkbox'}>
@@ -94,7 +108,7 @@ class Checkbox extends PureComponent {
           onFocus = {onFocus}
           onBlur = {onBlur}
           onChange = {this.handleChange}
-          {...otherProps}
+          {...checkboxProps}
           />
           <span styleName={'checkbox--inner'}></span>
         </span>

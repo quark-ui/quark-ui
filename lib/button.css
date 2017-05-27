@@ -2,25 +2,6 @@
  * Button Style
  * @author ryan.bian
  */
-:root {
-  /* 品牌色 */
-  /* 品牌色——浅 */
-  /* 品牌色——深 */
-  
-  /* 边框色 */
-
-  /* 中性色 */
-
-  /* 标题 主要文字 */
-  /* 正文 说明 */
-  /* 辅助 次级文字 */
-
-  /* 链接色 */
-
-  /* 警告 */
-  /* 失败 */
-  /* 成功 */
-}
 .CTy3CHb {
   border-style: solid;
   border-width: 1px;
@@ -109,6 +90,7 @@
   color: #999;
   cursor: not-allowed;
 }
+
 ._11KqluX {
 }
 ._1QjCEA1 {
@@ -125,5 +107,5 @@
 }
 ._2HVyQfI {
 }
-/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYnV0dG9uLmNzcyIsInNvdXJjZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OyIsInNvdXJjZVJvb3QiOiIifQ==*/
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYnV0dG9uLmNzcyIsInNvdXJjZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OyIsInNvdXJjZVJvb3QiOiIifQ==*/
 /*# sourceMappingURL=button.css.map*/

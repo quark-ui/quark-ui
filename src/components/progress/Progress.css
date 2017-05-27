@@ -2,8 +2,6 @@
  * Progress Style
  * @author heifade
  */
-@import "../../styles/theme.css";
-
 .progress {
     display: inline-block;
 }

@@ -72,6 +72,17 @@ export default class CheckboxDemo extends Component {
         onChange={this.handleChange}
       >
       </CheckboxGroup>
+
+      <h3>一组checkbox</h3>
+      <div>
+        <CheckboxGroup onChange={(v)=>{this.checkValue.innerHTML=v}} disabled={disabled}>
+          <Checkbox value="A"> A</Checkbox>
+          <Checkbox value="B"> B</Checkbox>
+          <Checkbox value="C"> C</Checkbox>
+          <Checkbox value="D"> D</Checkbox>
+        </CheckboxGroup>
+      </div>
+      <p ref={(v) => { this.checkValue = v; }}></p>
       <h3>受控方式</h3>
       <p>
         <Checkbox
@@ -113,7 +124,7 @@ export default class CheckboxDemo extends Component {
           ></Checkbox>
       </p>
         <Button onClick={this.handleToggleDisabled}>{disabled?'启用':'禁用'}</Button>&nbsp;
-        <Button onClick={this.handleToggleChecked}>{checked?'不选中':'选中'}</Button>
+        <Button onClick={this.handleToggleChecked}>{checked?'取消选中':'选中'}</Button>
       </div>
     );
   }

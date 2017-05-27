@@ -29,6 +29,10 @@ class CheckboxGroup extends PureComponent {
     onChange: PropTypes.func,
   }
 
+  static childContextTypes = {
+    checkboxGroup: PropTypes.any,
+  };
+
   constructor(props) {
     super(props);
 
@@ -43,9 +47,19 @@ class CheckboxGroup extends PureComponent {
   componentWillReceiveProps(nextProps){
     if('value' in nextProps){
       this.setState({
-        checked:nextProps.value||[],
+        value:nextProps.value||[],
       });
     }
+  }
+
+  getChildContext() {
+    return {
+      checkboxGroup: {
+        toggleOption: this.toggleOption,
+        value: this.state.value,
+        disabled: this.props.disabled,
+      },
+    };
   }
 
   getOptions=()=>{
@@ -63,7 +77,7 @@ class CheckboxGroup extends PureComponent {
 
   toggleOption=(option)=>{
     const optionIndex = this.state.value.indexOf(option.value);
-    const value = [...this.state.value];
+    let value = [...this.state.value];
 
     if(optionIndex===-1){
       value.push(option.value);
