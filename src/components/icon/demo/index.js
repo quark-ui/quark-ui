@@ -18,13 +18,10 @@ const IconList = [
   'check',
   'home',
   'info',
-<<<<<<< HEAD
   'search',
-=======
   'success',
   'warning',
   'error',
->>>>>>> upstream/master
 ];
 
 const IconDemo = () => (
