@@ -1,5 +1,6 @@
 import InputNumber from '../InputNumber';
 import { Component } from 'react';
+import CSSModules from 'react-css-modules';
 
 function onChange(value) {
   console.log('changed', value);
@@ -9,7 +10,6 @@ export default class InputNumberDemo extends Component {
   render() {
     return (
       <div>
-        <br />
         <span>基本</span>
         <br />
           <InputNumber  style={{ width: 200 }} min={1} max={10} defaultValue={3} onChange={onChange} />

@@ -19,7 +19,7 @@
 }
 
 .base:focus, .base:hover {
-    border-color: #49a9ee;
+    border-color: var(--brand-primary-light);
 }
 
 .disabled {
@@ -93,7 +93,7 @@
 }
 .input__wrapper:hover{
   & > input{
-    border-color: #49a9ee;
+    border-color: var(--brand-primary-light);
   }
 }
 .input__search{
@@ -102,6 +102,6 @@
 
   }
   & > .input__suffix:hover{
-    color: #49a9ee;
+    color: var(--brand-primary-light);
   }
 }

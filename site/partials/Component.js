@@ -3,7 +3,7 @@ import MDReactComponent from 'markdown-react-js';
 import SyntaxHighlighter, { registerLanguage } from 'react-syntax-highlighter/dist/light';
 import js from 'highlight.js/lib/languages/javascript';
 import CSSModules from 'react-css-modules';
-import darcula from 'react-syntax-highlighter/dist/styles/darcula';
+import darcula from 'react-syntax-highlighter/dist/styles/monokai-sublime';
 import { allowMultiple } from '../../src/constants';
 
 import styles from './Component.css';

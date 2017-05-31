@@ -23,7 +23,6 @@ export default class Layout extends PureComponent {
             <nav styleName="head__navigation">
               <NavLink to="/" exact>首页</NavLink>
               <NavLink to="/component/">组件</NavLink>
-              <a href="https://github.com/quark-ui/quark-ui" target="_blank">github</a>
             </nav>
             <ThemePicker />
           </header>
