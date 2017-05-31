@@ -2,8 +2,6 @@
  * Steps Style
  * @author grootfish
  */
-@import "../../styles/theme.css";
-
 :root {
   --inactive-color: #CECECE;
 }

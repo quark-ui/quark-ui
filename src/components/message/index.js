@@ -1,7 +1,7 @@
 import ReactDom from 'react-dom';
 import MessageBox from './MessageBox';
 
-const renderMessage = function (props = {}) {
+function renderMessage(props = {}) {
   const { getContainer, ...msgProps } = props;
 
   let div;
@@ -13,7 +13,7 @@ const renderMessage = function (props = {}) {
   }
 
   return ReactDom.render(<MessageBox {...msgProps} />, div);
-};
+}
 
 let messageInstance;
 function getMessageInstance() {

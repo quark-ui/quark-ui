@@ -2,6 +2,7 @@ import { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import TextToSVG from 'text-to-svg';
 import assign from 'object-assign';
+import fontPath from '../fonts/Audiowide-Regular.ttf';
 
 // import QuarkUI from '../../index';
 // const ComponentList = Object.keys(QuarkUI).map(c => c);
@@ -14,14 +15,13 @@ export default class Home extends Component {
   };
 
   componentWillMount() {
-    TextToSVG.load('/fonts/Audiowide-Regular.ttf', (err, font) => {
+    TextToSVG.load(fontPath, (err, font) => {
       this.textToSVG = new TextToSVG(font.font);
       this.getSVG();
     });
   }
 
   componentDidUpdate() {
-    console.log('componentDidUpdate');
     if (!this.lineDrawing) {
       this.lineDrawing = anime({
         targets: '#lineDrawing path',

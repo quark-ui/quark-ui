@@ -1,4 +1,4 @@
-export const placements = {
+const Placements = {
   topLeft: {
     points: ['bl', 'tl'],
     offset: [0, -4],
@@ -25,4 +25,4 @@ export const placements = {
   },
 };
 
-export default placements;
+export default Placements;

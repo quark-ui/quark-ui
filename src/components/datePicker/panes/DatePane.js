@@ -9,6 +9,7 @@ import CSSModules from 'react-css-modules';
 import classnames from 'classnames';
 import moment from 'moment';
 import momentPropTypes from 'react-moment-proptypes';
+import Icon from 'quark-ui/icon';
 import { allowMultiple } from '../../../constants';
 import styles from '../DatePicker.css';
 
@@ -18,6 +19,7 @@ class DatePane extends PureComponent {
   static displayName = 'DatePane'
 
   static defaultProps = {
+    className: '',
     date: moment(),
     showYearPane() {},
     showMonthPane() {},
@@ -25,10 +27,12 @@ class DatePane extends PureComponent {
     manipulateDate() {},
     disabledDate() {},
     inRange: undefined,
+    alwaysShowEqualWeeks: false,
   }
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
   static propTypes = {
+    className: PropTypes.string,
     date: momentPropTypes.momentObj,
     showYearPane: PropTypes.func,
     showMonthPane: PropTypes.func,
@@ -36,6 +40,7 @@ class DatePane extends PureComponent {
     manipulateDate: PropTypes.func,
     disabledDate: PropTypes.func,
     inRange: PropTypes.func,
+    alwaysShowEqualWeeks: PropTypes.bool,
   }
 
   constructor(props) {
@@ -77,18 +82,28 @@ class DatePane extends PureComponent {
     const { date, showYearPane, showMonthPane } = this.props;
     return (
       <div styleName="datePicker__datePaneHead">
-        <button onClick={this.handleSubtractYear}>&#9664;</button>
-        <button onClick={this.handleSubtractMonth}>&#9664;</button>
-        <button onClick={showMonthPane}>{date.format('MMM')}</button>
-        <button onClick={showYearPane}>{date.format('YYYY')}</button>
-        <button onClick={this.handleAddMonth}>&#9654;</button>
-        <button onClick={this.handleAddYear}>&#9654;</button>
+        <button styleName="datePicker__headControlBtn" onClick={this.handleSubtractYear}>
+          <Icon name="double-arrow-left" size={14} />
+        </button>
+        <button styleName="datePicker__headControlBtn" onClick={this.handleSubtractMonth}>
+          <Icon name="arrow-left" size={14} />
+        </button>
+        <div styleName="datePicker__headJump">
+          <button styleName="datePicker__headJumpBtn" onClick={showMonthPane}>{date.format('MMM')}</button>
+          <button styleName="datePicker__headJumpBtn" onClick={showYearPane}>{date.format('YYYY')}</button>
+        </div>
+        <button styleName="datePicker__headControlBtn" onClick={this.handleAddMonth}>
+          <Icon name="arrow-right" size={14} />
+        </button>
+        <button styleName="datePicker__headControlBtn" onClick={this.handleAddYear}>
+          <Icon name="double-arrow-right" size={14} />
+        </button>
       </div>
     );
   }
 
   renderWeekDays() {
-    const { date, disabledDate, inRange } = this.props;
+    const { date, disabledDate, inRange, alwaysShowEqualWeeks } = this.props;
     const curDate = date.date();
     const firstDayOfMonth = moment(date).startOf('month');
     const lastDayOfMonth = moment(date).endOf('month');
@@ -128,7 +143,7 @@ class DatePane extends PureComponent {
             'datePicker__dayGrid',
             'datePicker__dayGrid--curMonth',
             {
-              'datePicker__dayGrid--active': dateNum === curDate,
+              'datePicker__dayGrid--active': dateNum === curDate && !disabled,
               'datePicker__dayGrid--disabled': disabled,
               'datePicker__dayGrid--range': inRange && inRange(moveDate),
             },
@@ -139,22 +154,27 @@ class DatePane extends PureComponent {
       week.push(<button {...gridProps}>{dateNum}</button>);
       if (week.length === 7) {
         weeks.push(week);
+        if (i + 1 >= lastDayIndex) {
+          if (!alwaysShowEqualWeeks || weeks.length >= 6) {
+            break;
+          }
+        }
         week = [];
-        if (i > lastDayIndex) break;
       }
       moveDate.add(1, 'd');
       i += 1;
     }
     return (
-      weeks.map(w => (
-        <div key={w} styleName="datePicker__weekRow">{w}</div>
+      weeks.map((w, r) => (
+        <div key={r} styleName="datePicker__weekRow">{w}</div>
       ))
     );
   }
 
   render() {
+    const { className } = this.props;
     return (
-      <div styleName="datePicker__picker datePicker__datePane">
+      <div styleName="datePicker__picker datePicker__datePane" className={className}>
         {this.renderPaneHead()}
         {this.renderWeekTitle()}
         {this.renderWeekDays()}

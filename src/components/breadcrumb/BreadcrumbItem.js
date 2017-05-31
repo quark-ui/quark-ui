@@ -15,7 +15,6 @@ class BreadcrumbItem extends PureComponent {
 
   static defaultProps = {
     separator: '/',
-    href: '',
   }
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
@@ -25,7 +24,6 @@ class BreadcrumbItem extends PureComponent {
       PropTypes.element,
     ]),
     href: PropTypes.string,
-    children: PropTypes.isRequired,
   }
 
   constructor(props) {

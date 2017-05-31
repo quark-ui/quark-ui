@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Quark-UI</title>
-  <script src="/react/dist/react-with-addons.js" defer></script>
-  <script src="/react-dom/dist/react-dom.js" defer></script>
-  <script src="/animejs/anime.min.js" defer></script>
-  <script src="/site.js" defer></script>
+  <title><%= htmlWebpackPlugin.options.title %></title>
+  <script src="https://unpkg.com/react@15.5.4/dist/react-with-addons.<%= htmlWebpackPlugin.options.version %>js" defer></script>
+  <script src="https://unpkg.com/react-dom@15.5.4/dist/react-dom.<%= htmlWebpackPlugin.options.version %>js" defer></script>
+  <script src="https://unpkg.com/animejs@2.0.2/anime.min.js" defer></script>
 </head>
-<body id="App">
+<body>
+<div id="App"></div>
 </body>
 </html>

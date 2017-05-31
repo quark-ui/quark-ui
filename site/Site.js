@@ -11,8 +11,10 @@ import styles from './Site.css';
 import HomePage from './pages/HomePage';
 import ComponentPage from './pages/ComponentPage';
 
+const basename = BASEPATH;
+
 export default () => (
-  <Router>
+  <Router basename={basename}>
     <div className={styles.app}>
       <Route path="/" component={HomePage} exact />
       <Route path="/component" component={ComponentPage} />
