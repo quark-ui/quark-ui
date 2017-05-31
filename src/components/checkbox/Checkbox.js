@@ -5,6 +5,7 @@
 import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
+import shallowEqual from 'shallowequal';
 import { allowMultiple } from '../../constants';
 import styles from './Checkbox.css';
 
@@ -40,8 +41,8 @@ class Checkbox extends PureComponent {
   };
 
 
-  constructor(props) {
-    super(props);
+  constructor(props,context) {
+    super(props,context);
 
     const checked = 'checked' in props ?props.checked:props.defaultChecked;
 
@@ -50,6 +51,11 @@ class Checkbox extends PureComponent {
     };
   }
 
+  shouldComponentUpdate(nextProps, nextState, nextContext) {
+    return !shallowEqual(this.props, nextProps) ||
+           !shallowEqual(this.state, nextState) ||
+           !shallowEqual(this.context.checkboxGroup, nextContext.checkboxGroup);
+  }
 
   componentWillReceiveProps(nextProps){
     if('checked' in nextProps){
@@ -87,12 +93,12 @@ class Checkbox extends PureComponent {
   render() {
     const {context,props} = this;
     const {children,name,type,disabled,readOnly,onClick,onFocus,onBlur,...otherProps} = props;
-    let checkboxProps = {...otherProps};
+    let checkboxProps = { ...otherProps };
     // let {checked} = this.state;
     const {checkboxGroup} = context;
     if(checkboxGroup){
       checkboxProps.onChange =()=>checkboxGroup.toggleOption({label:children,value:props.value});
-      // checkboxProps.checked = checkboxGroup.value.indexOf(props.value) !==-1;
+      checkboxProps.checked = checkboxGroup.value.indexOf(props.value) !==-1;
       checkboxProps.disabled = 'disabled' in props ? props.disabled:checkboxGroup.disabled;
     }
     return (

@@ -5,6 +5,7 @@
 import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
+import shallowEqual from 'shallowequal';
 import { allowMultiple } from '../../constants';
 import Checkbox from './Checkbox'
 import styles from './Checkbox.css';
@@ -51,8 +52,12 @@ class CheckboxGroup extends PureComponent {
       });
     }
   }
+  shouldComponentUpdate(nextProps, nextState) {
+    return !shallowEqual(this.props, nextProps) ||
+      !shallowEqual(this.state, nextState);
+  }
 
-  getChildContext() {
+  getChildContext=()=> {
     return {
       checkboxGroup: {
         toggleOption: this.toggleOption,

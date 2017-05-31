@@ -78,12 +78,13 @@
     "moment": "^2.18.1",
     "object-assign": "^4.1.0",
     "prop-types": "^15.5.8",
+    "rc-menu": "~5.0.9",
+    "rc-upload": "~2.3.0",
     "react": "^15.5.0",
     "react-css-modules": "^4.2.1",
     "react-dom": "^15.5.0",
     "react-moment-proptypes": "^1.4.0",
-    "rc-menu": "~5.0.9",
-    "rc-upload": "~2.3.0"
+    "shallowequal": "^1.0.1"
   },
   "contributors": [],
   "license": "MIT"
