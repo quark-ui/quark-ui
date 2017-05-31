@@ -5,14 +5,17 @@
   "repository": "https://github.com/quark-ui/quark-ui.git",
   "author": "",
   "main": "lib/index.js",
+  "module": "src/index",
   "scripts": {
     "start": "webpack-dev-server --config ./conf/webpack.conf.js --port 3000 --open",
     "build": "webpack --config ./conf/webpack.conf.js",
+    "theme": "webpack --config ./conf/webpack.conf.js",
     "gh-pages": "webpack --config ./conf/webpack.conf.js -p",
     "pub": "git push origin master & npm publish",
     "new": "yo quarkui",
     "lint": "eslint --color -f table ./src",
-    "lint-c": "eslint --color -f table"
+    "lint-c": "eslint --color -f table",
+    "pack": "rollup -c ./conf/rollup.config.js"
   },
   "bugs": {
     "url": "http://github.com/quark-ui/quark-ui/issues"

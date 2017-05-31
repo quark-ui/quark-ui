@@ -5,7 +5,7 @@
 import React, { PureComponent, cloneElement } from 'react';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
-import Icon from '../icon';
+import Icon from 'quark-ui/icon';
 
 import { allowMultiple } from '../../constants';
 import styles from './Breadcrumb.css';
