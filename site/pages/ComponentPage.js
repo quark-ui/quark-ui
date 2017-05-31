@@ -1,7 +1,6 @@
 import { PureComponent } from 'react';
 import {
   Route,
-  Link,
   NavLink,
 } from 'react-router-dom';
 import lowerFirst from 'lodash/lowerFirst';

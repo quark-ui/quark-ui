@@ -2,25 +2,6 @@
  * Icon Style
  * @author ryan.bian
  */
-:root {
-  /* 品牌色 */
-  /* 品牌色——浅 */
-  /* 品牌色——深 */
-  
-  /* 边框色 */
-
-  /* 中性色 */
-
-  /* 标题 主要文字 */
-  /* 正文 说明 */
-  /* 辅助 次级文字 */
-
-  /* 链接色 */
-
-  /* 警告 */
-  /* 失败 */
-  /* 成功 */
-}
 ._2jSl5RJ {
   width: 1em;
   height: 1em;
@@ -31,37 +12,22 @@
  * Steps Style
  * @author grootfish
  */
-:root {
-  /* 品牌色 */
-  /* 品牌色——浅 */
-  /* 品牌色——深 */
-  
-  /* 边框色 */
 
-  /* 中性色 */
-
-  /* 标题 主要文字 */
-  /* 正文 说明 */
-  /* 辅助 次级文字 */
-
-  /* 链接色 */
-
-  /* 警告 */
-  /* 失败 */
-  /* 成功 */
-}
 ._1hnABRb {
   width: 100%;
   line-height: 1.5;
 }
+
 .O2T4biQ {
   position: relative;
   display: inline-block;
   vertical-align: top;
 }
+
 .O2T4biQ:last-child ._2vbHRHb {
   display: none;
 }
+
 .WV34rPt:not(:first-child) ._2UU-kd6 {
   padding-left: 10px;
   margin-left: -10px;
@@ -90,12 +56,15 @@
   height: 100%;
   opacity: 0;
 }
+
+
 ._2UU-kd6 {
   background: #fff;
   position: relative;
   display: inline-block;
   vertical-align: top;
 }
+
 ._2JVCbOY {
   display: block;
   border: 1px solid #CECECE;
@@ -107,11 +76,13 @@
   font-size: 14px;
   margin-right: 8px;
 }
+
 ._2jVCR-o {
   line-height: 1;
   color: rgb(58, 152, 224);
   position: relative;
 }
+
 ._35Vh_F5 {
   font-size: 14px;
   color: #333;
@@ -120,16 +91,19 @@
   display: inline-block;
   padding-right: 10px;
 }
+
 ._1DxItRx {
   font-size: 12px;
   color: #333;
 }
+
 ._11Rome9 {
   position: relative;
   display: inline-block;
   vertical-align: top;
   margin-top: 2.5px;
 }
+
 /*未开始状态样式*/
 .XQtgjbi{
 }
@@ -145,7 +119,8 @@
 }
 .XQtgjbi ._2JVCbOY>._2jVCR-o {
   color: #CECECE;
-}
+} 
+
 /*进行中状态样式*/
 .YRG4bmD{
 }
@@ -162,6 +137,7 @@
 .YRG4bmD ._2JVCbOY>._2jVCR-o {
   color: #fff;
 }
+
 /*完成状态样式*/
 ._1VnV_nf {
 
@@ -186,9 +162,12 @@
   opacity: 1;
   box-shadow: 0 0 0 0 rgb(58, 152, 224);
 }
+
+
 /*TODO*/
 ._2V3dCtV {}
 .WD5QBi2 {}
+
 /*竖向步骤条样式*/
 ._1Z9B0MQ{
 }
@@ -219,5 +198,5 @@
   display: block;
 }
 
-/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoic3RlcHMuY3NzIiwic291cmNlcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OyIsInNvdXJjZVJvb3QiOiIifQ==*/
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoic3RlcHMuY3NzIiwic291cmNlcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OyIsInNvdXJjZVJvb3QiOiIifQ==*/
 /*# sourceMappingURL=steps.css.map*/

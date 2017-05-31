@@ -22,7 +22,6 @@ export default class Home extends Component {
   }
 
   componentDidUpdate() {
-    console.log('componentDidUpdate');
     if (!this.lineDrawing) {
       this.lineDrawing = anime({
         targets: '#lineDrawing path',

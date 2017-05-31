@@ -2,8 +2,6 @@
  * Button Style
  * @author ryan.bian
  */
-@import '../../styles/theme.css';
-
 .base {
   border-style: solid;
   border-width: 1px;
