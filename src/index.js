@@ -29,7 +29,5 @@ export { default as Steps } from './components/steps/';
 
 export { default as Trigger } from './components/trigger/';
 
-export { default as Menu } from './components/menu/';
-
 export { default as Input } from './components/input/';
 
