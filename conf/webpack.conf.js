@@ -2,6 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const webpack = require('webpack');
 const ip = require('ip');
+const upperFirst = require('lodash/upperFirst');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const merge = require('webpack-merge');
@@ -11,7 +12,8 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const WebpackChunkHash = require('webpack-chunk-hash');
 
-const THEME = require('../src/styles/theme');
+const DEFAULT_THEME = require('../src/styles/theme');
+const ORANGE_THEME = require('../src/styles/orange');
 
 const TARGET = process.env.npm_lifecycle_event;
 
@@ -145,7 +147,7 @@ if (TARGET === 'start') {
                     browsers: ['last 5 Chrome versions'],
                     features: {
                       customProperties: {
-                        variables: THEME,
+                        variables: DEFAULT_THEME,
                       },
                     },
                   }),
@@ -219,7 +221,7 @@ if (TARGET === 'gh-pages') {
                       browsers: ['last 5 Chrome versions'],
                       features: {
                         customProperties: {
-                          variables: THEME,
+                          variables: DEFAULT_THEME,
                         },
                       },
                     }),
@@ -268,6 +270,70 @@ if (TARGET === 'gh-pages') {
   });
 }
 
+if (TARGET === 'theme') {
+  const extractCSS = new ExtractTextPlugin({
+    filename: '[name].orange.css',
+  });
+  const themeList = fs.readdirSync(path.resolve(__dirname, '../src/components'));
+  const themeEntries = {
+  };
+  themeList.forEach((name) => {
+    Object.assign(themeEntries, {
+      [`${name}`]: `./src/components/${name}/${upperFirst(name)}.css`,
+    });
+  });
+
+  config = merge(common, {
+    entry: themeEntries,
+    output: {
+      path: path.join(__dirname, '../lib'),
+      filename: '[name].orange.js',
+      publicPath: '/',
+    },
+    module: {
+      rules: [
+        {
+          test: /\.css$/,
+          use: extractCSS.extract(
+            [
+              {
+                loader: 'css-loader',
+                options: {
+                  importLoaders: 1,
+                  modules: true,
+                  localIdentName: '[hash:base64:7]',
+                },
+              },
+              {
+                loader: 'postcss-loader',
+                options: {
+                  plugins: () => [
+                    cssnext({
+                      features: {
+                        browsers: [
+                          '> 1%',
+                          'last 2 versions',
+                          'ie >= 8',
+                        ],
+                        customProperties: {
+                          variables: ORANGE_THEME,
+                        },
+                      },
+                    }),
+                  ],
+                },
+              },
+            ]
+          ),
+        },
+      ],
+    },
+    plugins: [
+      extractCSS,
+    ],
+  });
+}
+
 if (TARGET === 'build') {
   const extractCSS = new ExtractTextPlugin({
     filename: '[name].css',
@@ -311,8 +377,13 @@ if (TARGET === 'build') {
                   plugins: () => [
                     cssnext({
                       features: {
+                        browsers: [
+                          '> 1%',
+                          'last 2 versions',
+                          'ie >= 8',
+                        ],
                         customProperties: {
-                          variables: THEME,
+                          variables: DEFAULT_THEME,
                         },
                       },
                     }),
