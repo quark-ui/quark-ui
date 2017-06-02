@@ -7,7 +7,7 @@
   "main": "lib/index.js",
   "module": "src/index",
   "scripts": {
-    "start": "webpack-dev-server --config ./conf/webpack.conf.js --port 3000 --open",
+    "start": "webpack-dashboard -- webpack-dev-server --config ./conf/webpack.conf.js --port 3000 --open",
     "build": "webpack --config ./conf/webpack.conf.js",
     "theme": "webpack --config ./conf/webpack.conf.js",
     "gh-pages": "webpack --config ./conf/webpack.conf.js -p",
@@ -71,6 +71,7 @@
     "webpack": "^2.4.1",
     "webpack-bundle-analyzer": "^2.8.1",
     "webpack-chunk-hash": "^0.4.0",
+    "webpack-dashboard": "^0.4.0",
     "webpack-dev-server": "^2.4.2",
     "webpack-merge": "^4.1.0"
   },
