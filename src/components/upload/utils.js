@@ -1,10 +1,6 @@
-export function T() {
-  return true;
-}
-
 // Fix IE file.status problem
 // via coping a new Object
-export function fileToObject(file): any {
+export function fileToObject(file) {
   return {
     lastModified: file.lastModified,
     lastModifiedDate: file.lastModifiedDate,

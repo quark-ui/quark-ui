@@ -2,25 +2,30 @@
  * UploadList Component
  * @author heifade
  */
-import React, { PureComponent } from 'react';
+import React from 'react';
 import CSSModules from 'react-css-modules';
 import Animate from 'rc-animate';
 import Icon from '../icon/Icon';
 import { allowMultiple } from '../../constants';
 // import Tooltip from '../tooltip';
 import Progress from '../progress/Progress';
-import classNames from 'classnames';
+// import classNames from 'classnames';
 // import { UploadListProps } from './interface';
 import styles from './Upload.css';
 
+const previewFile = (file, callback) => {
+  const reader = new FileReader();
+  reader.onloadend = () => callback(reader.result);
+  reader.readAsDataURL(file);
+};
 
 @CSSModules(styles, { allowMultiple })
-export default class UploadList extends PureComponent {
+export default class UploadList extends React.Component {
 
   static displayName = 'UploadList'
 
   static defaultProps = {
-    listType: 'text',  // or picture
+    listType: 'text',  // or picture-card
     progressAttr: {
       strokeWidth: 2,
       showInfo: false,
@@ -34,6 +39,7 @@ export default class UploadList extends PureComponent {
   static propTypes = {
   }
 
+  // 删除
   handleClose = (file) => {
     const onRemove = this.props.onRemove;
     if (onRemove) {
@@ -56,10 +62,10 @@ export default class UploadList extends PureComponent {
     }
     (this.props.items || []).forEach((file) => {
       if (typeof document === 'undefined' ||
-          typeof window === 'undefined' ||
-          !window.FileReader || !window.File ||
-          !(file.originFileObj instanceof File) ||
-          file.thumbUrl !== undefined) {
+        typeof window === 'undefined' ||
+        !window.FileReader || !window.File ||
+        !(file.originFileObj instanceof File) ||
+        file.thumbUrl !== undefined) {
         return;
       }
       /*eslint-disable */
@@ -85,7 +91,7 @@ export default class UploadList extends PureComponent {
     const { prefixCls, items = [], listType, showPreviewIcon, showRemoveIcon, locale } = this.props;
     const list = items.map((file) => {
       let progress;
-      let icon = <Icon type={file.status === 'uploading' ? 'loading' : 'paper-clip'} />;
+      let icon = <Icon size={12} styleName={'status'} name={file.status === 'uploading' ? 'setting' : 'paper'} />;
 
       if (listType === 'picture' || listType === 'picture-card') {
         if (file.status === 'uploading' || (!file.thumbUrl && !file.url)) {
@@ -97,7 +103,7 @@ export default class UploadList extends PureComponent {
         } else {
           icon = (
             <a
-              className={`${prefixCls}-list-item-thumbnail`}
+              styleName={`${prefixCls}-list-item-thumbnail`}
               onClick={e => this.handlePreview(file, e)}
               href={file.url || file.thumbUrl}
               target="_blank"
@@ -116,15 +122,15 @@ export default class UploadList extends PureComponent {
         ) : null;
 
         progress = (
-          <div className={`${prefixCls}-list-item-progress`} key="progress">
+          <div styleName={`${prefixCls}-list-item-progress`} key="progress">
             {loadingProgress}
           </div>
         );
       }
-      const infoUploadingClass = classNames({
-        [`${prefixCls}-list-item`]: true,
-        [`${prefixCls}-list-item-${file.status}`]: true,
-      });
+
+      const message = file.response || (file.error && file.error.statusText) || locale.uploadError;
+
+
       const preview = file.url ? (
         <a
           href={file.url}
@@ -137,14 +143,15 @@ export default class UploadList extends PureComponent {
           {file.name}
         </a>
       ) : (
-        <span
-          styleName={`${prefixCls}-list-item-name`}
-          onClick={e => this.handlePreview(file, e)}
-          title={file.name}
-        >
-          {file.name}
-        </span>
-      );
+          <span
+            styleName={`${prefixCls}-list-item-name`}
+            onClick={e => this.handlePreview(file, e)}
+            // title={file.name}
+            title={file.response ? '' : message}
+          >
+            {file.name}
+          </span>
+        );
       const style = (file.url || file.thumbUrl) ? undefined : {
         pointerEvents: 'none',
         opacity: 0.5,
@@ -158,27 +165,33 @@ export default class UploadList extends PureComponent {
           onClick={e => this.handlePreview(file, e)}
           title={locale.previewFile}
         >
-          <Icon type="eye-o" />
+          <Icon name="setting" size={12} styleName={'eye'} color={`#ffffff`} />
         </a>
       ) : null;
       const removeIcon = showRemoveIcon ? (
-        <Icon type="delete" title={locale.removeFile} onClick={() => this.handleClose(file)} />
+        <Icon name="error" size={12} styleName={'remove'} title={locale.removeFile} onClick={() => this.handleClose(file)} /> // 删除
       ) : null;
       const removeIconCross = showRemoveIcon ? (
-        <Icon type="cross" title={locale.removeFile} onClick={() => this.handleClose(file)} />
+        <Icon name="error" size={12} styleName={'remove'} title={locale.removeFile} onClick={() => this.handleClose(file)} /> // 删除
       ) : null;
       const actions = (listType === 'picture-card' && file.status !== 'uploading')
-        ? <span className={`${prefixCls}-list-item-actions`}>{previewIcon}{removeIcon}</span>
+        ? <span styleName={`${prefixCls}-list-item-actions`}>{previewIcon}{removeIcon}</span>
         : removeIconCross;
 
-      const message = file.response || (file.error && file.error.statusText) || locale.uploadError;
+
       const iconAndPreview = (file.status === 'error')
-        ? <Tooltip title={message}>{icon}{preview}</Tooltip>
+        ? <span>{icon}{preview}</span>
         : <span>{icon}{preview}</span>;
 
+
+      // const infoUploadingClass = classNames({
+      //   [`${prefixCls}-list-item`]: true,
+      //   [`${prefixCls}-list-item-${file.status}`]: true,
+      // });
+
       return (
-        <div className={infoUploadingClass} key={file.uid}>
-          <div className={`${prefixCls}-list-item-info`}>
+        <div styleName={`${prefixCls}-list-item ${prefixCls}-list-item-${file.status}`} key={file.uid}>
+          <div styleName={`${prefixCls}-list-item-info`}>
             {iconAndPreview}
           </div>
           {actions}
@@ -188,16 +201,16 @@ export default class UploadList extends PureComponent {
         </div>
       );
     });
-    const listClassNames = classNames({
-      [`${prefixCls}-list`]: true,
-      [`${prefixCls}-list-${listType}`]: true,
-    });
+    // const listClassNames = classNames({
+    //   [`${prefixCls}-list`]: true,
+    //   [`${prefixCls}-list-${listType}`]: true,
+    // });
     const animationDirection = listType === 'picture-card' ? 'animate-inline' : 'animate';
     return (
       <Animate
         transitionName={`${prefixCls}-${animationDirection}`}
         component="div"
-        className={listClassNames}
+        styleName={`${prefixCls}-list ${prefixCls}-list-${listType}`}
       >
         {list}
       </Animate>

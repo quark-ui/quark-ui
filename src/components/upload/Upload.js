@@ -2,17 +2,17 @@
  * Upload Component
  * @author heifade
  */
-import React, { PureComponent } from 'react';
+import React from 'react';
 import RcUpload from 'rc-upload';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
 import { allowMultiple } from '../../constants';
 import assign from 'object-assign';
-import { T, fileToObject, genPercentAdd, getFileItem, removeFileItem } from './utils';
+import {fileToObject, genPercentAdd, getFileItem, removeFileItem } from './utils';
 // import Dragger from './Dragger';
 import UploadList from './UploadList';
 // import { UploadProps, UploadLocale } from './interface';
-import classNames from 'classnames';
+// import classNames from 'classnames';
 import styles from './Upload.css';
 
 const defaultLocale = {
@@ -23,28 +23,54 @@ const defaultLocale = {
 };
 
 @CSSModules(styles, { allowMultiple })
-class Upload extends PureComponent {
+class Upload extends React.Component {
 
   static displayName = 'Upload'
 
-
   static defaultProps = {
-    prefixCls: 'ant-upload',
-    type: 'select',
-    multiple: false,
+    name: 'file',
+    defaultFileList: null,
+    // fileList: null,
     action: '',
     data: {},
-    accept: '',
-    beforeUpload: T,
+    headers: null,
     showUploadList: true,
-    listType: 'text', // or pictrue
-    className: '',
+    multiple: false,
+    accept: '',
+    beforeUpload: null,
+    customRequest: null,
+    onChange: null,
+    listType: 'text', // or picture-card
+    onPreview: null,
+    onRemove: null,
     disabled: false,
-    supportServerRender: true,
+    withCredentials: false,
+
+    prefixCls: 'upload',
+    // type: 'select',
+    className: '',
+    supportServerRender: false,
   }
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
   static propTypes = {
+    name: PropTypes.string,
+    defaultFileList: PropTypes.arrayOf(PropTypes.object),
+    fileList: PropTypes.arrayOf(PropTypes.object),
+    action: PropTypes.string,
+    data: PropTypes.object || PropTypes.func,
+    headers: PropTypes.object,
+    showUploadList: PropTypes.bool || PropTypes.object,
+    multiple: PropTypes.bool,
+    accept: PropTypes.string,
+    beforeUpload: PropTypes.func,
+    customRequest: PropTypes.func,
+    onChange: PropTypes.func,
+    listType: PropTypes.oneOf('text', 'picture-card'),
+    onPreview: PropTypes.func,
+    onRemove: PropTypes.func,
+    disabled: PropTypes.bool,
+    withCredentials: PropTypes.bool
   }
 
   constructor(props) {
@@ -64,7 +90,6 @@ class Upload extends PureComponent {
   }
 
   onStart = (file) => {
-    console.log('onStart', file);
     let targetItem;
     let nextFileList = this.state.fileList.concat();
     if (file.length > 0) {
@@ -90,6 +115,49 @@ class Upload extends PureComponent {
     }
   }
 
+  // 上传出错时
+  onError = (error, response, file) => {
+    this.clearProgressTimer();
+    let fileList = this.state.fileList;
+    let targetItem = getFileItem(file, fileList);
+    // removed
+    if (!targetItem) {
+      return;
+    }
+    targetItem.error = error;
+    targetItem.response = response;
+    targetItem.status = 'error';
+    this.onChange({
+      file: { ...targetItem },
+      fileList,
+    });
+  }
+
+  handleRemove(file) {
+    const { onRemove } = this.props;
+
+    Promise.resolve(typeof onRemove === 'function' ? onRemove(file) : onRemove).then(ret => {
+      // Prevent removing file
+      if (ret === false) {
+        return;
+      }
+
+      const removedFileList = removeFileItem(file, this.state.fileList);
+      if (removedFileList) {
+        this.onChange({
+          file,
+          fileList: removedFileList,
+        });
+      }
+    });
+  }
+
+  handleManualRemove = (file) => {
+    this.refs.upload.abort(file);
+    file.status = 'removed'; // eslint-disable-line
+    this.handleRemove(file);
+  }
+
 
   onChange = (info) => {
     if (!('fileList' in this.props)) {
@@ -97,9 +165,22 @@ class Upload extends PureComponent {
     }
 
     const { onChange } = this.props;
+
     if (onChange) {
       onChange(info);
     }
+  }
+  componentWillReceiveProps(nextProps) {
+    if ('fileList' in nextProps) {
+      this.setState({
+        fileList: nextProps.fileList || [],
+      });
+    }
+  }
+  onFileDrop = (e) => {
+    this.setState({
+      dragState: e.type,
+    });
   }
 
   autoUpdateProgress(_, file) {
@@ -116,7 +197,6 @@ class Upload extends PureComponent {
 
 
   onSuccess = (response, file) => {
-    console.log('onSuccess', response, file);
     this.clearProgressTimer();
     try {
       if (typeof response === 'string') {
@@ -126,12 +206,14 @@ class Upload extends PureComponent {
     }
     const fileList = this.state.fileList;
     const targetItem = getFileItem(file, fileList);
+
     // removed
     if (!targetItem) {
       return;
     }
     targetItem.status = 'done';
     targetItem.response = response;
+
     this.onChange({
       file: { ...targetItem },
       fileList,
@@ -141,11 +223,13 @@ class Upload extends PureComponent {
   onProgress = (e, file) => {
     const fileList = this.state.fileList;
     const targetItem = getFileItem(file, fileList);
+
     // removed
     if (!targetItem) {
       return;
     }
     targetItem.percent = e.percent;
+
     this.onChange({
       event: e,
       file: { ...targetItem },
@@ -187,7 +271,7 @@ class Upload extends PureComponent {
       />
     ) : null;
 
-    if (type === 'drag') {
+    /*if (type === 'drag') {
       const dragCls = classNames(prefixCls, {
         [`${prefixCls}-drag`]: true,
         [`${prefixCls}-drag-uploading`]: this.state.fileList.some(file => file.status === 'uploading'),
@@ -211,33 +295,34 @@ class Upload extends PureComponent {
           {uploadList}
         </span>
       );
-    }
+    }*/
 
-    const uploadButtonCls = classNames(prefixCls, {
-      [`${prefixCls}-select`]: true,
-      [`${prefixCls}-select-${listType}`]: true,
-      [`${prefixCls}-disabled`]: disabled,
-    });
+    // const uploadButtonCls = classNames(prefixCls, {
+    //   [`${prefixCls}-select`]: true,
+    //   [`${prefixCls}-select-${listType}`]: true,
+    //   [`${prefixCls}-disabled`]: disabled,
+    // });
 
     const uploadButton = (
-      <div className={uploadButtonCls} style={{ display: children ? '' : 'none' }}>
+      <div styleName={`${prefixCls} ${prefixCls}-select ${prefixCls}-select-${listType}`} style={{ display: children ? '' : 'none' }}>
         <RcUpload {...rcUploadProps} ref="upload" />
       </div>
     );
 
     if (listType === 'picture-card') {
       return (
-        <span className={className}>
+        <div className={className}>
           {uploadList}
           {uploadButton}
-        </span>
+          <div style={{ clear: 'both' }}></div>
+        </div>
       );
     }
     return (
-      <span className={className}>
+      <div className={className}>
         {uploadButton}
         {uploadList}
-      </span>
+      </div>
     );
   }
 }
