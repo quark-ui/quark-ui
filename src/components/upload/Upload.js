@@ -2,13 +2,13 @@
  * Upload Component
  * @author heifade
  */
+import assign from 'object-assign';
 import React from 'react';
 import RcUpload from 'rc-upload';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
 import { allowMultiple } from '../../constants';
-import assign from 'object-assign';
-import {fileToObject, genPercentAdd, getFileItem, removeFileItem } from './utils';
+import { fileToObject, genPercentAdd, getFileItem, removeFileItem } from './utils';
 // import Dragger from './Dragger';
 import UploadList from './UploadList';
 // import { UploadProps, UploadLocale } from './interface';
@@ -70,7 +70,11 @@ class Upload extends React.Component {
     onPreview: PropTypes.func,
     onRemove: PropTypes.func,
     disabled: PropTypes.bool,
-    withCredentials: PropTypes.bool
+    withCredentials: PropTypes.bool,
+
+    prefixCls: PropTypes.string,
+    className: PropTypes.string,
+    supportServerRender: PropTypes.bool,
   }
 
   constructor(props) {
@@ -314,7 +318,7 @@ class Upload extends React.Component {
         <div className={className}>
           {uploadList}
           {uploadButton}
-          <div style={{ clear: 'both' }}></div>
+          <div style={{ clear: 'both' }} />
         </div>
       );
     }
