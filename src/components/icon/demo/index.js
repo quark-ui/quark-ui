@@ -20,7 +20,7 @@ const IconList = [
   'info',
   'success',
   'warning',
-  'error',
+  'error'
 ];
 
 const IconDemo = () => (

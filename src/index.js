@@ -31,3 +31,6 @@ export { default as Trigger } from './components/trigger/';
 
 export { default as Input } from './components/input/';
 
+export { default as Checkbox } from './components/checkbox/';
+
+export { default as Radio } from './components/radio/';
