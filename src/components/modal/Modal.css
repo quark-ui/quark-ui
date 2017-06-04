@@ -26,14 +26,35 @@
   background-color: #fff;
   border: 1px solid border-color;
   transform: translateY(-50%);
+  text-align: center;
 }
+
 .modal__header {
   position: relative;
-  height: 40px;
+  padding: 15px 20px;
+  font-size: 18px;
+  color: #333;
+  text-align: left;
 }
 .modal__closable {
   position: absolute;
-  right: 0;
-  top: 0;
+  right: 15px;
+  color: #a6a6a6;
 }
-.modal__footer {}
+.modal__footer {
+  margin: 40px 80px;
+}
+.modal__content{
+  width: 370px;
+  margin: 0px auto;
+  word-wrap: break-word;
+  font-size: 14px;
+  margin-top: 20px;
+}
+.modal__icon{
+  margin-bottom: 20px;
+}
+.modal--info .modal__content{}
+.modal--success .modal__content{}
+.modal--error .modal__content{}
+.modal--warning .modal__content{}

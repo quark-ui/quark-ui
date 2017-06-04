@@ -11,6 +11,7 @@ import { allowMultiple } from '../../constants';
 import styles from './Modal.css';
 import renderTo from '../../enhancer/render-to';
 import Mask from './Mask';
+import Icon from '../icon';
 
 const renderNoticeModal = (type, config = {
   title: '',
@@ -31,11 +32,12 @@ const renderNoticeModal = (type, config = {
           ReactDOM.unmountComponentAtNode(wrapNode);
           document.body.removeChild(wrapNode);
         }}
-      >确定</Button>
+      >我知道了</Button>
     ),
   };
   ReactDOM.render(
     <Modal {...modalProps}>
+      <div styleName={'modal__icon'}><Icon name={type} size={70} /></div>
       {config.content}
     </Modal>
   , wrapNode);
@@ -55,7 +57,7 @@ class Modal extends Component {
     footer: undefined,
     onOk() {},
     onCancel() {},
-    afterClose() {},
+    afterClose() {}
   }
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
   static propTypes = {
@@ -73,7 +75,8 @@ class Modal extends Component {
     onOk: PropTypes.func,
     onCancel: PropTypes.func,
     afterClose: PropTypes.func,
-    children: PropTypes.isRequired,
+    children: PropTypes.isRequired
+
   }
 
   static info(config) {
@@ -166,23 +169,24 @@ class Modal extends Component {
   }
 
   render() {
-    const { visible, width, children } = this.props;
+    const { visible, width, children} = this.props;
     const modalProps = {
       style: {
         width,
       },
-      styleName: `modal${visible ? '--visible' : ''}`,
-    };
+      styleName: `modal${visible ? '--visible' : ''}`
 
-    return (
-      <Mask visible={visible}>
-        <div {...modalProps}>
-          { this.renderHeader() }
-          {children}
-          { this.renderFooter() }
-        </div>
-      </Mask>
-    );
+    };{
+      return (
+        <Mask visible={visible}>
+          <div {...modalProps}>
+            { this.renderHeader() }
+            <div styleName="modal__content">{children}</div>
+            { this.renderFooter() }
+          </div>
+        </Mask>
+      );
+    }
   }
 }
 

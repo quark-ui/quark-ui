@@ -40,7 +40,7 @@ export default class ModalDemo extends Component {
           type="secondary"
           onClick={() => {
             Modal.info({
-              content: '这是提示信息',
+              content: '这是提示信息'
             });
           }}
         >info</Button>
