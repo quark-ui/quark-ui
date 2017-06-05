@@ -1,7 +1,6 @@
 import { Component } from 'react';
 import Breadcrumb from '../index';
 
-
 export default class BreadcrumbDemo extends Component {
   render() {
     return (
