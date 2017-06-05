@@ -1,11 +1,11 @@
+import CSSModules from 'react-css-modules';
 import React, { Component } from 'react';
+import { allowMultiple } from '../../../constants';
 import Upload from '../Upload';
 import Icon from '../../icon/Icon';
 import Button from '../../button/Button';
 import message from '../../message/index';
 import styles from './index.css';
-import { allowMultiple } from '../../../constants';
-import CSSModules from 'react-css-modules';
 
 @CSSModules(styles, { allowMultiple })
 class UploadDemo1 extends Component {
@@ -15,13 +15,14 @@ class UploadDemo1 extends Component {
     };
   }
   render() {
-    const props1 = {
+    const props = {
       name: 'file',
       action: 'https://jsonplaceholder.typicode.com/posts/',
       headers: {
         authorization: 'authorization-text',
       },
       multiple: true,
+      disabled: false,
       onChange(info) {
         if (info.file.status !== 'uploading') {
           // console.log(info.file, info.fileList);
@@ -37,8 +38,8 @@ class UploadDemo1 extends Component {
     return (
       <div>
         1、经典款式，用户点击按钮弹出文件选择框。
-        <Upload {...props1}>
-          <Button size="small" type="secondary">
+        <Upload {...props}>
+          <Button size="small" type="secondary" disabled={props.disabled}>
             <Icon size={12} name="home" /> 上传文件
           </Button>
         </Upload>
@@ -62,9 +63,10 @@ class UploadDemo2 extends Component {
         authorization: 'authorization-text',
       },
       multiple: true,
+      disabled: false,
       onChange(info) {
         if (info.file.status !== 'uploading') {
-          //console.log(info.file, info.fileList);
+          // console.log(info.file, info.fileList);
         }
         if (info.file.status === 'done') {
           message.success(`${info.file.name} 文件上传成功.`);
@@ -98,15 +100,12 @@ class UploadDemo2 extends Component {
         2、已上传文件的列表<br />
         使用 defaultFileList 设置已上传的内容。
         <Upload {...props}>
-          <Button size="small" type="secondary">
+          <Button size="small" type="secondary" disabled={props.disabled}>
             <Icon size={12} name="home" /> 上传文件
           </Button>
         </Upload>
       </div>
     );
-
-
-
   }
 }
 
@@ -128,6 +127,7 @@ class UploadDemo3 extends Component {
     const I = this;
     const props = {
       action: '//jsonplaceholder.typicode.com/posts/',
+      disabled: false,
       onChange(info) {
         let fileList = info.fileList;
 
@@ -160,78 +160,17 @@ class UploadDemo3 extends Component {
         2) 读取远程路径并显示链接。<br />
         3) 按照服务器返回信息筛选成功上传的文件。<br />
         <Upload {...props} fileList={this.state.fileList}>
-          <Button size="small" type="secondary">
+          <Button size="small" type="secondary" disabled={props.disabled}>
             <Icon size={12} name="home" /> 上传文件
           </Button>
         </Upload>
       </div>
-    )
+    );
   }
 }
 
 @CSSModules(styles, { allowMultiple })
 class UploadDemo4 extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
-  }
-
-  getBase64(img, callback) {
-    const reader = new FileReader();
-    reader.addEventListener('load', () => callback(reader.result));
-    reader.readAsDataURL(img);
-  }
-
-  beforeUpload(file) {
-    const isJPG = file.type === 'image/png';
-    if (!isJPG) {
-      message.error('请上传.png文件!');
-    }
-    const isLt2M = file.size < 1024 * 50;
-    if (!isLt2M) {
-      message.error('图片不能超过50KB!');
-    }
-    return isJPG && isLt2M;
-  }
-
-  handleChange = (info) => {
-    const I = this;
-    if (info.file.status === 'done') {
-      I.getBase64(info.file.originFileObj, (imageUrl) => {
-        I.setState({ imageUrl });
-      });
-    }
-  }
-
-  render() {
-    return (
-      <div>
-        4、显示上传缩略图
-        点击上传图片，并使用 beforeUpload 限制用户上传的图片格式和大小。
-        <Upload
-          styleName="avatar-uploader"
-          name="avatar"
-          showUploadList={false}
-          action="//jsonplaceholder.typicode.com/posts/"
-          beforeUpload={this.beforeUpload}
-          onChange={this.handleChange}
-        >
-          {
-            this.state.imageUrl ?
-              <img src={this.state.imageUrl} alt="" styleName="avatar" /> :
-              <div styleName="avatar-uploader-trigger">
-                <Icon name="setting" size={19} styleName="avatar-uploader-icon" />
-              </div>
-          }
-        </Upload>
-      </div>
-    )
-  }
-}
-
-@CSSModules(styles, { allowMultiple })
-class UploadDemo5 extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -259,38 +198,33 @@ class UploadDemo5 extends Component {
     return isJPG && isLt2M;
   }
   render() {
+    const props = {
+      action: '//jsonplaceholder.typicode.com/posts/',
+      disabled: false,
+      listType: 'picture-card',
+      fileList: this.state.fileList,
+      onPreview: this.handlePreview,
+      onChange: this.handleChange,
+      beforeUpload: this.beforeUpload,
+    };
+
     const uploadButton = (
-      <div styleName="avatar-uploader-s">
-        <div styleName="avatar-uploader-trigger-s">
-          <Icon name="setting" size={19} styleName="avatar-uploader-icon-s" />
-          <div styleName="upload-text-s">上传</div>
-        </div>
+      <div styleName="upload-btn">
+        <Icon name="setting" size={20} />
+        <div styleName="upload-text">上传</div>
       </div>
     );
     return (
       <div>
-        5、显示上传缩略图
+        4、显示上传缩略图
         点击上传图片，并使用 beforeUpload 限制用户上传的图片格式和大小。
-        <Upload
-          action="//jsonplaceholder.typicode.com/posts/"
-          listType="picture-card"
-          fileList={this.state.fileList}
-          onPreview={this.handlePreview}
-          onChange={this.handleChange}
-          beforeUpload={this.beforeUpload}
-        >
+        <Upload {...props}>
           {this.state.fileList.length >= 3 ? null : uploadButton}
         </Upload>
       </div>
     );
   }
 }
-
-
-
-
-
-
 
 export default class UploadDemo extends Component {
   render() {
@@ -303,11 +237,7 @@ export default class UploadDemo extends Component {
         <UploadDemo3 />
         <br /><br />
         <UploadDemo4 />
-        <br /><br />
-        <UploadDemo5 />
       </div>
     );
   }
 }
-
-

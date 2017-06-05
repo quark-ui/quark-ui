@@ -3,6 +3,7 @@
  * @author heifade
  */
 import React from 'react';
+import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
 import Animate from 'rc-animate';
 import Icon from '../icon/Icon';
@@ -26,34 +27,39 @@ export default class UploadList extends React.Component {
 
   static defaultProps = {
     listType: 'text',  // or picture-card
+    items: [],
+    onRemove: null,
+    onPreview: null,
+    prefixCls: 'upload',
+    showRemoveIcon: true,
+    showPreviewIcon: true,
+    disabled: false,
     progressAttr: {
       strokeWidth: 2,
       showInfo: false,
     },
-    prefixCls: 'upload',
-    showRemoveIcon: true,
-    showPreviewIcon: true,
+    locale: { },
   }
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
   static propTypes = {
+    listType: PropTypes.oneOf('text', 'picture-card'),
+    items: PropTypes.arrayOf(PropTypes.object),
+    onRemove: PropTypes.func,
+    onPreview: PropTypes.func,
+    prefixCls: PropTypes.string,
+    showPreviewIcon: PropTypes.bool,
+    showRemoveIcon: PropTypes.bool,
+    disabled: PropTypes.bool,
+    progressAttr: PropTypes.Requireable,
+    locale: PropTypes.Requireable,
   }
 
-  // 删除
-  handleClose = (file) => {
-    const onRemove = this.props.onRemove;
-    if (onRemove) {
-      onRemove(file);
-    }
-  }
+  constructor(props) {
+    super(props);
+    this.state = {
 
-  handlePreview = (file, e) => {
-    const { onPreview } = this.props;
-    if (!onPreview) {
-      return;
-    }
-    e.preventDefault();
-    return onPreview(file);
+    };
   }
 
   componentDidUpdate() {
@@ -80,15 +86,32 @@ export default class UploadList extends React.Component {
     });
   }
 
-  constructor(props) {
-    super(props);
-    this.state = {
+  // 删除
+  handleClose = (file) => {
+    const onRemove = this.props.onRemove;
+    if (onRemove) {
+      onRemove(file);
+    }
+  }
 
-    };
+  handlePreview = (file, e) => {
+    const { onPreview } = this.props;
+    if (!onPreview) {
+      return;
+    }
+    e.preventDefault();
+    onPreview(file);
   }
 
   render() {
-    const { prefixCls, items = [], listType, showPreviewIcon, showRemoveIcon, locale } = this.props;
+    const { prefixCls,
+      items = [],
+      listType,
+      showPreviewIcon,
+      showRemoveIcon,
+      locale,
+      disabled,
+    } = this.props;
     const list = items.map((file) => {
       let progress;
       let icon = <Icon size={12} styleName={'status'} name={file.status === 'uploading' ? 'setting' : 'paper'} />;
@@ -143,15 +166,14 @@ export default class UploadList extends React.Component {
           {file.name}
         </a>
       ) : (
-          <span
-            styleName={`${prefixCls}-list-item-name`}
-            onClick={e => this.handlePreview(file, e)}
-            // title={file.name}
-            title={file.response ? '' : message}
-          >
-            {file.name}
-          </span>
-        );
+        <span
+          styleName={`${prefixCls}-list-item-name`}
+          // title={file.name}
+          title={file.response ? '' : message}
+        >
+          {file.name}
+        </span>
+      );
       const style = (file.url || file.thumbUrl) ? undefined : {
         pointerEvents: 'none',
         opacity: 0.5,
@@ -165,13 +187,13 @@ export default class UploadList extends React.Component {
           onClick={e => this.handlePreview(file, e)}
           title={locale.previewFile}
         >
-          <Icon name="setting" size={12} styleName={'eye'} color={`#ffffff`} />
+          <Icon name="setting" size={12} styleName={'eye'} />
         </a>
       ) : null;
-      const removeIcon = showRemoveIcon ? (
+      const removeIcon = showRemoveIcon && !disabled ? (
         <Icon name="error" size={12} styleName={'remove'} title={locale.removeFile} onClick={() => this.handleClose(file)} /> // 删除
       ) : null;
-      const removeIconCross = showRemoveIcon ? (
+      const removeIconCross = showRemoveIcon && !disabled ? (
         <Icon name="error" size={12} styleName={'remove'} title={locale.removeFile} onClick={() => this.handleClose(file)} /> // 删除
       ) : null;
       const actions = (listType === 'picture-card' && file.status !== 'uploading')

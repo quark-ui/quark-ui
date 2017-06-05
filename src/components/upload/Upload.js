@@ -49,7 +49,7 @@ class Upload extends React.Component {
     prefixCls: 'upload',
     // type: 'select',
     className: '',
-    supportServerRender: false,
+    // supportServerRender: false,
   }
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
@@ -74,7 +74,8 @@ class Upload extends React.Component {
 
     prefixCls: PropTypes.string,
     className: PropTypes.string,
-    supportServerRender: PropTypes.bool,
+    children: PropTypes.element.isRequired,
+    // supportServerRender: PropTypes.bool,
   }
 
   constructor(props) {
@@ -85,14 +86,32 @@ class Upload extends React.Component {
     };
   }
 
-  getLocale() {
-    let locale = {};
-    if (this.context.antLocale && this.context.antLocale.Upload) {
-      locale = this.context.antLocale.Upload;
-    }
-    return assign({}, defaultLocale, locale, this.props.locale);
-  }
+  // getLocale() {
+  //   let locale = {};
+  //   if (this.context.antLocale && this.context.antLocale.Upload) {
+  //     locale = this.context.antLocale.Upload;
+  //   }
+  //   return assign({}, defaultLocale, locale, this.props.locale);
+  // }
 
+  componentWillReceiveProps(nextProps) {
+    if ('fileList' in nextProps) {
+      this.setState({
+        fileList: nextProps.fileList || [],
+      });
+    }
+  }
+  onChange = (info) => {
+    if (!('fileList' in this.props)) {
+      this.setState({ fileList: info.fileList });
+    }
+
+    const { onChange } = this.props;
+
+    if (onChange) {
+      onChange(info);
+    }
+  }
   onStart = (file) => {
     let targetItem;
     let nextFileList = this.state.fileList.concat();
@@ -118,12 +137,11 @@ class Upload extends React.Component {
       this.autoUpdateProgress(0, targetItem);
     }
   }
-
   // 上传出错时
   onError = (error, response, file) => {
     this.clearProgressTimer();
-    let fileList = this.state.fileList;
-    let targetItem = getFileItem(file, fileList);
+    const fileList = this.state.fileList;
+    const targetItem = getFileItem(file, fileList);
     // removed
     if (!targetItem) {
       return;
@@ -136,69 +154,11 @@ class Upload extends React.Component {
       fileList,
     });
   }
-
-  handleRemove(file) {
-    const { onRemove } = this.props;
-
-    Promise.resolve(typeof onRemove === 'function' ? onRemove(file) : onRemove).then(ret => {
-      // Prevent removing file
-      if (ret === false) {
-        return;
-      }
-
-      const removedFileList = removeFileItem(file, this.state.fileList);
-      if (removedFileList) {
-        this.onChange({
-          file,
-          fileList: removedFileList,
-        });
-      }
-    });
-  }
-
-  handleManualRemove = (file) => {
-    this.refs.upload.abort(file);
-    file.status = 'removed'; // eslint-disable-line
-    this.handleRemove(file);
-  }
-
-
-  onChange = (info) => {
-    if (!('fileList' in this.props)) {
-      this.setState({ fileList: info.fileList });
-    }
-
-    const { onChange } = this.props;
-
-    if (onChange) {
-      onChange(info);
-    }
-  }
-  componentWillReceiveProps(nextProps) {
-    if ('fileList' in nextProps) {
-      this.setState({
-        fileList: nextProps.fileList || [],
-      });
-    }
-  }
   onFileDrop = (e) => {
     this.setState({
       dragState: e.type,
     });
   }
-
-  autoUpdateProgress(_, file) {
-    const getPercent = genPercentAdd();
-    let curPercent = 0;
-    this.clearProgressTimer();
-    this.progressTimer = setInterval(() => {
-      curPercent = getPercent(curPercent);
-      this.onProgress({
-        percent: curPercent,
-      }, file);
-    }, 200);
-  }
-
 
   onSuccess = (response, file) => {
     this.clearProgressTimer();
@@ -241,15 +201,55 @@ class Upload extends React.Component {
     });
   }
 
+  autoUpdateProgress(_, file) {
+    const getPercent = genPercentAdd();
+    let curPercent = 0;
+    this.clearProgressTimer();
+    this.progressTimer = setInterval(() => {
+      curPercent = getPercent(curPercent);
+      this.onProgress({
+        percent: curPercent,
+      }, file);
+    }, 200);
+  }
+
+  handleManualRemove = (file) => {
+    this.refs.upload.abort(file);
+    file.status = 'removed'; // eslint-disable-line
+    this.handleRemove(file);
+  }
+
+  handleRemove(file) {
+    const { onRemove } = this.props;
+
+    Promise.resolve(typeof onRemove === 'function' ? onRemove(file) : onRemove)
+      .then(ret => {
+        // Prevent removing file
+        if (ret === false) {
+          return;
+        }
+
+        const removedFileList = removeFileItem(file, this.state.fileList);
+        if (removedFileList) {
+          this.onChange({
+            file,
+            fileList: removedFileList,
+          });
+        }
+      });
+  }
+
   clearProgressTimer() {
     clearInterval(this.progressTimer);
   }
 
-
   render() {
     const {
       prefixCls = '', showUploadList, listType, onPreview,
-      type, disabled, children, className,
+      // type, 
+      disabled,
+      children,
+      className,
     } = this.props;
 
     const rcUploadProps = assign({}, {
@@ -271,14 +271,18 @@ class Upload extends React.Component {
         onRemove={this.handleManualRemove}
         showRemoveIcon={showRemoveIcon}
         showPreviewIcon={showPreviewIcon}
-        locale={this.getLocale()}
+        // locale={this.getLocale()}
+        locale={defaultLocale}
+        disabled={disabled}
       />
     ) : null;
 
-    /*if (type === 'drag') {
+    /* if (type === 'drag') {
       const dragCls = classNames(prefixCls, {
         [`${prefixCls}-drag`]: true,
-        [`${prefixCls}-drag-uploading`]: this.state.fileList.some(file => file.status === 'uploading'),
+        [`${prefixCls}-drag-uploading`]: this.state.fileList.some(file => {
+          return file.status === 'uploading';
+        }),
         [`${prefixCls}-drag-hover`]: this.state.dragState === 'dragover',
         [`${prefixCls}-disabled`]: disabled,
       });
@@ -299,7 +303,7 @@ class Upload extends React.Component {
           {uploadList}
         </span>
       );
-    }*/
+    } */
 
     // const uploadButtonCls = classNames(prefixCls, {
     //   [`${prefixCls}-select`]: true,

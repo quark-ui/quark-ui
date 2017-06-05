@@ -2,10 +2,16 @@
  * Upload Style
  * @author heifade
  */
-
+:root{
+    --card-width: 149px;
+    --card-height: 149px;
+}
 
 
 .upload {
+    & *, & *:after, & *:before {
+        box-sizing: border-box;
+    }
     & .upload-select{
         display: inline-block;
     }
@@ -25,16 +31,30 @@
         box-sizing: border-box;
     }
 
-    &.upload-select-picture-card{
-        width: 96px;
-        height: 96px;
+    &.upload-select-picture-card {
+        width: var(--card-width);
+        height: var(--card-height);
         border-radius: 4px;
         background-color: #fbfbfb;
+        border: 1px dashed #d9d9d9;
         text-align: center;
         cursor: pointer;
         transition: border-color 0.3s ease;
         display: inline-block;
         vertical-align: top;
+
+        & > :global(.upload) {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        & > :global(.upload-disabled){
+            cursor: not-allowed;
+        }
+    }
+    &.upload-select-picture-card:hover{
+        border-color: #108ee9;
     }
 }
 
@@ -122,8 +142,8 @@
 
     & .upload-list-item{
         float: left;
-        width: 96px;
-        height: 96px;
+        width: var(--card-width);
+        height: var(--card-height);
         margin: 0 8px 8px 0;
 
         padding: 8px;
@@ -199,7 +219,7 @@
         width: 100%;
         height: 100%;
         opacity: 0;
-    }   
+    }
 }
 
 
