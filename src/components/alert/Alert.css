@@ -10,7 +10,7 @@
 }
 .alert {
   position: relative;
-  padding: 18px 48px 18px 50px;
+  padding: 16px 48px 16px 50px;
   border-radius: 4px;
   color: rgba(0, 0, 0, .65);
   line-height: 18px;
@@ -25,7 +25,7 @@
       }
   }
   &.no-icon{
-    padding: 18px 48px 18px 24px;
+    padding: 16px 48px 16px 24px;
     & .alert--description{
       margin-left:0;
     }
@@ -43,7 +43,7 @@
   margin-left:-24px;
 }
 .alert--icon{
-  top: 18px;
+  top: 16px;
   left: 24px;
   position: absolute;
 }
