@@ -11,6 +11,7 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const WebpackChunkHash = require('webpack-chunk-hash');
+const DashboardPlugin = require('webpack-dashboard/plugin');
 
 const DEFAULT_THEME = require('../src/styles/theme');
 const ORANGE_THEME = require('../src/styles/orange');
@@ -159,6 +160,7 @@ if (TARGET === 'start') {
       ],
     },
     plugins: [
+      new DashboardPlugin(),
       new webpack.HotModuleReplacementPlugin(),
       new webpack.DefinePlugin({
         BASEPATH: JSON.stringify('/'),
