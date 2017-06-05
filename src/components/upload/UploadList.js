@@ -51,8 +51,8 @@ export default class UploadList extends React.Component {
     showPreviewIcon: PropTypes.bool,
     showRemoveIcon: PropTypes.bool,
     disabled: PropTypes.bool,
-    progressAttr: PropTypes.Requireable,
-    locale: PropTypes.Requireable,
+    progressAttr: PropTypes.object,
+    locale: PropTypes.object,
   }
 
   constructor(props) {
