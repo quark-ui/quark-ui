@@ -10,22 +10,19 @@ export default class AlertDemo extends Component {
   render() {
     const infoProps = {
       type: 'info',
-      closeText: 'X',
       message: 'info信息',
-      description: 'info描述',
-      onClose() { console.log('info'); },
+      description: 'info描info描述info描述info描述info描述info描述info描述info描述info描述info描述info描述述',
     };
     const errorProps = {
       type: 'error',
-      closable: true,
-      closeText: '关闭',
       message: 'error信息',
       onClose() { console.log('error'); },
     };
     return (
       <div style={{ width: 400 }}>
-        <Alert {...infoProps} />
-        <Alert {...errorProps} />
+        <Alert {...infoProps} showIcon/>
+        <Alert {...errorProps} closable/>
+        <Alert type='warning' message="警告信息" showIcon closable></Alert>
       </div>
     );
   }
