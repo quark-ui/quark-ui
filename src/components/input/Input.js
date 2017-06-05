@@ -26,13 +26,14 @@ class Input extends PureComponent {
   static defaultProps = {
     type: 'text',
     size: 'normal',
-    wrapperCls:'input__wrapper',
+    // wrapperCls:'input__wrapper',
     disabled: false,
-    autosize:false
+    autosize:false,
+    onChange() {},
   }
 
   static propTypes = {
-    style: PropTypes.CSSProperties,
+    // style: PropTypes.CSSProperties,
     type: PropTypes.oneOf([
       'text',
       'textarea',
@@ -42,10 +43,10 @@ class Input extends PureComponent {
       'large',
       'small',
     ]),
-    wrapperCls: PropTypes.string,
+    // wrapperCls: PropTypes.string,
     disabled: PropTypes.bool,
-    value: PropTypes.any,
-    defaultValue: PropTypes.any,
+    // value: PropTypes.any,
+    // defaultValue: PropTypes.any,
     autosize: PropTypes.bool,
     prefix: PropTypes.node,
     suffix: PropTypes.node,
@@ -72,8 +73,6 @@ class Input extends PureComponent {
   resizeTextarea = () => {
 
     const { type, autosize } = this.props;
-      console.log(this.props);
-    
     if (type !== 'textarea' || !autosize || !this.refs.input) {
       return;
     }
@@ -101,10 +100,16 @@ class Input extends PureComponent {
       </span>
     ) : null;
 
+    const inputProps = {
+      styleName: `${props.prefix ? 'input__wrapper input__wrapper__prefix' : ( props.suffix ?  'input__wrapper input__wrapper__suffix' : 'input__wrapper')}`,
+    }
+
     return (
-      <span styleName={props.wrapperCls} style={props.style}>
+      <span 
+        {...inputProps} 
+        style={props.style}>
         {prefix}
-        {cloneElement(children, { style: null })}
+        {cloneElement(children)}
         {suffix}
       </span>
     );
@@ -114,7 +119,7 @@ class Input extends PureComponent {
   
   render() {
     const props = this.props;
-    const { style, type, size, disabled, ...otherProps } = props;
+    const {type, size, disabled,suffix,autosize, ...otherProps } = props;
     const btnProps = {
       ...otherProps,
       styleName: `input__${disabled ? 'disabled' : type} input__${size}`,

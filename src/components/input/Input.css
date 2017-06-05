@@ -4,7 +4,7 @@
  */
 .base{
   width: 100%;
-  margin: 0 8px 8px 0;
+  margin: 0;
   height: 28px;
   cursor: text;
   font-size: 12px;
@@ -16,12 +16,24 @@
   border-radius: 4px;
   -webkit-transition: all .3s;
   transition: all .3s;
+  box-sizing: border-box;
 }
 
 .base:focus, .base:hover {
     border-color: var(--brand-primary-light);
 }
+.base::-moz-placeholder {
+	color: #ccc;
+	opacity: 1
+}
 
+.base:-ms-input-placeholder {
+	color: #ccc
+}
+
+.base::-webkit-input-placeholder {
+	color: #ccc
+}
 .disabled {
   background: #f5f5f5;
   border-color: var(--border-color);
@@ -30,12 +42,12 @@
 }
 .normal{
   padding: 6px 7px;
-  height: 24px;
+  height: 28px;
 }
 
 .large{
   padding: 6px 7px;
-  height: 30px;
+  height: 32px;
 }
 
 .small{
@@ -49,6 +61,12 @@
 
 .input__textarea{
   composes: base;
+  height: auto;
+}
+
+.input__card{
+  composes: base;
+  height: auto;
 }
 
 .input__disabled{
@@ -71,6 +89,7 @@
   composes: small;
 }
 
+.input__prefix,
 .input__suffix{
     position: absolute;
     top: 50%;
@@ -80,12 +99,15 @@
     z-index: 2;
     line-height: 0;
     color: rgba(0,0,0,.65);
-    right: -7px;
-    margin-top: -4px;
     transition: all .3s;
 }
 
-
+.input__prefix{
+  left: 7px;
+}
+.input__suffix{
+  right: 7px;
+}
 .input__wrapper{
   position: relative;
   display: inline-block;
@@ -95,13 +117,44 @@
   & > input{
     border-color: var(--brand-primary-light);
   }
-}
-.input__search{
+
   & > .input__suffix{
     cursor: pointer;
-
   }
   & > .input__suffix:hover{
     color: var(--brand-primary-light);
+  }
+}
+.input__group{
+    position: relative;
+    display: table;
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    & > input{
+      display: inline-block;
+      float: left;
+      -webkit-box-flex: 0;
+      -webkit-flex: 0 0 auto;
+      -ms-flex: 0 0 auto;
+      flex: 0 0 auto;
+      margin: 0;
+      padding: 0;
+    }
+}
+.input__19{
+  
+}
+.input__20{
+  
+}
+.input__wrapper__suffix{
+  & > input{
+    padding-right: 30px;
+  }
+}
+.input__wrapper__prefix{
+  & > input{
+    padding-left: 30px;
   }
 }

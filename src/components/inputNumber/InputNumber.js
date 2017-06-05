@@ -37,7 +37,6 @@ class InputNumber extends PureComponent {
     formatter: PropTypes.func,
     parser:PropTypes.func,
     placeholder:PropTypes.string,
-    style: PropTypes.CSSProperties,
     className:PropTypes.string,
   }
 

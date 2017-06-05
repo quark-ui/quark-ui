@@ -16,18 +16,9 @@ export default class Search extends PureComponent {
   static displayName = 'Search'
 
   static defaultProps = {
-    size: 'normal',
-    onSearch() { },
   }
 
   static propTypes = {
-    style: PropTypes.CSSProperties,
-    size: PropTypes.oneOf([
-      'normal',
-      'large',
-      'small',
-    ]),
-    onSearch: PropTypes.func,
   }
 
   constructor(props) {
@@ -36,7 +27,6 @@ export default class Search extends PureComponent {
   }
 
   input: any;
-
 
   onSearch = () => {
     const { onSearch } = this.props;
@@ -49,13 +39,7 @@ export default class Search extends PureComponent {
 
 
   render() {
-    const props = this.props;
-    const { size, ...otherProps } = props;
-    const btnProps = {
-      ...otherProps,
-      styleName: `input__${size} input__search`,
-    };
-
+    const {suffix , ...otherProps} = this.props;
 
     const searchSuffix = (
       <Icon
@@ -67,9 +51,8 @@ export default class Search extends PureComponent {
 
     return (
       <Input
-        {...btnProps}
+        {...otherProps}
         suffix={searchSuffix}
-        wrapperCls={'input__wrapper input__search'}
         ref={node => this.input = node}
       />
     );

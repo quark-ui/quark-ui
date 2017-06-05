@@ -10,6 +10,8 @@ import Input from './Input';
 import styles from './Input.css';
 
 @CSSModules(styles, { allowMultiple })
+
+
 export default class Group extends PureComponent {
 
   static displayName = 'Group'
@@ -34,16 +36,18 @@ export default class Group extends PureComponent {
 
   render() {
     const props = this.props;
-    // const { size, ...otherProps } = props;
-    // const btnProps = {
-    //   ...otherProps,
-    //   styleName: `input__${size}`,
-    // };
+    const { size, ...otherProps } = props;
+    const btnProps = {
+      ...otherProps,
+      styleName: `input__group`,
+    };
 
     return (
-      <span>
-        {props.children}
-      </span>
+      <div
+         {...btnProps}
+      >
+      {props.children}
+      </div>
     );
 
   }
