@@ -2,48 +2,83 @@
  * Alert Style
  * @author grootfish
  */
-
+:root{
+    --alert-info-bg:#E8F6FF;
+    --alert-success-bg:#F5FFE9;
+    --alert-error-bg:#FFEBE8;
+    --alert-warning-bg:#FFFAE8;
+}
 .alert {
   position: relative;
-  padding: 8px 48px 8px 16px;
+  padding: 16px 48px 16px 50px;
   border-radius: 4px;
   color: rgba(0, 0, 0, .65);
-  line-height: 16px;
+  line-height: 18px;
   margin-bottom: 10px;
+  &.with-description{
+    & .alert--message{
+      font-size:18px;
+      margin-bottom:14px;
+    }
+    & .alert--close{
+        top:10px;
+      }
+  }
+  &.no-icon{
+    padding: 16px 48px 16px 24px;
+    & .alert--description{
+      margin-left:0;
+    }
+  }
 }
 
 .alert--message {
   display: block;
+  font-size:14px;
 }
 
 .alert--description {
   display: block;
-  font-size: 12px;
+  font-size: 14px;
+  margin-left:-24px;
 }
-
+.alert--icon{
+  top: 16px;
+  left: 24px;
+  position: absolute;
+}
 .alert--close {
   font-size: 12px;
   position: absolute;
   right: 16px;
-  top: 10px;
+  top: 18px;
   height: 12px;
   line-height: 12px;
   overflow: hidden;
   cursor: pointer;
+  color:#999;
 }
 
 .alert__info {
-  background-color: #ecf6fd;
+  background-color: var(--alert-info-bg);
+  color:var(--link-color);
+  border:1px solid var(--link-color);
 }
 
 .alert__success {
-  background-color: #ebf8f2;
+  background-color: var(--alert-success-bg);
+  color:var(--success-color);
+  border:1px solid var(--success-color);
 }
 
 .alert__error {
-  background-color: #fef0ef;
+  background-color: var(--alert-error-bg);
+  color:var(--fail-color);
+  border:1px solid var(--fail-color);
 }
 
 .alert__warning {
-  background-color: #fffaeb;
+  background-color: var(--alert-warning-bg);
+  color:var(--warn-color);
+  border:1px solid var(--warn-color);
 }
