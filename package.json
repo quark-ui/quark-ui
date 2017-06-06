@@ -88,6 +88,7 @@
     "react-css-modules": "^4.2.1",
     "react-dom": "^15.5.0",
     "react-moment-proptypes": "^1.4.0",
+    "rc-animate": "~2.3.0",
     "shallowequal": "^1.0.1"
   },
   "contributors": [],
