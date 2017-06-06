@@ -1,0 +1,61 @@
+/**
+ * Message Style
+ * @author grootfish
+ */
+
+._3_LyTzy {
+    position: fixed;
+    z-index: 1000;
+    top: 20px;
+    left: 50%;
+    -webkit-transform:translate(-50%,0);
+            transform:translate(-50%,0);
+    pointer-events: none;
+}
+
+.rvYOolG {
+    padding: 7px 24px 7px 10px;
+    border-radius: 3px 3px;
+    box-shadow: 0 0 10px #999;
+    border: 1px solid #999;
+    border: 0px solid rgba(0, 0, 0, 0);
+    background: #fff;
+    display: block;
+    line-height: 1.5;
+    vertical-align: middle;
+    position: relative;
+    margin: 10px 0;
+}
+._2VEwa73{
+    display:inline-block;
+        vertical-align: middle;
+        font-size:14px;
+}
+._1o8wQ0I{
+    display:inline-block;
+    margin-right:7px;
+    margin-left:1px;
+    vertical-align: middle;
+}
+._23xuyLQ{
+    color: rgb(58, 152, 224);
+    background-color: #E8F6FF;
+    box-shadow: 0 0 1px rgb(58, 152, 224);
+}
+._22HZ3wd{
+    color: rgb(104, 191, 11);
+    background-color: #F5FFE9;
+    box-shadow: 0 0 1px rgb(104, 191, 11);
+}
+._1XT6zY1{
+    color: rgb(255, 58, 36);
+    background-color: #FFEBE8;
+    box-shadow: 0 0 1px rgb(255, 58, 36);
+}
+._3SWQ13b{
+    color: rgb(255, 198, 28);
+    background-color: #FFFAE8;
+    box-shadow: 0 0 1px rgb(255, 198, 28);
+}
+
+/*# sourceMappingURL=message.orange.css.map*/

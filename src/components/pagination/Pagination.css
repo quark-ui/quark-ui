@@ -2,8 +2,6 @@
  * Pagination Style
  * @author ryan.bian
  */
-@import '../../styles/theme.css';
-
 .pagination {
   font-size: 14px;
   color: var(--text-color);

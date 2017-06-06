@@ -2,7 +2,6 @@
  * QuarkUi Site Style
  * @author 
  */
-@import "../src/styles/theme.css";
 @import "../src/styles/base.css";
 
 html, body {
@@ -20,16 +19,19 @@ a {
   flex: 0 0 48px;
   display: flex;
   height: 80px;
-  line-height: 80px;
   width: 90%;
   margin: 0 auto;
+  justify-content: space-between;
 }
 .head__brandTitle {
   margin: 0;
   font-size: 32px;
+  align-self: center;
 }
 .head__navigation {
   display: flex;
+  flex: 1;
+  margin-left: 20px;
   align-items: center;
   font-size: 14px;
   & a {
@@ -67,13 +69,14 @@ a {
   list-style: none;
 }
 .aside__navItem {
-  padding: 14px 24px;
   font-size: 16px;
   cursor: pointer;
   z-index: 1;
   transition: all .2s ease-in-out;
 
   & a {
+    display: block;
+    padding: 14px 24px;
     color: var(--text-color);
   }
   & a:hover {

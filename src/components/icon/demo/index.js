@@ -5,6 +5,7 @@ const IconList = [
   'ellipsis',
   'caution',
   'question',
+  'question2',
   'account',
   'setting',
   'paper',
@@ -12,9 +13,15 @@ const IconList = [
   'check',
   'arrow-left',
   'arrow-right',
+  'double-arrow-left',
+  'double-arrow-right',
   'check',
   'home',
   'info',
+  'success',
+  'warning',
+  'error',
+  'close',
 ];
 
 const IconDemo = () => (

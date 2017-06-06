@@ -7,10 +7,12 @@ import PropTypes from 'prop-types';
 import assign from 'object-assign';
 import CSSModules from 'react-css-modules';
 import classnames from 'classnames';
-import { allowMultiple } from '../../../constants';
-import styles from '../DatePicker.css';
+import Icon from 'quark-ui/icon';
 import moment from 'moment';
 import momentPropTypes from 'react-moment-proptypes';
+
+import { allowMultiple } from '../../../constants';
+import styles from '../DatePicker.css';
 
 @CSSModules(styles, { allowMultiple })
 class MonthPane extends PureComponent {
@@ -18,6 +20,7 @@ class MonthPane extends PureComponent {
   static displayName = 'MonthPane'
 
   static defaultProps = {
+    className: '',
     date: moment(),
     showYearPane() {},
     showDatePane() {},
@@ -27,6 +30,7 @@ class MonthPane extends PureComponent {
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
   static propTypes = {
+    className: PropTypes.string,
     date: momentPropTypes.momentObj,
     showYearPane: PropTypes.func,
     showDatePane: PropTypes.func,
@@ -56,9 +60,13 @@ class MonthPane extends PureComponent {
     const { date, showYearPane } = this.props;
     return (
       <div styleName="datePicker__monthPaneHead">
-        <button onClick={this.handleSubtractYear}>&#9664;</button>
-        <button onClick={showYearPane}>{date.format('YYYY')}</button>
-        <button onClick={this.handleAddYear}>&#9654;</button>
+        <button styleName="datePicker__headControlBtn" onClick={this.handleSubtractYear}>
+          <Icon name="arrow-left" size={14} />
+        </button>
+        <button styleName="datePicker__headJumpBtn" onClick={showYearPane}>{date.format('YYYY')}</button>
+        <button styleName="datePicker__headControlBtn" onClick={this.handleAddYear}>
+          <Icon name="arrow-right" size={14} />
+        </button>
       </div>
     );
   }
@@ -67,7 +75,7 @@ class MonthPane extends PureComponent {
     const months = moment.monthsShort();
     const curMonth = this.props.date.format('MMM');
     return (
-      <div>
+      <div styleName="datePicker__monthBody">
         {
           months.map((month) => {
             const monthProps = {
@@ -85,8 +93,9 @@ class MonthPane extends PureComponent {
   }
 
   render() {
+    const { className } = this.props;
     return (
-      <div styleName="datePicker__picker datePicker__monthPane">
+      <div styleName="datePicker__picker datePicker__monthPane" className={className}>
         { this.renderMonthHead() }
         { this.renderMonths() }
       </div>

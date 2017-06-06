@@ -2,25 +2,6 @@
  * Menu Style
  * @author heifade
  */
-:root {
-  /* 品牌色 */
-  /* 品牌色——浅 */
-  /* 品牌色——深 */
-  
-  /* 边框色 */
-
-  /* 中性色 */
-
-  /* 标题 主要文字 */
-  /* 正文 说明 */
-  /* 辅助 次级文字 */
-
-  /* 链接色 */
-
-  /* 警告 */
-  /* 失败 */
-  /* 成功 */
-}
 ._37XJzyY {
     outline: none;
     margin-bottom: 0;
@@ -30,47 +11,53 @@
     line-height: 46px
 }
 ._37XJzyY .menu-submenu {
-  position: relative
+    position: relative
 }
 ._37XJzyY .menu-item-active,
     ._37XJzyY .menu-submenu-active > .menu-submenu-title {
-  color: #108ee9
+    color: #108ee9
 }
 ._37XJzyY .menu-item-selected {
-  color: #108ee9
+    color: #108ee9
 }
 ._37XJzyY .menu-submenu-selected > .menu-submenu-title {
-  color: #108ee9
+    color: #108ee9
 }
 ._37XJzyY .menu-item-disabled, 
     ._37XJzyY .menu-submenu-disabled .menu-submenu-title {
-  color: rgba(0, 0, 0, .25);
-  cursor: not-allowed;
-  background: none
+    color: rgba(0, 0, 0, .25);
+    cursor: not-allowed;
+    background: none
 }
 ._37XJzyY .menu-item-group-title {
-  padding-left: 32px;
-  color: rgba(0, 0, 0, .43);
-  font-size: 12px;
-  line-height: 1.5;
-  padding: 8px 16px
+    padding-left: 32px;
+    color: rgba(0, 0, 0, .43);
+    font-size: 12px;
+    line-height: 1.5;
+    padding: 8px 16px
 }
 ._37XJzyY .menu-item-group-list .menu-item, 
     ._37XJzyY .menu-item-group-list .menu-submenu-title {
-  padding: 0 16px 0 28px
+    padding: 0 16px 0 28px
 }
 ._37XJzyY .menu-hidden {
-  display: none
+    display: none
 }
 ._37XJzyY .menu-item,
     ._37XJzyY .menu-submenu-title {
-  margin: 0;
-  padding: 0 20px;
-  position: relative;
-  display: block;
-  white-space: nowrap;
-  cursor: pointer
+    margin: 0;
+    padding: 0 20px;
+    position: relative;
+    display: block;
+    white-space: nowrap;
+    cursor: pointer
 }
+
+
+
+
+
+
 /*水平菜单，子菜单水平*/
 ._37XJzyY.menu-horizontal-h{
 
@@ -85,45 +72,50 @@
     
 }
 ._37XJzyY.menu-horizontal-h .menu-submenu .menu-item-selected {
-  background-color: #ecf6fd
+    background-color: #ecf6fd
 }
 ._37XJzyY.menu-horizontal-h > .menu-item-active, 
     ._37XJzyY.menu-horizontal-h > .menu-item-selected, 
     ._37XJzyY.menu-horizontal-h > .menu-submenu-active, 
     ._37XJzyY.menu-horizontal-h > .menu-submenu-selected {
-  border-bottom: solid 2px #108ee9
+    border-bottom: solid 2px #108ee9
 }
 ._37XJzyY.menu-horizontal-h > .menu-item {
-  float: left
+    float: left
 }
 ._37XJzyY.menu-horizontal-h:after {
-  content: " ";
-  display: block;
-  height: 0;
-  clear: both
+    content: " ";
+    display: block;
+    height: 0;
+    clear: both
 }
 ._37XJzyY.menu-horizontal-h .menu-submenu-horizontal-h {
-  float: left/*二级菜单弹出层*/
+    float: left/*二级菜单弹出层*/
 }
 ._37XJzyY.menu-horizontal-h .menu-submenu-horizontal-h.menu-submenu-open {
-  display: table
+    display: table
 }
 ._37XJzyY.menu-horizontal-h .menu-submenu-horizontal-h  > .menu {
-  top: 100%;
-  left: 50%;
-  -webkit-transform: translateX(-50%);
-          transform: translateX(-50%);
-  position: absolute;
-  margin-top: 7px;
-  border: solid 1px #ccc;
-  background-color: #fff;
-  border-radius: 4px;
-  z-index: 10
+    top: 100%;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
+    position: absolute;
+    margin-top: 7px;
+    border: solid 1px #ccc;
+    background-color: #fff;
+    border-radius: 4px;
+    z-index: 10
 }
 ._37XJzyY.menu-horizontal-h .menu-submenu-horizontal-h  > .menu .menu-item {
-  position: relative;
-  display: table-cell
+    position: relative;
+    display: table-cell
 }
+
+
+
+
+
 /*水平菜单，子菜单垂直*/
 ._37XJzyY.menu-horizontal{
 
@@ -132,62 +124,64 @@
     /*一级菜单*/
 }
 ._37XJzyY.menu-horizontal .menu-submenu .menu-item-selected {
-  background-color: #ecf6fd
+    background-color: #ecf6fd
 }
 ._37XJzyY.menu-horizontal > .menu-item-active, 
     ._37XJzyY.menu-horizontal > .menu-item-selected, 
     ._37XJzyY.menu-horizontal > .menu-submenu-active, 
     ._37XJzyY.menu-horizontal > .menu-submenu-selected {
-  border-bottom: solid 2px #108ee9
+    border-bottom: solid 2px #108ee9
 }
 ._37XJzyY.menu-horizontal > .menu-item {
-  float: left
+    float: left
 }
 ._37XJzyY.menu-horizontal:after {
-  content: " ";
-  display: block;
-  height: 0;
-  clear: both
+    content: " ";
+    display: block;
+    height: 0;
+    clear: both
 }
 ._37XJzyY.menu-horizontal .menu-submenu-horizontal {
-  position: relative;
-  float: left/*二级菜单弹出层*//*三级菜单弹出层*/
+    position: relative;
+    float: left/*二级菜单弹出层*//*三级菜单弹出层*/
 }
 ._37XJzyY.menu-horizontal .menu-submenu-horizontal  > .menu {
-  top: 100%;
-  left: 0;
-  position: absolute;
-  min-width: 100%;
-  margin-top: 7px;
-  border: solid 1px #ccc;
-  background-color: #fff;
-  border-radius: 4px;
-  z-index: 10
+    top: 100%;
+    left: 0;
+    position: absolute;
+    min-width: 100%;
+    margin-top: 7px;
+    border: solid 1px #ccc;
+    background-color: #fff;
+    border-radius: 4px;
+    z-index: 10
 }
 ._37XJzyY.menu-horizontal .menu-submenu-horizontal .menu-vertical .menu-submenu-title:after {
-  font-style: normal;
-  vertical-align: baseline;
-  text-align: center;
-  text-transform: none;
-  text-rendering: auto;
-  position: absolute;
-  transition: -webkit-transform .3s;
-  transition: transform .3s;
-  transition: transform .3s, -webkit-transform .3s;
-  content: "\FF1E";
-  right: 16px
+    font-style: normal;
+    vertical-align: baseline;
+    text-align: center;
+    text-transform: none;
+    text-rendering: auto;
+    position: absolute;
+    transition: -webkit-transform .3s;
+    transition: transform .3s;
+    transition: transform .3s, -webkit-transform .3s;
+    content: "\FF1E";
+    right: 16px
 }
 ._37XJzyY.menu-horizontal .menu-submenu-horizontal  > .menu .menu {
-  top: 0;
-  left: 100%;
-  position: absolute;
-  min-width: 100%;
-  margin-top: 7px;
-  border: solid 1px #ccc;
-  background-color: #fff;
-  border-radius: 4px;
-  z-index: 10
+    top: 0;
+    left: 100%;
+    position: absolute;
+    min-width: 100%;
+    margin-top: 7px;
+    border: solid 1px #ccc;
+    background-color: #fff;
+    border-radius: 4px;
+    z-index: 10
 }
+
+
 /*垂直菜单，子菜单水平向右弹出*/
 ._37XJzyY.menu-vertical{
     box-shadow: 0 1px 6px rgba(0, 0, 0, .2)
@@ -200,66 +194,68 @@
     /*二级菜单弹出层*/
 }
 ._37XJzyY.menu-vertical .menu-submenu-title:after {
-  font-style: normal;
-  vertical-align: baseline;
-  text-align: center;
-  text-transform: none;
-  text-rendering: auto;
-  position: absolute;
-  transition: -webkit-transform .3s;
-  transition: transform .3s;
-  transition: transform .3s, -webkit-transform .3s;
-  content: "\FF1E";
-  right: 16px
+    font-style: normal;
+    vertical-align: baseline;
+    text-align: center;
+    text-transform: none;
+    text-rendering: auto;
+    position: absolute;
+    transition: -webkit-transform .3s;
+    transition: transform .3s;
+    transition: transform .3s, -webkit-transform .3s;
+    content: "\FF1E";
+    right: 16px
 }
 ._37XJzyY.menu-vertical .menu-item-selected {
-  background-color: #ecf6fd
+    background-color: #ecf6fd
 }
 ._37XJzyY.menu-vertical  .menu {
-  top: 0;
-  left: 100%;
-  position: absolute;
-  min-width: 160px;
-  border: solid 1px #ccc;
-  background-color: #fff;
-  border-radius: 4px;
-  z-index: 10
+    top: 0;
+    left: 100%;
+    position: absolute;
+    min-width: 160px;
+    border: solid 1px #ccc;
+    background-color: #fff;
+    border-radius: 4px;
+    z-index: 10
 }
+
+
 /*垂直菜单，子菜单内嵌在菜单区域*/
 ._37XJzyY.menu-inline{
     box-shadow: 0 1px 6px rgba(0, 0, 0, .2)
 }
 ._37XJzyY.menu-inline .menu-submenu-title:after {
-  font-style: normal;
-  vertical-align: baseline;
-  text-align: center;
-  text-transform: none;
-  text-rendering: auto;
-  position: absolute;
-  transition: -webkit-transform .3s;
-  transition: transform .3s;
-  transition: transform .3s, -webkit-transform .3s;
-  content: "\FF1E";
-  -webkit-transform: rotate(90deg);
-          transform: rotate(90deg);
-  right: 16px
+    font-style: normal;
+    vertical-align: baseline;
+    text-align: center;
+    text-transform: none;
+    text-rendering: auto;
+    position: absolute;
+    transition: -webkit-transform .3s;
+    transition: transform .3s;
+    transition: transform .3s, -webkit-transform .3s;
+    content: "\FF1E";
+    -webkit-transform: rotate(90deg);
+            transform: rotate(90deg);
+    right: 16px
 }
 ._37XJzyY.menu-inline .menu-submenu-open > .menu-submenu-title:after {
-  -webkit-transform: rotate(270deg);
-          transform: rotate(270deg)
+    -webkit-transform: rotate(270deg);
+            transform: rotate(270deg)
 }
 ._37XJzyY.menu-inline > .menu-item-active, 
     ._37XJzyY.menu-inline .menu-submenu-active {}
 ._37XJzyY.menu-inline .menu-item-selected {
-  background-color: #ecf6fd
+    background-color: #ecf6fd
 }
 ._37XJzyY.menu-inline .menu-item-selected:after {
-  content: "";
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  border-right: 3px solid #108ee9
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border-right: 3px solid #108ee9
 }
-/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibWVudS5jc3MiLCJzb3VyY2VzIjpbXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Iiwic291cmNlUm9vdCI6IiJ9*/
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibWVudS5jc3MiLCJzb3VyY2VzIjpbXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OzsiLCJzb3VyY2VSb290IjoiIn0=*/
 /*# sourceMappingURL=menu.css.map*/

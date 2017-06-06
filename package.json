@@ -1,18 +1,21 @@
 {
   "name": "quark-ui",
-  "version": "0.0.1-beta4",
+  "version": "0.0.1-beta5",
   "description": "Quark UI, Components base on react.",
   "repository": "https://github.com/quark-ui/quark-ui.git",
   "author": "",
   "main": "lib/index.js",
+  "module": "src/index",
   "scripts": {
-    "start": "webpack-dev-server --config ./conf/webpack.conf.dev.js --port 3000 --open",
-    "build": "webpack --config ./conf/webpack.conf.production.js -p",
-    "gh-pages": "webpack --config ./conf/webpack.conf.deploy.js -p",
+    "start": "webpack-dashboard -- webpack-dev-server --config ./conf/webpack.conf.js --port 3000 --open",
+    "build": "webpack --config ./conf/webpack.conf.js",
+    "theme": "webpack --config ./conf/webpack.conf.js",
+    "gh-pages": "webpack --config ./conf/webpack.conf.js -p",
     "pub": "git push origin master & npm publish",
     "new": "yo quarkui",
     "lint": "eslint --color -f table ./src",
-    "lint-c": "eslint --color -f table"
+    "lint-c": "eslint --color -f table",
+    "pack": "rollup -c ./conf/rollup.config.js"
   },
   "bugs": {
     "url": "http://github.com/quark-ui/quark-ui/issues"
@@ -35,6 +38,7 @@
     "babel-preset-env": "^1.4.0",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-1": "^6.24.1",
+    "colr": "^1.2.2",
     "css-loader": "^0.28.0",
     "es5-shim": "^4.5.8",
     "eslint": "^3.19.0",
@@ -67,7 +71,9 @@
     "webpack": "^2.4.1",
     "webpack-bundle-analyzer": "^2.8.1",
     "webpack-chunk-hash": "^0.4.0",
-    "webpack-dev-server": "^2.4.2"
+    "webpack-dashboard": "^0.4.0",
+    "webpack-dev-server": "^2.4.2",
+    "webpack-merge": "^4.1.0"
   },
   "dependencies": {
     "classnames": "^2.2.5",
@@ -76,12 +82,14 @@
     "moment": "^2.18.1",
     "object-assign": "^4.1.0",
     "prop-types": "^15.5.8",
+    "rc-menu": "~5.0.9",
+    "rc-upload": "~2.3.0",
     "react": "^15.5.0",
     "react-css-modules": "^4.2.1",
     "react-dom": "^15.5.0",
     "react-moment-proptypes": "^1.4.0",
-    "rc-menu": "~5.0.9",
-    "rc-upload": "~2.3.0"
+    "rc-animate": "~2.3.0",
+    "shallowequal": "^1.0.1"
   },
   "contributors": [],
   "license": "MIT"

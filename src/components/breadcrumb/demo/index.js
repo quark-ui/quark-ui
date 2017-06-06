@@ -1,24 +1,22 @@
 import { Component } from 'react';
-import Breadcrumb from '../../breadcrumb';
-
-const Crumb = Breadcrumb.Item;
+import Breadcrumb from '../index';
 
 export default class BreadcrumbDemo extends Component {
   render() {
     return (
       <div>
         <Breadcrumb separator=">" hasBackIcon>
-          <Crumb>home</Crumb>
-          <Crumb href="/component/button">Button</Crumb>
-          <Crumb href="/component/steps">Steps</Crumb>
-          <Crumb>bbb</Crumb>
+          <Breadcrumb.Item>home</Breadcrumb.Item>
+          <Breadcrumb.Item href="/component/button">Button</Breadcrumb.Item>
+          <Breadcrumb.Item href="/component/steps">Steps</Breadcrumb.Item>
+          <Breadcrumb.Item>bbb</Breadcrumb.Item>
         </Breadcrumb>
 
         <Breadcrumb hasBackIcon>
-          <Crumb href="/">home</Crumb>
-          <Crumb href="/component/button">Button</Crumb>
-          <Crumb href="/component/steps">Steps</Crumb>
-          <Crumb>bbb</Crumb>
+          <Breadcrumb.Item href="/">home</Breadcrumb.Item>
+          <Breadcrumb.Item href="/component/button">Button</Breadcrumb.Item>
+          <Breadcrumb.Item href="/component/steps">Steps</Breadcrumb.Item>
+          <Breadcrumb.Item>bbb</Breadcrumb.Item>
         </Breadcrumb>
       </div>
     );
