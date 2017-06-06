@@ -16,18 +16,33 @@ import Icon from '../icon';
 const renderNoticeModal = (type, config = {
   title: '',
   content: '',
+  closable: false
 }) => {
   const wrapNode = document.createElement('div');
+  const colorArr = {'info' : '#3b98e0', 'success' : '#73da7d' , 
+                    'error' : '#e6445e', 'warning' : '#ffd31a'}
   document.body.appendChild(wrapNode);
   const modalProps = {
-    title: config.title || type,
+    title: (<p><Icon name={type} size={26} color={colorArr[type]} />
+            <span>{config.title || type}</span>
+            { config.closable ?
+            <a
+              styleName="modal__closable"
+              href="javascript:void(0)"
+              onClick={(e) => {
+                ReactDOM.unmountComponentAtNode(wrapNode);
+                document.body.removeChild(wrapNode);
+              }}
+            ><Icon name="close" size={14} color="#a6a6a6"/></a>
+            : null
+          }
+            </p>),
     visible: true,
     closable: false,
     footer: (
       <Button
         key="confirm"
         type="primary"
-        size="small"
         onClick={() => {
           ReactDOM.unmountComponentAtNode(wrapNode);
           document.body.removeChild(wrapNode);
@@ -37,7 +52,7 @@ const renderNoticeModal = (type, config = {
   };
   ReactDOM.render(
     <Modal {...modalProps}>
-      <div styleName={'modal__icon'}><Icon name={type} size={70} /></div>
+      
       {config.content}
     </Modal>
   , wrapNode);
@@ -134,7 +149,7 @@ class Modal extends Component {
                 e.preventDefault();
                 this.handleCancel(e);
               }}
-            >X</a>
+            ><Icon name="close" size={14} color="#a6a6a6"/></a>
             : null
           }
         </div>
@@ -149,7 +164,6 @@ class Modal extends Component {
       <Button
         key="cancel"
         type="secondary"
-        size="small"
         onClick={this.handleCancel}
       >
         取消
@@ -157,7 +171,6 @@ class Modal extends Component {
       <Button
         key="confirm"
         type="primary"
-        size="small"
         onClick={this.handleOk}
       >
         确定
