@@ -9,11 +9,14 @@ import styles from '../../../styles/demo.css';
 @CSSModules(styles)
 export default class InputDemo extends Component {
 
+	constructor(props) {
+		super(props);
+		this.state = {value:'1234-1234-1234-1234'};
+	}
+
 	onChangeCard = (e) => {
-		console.log(e.target.value);
-		const stateChange = {}
-		stateChange[e.target.name] = e.target.value
-		this.setState(stateChange)
+		const value= e.target.value
+		this.setState({value})
 	}
 
   	render() {
@@ -88,9 +91,9 @@ export default class InputDemo extends Component {
 						<p>
 							<CardInput
 								size="large"
-								mask="1111-11111111"
-								placeholder="0571-81818181"
-								value={'0571-81818181'}
+								mask="1111-1111-1111-1111"
+								placeholder="1234-1234-1234-1234"
+								value={this.state.value}
 								onChange={this.onChangeCard}
 							/>
 						</p>

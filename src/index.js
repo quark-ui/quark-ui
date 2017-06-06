@@ -17,6 +17,8 @@ export { default as Icon } from './components/icon/';
 
 export { default as Input } from './components/input/';
 
+export { default as InputNumber } from './components/inputNumber/';
+
 export { default as Menu } from './components/menu/';
 
 export { default as Message } from './components/message/';
@@ -31,5 +33,4 @@ export { default as Steps } from './components/steps/';
 
 export { default as Trigger } from './components/trigger/';
 
-export { default as InputNumber } from './components/inputNumber/';
-
+export { default as Tabs } from './components/tabs/';

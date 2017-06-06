@@ -91,8 +91,15 @@ class CardInput extends PureComponent {
 
   constructor(props) {
     super(props);
-    this.state = { value: props.defaultValue };
+    this.state = {};
   }
+
+  // getDefaultProps = () => {
+  //   return {
+  //     value: ''
+  //   }
+  // }
+
 
   onChange = (e) => {
     var maskValue = this.mask.getValue()
@@ -168,6 +175,7 @@ class CardInput extends PureComponent {
       this.mask.selection = getSelection(this.input)
       if (this.mask.backspace()) {
         var value = this.getDisplayValue()
+        
         e.target.value = value
         if (value) {
           setSelection(this.input, this.mask.selection)
