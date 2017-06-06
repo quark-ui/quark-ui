@@ -33,7 +33,7 @@ const renderNoticeModal = (type, config = {
                 ReactDOM.unmountComponentAtNode(wrapNode);
                 document.body.removeChild(wrapNode);
               }}
-            ><Icon name="close" size={14} color="#a6a6a6"/></a>
+            ><Icon name="close" size={18} color="#a6a6a6"/></a>
             : null
           }
             </p>),
@@ -149,7 +149,7 @@ class Modal extends Component {
                 e.preventDefault();
                 this.handleCancel(e);
               }}
-            ><Icon name="close" size={14} color="#a6a6a6"/></a>
+            ><Icon name="close" size={18} color="#a6a6a6"/></a>
             : null
           }
         </div>
