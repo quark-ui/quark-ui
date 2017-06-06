@@ -29,8 +29,11 @@ export { default as Steps } from './components/steps/';
 
 export { default as Trigger } from './components/trigger/';
 
+export { default as Upload } from './components/upload/';
+
 export { default as Input } from './components/input/';
 
 export { default as Checkbox } from './components/checkbox/';
 
 export { default as Radio } from './components/radio/';
+
