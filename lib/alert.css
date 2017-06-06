@@ -1,51 +1,89 @@
 /**
+ * Icon Style
+ * @author ryan.bian
+ */
+._2jSl5RJ {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}/**
  * Alert Style
  * @author grootfish
  */
-
 ._39kAAFy {
   position: relative;
-  padding: 8px 48px 8px 16px;
+  padding: 16px 48px 16px 50px;
   border-radius: 4px;
   color: rgba(0, 0, 0, .65);
-  line-height: 16px;
-  margin-bottom: 10px;
+  line-height: 18px;
+  margin-bottom: 10px
+}
+._39kAAFy._1ceJ84o {}
+._39kAAFy._1ceJ84o ._2PlM57S {
+  font-size: 18px;
+  margin-bottom: 14px
+}
+._39kAAFy._1ceJ84o ._2mpL-C1 {
+  top: 10px
+}
+._39kAAFy._1jGKsJo {
+  padding: 16px 48px 16px 24px
+}
+._39kAAFy._1jGKsJo ._2WVGGAD {
+  margin-left: 0
 }
 
 ._2PlM57S {
   display: block;
+  font-size:14px;
 }
 
 ._2WVGGAD {
   display: block;
-  font-size: 12px;
+  font-size: 14px;
+  margin-left:-24px;
 }
-
+._2HsOl4s{
+  top: 16px;
+  left: 24px;
+  position: absolute;
+}
 ._2mpL-C1 {
   font-size: 12px;
   position: absolute;
   right: 16px;
-  top: 10px;
+  top: 18px;
   height: 12px;
   line-height: 12px;
   overflow: hidden;
   cursor: pointer;
+  color:#999;
 }
 
 ._2zbvGEj {
-  background-color: #ecf6fd;
+  background-color: #E8F6FF;
+  color: rgb(58, 152, 224);
+  border: 1px solid rgb(58, 152, 224);
 }
 
 ._1G-i0lm {
-  background-color: #ebf8f2;
+  background-color: #F5FFE9;
+  color: rgb(104, 191, 11);
+  border: 1px solid rgb(104, 191, 11);
 }
 
 ._2IstVeW {
-  background-color: #fef0ef;
+  background-color: #FFEBE8;
+  color: rgb(255, 58, 36);
+  border: 1px solid rgb(255, 58, 36);
 }
 
 ._1RLd9u1 {
-  background-color: #fffaeb;
+  background-color: #FFFAE8;
+  color: rgb(255, 198, 28);
+  border: 1px solid rgb(255, 198, 28);
 }
-/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYWxlcnQuY3NzIiwic291cmNlcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Iiwic291cmNlUm9vdCI6IiJ9*/
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYWxlcnQuY3NzIiwic291cmNlcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OzsiLCJzb3VyY2VSb290IjoiIn0=*/
 /*# sourceMappingURL=alert.css.map*/
