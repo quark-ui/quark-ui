@@ -23,6 +23,21 @@ class UploadDemo1 extends Component {
       },
       multiple: true,
       disabled: false,
+      onResponse(response) {
+        response = {"result":"success","msg":"上传成功！"};
+        if (response.result === 'success') {
+          return {
+            success: true,
+            message: '上传成功',
+          }
+        }
+        else {
+          return {
+            success: false,
+            message: response.msg,
+          }
+        }
+      },
       onChange(info) {
         if (info.file.status !== 'uploading') {
           // console.log(info.file, info.fileList);
@@ -64,6 +79,21 @@ class UploadDemo2 extends Component {
       },
       multiple: true,
       disabled: false,
+      onResponse(response) {
+        response = {"result":"success","msg":"上传成功！"};
+        if (response.result === 'success') {
+          return {
+            success: true,
+            message: '上传成功',
+          }
+        }
+        else {
+          return {
+            success: false,
+            message: response.msg,
+          }
+        }
+      },
       onChange(info) {
         if (info.file.status !== 'uploading') {
           // console.log(info.file, info.fileList);
@@ -78,7 +108,6 @@ class UploadDemo2 extends Component {
         uid: 1,
         name: '图片1.png',
         status: 'done',
-        reponse: 'Server Error 500',  // custom error message to show
         url: 'https://www.ehuodi.com/module/index/img/index2/line2_bg.png',
       }, {
         uid: 2,
@@ -89,8 +118,7 @@ class UploadDemo2 extends Component {
         uid: 3,
         name: '图片3.png',
         status: 'error',
-        reponse: 'Server Error 500',  // custom error message to show
-        url: 'https://www.ehuodi.com/module/index/img/index2/line2_bg.png',
+        response: '上传失败，图片太大',
       }],
     };
 
@@ -128,6 +156,21 @@ class UploadDemo3 extends Component {
     const props = {
       action: '//jsonplaceholder.typicode.com/posts/',
       disabled: false,
+      onResponse(response) {
+        response = {"result":"success","msg":"上传成功！"};
+        if (response.result === 'success') {
+          return {
+            success: true,
+            message: '上传成功',
+          }
+        }
+        else {
+          return {
+            success: false,
+            message: response.msg,
+          }
+        }
+      },
       onChange(info) {
         let fileList = info.fileList;
 
@@ -142,13 +185,13 @@ class UploadDemo3 extends Component {
           return file;
         });
 
-        // 过滤上传成功的文件
-        fileList = fileList.filter((file) => {
-          if (file.response) {
-            return file.status === 'done';
-          }
-          return true;
-        });
+        // // 过滤上传成功的文件
+        // fileList = fileList.filter((file) => {
+        //   if (file.response) {
+        //     return file.status === 'done';
+        //   }
+        //   return true;
+        // });
 
         I.setState({ fileList });
       },
@@ -183,17 +226,17 @@ class UploadDemo4 extends Component {
     };
   }
 
-  handleChange = ({ fileList }) => {
-    this.setState({ fileList });
+  handleChange = (info) => {
+    this.setState({fileList: info.fileList});
   }
   beforeUpload(file) {
     const isJPG = file.type === 'image/png';
     if (!isJPG) {
       message.error('请上传.png文件!');
     }
-    const isLt2M = file.size < 1024 * 50;
+    const isLt2M = file.size < 1024 * 1000;
     if (!isLt2M) {
-      message.error('图片不能超过50KB!');
+      message.error('图片不能超过1000KB!');
     }
     return isJPG && isLt2M;
   }
@@ -206,11 +249,26 @@ class UploadDemo4 extends Component {
       onPreview: this.handlePreview,
       onChange: this.handleChange,
       beforeUpload: this.beforeUpload,
+      onResponse(response) {
+        response = {"result":"success","msg":"上传成功！"};
+        if (response.result === 'success') {
+          return {
+            success: true,
+            message: '上传成功',
+          }
+        }
+        else {
+          return {
+            success: false,
+            message: response.msg,
+          }
+        }
+      },
     };
 
     const uploadButton = (
       <div styleName="upload-btn">
-        <Icon name="setting" size={20} />
+        <Icon name="error" size={25} />
         <div styleName="upload-text">上传</div>
       </div>
     );

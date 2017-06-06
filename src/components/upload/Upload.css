@@ -3,13 +3,13 @@
  * @author heifade
  */
 :root{
-    --card-width: 149px;
-    --card-height: 149px;
+    --card-width: 111px;
+    --card-height: 111px;
 }
 
 
 .upload {
-    & *, & *:after, & *:before {
+    &, & *, & *:after, & *:before {
         box-sizing: border-box;
     }
     & .upload-select{
@@ -19,7 +19,7 @@
 
     }
 
-    & .avatar-uploader {
+    /*& .avatar-uploader {
         display: block;
         position: relative;
         border: 1px dashed #d9d9d9;
@@ -29,33 +29,7 @@
         width: 149px;
         height: 149px;
         box-sizing: border-box;
-    }
-
-    &.upload-select-picture-card {
-        width: var(--card-width);
-        height: var(--card-height);
-        border-radius: 4px;
-        background-color: #fbfbfb;
-        border: 1px dashed #d9d9d9;
-        text-align: center;
-        cursor: pointer;
-        transition: border-color 0.3s ease;
-        display: inline-block;
-        vertical-align: top;
-
-        & > :global(.upload) {
-            width: 100%;
-            height: 100%;
-            display: block;
-        }
-
-        & > :global(.upload-disabled){
-            cursor: not-allowed;
-        }
-    }
-    &.upload-select-picture-card:hover{
-        border-color: #108ee9;
-    }
+    }*/
 }
 
 .upload-list {
@@ -102,17 +76,19 @@
             font-size: 12px;
             position: absolute;
             width: 100%;
-            bottom: 0;
+            bottom: 0px;
+        }
+
+        &:hover {
+            & .remove {
+                opacity: 1;
+            }
+            & .upload-list-item-info {
+                background-color: #f6f8fc;
+            }
         }
     }
-    & .upload-list-item:hover {
-        & .remove {
-            opacity: 1;
-        }
-        & .upload-list-item-info {
-            background-color: #ecf6fd;
-        }
-    }
+    
 
     & .upload-list-item-uploading{
 
@@ -121,7 +97,7 @@
 
     }
     & .upload-list-item-error {
-        color: #f04134;
+        color: #fe3824;
     }
 
     & .upload-list-text{
@@ -129,10 +105,60 @@
     }
 }
 
+@keyframes pictureShow {
+    0% {
+        transform: scale(0.7);
+        opacity: 0.3;
+    }
+    100%{
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.upload-select-picture-card {
+    width: var(--card-width);
+    height: var(--card-height);
+    border-radius: 4px;
+    background-color: #f5f5f5;
+    border: 1px dashed #999999;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+    display: inline-block;
+    vertical-align: top;
+    color: #666666;
+    transform: scale(1);
+    transition: transform 0.3s;
+
+    & > :global(.upload) {
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+
+    & > :global(.upload-disabled){
+        cursor: not-allowed;
+    }
+    &:hover{
+        border-color: var(--brand-primary-light);
+        color: var(--brand-primary-light);
+    }
+    &:active {
+        border-color: var(--brand-primary-dark);
+        color: var(--brand-primary-dark);
+    }
+    &.hide{
+        transform: scale(0);
+        transition: transform 0.3s;
+    }
+}
+
+
 .upload-list-picture-card{
     display: inline;
 
-    & *, & *:after, & *:before {
+    &, & *, & *:after, & *:before {
         box-sizing: border-box;
     }
 
@@ -176,6 +202,16 @@
             & .upload-list-item-name{
                 display: none;
             }
+            /*上传中*/
+            & .uploading-text{
+                line-height: calc( var(--card-height) - 18px);
+                text-align: center;
+            }
+            /*缩略图*/
+            & .imgshow{
+                animation: pictureShow;
+                animation-duration: 0.3s;
+            }
         }
         & .upload-list-item-info:hover + .upload-list-item-actions,
         & .upload-list-item-actions:hover {
@@ -193,6 +229,16 @@
             transition: opacity .3s;
             opacity: 1;
         }
+
+        & .upload-list-item-progress {
+            width: calc( var(--card-width) - 18px);
+            bottom: 20px;
+        }
+    }
+
+    & .upload-list-item-error {
+        color: #fe3824;
+        border-color: #f04134;
     }
 
     & .upload-list-item-actions{
@@ -204,10 +250,6 @@
         white-space: nowrap;
         opacity: 0;
         transition: all .3s;
-
-        & .anticon-eye-o:before {
-            content: "\E688";
-        }
     }
 
     & .upload-list-item-info:before{
