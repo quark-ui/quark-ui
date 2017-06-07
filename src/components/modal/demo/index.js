@@ -41,6 +41,7 @@ export default class ModalDemo extends Component {
           onClick={() => {
             Modal.info({
               content: '这是提示信息',
+              closable: true
             });
           }}
         >info</Button>
