@@ -6,6 +6,7 @@ import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
 import shallowEqual from 'shallowequal';
+import classNames from 'classnames';
 import { allowMultiple } from '../../constants';
 import styles from './Checkbox.css';
 
@@ -15,13 +16,18 @@ class Checkbox extends PureComponent {
   static displayName = 'Checkbox'
 
   static defaultProps = {
-    type: 'checkbox',
-    defaultChecked: false,
-    onChange() {},
+    prefixCls:'checkbox',
+    type:'checkbox',
+    defaultChecked:false,
+    onChange(){},
+    onFocus() {},
+    onBlur() {},
+    onClick(){},
   }
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
   static propTypes = {
+    prefixCls: PropTypes.string,
     defaultChecked: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
     onChange: PropTypes.func,
     name: PropTypes.string,
@@ -84,24 +90,29 @@ class Checkbox extends PureComponent {
   };
 
   render() {
-    const { context, props } = this;
-    const { children, name, type, disabled, readOnly, ...otherProps } = props;
-    const checkboxProps = { ...otherProps };
-    // let {checked} = this.state;
-    const { checkboxGroup } = context;
-    if (checkboxGroup) {
-      checkboxProps.onChange = () => checkboxGroup.toggleOption({ label: children, value: props.value });
-      checkboxProps.checked = checkboxGroup.value.indexOf(props.value) !== -1;
-      checkboxProps.disabled = 'disabled' in props ? props.disabled : checkboxGroup.disabled;
+    const {context,props} = this;
+    const {children,name,type,disabled,readOnly,onClick,onFocus,onBlur,prefixCls ,...otherProps} = props;
+    let checkboxProps = { ...otherProps };
+    let {checked} = this.state;
+    const {checkboxGroup} = context;
+    if(checkboxGroup){
+      checkboxProps.onChange =()=>checkboxGroup.toggleOption({label:children,value:props.value});
+      checkboxProps.checked = checkboxGroup.value.indexOf(props.value) !==-1;
+      checkboxProps.disabled = 'disabled' in props ? props.disabled:checkboxGroup.disabled;
     }
+
+    const classString = classNames(prefixCls,{
+      [`${prefixCls}__checked`]:checked,
+      [`${prefixCls}__disabled`]:disabled,
+    })
     return (
       <label>
-        <span styleName={'checkbox'}>
-          <input
-            name={name}
-            type={type}
-            readOnly={readOnly}
-            disabled={disabled}
+        <span styleName={classString}>
+          <input 
+          name={name}
+          type={type}
+          readOnly={readOnly}
+          disabled={disabled}
           // checked={!!checked}
             onChange={this.handleChange}
             {...checkboxProps}

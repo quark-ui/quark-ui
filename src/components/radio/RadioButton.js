@@ -1,35 +1,35 @@
 /**
- * Radio Component
+ * RadioButton Component
  * @author grootfish
  */
 import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
+import shallowEqual from 'shallowEqual';
+import Radio from './Radio';
 import { allowMultiple } from '../../constants';
 import styles from './Radio.css';
-import Checkbox from '../checkbox';
-import shallowEqual from 'shallowEqual';
+
 
 @CSSModules(styles, { allowMultiple })
-class Radio extends PureComponent {
+class RadioButton extends PureComponent {
 
-  static displayName = 'Radio'
+  static displayName = 'RadioButton'
 
   static defaultProps = {
-    type:'radio',
-    prefixCls:'radio',
+    prefixCls:'radio--button',
   }
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
   static propTypes = {
-    type: PropTypes.string,
+    prefixCls:PropTypes.string,
   }
 
   static contextTypes = {
-    radioGroup: PropTypes.any,
+    radioGroup:PropTypes.any
   }
 
-  shouldComponentUpdate(nextProps, nextState, nextContext) {
+  shouldComponentUpdate(nextProps,nextState,nextContext){
     return !shallowEqual(this.props, nextProps) ||
            !shallowEqual(this.state, nextState) ||
            !shallowEqual(this.context.radioGroup, nextContext.radioGroup);
@@ -42,21 +42,17 @@ class Radio extends PureComponent {
 
   render() {
     const {props,context} = this;
-    const {children,prefixCls,...restProps} = props;
     const {radioGroup} = context;
-    let radioProps = restProps;
-
+    let radioProps = props;
     if(radioGroup){
       radioProps.onChange = radioGroup.onChange;
-      radioProps.checked = props.value == radioGroup.value;
-      radioProps.disabled = props.disabled || radioGroup.disabled;
+      radioProps.checked =props.value==radioGroup.value;
+      radioProps.disabled = props.disabled||radioGroup.disabled;
     }
     return (
-      <Checkbox {...radioProps} prefixCls={prefixCls}>
-        {children !== undefined ? children : null}
-      </Checkbox>
-      );
+      <Radio {...radioProps}></Radio>
+    );
   }
 }
 
-export default Radio;
+export default RadioButton;
