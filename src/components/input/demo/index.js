@@ -29,35 +29,22 @@ export default class InputDemo extends Component {
 	    	<div>
 				<section styleName="code__box">
 					<div styleName="code__temp">
-						<span>搜索框</span>
-						<p>带有搜索按钮的输入框</p>
-						<p>
-							<Search size="large" placeholder="input search text" style={{ width: 240 }}></Search>
-						</p>
-						<p>
-							<Search placeholder="input search text" style={{ width: 240 }}></Search>
-						</p>
-						<p>
-							<Search size="small" placeholder="input search text" style={{ width: 240 }}></Search>
-						</p>
-					</div>
-					<div styleName="code__temp">
 						<span>基本</span>
-						<p>数字输入框</p>
+						<p>输入框</p>
 						<p>
 							<Input placeholder="请输入" defaultValue="12345465" />
 						</p>
 					</div>
 					<div styleName="code__temp">
 						<span>图标</span>
-						<p>数字输入框</p>
+						<p>图标输入框</p>
 						<p>
 							<Input placeholder="请输入" prefix={prefix} />
 						</p>
 					</div>
 					<div styleName="code__temp">
-						<span>尺寸</span>
-						<p>数字输入框</p>
+						<span>大小</span>
+						<p>三种大小的数字输入框</p>
 						<p>
 							<Input size="large" placeholder="large size" />
 						</p>
@@ -73,6 +60,19 @@ export default class InputDemo extends Component {
 						<p>输入框禁用</p>
 						<p>
 							<Input placeholder="input disabled" defaultValue="12345465" disabled />
+						</p>
+					</div>
+					<div styleName="code__temp">
+						<span>搜索框</span>
+						<p>带有搜索按钮的输入框</p>
+						<p>
+							<Search size="large" placeholder="input search text" style={{ width: 240 }}></Search>
+						</p>
+						<p>
+							<Search placeholder="input search text" style={{ width: 240 }}></Search>
+						</p>
+						<p>
+							<Search size="small" placeholder="input search text" style={{ width: 240 }}></Search>
 						</p>
 					</div>
 					<div styleName="code__temp">
