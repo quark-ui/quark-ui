@@ -50,7 +50,6 @@ class MessageBox extends PureComponent {
   }
 
   render() {
-    const props = this.props;
     const Nodes = this.state.messages.map((message) => {
       const onClose = () => {
         if (message.onClose) {
@@ -67,36 +66,11 @@ class MessageBox extends PureComponent {
     });
 
     return (
-      <div styleName="message--box" style={props.style}>
+      <div styleName="message--box">
         {Nodes}
       </div>
     );
   }
-}
-
-MessageBox.newInstance = function(properties){
-  const {getContainer,...props} = properties||{};
-  let div;
-  if(getContainer){
-    div = getContainer();
-  }else{
-    div = document.createElement('div');
-    document.body.appendChild(div);
-  }
-  const messageBox = ReactDOM.render(<MessageBox {...props} />, div);
-  return {
-    msg(noticeProps){
-      messageBox.add(noticeProps);
-    },
-    removeMsg(key){
-      messageBox.remove(key);
-    },
-    component:messageBox,
-    destroy(){
-      ReactDOM.unmountComponentAtNode(div);
-      document.body.removeChild(div);
-    },
-  };
 }
 
 export default MessageBox;

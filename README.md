@@ -18,9 +18,3 @@ Component for quark-ui.
 [devdep-url]: https://david-dm.org/quark-ui/quark-ui#info=devDependencies
 [downloads-image]: https://img.shields.io/npm/dm/quark-ui.svg
 
-### How To Use
-
-```js
-import 'quark/lib/button.css';
-import Button from 'quark/lib/button';
-```

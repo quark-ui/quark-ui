@@ -12,7 +12,7 @@
 .message--box {
     position: fixed;
     z-index: 1000;
-    top: 50px;
+    top: 20px;
     left: 50%;
     transform:translate(-50%,0);
     pointer-events: none;
@@ -29,7 +29,7 @@
     line-height: 1.5;
     vertical-align: middle;
     position: relative;
-    margin-bottom: 10px;
+    margin: 10px 0;
 }
 .message--content{
     display:inline-block;
