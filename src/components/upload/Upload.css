@@ -3,8 +3,8 @@
  * @author heifade
  */
 :root{
-    --card-width: 111px;
-    --card-height: 111px;
+    --upload-card-width: 111px;
+    --upload-card-height: 111px;
 }
 
 
@@ -117,8 +117,8 @@
 }
 
 .upload-select-picture-card {
-    width: var(--card-width);
-    height: var(--card-height);
+    width: var(--upload-card-width);
+    height: var(--upload-card-height);
     border-radius: 4px;
     background-color: #f5f5f5;
     border: 1px dashed #999999;
@@ -168,8 +168,8 @@
 
     & .upload-list-item{
         float: left;
-        width: var(--card-width);
-        height: var(--card-height);
+        width: var(--upload-card-width);
+        height: var(--upload-card-height);
         margin: 0 8px 8px 0;
 
         padding: 8px;
@@ -204,7 +204,7 @@
             }
             /*上传中*/
             & .uploading-text{
-                line-height: calc( var(--card-height) - 18px);
+                line-height: calc( var(--upload-card-height) - 18px);
                 text-align: center;
             }
             /*缩略图*/
@@ -231,7 +231,7 @@
         }
 
         & .upload-list-item-progress {
-            width: calc( var(--card-width) - 18px);
+            width: calc( var(--upload-card-width) - 18px);
             bottom: 20px;
         }
     }
