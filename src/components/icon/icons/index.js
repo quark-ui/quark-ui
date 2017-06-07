@@ -18,6 +18,7 @@ import plus from './plus.svg';
 import question from './question.svg';
 import question2 from './question2.svg';
 import recycle from './recycle.svg';
+import search from './search.svg';
 import setting from './setting.svg';
 import success from './success.svg';
 import upload from './upload.svg';
@@ -45,6 +46,7 @@ const ICONS = {
   question,
   question2,
   recycle,
+  search,
   setting,
   success,
   upload,
