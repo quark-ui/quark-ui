@@ -4,6 +4,8 @@ import Input from '../../input'
 import { Component } from 'react';
 
 const RadioGroup = Radio.Group;
+const RadioButton = Radio.Button;
+
 const plainOptions = ['Apple', 'Pear', 'Orange'];
 const options = [
   { label: 'Apple', value: 'Apple' },
@@ -15,6 +17,10 @@ const optionsWithDisabled = [
   { label: 'Pear', value: 'Pear' },
   { label: 'Orange', value: 'Orange', disabled: false },
 ];
+
+function onChange(e) {
+  console.log(`radio checked:${e.target.value}`);
+}
 export default class RadioDemo extends Component {
   constructor(props){
     super(props);
@@ -86,6 +92,15 @@ export default class RadioDemo extends Component {
           {value == 4 ? <Input style={{ width: 100, marginLeft: 10 }} /> : null}
         </Radio>
       </RadioGroup>
+
+        <h3>按钮样式的单选组合</h3>
+        <RadioGroup onChange={onChange} defaultValue="a">
+      <RadioButton value="a">Hangzhou</RadioButton>
+      <RadioButton value="b">Shanghai</RadioButton>
+      <RadioButton value="c">Beijing</RadioButton>
+      <RadioButton value="d">Chengdu</RadioButton>
+    </RadioGroup>
+
         <h3>非受控方式</h3>
         <p><Radio defaultChecked name={"my-radio"} disabled={disabled}>&nbsp;默认选中</Radio></p>
         <p>

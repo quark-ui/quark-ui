@@ -17,6 +17,7 @@ class Radio extends PureComponent {
 
   static defaultProps = {
     type:'radio',
+    prefixCls:'radio',
   }
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
@@ -41,19 +42,20 @@ class Radio extends PureComponent {
 
   render() {
     const {props,context} = this;
-    const {children,...restProps} = props;
+    const {children,prefixCls,...restProps} = props;
     const {radioGroup} = context;
     let radioProps = restProps;
 
     if(radioGroup){
-      
       radioProps.onChange = radioGroup.onChange;
       radioProps.checked =props.value==radioGroup.value;
       radioProps.disabled = props.disabled||radioGroup.disabled;
     }
-    return (<Checkbox {...radioProps}>
-    {children !== undefined ? children : null}
-    </Checkbox>);
+    return (
+      <Checkbox {...radioProps} prefixCls={prefixCls}>
+        {children !== undefined ? children : null}
+      </Checkbox>
+      );
   }
 }
 
