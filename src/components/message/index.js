@@ -20,22 +20,18 @@ function getMessageInstance() {
 function noop() {}
 export default {
   info(content = '', duration = defaultDuration , onClose = noop) {
-    messageInstance = getMessageInstance();
-      messageInstance.msg({ type: 'info', content, duration, onClose });
+      getMessageInstance().msg({ type: 'info', content, duration, onClose });
     
   },
   success(content = '', duration = defaultDuration , onClose = noop) {
-    messageInstance = getMessageInstance();
-      messageInstance.msg({ type: 'success', content, duration, onClose });
+      getMessageInstance().msg({ type: 'success', content, duration, onClose });
     
   },
   error(content = '', duration = defaultDuration , onClose = noop) {
-    messageInstance = getMessageInstance();
-      messageInstance.msg({ type: 'error', content, duration, onClose });
+      getMessageInstance().msg({ type: 'error', content, duration, onClose });
   },
   warning(content = '', duration = defaultDuration , onClose = noop) {
-    messageInstance = getMessageInstance();
-      messageInstance.msg({ type: 'warning', content, duration, onClose });
+      getMessageInstance().msg({ type: 'warning', content, duration, onClose });
   },
   config(options={}){
     if (options.top !== undefined) {

@@ -2,7 +2,7 @@
  * Radio Component
  * @author grootfish
  */
-import React ,{ PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
 import shallowEqual from 'shallowEqual';
@@ -10,16 +10,16 @@ import { allowMultiple } from '../../constants';
 import styles from './Radio.css';
 import Radio from '../radio';
 
-function getCheckedValue(children){
+function getCheckedValue(children) {
   let value = null;
   let matched = false;
-  React.Children.forEach(children,(radio)=>{
-    if(radio&&radio.props&&radio.props.checked){
+  React.Children.forEach(children, (radio) => {
+    if (radio && radio.props && radio.props.checked) {
       value = radio.props.value;
       matched = true;
     }
   });
-  return matched?{value}:undefined;
+  return matched ? { value } : undefined;
 }
 
 
@@ -29,28 +29,28 @@ class RadioGroup extends PureComponent {
   static displayName = 'RadioGroup'
 
   static defaultProps = {
-    disabled:false,
+    disabled: false,
   }
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
   static propTypes = {
-    disabled:PropTypes.bool,
+    disabled: PropTypes.bool,
   }
 
-   static childContextTypes = {
+  static childContextTypes = {
     radioGroup: PropTypes.any,
   };
 
   constructor(props) {
     super(props);
     let value;
-    if('value' in props){
+    if ('value' in props) {
       value = props.value;
-    }else if('defaultValue' in props){
+    } else if ('defaultValue' in props) {
       value = props.defaultValue;
-    }else{
+    } else {
       const checkedValue = getCheckedValue(props.children);
-      value = checkedValue&&checkedValue.value;
+      value = checkedValue && checkedValue.value;
     }
 
     this.state = {
@@ -58,25 +58,25 @@ class RadioGroup extends PureComponent {
     };
   }
 
-  getChildContext(){
+  getChildContext() {
     return {
-      radioGroup:{
-        onChange:this.onRadioChange,
-        value:this.state.value,
-        disabled:this.props.disabled,
-      }
-    }
+      radioGroup: {
+        onChange: this.onRadioChange,
+        value: this.state.value,
+        disabled: this.props.disabled,
+      },
+    };
   }
 
-  componentWillReceiveProps(nextProps){
-    if('value' in nextProps){
+  componentWillReceiveProps(nextProps) {
+    if ('value' in nextProps) {
       this.setState({
-        value:nextProps.value,
+        value: nextProps.value,
       });
-    }else{
+    } else {
       const checkedValue = getCheckedValue(nextProps.children);
-      if(checkedValue){
-        this.setState({value:checkedValue.value});
+      if (checkedValue) {
+        this.setState({ value: checkedValue.value });
       }
     }
   }
@@ -86,49 +86,47 @@ class RadioGroup extends PureComponent {
       !shallowEqual(this.state, nextState);
   }
 
-  onRadioChange=(e)=>{
+  onRadioChange=(e) => {
     const lastValue = this.state.value;
-    const {value} = e.target;
-    if(!('value' in this.props)){
-      this.setState({value});
+    const { value } = e.target;
+    if (!('value' in this.props)) {
+      this.setState({ value });
     }
 
-    const {onChange} = this.props;
-    if(onChange&&value!==lastValue){
+    const { onChange } = this.props;
+    if (onChange && value !== lastValue) {
       onChange(e);
     }
   }
 
-  getOptions=()=>{
-    const {options}= this.props;
-    return options.map((option)=>{
-      if(typeof option=='string'){
+  getOptions=() => {
+    const { options } = this.props;
+    return options.map((option) => {
+      if (typeof option === 'string') {
         return {
-          label:option,
-          value:option,
-        }
+          label: option,
+          value: option,
+        };
       }
       return option;
     });
   }
 
   render() {
-    const {props,state,getOptions} = this;
-    let {children,options} = props;
-    if(options&&options.length>0){
-      children = getOptions().map((option,index)=>{
-          return (
-            <Radio 
-              key={index}
-              disabled = {option.disabled||props.disabled}
-              value = {option.value}
-              onChange = {this.onRadioChange}
-              checked = {state.value === option.value}
-            >
-            {option.label}
-            </Radio>
-          );
-        }
+    const { props, state, getOptions } = this;
+    let { children, options } = props;
+    if (options && options.length > 0) {
+      children = getOptions().map((option, index) => (
+        <Radio
+          key={index}
+          disabled={option.disabled || props.disabled}
+          value={option.value}
+          onChange={this.onRadioChange}
+          checked={state.value === option.value}
+        >
+          {option.label}
+        </Radio>
+          ),
       );
     }
 

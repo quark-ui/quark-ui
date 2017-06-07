@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
 import shallowEqual from 'shallowequal';
 import { allowMultiple } from '../../constants';
-import Checkbox from './Checkbox'
+import Checkbox from './Checkbox';
 import styles from './Checkbox.css';
 
 @CSSModules(styles, { allowMultiple })
@@ -16,10 +16,10 @@ class CheckboxGroup extends PureComponent {
   static displayName = 'CheckboxGroup'
 
   static defaultProps = {
-    type:'checkbox',
-    defaultValue:[],
-    optoins:[],
-    onChange(){},
+    type: 'checkbox',
+    defaultValue: [],
+    optoins: [],
+    onChange() {},
   }
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
@@ -37,18 +37,17 @@ class CheckboxGroup extends PureComponent {
   constructor(props) {
     super(props);
 
-    const value = 'value' in props ?props.value:props.defaultValue;
+    const value = 'value' in props ? props.value : props.defaultValue;
 
     this.state = {
       value,
     };
-    
   }
 
-  componentWillReceiveProps(nextProps){
-    if('value' in nextProps){
+  componentWillReceiveProps(nextProps) {
+    if ('value' in nextProps) {
       this.setState({
-        value:nextProps.value||[],
+        value: nextProps.value || [],
       });
     }
   }
@@ -57,63 +56,60 @@ class CheckboxGroup extends PureComponent {
       !shallowEqual(this.state, nextState);
   }
 
-  getChildContext=()=> {
-    return {
-      checkboxGroup: {
-        toggleOption: this.toggleOption,
-        value: this.state.value,
-        disabled: this.props.disabled,
-      },
-    };
-  }
+  getChildContext = () => ({
+    checkboxGroup: {
+      toggleOption: this.toggleOption,
+      value: this.state.value,
+      disabled: this.props.disabled,
+    },
+  })
 
-  getOptions=()=>{
-    const {options}= this.props;
-    return options.map((option)=>{
-      if(typeof option=='string'){
+  getOptions=() => {
+    const { options } = this.props;
+    return options.map((option) => {
+      if (typeof option === 'string') {
         return {
-          label:option,
-          value:option,
-        }
+          label: option,
+          value: option,
+        };
       }
       return option;
     });
   }
 
-  toggleOption=(option)=>{
+  toggleOption=(option) => {
     const optionIndex = this.state.value.indexOf(option.value);
-    let value = [...this.state.value];
+    const value = [...this.state.value];
 
-    if(optionIndex===-1){
+    if (optionIndex === -1) {
       value.push(option.value);
-    }else{
-      value.splice(optionIndex,1);
+    } else {
+      value.splice(optionIndex, 1);
     }
 
-    if(!('value' in this.props)){
-      this.setState({value});
+    if (!('value' in this.props)) {
+      this.setState({ value });
     }
 
-    if(this.props.onChange){
+    if (this.props.onChange) {
       this.props.onChange(value);
     }
   }
 
- 
 
   render() {
-    const {props,state}=this;
-    let {options,children} = props;
-    if(options&&options.length>0){
-      children = this.getOptions().map(option=>(
+    const { props, state } = this;
+    let { options, children } = props;
+    if (options && options.length > 0) {
+      children = this.getOptions().map(option => (
         <Checkbox
           key={option.value}
-          disabled={'disabled' in option?option.disabled:props.disabled}
+          disabled={'disabled' in option ? option.disabled : props.disabled}
           value={option.value}
-          checked ={state.value.indexOf(option.value)!==-1}
-          onChange={()=>{this.toggleOption(option)}}
+          checked={state.value.indexOf(option.value) !== -1}
+          onChange={() => { this.toggleOption(option); }}
         >
-        {option.label}
+          {option.label}
         </Checkbox>
       ));
     }

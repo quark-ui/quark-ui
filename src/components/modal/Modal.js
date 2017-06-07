@@ -11,31 +11,53 @@ import { allowMultiple } from '../../constants';
 import styles from './Modal.css';
 import renderTo from '../../enhancer/render-to';
 import Mask from './Mask';
+import Icon from '../icon';
 
 const renderNoticeModal = (type, config = {
   title: '',
   content: '',
+  closable: false,
 }) => {
   const wrapNode = document.createElement('div');
+  const colorArr = {
+    info: '#3b98e0',
+    success: '#73da7d',
+    error: '#e6445e',
+    warning: '#ffd31a',
+  };
   document.body.appendChild(wrapNode);
   const modalProps = {
-    title: config.title || type,
+    title: (<p><Icon name={type} size={26} color={colorArr[type]} />
+      <span>{config.title || type}</span>
+      { config.closable ?
+        <a
+          styleName="modal__closable"
+          href=""
+          onClick={(e) => {
+            e.preventDefault();
+            ReactDOM.unmountComponentAtNode(wrapNode);
+            document.body.removeChild(wrapNode);
+          }}
+        ><Icon name="close" size={18} color="#a6a6a6" /></a>
+            : null
+          }
+    </p>),
     visible: true,
     closable: false,
     footer: (
       <Button
         key="confirm"
         type="primary"
-        size="small"
         onClick={() => {
           ReactDOM.unmountComponentAtNode(wrapNode);
           document.body.removeChild(wrapNode);
         }}
-      >确定</Button>
+      >我知道了</Button>
     ),
   };
   ReactDOM.render(
     <Modal {...modalProps}>
+
       {config.content}
     </Modal>
   , wrapNode);
@@ -74,6 +96,7 @@ class Modal extends Component {
     onCancel: PropTypes.func,
     afterClose: PropTypes.func,
     children: PropTypes.isRequired,
+
   }
 
   static info(config) {
@@ -131,7 +154,7 @@ class Modal extends Component {
                 e.preventDefault();
                 this.handleCancel(e);
               }}
-            >X</a>
+            ><Icon name="close" size={18} color="#a6a6a6" /></a>
             : null
           }
         </div>
@@ -146,7 +169,6 @@ class Modal extends Component {
       <Button
         key="cancel"
         type="secondary"
-        size="small"
         onClick={this.handleCancel}
       >
         取消
@@ -154,7 +176,6 @@ class Modal extends Component {
       <Button
         key="confirm"
         type="primary"
-        size="small"
         onClick={this.handleOk}
       >
         确定
@@ -172,17 +193,18 @@ class Modal extends Component {
         width,
       },
       styleName: `modal${visible ? '--visible' : ''}`,
-    };
 
-    return (
-      <Mask visible={visible}>
-        <div {...modalProps}>
-          { this.renderHeader() }
-          {children}
-          { this.renderFooter() }
-        </div>
-      </Mask>
-    );
+    }; {
+      return (
+        <Mask visible={visible}>
+          <div {...modalProps}>
+            { this.renderHeader() }
+            <div styleName="modal__content">{children}</div>
+            { this.renderFooter() }
+          </div>
+        </Mask>
+      );
+    }
   }
 }
 

@@ -14,8 +14,7 @@
     "pub": "git push origin master & npm publish",
     "new": "yo quarkui",
     "lint": "eslint --color -f table ./src",
-    "lint-c": "eslint --color -f table",
-    "pack": "rollup -c ./conf/rollup.config.js"
+    "lint-c": "eslint --color -f table"
   },
   "bugs": {
     "url": "http://github.com/quark-ui/quark-ui/issues"
