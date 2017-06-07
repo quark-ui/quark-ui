@@ -27,13 +27,50 @@
   border: 1px solid border-color;
   transform: translateY(-50%);
 }
+
 .modal__header {
   position: relative;
-  height: 40px;
+  padding: 15px 20px;
+  font-size: 18px;
+  color: #333;
+  text-align: left;
+}
+.modal__header p{
+  display: inline-block;
+}
+.modal__header>p>span{
+  padding-left: 10px;
+  vertical-align: 3px;
 }
 .modal__closable {
   position: absolute;
-  right: 0;
-  top: 0;
+  right: 15px;
+  color: #a6a6a6;
 }
-.modal__footer {}
+.modal__closable:hover{
+  text-decoration: none;
+}
+.modal__footer {
+  margin: 16px 16px;
+  text-align: right;
+}
+.modal__footer button{
+  width: 80px;
+}
+.modal__footer button:not(:last-child){
+  margin-right: 16px;
+}
+.modal__content{
+  width: 370px;
+  padding: 0px 20px;
+  word-wrap: break-word;
+  font-size: 14px;
+  margin-bottom: 40px;
+}
+.modal__icon{
+  margin-bottom: 20px;
+}
+.modal--info .modal__content{}
+.modal--success .modal__content{}
+.modal--error .modal__content{}
+.modal--warning .modal__content{}
