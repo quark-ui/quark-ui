@@ -55,7 +55,7 @@ class UploadDemo1 extends Component {
         1、经典款式，用户点击按钮弹出文件选择框。
         <Upload {...props}>
           <Button size="small" type="secondary" disabled={props.disabled}>
-            <Icon size={12} name="home" /> 上传文件
+            <Icon size={12} name="upload" /> 上传文件
           </Button>
         </Upload>
       </div>
@@ -129,7 +129,7 @@ class UploadDemo2 extends Component {
         使用 defaultFileList 设置已上传的内容。
         <Upload {...props}>
           <Button size="small" type="secondary" disabled={props.disabled}>
-            <Icon size={12} name="home" /> 上传文件
+            <Icon size={12} name="upload" /> 上传文件
           </Button>
         </Upload>
       </div>
@@ -204,7 +204,7 @@ class UploadDemo3 extends Component {
         3) 按照服务器返回信息筛选成功上传的文件。<br />
         <Upload {...props} fileList={this.state.fileList}>
           <Button size="small" type="secondary" disabled={props.disabled}>
-            <Icon size={12} name="home" /> 上传文件
+            <Icon size={12} name="upload" /> 上传文件
           </Button>
         </Upload>
       </div>
@@ -268,7 +268,7 @@ class UploadDemo4 extends Component {
 
     const uploadButton = (
       <div styleName="upload-btn">
-        <Icon name="error" size={25} />
+        <Icon name="plus" size={25} />
         <div styleName="upload-text">上传</div>
       </div>
     );

@@ -114,7 +114,7 @@ export default class UploadList extends React.Component {
     } = this.props;
     const list = items.map((file) => {
       let progress;
-      let icon = <Icon size={12} styleName={'status'} name={file.status === 'uploading' ? 'setting' : 'paper'} />;
+      let icon = <Icon size={12} styleName={'status'} name={file.status === 'uploading' ? 'attachment' : 'attachment'} />;
 
       if (listType === 'picture' || listType === 'picture-card') {
         if (file.status === 'uploading' || (!file.thumbUrl && !file.url)) {
@@ -189,7 +189,7 @@ export default class UploadList extends React.Component {
           onClick={e => this.handlePreview(file, e)}
           title={locale.previewFile}
         >
-          <Icon name="error" size={20} styleName={'eye'} />
+          <Icon name="visible" size={20} styleName={'eye'} />
         </a>
       ) : null;
       // picture-card 删除按钮
@@ -199,7 +199,7 @@ export default class UploadList extends React.Component {
           title={locale.removeFile}
           onClick={() => this.handleClose(file)}
         >
-          <Icon name="error" size={20} styleName={'remove'} />
+          <Icon name="recycle" size={20} styleName={'remove'} />
         </a>
       ) : null;
       // text 删除按钮
