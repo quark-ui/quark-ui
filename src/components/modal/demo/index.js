@@ -44,7 +44,7 @@ export default class ModalDemo extends Component {
               closable: true
             });
           }}
-        >info</Button>
+        >info</Button>&emsp;
         <Button
           type="secondary"
           onClick={() => {
@@ -52,7 +52,7 @@ export default class ModalDemo extends Component {
               content: '这是成功消息',
             });
           }}
-        >success</Button>
+        >success</Button>&emsp;
         <Button
           type="secondary"
           onClick={() => {
@@ -60,7 +60,7 @@ export default class ModalDemo extends Component {
               content: '这是错误提示',
             });
           }}
-        >error</Button>
+        >error</Button>&emsp;
         <Button
           type="secondary"
           onClick={() => {
