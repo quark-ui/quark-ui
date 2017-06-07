@@ -1,40 +1,42 @@
+import { Component } from 'react';
 import Icon from '../Icon';
 import styles from './index.css';
+import Icons from '../icons/';
 
-const IconList = [
-  'ellipsis',
-  'caution',
-  'question',
-  'question2',
-  'account',
-  'setting',
-  'paper',
-  'finance',
-  'check',
-  'arrow-left',
-  'arrow-right',
-  'double-arrow-left',
-  'double-arrow-right',
-  'check',
-  'home',
-  'info',
-  'success',
-  'warning',
-  'error',
-  'close',
-];
+const IconList = Object.keys(Icons);
 
-const IconDemo = () => (
-  <div>
-    {
-      IconList.map(name => (
-        <div className={styles['Icon--grid']} key={name}>
-          <Icon size={48} name={name} />
-          <span className={styles['Icon-name']}>{name}</span>
-        </div>
-      ))
+export default class IconDemo extends Component {
+  state = {
+    color: document.documentElement.style.getPropertyValue('--brand-primary'),
+  }
+  componentDidMount() {
+    if (typeof MutationObserver === 'function') {
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutationRecord) => {
+          this.setState({
+            color: document.documentElement.style.getPropertyValue('--brand-primary'),
+          });
+        });
+      });
+
+      observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['style'],
+      });
     }
-  </div>
-);
-
-export default IconDemo;
+  }
+  render() {
+    return (
+      <div>
+        {
+          IconList.map(name => (
+            <div className={styles['Icon--grid']} key={name}>
+              <Icon size={48} name={name} color={this.state.color} />
+              <span className={styles['Icon-name']}>{name}</span>
+            </div>
+          ))
+        }
+      </div>
+    );
+  }
+}

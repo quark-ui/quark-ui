@@ -15,12 +15,9 @@ class Checkbox extends PureComponent {
   static displayName = 'Checkbox'
 
   static defaultProps = {
-    type:'checkbox',
-    defaultChecked:false,
-    onChange(){},
-    onFocus() {},
-    onBlur() {},
-    onClick(){},
+    type: 'checkbox',
+    defaultChecked: false,
+    onChange() {},
   }
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
@@ -31,9 +28,6 @@ class Checkbox extends PureComponent {
     type: PropTypes.string,
     disabled: PropTypes.bool,
     readOnly: PropTypes.bool,
-    onFocus: PropTypes.func,
-    onBlur: PropTypes.func,
-    onClick: PropTypes.func,
   }
 
   static contextTypes = {
@@ -41,14 +35,22 @@ class Checkbox extends PureComponent {
   };
 
 
-  constructor(props,context) {
-    super(props,context);
+  constructor(props, context) {
+    super(props, context);
 
-    const checked = 'checked' in props ?props.checked:props.defaultChecked;
+    const checked = 'checked' in props ? props.checked : props.defaultChecked;
 
     this.state = {
       checked,
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if ('checked' in nextProps) {
+      this.setState({
+        checked: nextProps.checked,
+      });
+    }
   }
 
   shouldComponentUpdate(nextProps, nextState, nextContext) {
@@ -57,70 +59,58 @@ class Checkbox extends PureComponent {
            !shallowEqual(this.context.checkboxGroup, nextContext.checkboxGroup);
   }
 
-  componentWillReceiveProps(nextProps){
-    if('checked' in nextProps){
-      this.setState({
-        checked:nextProps.checked,
-      });
-    }
-  }
-
-  handleChange = (e)=>{
-    
-    const {props} = this;
-    if(props.disabled){
+  handleChange = (e) => {
+    const { props } = this;
+    if (props.disabled) {
       return;
     }
-    if(!('checked' in props)){
+    if (!('checked' in props)) {
       this.setState({
-        checked:e.target.checked,
-      })
+        checked: e.target.checked,
+      });
     }
     props.onChange({
-      target:{
+      target: {
         ...props,
-        checked:e.target.checked,
+        checked: e.target.checked,
       },
-      stopPropagation(){
+      stopPropagation() {
         e.stopPropagation();
       },
-      preventDefault(){
+      preventDefault() {
         e.preventDefault();
-      }
+      },
     });
   };
 
   render() {
-    const {context,props} = this;
-    const {children,name,type,disabled,readOnly,onClick,onFocus,onBlur,...otherProps} = props;
-    let checkboxProps = { ...otherProps };
+    const { context, props } = this;
+    const { children, name, type, disabled, readOnly, ...otherProps } = props;
+    const checkboxProps = { ...otherProps };
     // let {checked} = this.state;
-    const {checkboxGroup} = context;
-    if(checkboxGroup){
-      checkboxProps.onChange =()=>checkboxGroup.toggleOption({label:children,value:props.value});
-      checkboxProps.checked = checkboxGroup.value.indexOf(props.value) !==-1;
-      checkboxProps.disabled = 'disabled' in props ? props.disabled:checkboxGroup.disabled;
+    const { checkboxGroup } = context;
+    if (checkboxGroup) {
+      checkboxProps.onChange = () => checkboxGroup.toggleOption({ label: children, value: props.value });
+      checkboxProps.checked = checkboxGroup.value.indexOf(props.value) !== -1;
+      checkboxProps.disabled = 'disabled' in props ? props.disabled : checkboxGroup.disabled;
     }
     return (
       <label>
         <span styleName={'checkbox'}>
-          <input 
-          name={name}
-          type={type}
-          readOnly={readOnly}
-          disabled={disabled}
+          <input
+            name={name}
+            type={type}
+            readOnly={readOnly}
+            disabled={disabled}
           // checked={!!checked}
-          onClick={onClick}
-          onFocus = {onFocus}
-          onBlur = {onBlur}
-          onChange = {this.handleChange}
-          {...checkboxProps}
+            onChange={this.handleChange}
+            {...checkboxProps}
           />
-          <span styleName={'checkbox--inner'}></span>
+          <span styleName={'checkbox--inner'} />
         </span>
         {children !== undefined ? <span>{children}</span> : null}
       </label>
-      
+
     );
   }
 }

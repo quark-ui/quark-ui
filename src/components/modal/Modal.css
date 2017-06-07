@@ -55,10 +55,8 @@
   text-align: right;
 }
 .modal__footer button{
-  width: 80px;
-}
-.modal__footer button:not(:last-child){
-  margin-right: 16px;
+  /*width: 80px;*/
+  margin-left: 16px;
 }
 .modal__content{
   width: 370px;

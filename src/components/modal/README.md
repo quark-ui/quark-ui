@@ -16,11 +16,12 @@ Modal Component.
 
 ### Api
 #### Modal.method()
+
 - 包括：
-- Modal.info
-- Modal.success
-- Modal.error
-- Modal.warning
+  - Modal.info
+  - Modal.success
+  - Modal.error
+  - Modal.warning
 - 以上均为一个函数，参数为object，具体属性如下:
 
 |name|type|default|description|

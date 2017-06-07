@@ -2,16 +2,13 @@
  * Icon Component
  * @author ryan.bian
  */
-import ReactDOM from 'react-dom';
 import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import CSSModules from 'react-css-modules';
-import { allowMultiple } from '../../constants';
+import classnames from 'classnames';
 import styles from './Icon.css';
 
-import IconSvg from './iconfont.svg';
+import ICONS from './icons';
 
-@CSSModules(styles, { allowMultiple })
 class Icon extends PureComponent {
 
   static displayName = 'Icon'
@@ -34,35 +31,19 @@ class Icon extends PureComponent {
     this.state = {};
   }
 
-  componentWillMount() {
-    if (document.getElementById('quark-icons')) return;
-    const wrapNode = document.createElement('div');
-    wrapNode.style.cssText = 'display:none';
-    wrapNode.setAttribute('id', 'quark-icons');
-    ReactDOM.unstable_renderSubtreeIntoContainer(
-      this,
-      <IconSvg />,
-      wrapNode,
-    );
-    document.body.insertBefore(wrapNode, document.body.firstChild);
-  }
-
   render() {
-    const { name, size, color, ...otherProps } = this.props;
+    const { name, size, color, className, ...otherProps } = this.props;
     const svgProps = {
       style: {
         fontSize: size,
         fill: color,
       },
-      styleName: 'Icon',
+      className: classnames(className, styles.Icon),
       'aria-hidden': true,
       ...otherProps,
     };
-    return (
-      <svg {...svgProps}>
-        <use xlinkHref={`#${name}`} />
-      </svg>
-    );
+    const IconNode = ICONS[name];
+    return <IconNode {...svgProps} />;
   }
 }
 

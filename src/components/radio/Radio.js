@@ -16,7 +16,7 @@ class Radio extends PureComponent {
   static displayName = 'Radio'
 
   static defaultProps = {
-    type:'radio',
+    type: 'radio',
   }
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
@@ -25,10 +25,10 @@ class Radio extends PureComponent {
   }
 
   static contextTypes = {
-    radioGroup:PropTypes.any
+    radioGroup: PropTypes.any,
   }
 
-  shouldComponentUpdate(nextProps,nextState,nextContext){
+  shouldComponentUpdate(nextProps, nextState, nextContext) {
     return !shallowEqual(this.props, nextProps) ||
            !shallowEqual(this.state, nextState) ||
            !shallowEqual(this.context.radioGroup, nextContext.radioGroup);
@@ -40,19 +40,18 @@ class Radio extends PureComponent {
   }
 
   render() {
-    const {props,context} = this;
-    const {children,...restProps} = props;
-    const {radioGroup} = context;
-    let radioProps = restProps;
+    const { props, context } = this;
+    const { children, ...restProps } = props;
+    const { radioGroup } = context;
+    const radioProps = restProps;
 
-    if(radioGroup){
-      
+    if (radioGroup) {
       radioProps.onChange = radioGroup.onChange;
-      radioProps.checked =props.value==radioGroup.value;
-      radioProps.disabled = props.disabled||radioGroup.disabled;
+      radioProps.checked = props.value == radioGroup.value;
+      radioProps.disabled = props.disabled || radioGroup.disabled;
     }
     return (<Checkbox {...radioProps}>
-    {children !== undefined ? children : null}
+      {children !== undefined ? children : null}
     </Checkbox>);
   }
 }
