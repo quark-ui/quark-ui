@@ -1,51 +1,58 @@
 import ReactDom from 'react-dom';
 import MessageBox from './MessageBox';
 
-function renderMessage(props = {}) {
-  const { getContainer, ...msgProps } = props;
-
-  let div;
-  if (getContainer) {
-    div = getContainer;
-  } else {
-    div = document.createElement('div');
-    document.body.appendChild(div);
-  }
-
-  return ReactDom.render(<MessageBox {...msgProps} />, div);
-}
-
+let defaultDuration =1.5;
+let defaultTop=50;
 let messageInstance;
+let getContainer;
+
+
 function getMessageInstance() {
-  messageInstance = messageInstance || renderMessage();
+  messageInstance = messageInstance || MessageBox.newInstance({
+    style:{top:defaultTop},
+    getContainer,
+  });
   return messageInstance;
 }
 
 
+
 function noop() {}
 export default {
-  info(content = '', duration = 2, onClose = noop) {
-    const message = getMessageInstance();
-    if (message) {
-      message.add({ type: 'info', content, duration, onClose });
+  info(content = '', duration = defaultDuration , onClose = noop) {
+    messageInstance = getMessageInstance();
+      messageInstance.msg({ type: 'info', content, duration, onClose });
+    
+  },
+  success(content = '', duration = defaultDuration , onClose = noop) {
+    messageInstance = getMessageInstance();
+      messageInstance.msg({ type: 'success', content, duration, onClose });
+    
+  },
+  error(content = '', duration = defaultDuration , onClose = noop) {
+    messageInstance = getMessageInstance();
+      messageInstance.msg({ type: 'error', content, duration, onClose });
+  },
+  warning(content = '', duration = defaultDuration , onClose = noop) {
+    messageInstance = getMessageInstance();
+      messageInstance.msg({ type: 'warning', content, duration, onClose });
+  },
+  config(options={}){
+    if (options.top !== undefined) {
+      defaultTop = options.top;
+      messageInstance = null; // delete messageInstance for new defaultTop
+    }
+    if (options.duration !== undefined) {
+      defaultDuration = options.duration;
+    }
+    if (options.getContainer !== undefined) {
+      getContainer = options.getContainer;
     }
   },
-  success(content = '', duration = 2, onClose = noop) {
-    const message = getMessageInstance();
-    if (message) {
-      message.add({ type: 'success', content, duration, onClose });
-    }
-  },
-  error(content = '', duration = 2, onClose = noop) {
-    const message = getMessageInstance();
-    if (message) {
-      message.add({ type: 'error', content, duration, onClose });
-    }
-  },
-  warning(content = '', duration = 2, onClose = noop) {
-    const message = getMessageInstance();
-    if (message) {
-      message.add({ type: 'warning', content, duration, onClose });
+  destroy() {
+    if (messageInstance) {
+      messageInstance.destroy();
+      messageInstance = null;
     }
   },
 };

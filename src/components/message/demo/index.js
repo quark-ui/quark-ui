@@ -9,6 +9,10 @@ export default class MessageDemo extends Component {
   }
 
   render() {
+    message.config({
+      top: 60,
+      duration: 2,
+    });
     return (
       <div>
         <Button onClick={() => { message.info('这是一条提示信息（信息内容）。'); }}>info</Button>&emsp;
