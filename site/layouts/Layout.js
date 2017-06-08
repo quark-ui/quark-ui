@@ -15,16 +15,18 @@ export default class Layout extends PureComponent {
     const { match } = this.props;
     return (
       <div>
-        <header styleName="head">
-          <h1 styleName="head__brandTitle">
-            <Link to="/">Quark UI</Link>
-          </h1>
-          <nav styleName="head__navigation">
-            <NavLink to="/" exact>首页</NavLink>
-            <NavLink to="/component/">组件</NavLink>
-          </nav>
-          <ThemePicker />
-        </header>
+        <div styleName="container">
+          <header styleName="head">
+            <h1 styleName="head__brandTitle">
+              <Link to="/">Quark UI</Link>
+            </h1>
+            <nav styleName="head__navigation">
+              <NavLink to="/" exact>首页</NavLink>
+              <NavLink to="/component/">组件</NavLink>
+            </nav>
+            <ThemePicker />
+          </header>
+        </div>
         {
           Children.map(this.props.children, Comp => cloneElement(Comp))
         }
