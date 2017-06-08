@@ -240,19 +240,6 @@
             z-index: 10;
         }
 
-        & :global(.menu-vertical) :global(.menu-submenu-title):after{
-            font-style: normal;
-            vertical-align: baseline;
-            text-align: center;
-            text-transform: none;
-            text-rendering: auto;
-            position: absolute;
-            transition: transform .3s;
-            content: "＞";
-            right: 16px;
-        }
-
-
         /*三级菜单弹出层*/
         & :global(.menu) :global(.menu) {
             top: 0;
@@ -321,20 +308,6 @@
                 color: #666666;
             }
         }
-        
-    }
-
-
-    & :global(.menu-submenu-title):after{
-        font-style: normal;
-        vertical-align: baseline;
-        text-align: center;
-        text-transform: none;
-        text-rendering: auto;
-        position: absolute;
-        transition: transform .3s;
-        content: "＞";
-        right: 16px;
     }
 
     /*二级菜单弹出层*/
@@ -400,31 +373,6 @@
         & :global(.menu){
             background-color: #111111;
         }
-    }
-
-    & :global(.menu-submenu-title):after{
-        font-style: normal;
-        vertical-align: baseline;
-        text-align: center;
-        text-transform: none;
-        text-rendering: auto;
-        position: absolute;
-        transition: transform .3s;
-        content: "＞";
-        transform: rotate(90deg);
-        right: 16px;
-    }
-
-    & :global(.menu-submenu-open) {
-        & > :global(.menu-submenu-title):after {
-            transform: rotate(270deg);
-        }
-    }
-    
-
-    & > :global(.menu-item-active), 
-    & :global(.menu-submenu-active) {
-        
     }
 
     & :global(.menu-item-selected) {
