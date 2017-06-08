@@ -1,5 +1,5 @@
 import { TabPane } from 'rc-tabs';
 import Tabs from './Tabs';
 
-export { TabPane };
+Tabs.TabPane = TabPane;
 export default Tabs;
