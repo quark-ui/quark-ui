@@ -83,7 +83,7 @@ export default class Tabs extends PureComponent {
             <Icon
               size={12}
               name={'close'}
-              onClick={e => this.removeTab(child.key, e)}
+              onClick={e => this.removeTab(child.props.eventKey, e)}
             />
           );
         }
@@ -95,7 +95,7 @@ export default class Tabs extends PureComponent {
               {closeIcon}
             </div>
           ),
-          key: child.key || index,
+          key: child.props.eventKey || index,
         }));
       });
     } else {

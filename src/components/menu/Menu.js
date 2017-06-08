@@ -19,9 +19,9 @@ class Menu extends PureComponent {
   static displayName = 'Menu'
 
   static defaultProps = {
-    styleName: 'menu',
-    className: '',
+    // className: '',
     type: 'inline',
+    colorType: 'warm',
     selectedKeys: [],
     defaultOpenKeys: [],
     // openKeys: undefined,
@@ -31,15 +31,14 @@ class Menu extends PureComponent {
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
   static propTypes = {
-    styleName: PropTypes.string,
-    className: PropTypes.string,
+    // className: PropTypes.string,
     type: PropTypes.oneOf([
       'horizontal-h', // 水平菜单，子菜单水平
       'horizontal-v', // 水平菜单，子菜单垂直
       'vertical-h', // 垂直菜单，子菜单水平向右弹出
       'vertical-v', // 垂直菜单，子菜单内嵌在菜单区域
     ]),
-
+    colorType: PropTypes.oneOf(['warm', 'cold']),
     selectedKeys: PropTypes.arrayOf(PropTypes.string),
     defaultOpenKeys: PropTypes.arrayOf(PropTypes.string),
     openKeys: PropTypes.arrayOf(PropTypes.string),
@@ -114,7 +113,6 @@ class Menu extends PureComponent {
 
     if (mode === 'inline') { // 垂直菜单，子菜单内嵌在菜单区域。
       props = {
-        className,
         mode,
       };
     } else {
@@ -122,12 +120,13 @@ class Menu extends PureComponent {
         openKeys: this.state.openKeys,
         onClick: this.handleClick,
         onOpenChange: this.handleOpenChange,
-        className,
         mode,
       };
     }
-
-    props.prefixCls = this.props.styleName;
+    props.className = `color-${this.props.colorType}`;
+    props.styleName = 'menu';
+    props.prefixCls = 'menu';
+    props.inlineIndent = 18;
 
     return (
       <RcMenu {...this.props} {...props} />
