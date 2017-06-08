@@ -2,7 +2,7 @@
  * Tabs Component
  * @author yan
  */
-import { PureComponent } from 'react';
+import { PureComponent,cloneElement } from 'react';
 import PropTypes from 'prop-types';
 import RcTabs, { TabPane } from 'rc-tabs';
 import ScrollableInkTabBar from 'rc-tabs/lib/ScrollableInkTabBar';
@@ -27,6 +27,7 @@ export default class Tabs extends PureComponent {
   static propTypes = {
     prefixCls: PropTypes.string,
     defaultActiveKey: PropTypes.string,
+    onEdit:PropTypes.func,
   }
 
   constructor(props) {
@@ -41,6 +42,20 @@ export default class Tabs extends PureComponent {
     } 
   }
 
+  onEdit = (targetKey,action) =>{
+
+  }
+
+  removeTab = (targetKey, e) => {
+    e.stopPropagation();
+    if (!targetKey) {
+      return;
+    }
+    const onEdit = this.props.onEdit;
+    if (onEdit) {
+      onEdit(targetKey, 'remove');
+    }
+  }
 
   render() {
 
@@ -60,7 +75,38 @@ export default class Tabs extends PureComponent {
       [`${prefixCls}-${type}`]: true,
     });
 
-
+    let childrenNodes = [];
+    
+    if (type === 'edit-card') {
+      children.map((child,index) => {
+        let closable = child.props.closable;
+        closable = typeof closable === 'undefined' ? true : closable;
+        let closeIcon;
+        if(closable){
+          closeIcon = (
+            <Icon
+              size={12}
+              name={'close'}
+              onClick={e => this.removeTab(child.key, e)}
+            />
+          );
+        }
+        
+        childrenNodes.push(cloneElement(child, {
+          tab: (
+            <div className={closable ? undefined : `${prefixCls}-tab-unclosable`}>
+              {child.props.tab}
+              {closeIcon}
+            </div>
+          ),
+          key: child.key || index,
+        }));
+        
+      })
+    }else{
+      childrenNodes.push(children)
+    }
+    
     return (
       <RcTabs
         {...this.props}
@@ -70,7 +116,7 @@ export default class Tabs extends PureComponent {
         renderTabBar={()=><ScrollableInkTabBar />}
         renderTabContent={()=><TabContent />}
       >
-      {children}
+        {childrenNodes}
       </RcTabs>
     );
   }
