@@ -114,12 +114,12 @@ export default class UploadList extends React.Component {
     } = this.props;
     const list = items.map((file) => {
       let progress;
-      let icon = <Icon size={12} styleName={'status'} name={file.status === 'uploading' ? 'setting' : 'paper'} />;
+      let icon = <Icon size={12} styleName={'status'} name={file.status === 'uploading' ? 'attachment' : 'attachment'} />;
 
       if (listType === 'picture' || listType === 'picture-card') {
         if (file.status === 'uploading' || (!file.thumbUrl && !file.url)) {
           if (listType === 'picture-card') {
-            icon = <div className={`${prefixCls}-list-item-uploading-text`}>{locale.uploading}</div>;
+            icon = <div styleName={'uploading-text'}>{locale.uploading}</div>;
           } else {
             icon = <Icon className={`${prefixCls}-list-item-thumbnail`} type="picture" />;
           }
@@ -132,7 +132,7 @@ export default class UploadList extends React.Component {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <img src={file.thumbUrl || file.url} alt={file.name} />
+              <img src={file.thumbUrl || file.url} alt={file.name} styleName="imgshow" />
             </a>
           );
         }
@@ -150,9 +150,10 @@ export default class UploadList extends React.Component {
           </div>
         );
       }
+      // const message = file.response || (file.error && file.error.statusText) || locale.uploadError;
+      const message = file.status === 'error' ? file.response || locale.uploadError : file.response;
 
-      const message = file.response || (file.error && file.error.statusText) || locale.uploadError;
-
+      // console.log(file);
 
       const preview = file.url ? (
         <a
@@ -161,7 +162,8 @@ export default class UploadList extends React.Component {
           rel="noopener noreferrer"
           styleName={`${prefixCls}-list-item-name`}
           onClick={e => this.handlePreview(file, e)}
-          title={file.name}
+          // title={file.name}
+          title={message}
         >
           {file.name}
         </a>
@@ -169,7 +171,7 @@ export default class UploadList extends React.Component {
         <span
           styleName={`${prefixCls}-list-item-name`}
           // title={file.name}
-          title={file.response ? '' : message}
+          title={message}
         >
           {file.name}
         </span>
@@ -187,14 +189,28 @@ export default class UploadList extends React.Component {
           onClick={e => this.handlePreview(file, e)}
           title={locale.previewFile}
         >
-          <Icon name="setting" size={12} styleName={'eye'} />
+          <Icon name="visible" size={20} styleName={'eye'} />
         </a>
       ) : null;
+      // picture-card 删除按钮
       const removeIcon = showRemoveIcon && !disabled ? (
-        <Icon name="error" size={12} styleName={'remove'} title={locale.removeFile} onClick={() => this.handleClose(file)} /> // 删除
+        <a
+          href='javascript:void(0)'
+          title={locale.removeFile}
+          onClick={() => this.handleClose(file)}
+        >
+          <Icon name="recycle" size={20} styleName={'remove'} />
+        </a>
       ) : null;
+      // text 删除按钮
       const removeIconCross = showRemoveIcon && !disabled ? (
-        <Icon name="error" size={12} styleName={'remove'} title={locale.removeFile} onClick={() => this.handleClose(file)} /> // 删除
+        <a
+          href='javascript:void(0)'
+          title={locale.removeFile}
+          onClick={() => this.handleClose(file)}
+        >
+          <Icon name="close" size={10} styleName={'remove'} />
+        </a>
       ) : null;
       const actions = (listType === 'picture-card' && file.status !== 'uploading')
         ? <span styleName={`${prefixCls}-list-item-actions`}>{previewIcon}{removeIcon}</span>
