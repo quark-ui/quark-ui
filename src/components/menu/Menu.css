@@ -29,6 +29,9 @@
         & :global(.menu-submenu-disabled) :global(.menu-submenu-title) {
             color: #999999;
         }
+        & :global(.menu) {
+            border: solid 1px #ffa85c;
+        }
     }
     /*颜色-冷色*/
     &:global(.color-cold) {
@@ -47,6 +50,9 @@
         & :global(.menu-item-disabled), 
         & :global(.menu-submenu-disabled) :global(.menu-submenu-title) {
             color: #666666;
+        }
+        & :global(.menu) {
+            border: solid 1px #64afe8;
         }
     }
     
@@ -94,7 +100,7 @@
 .menu:global(.menu-horizontal-h){
 
     border: solid 1px #dddddd;
-    padding-bottom: 6px;
+    padding: 4px 0;
 
     /*颜色-暖色*/
     &:global(.color-warm) {
@@ -125,6 +131,7 @@
     & > :global(.menu-item) {
         display: inline-block;
         margin-left: 10px;
+        line-height: 44px;
     }
 
     /*一级菜单*/
@@ -133,24 +140,24 @@
         margin-left: 10px;
 
         /*二级菜单弹出层*/
-        &  > :global(.menu) {
+        & > :global(.menu) {
             top: 110%;
             left: 50%;
             transform: translateX(-50%);
             position: absolute;
-            padding: 0 10px 6px 10px;
+            padding: 4px 10px 4px 10px;
             
             margin-top: 7px;
-            border: solid 1px #64afe8;
             background-color: #fff;
             box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.13);
             border-radius: 4px;
             z-index: 10;
         }
 
-        &  > :global(.menu) :global(.menu-item){
+        & > :global(.menu) :global(.menu-item){
             position: relative;
             display: table-cell;
+            line-height: 44px;
         }
     }
 }
@@ -159,7 +166,7 @@
 .menu:global(.menu-horizontal){
 
     border: solid 1px #dddddd;
-    padding-bottom: 6px;
+    padding: 4px 0;
 
     /*颜色-暖色*/
     &:global(.color-warm) {
@@ -181,7 +188,6 @@
             bottom: 0;
             border-right: 3px solid #ff9536;
         }
-
     }
 
     /*颜色-冷色*/
@@ -214,6 +220,7 @@
     & > :global(.menu-item) {
         display: inline-block;
         margin-left: 10px;
+        line-height: 44px;
     }
 
     /*一级菜单*/
@@ -228,7 +235,6 @@
             position: absolute;
             min-width: 150px;
             margin-top: 7px;
-            border: solid 1px #ccc;
             background-color: #fff;
             border-radius: 4px;
             z-index: 10;
@@ -248,13 +254,12 @@
 
 
         /*三级菜单弹出层*/
-        &  > :global(.menu) :global(.menu) {
+        & :global(.menu) :global(.menu) {
             top: 0;
-            left: 100%;
+            left: 105%;
             position: absolute;
             min-width: 100%;
             margin-top: 7px;
-            border: solid 1px #ccc;
             background-color: #fff;
             border-radius: 4px;
             z-index: 10;
@@ -313,7 +318,7 @@
                 color: #ffffff;
             }
             & :global(.menu-item-group-title){
-                color: #555555;
+                color: #666666;
             }
         }
         
@@ -338,8 +343,6 @@
         left: 105%;
         position: absolute;
         min-width: 160px;
-        border: solid 1px #ccc;
-        
         border-radius: 4px;
         z-index: 10;
     }
@@ -352,7 +355,6 @@
 /*垂直菜单，子菜单内嵌在菜单区域*/
 .menu:global(.menu-inline){
     box-shadow: 0 1px 6px rgba(0,0,0,.2);
-
 
     /*颜色-暖色*/
     &:global(.color-warm) {
@@ -386,14 +388,17 @@
         }
 
         & :global(.menu-item-active),
-        & :global(.menu-submenu-active) :global(.menu-submenu-title) {
+        & :global(.menu-submenu-active) > :global(.menu-submenu-title) {
             color: #dddddd;
         }
-        & :global(.menu-item-selected){
+        & :global(.menu-item-selected) > :global(.menu-submenu-title) {
             color: #ffffff;
         }
         & :global(.menu-item-group-title){
-            color: #555555;
+            color: #666666;
+        }
+        & :global(.menu){
+            background-color: #111111;
         }
     }
 
@@ -411,11 +416,9 @@
     }
 
     & :global(.menu-submenu-open) {
-
         & > :global(.menu-submenu-title):after {
             transform: rotate(270deg);
         }
-
     }
     
 
@@ -435,5 +438,8 @@
         top: 0;
         bottom: 0;
         border-right: 3px solid #108ee9;
-    }    
+    }
+    & :global(.menu){
+        border: none;
+    }
 }

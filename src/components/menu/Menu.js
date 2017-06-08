@@ -126,6 +126,7 @@ class Menu extends PureComponent {
     props.className = `color-${this.props.colorType}`;
     props.styleName = 'menu';
     props.prefixCls = 'menu';
+    props.inlineIndent = 18;
 
     return (
       <RcMenu {...this.props} {...props} />

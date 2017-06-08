@@ -338,7 +338,6 @@ export default class MenuDemo extends Component {
           <tr>
             <td style={{verticalAlign:'top'}}>
               <Menu
-                // theme={this.state.theme}
                 onClick={this.handleClick}
                 style={{ width: 240 }}
                 defaultOpenKeys={['.$m1']}
@@ -372,14 +371,10 @@ export default class MenuDemo extends Component {
                     <Menu.Item key="m2g2i3">二级菜单3</Menu.Item>
                   </Menu.ItemGroup>
                   <Menu.SubMenu key="m2m2" title="三级菜单">
-                    <Menu.ItemGroup key="m2m2g1" title="分组1">
-                      <Menu.Item key="m2m2g1i1">三级菜单1</Menu.Item>
-                      <Menu.Item key="m2m2g1i2">三级菜单2</Menu.Item>
-                    </Menu.ItemGroup>
-                    <Menu.ItemGroup key="m2m2g2" title="分组2">
-                      <Menu.Item key="m2m2g2i1">三级菜单1</Menu.Item>
-                      <Menu.Item key="m2m2g2i2">三级菜单2</Menu.Item>
-                    </Menu.ItemGroup>
+                    <Menu.Item key="m2m2i1">三级菜单1</Menu.Item>
+                    <Menu.Item key="m2m2i2">三级菜单2</Menu.Item>
+                    <Menu.Item key="m2m2i3">三级菜单3</Menu.Item>
+                    <Menu.Item key="m2m2i4">三级菜单4</Menu.Item>
                   </Menu.SubMenu>
                 </Menu.SubMenu>
                 <Menu.SubMenu key="m3" disabled title={<span><Icon className="icon" size={14} name={'attachment'} /><span>不可用下拉菜单</span></span>}>
@@ -393,7 +388,6 @@ export default class MenuDemo extends Component {
             </td>
             <td style={{verticalAlign:'top'}}>
               <Menu
-                // theme={this.state.theme}
                 onClick={this.handleClick}
                 style={{ width: 240 }}
                 defaultOpenKeys={['.$m1']}
@@ -427,14 +421,10 @@ export default class MenuDemo extends Component {
                     <Menu.Item key="m2g2i3">二级菜单3</Menu.Item>
                   </Menu.ItemGroup>
                   <Menu.SubMenu key="m2m2" title="三级菜单">
-                    <Menu.ItemGroup key="m2m2g1" title="分组1">
-                      <Menu.Item key="m2m2g1i1">三级菜单1</Menu.Item>
-                      <Menu.Item key="m2m2g1i2">三级菜单2</Menu.Item>
-                    </Menu.ItemGroup>
-                    <Menu.ItemGroup key="m2m2g2" title="分组2">
-                      <Menu.Item key="m2m2g2i1">三级菜单1</Menu.Item>
-                      <Menu.Item key="m2m2g2i2">三级菜单2</Menu.Item>
-                    </Menu.ItemGroup>
+                    <Menu.Item key="m2m2i1">三级菜单1</Menu.Item>
+                    <Menu.Item key="m2m2i2">三级菜单2</Menu.Item>
+                    <Menu.Item key="m2m2i3">三级菜单3</Menu.Item>
+                    <Menu.Item key="m2m2i4">三级菜单4</Menu.Item>
                   </Menu.SubMenu>
                 </Menu.SubMenu>
                 <Menu.SubMenu key="m3" disabled title={<span><Icon className="icon" size={14} name={'attachment'} /><span>不可用下拉菜单</span></span>}>

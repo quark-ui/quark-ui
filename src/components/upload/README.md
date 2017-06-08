@@ -7,7 +7,6 @@ Upload Component.
 |---|---|---|---|
 |name|String|file|发到后台的文件参数名|
 |defaultFileList|object[]|[]|默认已经上传的文件列表|
-|fileList|object[]|[]|已经上传的文件列表|
 |action|String|''|必选参数, 上传的地址|
 |data|object|function(file)|null|上传所需参数或返回上传参数的方法|
 |headers|object|null|设置上传的请求头部，IE10 以上有效|
