@@ -41,7 +41,7 @@ export default class Search extends PureComponent {
 
 
   render() {
-    const {suffix , ...otherProps} = this.props;
+    const {suffix ,onSearch, ...otherProps} = this.props;
 
     const searchSuffix = (
       <Icon
