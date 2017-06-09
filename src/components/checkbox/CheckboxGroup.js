@@ -91,8 +91,7 @@ class CheckboxGroup extends PureComponent {
       this.setState({ value });
     }
 
-    if (this.props.onChange) {
-      debugger   
+    if (this.props.onChange) {   
       this.props.onChange(value);
     }
   }

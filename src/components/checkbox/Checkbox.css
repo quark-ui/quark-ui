@@ -7,6 +7,7 @@
   cursor: pointer;
   font-size: 14px;
   display: inline-block;
+  &.checkbox--wrapper__checked {}
 }
 
 .checkbox {
@@ -38,8 +39,8 @@
 
 .checkbox__checked {
   & .checkbox--inner {
-    background-color: var(--brand-primary-light);
-    border-color: var(--brand-primary-light);
+    background-color: var(--brand-primary);
+    border-color: var(--brand-primary);
     &:after {
       -webkit-transform: rotate(45deg) scale(1);
       -ms-transform: rotate(45deg) scale(1);
@@ -110,7 +111,10 @@
   }
 }
 
-.checkbox--group {}
+.checkbox--group {
+  display: inline-block;
+  font-size: 12px;
+}
 
 .radio--button {}
 
@@ -159,7 +163,7 @@
       border-top: 0;
       border-left: 0;
       content: " ";
-      background-color: var(--brand-primary-light);
+      background-color: var(--brand-primary);
       opacity: 0;
       -webkit-transform: scale(0);
       -ms-transform: scale(0);
@@ -170,7 +174,7 @@
   }
   &.radio__checked {
     & .radio--inner {
-      border-color: var(--brand-primary-light);
+      border-color: var(--brand-primary);
       &:after {
         -webkit-transform: scale(1);
         -ms-transform: scale(1);
@@ -202,11 +206,63 @@
 .radio--wrapper {
   font-size: 12px;
   margin-right: 8px;
+  &.radio--wrapper__checked {}
 }
 
-.radio--button--wrapper {}
+.radio--button--wrapper {
+  margin: 0;
+  height: 28px;
+  line-height: 26px;
+  color: rgba(0, 0, 0, .65);
+  display: inline-block;
+  -webkit-transition: all .3s ease;
+  transition: all .3s ease;
+  cursor: pointer;
+  border: 1px solid #d9d9d9;
+  border-left: 0;
+  background: #fff;
+  padding: 0 16px;
+  &:hover{
+    color:var(--brand-primary);
+  }
+  &:first-child {
+    border-radius: 4px 0 0 4px;
+    border-left: 1px solid #d9d9d9;
+  }
+  &:last-child{
+    border-radius: 0 4px 4px 0;
+  }
+  &.radio--button--wrapper__checked {
+    
+    background: #fff;
+    border-color: var(--brand-primary);
+    background-color:var(--brand-primary);
+    color: #fff;
+    box-shadow: -1px 0 0 0 var(--brand-primary);
+    &:first-child {
+      border-color: var(--brand-primary);
+      box-shadow: none!important;
+    }
+  }
+  &.radio--button--wrapper__disabled {
+    cursor: not-allowed;
+    border-color: #d9d9d9;
+    background-color: #f7f7f7;
+    color: rgba(0, 0, 0, .25);
+  }
+}
 
 .radio--button {
+  margin-left: 0;
+  display: block;
+  width: 0;
+  height: 0;
+  & input {
+    opacity: 0;
+    filter: alpha(opacity=0);
+    width: 0;
+    height: 0;
+  }
   &.radio--button__checked {}
   &.radio--button__disabled {}
   & .radio--button--inner {}

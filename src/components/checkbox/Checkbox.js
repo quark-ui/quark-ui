@@ -106,7 +106,8 @@ class Checkbox extends PureComponent {
       [`${prefixCls}__disabled`]:disabled,
     });
     const wrapperString = classNames({
-      [`${prefixCls}--wrapper`]:true
+      [`${prefixCls}--wrapper`]:true,
+      [`${prefixCls}--wrapper__checked`]:checked,
     });
     const innerString = classNames({
       [`${prefixCls}--inner`]:true
