@@ -4,6 +4,9 @@
  */
 .progress {
     display: inline-block;
+    &, & *, & *:after, & *:before {
+        box-sizing: border-box;
+    }
 }
 
 .progress--line{

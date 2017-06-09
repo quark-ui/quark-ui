@@ -71,9 +71,9 @@ class Progress extends PureComponent {
       let text;
       // const iconType = (type === 'circle' || type === 'dashboard') ? '' : '-circle';
       if (progressStatus === 'exception') {
-        text = format ? textFormatter(percent) : <Icon size={14} name={'setting'} />;
+        text = format ? textFormatter(percent) : <Icon size={14} name={'error'} color='red' />;
       } else if (progressStatus === 'success') {
-        text = format ? textFormatter(percent) : <Icon size={14} name={'setting'} />;
+        text = format ? textFormatter(percent) : <Icon size={14} name={'success'} color='green' />;
       } else {
         text = textFormatter(percent);
       }

@@ -10,6 +10,7 @@ export default class ProgressDemo extends Component {
           <Progress percent={30} />
           <Progress percent={50} status="active" />
           <Progress percent={70} status="exception" />
+          <Progress percent={100} status="success" />
           <Progress percent={100} />
           <Progress percent={50} showInfo={false} />
         </div>
@@ -18,6 +19,7 @@ export default class ProgressDemo extends Component {
           <Progress percent={30} strokeWidth={5} />
           <Progress percent={50} strokeWidth={5} status="active" />
           <Progress percent={70} strokeWidth={5} status="exception" />
+          <Progress percent={100} strokeWidth={5} status="success" />
           <Progress percent={100} strokeWidth={5} />
         </div>
       </div>

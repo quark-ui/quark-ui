@@ -2,7 +2,7 @@
  * Tabs Component
  * @author yan
  */
-import { PureComponent,cloneElement } from 'react';
+import { PureComponent,cloneElement,Children } from 'react';
 import PropTypes from 'prop-types';
 import RcTabs, { TabPane } from 'rc-tabs';
 import ScrollableInkTabBar from 'rc-tabs/lib/ScrollableInkTabBar';
@@ -70,15 +70,18 @@ export default class Tabs extends PureComponent {
 
     
     let cls = classNames({
-      [`${prefixCls}-mini`]: size === 'small' || size === 'mini',
+      [`${prefixCls}-small`]: size === 'small',
       [`${prefixCls}-card`]: type.indexOf('card') >= 0,
       [`${prefixCls}-${type}`]: true,
     });
 
     let childrenNodes = [];
-    
     if (type === 'edit-card') {
-      children.map((child,index) => {
+
+      
+    console.log(children)
+      React.Children.forEach(children,(child,index) => {
+        
         let closable = child.props.closable;
         closable = typeof closable === 'undefined' ? true : closable;
         let closeIcon;
@@ -87,7 +90,7 @@ export default class Tabs extends PureComponent {
             <Icon
               size={12}
               name={'close'}
-              onClick={e => this.removeTab(child.key, e)}
+              onClick={e => this.removeTab(child.props.eventKey, e)}
             />
           );
         }
@@ -99,7 +102,7 @@ export default class Tabs extends PureComponent {
               {closeIcon}
             </div>
           ),
-          key: child.key || index,
+          key: child.props.eventKey || index,
         }));
         
       })
