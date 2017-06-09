@@ -41,8 +41,8 @@ class Checkbox extends PureComponent {
   };
 
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     const checked = 'checked' in props ? props.checked : props.defaultChecked;
 
@@ -66,6 +66,7 @@ class Checkbox extends PureComponent {
   }
 
   handleChange = (e) => {
+    debugger
     const { props } = this;
     if (props.disabled) {
       return;
@@ -104,9 +105,15 @@ class Checkbox extends PureComponent {
     const classString = classNames(prefixCls,{
       [`${prefixCls}__checked`]:checked,
       [`${prefixCls}__disabled`]:disabled,
-    })
+    });
+    const wrapperString = classNames({
+      [`${prefixCls}--wrapper`]:true
+    });
+    const innerString = classNames({
+      [`${prefixCls}--inner`]:true
+    });
     return (
-      <label>
+      <label styleName={wrapperString}>
         <span styleName={classString}>
           <input 
           name={name}
@@ -114,10 +121,10 @@ class Checkbox extends PureComponent {
           readOnly={readOnly}
           disabled={disabled}
           // checked={!!checked}
-            onChange={this.handleChange}
+            onChange={()=>{console.log(1)}}
             {...checkboxProps}
           />
-          <span styleName={'checkbox--inner'} />
+          <span styleName={innerString} />
         </span>
         {children !== undefined ? <span>{children}</span> : null}
       </label>
