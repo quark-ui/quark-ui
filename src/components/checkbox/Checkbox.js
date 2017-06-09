@@ -66,7 +66,6 @@ class Checkbox extends PureComponent {
   }
 
   handleChange = (e) => {
-    debugger
     const { props } = this;
     if (props.disabled) {
       return;
@@ -92,14 +91,14 @@ class Checkbox extends PureComponent {
 
   render() {
     const {context,props} = this;
-    const {children,name,type,disabled,readOnly,onClick,onFocus,onBlur,prefixCls ,...otherProps} = props;
+    let {children,name,type,disabled,readOnly,onClick,onFocus,onBlur,prefixCls ,...otherProps} = props;
     let checkboxProps = { ...otherProps };
     let {checked} = this.state;
     const {checkboxGroup} = context;
     if(checkboxGroup){
-      checkboxProps.onChange =()=>checkboxGroup.toggleOption({label:children,value:props.value});
-      checkboxProps.checked = checkboxGroup.value.indexOf(props.value) !==-1;
-      checkboxProps.disabled = 'disabled' in props ? props.disabled:checkboxGroup.disabled;
+      this.handleChange =()=>checkboxGroup.toggleOption({label:children,value:props.value});
+      checked = checkboxGroup.value.indexOf(props.value) !==-1;
+      disabled = 'disabled' in props ? props.disabled:checkboxGroup.disabled;
     }
 
     const classString = classNames(prefixCls,{
@@ -116,13 +115,12 @@ class Checkbox extends PureComponent {
       <label styleName={wrapperString}>
         <span styleName={classString}>
           <input 
-          name={name}
-          type={type}
-          readOnly={readOnly}
-          disabled={disabled}
-          // checked={!!checked}
-            onChange={()=>{console.log(1)}}
-            {...checkboxProps}
+            name={name}
+            type={type}
+            readOnly={readOnly}
+            disabled={disabled}
+            checked={!!checked}
+            onChange={this.handleChange}
           />
           <span styleName={innerString} />
         </span>
