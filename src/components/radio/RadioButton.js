@@ -17,7 +17,7 @@ class RadioButton extends PureComponent {
   static displayName = 'RadioButton'
 
   static defaultProps = {
-    prefixCls:'radio--button',
+    prefixCls:'radio-button',
   }
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html

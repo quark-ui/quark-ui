@@ -94,7 +94,7 @@ export default class RadioDemo extends Component {
       </RadioGroup>
 
         <h3>按钮样式的单选组合</h3>
-        <RadioGroup onChange={onChange} defaultValue="a">
+        <RadioGroup onChange={onChange} defaultValue="a" disabled={disabled}>
       <RadioButton value="a">Hangzhou</RadioButton>
       <RadioButton value="b">Shanghai</RadioButton>
       <RadioButton value="c">Beijing</RadioButton>
