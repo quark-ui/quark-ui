@@ -60,16 +60,53 @@ export default class InputNumberDemo extends Component {
                     parser={value => value.replace(/\¥\s?|(,*)/g, '')}
                     onChange={this.onChange}/>
                 <InputNumber
-                  defaultValue={1000}
+                  defaultValue={1}
                   min={0}
+                  max={10}
                   formatter={value => `${value}m`}
                   parser={value => value.replace('m', '')}
                   onChange={this.onChange}/>
                 <InputNumber
-                  defaultValue={1000}
+                  defaultValue={1}
                   min={0}
-                  formatter={value => `${value}m³`}
-                  parser={value => value.replace('m³', '')}
+                  max={10}
+                  formatter={value => `${value}㎡`}
+                  parser={value => value.replace('㎡', '')}
+                  onChange={this.onChange}/>
+                <InputNumber
+                  defaultValue={1}
+                  min={0}
+                  max={10}
+                  formatter={value => `${value}㎝`}
+                  parser={value => value.replace('㎝', '')}
+                  onChange={this.onChange}/>
+                <InputNumber
+                  defaultValue={1}
+                  min={0}
+                  max={10}
+                  formatter={value => `${value}㎞`}
+                  parser={value => value.replace('㎞', '')}
+                  onChange={this.onChange}/>
+                <InputNumber
+                  defaultValue={1}
+                  min={0}
+                  max={10}
+                  formatter={value => `${value}℅`}
+                  parser={value => value.replace('℅', '')}
+                  onChange={this.onChange}/>
+                  <InputNumber
+                  defaultValue={1}
+                  min={0}
+                  max={10}
+                  formatter={value => `${value}℃`}
+                  parser={value => value.replace('℃', '')}
+                  onChange={this.onChange}/>
+                  <InputNumber
+                  defaultValue={1}
+                  min={0}
+                  max={10}
+                  formatter={value => `${value}㎎`}
+                  parser={value => value.replace('㎎', '')}
                   onChange={this.onChange}/>
               </div>
           </div>
