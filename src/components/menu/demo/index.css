@@ -1,3 +1,17 @@
-:global(.menu) :global(.icon) {
+.menu--icon {
     margin-right: 8px;
+}
+
+.menu--icon__pullright {
+    float: right;
+    margin-top: 16px;
+    transform: scale(0.8);
+    transition: transform .3s;
+}
+
+:global(.menu-inline) :global(.menu-submenu-open) {
+    & > :global(.menu-submenu-title) .menu--icon__pullright {
+        transform: scale(0.8) rotate(270deg);
+        transition: transform .3s;
+    }
 }

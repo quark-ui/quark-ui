@@ -18,18 +18,6 @@
     & .upload-select-text{
 
     }
-
-    /*& .avatar-uploader {
-        display: block;
-        position: relative;
-        border: 1px dashed #d9d9d9;
-        border-radius: 6px;
-        cursor: pointer;
-
-        width: 149px;
-        height: 149px;
-        box-sizing: border-box;
-    }*/
 }
 
 .upload-list {
@@ -59,6 +47,7 @@
             & .status {
                 position: absolute;
                 top: 5px;
+                color: #979797;
             }
         }
         
@@ -222,7 +211,7 @@
             position: static;
             cursor: pointer;
             color: #ffffff;
-            margin: 0 4px;
+            margin: 0 12px;
         }
 
         &:hover .upload-list-item-info:before{

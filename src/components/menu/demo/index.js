@@ -1,8 +1,11 @@
+import CSSModules from 'react-css-modules';
 import React, { Component } from 'react';
+import { allowMultiple } from '../../../constants';
 import Menu from '../Menu';
 import Icon from '../../icon/Icon';
-import style from  './index.css';
+import styles from  './index.css';
 
+@CSSModules(styles, { allowMultiple })
 export default class MenuDemo extends Component {
 
   state = {
@@ -38,15 +41,15 @@ export default class MenuDemo extends Component {
               >
 
                 <Menu.Item key="m0">
-                  <Icon className="icon" size={14} name={'attachment'} />
+                  <Icon className={styles['menu--icon']} size={14} name={'attachment'} />
                   菜单按钮
                   </Menu.Item>
-                <Menu.SubMenu key="m1" title={<span><Icon className="icon" size={14} name={'attachment'} /><span>下拉菜单</span></span>}>
+                <Menu.SubMenu key="m1" title={<span><Icon className={styles['menu--icon']} size={14} name={'attachment'} />下拉菜单</span>}>
                   <Menu.Item key="m1i1">二级菜单1</Menu.Item>
                   <Menu.Item key="m1i2">二级菜单2</Menu.Item>
                   <Menu.Item key="m1i3">二级菜单3</Menu.Item>
                 </Menu.SubMenu>
-                <Menu.SubMenu key="m2" title={<span><Icon className="icon" size={14} name={'attachment'} /><span>分组</span></span>}>
+                <Menu.SubMenu key="m2" title={<span><Icon className={styles['menu--icon']} size={14} name={'attachment'} />分组</span>}>
                   <Menu.Item key="m2g1i1">二级菜单1</Menu.Item>
                   <Menu.Item key="m2g1i2">二级菜单2</Menu.Item>
                   <Menu.Item key="m2g1i3">二级菜单3</Menu.Item>
@@ -54,12 +57,12 @@ export default class MenuDemo extends Component {
                   <Menu.Item key="m2g2i2">二级菜单2</Menu.Item>
                   <Menu.Item key="m2g2i3">二级菜单3</Menu.Item>
                 </Menu.SubMenu>
-                <Menu.SubMenu key="m3" disabled title={<span><Icon className="icon" size={14} name={'attachment'} /><span>不可用</span></span>}>
+                <Menu.SubMenu key="m3" disabled title={<span><Icon className={styles['menu--icon']} size={14} name={'attachment'} />不可用</span>}>
                   <Menu.Item key="m3i1">二级菜单4</Menu.Item>
                   <Menu.Item key="m3i2">二级菜单5</Menu.Item>
                 </Menu.SubMenu>
                 <Menu.Item key="m4" disabled>
-                  <Icon className="icon" size={14} name={'attachment'} />不可用
+                  <Icon className={styles['menu--icon']} size={14} name={'attachment'} />不可用
                   </Menu.Item>
               </Menu>
             </td>
@@ -72,15 +75,15 @@ export default class MenuDemo extends Component {
               >
 
                 <Menu.Item key="m0">
-                  <Icon className="icon" size={14} name={'attachment'} />
+                  <Icon className={styles['menu--icon']} size={14} name={'attachment'} />
                   菜单按钮
                   </Menu.Item>
-                <Menu.SubMenu key="m1" title={<span><Icon className="icon" size={14} name={'attachment'} /><span>下拉菜单</span></span>}>
+                <Menu.SubMenu key="m1" title={<span><Icon className={styles['menu--icon']} size={14} name={'attachment'} />下拉菜单</span>}>
                   <Menu.Item key="m1i1">二级菜单1</Menu.Item>
                   <Menu.Item key="m1i2">二级菜单2</Menu.Item>
                   <Menu.Item key="m1i3">二级菜单3</Menu.Item>
                 </Menu.SubMenu>
-                <Menu.SubMenu key="m2" title={<span><Icon className="icon" size={14} name={'attachment'} /><span>分组</span></span>}>
+                <Menu.SubMenu key="m2" title={<span><Icon className={styles['menu--icon']} size={14} name={'attachment'} />分组</span>}>
                   <Menu.Item key="m2g1i1">二级菜单1</Menu.Item>
                   <Menu.Item key="m2g1i2">二级菜单2</Menu.Item>
                   <Menu.Item key="m2g1i3">二级菜单3</Menu.Item>
@@ -88,12 +91,12 @@ export default class MenuDemo extends Component {
                   <Menu.Item key="m2g2i2">二级菜单2</Menu.Item>
                   <Menu.Item key="m2g2i3">二级菜单3</Menu.Item>
                 </Menu.SubMenu>
-                <Menu.SubMenu key="m3" disabled title={<span><Icon className="icon" size={14} name={'attachment'} /><span>不可用</span></span>}>
+                <Menu.SubMenu key="m3" disabled title={<span><Icon className={styles['menu--icon']} size={14} name={'attachment'} />不可用</span>}>
                   <Menu.Item key="m3i1">二级菜单4</Menu.Item>
                   <Menu.Item key="m3i2">二级菜单5</Menu.Item>
                 </Menu.SubMenu>
                 <Menu.Item key="m4" disabled>
-                  <Icon className="icon" size={14} name={'attachment'} />不可用
+                  <Icon className={styles['menu--icon']} size={14} name={'attachment'} />不可用
                   </Menu.Item>
               </Menu>
             </td>
@@ -115,19 +118,19 @@ export default class MenuDemo extends Component {
               >
 
                 <Menu.Item key="m0">
-                  <Icon className="icon" size={14} name={'attachment'} />
+                  <Icon className={styles['menu--icon']} size={14} name={'attachment'} />
                   菜单按钮
                   </Menu.Item>
-                <Menu.SubMenu key="m1" title={<span><Icon className="icon" size={14} name={'attachment'} /><span>下拉菜单</span></span>}>
+                <Menu.SubMenu key="m1" title={<span><Icon className={styles['menu--icon']} size={14} name={'attachment'} />下拉菜单</span>}>
                   <Menu.Item key="m1i1">二级菜单1</Menu.Item>
                   <Menu.Item key="m1i2">二级菜单2</Menu.Item>
                   <Menu.Item key="m1i3">二级菜单3</Menu.Item>
-                  <Menu.SubMenu key="m1m1" title="三级菜单">
+                  <Menu.SubMenu key="m1m1" title={<span><Icon className={styles['menu--icon__pullright']} size={12} name={'arrow-right'} />三级菜单</span>}>
                     <Menu.Item key="m1m1i1">三级菜单1</Menu.Item>
                     <Menu.Item key="m1m1i2">三级菜单2</Menu.Item>
                   </Menu.SubMenu>
                 </Menu.SubMenu>
-                <Menu.SubMenu key="m2" title={<span><Icon className="icon" size={14} name={'attachment'} /><span>分组</span></span>}>
+                <Menu.SubMenu key="m2" title={<span><Icon className={styles['menu--icon']} size={14} name={'attachment'} />分组</span>}>
                   <Menu.ItemGroup key="m2g1" title="分组1">
                     <Menu.Item key="m2g1i1">二级菜单1</Menu.Item>
                     <Menu.Item key="m2g1i2">二级菜单2</Menu.Item>
@@ -138,7 +141,7 @@ export default class MenuDemo extends Component {
                     <Menu.Item key="m2g2i2">二级菜单2</Menu.Item>
                     <Menu.Item key="m2g2i3">二级菜单3</Menu.Item>
                   </Menu.ItemGroup>
-                  <Menu.SubMenu key="m2m2" title="三级菜单">
+                  <Menu.SubMenu key="m2m2" title={<span><Icon className={styles['menu--icon__pullright']} size={12} name={'arrow-right'} />三级菜单</span>}>
                     <Menu.ItemGroup key="m2m2g1" title="分组1">
                       <Menu.Item key="m2m2g1i1">三级菜单1</Menu.Item>
                       <Menu.Item key="m2m2g1i2">三级菜单2</Menu.Item>
@@ -149,12 +152,12 @@ export default class MenuDemo extends Component {
                     </Menu.ItemGroup>
                   </Menu.SubMenu>
                 </Menu.SubMenu>
-                <Menu.SubMenu key="m3" disabled title={<span><Icon className="icon" size={14} name={'attachment'} /><span>不可用</span></span>}>
+                <Menu.SubMenu key="m3" disabled title={<span><Icon className={styles['menu--icon']} size={14} name={'attachment'} />不可用</span>}>
                   <Menu.Item key="m3i1">二级菜单4</Menu.Item>
                   <Menu.Item key="m3i2">二级菜单5</Menu.Item>
                 </Menu.SubMenu>
                 <Menu.Item key="m4" disabled>
-                  <Icon className="icon" size={14} name={'attachment'} />不可用
+                  <Icon className={styles['menu--icon']} size={14} name={'attachment'} />不可用
                   </Menu.Item>
               </Menu>
             </td>
@@ -167,19 +170,19 @@ export default class MenuDemo extends Component {
               >
 
                 <Menu.Item key="m0">
-                  <Icon className="icon" size={14} name={'attachment'} />
+                  <Icon className={styles['menu--icon']} size={14} name={'attachment'} />
                   菜单按钮
                   </Menu.Item>
-                <Menu.SubMenu key="m1" title={<span><Icon className="icon" size={14} name={'attachment'} /><span>下拉菜单</span></span>}>
+                <Menu.SubMenu key="m1" title={<span><Icon className={styles['menu--icon']} size={14} name={'attachment'} />下拉菜单</span>}>
                   <Menu.Item key="m1i1">二级菜单1</Menu.Item>
                   <Menu.Item key="m1i2">二级菜单2</Menu.Item>
                   <Menu.Item key="m1i3">二级菜单3</Menu.Item>
-                  <Menu.SubMenu key="m1m1" title="三级菜单">
+                  <Menu.SubMenu key="m1m1" title={<span><Icon className={styles['menu--icon__pullright']} size={12} name={'arrow-right'} />三级菜单</span>}>
                     <Menu.Item key="m1m1i1">三级菜单1</Menu.Item>
                     <Menu.Item key="m1m1i2">三级菜单2</Menu.Item>
                   </Menu.SubMenu>
                 </Menu.SubMenu>
-                <Menu.SubMenu key="m2" title={<span><Icon className="icon" size={14} name={'attachment'} /><span>分组</span></span>}>
+                <Menu.SubMenu key="m2" title={<span><Icon className={styles['menu--icon']} size={14} name={'attachment'} />分组</span>}>
                   <Menu.ItemGroup key="m2g1" title="分组1">
                     <Menu.Item key="m2g1i1">二级菜单1</Menu.Item>
                     <Menu.Item key="m2g1i2">二级菜单2</Menu.Item>
@@ -190,7 +193,7 @@ export default class MenuDemo extends Component {
                     <Menu.Item key="m2g2i2">二级菜单2</Menu.Item>
                     <Menu.Item key="m2g2i3">二级菜单3</Menu.Item>
                   </Menu.ItemGroup>
-                  <Menu.SubMenu key="m2m2" title="三级菜单">
+                  <Menu.SubMenu key="m2m2" title={<span><Icon className={styles['menu--icon__pullright']} size={12} name={'arrow-right'} />三级菜单</span>}>
                     <Menu.ItemGroup key="m2m2g1" title="分组1">
                       <Menu.Item key="m2m2g1i1">三级菜单1</Menu.Item>
                       <Menu.Item key="m2m2g1i2">三级菜单2</Menu.Item>
@@ -201,12 +204,12 @@ export default class MenuDemo extends Component {
                     </Menu.ItemGroup>
                   </Menu.SubMenu>
                 </Menu.SubMenu>
-                <Menu.SubMenu key="m3" disabled title={<span><Icon className="icon" size={14} name={'attachment'} /><span>不可用</span></span>}>
+                <Menu.SubMenu key="m3" disabled title={<span><Icon className={styles['menu--icon']} size={14} name={'attachment'} />不可用</span>}>
                   <Menu.Item key="m3i1">二级菜单4</Menu.Item>
                   <Menu.Item key="m3i2">二级菜单5</Menu.Item>
                 </Menu.SubMenu>
                 <Menu.Item key="m4" disabled>
-                  <Icon className="icon" size={14} name={'attachment'} />不可用
+                  <Icon className={styles['menu--icon']} size={14} name={'attachment'} />不可用
                   </Menu.Item>
               </Menu>
             </td>
@@ -230,19 +233,19 @@ export default class MenuDemo extends Component {
               >
 
                 <Menu.Item key="m0">
-                  <Icon className="icon" size={14} name={'attachment'} />
+                  <Icon className={styles['menu--icon']} size={14} name={'attachment'} />
                   菜单按钮
                   </Menu.Item>
-                <Menu.SubMenu key="m1" title={<span><Icon className="icon" size={14} name={'attachment'} /><span>下拉菜单</span></span>}>
+                <Menu.SubMenu key="m1" title={<span><Icon className={styles['menu--icon']} size={14} name={'attachment'} /><Icon className={styles['menu--icon__pullright']} size={12} name={'arrow-right'} />下拉菜单</span>}>
                   <Menu.Item key="m1i1">二级菜单1</Menu.Item>
                   <Menu.Item key="m1i2">二级菜单2</Menu.Item>
                   <Menu.Item key="m1i3">二级菜单3</Menu.Item>
-                  <Menu.SubMenu key="m1m1" title="三级菜单">
+                  <Menu.SubMenu key="m1m1" title={<span><Icon className={styles['menu--icon__pullright']} size={12} name={'arrow-right'} />三级菜单</span>}>
                     <Menu.Item key="m1m1i1">三级菜单1</Menu.Item>
                     <Menu.Item key="m1m1i2">三级菜单2</Menu.Item>
                   </Menu.SubMenu>
                 </Menu.SubMenu>
-                <Menu.SubMenu key="m2" title={<span><Icon className="icon" size={14} name={'attachment'} /><span>下拉菜单分组</span></span>}>
+                <Menu.SubMenu key="m2" title={<span><Icon className={styles['menu--icon']} size={14} name={'attachment'} /><Icon className={styles['menu--icon__pullright']} size={12} name={'arrow-right'} />下拉菜单分组</span>}>
                   <Menu.ItemGroup key="m2g1" title="分组1">
                     <Menu.Item key="m2g1i1">二级菜单1</Menu.Item>
                     <Menu.Item key="m2g1i2">二级菜单2</Menu.Item>
@@ -253,7 +256,7 @@ export default class MenuDemo extends Component {
                     <Menu.Item key="m2g2i2">二级菜单2</Menu.Item>
                     <Menu.Item key="m2g2i3">二级菜单3</Menu.Item>
                   </Menu.ItemGroup>
-                  <Menu.SubMenu key="m2m2" title="三级菜单">
+                  <Menu.SubMenu key="m2m2" title={<span><Icon className={styles['menu--icon__pullright']} size={12} name={'arrow-right'} />三级菜单</span>}>
                     <Menu.ItemGroup key="m2m2g1" title="分组1">
                       <Menu.Item key="m2m2g1i1">三级菜单1</Menu.Item>
                       <Menu.Item key="m2m2g1i2">三级菜单2</Menu.Item>
@@ -264,13 +267,13 @@ export default class MenuDemo extends Component {
                     </Menu.ItemGroup>
                   </Menu.SubMenu>
                 </Menu.SubMenu>
-                <Menu.SubMenu key="m3" disabled title={<span><Icon className="icon" size={14} name={'attachment'} /><span>不可用下拉菜单</span></span>}>
+                <Menu.SubMenu key="m3" disabled title={<span><Icon className={styles['menu--icon']} size={14} name={'attachment'} /><Icon className={styles['menu--icon__pullright']} size={12} name={'arrow-right'} />不可用下拉菜单</span>}>
                   <Menu.Item key="m3i1">二级菜单4</Menu.Item>
                   <Menu.Item key="m3i2">二级菜单5</Menu.Item>
                 </Menu.SubMenu>
                 <Menu.Item key="m4" disabled>
-                  <Icon className="icon" size={14} name={'attachment'} />不可用菜单按钮
-                  </Menu.Item>
+                  <Icon className={styles['menu--icon']} size={14} name={'attachment'} />不可用菜单按钮
+                </Menu.Item>
               </Menu>
             </td>
             <td>
@@ -284,19 +287,19 @@ export default class MenuDemo extends Component {
               >
 
                 <Menu.Item key="m0">
-                  <Icon className="icon" size={14} name={'attachment'} />
+                  <Icon className={styles['menu--icon']} size={14} name={'attachment'} />
                   菜单按钮
                   </Menu.Item>
-                <Menu.SubMenu key="m1" title={<span><Icon className="icon" size={14} name={'attachment'} /><span>下拉菜单</span></span>}>
+                <Menu.SubMenu key="m1" title={<span><Icon className={styles['menu--icon']} size={14} name={'attachment'} /><Icon className={styles['menu--icon__pullright']} size={12} name={'arrow-right'} />下拉菜单</span>}>
                   <Menu.Item key="m1i1">二级菜单1</Menu.Item>
                   <Menu.Item key="m1i2">二级菜单2</Menu.Item>
                   <Menu.Item key="m1i3">二级菜单3</Menu.Item>
-                  <Menu.SubMenu key="m1m1" title="三级菜单">
+                  <Menu.SubMenu key="m1m1" title={<span><Icon className={styles['menu--icon__pullright']} size={12} name={'arrow-right'} />三级菜单</span>}>
                     <Menu.Item key="m1m1i1">三级菜单1</Menu.Item>
                     <Menu.Item key="m1m1i2">三级菜单2</Menu.Item>
                   </Menu.SubMenu>
                 </Menu.SubMenu>
-                <Menu.SubMenu key="m2" title={<span><Icon className="icon" size={14} name={'attachment'} /><span>下拉菜单分组</span></span>}>
+                <Menu.SubMenu key="m2" title={<span><Icon className={styles['menu--icon']} size={14} name={'attachment'} /><Icon className={styles['menu--icon__pullright']} size={12} name={'arrow-right'} />下拉菜单分组</span>}>
                   <Menu.ItemGroup key="m2g1" title="分组1">
                     <Menu.Item key="m2g1i1">二级菜单1</Menu.Item>
                     <Menu.Item key="m2g1i2">二级菜单2</Menu.Item>
@@ -307,7 +310,7 @@ export default class MenuDemo extends Component {
                     <Menu.Item key="m2g2i2">二级菜单2</Menu.Item>
                     <Menu.Item key="m2g2i3">二级菜单3</Menu.Item>
                   </Menu.ItemGroup>
-                  <Menu.SubMenu key="m2m2" title="三级菜单">
+                  <Menu.SubMenu key="m2m2" title={<span><Icon className={styles['menu--icon__pullright']} size={12} name={'arrow-right'} />三级菜单</span>}>
                     <Menu.ItemGroup key="m2m2g1" title="分组1">
                       <Menu.Item key="m2m2g1i1">三级菜单1</Menu.Item>
                       <Menu.Item key="m2m2g1i2">三级菜单2</Menu.Item>
@@ -318,13 +321,13 @@ export default class MenuDemo extends Component {
                     </Menu.ItemGroup>
                   </Menu.SubMenu>
                 </Menu.SubMenu>
-                <Menu.SubMenu key="m3" disabled title={<span><Icon className="icon" size={14} name={'attachment'} /><span>不可用下拉菜单</span></span>}>
+                <Menu.SubMenu key="m3" disabled title={<span><Icon className={styles['menu--icon']} size={14} name={'attachment'} /><Icon className={styles['menu--icon__pullright']} size={12} name={'arrow-right'} />不可用下拉菜单</span>}>
                   <Menu.Item key="m3i1">二级菜单4</Menu.Item>
                   <Menu.Item key="m3i2">二级菜单5</Menu.Item>
                 </Menu.SubMenu>
                 <Menu.Item key="m4" disabled>
-                  <Icon className="icon" size={14} name={'attachment'} />不可用菜单按钮
-                  </Menu.Item>
+                  <Icon className={styles['menu--icon']} size={14} name={'attachment'} />不可用菜单按钮
+                </Menu.Item>
               </Menu>
             </td>
           </tr>
@@ -347,19 +350,19 @@ export default class MenuDemo extends Component {
               >
 
                 <Menu.Item key="m0">
-                  <Icon className="icon" size={14} name={'attachment'} />
+                  <Icon className={styles['menu--icon']} size={14} name={'attachment'} />
                   菜单按钮
                   </Menu.Item>
-                <Menu.SubMenu key="m1" title={<span><Icon className="icon" size={14} name={'attachment'} /><span>下拉菜单</span></span>}>
+                <Menu.SubMenu key="m1" title={<span><Icon className={styles['menu--icon']} size={14} name={'attachment'} /><Icon className={styles['menu--icon__pullright']} size={12} name={'arrow-right'} />下拉菜单</span>}>
                   <Menu.Item key="m1i1">二级菜单1</Menu.Item>
                   <Menu.Item key="m1i2">二级菜单2</Menu.Item>
                   <Menu.Item key="m1i3">二级菜单3</Menu.Item>
-                  <Menu.SubMenu key="m1m1" title="三级菜单">
+                  <Menu.SubMenu key="m1m1" title={<span><Icon className={styles['menu--icon__pullright']} size={12} name={'arrow-right'} />三级菜单</span>}>
                     <Menu.Item key="m1m1i1">三级菜单1</Menu.Item>
                     <Menu.Item key="m1m1i2">三级菜单2</Menu.Item>
                   </Menu.SubMenu>
                 </Menu.SubMenu>
-                <Menu.SubMenu key="m2" title={<span><Icon className="icon" size={14} name={'attachment'} /><span>下拉菜单分组</span></span>}>
+                <Menu.SubMenu key="m2" title={<span><Icon className={styles['menu--icon']} size={14} name={'attachment'} /><Icon className={styles['menu--icon__pullright']} size={12} name={'arrow-right'} />下拉菜单分组</span>}>
                   <Menu.ItemGroup key="m2g1" title="分组1">
                     <Menu.Item key="m2g1i1">二级菜单1</Menu.Item>
                     <Menu.Item key="m2g1i2">二级菜单2</Menu.Item>
@@ -370,19 +373,19 @@ export default class MenuDemo extends Component {
                     <Menu.Item key="m2g2i2">二级菜单2</Menu.Item>
                     <Menu.Item key="m2g2i3">二级菜单3</Menu.Item>
                   </Menu.ItemGroup>
-                  <Menu.SubMenu key="m2m2" title="三级菜单">
+                  <Menu.SubMenu key="m2m2" title={<span><Icon className={styles['menu--icon__pullright']} size={12} name={'arrow-right'} />三级菜单</span>}>
                     <Menu.Item key="m2m2i1">三级菜单1</Menu.Item>
                     <Menu.Item key="m2m2i2">三级菜单2</Menu.Item>
                     <Menu.Item key="m2m2i3">三级菜单3</Menu.Item>
                     <Menu.Item key="m2m2i4">三级菜单4</Menu.Item>
                   </Menu.SubMenu>
                 </Menu.SubMenu>
-                <Menu.SubMenu key="m3" disabled title={<span><Icon className="icon" size={14} name={'attachment'} /><span>不可用下拉菜单</span></span>}>
+                <Menu.SubMenu key="m3" disabled title={<span><Icon className={styles['menu--icon']} size={14} name={'attachment'} /><Icon className={styles['menu--icon__pullright']} size={12} name={'arrow-right'} />不可用下拉菜单</span>}>
                   <Menu.Item key="m3i1">二级菜单4</Menu.Item>
                   <Menu.Item key="m3i2">二级菜单5</Menu.Item>
                 </Menu.SubMenu>
                 <Menu.Item key="m4" disabled>
-                  <Icon className="icon" size={14} name={'attachment'} />不可用菜单按钮
+                  <Icon className={styles['menu--icon']} size={14} name={'attachment'} />不可用菜单按钮
                   </Menu.Item>
               </Menu>
             </td>
@@ -397,19 +400,19 @@ export default class MenuDemo extends Component {
               >
 
                 <Menu.Item key="m0">
-                  <Icon className="icon" size={14} name={'attachment'} />
+                  <Icon className={styles['menu--icon']} size={14} name={'attachment'} />
                   菜单按钮
                   </Menu.Item>
-                <Menu.SubMenu key="m1" title={<span><Icon className="icon" size={14} name={'attachment'} /><span>下拉菜单</span></span>}>
+                <Menu.SubMenu key="m1" title={<span><Icon className={styles['menu--icon']} size={14} name={'attachment'} /><Icon className={styles['menu--icon__pullright']} size={12} name={'arrow-right'} />下拉菜单</span>}>
                   <Menu.Item key="m1i1">二级菜单1</Menu.Item>
                   <Menu.Item key="m1i2">二级菜单2</Menu.Item>
                   <Menu.Item key="m1i3">二级菜单3</Menu.Item>
-                  <Menu.SubMenu key="m1m1" title="三级菜单">
+                  <Menu.SubMenu key="m1m1" title={<span><Icon className={styles['menu--icon__pullright']} size={12} name={'arrow-right'} />三级菜单</span>}>
                     <Menu.Item key="m1m1i1">三级菜单1</Menu.Item>
                     <Menu.Item key="m1m1i2">三级菜单2</Menu.Item>
                   </Menu.SubMenu>
                 </Menu.SubMenu>
-                <Menu.SubMenu key="m2" title={<span><Icon className="icon" size={14} name={'attachment'} /><span>下拉菜单分组</span></span>}>
+                <Menu.SubMenu key="m2" title={<span><Icon className={styles['menu--icon']} size={14} name={'attachment'} /><Icon className={styles['menu--icon__pullright']} size={12} name={'arrow-right'} />下拉菜单分组</span>}>
                   <Menu.ItemGroup key="m2g1" title="分组1">
                     <Menu.Item key="m2g1i1">二级菜单1</Menu.Item>
                     <Menu.Item key="m2g1i2">二级菜单2</Menu.Item>
@@ -420,19 +423,19 @@ export default class MenuDemo extends Component {
                     <Menu.Item key="m2g2i2">二级菜单2</Menu.Item>
                     <Menu.Item key="m2g2i3">二级菜单3</Menu.Item>
                   </Menu.ItemGroup>
-                  <Menu.SubMenu key="m2m2" title="三级菜单">
+                  <Menu.SubMenu key="m2m2" title={<span><Icon className={styles['menu--icon__pullright']} size={12} name={'arrow-right'} />三级菜单</span>}>
                     <Menu.Item key="m2m2i1">三级菜单1</Menu.Item>
                     <Menu.Item key="m2m2i2">三级菜单2</Menu.Item>
                     <Menu.Item key="m2m2i3">三级菜单3</Menu.Item>
                     <Menu.Item key="m2m2i4">三级菜单4</Menu.Item>
                   </Menu.SubMenu>
                 </Menu.SubMenu>
-                <Menu.SubMenu key="m3" disabled title={<span><Icon className="icon" size={14} name={'attachment'} /><span>不可用下拉菜单</span></span>}>
+                <Menu.SubMenu key="m3" disabled title={<span><Icon className={styles['menu--icon']} size={14} name={'attachment'} /><Icon className={styles['menu--icon__pullright']} size={12} name={'arrow-right'} />不可用下拉菜单</span>}>
                   <Menu.Item key="m3i1">二级菜单4</Menu.Item>
                   <Menu.Item key="m3i2">二级菜单5</Menu.Item>
                 </Menu.SubMenu>
                 <Menu.Item key="m4" disabled>
-                  <Icon className="icon" size={14} name={'attachment'} />不可用菜单按钮
+                  <Icon className={styles['menu--icon']} size={14} name={'attachment'} />不可用菜单按钮
                   </Menu.Item>
               </Menu>
             </td>
