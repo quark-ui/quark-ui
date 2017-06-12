@@ -3,19 +3,273 @@
  * @author grootfish
  */
 
-.checkbox {
-
+.checkbox--wrapper {
+  cursor: pointer;
+  font-size: 14px;
+  display: inline-block;
+  &.checkbox--wrapper__checked {}
+  &.checkbox--wrapper__disabled{}
 }
 
-.checkbox--inner{}
-.checkbox--group{}
+.checkbox {
+  &+span {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+  white-space: nowrap;
+  cursor: pointer;
+  outline: none;
+  display: inline-block;
+  line-height: 1;
+  position: relative;
+  vertical-align: text-bottom;
+  & input {
+    position: absolute;
+    left: 0;
+    z-index: 1;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
 
-.radio--button{}
-.radio{}
+.checkbox__checked {
+  & .checkbox--inner {
+    background-color: var(--brand-primary);
+    border-color: var(--brand-primary);
+    &:after {
+      -webkit-transform: rotate(45deg) scale(1);
+      -ms-transform: rotate(45deg) scale(1);
+      transform: rotate(45deg) scale(1);
+      position: absolute;
+      left: 4px;
+      top: 1px;
+      display: table;
+      width: 4px;
+      height: 8px;
+      border: 2px solid #fff;
+      border-top: 0;
+      border-left: 0;
+      content: " ";
+      -webkit-transition: all .2s cubic-bezier(.12, .4, .29, 1.46) .1s;
+      transition: all .2s cubic-bezier(.12, .4, .29, 1.46) .1s;
+    }
+  }
+}
 
-.radio__checked{}
-.radio__disabled{}
-.radio--button__checked{}
-.radio--button__disabled{}
-.checkbox__checked{}
-.checkbox__disabled{}
+.checkbox__disabled {
+  &+span {
+    color: rgba(0, 0, 0, .25);
+    cursor: not-allowed;
+  }
+  & input {
+    cursor: not-allowed;
+  }
+  & .checkbox--inner {
+    background-color: #f5f5f5;
+    border-color: #e6e6e6;
+    &:after {
+      -webkit-animation-name: none;
+      animation-name: none;
+      border-color: rgba(0, 0, 0, .25);
+    }
+  }
+}
+
+.checkbox--inner {
+  position: relative;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 14px;
+  height: 14px;
+  border: 1px solid #e6e6e6;
+  border-radius: 3px;
+  background-color: #fff;
+  -webkit-transition: all .3s;
+  transition: all .3s;
+  &:after {
+    -webkit-transform: rotate(45deg) scale(0);
+    -ms-transform: rotate(45deg) scale(0);
+    transform: rotate(45deg) scale(0);
+    position: absolute;
+    left: 4px;
+    top: 1px;
+    display: table;
+    width: 4px;
+    height: 8px;
+    border: 2px solid #fff;
+    border-top: 0;
+    border-left: 0;
+    content: " ";
+    -webkit-transition: all .1s cubic-bezier(.71, -.46, .88, .6);
+    transition: all .1s cubic-bezier(.71, -.46, .88, .6);
+  }
+}
+
+.checkbox--group {
+  display: inline-block;
+  font-size: 12px;
+}
+
+
+.radio {
+  &+span {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+  outline: none;
+  line-height: 1;
+  vertical-align: text-bottom;
+  display: inline-block;
+  position: relative;
+  white-space: nowrap;
+  cursor: pointer;
+  & input {
+    position: absolute;
+    left: 0;
+    z-index: 1;
+    cursor: pointer;
+    opacity: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+  }
+  & .radio--inner {
+    position: relative;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 14px;
+    height: 14px;
+    border-radius: 14px;
+    border: 1px solid #d9d9d9;
+    background-color: #fff;
+    -webkit-transition: all .3s;
+    transition: all .3s;
+    &:after {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      left: 3px;
+      top: 3px;
+      border-radius: 4px;
+      display: table;
+      border-top: 0;
+      border-left: 0;
+      content: " ";
+      background-color: var(--brand-primary);
+      opacity: 0;
+      -webkit-transform: scale(0);
+      -ms-transform: scale(0);
+      transform: scale(0);
+      -webkit-transition: all .3s cubic-bezier(.78, .14, .15, .86);
+      transition: all .3s cubic-bezier(.78, .14, .15, .86);
+    }
+  }
+  &.radio__checked {
+    & .radio--inner {
+      border-color: var(--brand-primary);
+      &:after {
+        -webkit-transform: scale(1);
+        -ms-transform: scale(1);
+        transform: scale(1);
+        opacity: 1;
+        -webkit-transition: all .3s cubic-bezier(.78, .14, .15, .86);
+        transition: all .3s cubic-bezier(.78, .14, .15, .86);
+      }
+    }
+  }
+  &.radio__disabled {
+    &+span {
+      color: rgba(0, 0, 0, .25);
+      cursor: not-allowed;
+    }
+    & input {
+      cursor: not-allowed;
+    }
+    & .radio--inner {
+      border-color: #d9d9d9!important;
+      background-color: #f7f7f7;
+      &:after {
+        background-color: #ccc;
+      }
+    }
+  }
+}
+
+.radio--wrapper {
+  font-size: 12px;
+  margin-right: 8px;
+  &.radio--wrapper__checked {}
+  &.radio--wrapper__disabled {}
+}
+
+.radio-button--wrapper {
+  margin: 0;
+  height: 28px;
+  line-height: 26px;
+  color: rgba(0, 0, 0, .65);
+  display: inline-block;
+  -webkit-transition: all .3s ease;
+  transition: all .3s ease;
+  cursor: pointer;
+  border: 1px solid #d9d9d9;
+  border-left: 0;
+  background: #fff;
+  padding: 0 16px;
+  &:hover {
+    color: var(--brand-primary);
+  }
+  &:first-child {
+    border-radius: 4px 0 0 4px;
+    border-left: 1px solid #d9d9d9;
+  }
+  &:last-child {
+    border-radius: 0 4px 4px 0;
+  }
+  &.radio-button--wrapper__checked {
+    background: #fff;
+    border-color: var(--brand-primary);
+    background-color: var(--brand-primary);
+    color: #fff;
+    box-shadow: -1px 0 0 0 var(--brand-primary);
+    &:first-child {
+      border-color: var(--brand-primary);
+      box-shadow: none!important;
+    }
+  }
+  &.radio-button--wrapper__disabled {
+    cursor: not-allowed;
+    border-color: #d9d9d9;
+    background-color: #f7f7f7;
+    color: rgba(0, 0, 0, .25);
+    &.radio-button--wrapper__checked {
+      color: #fff;
+      background-color: #e6e6e6;
+      border-color: #d9d9d9;
+      box-shadow: none;
+    }
+  }
+}
+
+.radio-button {
+  margin-left: 0;
+  display: block;
+  width: 0;
+  height: 0;
+  & input {
+    opacity: 0;
+    filter: alpha(opacity=0);
+    width: 0;
+    height: 0;
+  }
+  &.radio-button__checked {}
+  &.radio-button__disabled {}
+  & .radio-button--inner {}
+}

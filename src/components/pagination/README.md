@@ -1,3 +1,10 @@
+---
+author:
+  name: ryan.bian
+  homepage: https://github.com/macisi/
+  email: macisi528@gmail.com
+---
+
 ## Pagination
 
 Pagination Component.

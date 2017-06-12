@@ -1,3 +1,9 @@
+---
+author:
+  name: yan
+  homepage: https://github.com/olivianate/
+---
+
 ## Input
 
 Input Component.

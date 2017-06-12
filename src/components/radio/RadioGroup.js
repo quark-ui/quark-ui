@@ -35,6 +35,11 @@ class RadioGroup extends PureComponent {
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
   static propTypes = {
     disabled: PropTypes.bool,
+    defaultValue: PropTypes.any,
+    value: PropTypes.any,
+    children: PropTypes.any,
+    onChange: PropTypes.func,
+    options: PropTypes.array,
   }
 
   static childContextTypes = {
@@ -114,11 +119,12 @@ class RadioGroup extends PureComponent {
 
   render() {
     const { props, state, getOptions } = this;
-    let { children, options } = props;
+    const { options } = props;
+    let { children } = props;
     if (options && options.length > 0) {
-      children = getOptions().map((option, index) => (
+      children = getOptions().map(option => (
         <Radio
-          key={index}
+          key={option.value}
           disabled={option.disabled || props.disabled}
           value={option.value}
           onChange={this.onRadioChange}

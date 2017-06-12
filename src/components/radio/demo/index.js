@@ -1,7 +1,7 @@
+import { Component } from 'react';
 import Radio from '../index';
 import Button from '../../button';
 import Input from '../../input';
-import { Component } from 'react';
 
 const RadioGroup = Radio.Group;
 const RadioButton = Radio.Button;
@@ -36,18 +36,6 @@ export default class RadioDemo extends Component {
     };
   }
 
-  handleChange=(e) => {
-    this.setState({
-      checked: !this.state.checked,
-    });
-  }
-
-  handleToggle=() => {
-    this.setState({
-      disabled: !this.state.disabled,
-    });
-  }
-
   onChange=(e) => {
     console.log('radio checked', e.target.value);
     this.setState({
@@ -73,6 +61,18 @@ export default class RadioDemo extends Component {
     });
   }
 
+  handleChange=() => {
+    this.setState({
+      checked: !this.state.checked,
+    });
+  }
+
+  handleToggle=() => {
+    this.setState({
+      disabled: !this.state.disabled,
+    });
+  }
+
   render() {
     const { checked, disabled, value1, value2, value3, value } = this.state;
     return (
@@ -90,16 +90,16 @@ export default class RadioDemo extends Component {
           <Radio value={4}>
           More...
           {value == 4 ? <Input style={{ width: 100, marginLeft: 10 }} /> : null}
-        </Radio>
-      </RadioGroup>
+          </Radio>
+        </RadioGroup>
 
         <h3>按钮样式的单选组合</h3>
-        <RadioGroup onChange={onChange} defaultValue="a">
-      <RadioButton value="a">Hangzhou</RadioButton>
-      <RadioButton value="b">Shanghai</RadioButton>
-      <RadioButton value="c">Beijing</RadioButton>
-      <RadioButton value="d">Chengdu</RadioButton>
-    </RadioGroup>
+        <RadioGroup onChange={onChange} defaultValue="a" disabled={disabled}>
+          <RadioButton value="a">Hangzhou</RadioButton>
+          <RadioButton value="b">Shanghai</RadioButton>
+          <RadioButton value="c">Beijing</RadioButton>
+          <RadioButton value="d">Chengdu</RadioButton>
+        </RadioGroup>
 
         <h3>非受控方式</h3>
         <p><Radio defaultChecked name={'my-radio'} disabled={disabled}>&nbsp;默认选中</Radio></p>

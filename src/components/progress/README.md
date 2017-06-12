@@ -1,3 +1,9 @@
+---
+author:
+  name: heifade
+  homepage: https://github.com/heifade/
+---
+
 ## Progress
 
 Progress Component.

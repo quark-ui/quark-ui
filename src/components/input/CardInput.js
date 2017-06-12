@@ -3,66 +3,65 @@
  * @author yan
  */
 import { PureComponent } from 'react';
-import InputMask  from 'inputmask-core';
+import InputMask from 'inputmask-core';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
 import { allowMultiple } from '../../constants';
 import Input from './Input';
 import styles from './Input.css';
 
-var KEYCODE_Z = 90
-var KEYCODE_Y = 89
+const KEYCODE_Z = 90;
+const KEYCODE_Y = 89;
 
 function isUndo(e) {
-  return (e.ctrlKey || e.metaKey) && e.keyCode === (e.shiftKey ? KEYCODE_Y : KEYCODE_Z)
+  return (e.ctrlKey || e.metaKey) && e.keyCode === (e.shiftKey ? KEYCODE_Y : KEYCODE_Z);
 }
 
 function isRedo(e) {
-  return (e.ctrlKey || e.metaKey) && e.keyCode === (e.shiftKey ? KEYCODE_Z : KEYCODE_Y)
+  return (e.ctrlKey || e.metaKey) && e.keyCode === (e.shiftKey ? KEYCODE_Z : KEYCODE_Y);
 }
-function getSelection (el) {
-  var start, end, rangeEl, clone
+function getSelection(el) {
+  let start,
+    end,
+    rangeEl,
+    clone;
 
   if (el.selectionStart !== undefined) {
-    start = el.selectionStart
-    end = el.selectionEnd
-  }
-  else {
+    start = el.selectionStart;
+    end = el.selectionEnd;
+  } else {
     try {
-      el.focus()
-      rangeEl = el.createTextRange()
-      clone = rangeEl.duplicate()
+      el.focus();
+      rangeEl = el.createTextRange();
+      clone = rangeEl.duplicate();
 
-      rangeEl.moveToBookmark(document.selection.createRange().getBookmark())
-      clone.setEndPoint('EndToStart', rangeEl)
+      rangeEl.moveToBookmark(document.selection.createRange().getBookmark());
+      clone.setEndPoint('EndToStart', rangeEl);
 
-      start = clone.text.length
-      end = start + rangeEl.text.length
-    }
-    catch (e) { /* not focused or not visible */ }
+      start = clone.text.length;
+      end = start + rangeEl.text.length;
+    } catch (e) { /* not focused or not visible */ }
   }
 
-  return { start, end }
+  return { start, end };
 }
 
 function setSelection(el, selection) {
-  var rangeEl
+  let rangeEl;
 
   try {
     if (el.selectionStart !== undefined) {
-      el.focus()
-      el.setSelectionRange(selection.start, selection.end)
+      el.focus();
+      el.setSelectionRange(selection.start, selection.end);
+    } else {
+      el.focus();
+      rangeEl = el.createTextRange();
+      rangeEl.collapse(true);
+      rangeEl.moveStart('character', selection.start);
+      rangeEl.moveEnd('character', selection.end - selection.start);
+      rangeEl.select();
     }
-    else {
-      el.focus()
-      rangeEl = el.createTextRange()
-      rangeEl.collapse(true)
-      rangeEl.moveStart('character', selection.start)
-      rangeEl.moveEnd('character', selection.end - selection.start)
-      rangeEl.select()
-    }
-  }
-  catch (e) { /* not focused or not visible */ }
+  } catch (e) { /* not focused or not visible */ }
 }
 
 
@@ -74,7 +73,7 @@ class CardInput extends PureComponent {
   static defaultProps = {
     size: 'normal',
     disabled: false,
-    value:''
+    value: '',
   }
 
   static propTypes = {
@@ -102,24 +101,24 @@ class CardInput extends PureComponent {
 
 
   onChange = (e) => {
-    var maskValue = this.mask.getValue()
+    const maskValue = this.mask.getValue();
     if (e.target.value !== maskValue) {
       // Cut or delete operations will have shortened the value
       if (e.target.value.length < maskValue.length) {
-        var sizeDiff = maskValue.length - e.target.value.length
-        this.mask.selection = getSelection(this.input)
-        this.mask.selection.end = this.mask.selection.start + sizeDiff
-        this.mask.backspace()
+        const sizeDiff = maskValue.length - e.target.value.length;
+        this.mask.selection = getSelection(this.input);
+        this.mask.selection.end = this.mask.selection.start + sizeDiff;
+        this.mask.backspace();
       }
-      var value = this.getDisplayValue()
-      e.target.value = value
+      const value = this.getDisplayValue();
+      e.target.value = value;
       if (value) {
-        setSelection(this.input, this.mask.selection)
+        setSelection(this.input, this.mask.selection);
       }
     }
 
     if (this.props.onChange) {
-      this.props.onChange(e)
+      this.props.onChange(e);
     }
   }
 
@@ -128,19 +127,19 @@ class CardInput extends PureComponent {
 
     // Ignore modified key presses
     // Ignore enter key to allow form submission
-    if (e.metaKey || e.altKey || e.ctrlKey || e.key === 'Enter') { return }
+    if (e.metaKey || e.altKey || e.ctrlKey || e.key === 'Enter') { return; }
 
-    e.preventDefault()
-    this.mask.selection = getSelection(this.input)
+    e.preventDefault();
+    this.mask.selection = getSelection(this.input);
 
     if (this.mask.input((e.key || e.data))) {
-      e.target.value = this.mask.getValue()
+      e.target.value = this.mask.getValue();
       // this._updateInputSelection()
 
-      setSelection(this.input, this.mask.selection)
+      setSelection(this.input, this.mask.selection);
 
       if (this.props.onChange) {
-        this.props.onChange(e)
+        this.props.onChange(e);
       }
     }
   }
@@ -148,40 +147,39 @@ class CardInput extends PureComponent {
   onKeyDown = (e) => {
     // console.log('onKeyDown', JSON.stringify(getSelection(this.input)), e.key, e.target.value)
     if (isUndo(e)) {
-      e.preventDefault()
+      e.preventDefault();
       if (this.mask.undo()) {
-        e.target.value = this.getDisplayValue()
-        setSelection(this.input, this.mask.selection)
+        e.target.value = this.getDisplayValue();
+        setSelection(this.input, this.mask.selection);
         if (this.props.onChange) {
-          this.props.onChange(e)
+          this.props.onChange(e);
         }
       }
-      return
-    }
-    else if (isRedo(e)) {
-      e.preventDefault()
+      return;
+    } else if (isRedo(e)) {
+      e.preventDefault();
       if (this.mask.redo()) {
-        e.target.value = this.getDisplayValue()
-        setSelection(this.input, this.mask.selection)
+        e.target.value = this.getDisplayValue();
+        setSelection(this.input, this.mask.selection);
         if (this.props.onChange) {
-          this.props.onChange(e)
+          this.props.onChange(e);
         }
       }
-      return
+      return;
     }
 
     if (e.key === 'Backspace') {
-      e.preventDefault()
-      this.mask.selection = getSelection(this.input)
+      e.preventDefault();
+      this.mask.selection = getSelection(this.input);
       if (this.mask.backspace()) {
-        var value = this.getDisplayValue()
-        
-        e.target.value = value
+        const value = this.getDisplayValue();
+
+        e.target.value = value;
         if (value) {
-          setSelection(this.input, this.mask.selection)
+          setSelection(this.input, this.mask.selection);
         }
         if (this.props.onChange) {
-          this.props.onChange(e)
+          this.props.onChange(e);
         }
       }
     }
@@ -189,64 +187,60 @@ class CardInput extends PureComponent {
 
   onPaste = (e) => {
     // console.log('onPaste', JSON.stringify(getSelection(this.input)), e.clipboardData.getData('Text'), e.target.value)
-    e.preventDefault()
-    this.mask.selection = getSelection(this.input)
+    e.preventDefault();
+    this.mask.selection = getSelection(this.input);
     // getData value needed for IE also works in FF & Chrome
     if (this.mask.paste(e.clipboardData.getData('Text'))) {
-      e.target.value = this.mask.getValue()
+      e.target.value = this.mask.getValue();
       // Timeout needed for IE
-      setSelection(this.input, this.mask.selection)
+      setSelection(this.input, this.mask.selection);
       // setTimeout(function(){setSelection(this.input, this.mask.selection)}, 0)
       if (this.props.onChange) {
-        this.props.onChange(e)
+        this.props.onChange(e);
       }
     }
   }
 
   getDisplayValue = () => {
-    var value = this.mask.getValue()
-    return value === this.mask.emptyValue ? '' : value
+    const value = this.mask.getValue();
+    return value === this.mask.emptyValue ? '' : value;
   }
 
-  getEventHandlers = () => {
-    return {
-      onChange: this.onChange,
-      onKeyDown: this.onKeyDown,
-      onPaste: this.onPaste,
-      onKeyPress: this.onKeyPress,
-    }
-  }
+  getEventHandlers = () => ({
+    onChange: this.onChange,
+    onKeyDown: this.onKeyDown,
+    onPaste: this.onPaste,
+    onKeyPress: this.onKeyPress,
+  })
 
-  componentWillMount(){
-    var options = {
+  componentWillMount() {
+    const options = {
       pattern: this.props.mask,
       value: this.props.value,
-      formatCharacters: this.props.formatCharacters
-    }
+      formatCharacters: this.props.formatCharacters,
+    };
     if (this.props.placeholderChar) {
-      options.placeholderChar = this.props.placeholderChar
+      options.placeholderChar = this.props.placeholderChar;
     }
-    this.mask = new InputMask(options)
+    this.mask = new InputMask(options);
   }
-
 
 
   render() {
-    const ref = r => this.input = r
+    const ref = r => this.input = r;
     const maxLength = this.mask.pattern.length;
     const value = this.getDisplayValue();
     const eventHandlers = this.getEventHandlers();
-    const { disabled, size = maxLength, placeholder = this.mask.emptyValue } = this.props
+    const { disabled, size = maxLength, placeholder = this.mask.emptyValue } = this.props;
 
-    const {placeholderChar, formatCharacters, ...cleanedProps} = this.props
-    const inputProps = { ...cleanedProps, ...eventHandlers, ref, maxLength, value, size, placeholder,styleName: `${disabled ? 'input__disabled' : ''} input__${size}` }
+    const { placeholderChar, formatCharacters, ...cleanedProps } = this.props;
+    const inputProps = { ...cleanedProps, ...eventHandlers, ref, maxLength, value, size, placeholder, styleName: `${disabled ? 'input__disabled' : ''} input__${size}` };
 
     return (
       <input
-          {...inputProps}
+        {...inputProps}
       />
     );
-
   }
 }
 export default CardInput;

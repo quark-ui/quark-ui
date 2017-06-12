@@ -22,7 +22,8 @@ export default class Layout extends PureComponent {
             </h1>
             <nav styleName="head__navigation">
               <NavLink to="/" exact>首页</NavLink>
-              <NavLink to="/component/">组件</NavLink>
+              <NavLink to="/component/alert">组件</NavLink>
+              <NavLink to="/changes">更新</NavLink>
             </nav>
             <ThemePicker />
           </header>

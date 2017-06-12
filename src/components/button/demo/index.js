@@ -10,28 +10,16 @@ export default class ButtonDemo extends Component {
           <thead>
             <tr>
               <th>主按钮</th>
-            </tr>
-            <tr>
               <th>次按钮</th>
-            </tr>
-            <tr>
               <th>虚线按钮</th>
-            </tr>
-            <tr>
               <th>危险按钮</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td><Button type="primary">主按钮</Button></td>
-            </tr>
-            <tr>
               <td><Button type="secondary">次按钮</Button></td>
-            </tr>
-            <tr>
               <td><Button type="dashed">虚线按钮</Button></td>
-            </tr>
-            <tr>
               <td><Button type="danger">危险按钮</Button></td>
             </tr>
           </tbody>

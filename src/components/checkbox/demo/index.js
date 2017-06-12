@@ -1,7 +1,8 @@
+import { Component } from 'react';
 import Checkbox from '../Checkbox';
 // import {Checkbox} from 'antd'
 import Button from '../../button';
-import { Component } from 'react';
+
 
 const CheckboxGroup = Checkbox.Group;
 const plainOptions = ['Apple', 'Pear', 'Orange'];
@@ -29,7 +30,7 @@ export default class CheckboxDemo extends Component {
     });
   }
 
-  handleToggleChecked=(e) => {
+  handleToggleChecked=() => {
     this.setState({
       checked: !this.state.checked,
     });
@@ -38,12 +39,12 @@ export default class CheckboxDemo extends Component {
   handleChange=(checkedList) => {
     this.setState({
       checkedList,
-      checkAll: checkedList.length == plainOptions.length,
+      checkAll: checkedList.length === plainOptions.length,
     });
   }
 
   handleAllChange=(e) => {
-    const { checkedList, checkAll } = this.state;
+    // const { checkedList, checkAll } = this.state;
     this.setState({
       checkedList: e.target.checked ? plainOptions : [],
       checkAll: e.target.checked,
@@ -114,11 +115,10 @@ export default class CheckboxDemo extends Component {
         <h3>非受控方式</h3>
         <p>
           <Checkbox
-            children="&nbsp;非控的CheckBox组件"
             defaultChecked
             disabled={disabled}
             onChange={onChange}
-          />
+          >&nbsp;非控的CheckBox组件</Checkbox>
         </p>
         <Button onClick={this.handleToggleDisabled}>{disabled ? '启用' : '禁用'}</Button>&nbsp;
         <Button onClick={this.handleToggleChecked}>{checked ? '取消选中' : '选中'}</Button>

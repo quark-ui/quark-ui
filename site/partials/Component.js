@@ -1,14 +1,19 @@
 import { Component, createElement } from 'react';
-import MDReactComponent from 'markdown-react-js';
-import SyntaxHighlighter, { registerLanguage } from 'react-syntax-highlighter/dist/light';
-import js from 'highlight.js/lib/languages/javascript';
+import marked from 'meta-marked';
+import Prism from 'prismjs';
 import CSSModules from 'react-css-modules';
-import darcula from 'react-syntax-highlighter/dist/styles/darcula';
 import { allowMultiple } from '../../src/constants';
+import IconGithub from '../icons/github.svg';
+import IconUser from '../icons/user.svg';
+import IconMail from '../icons/email.svg';
+import 'prismjs/themes/prism.css';
 
 import styles from './Component.css';
 
-registerLanguage('javascript', js);
+const IconProps = {
+  width: 18,
+  height: 18,
+};
 
 @CSSModules(styles, { allowMultiple })
 export default class ComponentBlock extends Component {
@@ -33,18 +38,62 @@ export default class ComponentBlock extends Component {
       });
     });
   }
+  static renderMetaData = ({ author = {} }, match) => {
+    const { name, homepage, email } = author;
+    return (
+      <div styleName="Component__meta">
+        <span styleName="meta__tag">
+          <IconGithub {...IconProps} />
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href={`https://github.com/quark-ui/quark-ui/tree/master/src/components/${match.params.name}`}>
+            HomePage
+          </a>
+        </span>
+        <span styleName="meta__tag">
+          <IconUser {...IconProps} />
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href={homepage || email}
+          >{name}</a>
+        </span>
+        {
+          email ? (
+            <span styleName="meta__tag">
+              <IconMail {...IconProps} />
+              <a href={`mailto:${email}`}>Email</a>
+            </span>
+          ) : null
+        }
+      </div>
+    );
+  }
   render() {
+    const { match } = this.props;
     const { readme, demo, demoSourceCode } = this.state;
+    if (!readme) {
+      return null;
+    }
+    const { meta, html } = marked(readme);
     return (
       <div styleName="Component__wrap">
-        <MDReactComponent text={readme} styleName="Component__doc" />
+        { ComponentBlock.renderMetaData(meta, match) }
+        <div styleName="Component__doc" dangerouslySetInnerHTML={{ __html: html }} />
         {
           demo ? <div styleName="Component__demoBox">{createElement(demo)}</div> : null
         }
-        <SyntaxHighlighter
-          language={'javascript'}
-          style={darcula}
-        >{demoSourceCode}</SyntaxHighlighter>
+        <div styleName="Component__demoCode">
+          <pre className="language-javascript">
+            <code
+              className="language-javascript"
+              dangerouslySetInnerHTML={{
+                __html: Prism.highlight(demoSourceCode, Prism.languages.javascript),
+              }}
+            />
+          </pre>
+        </div>
       </div>
     );
   }
