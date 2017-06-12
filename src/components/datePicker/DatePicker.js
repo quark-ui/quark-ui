@@ -11,6 +11,7 @@ import assign from 'object-assign';
 import { allowMultiple } from '../../constants';
 import styles from './DatePicker.css';
 import { defaultProps, propTypes } from './props';
+import Input from '../input';
 
 import Picker from './Picker';
 
@@ -70,21 +71,29 @@ class DatePicker extends PureComponent {
 
   render() {
     const { value } = this.state;
-    const { pickerType, disabled, format, disabledDate } = this.props;
+    const { pickerType, disabled, format, disabledDate, fieldSize, fieldWidth } = this.props;
     const pickerProps = {
       date: value,
       changeDate: this.changeDateInternal,
       type: pickerType,
       disabledDate,
     };
+    const fieldStyle = {};
+    if (fieldWidth) {
+      assign(fieldStyle, {
+        width: fieldWidth,
+      });
+    }
     const inputProps = {
-      type: 'text',
+      // type: 'text',
       disabled,
       value: value.format(format),
+      size: fieldSize,
+      style: fieldStyle,
     };
-    return disabled ? <input {...inputProps} /> : (
+    return disabled ? <Input {...inputProps} /> : (
       <Picker {...pickerProps}>
-        <input {...inputProps} />
+        <Input {...inputProps} />
       </Picker>
     );
   }

@@ -7,7 +7,7 @@ import styles from '../../../styles/demo.css';
 @CSSModules(styles)
 
 export default class InputNumberDemo extends Component {
-  
+
   onChange = (value) => {
     console.log('changed', value);
   }
@@ -20,95 +20,110 @@ export default class InputNumberDemo extends Component {
             <span>基本</span>
             <p>数字输入框</p>
             <div>
-                <InputNumber  style={{ width: 200 }} min={1} max={10} defaultValue={3} onChange={this.onChange}/>
+              <InputNumber
+                style={{ width: 200 }}
+                min={1}
+                max={10}
+                defaultValue={3}
+                onChange={this.onChange}
+              />
             </div>
           </div>
           <div styleName="code__temp">
-             <span>禁用</span>
-              <p>数字输入框禁用</p>
-              <div>
-                <InputNumber min={1} max={10} disabled={true} defaultValue={3} />
-              </div>
+            <span>禁用</span>
+            <p>数字输入框禁用</p>
+            <div>
+              <InputNumber min={1} max={10} disabled defaultValue={3} />
+            </div>
           </div>
           <div styleName="code__temp">
-             <span>小数</span>
-              <p>和原生的数字输入框一样，鼠标离开输入框时自动取值。目前设定小数位两位。</p>
-              <div>
-                <InputNumber min={0} max={10} defaultValue={3} step={0.11} onChange={this.onChange}/>
-              </div>
+            <span>小数</span>
+            <p>和原生的数字输入框一样，鼠标离开输入框时自动取值。目前设定小数位两位。</p>
+            <div>
+              <InputNumber min={0} max={10} defaultValue={3} step={0.11} onChange={this.onChange} />
+            </div>
           </div>
           <div styleName="code__temp">
-             <span>大小</span>
-              <p>三种大小的数字输入框。</p>
-              <div>
-                <InputNumber size="large" min={1} max={100000} defaultValue={3} onChange={this.onChange}/>
-                <InputNumber min={1} max={100000} defaultValue={3} onChange={this.onChange} />
-                <InputNumber size="small" min={1} max={100000} defaultValue={3} onChange={this.onChange}/>
-              </div>
+            <span>大小</span>
+            <p>三种大小的数字输入框。</p>
+            <div>
+              <InputNumber size="large" min={1} max={100000} defaultValue={3} onChange={this.onChange} />
+              <InputNumber min={1} max={100000} defaultValue={3} onChange={this.onChange} />
+              <InputNumber size="small" min={1} max={100000} defaultValue={3} onChange={this.onChange} />
+            </div>
           </div>
           <div styleName="code__temp">
-             <span>格式化展示</span>
-              <p>展示具有具体含义的数据</p>
-              <div>
-                <InputNumber
-                  formatter={value => `$ ${value.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}
-                  parser={value => value.replace(/\$\s?|(,*)/g, '')}
-                  onChange={this.onChange}/>
-                <InputNumber
-                    defaultValue={1000}
-                    formatter={value => `¥ ${value.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}
-                    parser={value => value.replace(/\¥\s?|(,*)/g, '')}
-                    onChange={this.onChange}/>
-                <InputNumber
-                  defaultValue={1}
-                  min={0}
-                  max={10}
-                  formatter={value => `${value}m`}
-                  parser={value => value.replace('m', '')}
-                  onChange={this.onChange}/>
-                <InputNumber
-                  defaultValue={1}
-                  min={0}
-                  max={10}
-                  formatter={value => `${value}㎡`}
-                  parser={value => value.replace('㎡', '')}
-                  onChange={this.onChange}/>
-                <InputNumber
-                  defaultValue={1}
-                  min={0}
-                  max={10}
-                  formatter={value => `${value}㎝`}
-                  parser={value => value.replace('㎝', '')}
-                  onChange={this.onChange}/>
-                <InputNumber
-                  defaultValue={1}
-                  min={0}
-                  max={10}
-                  formatter={value => `${value}㎞`}
-                  parser={value => value.replace('㎞', '')}
-                  onChange={this.onChange}/>
-                <InputNumber
-                  defaultValue={1}
-                  min={0}
-                  max={10}
-                  formatter={value => `${value}℅`}
-                  parser={value => value.replace('℅', '')}
-                  onChange={this.onChange}/>
-                  <InputNumber
-                  defaultValue={1}
-                  min={0}
-                  max={10}
-                  formatter={value => `${value}℃`}
-                  parser={value => value.replace('℃', '')}
-                  onChange={this.onChange}/>
-                  <InputNumber
-                  defaultValue={1}
-                  min={0}
-                  max={10}
-                  formatter={value => `${value}㎎`}
-                  parser={value => value.replace('㎎', '')}
-                  onChange={this.onChange}/>
-              </div>
+            <span>格式化展示</span>
+            <p>展示具有具体含义的数据</p>
+            <div>
+              <InputNumber
+                formatter={value => `$ ${value.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}
+                parser={value => value.replace(/\$\s?|(,*)/g, '')}
+                onChange={this.onChange}
+              />
+              <InputNumber
+                defaultValue={1000}
+                formatter={value => `¥ ${value.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}
+                parser={value => value.replace(/\¥\s?|(,*)/g, '')}
+                onChange={this.onChange}
+              />
+              <InputNumber
+                defaultValue={1}
+                min={0}
+                max={10}
+                formatter={value => `${value}m`}
+                parser={value => value.replace('m', '')}
+                onChange={this.onChange}
+              />
+              <InputNumber
+                defaultValue={1}
+                min={0}
+                max={10}
+                formatter={value => `${value}㎡`}
+                parser={value => value.replace('㎡', '')}
+                onChange={this.onChange}
+              />
+              <InputNumber
+                defaultValue={1}
+                min={0}
+                max={10}
+                formatter={value => `${value}㎝`}
+                parser={value => value.replace('㎝', '')}
+                onChange={this.onChange}
+              />
+              <InputNumber
+                defaultValue={1}
+                min={0}
+                max={10}
+                formatter={value => `${value}㎞`}
+                parser={value => value.replace('㎞', '')}
+                onChange={this.onChange}
+              />
+              <InputNumber
+                defaultValue={1}
+                min={0}
+                max={10}
+                formatter={value => `${value}℅`}
+                parser={value => value.replace('℅', '')}
+                onChange={this.onChange}
+              />
+              <InputNumber
+                defaultValue={1}
+                min={0}
+                max={10}
+                formatter={value => `${value}℃`}
+                parser={value => value.replace('℃', '')}
+                onChange={this.onChange}
+              />
+              <InputNumber
+                defaultValue={1}
+                min={0}
+                max={10}
+                formatter={value => `${value}㎎`}
+                parser={value => value.replace('㎎', '')}
+                onChange={this.onChange}
+              />
+            </div>
           </div>
         </section>
       </div>

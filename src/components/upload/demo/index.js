@@ -24,19 +24,18 @@ class UploadDemo1 extends Component {
       multiple: true,
       disabled: false,
       onResponse(response) {
-        response = {"result":"success","msg":"上传成功！"};
+        response = { result: 'success', msg: '上传成功！' };
         if (response.result === 'success') {
           return {
             success: true,
             message: '上传成功',
-          }
+          };
         }
-        else {
-          return {
-            success: false,
-            message: response.msg,
-          }
-        }
+
+        return {
+          success: false,
+          message: response.msg,
+        };
       },
       onChange(info) {
         if (info.file.status !== 'uploading') {
@@ -80,19 +79,18 @@ class UploadDemo2 extends Component {
       multiple: true,
       disabled: false,
       onResponse(response) {
-        response = {"result":"success","msg":"上传成功！"};
+        response = { result: 'success', msg: '上传成功！' };
         if (response.result === 'success') {
           return {
             success: true,
             message: '上传成功',
-          }
+          };
         }
-        else {
-          return {
-            success: false,
-            message: response.msg,
-          }
-        }
+
+        return {
+          success: false,
+          message: response.msg,
+        };
       },
       onChange(info) {
         if (info.file.status !== 'uploading') {
@@ -157,19 +155,18 @@ class UploadDemo3 extends Component {
       action: '//jsonplaceholder.typicode.com/posts/',
       disabled: false,
       onResponse(response) {
-        response = {"result":"success","msg":"上传成功！"};
+        response = { result: 'success', msg: '上传成功！' };
         if (response.result === 'success') {
           return {
             success: true,
             message: '上传成功',
-          }
+          };
         }
-        else {
-          return {
-            success: false,
-            message: response.msg,
-          }
-        }
+
+        return {
+          success: false,
+          message: response.msg,
+        };
       },
       onChange(info) {
         let fileList = info.fileList;
@@ -227,7 +224,7 @@ class UploadDemo4 extends Component {
   }
 
   handleChange = (info) => {
-    this.setState({fileList: info.fileList});
+    this.setState({ fileList: info.fileList });
   }
   beforeUpload(file) {
     const isJPG = file.type === 'image/png';
@@ -250,19 +247,18 @@ class UploadDemo4 extends Component {
       onChange: this.handleChange,
       beforeUpload: this.beforeUpload,
       onResponse(response) {
-        response = {"result":"success","msg":"上传成功！"};
+        response = { result: 'success', msg: '上传成功！' };
         if (response.result === 'success') {
           return {
             success: true,
             message: '上传成功',
-          }
+          };
         }
-        else {
-          return {
-            success: false,
-            message: response.msg,
-          }
-        }
+
+        return {
+          success: false,
+          message: response.msg,
+        };
       },
     };
 

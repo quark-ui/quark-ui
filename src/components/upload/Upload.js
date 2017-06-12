@@ -54,14 +54,13 @@ class Upload extends React.Component {
         return {
           success: true,
           message: '上传成功',
-        }
+        };
       }
-      else {
-        return {
-          success: false,
-          message: response.msg,
-        }
-      }
+
+      return {
+        success: false,
+        message: response.msg,
+      };
     },
   }
 
@@ -194,8 +193,7 @@ class Upload extends React.Component {
       const resultData = this.props.onResponse(response);
       if (resultData.success) {
         targetItem.status = 'done';
-      }
-      else {
+      } else {
         targetItem.status = 'error';
         targetItem.response = resultData.message;
       }
@@ -246,7 +244,7 @@ class Upload extends React.Component {
     const { onRemove } = this.props;
 
     Promise.resolve(typeof onRemove === 'function' ? onRemove(file) : onRemove)
-      .then(ret => {
+      .then((ret) => {
         // Prevent removing file
         if (ret === false) {
           return;
@@ -269,7 +267,7 @@ class Upload extends React.Component {
   render() {
     const {
       prefixCls = '', showUploadList, listType, onPreview,
-      // type, 
+      // type,
       disabled,
       children,
       className,

@@ -6,8 +6,8 @@ import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import RcInputNumber from 'rc-input-number';
 // import CSSModules from 'react-css-modules';
-import { allowMultiple } from '../../constants';
-import styles from './InputNumber.css';
+// import { allowMultiple } from '../../constants';
+// import styles from './InputNumber.css';
 
 // @CSSModules(styles, { allowMultiple })
 class InputNumber extends PureComponent {
@@ -16,29 +16,29 @@ class InputNumber extends PureComponent {
 
   static defaultProps = {
     step: 1,
-    size:'normal',
+    size: 'normal',
   }
 
   static propTypes = {
     min: PropTypes.number,
     max: PropTypes.number,
     value: PropTypes.number,
-    step:PropTypes.oneOfType([
+    step: PropTypes.oneOfType([
       PropTypes.number,
       PropTypes.string,
     ]),
-    defaultValue:PropTypes.number,
+    defaultValue: PropTypes.number,
     onChange: PropTypes.func,
-    disabled:PropTypes.bool,
+    disabled: PropTypes.bool,
     size: PropTypes.oneOf([
       'normal',
       'large',
       'small',
     ]),
     formatter: PropTypes.func,
-    parser:PropTypes.func,
-    placeholder:PropTypes.string,
-    className:PropTypes.string,
+    parser: PropTypes.func,
+    placeholder: PropTypes.string,
+    className: PropTypes.string,
   }
 
   constructor(props) {
@@ -47,13 +47,11 @@ class InputNumber extends PureComponent {
   }
 
   render() {
-
     const { className, size, ...otherProps } = this.props;
 
-    const inputNumberClass =  `input-number-${size}`;
+    const inputNumberClass = `input-number-${size}`;
 
     return <RcInputNumber className={inputNumberClass} {...otherProps} />;
-
   }
 }
 

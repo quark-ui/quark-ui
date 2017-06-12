@@ -7,7 +7,7 @@ author:
 
 ## Icon
 
-Icon Component.
+图标。
 
 ### Props
 |name|type|default|description|

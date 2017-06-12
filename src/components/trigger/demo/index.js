@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import Trigger from '../Trigger';
+import Radio, { RadioGroup } from '../../radio';
 
 const PLACEMENT_ENUM = {
   left: {
@@ -44,6 +45,7 @@ export default class TriggerDemo extends Component {
     });
   }
   onChangeActionType = (e) => {
+    console.log(e.target.value)
     this.setState({
       action: e.target.value,
     });
@@ -72,19 +74,16 @@ export default class TriggerDemo extends Component {
           this.renderPlacementSelector()
         }
         <label htmlFor="action">触发方式</label>
-        {
-          ActionType.map(type => (
-            <label htmlFor="action" key={type}>
-              <input
-                type="radio"
-                onChange={this.onChangeActionType}
+        <RadioGroup value={action} onChange={this.onChangeActionType}>
+          {
+            ActionType.map(type => (
+              <Radio
                 value={type}
-                checked={type === action}
-              />
-              {type}
-            </label>
-          ))
-        }
+                key={type}
+              >{type}</Radio>
+            ))
+          }
+        </RadioGroup>
         <Trigger
           action={action}
           popup={

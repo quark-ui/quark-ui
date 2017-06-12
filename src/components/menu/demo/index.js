@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { allowMultiple } from '../../../constants';
 import Menu from '../Menu';
 import Icon from '../../icon/Icon';
-import styles from  './index.css';
+import styles from './index.css';
 
 @CSSModules(styles, { allowMultiple })
 export default class MenuDemo extends Component {
@@ -24,12 +24,12 @@ export default class MenuDemo extends Component {
   render() {
     return (
       <div>
-        <table style={{width: '100%'}}>
+        <table style={{ width: '100%' }}>
           <tr>
             <td colSpan="2">1、水平菜单，子菜单水平</td>
           </tr>
           <tr>
-            <th style={{width: '50%'}}>KA</th><th style={{width: '50%'}}>车队加盟</th>
+            <th style={{ width: '50%' }}>KA</th><th style={{ width: '50%' }}>车队加盟</th>
           </tr>
           <tr>
             <td>
@@ -101,12 +101,12 @@ export default class MenuDemo extends Component {
               </Menu>
             </td>
           </tr>
-          <tr><td style={{height:'30px'}}></td><td></td></tr>
+          <tr><td style={{ height: '30px' }} /><td /></tr>
           <tr>
             <td colSpan="2">2、水平菜单，子菜单垂直</td>
           </tr>
           <tr>
-            <th style={{width: '50%'}}>KA</th><th style={{width: '50%'}}>车队加盟</th>
+            <th style={{ width: '50%' }}>KA</th><th style={{ width: '50%' }}>车队加盟</th>
           </tr>
           <tr>
             <td>
@@ -214,12 +214,12 @@ export default class MenuDemo extends Component {
               </Menu>
             </td>
           </tr>
-          <tr><td style={{height:'30px'}}></td><td></td></tr>
+          <tr><td style={{ height: '30px' }} /><td /></tr>
           <tr>
             <td colSpan="2">3、垂直菜单，子菜单水平向右弹出</td>
           </tr>
           <tr>
-            <th style={{width: '50%'}}>KA</th><th style={{width: '50%'}}>车队加盟</th>
+            <th style={{ width: '50%' }}>KA</th><th style={{ width: '50%' }}>车队加盟</th>
           </tr>
           <tr>
             <td>
@@ -331,15 +331,15 @@ export default class MenuDemo extends Component {
               </Menu>
             </td>
           </tr>
-          <tr><td style={{height:'30px'}}></td><td></td></tr>
+          <tr><td style={{ height: '30px' }} /><td /></tr>
           <tr>
             <td colSpan="2">4、垂直菜单，子菜单内嵌在菜单区域</td>
           </tr>
           <tr>
-            <th style={{width: '50%'}}>KA</th><th style={{width: '50%'}}>车队加盟</th>
+            <th style={{ width: '50%' }}>KA</th><th style={{ width: '50%' }}>车队加盟</th>
           </tr>
           <tr>
-            <td style={{verticalAlign:'top'}}>
+            <td style={{ verticalAlign: 'top' }}>
               <Menu
                 onClick={this.handleClick}
                 style={{ width: 240 }}
@@ -389,7 +389,7 @@ export default class MenuDemo extends Component {
                   </Menu.Item>
               </Menu>
             </td>
-            <td style={{verticalAlign:'top'}}>
+            <td style={{ verticalAlign: 'top' }}>
               <Menu
                 onClick={this.handleClick}
                 style={{ width: 240 }}

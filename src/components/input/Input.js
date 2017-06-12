@@ -2,7 +2,7 @@
  * Input Component
  * @author yan
  */
-import { PureComponent,cloneElement } from 'react';
+import { PureComponent, cloneElement } from 'react';
 import PropTypes from 'prop-types';
 import assign from 'object-assign';
 import CSSModules from 'react-css-modules';
@@ -28,7 +28,7 @@ class Input extends PureComponent {
     size: 'normal',
     // wrapperCls:'input__wrapper',
     disabled: false,
-    autosize:false,
+    autosize: false,
     onChange() {},
   }
 
@@ -71,16 +71,15 @@ class Input extends PureComponent {
   }
 
   resizeTextarea = () => {
-
     const { type, autosize } = this.props;
-    if (type !== 'textarea' || !autosize || !this.refs.input) {
+    if (type !== 'textarea' || !autosize || !this.input) {
       return;
     }
 
-    const textareaStyles = calculateNodeHeight(this.refs.input,false);
+    const textareaStyles = calculateNodeHeight(this.input, false);
     this.setState({ textareaStyles });
   }
- 
+
 
   renderLabeledIcon(children) {
     const props = this.props;
@@ -101,13 +100,14 @@ class Input extends PureComponent {
     ) : null;
 
     const inputProps = {
-      styleName: `${props.prefix ? 'input__wrapper input__wrapper__prefix' : ( props.suffix ?  'input__wrapper input__wrapper__suffix' : 'input__wrapper')}`,
-    }
+      styleName: `${props.prefix ? 'input__wrapper input__wrapper__prefix' : (props.suffix ? 'input__wrapper input__wrapper__suffix' : 'input__wrapper')}`,
+    };
 
     return (
-      <span 
-        {...inputProps} 
-        style={props.style}>
+      <span
+        {...inputProps}
+        style={props.style}
+      >
         {prefix}
         {cloneElement(children)}
         {suffix}
@@ -116,13 +116,14 @@ class Input extends PureComponent {
   }
 
 
-  
   render() {
     const props = this.props;
-    const {type, size, disabled,suffix,autosize, ...otherProps } = props;
-    const btnProps = {
+    const { type, size, disabled, suffix, autosize, ...otherProps } = props;
+    const fieldProps = {
       ...otherProps,
       styleName: `input__${disabled ? 'disabled' : type} input__${size}`,
+      ref: node => (this.input = node),
+      disabled,
     };
 
     if ('value' in props) {
@@ -130,27 +131,16 @@ class Input extends PureComponent {
       delete otherProps.defaultValue;
     }
 
-    switch (type) {
-      case 'textarea':
-        return (
-          <textarea 
-          {...btnProps}
-          style={assign({}, props.style, this.state.textareaStyles)}
-          disabled={disabled}
-          onChange={this.textareaChange}
-          ref="input"
-           />
-        );
-      default:
-        return this.renderLabeledIcon(
-          <input 
-          {...btnProps}
-          disabled={disabled}
-          ref="input"
-           />
-        );
+    if (type === 'textarea') {
+      return <textarea
+        {...fieldProps}
+        style={assign({}, props.style, this.state.textareaStyles)}
+        onChange={this.textareaChange}
+      />;
     }
-
+    return this.renderLabeledIcon(
+      <input {...fieldProps} />,
+    );
   }
 }
 
