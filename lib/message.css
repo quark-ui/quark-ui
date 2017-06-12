@@ -16,7 +16,7 @@
 ._3_LyTzy {
     position: fixed;
     z-index: 1000;
-    top: 20px;
+    top: 50px;
     left: 50%;
     -webkit-transform:translate(-50%,0);
             transform:translate(-50%,0);
@@ -34,7 +34,7 @@
     line-height: 1.5;
     vertical-align: middle;
     position: relative;
-    margin: 10px 0;
+    margin-bottom: 10px;
 }
 ._2VEwa73{
     display:inline-block;

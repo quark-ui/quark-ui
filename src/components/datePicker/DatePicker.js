@@ -91,7 +91,7 @@ class DatePicker extends PureComponent {
       size: fieldSize,
       style: fieldStyle,
     };
-    return disabled ? <input {...inputProps} /> : (
+    return disabled ? <Input {...inputProps} /> : (
       <Picker {...pickerProps}>
         <Input {...inputProps} />
       </Picker>
