@@ -36,8 +36,9 @@
   text-align: center;
   display: inline-block;
   margin-right: 6px;
+  vertical-align: text-top;
   & svg {
-    transform: scale(0.6);
+    transform: scale(0.75);
   }
   &:hover {
     cursor: pointer;

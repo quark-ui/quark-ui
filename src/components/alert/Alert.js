@@ -20,8 +20,8 @@ class Alert extends PureComponent {
   static defaultProps = {
     type: 'info',
     closable: false,
-    showIcon: true,
-    closeText: <Icon name="close" size={14} />,
+    showIcon: false,
+    closeText: '',
     message: '',
     description: '',
     onClose() {},
@@ -66,11 +66,11 @@ class Alert extends PureComponent {
   }
 
   render() {
-    const { closable, description, type, message, showIcon, closeText } = this.props;
+    const { description, type, message, showIcon, closeText } = this.props;
+    if (closeText) {
+      this.props.closable = true;
+    }
 
-    const closeIcon = closable ? (<span onClick={this.handleClose} styleName={'alert--close'}>
-      {closeText}
-    </span>) : null;
 
     const alertCls = classnames(
       {
@@ -86,7 +86,9 @@ class Alert extends PureComponent {
         {showIcon ? <Icon styleName={'alert--icon'} name={type} size={18} /> : null}
         <span styleName={'alert--message'}>{message}</span>
         <span styleName={'alert--description'}>{description}</span>
-        {closeIcon}
+        {this.props.closable ? <span onClick={this.handleClose} styleName={'alert--close'}>
+          {closeText || <Icon name="close" size={14} />}
+        </span> : null}
       </div>
     );
   }

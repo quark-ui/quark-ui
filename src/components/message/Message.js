@@ -17,7 +17,7 @@ class Message extends PureComponent {
 
   static defaultProps = {
     onClose() {},
-    duration: 1.5,
+    duration: 1.8,
     type: 'info',
   }
 

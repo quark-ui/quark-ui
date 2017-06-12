@@ -16,6 +16,7 @@ Steps Component.
 |current|number|0|指定当前步骤，从 0 开始记数|
 |status|string|process|指定当前步骤的状态，可选 `wait` `process` `finish`|
 |direction|string|horizontal|指定步骤条方向。默认水平|
+|isFinishIcon|boolean|false|指定finish状态的显示方式是否使用Icon|
 
 #### Steps.Step 步骤条内的每一个步骤
 |name|type|default|description|

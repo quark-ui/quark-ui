@@ -11,7 +11,7 @@ export default class MessageDemo extends Component {
   render() {
     message.config({
       top: 60,
-      duration: 2,
+      duration: 10,
     });
     return (
       <div>

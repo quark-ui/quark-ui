@@ -12,7 +12,7 @@ Message Component.
 ### Props
 |name|type|default|description|
 |---|---|---|---|
-|duration|Number|1.5|message 1.5s之后关闭|
+|duration|Number|1.8|message 1.8s之后关闭|
 |onClose|Function|function(){}|message 关闭之后的回调|
 |type|String|'info'|message 提示类型|
 ### Api
@@ -28,7 +28,7 @@ Message Component.
 |name|type|default|description|
 |---|---|---|---|
 |content|string|''|提示内容
-|duration|Number|1.5|message 默认1.5s之后关闭，可通过config设置|
+|duration|Number|1.8|message 默认1.8s之后关闭，可通过config设置|
 |onClose|Function|function(){}|message 关闭之后的回调，可通过config设置|
 
 还提供了全局配置和全局销毁方法：
@@ -41,6 +41,6 @@ Message Component.
 |name|type|default|description|
 |---|---|---|---|
 |top|number|50px|消息距离顶部的距离
-|duration|Number|1.5|message 默认1.5s之后关闭，可通过config设置|
+|duration|Number|1.8|message 默认1.8s之后关闭，可通过config设置|
 |getContainer|Function|function(){}|配置渲染节点的输出位置|
 

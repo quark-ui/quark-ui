@@ -38,7 +38,7 @@ export default class StepDemo extends Component {
         <Button disabled={this.state.current <= 0} onClick={this.handlePrev}>上一步</Button>&nbsp;
         <Button disabled={this.state.current >= 3} onClick={this.handleNext}>下一步</Button>
         <h3>横向步骤条</h3>
-        <Steps current={this.state.current}>
+        <Steps current={this.state.current} isFinishIcon>
           <Step title="Finished" description="This is a description." />
           <Step title="In Progress" />
           <Step title="Waiting" />
@@ -46,17 +46,34 @@ export default class StepDemo extends Component {
         </Steps>
         <Steps current={this.state.current}>
           <Step title="Finished" description="This is a description." />
-          <Step title="In Progress" />
-          <Step title="Waiting" description="This is a description." />
-          <Step title="In Progress" />
-        </Steps>
-        <h3>竖向步骤条</h3>
-        <Steps current={this.state.current} direction="vertical">
-          <Step title="Finished" description="This is a description." />
           <Step title="In Progress" description="This is a description." />
           <Step title="Waiting" description="This is a description." />
+          <Step title="In Progress" description="This is a description." />
+        </Steps>
+        <Steps current={this.state.current}>
+          <Step title="Finished" />
+          <Step title="In Progress" />
+          <Step title="Waiting" />
           <Step title="In Progress" />
         </Steps>
+
+        <h3>竖向步骤条</h3>
+        <div style={{ width: 200, display: 'inline-block' }}>
+          <Steps current={this.state.current} direction="vertical">
+            <Step title="Finished" description="This is a description." />
+            <Step title="In Progress" description="This is a description." />
+            <Step title="Waiting" description="This is a description." />
+            <Step title="In Progress" />
+          </Steps>
+        </div>
+        <div style={{ display: 'inline-block' }}>
+          <Steps current={this.state.current} direction="vertical" isFinishIcon>
+            <Step title="Finished" description="This is a description." />
+            <Step title="In Progress" description="This is a description." />
+            <Step title="Waiting" description="This is a description." />
+            <Step title="In Progress" />
+          </Steps>
+        </div>
       </div>
     );
   }

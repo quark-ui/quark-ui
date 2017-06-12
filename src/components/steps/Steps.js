@@ -18,6 +18,7 @@ class Steps extends PureComponent {
     direction: 'horizontal',
     current: 0,
     status: 'process',
+    isFinishIcon: false,
   }
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
@@ -25,7 +26,7 @@ class Steps extends PureComponent {
     direction: PropTypes.oneOf(['horizontal', 'vertical']),
     current: PropTypes.number,
     status: PropTypes.string,
-    children: PropTypes.any,
+    isFinishIcon: PropTypes.bool,
   }
 
   constructor(props) {
@@ -63,7 +64,7 @@ class Steps extends PureComponent {
   }
 
   render() {
-    const { children, direction, status, current, ...restProps } = this.props;
+    const { children, direction, status, current, isFinishIcon, ...restProps } = this.props;
     const lastIndex = children.length - 1;
     const reLayouted = this.state.lastStepOffsetWidth > 0;
     const classString = classnames({
@@ -82,6 +83,7 @@ class Steps extends PureComponent {
               stepNumber: (idx + 1).toString(),
               itemWidth,
               adjustMarginRight,
+              isFinishIcon,
             };
 
             if (!ele.props.status) {
