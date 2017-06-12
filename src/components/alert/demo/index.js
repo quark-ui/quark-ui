@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import Alert from '../Alert';
+import Alert from '../index';
 
 export default class AlertDemo extends Component {
   constructor(props) {
