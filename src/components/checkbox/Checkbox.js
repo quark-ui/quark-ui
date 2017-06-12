@@ -16,13 +16,13 @@ class Checkbox extends PureComponent {
   static displayName = 'Checkbox'
 
   static defaultProps = {
-    prefixCls:'checkbox',
-    type:'checkbox',
-    defaultChecked:false,
-    onChange(){},
+    prefixCls: 'checkbox',
+    type: 'checkbox',
+    defaultChecked: false,
+    onChange() {},
     onFocus() {},
     onBlur() {},
-    onClick(){},
+    onClick() {},
   }
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
@@ -90,33 +90,34 @@ class Checkbox extends PureComponent {
   };
 
   render() {
-    const {context,props} = this;
-    let {children,name,type,disabled,readOnly,onClick,onFocus,onBlur,prefixCls ,...otherProps} = props;
-    let checkboxProps = { ...otherProps };
-    let {checked} = this.state;
-    const {checkboxGroup} = context;
-    if(checkboxGroup){
-      this.handleChange =()=>checkboxGroup.toggleOption({label:children,value:props.value});
-      checked = checkboxGroup.value.indexOf(props.value) !==-1;
-      disabled = 'disabled' in props ? props.disabled:checkboxGroup.disabled;
+    const { context, props, state } = this;
+    const { children, name, type, readOnly, onClick, onFocus, onBlur, prefixCls, ...otherProps } = props;
+    const checkboxProps = otherProps;
+    let { checked } = state;
+    let { disabled } = props;
+    const { checkboxGroup } = context;
+    if (checkboxGroup) {
+      this.handleChange = () => checkboxGroup.toggleOption({ label: children, value: props.value });
+      checked = checkboxGroup.value.indexOf(props.value) !== -1;
+      disabled = 'disabled' in props ? props.disabled : checkboxGroup.disabled;
     }
 
-    const classString = classNames(prefixCls,{
-      [`${prefixCls}__checked`]:checked,
-      [`${prefixCls}__disabled`]:disabled,
+    const classString = classNames(prefixCls, {
+      [`${prefixCls}__checked`]: checked,
+      [`${prefixCls}__disabled`]: disabled,
     });
     const wrapperString = classNames({
-      [`${prefixCls}--wrapper`]:true,
-      [`${prefixCls}--wrapper__checked`]:checked,
-      [`${prefixCls}--wrapper__disabled`]:disabled,
+      [`${prefixCls}--wrapper`]: true,
+      [`${prefixCls}--wrapper__checked`]: checked,
+      [`${prefixCls}--wrapper__disabled`]: disabled,
     });
     const innerString = classNames({
-      [`${prefixCls}--inner`]:true
+      [`${prefixCls}--inner`]: true,
     });
     return (
       <label styleName={wrapperString}>
         <span styleName={classString}>
-          <input 
+          <input
             name={name}
             type={type}
             readOnly={readOnly}

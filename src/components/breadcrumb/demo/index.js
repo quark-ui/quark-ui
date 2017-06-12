@@ -1,7 +1,7 @@
-import { Component } from 'react';
+import { PrueComponent } from 'react';
 import Breadcrumb from '../index';
 
-export default class BreadcrumbDemo extends Component {
+export default class BreadcrumbDemo extends PrueComponent {
   render() {
     return (
       <div>

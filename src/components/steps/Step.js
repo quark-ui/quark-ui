@@ -31,13 +31,13 @@ class Step extends PureComponent {
     description: PropTypes.string,
     stepNumber: PropTypes.string,
     itemWidth: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.string,
-  ]),
+      PropTypes.number,
+      PropTypes.string,
+    ]),
     adjustMarginRight: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.string,
-  ]),
+      PropTypes.number,
+      PropTypes.string,
+    ]),
   }
 
   constructor(props) {
@@ -47,7 +47,7 @@ class Step extends PureComponent {
 
   render() {
     const {
-      status='wait',
+      status = 'wait',
       description,
       title,
       stepNumber,

@@ -20,9 +20,9 @@ export default class AlertDemo extends Component {
     };
     return (
       <div style={{ width: 400 }}>
-        <Alert {...infoProps} showIcon/>
-        <Alert {...errorProps} closable/>
-        <Alert type='warning' message="警告信息" showIcon closable></Alert>
+        <Alert {...infoProps} showIcon />
+        <Alert {...errorProps} closable />
+        <Alert type="warning" message="警告信息" showIcon closable />
       </div>
     );
   }
