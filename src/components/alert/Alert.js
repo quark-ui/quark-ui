@@ -4,9 +4,10 @@
  */
 import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import CSSModules from 'react-css-modules';
 import classnames from 'classnames';
 import Icon from '../icon';
-import CSSModules from 'react-css-modules';
+
 import { allowMultiple } from '../../constants';
 import styles from './Alert.css';
 

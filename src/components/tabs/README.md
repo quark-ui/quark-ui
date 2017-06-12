@@ -14,7 +14,7 @@ Tabs Component.
 |defaultActiveKey|String|第一个面板|初始化选中面板的 key，如果没有设置 activeKey|
 |onChange|Function|无|切换面板的回调|
 |type|String|'line'|页签的基本样式，可选 line、card 类型|
-|size|String|'default'|大小，提供 default 和 small 两种大小，仅当 type="line" 时生效。|
+|size|String|'default'|大小，提供 default 和 small 两种大小|
 |tabPosition|String||页签位置，可选值有 vertical|
 
 ### Tabs.TabPane

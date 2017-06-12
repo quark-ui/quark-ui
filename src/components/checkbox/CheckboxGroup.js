@@ -28,6 +28,7 @@ class CheckboxGroup extends PureComponent {
     value: PropTypes.array,
     options: PropTypes.array,
     onChange: PropTypes.func,
+    disabled: PropTypes.bool,
   }
 
   static childContextTypes = {
@@ -43,6 +44,13 @@ class CheckboxGroup extends PureComponent {
       value,
     };
   }
+  getChildContext = () => ({
+    checkboxGroup: {
+      toggleOption: this.toggleOption,
+      value: this.state.value,
+      disabled: this.props.disabled,
+    },
+  })
 
   componentWillReceiveProps(nextProps) {
     if ('value' in nextProps) {
@@ -56,13 +64,6 @@ class CheckboxGroup extends PureComponent {
       !shallowEqual(this.state, nextState);
   }
 
-  getChildContext = () => ({
-    checkboxGroup: {
-      toggleOption: this.toggleOption,
-      value: this.state.value,
-      disabled: this.props.disabled,
-    },
-  })
 
   getOptions=() => {
     const { options } = this.props;

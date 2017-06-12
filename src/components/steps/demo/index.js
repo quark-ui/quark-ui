@@ -1,5 +1,5 @@
-import Button from '../../button';
 import { Component } from 'react';
+import Button from '../../button';
 import Steps from '../Steps';
 
 const Step = Steps.Step;
