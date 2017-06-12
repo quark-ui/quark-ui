@@ -1,3 +1,10 @@
+---
+author:
+  name: ryan.bian / lhf-nife
+  homepage: https://github.com/macisi/
+  email: macisi528@gmail.com
+---
+
 ## Modal
 
 Modal Component.

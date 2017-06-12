@@ -82,19 +82,20 @@ a {
   display: flex;
   flex-direction: row-reverse;
   background: #fff;
-  width: 90%;
+  width: 100%;
+  width: calc(100% - 20px);
   margin: 0 auto;
-  border-radius: 6px;
 }
 .content {
   flex: 1;
   padding: 20px 20px 20px 50px;
-  width: calc(100% - 120px);
+  width: calc(100% - 240px);
   box-sizing: border-box;
 }
 .aside {
   flex: 0 0 240px;
   border-right: solid 1px #f7f7f7;
+  box-sizing: border-box;
 }
 .aside__nav {
   margin: 0;
@@ -122,4 +123,9 @@ a {
 
 .aside__navItem:hover{
     background-color: #f7f7f7;
+}
+.ChangePage {
+  padding: 20px;
+  width: 100%;
+  font-size: 16px;
 }

@@ -10,6 +10,7 @@ import styles from './Site.css';
 
 import HomePage from './pages/HomePage';
 import ComponentPage from './pages/ComponentPage';
+import ChangePage from './pages/ChangePage';
 
 const basename = BASEPATH;
 
@@ -18,6 +19,7 @@ export default () => (
     <div className={styles.app}>
       <Route path="/" component={HomePage} exact />
       <Route path="/component" component={ComponentPage} />
+      <Route path="/changes" component={ChangePage} />
     </div>
   </Router>
 );

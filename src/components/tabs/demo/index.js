@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import Icon from '../../icon';
-import Button from '../../Button';
+import Button from '../../button';
 import CSSModules from 'react-css-modules';
 import Tabs, { TabPane } from '../index';
 import styles from '../../../styles/demo.css';
@@ -12,21 +12,12 @@ export default class TabsDemo extends Component {
     super(props);
     this.newTabIndex = 0;
     const panes = [
-<<<<<<< HEAD
-      { title: 'Tab 1', content: 'Content of Tab 1', key: '1', closable: false },
-      { title: 'Tab 2', content: 'Content of Tab 2', key: '2' },
-      { title: 'Tab 3', content: 'Content of Tab 3', key: '3' },
-    ];
-    this.state = {
-      activeKey: panes[0].key,
-=======
       { title: 'Tab 1', content: 'Content of Tab 1', eventKey: '1', closable: false },
       { title: 'Tab 2', content: 'Content of Tab 2', eventKey: '2'},
       { title: 'Tab 3', content: 'Content of Tab 3', eventKey: '3'},
     ];
     this.state = {
       activeKey: panes[0].eventKey,
->>>>>>> 3ba65da02ac2d3aaa5dcf86b94a1d4cb9e105a50
       panes,
     };
   }
@@ -53,7 +44,7 @@ export default class TabsDemo extends Component {
     this.setState({ panes, activeKey });
   }
 
-  add = ()=>{
+  add = () => {
     const panes = this.state.panes;
     const activeKey = `newTab${this.newTabIndex++}`;
     panes.push({ title: 'New Tab', content: 'Content of new Tab', eventKey: activeKey });
@@ -75,15 +66,15 @@ export default class TabsDemo extends Component {
               </Tabs>
             </div>
             <div styleName="code__temp">
-                <span>禁用</span>
-                <p>对某项实行禁用</p>
-                <div>
-                    <Tabs defaultActiveKey=".0:$.$2" onChange={this.onChange}>
-                      <TabPane tab="Tab 1" key="1">Content of Tab Pane 1</TabPane>
-                      <TabPane tab="Tab 2" key="2">Content of Tab Pane 2</TabPane>
-                      <TabPane tab="Tab 3" disabled key="3">Content of Tab Pane 3</TabPane>
-                    </Tabs>
-                </div>
+              <span>禁用</span>
+              <p>对某项实行禁用</p>
+              <div>
+                <Tabs defaultActiveKey=".0:$.$2" onChange={this.onChange}>
+                  <TabPane tab="Tab 1" key="1">Content of Tab Pane 1</TabPane>
+                  <TabPane tab="Tab 2" key="2">Content of Tab Pane 2</TabPane>
+                  <TabPane tab="Tab 3" disabled key="3">Content of Tab Pane 3</TabPane>
+                </Tabs>
+              </div>
             </div>
           </div>
           <div styleName="code__temp">
@@ -111,36 +102,36 @@ export default class TabsDemo extends Component {
               </Tabs>
             </div>
             <div styleName="code__temp">
-                <span>纵向</span>
-                <p>纵向的Tab</p>
-                <div>
-                    <Tabs tabPosition={'vertical'} style={{ height: 220 }}>
-                      <TabPane tab="Tab 1" key="1">Content of Tab Pane 1</TabPane>
-                      <TabPane tab="Tab 2" disabled key="2">Content of Tab Pane 2</TabPane>
-                      <TabPane tab="Tab 3" key="3">Content of Tab Pane 3</TabPane>
-                    </Tabs>
-                </div>
+              <span>纵向</span>
+              <p>纵向的Tab</p>
+              <div>
+                <Tabs tabPosition={'vertical'} style={{ height: 220 }}>
+                  <TabPane tab="Tab 1" key="1">Content of Tab Pane 1</TabPane>
+                  <TabPane tab="Tab 2" disabled key="2">Content of Tab Pane 2</TabPane>
+                  <TabPane tab="Tab 3" key="3">Content of Tab Pane 3</TabPane>
+                </Tabs>
+              </div>
             </div>
             <div styleName="code__temp">
-                <span>卡片式</span>
-                <p>卡片式的页签，常用于容器顶部</p>
-                <div>
-                    <Tabs type="card">
-                      {this.state.panes.map(pane => <TabPane tab={pane.title} eventKey={pane.key}>{pane.content}</TabPane>)}
-                    </Tabs>
-                </div>
+              <span>卡片式</span>
+              <p>卡片式的页签，常用于容器顶部</p>
+              <div>
+                <Tabs type="card">
+                  {this.state.panes.map(pane => <TabPane tab={pane.title} eventKey={pane.key}>{pane.content}</TabPane>)}
+                </Tabs>
+              </div>
             </div>
             <div styleName="code__temp">
-                <span>新增和关闭页签</span>
-                <p>支持用户关闭</p>
-                <div style={{ marginBottom: 16 }}>
-                  <Button onClick={this.add}>ADD</Button>
-                </div>
-                <div>
-                    <Tabs type="edit-card" onEdit={this.onEdit}>
-                        {this.state.panes.map(pane => <TabPane tab={pane.title} eventKey={pane.eventKey} closable={pane.closable}>{pane.content}</TabPane>)}
-                    </Tabs>
-                </div>
+              <span>新增和关闭页签</span>
+              <p>支持用户关闭</p>
+              <div style={{ marginBottom: 16 }}>
+                <Button onClick={this.add}>ADD</Button>
+              </div>
+              <div>
+                <Tabs type="edit-card" onEdit={this.onEdit}>
+                  {this.state.panes.map(pane => <TabPane tab={pane.title} eventKey={pane.eventKey} closable={pane.closable}>{pane.content}</TabPane>)}
+                </Tabs>
+              </div>
             </div>
           </div>
         </section>

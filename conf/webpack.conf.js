@@ -108,7 +108,7 @@ const siteConfig = {
 };
 
 let config;
-if (TARGET === 'start') {
+if (TARGET === 'start' || TARGET === 'start-nodash') {
   const host = ip.address();
   config = merge.strategy({
     entry: 'prepend',
@@ -130,6 +130,10 @@ if (TARGET === 'start') {
       rules: [
         {
           test: /\.css$/,
+          include: [
+            path.resolve(__dirname, '../src'),
+            path.resolve(__dirname, '../site'),
+          ],
           use: [
             { loader: 'style-loader' },
             {
@@ -155,6 +159,16 @@ if (TARGET === 'start') {
                 ],
               },
             },
+          ],
+        },
+        {
+          test: /\.css$/,
+          include: [
+            path.resolve(__dirname, '../node_modules'),
+          ],
+          use: [
+            { loader: 'style-loader' },
+            { loader: 'css-loader' },
           ],
         },
       ],
@@ -203,6 +217,10 @@ if (TARGET === 'gh-pages') {
       rules: [
         {
           test: /\.css$/,
+          include: [
+            path.resolve(__dirname, '../src'),
+            path.resolve(__dirname, '../site'),
+          ],
           use: ExtractTextPlugin.extract({
             fallback: 'style-loader',
             use: [
@@ -228,6 +246,23 @@ if (TARGET === 'gh-pages') {
                       },
                     }),
                   ],
+                },
+              },
+            ],
+          }),
+        },
+        {
+          test: /\.css$/,
+          include: [
+            path.resolve(__dirname, '../node_modules'),
+          ],
+          use: ExtractTextPlugin.extract({
+            fallback: 'style-loader',
+            use: [
+              {
+                loader: 'css-loader',
+                options: {
+                  minimize: true,
                 },
               },
             ],
