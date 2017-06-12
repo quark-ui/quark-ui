@@ -28,7 +28,7 @@ class CheckboxGroup extends PureComponent {
     value: PropTypes.array,
     options: PropTypes.array,
     onChange: PropTypes.func,
-    disabled: propTypes.bool,
+    disabled: PropTypes.bool,
   }
 
   static childContextTypes = {
