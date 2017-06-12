@@ -21,7 +21,7 @@ export default class InputDemo extends Component {
 
   	render() {
 		const prefix = <Icon
-			size={18}
+			size={12}
 			name={'account'}
 		/>
 

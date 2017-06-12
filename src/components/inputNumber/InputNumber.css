@@ -11,11 +11,11 @@
 }
 :global(.rc-input-number) {
     position: relative;
-	padding: 4px 7px;
+	padding: 6px 7px;
 	width: 100%;
 	cursor: text;
 	line-height: 1.5;
-	color: rgba(0,0,0,.65);
+	color: var(--text-color);
 	background-color: #fff;
 	background-image: none;
 	-webkit-transition: all .3s;
@@ -25,15 +25,14 @@
 	font-size: 12px;
 	height: 28px;
 	display: inline-block;
-	border: 1px solid #d9d9d9;
-	border-radius: 4px;
-	width:80px;
+	border: 1px solid var(--border-color);
+	border-radius: 3px;
+	width:94px;
 }
 
 :global(.rc-input-number:focus) {
 	border-color: var(--brand-primary-light);
 	outline: 0;
-	box-shadow: 0 0 0 2px rgba(16,142,233,.2)
 }
 
 :global(.rc-input-number[disabled]) {
@@ -47,12 +46,15 @@
 	border-color:var(--brand-primary-light);
 }
 
-:global(.rc-input-number-large) {
-	padding: 6px 7px;
-	height: 32px
+:global(.input-number-large) {
+	padding: 5px 7px;
 }
 
-:global(.rc-input-number-small) {
+:global(.input-number-normal) {
+	padding: 2px 7px;
+}
+
+:global(.input-number-small) {
 	height: 26px
 }
 
@@ -124,13 +126,12 @@
 }
 
 :global(.rc-input-number:hover) {
-	border-color: var(--brand-primary-light)
+	border-color: var(--brand-primary-light);
 }
 
 :global(.rc-input-number-focused) {
 	border-color: var(--brand-primary-light);
 	outline: 0;
-	box-shadow: 0 0 0 2px rgba(16,142,233,.2)
 }
 
 :global(.rc-input-number-disabled) {
@@ -152,7 +153,7 @@
 	height: 26px;
 	-webkit-transition: all .3s linear;
 	transition: all .3s linear;
-	color: rgba(0,0,0,.65);
+	color: var(--text-color);
 	background-color: #fff;
 	border: 0;
 	border-radius: 4px;
@@ -171,7 +172,7 @@
 }
 
 :global(.rc-input-number-handler-wrap) {
-	border-left: 1px solid #d9d9d9;
+	border-left: 1px solid #ddd;
 	width: 22px;
 	height: 100%;
 	background: #fff;
@@ -227,6 +228,7 @@
 }
 
 :global(.rc-input-number-handler-down:hover) {
+	color: var(--brand-primary-light);
 	height: 60%!important
 }
 
@@ -252,7 +254,7 @@
 }
 
 :global(.rc-input-number-disabled .rc-input-number-handler) {
-	opacity: .72;
+	/*opacity: .72;*/
 	color: #ccc!important;
 	cursor: not-allowed
 }

@@ -45,7 +45,7 @@ export default class Search extends PureComponent {
 
     const searchSuffix = (
       <Icon
-        size={24}
+        size={12}
         name={'search'}
         onClick={this.onSearch}
       />
