@@ -97,20 +97,20 @@ a {
   border-right: solid 1px #f7f7f7;
   box-sizing: border-box;
 }
-.aside__menu{
+.aside__menu {
   margin: 0;
   padding: 0;
   list-style: none;
 }
-.aside__group{
+.aside__group {
   line-height: normal;
 }
-.aside__title{
-    height: 48px;
-    line-height: 48px;
-    font-size: 14px;
-    padding-left: 28px;
-    color: #999;
+.aside__title {
+  height: 48px;
+  line-height: 48px;
+  font-size: 14px;
+  padding-left: 28px;
+  color: #999;
 }
 
 .aside__nav {

@@ -281,7 +281,7 @@ if (TARGET === 'gh-pages') {
       new webpack.HashedModuleIdsPlugin(),
       new WebpackChunkHash(),
       new ExtractTextPlugin({
-        filename: 'style.css',
+        filename: '[contenthash].css',
       }),
       new UglifyJSPlugin({
         sourceMap: true,
