@@ -16,6 +16,7 @@ class InputNumber extends PureComponent {
 
   static defaultProps = {
     step: 1,
+    size:'normal',
   }
 
   static propTypes = {
@@ -49,7 +50,7 @@ class InputNumber extends PureComponent {
 
     const { className, size, ...otherProps } = this.props;
 
-    const inputNumberClass =  `rc-input-number-${size}`;
+    const inputNumberClass =  `input-number-${size}`;
 
     return <RcInputNumber className={inputNumberClass} {...otherProps} />;
 

@@ -96,16 +96,37 @@ a {
   flex: 0 0 240px;
   border-right: solid 1px #f7f7f7;
 }
-.aside__nav {
+.aside__menu{
   margin: 0;
   padding: 0;
   list-style: none;
+}
+.aside__group{
+  line-height: normal;
+}
+.aside__title{
+    height: 48px;
+    line-height: 48px;
+    font-size: 14px;
+    padding-left: 28px;
+    color: #999;
+}
+
+.aside__nav {
+  /*margin: 0;
+  padding: 0;
+  list-style: none;*/
 }
 .aside__navItem {
   font-size: 16px;
   cursor: pointer;
   z-index: 1;
   transition: all .2s ease-in-out;
+  & span{
+    font-size: 14px;
+    display:inline-block;
+    margin-left:10px;
+  }
 
   & a {
     padding: 14px 24px;
@@ -118,6 +139,7 @@ a {
   & :global(.active) {
     color: var(--brand-primary);
   }
+
 }
 
 .aside__navItem:hover{

@@ -77,9 +77,7 @@ export default class Tabs extends PureComponent {
 
     let childrenNodes = [];
     if (type === 'edit-card') {
-
       
-    console.log(children)
       React.Children.forEach(children,(child,index) => {
         
         let closable = child.props.closable;
