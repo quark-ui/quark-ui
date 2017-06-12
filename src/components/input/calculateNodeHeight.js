@@ -34,7 +34,7 @@ const SIZING_STYLE = [
   'box-sizing',
 ];
 
-let computedStyleCache = {};
+const computedStyleCache = {};
 let hiddenTextarea;
 
 function calculateNodeStyling(node, useCache = false) {
@@ -95,7 +95,7 @@ export default function calculateNodeHeight(
 
   // Copy all CSS properties that have an impact on the height of the content in
   // the textbox
-  let {
+  const {
     paddingSize, borderSize,
     boxSizing, sizingStyle,
   } = calculateNodeStyling(uiTextNode, useCache);
@@ -106,17 +106,17 @@ export default function calculateNodeHeight(
   hiddenTextarea.setAttribute('style', `${sizingStyle};${HIDDEN_TEXTAREA_STYLE}`);
   hiddenTextarea.value = uiTextNode.value || uiTextNode.placeholder || '';
 
-  let minHeight = -Infinity;
-  let maxHeight = Infinity;
+  const minHeight = -Infinity;
+  const maxHeight = Infinity;
   let height = hiddenTextarea.scrollHeight;
 
   if (boxSizing === 'border-box') {
     // border-box: add border, since height = content + padding + border
-    height = height + borderSize;
+    height += borderSize;
   } else if (boxSizing === 'content-box') {
     // remove padding, since height = content
-    height = height - paddingSize;
+    height -= paddingSize;
   }
- 
+
   return { height, minHeight, maxHeight };
 }

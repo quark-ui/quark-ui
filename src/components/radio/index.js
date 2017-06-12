@@ -1,9 +1,6 @@
 import Radio from './Radio';
-import RadioGrop from './RadioGroup';
+import RadioGroup from './RadioGroup';
 import RadioButton from './RadioButton';
 
-Radio.Group = RadioGrop;
-Radio.Button = RadioButton;
-
-export { RadioGrop, RadioButton };
+export { RadioGroup, RadioButton };
 export default Radio;

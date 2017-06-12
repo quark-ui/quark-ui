@@ -9,11 +9,13 @@ import shallowEqual from 'shallowequal';
 import classNames from 'classnames';
 import { allowMultiple } from '../../constants';
 import styles from './Checkbox.css';
+import CheckboxGroup from './CheckboxGroup';
 
 @CSSModules(styles, { allowMultiple })
 class Checkbox extends PureComponent {
 
-  static displayName = 'Checkbox'
+  static Group = CheckboxGroup;
+  static displayName = 'Checkbox';
 
   static defaultProps = {
     prefixCls: 'checkbox',

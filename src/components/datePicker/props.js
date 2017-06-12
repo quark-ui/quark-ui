@@ -7,6 +7,8 @@ export const defaultProps = {
   disabled: false,
   format: 'YYYY-MM-DD',
   onChange() {},
+  fieldSize: 'normal',
+  fieldWidth: null,
 };
 
 // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
@@ -22,4 +24,10 @@ export const propTypes = {
   disabled: PropTypes.bool,
   format: PropTypes.string,
   onChange: PropTypes.func,
+  fieldSize: PropTypes.oneOf([
+    'normal',
+    'large',
+    'small',
+  ]),
+  fieldWidth: PropTypes.number,
 };

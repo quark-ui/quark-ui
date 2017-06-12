@@ -17,7 +17,7 @@ class Spin extends PureComponent {
   static defaultProps = {
     size: 'default',
     spinning: true,
-    delay: 0
+    delay: 0,
   }
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
@@ -25,10 +25,10 @@ class Spin extends PureComponent {
     size: PropTypes.oneOf([
       'small',
       'large',
-      'default'
+      'default',
     ]),
     spinning: PropTypes.bool,
-    delay: PropTypes.number
+    delay: PropTypes.number,
   }
 
   debounceTimeout = null
@@ -37,7 +37,7 @@ class Spin extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      spinning: props.spinning
+      spinning: props.spinning,
     };
   }
 
@@ -54,12 +54,10 @@ class Spin extends PureComponent {
       if (this.delayTimeout) {
         clearTimeout(this.delayTimeout);
       }
+    } else if (spinning && delay && !isNaN(Number(delay))) {
+      this.delayTimeout = setTimeout(() => this.setState({ spinning }), delay);
     } else {
-      if (spinning && delay && !isNaN(Number(delay))) {
-        this.delayTimeout = setTimeout(() => this.setState({ spinning }), delay);
-      } else {
-        this.setState({ spinning });
-      }
+      this.setState({ spinning });
     }
   }
 
@@ -72,24 +70,24 @@ class Spin extends PureComponent {
     const { spinning } = this.state;
 
     const spinProps = {
-      styleName: `Spin ${size === 'default' ? '' : size}`
-    }
+      styleName: `Spin ${size === 'default' ? '' : size}`,
+    };
     const conProps = {
-      styleName: `qui-spin-container ${spinning ? 'qui-spin-blur' : ''}`
-    }
+      styleName: `qui-spin-container ${spinning ? 'qui-spin-blur' : ''}`,
+    };
     const spinElement = (
       <div {...spinProps}>
         <span styleName={'qui-spin-dot'}>
-          <i></i>
-          <i></i>
-          <i></i>
-          <i></i>
+          <i />
+          <i />
+          <i />
+          <i />
         </span>
         {
           tip ? <p styleName={'qui-spin-text'}>{tip}</p> : null
         }
       </div>
-    )
+    );
 
     if (this.isNestedPattern()) {
       return (

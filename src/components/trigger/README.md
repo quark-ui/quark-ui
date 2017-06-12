@@ -7,7 +7,7 @@ author:
 
 ## Trigger
 
-Trigger Component.
+触发器。
 
 ### Props
 |name|type|default|description|
