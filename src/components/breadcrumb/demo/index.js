@@ -4,7 +4,7 @@ import Breadcrumb from '../index';
 export default class BreadcrumbDemo extends Component {
   render() {
     return (
-      <div>
+      <div className="markdown-block">
         <h3>基本面包屑</h3>
         <Breadcrumb>
           <Breadcrumb.Item>home</Breadcrumb.Item>

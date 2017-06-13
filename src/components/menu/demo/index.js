@@ -23,7 +23,7 @@ export default class MenuDemo extends Component {
 
   render() {
     return (
-      <div>
+      <div className="markdown-block">
         <table style={{ width: '100%' }}>
           <tr>
             <td colSpan="2">1、水平菜单，子菜单水平</td>

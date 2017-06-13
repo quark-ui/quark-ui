@@ -76,7 +76,7 @@ export default class RadioDemo extends Component {
   render() {
     const { checked, disabled, value1, value2, value3, value } = this.state;
     return (
-      <div>
+      <div className="markdown-block">
         <h3>通过配置 options 参数来渲染单选框</h3>
         <RadioGroup options={plainOptions} onChange={this.onChange1} value={value1} disabled={disabled} />
         <RadioGroup options={options} onChange={this.onChange2} value={value2} disabled={disabled} />

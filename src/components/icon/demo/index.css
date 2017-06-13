@@ -1,10 +1,23 @@
-.Icon--grid {
-  display: inline-block;
+.Icon__wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+.Icon__grid {
+  display: inline-flex;
+  margin: 1px;
   width: 80px;
   height: 80px;
+  border: 1px solid var(--border-color);
+  flex-direction: column;
+  justify-content: space-around;
   text-align: center;
+
+  & > svg {
+    margin: 0 auto;
+  }
 }
-.Icon-name {
+.Icon__name {
   display: block;
   font-size: 12px;
+  line-height: 1;
 }

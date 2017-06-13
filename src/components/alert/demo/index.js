@@ -28,7 +28,7 @@ export default class AlertDemo extends Component {
     };
 
     return (
-      <div>
+      <div className="markdown-block">
         <h3>基本的提示</h3>
         <Alert {...successProps} />
         <h3>可关闭的提示</h3>

@@ -27,12 +27,12 @@ export default class IconDemo extends Component {
   }
   render() {
     return (
-      <div>
+      <div className={styles.Icon__wrap}>
         {
           IconList.map(name => (
-            <div className={styles['Icon--grid']} key={name}>
-              <Icon size={48} name={name} color={this.state.color} />
-              <span className={styles['Icon-name']}>{name}</span>
+            <div className={styles['Icon__grid']} key={name}>
+              <Icon size={36} name={name} color={this.state.color} />
+              <span className={styles['Icon__name']}>{name}</span>
             </div>
           ))
         }

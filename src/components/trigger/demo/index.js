@@ -68,7 +68,7 @@ export default class TriggerDemo extends Component {
       action,
     } = this.state;
     return (
-      <div>
+      <div className="markdown-block">
         <label htmlFor="placement">对齐方式</label>
         {
           this.renderPlacementSelector()

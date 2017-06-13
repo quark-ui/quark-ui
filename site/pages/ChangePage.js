@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import styles from '../Site.css';
 import componentStyles from '../partials/Component.css';
 
-import CHANGES from '!raw-loader!../../CHANGE.md';
+import CHANGES from '!raw-loader!../../HISTORY.md';
 
 import Layout from '../layouts/Layout';
 

@@ -29,7 +29,7 @@ export default class ModalDemo extends Component {
       onCancel: () => { this.closeModal(); },
     };
     return (
-      <div>
+      <div className="markdown-block">
         <h3>基本</h3>
         <Button type="secondary" onClick={this.openModal}>open modal</Button>
         <Modal {...modalProps}>

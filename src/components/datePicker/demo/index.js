@@ -21,7 +21,7 @@ export default class DatePickerDemo extends Component {
   render() {
     const { date, disabled } = this.state;
     return (
-      <div>
+      <div className="markdown-block">
         <Checkbox
           checked={disabled}
           onChange={this.changeDisabled}

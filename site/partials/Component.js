@@ -80,7 +80,7 @@ export default class ComponentBlock extends Component {
     return (
       <div styleName="Component__wrap">
         { ComponentBlock.renderMetaData(meta, match) }
-        <div styleName="Component__doc" dangerouslySetInnerHTML={{ __html: html }} />
+        <div className="markdown-block" styleName="Component__doc" dangerouslySetInnerHTML={{ __html: html }} />
         {
           demo ? <div styleName="Component__demoBox">{createElement(demo)}</div> : null
         }

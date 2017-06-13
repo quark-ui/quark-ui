@@ -50,7 +50,7 @@ class UploadDemo1 extends Component {
     };
 
     return (
-      <div>
+      <div className="markdown-block">
         1、经典款式，用户点击按钮弹出文件选择框。
         <Upload {...props}>
           <Button size="small" type="secondary" disabled={props.disabled}>
@@ -122,7 +122,7 @@ class UploadDemo2 extends Component {
 
 
     return (
-      <div>
+      <div className="markdown-block">
         2、已上传文件的列表<br />
         使用 defaultFileList 设置已上传的内容。
         <Upload {...props}>
@@ -194,7 +194,7 @@ class UploadDemo3 extends Component {
       },
     };
     return (
-      <div>
+      <div className="markdown-block">
         3、使用 fileList 对列表进行完全控制，可以实现各种自定义功能，以下演示三种情况：<br />
         1) 上传列表数量的限制。<br />
         2) 读取远程路径并显示链接。<br />
@@ -269,7 +269,7 @@ class UploadDemo4 extends Component {
       </div>
     );
     return (
-      <div>
+      <div className="markdown-block">
         4、显示上传缩略图
         点击上传图片，并使用 beforeUpload 限制用户上传的图片格式和大小。
         <Upload {...props}>
@@ -283,7 +283,7 @@ class UploadDemo4 extends Component {
 export default class UploadDemo extends Component {
   render() {
     return (
-      <div>
+      <div className="markdown-block">
         <UploadDemo1 />
         <br /><br />
         <UploadDemo2 />

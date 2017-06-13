@@ -42,7 +42,8 @@
 .Component__demoBox {
   padding: 10px;
 }
-.Component__doc {
+.Component__doc {}
+:global(.markdown-block) {
   display: block;
   color: var(--text-color);
   & > h1, & > h2, & > h3, & > h4, & > h5, & > h6 {
@@ -117,9 +118,6 @@
     font-size: 85%;
     border-radius: 3px;
   }
-}
-.Component__copy{
-  
 }
 
 .Component__code{

@@ -8,7 +8,7 @@ export default class PaginationDemo extends Component {
   render() {
     const { current } = this.state;
     return (
-      <div>
+      <div className="markdown-block">
         <h3>基本</h3>
         <p>基础分页。</p>
         <Pagination current={current} total={50} />

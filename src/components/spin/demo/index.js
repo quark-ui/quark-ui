@@ -27,68 +27,56 @@ export default class SpinDemo extends Component {
 
   render() {
     return (
-      <div style={{ width: 400 }}>
-        <div>
-          <h3>基本用法</h3>
+      <div className="markdown-block">
+        <h3>基本用法</h3>
+        <Spin />
+        <h3>自定义大小</h3>
+        <Spin size="small" />
+        <Spin size="default" />
+        <Spin size="large" />
+        <h3>自定义描述文案</h3>
+        <Spin tip="loading..." />
+        <h3>容器中使用</h3>
+        <div className={style.example1}>
           <Spin />
-        </div><br />
-        <div>
-          <h3>自定义大小</h3>
-          <Spin size="small" />
-          <Spin size="default" />
-          <Spin size="large" />
-        </div><br />
-        <div>
-          <h3>自定义描述文案</h3>
-          <Spin tip="loading..." />
-        </div><br />
-        <div>
-          <h3>容器中使用</h3>
-          <div className={style.example1}>
-            <Spin />
-          </div>
-          <div className={style.example1}>
-            <Spin tip="loading..." />
-          </div>
-        </div><br />
-        <div>
-          <h3>提示中使用</h3>
-          <div>
-            <Spin spinning={this.state.isShow1}>
-              <Alert
-                type="info"
-                message="警告提示内容"
-                description="警告提示的辅助性文字介绍警告提示的辅助
-                性文字介绍警告提示的辅助性文字介绍警告提示的辅助性文
-                字介绍警告提示的辅助性文字介绍警告提示的辅助性文字介
-                绍警告提示的辅助性文字介绍警告提示的辅助性文字介绍警
-                告提示的辅助性文字介绍警告提示的辅助性文字介绍"
-              />
-            </Spin>
-            <p>
-              <Button type="primary" onClick={this.swichHandle1}>显示/隐藏</Button>
-            </p>
-          </div>
         </div>
+        <div className={style.example1}>
+          <Spin tip="loading..." />
+        </div>
+        <h3>提示中使用</h3>
         <div>
-          <h3>延迟</h3>
-          <div>
-            <Spin spinning={this.state.isShow2} delay={600}>
-              <Alert
-                type="info"
-                message="警告提示内容"
-                description="警告提示的辅助性文字介绍警告提示
-                的辅助性文字介绍警告提示的辅助性文字介绍警告提示
-                的辅助性文字介绍警告提示的辅助性文字介绍警告提示
-                的辅助性文字介绍警告提示的辅助性文字介绍警告提示
-                的辅助性文字介绍警告提示的辅助性文字介绍警告提示
-                的辅助性文字介绍"
-              />
-            </Spin>
-            <p>
-              <Button type="primary" onClick={this.swichHandle2}>显示/隐藏</Button>
-            </p>
-          </div>
+          <Spin spinning={this.state.isShow1}>
+            <Alert
+              type="info"
+              message="警告提示内容"
+              description="警告提示的辅助性文字介绍警告提示的辅助
+              性文字介绍警告提示的辅助性文字介绍警告提示的辅助性文
+              字介绍警告提示的辅助性文字介绍警告提示的辅助性文字介
+              绍警告提示的辅助性文字介绍警告提示的辅助性文字介绍警
+              告提示的辅助性文字介绍警告提示的辅助性文字介绍"
+            />
+          </Spin>
+          <p>
+            <Button type="primary" onClick={this.swichHandle1}>显示/隐藏</Button>
+          </p>
+        </div>
+        <h3>延迟</h3>
+        <div>
+          <Spin spinning={this.state.isShow2} delay={600}>
+            <Alert
+              type="info"
+              message="警告提示内容"
+              description="警告提示的辅助性文字介绍警告提示
+              的辅助性文字介绍警告提示的辅助性文字介绍警告提示
+              的辅助性文字介绍警告提示的辅助性文字介绍警告提示
+              的辅助性文字介绍警告提示的辅助性文字介绍警告提示
+              的辅助性文字介绍警告提示的辅助性文字介绍警告提示
+              的辅助性文字介绍"
+            />
+          </Spin>
+          <p>
+            <Button type="primary" onClick={this.swichHandle2}>显示/隐藏</Button>
+          </p>
         </div>
       </div>
     );

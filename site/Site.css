@@ -59,11 +59,7 @@ a {
     color: var(--brand-primary);
     content: '';
     opacity: 0;
-    -webkit-transition: height 0.3s, opacity 0.3s, -webkit-transform 0.3s;
-    -moz-transition: height 0.3s, opacity 0.3s, -moz-transform 0.3s;
     transition: height 0.3s, opacity 0.3s, transform 0.3s;
-    -webkit-transform: translateY(-10px);
-    -moz-transform: translateY(-10px);
     transform: translateY(-10px);
   }
   & a:hover:after{
@@ -123,10 +119,10 @@ a {
   cursor: pointer;
   z-index: 1;
   transition: all .2s ease-in-out;
-  & span{
+  & span {
     font-size: 14px;
     display:inline-block;
-    margin-left:10px;
+    margin-left: 10px;
   }
 
   & a {

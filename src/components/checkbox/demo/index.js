@@ -55,7 +55,7 @@ export default class CheckboxDemo extends Component {
   render() {
     const { checked, disabled, checkedList, checkAll } = this.state;
     return (
-      <div>
+      <div className="markdown-block">
         <h3>全选</h3>
         <p>
           <Checkbox
