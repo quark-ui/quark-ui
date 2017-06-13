@@ -3,7 +3,7 @@
  * @author grootfish
  */
 import { PureComponent } from 'react';
-import shallowEqual from 'shallowEqual';
+import shallowEqual from 'shallowequal';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
 import { allowMultiple } from '../../constants';
