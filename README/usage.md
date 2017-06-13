@@ -2,7 +2,7 @@
 
 ### 方式一
 
-直接在页面中引入 cdn 上的 universal 包，这个时候需注意全局 windows 对象中需包含 React 和 ReactDOM
+直接在页面中引入 cdn 上的 universal 包，这个时候需注意全局 windows 对象中需包含 `React` 和 `ReactDOM`
 
 ```html
 <script src="https://unpkg.com/quark-ui"></script>
@@ -17,7 +17,7 @@
 npm i -S quark-ui
 ```
 
-2. 推荐使用 webpack 作为依赖解析环境，配合 esmodule 语法加载对应组件，按需加载组件，避免整包引入。
+2. 推荐使用 `webpack` 作为依赖解析环境，配合 esmodule 语法加载对应组件，按需加载组件，避免整包引入。
 
 ```js
 import 'quark-ui/lib/button.css';
