@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import Spin from '../spin';
+import Spin from '../Spin';
 import Alert from '../../alert';
 import Button from '../../button';
 import style from './index.css';

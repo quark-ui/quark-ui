@@ -5,10 +5,6 @@
 
 }
 .Component__demoCode {
-  padding: 8px;
-  background-color: #f5f5f5;
-  border: 1px solid var(--border-color);
-  border-radius: 3px;
   & pre {
     margin: 0;
   }
@@ -40,7 +36,6 @@
   text-decoration: none;
 }
 .Component__demoBox {
-  padding: 10px;
 }
 .Component__doc {}
 :global(.markdown-block) {
@@ -120,14 +115,11 @@
   }
 }
 
-.Component__code{
+.Component__code {
   position: relative;
-  & > pre {
-    background-color: #f7f7f7;
-  }
 }
 
-.Component__copy{
+.Component__copy {
   color: #fff;
   position: absolute;
   top: 0;

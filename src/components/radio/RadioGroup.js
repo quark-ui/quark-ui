@@ -5,7 +5,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
-import shallowEqual from 'shallowEqual';
+import shallowEqual from 'shallowequal';
 import { allowMultiple } from '../../constants';
 import styles from './Radio.css';
 import Radio from '../radio';
