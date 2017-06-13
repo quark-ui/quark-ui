@@ -5,6 +5,7 @@
 直接在页面中引入 cdn 上的 universal 包，这个时候需注意全局 windows 对象中需包含 `React` 和 `ReactDOM`
 
 ```html
+<link href="https://unpkg.com/quark-ui/lib/index.css" />    
 <script src="https://unpkg.com/quark-ui"></script>
 ``` 
 
