@@ -5,7 +5,7 @@
   "repository": "https://github.com/quark-ui/quark-ui.git",
   "author": "",
   "main": "lib/index.js",
-  "module": "src/index",
+  "module": "es/index.js",
   "scripts": {
     "start": "webpack-dashboard -- webpack-dev-server --config ./conf/webpack.conf.js --port 3000 --open",
     "start-nodash": "webpack-dev-server --config ./conf/webpack.conf.js --port 3000 --open",

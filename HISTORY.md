@@ -1,3 +1,8 @@
+## v0.0.1-beta7 (2017-06-13)
+
+Switch from `webpack` to `rollup` to build publish files
+- add `es` directory which support `rollup` or `webpack 2` system.
+
 ## v0.0.1-beta6 (2017-06-12)
 
 New Component

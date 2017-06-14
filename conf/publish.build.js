@@ -162,4 +162,17 @@ rollup.rollup({
   });
 }).catch(err => console.error(err));
 
+rollup.rollup({
+  entry: './src/index.js',
+  external,
+  plugins,
+  legacy: true,
+}).then(bundle => {
+  bundle.write({
+    format: 'es',
+    dest: './es/index.js',
+    sourceMap: true,
+  });
+}).catch(err => console.error(err));
+
 generateCSS();
