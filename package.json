@@ -100,10 +100,10 @@
     "rc-animate": "~2.3.0",
     "rc-input-number": "^3.6.0",
     "rc-menu": "~5.0.9",
-    "rc-tabs": "^8.0.0",
     "rc-upload": "~2.3.0",
     "react-css-modules": "^4.2.1",
     "react-moment-proptypes": "^1.4.0",
+    "react-tappable": "^1.0.0",
     "shallowequal": "^1.0.1"
   },
   "peerDependencies": {
