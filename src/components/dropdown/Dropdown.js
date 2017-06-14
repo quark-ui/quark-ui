@@ -5,8 +5,8 @@
 import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
-import Trigger from 'quark-ui/trigger';
-import Button from 'quark-ui/button';
+import Trigger from '../trigger';
+import Button from '../button';
 import { allowMultiple } from '../../constants';
 import styles from './Dropdown.css';
 import Menu from './Menu';

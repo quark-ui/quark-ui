@@ -3,36 +3,36 @@
  * @author grootfish
  */
 
-._26mKfx- {
+._15DqQC7 {
   font-size: 14px
 }
 
-._26mKfx->span {
+._15DqQC7>span {
   color: #999
 }
 
-._26mKfx->span:last-child {
+._15DqQC7>span:last-child {
   color: #333
 }
 
-._26mKfx->span:last-child ._3v_bQW3 {
+._15DqQC7>span:last-child ._24xT_Vo {
   display: none
 }
 
-._26mKfx- a._35am08f {
+._15DqQC7 a._2knYGjk {
   color: #999
 }
 
-._26mKfx- a._35am08f:hover {
+._15DqQC7 a._2knYGjk:hover {
   color: rgb(255, 148, 54);
   text-decoration: none
 }
 
-._26mKfx- a._35am08f:avtive {
+._15DqQC7 a._2knYGjk:avtive {
   color: rgb(242, 114, 2)
 }
 
-.y-He0IY span {
+.lGcMH25 span {
   color: #fff;
   border-radius: 2px;
   background-color: rgb(255, 148, 54);
@@ -41,25 +41,25 @@
   line-height: 14px;
   text-align: center;
   display: inline-block;
-  margin-right: 6px
+  margin-right: 6px;
+  vertical-align: text-top
 }
 
-.y-He0IY span svg {
-  -webkit-transform: scale(0.6);
-          transform: scale(0.6)
+.lGcMH25 span svg {
+  -webkit-transform: scale(0.75);
+          transform: scale(0.75)
 }
 
-.y-He0IY span:hover {
+.lGcMH25 span:hover {
   cursor: pointer;
   background-color: rgb(255, 171, 97);
   color: #fff
 }
 
-.y-He0IY span:active {
+.lGcMH25 span:active {
   background-color: rgb(242, 114, 2)
 }
 
-._3v_bQW3 {
+._24xT_Vo {
   margin: 0 5px;
 }
-/*# sourceMappingURL=breadcrumb.orange.css.map*/

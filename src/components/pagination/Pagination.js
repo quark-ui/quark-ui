@@ -9,7 +9,7 @@ import classnames from 'classnames';
 import assign from 'object-assign';
 import { allowMultiple } from '../../constants';
 import styles from './Pagination.css';
-import Icon from 'quark-ui/icon';
+import Icon from '../icon';
 
 @CSSModules(styles, { allowMultiple })
 class Pagination extends PureComponent {

@@ -2,10 +2,10 @@
  * Modal Style
  * @author ryan.bian
  */
-._3v9JpJU {
+.DCMRwkz {
   display: none;
 }
-._10G5ebT {
+._1iw3_Tl {
   position: fixed;
   left: 0;
   top: 0;
@@ -13,10 +13,10 @@
   height: 100%;
   background: rgba(0, 0, 0, .3)!important;
 }
-.LrsEe32 {
+._2N4dO9C {
   display: none;
 }
-._3gon6Oj {
+._23S10Ht {
   position: absolute;
   left: 0;
   right: 0;
@@ -28,14 +28,47 @@
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
 }
-._5faeo8s {
+._2Fxr3he {
   position: relative;
-  height: 40px;
+  padding: 15px 20px;
+  font-size: 18px;
+  color: #333;
+  text-align: left;
 }
-.a1dhyEV {
+._2Fxr3he p{
+  display: inline-block;
+}
+._2Fxr3he>p>span{
+  padding-left: 10px;
+  vertical-align: 3px;
+}
+._2RrFae2 {
   position: absolute;
-  right: 0;
-  top: 0;
+  right: 15px;
+  color: #a6a6a6;
 }
-.yb8LdV1 {}
-/*# sourceMappingURL=modal.orange.css.map*/
+._2RrFae2:hover{
+  text-decoration: none;
+}
+._1OTqLj0 {
+  margin: 16px 16px;
+  text-align: right;
+}
+._1OTqLj0 button{
+  /*width: 80px;*/
+  margin-left: 16px;
+}
+._1HLRvee{
+  width: 370px;
+  padding: 0px 20px;
+  word-wrap: break-word;
+  font-size: 14px;
+  margin-bottom: 40px;
+}
+._2WWVJx6{
+  margin-bottom: 20px;
+}
+._1d08GAd ._1HLRvee{}
+._2szRBFq ._1HLRvee{}
+._2q46cNH ._1HLRvee{}
+._2I8e3TN ._1HLRvee{}
