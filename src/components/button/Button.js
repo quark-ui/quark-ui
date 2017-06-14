@@ -4,11 +4,9 @@
  */
 import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import CSSModules from 'react-css-modules';
-import { allowMultiple } from '../../constants';
+import classnames from 'classnames';
 import styles from './Button.css';
 
-@CSSModules(styles, { allowMultiple })
 class Button extends PureComponent {
 
   static displayName = 'Button'
@@ -43,7 +41,10 @@ class Button extends PureComponent {
     const { children, type, size, disabled, ...otherProps } = this.props;
     const btnProps = {
       ...otherProps,
-      styleName: `button--${disabled ? 'disabled' : type} button--${size}`,
+      className: classnames(
+        styles[`button--${disabled ? 'disabled' : type}`],
+        styles[`button--${size}`],
+      ),
     };
     return (
       <button {...btnProps}>{children}</button>

@@ -2,63 +2,136 @@
  * Input Style
  * @author yan
  */
-._3d8Ip3y{
-  width: 200px;
-  margin: 0 8px 8px 0;
+._9JV29oH{
+  width: 100%;
+  margin: 0;
   height: 28px;
   cursor: text;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.5;
-  color: rgba(0, 0, 0, .65);
+  color: #666;
   background-color: #fff;
   background-image: none;
-  border: 1px solid #d9d9d9;
+  border: 1px solid #e6e6e6;
   border-radius: 4px;
   transition: all .3s;
+  box-sizing: border-box;
 }
-
-._3d8Ip3y:focus, ._3d8Ip3y:hover {
-    border-color: #49a9ee;
+._9JV29oH:focus, ._9JV29oH:hover {
+    border-color: rgb(255, 171, 97);
 }
-
-._23bMeMN {
+._9JV29oH::-moz-placeholder {
+	color: #bcbcbc;
+	opacity: 1
+}
+._9JV29oH:-ms-input-placeholder {
+	color: #bcbcbc
+}
+._9JV29oH::-webkit-input-placeholder {
+	color: #bcbcbc
+}
+._2ZsC2cH {
   background: #f5f5f5;
   border-color: #e6e6e6;
   color: #999;
   cursor: not-allowed;
 }
-._2zTE3Ne{
+._3D0U8St{
   padding: 6px 7px;
-  height: 24px;
+  height: 34px;
 }
-
-._3XuYOM0{
+._2viFZsQ{
   padding: 6px 7px;
-  height: 30px;
+  height: 40px;
 }
-
-._2t3xTWo{
+._2oRsOmU{
   padding: 1px 7px;
-  height: 22px;
+  height: 26px;
 }
-
-._3hkY6oH{
+.ojGVu_O{
 }
-
-._1whAjSd{
+._20hPALr{
+  height: auto;
 }
-
-._1SNztTO{
+._10Fp69o{
+  height: auto;
 }
-
-._3PBNxgP{
+._2WZRwLL{
 }
-
-._1Ulh8TU{
+._2a5mJn1{
 }
-
-.jvPBoLu{
+._3IUawJl{
 }
+.HKnrTVR{
+}
+._14u77OZ,
+.fsGOz5E{
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    z-index: 2;
+    line-height: 0;
+    color: #666;
+    transition: all .3s;
+}
+._14u77OZ{
+  left: 7px;
+}
+.fsGOz5E{
+  right: 7px;
+}
+._2u75xAY{
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+._2u75xAY:hover{
 
-
-/*# sourceMappingURL=input.orange.css.map*/
+}
+._2u75xAY:hover > input{
+  border-color: rgb(255, 171, 97);
+}
+._2u75xAY:hover > .fsGOz5E{
+  cursor: pointer;
+}
+._2u75xAY:hover > .fsGOz5E:hover{
+  color: rgb(255, 171, 97);
+}
+._2u75xAY:hover > ._14u77OZ{/*cursor: pointer;*/
+}
+._2u75xAY:hover > ._14u77OZ:hover{
+  color: rgb(255, 171, 97);
+}
+._2HoVPHk{
+    position: relative;
+    display: table;
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%
+}
+._2HoVPHk > input{
+  display: inline-block;
+  float: left;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
+  margin: 0;
+  padding: 0;
+}
+._1X0_ffc{
+  
+}
+._3lINFLC{
+  
+}
+._1jjWEyS{
+}
+._1jjWEyS > input{
+  padding-right: 30px;
+}
+._1-pWIab{
+}
+._1-pWIab > input{
+  padding-left: 30px;
+}

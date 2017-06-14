@@ -6,9 +6,8 @@
 
 ```html
 <link href="https://unpkg.com/quark-ui/lib/index.css" />    
-<script src="https://unpkg.com/quark-ui"></script>
+<script src="https://unpkg.com/quark-ui/lib/index.js"></script>
 ``` 
-
 
 ### 方式二
 

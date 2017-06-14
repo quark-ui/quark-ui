@@ -3,17 +3,17 @@
  * @author grootfish
  */
 
-._3_LyTzy {
+.Tp7nM0V {
     position: fixed;
     z-index: 1000;
-    top: 20px;
+    top: 50px;
     left: 50%;
     -webkit-transform:translate(-50%,0);
             transform:translate(-50%,0);
     pointer-events: none;
 }
 
-.rvYOolG {
+.TML-oze {
     padding: 7px 24px 7px 10px;
     border-radius: 3px 3px;
     box-shadow: 0 0 10px #999;
@@ -24,38 +24,42 @@
     line-height: 1.5;
     vertical-align: middle;
     position: relative;
-    margin: 10px 0;
+    margin-bottom: 10px;
 }
-._2VEwa73{
+
+._3bIMIt4{
     display:inline-block;
         vertical-align: middle;
         font-size:14px;
 }
-._1o8wQ0I{
+
+._2nJiJW2{
     display:inline-block;
     margin-right:7px;
     margin-left:1px;
     vertical-align: middle;
 }
-._23xuyLQ{
+
+._24nf85a{
     color: rgb(58, 152, 224);
     background-color: #E8F6FF;
     box-shadow: 0 0 1px rgb(58, 152, 224);
 }
-._22HZ3wd{
+
+._31au0Cv{
     color: rgb(104, 191, 11);
     background-color: #F5FFE9;
     box-shadow: 0 0 1px rgb(104, 191, 11);
 }
-._1XT6zY1{
+
+._34GJGIf{
     color: rgb(255, 58, 36);
     background-color: #FFEBE8;
     box-shadow: 0 0 1px rgb(255, 58, 36);
 }
-._3SWQ13b{
+
+._2oCKBQV{
     color: rgb(255, 198, 28);
     background-color: #FFFAE8;
     box-shadow: 0 0 1px rgb(255, 198, 28);
 }
-
-/*# sourceMappingURL=message.orange.css.map*/

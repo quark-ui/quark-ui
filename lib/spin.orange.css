@@ -1,0 +1,147 @@
+/**
+ * Spin Style
+ * @author Northerner
+ */
+
+._1euEuAz {
+    opacity: 1;
+    display: inline-block;
+    position: static;
+    text-align: center;
+}
+
+.GdLF9TD {
+    position: relative;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    -webkit-animation: OJNp0rd 1.2s infinite linear;
+            animation: OJNp0rd 1.2s infinite linear;
+}
+
+._4DCoius .GdLF9TD {
+    width: 14px;
+    height: 14px;
+}
+
+._27g6-bg .GdLF9TD {
+    width: 32px;
+    height: 32px;
+}
+
+@-webkit-keyframes OJNp0rd {
+    0% {
+        -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+    }
+}
+
+@keyframes OJNp0rd {
+    0% {
+        -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+    }
+}
+
+.GdLF9TD i {
+    position: absolute;
+    width: 9px;
+    height: 9px;
+    border-radius: 100%;
+    background: rgb(255, 148, 54);
+    -webkit-transform: scale(.75);
+            transform: scale(.75);
+    -webkit-animation: _3JB_nVZ 1s infinite linear alternate;
+            animation: _3JB_nVZ 1s infinite linear alternate;
+}
+
+._4DCoius .GdLF9TD i {
+    width: 6px;
+    height: 6px;
+}
+
+._27g6-bg .GdLF9TD i {
+    width: 14px;
+    height: 14px;
+}
+
+.GdLF9TD i:nth-child(1) {
+    left: 0;
+    top: 0;
+}
+
+.GdLF9TD i:nth-child(2) {
+    right: 0;
+    top: 0;
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+}
+
+.GdLF9TD i:nth-child(3) {
+    left: 0;
+    bottom: 0;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+}
+
+.GdLF9TD i:nth-child(4) {
+    right: 0;
+    bottom: 0;
+    -webkit-animation-delay: 1.2s;
+            animation-delay: 1.2s;
+}
+
+@-webkit-keyframes _3JB_nVZ {
+    0% {
+        opacity: 0.3;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes _3JB_nVZ {
+    0% {
+        opacity: 0.3;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+._34yuQ8a {
+    text-align: center;
+    color: rgb(255, 148, 54);
+}
+
+.JFq5c57{
+    position: relative;
+    transition: all 0.3s ease-in-out;
+}
+
+._1lx5ldT{
+    opacity: 0.7;
+}
+
+._5RIH6gP{
+    position: relative;
+}
+
+.NgKIaqD{
+    position: absolute;
+    z-index: 10;
+    /*width: 100%;
+    height: 100%;*/
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+}

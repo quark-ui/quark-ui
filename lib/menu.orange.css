@@ -2,49 +2,78 @@
  * Menu Style
  * @author heifade
  */
-._37XJzyY {
+._3P9Itqd {
     outline: none;
     margin-bottom: 0;
     padding-left: 0;
     list-style: none;
     z-index: 1050;
-    line-height: 46px
+    line-height: 46px;
+    background-color: #ffffff
+
+    /*颜色-暖色*/
+    /*颜色-冷色*/
 }
-._37XJzyY .menu-submenu {
+._3P9Itqd .menu-submenu {
     position: relative
 }
-._37XJzyY .menu-item-active,
-    ._37XJzyY .menu-submenu-active > .menu-submenu-title {
-    color: #108ee9
+._3P9Itqd.color-warm {}
+._3P9Itqd.color-warm .menu-item-active,
+        ._3P9Itqd.color-warm .menu-submenu-active > .menu-submenu-title {
+    color: #ff9536
 }
-._37XJzyY .menu-item-selected {
-    color: #108ee9
+._3P9Itqd.color-warm .menu-item-selected,
+        ._3P9Itqd.color-warm .menu-submenu-selected > .menu-submenu-title {
+    color: #f27102
 }
-._37XJzyY .menu-submenu-selected > .menu-submenu-title {
-    color: #108ee9
+._3P9Itqd.color-warm .menu-item-disabled, 
+        ._3P9Itqd.color-warm .menu-submenu-disabled .menu-submenu-title {
+    color: #999999
 }
-._37XJzyY .menu-item-disabled, 
-    ._37XJzyY .menu-submenu-disabled .menu-submenu-title {
-    color: rgba(0, 0, 0, .25);
+._3P9Itqd.color-warm .menu {
+    border: solid 1px #ffa85c
+}
+._3P9Itqd.color-cold {}
+._3P9Itqd.color-cold .menu-item-active,
+        ._3P9Itqd.color-cold .menu-submenu-active > .menu-submenu-title {
+    color: #dddddd
+}
+._3P9Itqd.color-cold .menu .menu-item-active,
+        ._3P9Itqd.color-cold .menu .menu-submenu-active > .menu-submenu-title {
+    color: #3b98e0
+}
+._3P9Itqd.color-cold .menu-item-selected,
+        ._3P9Itqd.color-cold .menu-submenu-selected > .menu-submenu-title {
+    color: #ffffff
+}
+._3P9Itqd.color-cold .menu-item-disabled, 
+        ._3P9Itqd.color-cold .menu-submenu-disabled .menu-submenu-title {
+    color: #666666
+}
+._3P9Itqd.color-cold .menu {
+    border: solid 1px #64afe8
+}
+._3P9Itqd .menu-item-disabled, 
+    ._3P9Itqd .menu-submenu-disabled .menu-submenu-title {
     cursor: not-allowed;
     background: none
 }
-._37XJzyY .menu-item-group-title {
+._3P9Itqd .menu-item-group-title {
     padding-left: 32px;
     color: rgba(0, 0, 0, .43);
     font-size: 12px;
-    line-height: 1.5;
-    padding: 8px 16px
+    line-height: 1.8;
+    padding: 16px 18px 0 18px
 }
-._37XJzyY .menu-item-group-list .menu-item, 
-    ._37XJzyY .menu-item-group-list .menu-submenu-title {
-    padding: 0 16px 0 28px
+._3P9Itqd .menu-item-group-list .menu-item, 
+    ._3P9Itqd .menu-item-group-list .menu-submenu-title {
+    padding: 0 18px 0 40px
 }
-._37XJzyY .menu-hidden {
+._3P9Itqd .menu-hidden {
     display: none
 }
-._37XJzyY .menu-item,
-    ._37XJzyY .menu-submenu-title {
+._3P9Itqd .menu-item,
+    ._3P9Itqd .menu-submenu-title {
     margin: 0;
     padding: 0 20px;
     position: relative;
@@ -52,204 +81,254 @@
     white-space: nowrap;
     cursor: pointer
 }
-
-
-
-
-
-
 /*水平菜单，子菜单水平*/
-._37XJzyY.menu-horizontal-h{
+._3P9Itqd.menu-horizontal-h{
 
-    border-bottom: solid 1px #e9e9e9
+    border: solid 1px #dddddd;
+    padding: 4px 0
+
+    /*颜色-暖色*/
+    /*颜色-冷色*/
 
     /*一级菜单*/
-
-    
-
-    
-
-    
 }
-._37XJzyY.menu-horizontal-h .menu-submenu .menu-item-selected {
-    background-color: #ecf6fd
+._3P9Itqd.menu-horizontal-h.color-warm {
+    background-color: #ffffff;/*一级菜单背景色(白)*/
+    color: #666666
 }
-._37XJzyY.menu-horizontal-h > .menu-item-active, 
-    ._37XJzyY.menu-horizontal-h > .menu-item-selected, 
-    ._37XJzyY.menu-horizontal-h > .menu-submenu-active, 
-    ._37XJzyY.menu-horizontal-h > .menu-submenu-selected {
-    border-bottom: solid 2px #108ee9
+._3P9Itqd.menu-horizontal-h.color-warm .menu-item-selected, 
+        ._3P9Itqd.menu-horizontal-h.color-warm > .menu-submenu-selected {
+    border-bottom: solid 1px #ff9536
 }
-._37XJzyY.menu-horizontal-h > .menu-item {
-    float: left
+._3P9Itqd.menu-horizontal-h.color-cold {
+    background-color: #242424;/*一级菜单背景色(黑)*/
+    color: #999999
 }
-._37XJzyY.menu-horizontal-h:after {
-    content: " ";
-    display: block;
-    height: 0;
-    clear: both
+._3P9Itqd.menu-horizontal-h.color-cold > .menu-item-selected, 
+        ._3P9Itqd.menu-horizontal-h.color-cold > .menu-submenu-selected {
+    border-bottom: solid 1px #ffffff
 }
-._37XJzyY.menu-horizontal-h .menu-submenu-horizontal-h {
-    float: left/*二级菜单弹出层*/
+._3P9Itqd.menu-horizontal-h.color-cold .menu .menu-item-selected {
+    color: #0c7dd4;
+    border-bottom: solid 1px #0c7dd4
 }
-._37XJzyY.menu-horizontal-h .menu-submenu-horizontal-h.menu-submenu-open {
-    display: table
+._3P9Itqd.menu-horizontal-h > .menu-item {
+    display: inline-block;
+    margin-left: 10px;
+    line-height: 44px
 }
-._37XJzyY.menu-horizontal-h .menu-submenu-horizontal-h  > .menu {
-    top: 100%;
+._3P9Itqd.menu-horizontal-h .menu-submenu-horizontal-h {
+    display: inline-block;
+    margin-left: 10px/*二级菜单弹出层*/
+}
+._3P9Itqd.menu-horizontal-h .menu-submenu-horizontal-h > .menu {
+    top: 110%;
     left: 50%;
     -webkit-transform: translateX(-50%);
             transform: translateX(-50%);
     position: absolute;
+    padding: 4px 10px 4px 10px;
     margin-top: 7px;
-    border: solid 1px #ccc;
     background-color: #fff;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, .13);
     border-radius: 4px;
     z-index: 10
 }
-._37XJzyY.menu-horizontal-h .menu-submenu-horizontal-h  > .menu .menu-item {
+._3P9Itqd.menu-horizontal-h .menu-submenu-horizontal-h > .menu .menu-item {
     position: relative;
-    display: table-cell
+    display: table-cell;
+    line-height: 44px
 }
-
-
-
-
-
 /*水平菜单，子菜单垂直*/
-._37XJzyY.menu-horizontal{
+._3P9Itqd.menu-horizontal{
 
-    border-bottom: solid 1px #e9e9e9
+    border: solid 1px #dddddd;
+    padding: 4px 0
+
+    /*颜色-暖色*/
+
+    /*颜色-冷色*/
 
     /*一级菜单*/
 }
-._37XJzyY.menu-horizontal .menu-submenu .menu-item-selected {
-    background-color: #ecf6fd
+._3P9Itqd.menu-horizontal.color-warm {
+    background-color: #ffffff;/*一级菜单背景色(白)*/
+    color: #666666
 }
-._37XJzyY.menu-horizontal > .menu-item-active, 
-    ._37XJzyY.menu-horizontal > .menu-item-selected, 
-    ._37XJzyY.menu-horizontal > .menu-submenu-active, 
-    ._37XJzyY.menu-horizontal > .menu-submenu-selected {
-    border-bottom: solid 2px #108ee9
+._3P9Itqd.menu-horizontal.color-warm > .menu-item-selected, 
+        ._3P9Itqd.menu-horizontal.color-warm > .menu-submenu-selected {
+    border-bottom: solid 1px #ff9536
 }
-._37XJzyY.menu-horizontal > .menu-item {
-    float: left
+._3P9Itqd.menu-horizontal.color-warm .menu .menu-item-selected {
+    background-color: #f6f8fc
 }
-._37XJzyY.menu-horizontal:after {
-    content: " ";
-    display: block;
-    height: 0;
-    clear: both
+._3P9Itqd.menu-horizontal.color-warm .menu .menu-item-selected:after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border-right: 3px solid #ff9536
 }
-._37XJzyY.menu-horizontal .menu-submenu-horizontal {
-    position: relative;
-    float: left/*二级菜单弹出层*//*三级菜单弹出层*/
+._3P9Itqd.menu-horizontal.color-cold {
+    background-color: #242424;/*一级菜单背景色(黑)*/
+    color: #999999
 }
-._37XJzyY.menu-horizontal .menu-submenu-horizontal  > .menu {
+._3P9Itqd.menu-horizontal.color-cold > .menu-item-selected, 
+        ._3P9Itqd.menu-horizontal.color-cold > .menu-submenu-selected {
+    border-bottom: solid 1px #ffffff
+}
+._3P9Itqd.menu-horizontal.color-cold .menu .menu-submenu-selected > .menu-submenu-title {
+    color: #0c7dd4
+}
+._3P9Itqd.menu-horizontal.color-cold .menu .menu-item-selected {
+    background-color: #f6f8fc;
+    color: #0c7dd4
+}
+._3P9Itqd.menu-horizontal.color-cold .menu .menu-item-selected:after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border-right: 3px solid #3b98e0
+}
+._3P9Itqd.menu-horizontal > .menu-item {
+    display: inline-block;
+    margin-left: 10px;
+    line-height: 44px
+}
+._3P9Itqd.menu-horizontal .menu-submenu-horizontal {
+    display: inline-block;
+    margin-left: 10px/*二级菜单弹出层*//*三级菜单弹出层*/
+}
+._3P9Itqd.menu-horizontal .menu-submenu-horizontal  > .menu {
     top: 100%;
     left: 0;
     position: absolute;
-    min-width: 100%;
+    min-width: 150px;
     margin-top: 7px;
-    border: solid 1px #ccc;
     background-color: #fff;
     border-radius: 4px;
     z-index: 10
 }
-._37XJzyY.menu-horizontal .menu-submenu-horizontal .menu-vertical .menu-submenu-title:after {
-    font-style: normal;
-    vertical-align: baseline;
-    text-align: center;
-    text-transform: none;
-    text-rendering: auto;
-    position: absolute;
-    transition: -webkit-transform .3s;
-    transition: transform .3s;
-    transition: transform .3s, -webkit-transform .3s;
-    content: "\FF1E";
-    right: 16px
-}
-._37XJzyY.menu-horizontal .menu-submenu-horizontal  > .menu .menu {
+._3P9Itqd.menu-horizontal .menu-submenu-horizontal .menu .menu {
     top: 0;
-    left: 100%;
+    left: 105%;
     position: absolute;
     min-width: 100%;
     margin-top: 7px;
-    border: solid 1px #ccc;
     background-color: #fff;
     border-radius: 4px;
     z-index: 10
 }
-
-
 /*垂直菜单，子菜单水平向右弹出*/
-._37XJzyY.menu-vertical{
+._3P9Itqd.menu-vertical{
     box-shadow: 0 1px 6px rgba(0, 0, 0, .2)
 
-    
+    /*颜色-暖色*/
 
-
-
+    /*颜色-冷色*/
 
     /*二级菜单弹出层*/
 }
-._37XJzyY.menu-vertical .menu-submenu-title:after {
-    font-style: normal;
-    vertical-align: baseline;
-    text-align: center;
-    text-transform: none;
-    text-rendering: auto;
+._3P9Itqd.menu-vertical.color-warm {
+    color: #666666/*二级菜单弹出层*/
+}
+._3P9Itqd.menu-vertical.color-warm .menu-item-selected {
+    background-color: #f6f8fc
+}
+._3P9Itqd.menu-vertical.color-warm .menu {
+    background-color: #ffffff
+}
+._3P9Itqd.menu-vertical.color-warm .menu .menu-item-selected:after {
+    content: "";
     position: absolute;
-    transition: -webkit-transform .3s;
-    transition: transform .3s;
-    transition: transform .3s, -webkit-transform .3s;
-    content: "\FF1E";
-    right: 16px
-}
-._37XJzyY.menu-vertical .menu-item-selected {
-    background-color: #ecf6fd
-}
-._37XJzyY.menu-vertical  .menu {
+    right: 0;
     top: 0;
-    left: 100%;
+    bottom: 0;
+    border-right: 3px solid #ff9536
+}
+._3P9Itqd.menu-vertical.color-warm .menu .menu-item-group-title {
+    color: #999999
+}
+._3P9Itqd.menu-vertical.color-cold {
+    color: #999999;
+    background-color: #242424/*二级菜单弹出层*/
+}
+._3P9Itqd.menu-vertical.color-cold .menu-item-selected {
+    background-color: #3b98e0
+}
+._3P9Itqd.menu-vertical.color-cold .menu {
+    background-color: #242424
+}
+._3P9Itqd.menu-vertical.color-cold .menu .menu-item-active,
+            ._3P9Itqd.menu-vertical.color-cold .menu .menu-submenu-active .menu-submenu-title {
+    color: #dddddd
+}
+._3P9Itqd.menu-vertical.color-cold .menu .menu-item-selected {
+    color: #ffffff
+}
+._3P9Itqd.menu-vertical.color-cold .menu .menu-item-group-title {
+    color: #666666
+}
+._3P9Itqd.menu-vertical .menu {
+    top: 0;
+    left: 105%;
     position: absolute;
     min-width: 160px;
-    border: solid 1px #ccc;
-    background-color: #fff;
     border-radius: 4px;
     z-index: 10
 }
-
-
 /*垂直菜单，子菜单内嵌在菜单区域*/
-._37XJzyY.menu-inline{
+._3P9Itqd.menu-inline{
     box-shadow: 0 1px 6px rgba(0, 0, 0, .2)
+
+    /*颜色-暖色*/
+
+    /*颜色-冷色*/
 }
-._37XJzyY.menu-inline .menu-submenu-title:after {
-    font-style: normal;
-    vertical-align: baseline;
-    text-align: center;
-    text-transform: none;
-    text-rendering: auto;
+._3P9Itqd.menu-inline.color-warm {
+    color: #666666
+}
+._3P9Itqd.menu-inline.color-warm .menu-item-selected {
+    background-color: #f6f8fc
+}
+._3P9Itqd.menu-inline.color-warm .menu-item-selected:after {
+    content: "";
     position: absolute;
-    transition: -webkit-transform .3s;
-    transition: transform .3s;
-    transition: transform .3s, -webkit-transform .3s;
-    content: "\FF1E";
-    -webkit-transform: rotate(90deg);
-            transform: rotate(90deg);
-    right: 16px
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border-right: 3px solid #ff9536
 }
-._37XJzyY.menu-inline .menu-submenu-open > .menu-submenu-title:after {
-    -webkit-transform: rotate(270deg);
-            transform: rotate(270deg)
+._3P9Itqd.menu-inline.color-warm .menu-item-group-title {
+    color: #999999
 }
-._37XJzyY.menu-inline > .menu-item-active, 
-    ._37XJzyY.menu-inline .menu-submenu-active {}
-._37XJzyY.menu-inline .menu-item-selected {
+._3P9Itqd.menu-inline.color-cold {
+    color: #999999;
+    background-color: #242424
+}
+._3P9Itqd.menu-inline.color-cold .menu-item-selected {
+    background-color: #3b98e0
+}
+._3P9Itqd.menu-inline.color-cold .menu-item-active,
+        ._3P9Itqd.menu-inline.color-cold .menu-submenu-active > .menu-submenu-title {
+    color: #dddddd
+}
+._3P9Itqd.menu-inline.color-cold .menu-item-selected > .menu-submenu-title {
+    color: #ffffff
+}
+._3P9Itqd.menu-inline.color-cold .menu-item-group-title {
+    color: #666666
+}
+._3P9Itqd.menu-inline.color-cold .menu {
+    background-color: #111111
+}
+._3P9Itqd.menu-inline .menu-item-selected {
     background-color: #ecf6fd
 }
-._37XJzyY.menu-inline .menu-item-selected:after {
+._3P9Itqd.menu-inline .menu-item-selected:after {
     content: "";
     position: absolute;
     right: 0;
@@ -257,4 +336,6 @@
     bottom: 0;
     border-right: 3px solid #108ee9
 }
-/*# sourceMappingURL=menu.orange.css.map*/
+._3P9Itqd.menu-inline .menu {
+    border: none
+}

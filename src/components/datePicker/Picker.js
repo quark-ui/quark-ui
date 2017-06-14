@@ -9,7 +9,7 @@ import moment from 'moment';
 import momentPropTypes from 'react-moment-proptypes';
 import assign from 'object-assign';
 import partialRight from 'lodash/partialRight';
-import Trigger from 'quark-ui/trigger';
+import Trigger from '../trigger';
 import { allowMultiple } from '../../constants';
 import styles from './DatePicker.css';
 import DatePane from './panes/DatePane';

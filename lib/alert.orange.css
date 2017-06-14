@@ -2,7 +2,7 @@
  * Alert Style
  * @author grootfish
  */
-._39kAAFy {
+._1GB2-JB {
   position: relative;
   padding: 16px 48px 16px 50px;
   border-radius: 4px;
@@ -10,37 +10,35 @@
   line-height: 18px;
   margin-bottom: 10px
 }
-._39kAAFy._1ceJ84o {}
-._39kAAFy._1ceJ84o ._2PlM57S {
+._1GB2-JB._3EUMm8_ {}
+._1GB2-JB._3EUMm8_ ._3pVZZaC {
   font-size: 18px;
   margin-bottom: 14px
 }
-._39kAAFy._1ceJ84o ._2mpL-C1 {
+._1GB2-JB._3EUMm8_ ._2nQsLw9 {
   top: 10px
 }
-._39kAAFy._1jGKsJo {
+._1GB2-JB._2A8aaYy {
   padding: 16px 48px 16px 24px
 }
-._39kAAFy._1jGKsJo ._2WVGGAD {
+._1GB2-JB._2A8aaYy ._1xsSoXb {
   margin-left: 0
 }
-
-._2PlM57S {
+._3pVZZaC {
   display: block;
   font-size:14px;
 }
-
-._2WVGGAD {
+._1xsSoXb {
   display: block;
   font-size: 14px;
   margin-left:-24px;
 }
-._2HsOl4s{
+._1Xuh7Xb{
   top: 16px;
   left: 24px;
   position: absolute;
 }
-._2mpL-C1 {
+._2nQsLw9 {
   font-size: 12px;
   position: absolute;
   right: 16px;
@@ -49,30 +47,28 @@
   line-height: 12px;
   overflow: hidden;
   cursor: pointer;
-  color:#999;
+  color:#999
 }
-
-._2zbvGEj {
+._2nQsLw9:hover {
+  color: #666
+}
+._26sdxhi {
   background-color: #E8F6FF;
   color: rgb(58, 152, 224);
   border: 1px solid rgb(58, 152, 224);
 }
-
-._1G-i0lm {
+._1CwPGBp {
   background-color: #F5FFE9;
   color: rgb(104, 191, 11);
   border: 1px solid rgb(104, 191, 11);
 }
-
-._2IstVeW {
+._3QhKkZ8 {
   background-color: #FFEBE8;
   color: rgb(255, 58, 36);
   border: 1px solid rgb(255, 58, 36);
 }
-
-._1RLd9u1 {
+._3BUd41- {
   background-color: #FFFAE8;
   color: rgb(255, 198, 28);
   border: 1px solid rgb(255, 198, 28);
 }
-/*# sourceMappingURL=alert.orange.css.map*/

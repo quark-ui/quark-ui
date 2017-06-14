@@ -2,46 +2,44 @@
  * Progress Style
  * @author heifade
  */
-.WMaqHWs {
-    display: inline-block;
+._1wmp6rQ {
+    display: inline-block
 }
-
-._3xg6VqA{
+._1wmp6rQ, ._1wmp6rQ *, ._1wmp6rQ *:after, ._1wmp6rQ *:before {
+    box-sizing: border-box
+}
+._3X85yhI{
     /*margin-right: 8px;*/
-    margin-bottom: 8px;
+    /*margin-bottom: 8px;*/
     width: 100%;
     font-size: 12px;
     position: relative;
 }
-
-._3jjNyzc{
+._1UPEYoF{
     display: inline-block;
     width: 100%;
     margin-right: 0;
     padding-right: 0;
     box-sizing: border-box;
 }
-
-._2rlYPCR{
+._1RDGF7L{
     display: inline-block;
     width: 100%;
     background-color: #f7f7f7;
     border-radius: 100px;
     vertical-align: middle;
 }
-._3PKDJ1C{
+._2Jb9pRa{
     border-radius: 100px;
     background-color: #108ee9;
     transition: all .4s cubic-bezier(.08,.82,.17,1) 0s;
     position: relative;
 }
-
-._1EvJNAq ._3jjNyzc{
+.TJk4cYl ._1UPEYoF{
     padding-right: 45px;
     margin-right: -45px;
 }
-
-.j6hJ9BN {
+._15YVWKW {
     width: 35px;
     text-align: left;
     font-size: 1em;
@@ -50,8 +48,7 @@
     display: inline-block;
     position: relative;
 }
-
-._37dTj6C ._3PKDJ1C:before {
+._2Y2k2_P ._2Jb9pRa:before {
     content: "";
     opacity: 0;
     position: absolute;
@@ -61,24 +58,22 @@
     bottom: 0;
     background: #fff;
     border-radius: 10px;
-    -webkit-animation: _1L4m8vT 2.4s cubic-bezier(.23,1,.32,1) infinite;
-            animation: _1L4m8vT 2.4s cubic-bezier(.23,1,.32,1) infinite;
+    -webkit-animation: _196xXst 2.4s cubic-bezier(.23,1,.32,1) infinite;
+            animation: _196xXst 2.4s cubic-bezier(.23,1,.32,1) infinite;
 }
-.zdFCOPi ._3PKDJ1C {
+._3hCXhQ2 ._2Jb9pRa {
     background-color: #f04134;
 }
-
-._2E5UTJ4 ._3PKDJ1C:before {
+._2gCNSXU ._2Jb9pRa:before {
     
 }
-.zdFCOPi ._3PKDJ1C:before {
+._3hCXhQ2 ._2Jb9pRa:before {
     
 }
-._3w7-N9Y ._3PKDJ1C:before {
+._3V1FpTT ._2Jb9pRa:before {
     
 }
-
-@-webkit-keyframes _1L4m8vT {
+@-webkit-keyframes _196xXst {
   0% {
     opacity: 0.1;
     width: 0;
@@ -92,8 +87,7 @@
     width: 100%;
   }
 }
-
-@keyframes _1L4m8vT {
+@keyframes _196xXst {
   0% {
     opacity: 0.1;
     width: 0;
@@ -107,4 +101,3 @@
     width: 100%;
   }
 }
-/*# sourceMappingURL=progress.orange.css.map*/
