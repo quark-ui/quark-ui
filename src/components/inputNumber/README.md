@@ -6,7 +6,7 @@ author:
 
 ## InputNumber
 
-InputNumber Component.
+通过鼠标或键盘，输入范围内的数值
 
 ### Props
 |name|type|default|description|

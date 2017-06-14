@@ -4,144 +4,100 @@ import Radio from '../../radio';
 import Button from '../../button';
 import CSSModules from 'react-css-modules';
 import Tabs from '../Tabs';
-import styles from '../../../styles/demo.css';
-const TabPane = Tabs.TabPane;
-const RadioGroup = Radio.Group;
-const RadioButton = Radio.Button;
+import Panel from '../Panel';
+Tabs.Panel = Panel;
 
-
-@CSSModules(styles)
 export default class TabsDemo extends Component {
 
   constructor(props) {
     super(props);
-    this.newTabIndex = 0;
     const panes = [
-      { title: 'Tab 1', content: 'Content of Tab 1', eventKey: '1', closable: false },
-      { title: 'Tab 2', content: 'Content of Tab 2', eventKey: '2' },
-      { title: 'Tab 3', content: 'Content of Tab 3', eventKey: '3' },
+      { title: 'Tab 1', content: 'Content of Tab 1', key: 1, closable: false },
+      { title: 'Tab 2', content: 'Content of Tab 2', key: 2 },
+      { title: 'Tab 3', content: 'Content of Tab 3', key: 3 },
     ];
+
     this.state = {
-      activeKey: panes[0].eventKey,
+      activeKey: panes[0].key,
       panes,
     };
   }
-
-  onChange = (activeKey) => {
-    this.setState({ activeKey });
-  }
-
-  onEdit = (targetKey, action) => {
-    this[action](targetKey);
-  }
-  remove = (targetKey) => {
+  
+  deleteButton = ()=> {
+    let data = this.state.panes;
     let activeKey = this.state.activeKey;
-    let lastIndex;
-    this.state.panes.forEach((pane, i) => {
-      if ((pane.eventKey) === targetKey) {
-        lastIndex = i - 1;
-      }
-    });
-
-    const panes = this.state.panes.filter(pane => (pane.eventKey) !== targetKey);
-    if (lastIndex >= 0 && activeKey === targetKey) {
-      activeKey = panes[lastIndex].eventKey;
-    }
-    this.setState({ panes, activeKey });
+    data.splice(activeKey, 1); 
+    
+    if (data.length <= activeKey + 1)
+      activeKey = data.length - 1;
+    this.setState({
+      panes: data,
+      activeKey: activeKey
+    })
   }
 
-  add = () => {
-    const panes = this.state.panes;
-    const activeKey = `newTab${this.newTabIndex++}`;
-    panes.push({ title: 'New Tab', content: 'Content of new Tab', eventKey: activeKey });
-    this.setState({ panes, activeKey });
-  }
-
-
-  radioOnChange = (e) => {
-    console.log(`radio checked:${e.target.value}`);
+  handleTabClick = (key)=> {
+    this.setState({activeKey: key})
   }
 
   render() {
+
     return (
-      <div>
-        <section styleName="code__box">
-          <div styleName="code__temp">
-            <span>基本</span>
+      <div className="markdown-block">
+
+          <h3>基本</h3>
             <p>标准线条式页签</p>
-            <div>
-              <Tabs onChange={this.onChange}>
-                {this.state.panes.map(pane => <TabPane tab={pane.title} key={pane.key}>{pane.content}</TabPane>)}
+              <Tabs 
+                  activeKey={this.state.activeKey} 
+                  handleTabClick={this.handleTabClick} >
+                {this.state.panes.map(pane => <Panel title={pane.title} key={pane.key} closable={pane.closable}>{pane.content}</Panel>)}
               </Tabs>
-            </div>
-          </div>
-          <div styleName="code__temp">
-            <span>禁用</span>
+            <h3>禁用</h3>
             <p>对某项实行禁用</p>
-            <div>
-              <Tabs defaultActiveKey=".0:$.$2" onChange={this.onChange}>
-                <TabPane tab="Tab 1" key="1">Content of Tab Pane 1</TabPane>
-                <TabPane tab="Tab 2" key="2">Content of Tab Pane 2</TabPane>
-                <TabPane tab="Tab 3" disabled key="3">Content of Tab Pane 3</TabPane>
-              </Tabs>
-            </div>
-          </div>
-          <div styleName="code__temp">
-            <span>迷你</span>
+            
+            <h3>迷你</h3>
             <p>用在狭小的区块或子级Tab</p>
-            <div>
-              <Tabs onChange={this.onChange} size="small">
-                <TabPane tab="Tab 1" key="1">Content of Tab Pane 1</TabPane>
-                <TabPane tab="Tab 2" disabled key="2">Content of Tab Pane 2</TabPane>
-                <TabPane tab="Tab 3" key="3">Content of Tab Pane 3</TabPane>
-              </Tabs>
-            </div>
-          </div>
-          <div styleName="code__temp">
-            <span>带图标</span>
+            <Tabs 
+                size={'small'}
+                activeKey={this.state.activeKey} 
+                handleTabClick={this.handleTabClick} >
+              {this.state.panes.map(pane => <Panel title={pane.title} key={pane.key} closable={pane.closable}>{pane.content}</Panel>)}
+            </Tabs>
+            <h3>带图标</h3>
             <p>带图标的Tab</p>
-            <div>
-              <Tabs>
-                <TabPane tab={<span><Icon size={18} name="account" />Tab 1</span>} key="1">
+            <Tabs
+              activeKey={this.state.activeKey}
+              handleTabClick={this.handleTabClick}
+              >
+                <Panel title={<span><Icon size={18} name="account" />Tab 1</span>} key="1">
                   Tab 1
-                      </TabPane>
-                <TabPane tab={<span><Icon size={18} name="account" />Tab 2</span>} key="2">
+                </Panel>
+                <Panel title={<span><Icon size={18} name="account" />Tab 2</span>} key="2">
                   Tab 2
-                      </TabPane>
-              </Tabs>
-            </div>
-          </div>
-          <div styleName="code__temp">
-            <span>纵向</span>
+                </Panel>
+                <Panel title={<span><Icon size={18} name="account" />Tab 3</span>} key="2">
+                  Tab 3
+                </Panel>
+            </Tabs>
+            <h3>纵向</h3>
             <p>纵向的Tab</p>
-            <div>
-              <Tabs tabPosition={'vertical'} style={{ height: 'auto' }}>
-                {this.state.panes.map(pane => <TabPane tab={pane.title} eventKey={pane.key}>{pane.content}</TabPane>)}
+              <Tabs 
+                  activeKey={this.state.activeKey}
+                  tabPosition={'left'} 
+                  handleTabClick={this.handleTabClick} >
+                {this.state.panes.map(pane => <Panel title={pane.title} key={pane.key} closable={pane.closable}>{pane.content}</Panel>)}
               </Tabs>
-            </div>
-          </div>
-          <div styleName="code__temp">
-            <span>卡片式</span>
+            <h3>卡片式</h3>
             <p>卡片式的页签，常用于容器顶部</p>
-            <div>
-              <Tabs type="card">
-                {this.state.panes.map(pane => <TabPane tab={pane.title} eventKey={pane.key}>{pane.content}</TabPane>)}
-              </Tabs>
-            </div>
-          </div>
-          <div styleName="code__temp">
-            <span>新增和关闭页签</span>
-            <p>支持用户关闭</p>
-            <div style={{ marginBottom: 16 }}>
-              <Button onClick={this.add}>ADD</Button>
-            </div>
-            <div>
-              <Tabs type="edit-card" onChange={this.onChange} onEdit={this.onEdit}>
-                {this.state.panes.map(pane => <TabPane tab={pane.title} eventKey={pane.eventKey} closable={pane.closable}>{pane.content}</TabPane>)}
-              </Tabs>
-            </div>
-          </div>
-        </section>
+            <Tabs activeKey={this.state.activeKey}
+                type={'card'} 
+                tabDeleteButton={true}
+                deleteButton={this.deleteButton}
+                handleTabClick={this.handleTabClick}
+            >
+              {this.state.panes.map(pane => <Panel title={pane.title} key={pane.key} closable={pane.closable}>{pane.content}</Panel>)}
+            </Tabs>
+            
       </div>
     );
   }

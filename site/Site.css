@@ -80,7 +80,6 @@ a {
   background: #fff;
   width: 100%;
   width: calc(100% - 20px);
-  margin: 0 60px;
 }
 .content {
   flex: 1;
@@ -92,6 +91,7 @@ a {
   flex: 0 0 240px;
   border-right: solid 1px #f7f7f7;
   box-sizing: border-box;
+  margin-left: 80px;
 }
 .aside__menu {
   margin: 0;

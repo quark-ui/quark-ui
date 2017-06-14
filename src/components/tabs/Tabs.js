@@ -2,11 +2,9 @@
  * Tabs Component
  * @author yan
  */
-import { PureComponent, cloneElement, Children } from 'react';
+import React,{ PureComponent, cloneElement, Children } from 'react';
 import PropTypes from 'prop-types';
-import RcTabs, { TabPane } from 'rc-tabs';
-import ScrollableInkTabBar from 'rc-tabs/lib/ScrollableInkTabBar';
-import TabContent from 'rc-tabs/lib/TabContent';
+import Tab from './Tab';
 import Icon from '../icon';
 import CSSModules from 'react-css-modules';
 import classNames from 'classnames';
@@ -15,105 +13,133 @@ import styles from './Tabs.css';
 
 @CSSModules(styles, { allowMultiple })
 export default class Tabs extends PureComponent {
-  static TabPane = TabPane;
   static displayName = 'Tabs'
 
   static defaultProps = {
-    prefixCls: 'rc-tabs',
-    size: 'default',
+    defaultActiveKey: 0,
+    type:'line',
+    size:'default',
+    tabPosition:'top',
   }
 
   static propTypes = {
-    prefixCls: PropTypes.string,
-    defaultActiveKey: PropTypes.string,
-    onEdit: PropTypes.func,
+    type:PropTypes.oneOf([
+      'line',
+      'card',
+    ]),
+    size:PropTypes.oneOf([
+      'default',
+      'small',
+    ]),
+    tabPosition:PropTypes.oneOf([
+      'top',
+      'left',
+    ]),
+    activeKey: PropTypes.number,
+    defaultActiveKey: PropTypes.number,
   }
 
   constructor(props) {
     super(props);
-    this.state = {};
-  }
+    this.handleTabClick = this.handleTabClick.bind(this);
+    this.deleteButton = this.deleteButton.bind(this);
+    this.getPanel = this.getPanel.bind(this);
 
-  onChange = (activeKey) => {
-    const onChange = this.props.onChange;
-    if (onChange) {
-      onChange(activeKey);
+    this.state = {
+      activeKey: props.activeKey || props.defaultActiveKey,
+      children: props.children,
     }
   }
 
-  onEdit = (targetKey, action) => {
-
-  }
-
-  removeTab = (targetKey, e) => {
-    e.stopPropagation();
-    if (!targetKey) {
-      return;
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.activeKey !== this.state.activeKey) {
+      this.setState({
+        activeKey: nextProps.activeKey
+      })
     }
-    const onEdit = this.props.onEdit;
-    if (onEdit) {
-      onEdit(targetKey, 'remove');
+    if (nextProps.children !== this.state.children) {
+      this.setState({
+        children: nextProps.children
+      })
     }
   }
+
+  handleTabClick=(activeKey)=> {
+    if (this.props.handleTabClick) {
+      this.props.handleTabClick(activeKey);
+    }
+
+    this.setState({
+      activeKey: activeKey,
+      panelUpdateKey: -1
+    })
+  }
+
+  deleteButton = (key)=> {
+    this.props.deleteButton();
+    this.setState({
+      panelUpdateKey: key
+    })
+  }
+
+  getPanel = () => {
+    var that = this;
+    let tab = [];
+    let panel = [];
+    Children.forEach(this.state.children, function(children, index) {
+      // add tabs
+      let status, className;
+      if (index === that.state.activeKey) {
+        status = 'active';
+      } else {
+        status = 'inactive';
+      }
+      var props = {
+        key: 'tab'+index,
+        tabKey: index,
+        title: children.props.title,
+        status: status,
+        style: that.state.style,
+        handleTabClick: that.handleTabClick,
+        tabDeleteButton: that.props.tabDeleteButton,
+        deleteButton: that.deleteButton,
+      }
+      
+      tab.push(<Tab {...props}/>);
+
+      if (!children.props.lazy || (children.props.lazy && index === that.state.activeKey)) {
+        var props = {className: classNames('tabs__panel', status), status: status, key: index};
+        if (that.state.panelUpdateKey === index) {
+          props.update = true;
+        }
+        panel.push(cloneElement(children, props));
+      }
+    })
+
+    return {tab: tab, panel: panel};
+  }
+
 
   render() {
-    const {
-      prefixCls,
-      className = '',
-      size,
-      type = 'line',
-      tabPosition,
-      children,
-    } = this.props;
-
-
+    var opt = this.getPanel();
+    const props = this.props;
+    const{type,size,tabPosition, ...otherProps} = props;
     const cls = classNames({
-      [`${prefixCls}-small`]: size === 'small',
-      [`${prefixCls}-card`]: type.indexOf('card') >= 0,
-      [`${prefixCls}-${type}`]: true,
-    });
+        ['tabs__card'] : type === 'card',
+        ['tabs__small'] : size === 'small',
+        ['tabs__left clearfix'] : tabPosition === 'left',
+        ['tabs__wrap'] : true,
+      })
 
-    const childrenNodes = [];
-    if (type === 'edit-card') {
-      React.Children.forEach(children, (child, index) => {
-        let closable = child.props.closable;
-        closable = typeof closable === 'undefined' ? true : closable;
-        let closeIcon;
-        if (closable) {
-          closeIcon = (
-            <Icon
-              size={12}
-              name={'close'}
-              onClick={e => this.removeTab(child.props.eventKey, e)}
-            />
-          );
-        }
-
-        childrenNodes.push(cloneElement(child, {
-          tab: (
-            <div className={closable ? undefined : `${prefixCls}-tab-unclosable`}>
-              {child.props.tab}
-              {closeIcon}
-            </div>
-          ),
-          key: child.props.eventKey || index,
-        }));
-      });
-    } else {
-      childrenNodes.push(children);
-    }
-
-    return (
-      <RcTabs
-        {...this.props}
-        className={cls}
-        tabBarPosition={tabPosition}
-        onChange={this.onChange}
-        renderTabBar={() => <ScrollableInkTabBar />}
-        renderTabContent={() => <TabContent />}
-      >
-        {childrenNodes}
-      </RcTabs>
+    return(
+      <div styleName={cls}>
+        <div styleName={'tabs__bar'}>
+          {opt.tab}
+        </div>
+        <div styleName={'tabs__con'}>
+          {opt.panel}
+        </div>
+      </div>
     );
   }
 }
