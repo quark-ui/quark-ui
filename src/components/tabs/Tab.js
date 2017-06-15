@@ -18,9 +18,11 @@ export default class Tab extends PureComponent {
   static displayName = 'Tab'
 
   static defaultProps = {
+    closable:true,
   }
 
   static propTypes = {
+    closable:PropTypes.bool,
   }
 
   constructor(props) {
@@ -35,30 +37,24 @@ export default class Tab extends PureComponent {
   }
 
   clickTab = ()=> {
-    this.props.handleTabClick(this.props.tabKey);
+    this.props.onClick(this.props.tabKey);
   }
 
   render() {
     let tabClass,
-        closeButtonStyle;
+        delTabStyle;
 
     const props = this.props;
-
-    const { connectDropTarget } = props;
-    if (props.status === 'active') {
-      tabClass = classNames('tabs__tab', 'active');
-    } else {
-      tabClass = classNames('tabs__tab');
-    }
-
     console.log(props);
 
-    // only show the delete button when it's active
-    if (props.tabDeleteButton && props.status === "active") {
-      closeButtonStyle = {display: 'inline-block'};
-    } else {
-      closeButtonStyle = {display: 'none'};
-    }
+    const { closable,disabled,status,tabDeleteButton,title, connectDropTarget } = props;
+    tabClass = classNames({
+      ['disabled']:disabled === true,
+      ['active']:status === 'active',
+      ['tabs__tab']:true,
+    })
+    
+    delTabStyle = status === "active" ? {display: 'inline-block'} : {display: 'none'};
 
     const delIcon = (
       <Icon
@@ -70,10 +66,12 @@ export default class Tab extends PureComponent {
 
     return (
       <div styleName={tabClass} onClick={this.clickTab}>
-        {this.props.title}
-        <div style={closeButtonStyle}>
-          {delIcon}
-        </div>
+        {title}{
+          tabDeleteButton ? 
+          <div style={delTabStyle}>
+          {closable ? delIcon : null}
+          </div> :null
+        }
       </div>
     )
   }

@@ -41,7 +41,7 @@ export default class Tabs extends PureComponent {
 
   constructor(props) {
     super(props);
-    this.handleTabClick = this.handleTabClick.bind(this);
+    this.onClick = this.onClick.bind(this);
     this.deleteButton = this.deleteButton.bind(this);
     this.getPanel = this.getPanel.bind(this);
 
@@ -64,9 +64,14 @@ export default class Tabs extends PureComponent {
     }
   }
 
-  handleTabClick=(activeKey)=> {
-    if (this.props.handleTabClick) {
-      this.props.handleTabClick(activeKey);
+  onClick=(activeKey)=> {
+    const props = this.props;
+
+    if(props.children[activeKey].props.disabled){
+      return
+    }    
+    if (props.onClick) {
+      props.onClick(activeKey);
     }
 
     this.setState({
@@ -89,25 +94,25 @@ export default class Tabs extends PureComponent {
     Children.forEach(this.state.children, function(children, index) {
       // add tabs
       let status, className;
-      if (index === that.state.activeKey) {
-        status = 'active';
-      } else {
-        status = 'inactive';
-      }
+
+      status = index === that.state.activeKey ? 'active' : 'inactive';
+
       var props = {
         key: 'tab'+index,
         tabKey: index,
         title: children.props.title,
         status: status,
+        disabled:children.props.disabled,
+        closable:children.props.closable,
         style: that.state.style,
-        handleTabClick: that.handleTabClick,
+        onClick: that.onClick,
         tabDeleteButton: that.props.tabDeleteButton,
         deleteButton: that.deleteButton,
       }
       
       tab.push(<Tab {...props}/>);
 
-      if (!children.props.lazy || (children.props.lazy && index === that.state.activeKey)) {
+      if (index === that.state.activeKey) {
         var props = {className: classNames('tabs__panel', status), status: status, key: index};
         if (that.state.panelUpdateKey === index) {
           props.update = true;

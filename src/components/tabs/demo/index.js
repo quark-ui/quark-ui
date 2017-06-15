@@ -36,7 +36,7 @@ export default class TabsDemo extends Component {
     })
   }
 
-  handleTabClick = (key)=> {
+  onClick = (key)=> {
     this.setState({activeKey: key})
   }
 
@@ -49,25 +49,14 @@ export default class TabsDemo extends Component {
             <p>标准线条式页签</p>
               <Tabs 
                   activeKey={this.state.activeKey} 
-                  handleTabClick={this.handleTabClick} >
+                  onClick={this.onClick} >
                 {this.state.panes.map(pane => <Panel title={pane.title} key={pane.key} closable={pane.closable}>{pane.content}</Panel>)}
               </Tabs>
             <h3>禁用</h3>
             <p>对某项实行禁用</p>
-            
-            <h3>迷你</h3>
-            <p>用在狭小的区块或子级Tab</p>
-            <Tabs 
-                size={'small'}
-                activeKey={this.state.activeKey} 
-                handleTabClick={this.handleTabClick} >
-              {this.state.panes.map(pane => <Panel title={pane.title} key={pane.key} closable={pane.closable}>{pane.content}</Panel>)}
-            </Tabs>
-            <h3>带图标</h3>
-            <p>带图标的Tab</p>
             <Tabs
               activeKey={this.state.activeKey}
-              handleTabClick={this.handleTabClick}
+              onClick={this.onClick}
               >
                 <Panel title={<span><Icon size={18} name="account" />Tab 1</span>} key="1">
                   Tab 1
@@ -75,7 +64,31 @@ export default class TabsDemo extends Component {
                 <Panel title={<span><Icon size={18} name="account" />Tab 2</span>} key="2">
                   Tab 2
                 </Panel>
-                <Panel title={<span><Icon size={18} name="account" />Tab 3</span>} key="2">
+                <Panel title={<span><Icon size={18} name="account" />Tab 3</span>} key="3" disabled >
+                  Tab 3
+                </Panel>
+            </Tabs>
+            <h3>迷你</h3>
+            <p>用在狭小的区块或子级Tab</p>
+            <Tabs 
+                size={'small'}
+                activeKey={this.state.activeKey} 
+                onClick={this.onClick} >
+              {this.state.panes.map(pane => <Panel title={pane.title} key={pane.key} closable={pane.closable}>{pane.content}</Panel>)}
+            </Tabs>
+            <h3>带图标</h3>
+            <p>带图标的Tab</p>
+            <Tabs
+              activeKey={this.state.activeKey}
+              onClick={this.onClick}
+              >
+                <Panel title={<span><Icon size={18} name="account" />Tab 1</span>} key="1">
+                  Tab 1
+                </Panel>
+                <Panel title={<span><Icon size={18} name="account" />Tab 2</span>} key="2">
+                  Tab 2
+                </Panel>
+                <Panel title={<span><Icon size={18} name="account" />Tab 3</span>} key="3" >
                   Tab 3
                 </Panel>
             </Tabs>
@@ -84,7 +97,7 @@ export default class TabsDemo extends Component {
               <Tabs 
                   activeKey={this.state.activeKey}
                   tabPosition={'left'} 
-                  handleTabClick={this.handleTabClick} >
+                  onClick={this.onClick} >
                 {this.state.panes.map(pane => <Panel title={pane.title} key={pane.key} closable={pane.closable}>{pane.content}</Panel>)}
               </Tabs>
             <h3>卡片式</h3>
@@ -93,7 +106,7 @@ export default class TabsDemo extends Component {
                 type={'card'} 
                 tabDeleteButton={true}
                 deleteButton={this.deleteButton}
-                handleTabClick={this.handleTabClick}
+                onClick={this.onClick}
             >
               {this.state.panes.map(pane => <Panel title={pane.title} key={pane.key} closable={pane.closable}>{pane.content}</Panel>)}
             </Tabs>

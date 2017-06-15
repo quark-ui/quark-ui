@@ -29,6 +29,13 @@
        color: #108ee9;
        border-bottom: solid 1px #108ee9;
     }
+
+    & .tabs__tab.disabled{
+       color: rgba(0,0,0,.25);
+    }
+    & .tabs__tab.disabled:hover{
+       cursor:default;
+    }
   }
 
   & .tabs__con{
