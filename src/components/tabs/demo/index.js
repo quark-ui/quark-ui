@@ -110,6 +110,14 @@ export default class TabsDemo extends Component {
             >
               {this.state.panes.map(pane => <Panel title={pane.title} key={pane.key} closable={pane.closable}>{pane.content}</Panel>)}
             </Tabs>
+            <br />
+            <p>button可作为更次级的页签来使用</p>
+            <Tabs activeKey={this.state.activeKey}
+                type={'button'} 
+                onClick={this.onClick}
+            >
+              {this.state.panes.map(pane => <Panel title={pane.title} key={pane.key} closable={pane.closable}>{pane.content}</Panel>)}
+            </Tabs>
             
       </div>
     );

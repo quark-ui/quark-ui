@@ -26,6 +26,7 @@ export default class Tabs extends PureComponent {
     type:PropTypes.oneOf([
       'line',
       'card',
+      'button'
     ]),
     size:PropTypes.oneOf([
       'default',
@@ -131,6 +132,7 @@ export default class Tabs extends PureComponent {
     const{type,size,tabPosition, ...otherProps} = props;
     const cls = classNames({
         ['tabs__card'] : type === 'card',
+        ['tabs__button'] : type === 'button',
         ['tabs__small'] : size === 'small',
         ['tabs__left clearfix'] : tabPosition === 'left',
         ['tabs__wrap'] : true,

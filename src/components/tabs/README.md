@@ -13,7 +13,7 @@ author:
 |---|---|---|---|
 |defaultActiveKey|number|第一个面板|初始化选中面板的 key|
 |onClick|Function|无|切换面板的回调|
-|type|String|'line'|页签的基本样式，可选 line、card 类型|
+|type|String|'line'|页签的基本样式，可选 line、card、button 类型|
 |size|String|'default'|大小，提供 default 和 small 两种大小|
 |tabPosition|String||页签位置，可选值有 left|
 
