@@ -2,6 +2,7 @@ import { Component, createElement } from 'react';
 import marked from 'meta-marked';
 import Prism from 'prismjs';
 import CSSModules from 'react-css-modules';
+import classnames from 'classnames';
 import { allowMultiple } from '../../src/constants';
 import IconGithub from '../icons/github.svg';
 import IconUser from '../icons/user.svg';
@@ -21,6 +22,7 @@ export default class ComponentBlock extends Component {
     readme: '',
     demo: undefined,
     demoSourceCode: '',
+    showCode: true,
   };
   componentWillMount() {
     const { match } = this.props;
@@ -70,6 +72,23 @@ export default class ComponentBlock extends Component {
       </div>
     );
   }
+
+
+  demoCopy =() => {
+      let cls = classnames({
+        ['active']:this.state.showCode,
+        ['show_demo']:true,
+      })
+      return (
+        <i
+          styleName = {cls}
+          onClick={(e)=>{
+              this.state.showCode ? this.setState({ showCode: false,}) : this.setState({ showCode: true,}) ;
+          }}>
+        </i>
+      )
+    }
+
   render() {
     const { match } = this.props;
     const { readme, demo, demoSourceCode } = this.state;
@@ -77,6 +96,8 @@ export default class ComponentBlock extends Component {
       return null;
     }
     const { meta, html } = marked(readme);
+
+    
     return (
       <div styleName="Component__wrap">
         { ComponentBlock.renderMetaData(meta, match) }
@@ -85,8 +106,12 @@ export default class ComponentBlock extends Component {
             {
               demo ? <div styleName="Component__demoBox">{createElement(demo)}</div> : null
             }
-            <div className="markdown-copy"></div>
-            <div styleName="Component__demoCode" className="markdown-code">
+            <div styleName="Component__copy">
+              {this.demoCopy()}
+            </div>
+            {
+              
+              this.state.showCode ? <div styleName="Component__demoCode" className="markdown-code">
               <pre className="language-javascript">
                 <code
                   className="language-javascript"
@@ -95,7 +120,9 @@ export default class ComponentBlock extends Component {
                   }}
                 />
               </pre>
-            </div>
+            </div> : null
+            }
+            
         </div>
       </div>
     );

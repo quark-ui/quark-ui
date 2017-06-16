@@ -81,7 +81,6 @@ a {
   color: #666;
 }
 .lineDrawing{
-  height: 700px;
 }
 .main {
   flex: 1;
@@ -171,9 +170,7 @@ a {
   border-radius: 2px;
   background-color: #fff;
 }
-:global(.markdown-copy){
-  height: 50px;
-}
+
 :global(.markdown-code){
 
 }
@@ -235,6 +232,7 @@ a {
     border-collapse: collapse;
     border-spacing: 0;
     empty-cells: show;
+    background-color: #fff;
 
     & th {
       background: #f7f7f7;
