@@ -89,7 +89,6 @@ a {
   flex-direction: row-reverse;
   background: #fff;
   width: 100%;
-  /*width: calc(100% - 20px);*/
 }
 .content {
   flex: 1;
@@ -99,11 +98,11 @@ a {
   background-color: #fafafa;
 }
 .aside {
-  flex: 0 0 340px;
+  flex: 0 0 240px;
   border-right: solid 1px #f7f7f7;
   box-sizing: border-box;
   background-color: #fff;
-  margin: 0 0 50px 50px;
+  margin: 0 0 50px 0;
   
 }
 .aside__menu {

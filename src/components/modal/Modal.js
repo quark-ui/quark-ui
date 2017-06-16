@@ -95,7 +95,6 @@ class Modal extends Component {
     onOk: PropTypes.func,
     onCancel: PropTypes.func,
     afterClose: PropTypes.func,
-    children: PropTypes.isRequired,
 
   }
 

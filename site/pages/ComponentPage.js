@@ -1,65 +1,64 @@
-import { PureComponent } from 'react';
 import {
   Route,
   NavLink,
 } from 'react-router-dom';
 import lowerFirst from 'lodash/lowerFirst';
-import CSSModules from 'react-css-modules';
 import styles from '../Site.css';
-import { allowMultiple } from '../../src/constants';
 
 import ComponentBlock from '../partials/Component';
 import * as QuarkUI from '../../src/index';
-import pages from './Pages.json';
+import pages from './componentList';
 
 import Layout from '../layouts/Layout';
 
 const ComponentList = Object.keys(QuarkUI).map(c => c);
 
-@CSSModules(styles, { allowMultiple })
-export default class ComponentPage extends PureComponent {
+const renderNavGroup = group => (
+  <ul className={styles.aside__nav}>
+    {
+      group
+        .filter(d => ComponentList.indexOf(d.name) !== -1)
+        .map(d =>
+        <li className={styles.aside__navItem} key={d.name}>
+          <NavLink to={`/component/${lowerFirst(d.name)}`}>{d.name}<span>{d.title}</span></NavLink>
+        </li>,
+      )
+    }
+  </ul>
+);
 
-  renderComponentList() {
-    return (
-      <ul styleName="aside__menu">
-        {
-          pages.data.map((p, index) =>
-            <li styleName="aside__group">
-              <div styleName="aside__title">{p.group}</div>
-              <ul styleName="aside__nav">
-                {
-                  p.page.map((pt, index) =>
-                    ComponentList.map(c => (pt.name == c) ? <li styleName="aside__navItem" key={c}>
-                      <NavLink to={`/component/${lowerFirst(c)}`}>{c}<span>{pt.title}</span></NavLink>
-                    </li> : null)
-                  )
-                }
-              </ul>
-            </li>
-          )
-        }
-      </ul>
-    );
-  }
+const renderComponentList = () => (
+  <ul styleName="aside__menu">
+    {
+      pages.data.map(p =>
+        (
+          <li className={styles.aside__group} key={p.group}>
+            <div className={styles.aside__title}>{p.group}</div>
+            { renderNavGroup(p.page) }
+          </li>
+        ),
+      )
+    }
+  </ul>
+);
 
-  render() {
-    return (
-      <Layout {...this.props}>
-        <main styleName="main">
-          <div styleName="content">
-            <Route
-              path="/component/:name"
-              component={(data) => {
-                const { match } = data;
-                return <ComponentBlock key={match.params.name} {...data} />;
-              }}
-            />
-          </div>
-          <aside styleName="aside">
-            {this.renderComponentList()}
-          </aside>
-        </main>
-      </Layout>
-    );
-  }
-}
+const ComponentPage = props => (
+  <Layout {...props}>
+    <main className={styles.main}>
+      <div className={styles.content}>
+        <Route
+          path="/component/:name"
+          component={(data) => {
+            const { match } = data;
+            return <ComponentBlock key={match.params.name} {...data} />;
+          }}
+        />
+      </div>
+      <aside className={styles.aside}>
+        { renderComponentList() }
+      </aside>
+    </main>
+  </Layout>
+);
+
+export default ComponentPage;

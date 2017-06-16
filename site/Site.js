@@ -38,7 +38,7 @@ const DesignPage = mapProps(() => ({
 
 export default () => (
   <Router basename={basename}>
-    <div className={styles.app}>
+    <div>
       <Route path="/" component={HomePage} exact />
       <Route path="/component" component={ComponentPage} />
       <Route path="/usage" component={UsagePage} />

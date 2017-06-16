@@ -36,7 +36,6 @@ class Trigger extends PureComponent {
     ]),
     mouseEnterDelay: PropTypes.number,
     mouseLeaveDelay: PropTypes.number,
-    children: PropTypes.isRequired,
   }
 
   static getTargetRect = target => target.getBoundingClientRect()
