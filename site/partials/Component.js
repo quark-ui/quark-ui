@@ -81,18 +81,21 @@ export default class ComponentBlock extends Component {
       <div styleName="Component__wrap">
         { ComponentBlock.renderMetaData(meta, match) }
         <div className="markdown-block" styleName="Component__doc" dangerouslySetInnerHTML={{ __html: html }} />
-        {
-          demo ? <div styleName="Component__demoBox">{createElement(demo)}</div> : null
-        }
-        <div styleName="Component__demoCode">
-          <pre className="language-javascript">
-            <code
-              className="language-javascript"
-              dangerouslySetInnerHTML={{
-                __html: Prism.highlight(demoSourceCode, Prism.languages.javascript),
-              }}
-            />
-          </pre>
+        <div className="markdown-demo">
+            {
+              demo ? <div styleName="Component__demoBox">{createElement(demo)}</div> : null
+            }
+            <div className="markdown-copy"></div>
+            <div styleName="Component__demoCode" className="markdown-code">
+              <pre className="language-javascript">
+                <code
+                  className="language-javascript"
+                  dangerouslySetInnerHTML={{
+                    __html: Prism.highlight(demoSourceCode, Prism.languages.javascript),
+                  }}
+                />
+              </pre>
+            </div>
         </div>
       </div>
     );

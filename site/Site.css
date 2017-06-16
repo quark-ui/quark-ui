@@ -79,19 +79,21 @@ a {
   flex-direction: row-reverse;
   background: #fff;
   width: 100%;
-  width: calc(100% - 20px);
+  /*width: calc(100% - 20px);*/
 }
 .content {
   flex: 1;
   padding: 20px 20px 20px 50px;
   width: calc(100% - 240px);
   box-sizing: border-box;
+  background-color: #fafafa;
 }
 .aside {
-  flex: 0 0 240px;
+  flex: 0 0 340px;
   border-right: solid 1px #f7f7f7;
   box-sizing: border-box;
-  margin-left: 80px;
+  padding-left: 80px;
+  background-color: #fff;
 }
 .aside__menu {
   margin: 0;
@@ -132,6 +134,7 @@ a {
   }
   & a:hover {
     text-decoration: none;
+    color: var(--brand-primary);
   }
   & :global(.active) {
     color: var(--brand-primary);
@@ -141,6 +144,7 @@ a {
 
 .aside__navItem:hover{
     background-color: #f7f7f7;
+    color: var(--brand-primary);
 }
 .DocPage {
   padding: 20px;
@@ -148,10 +152,25 @@ a {
   font-size: 16px;
 }
 
+
+:global(.markdown-demo){
+  padding: 0 20px 20px 20px;
+  border: solid 1px #dddddd;
+  border-radius: 2px;
+  background-color: #fff;
+}
+:global(.markdown-copy){
+  height: 50px;
+}
+:global(.markdown-code){
+
+}
+
 :global(.markdown-block) {
   display: block;
   color: var(--text-color);
   line-height: 1.5;
+
   & > h1, & > h2, & > h3, & > h4, & > h5, & > h6 {
     margin: 24px 0 16px;
     font-weight: 600;
@@ -160,16 +179,18 @@ a {
 
   & > h1 {
     padding-bottom: .3em;
-    font-size: 2em;
+    font-size: 2.5em;
     border-bottom: 1px solid #eaecef;
   }
   & > h2 {
     padding-bottom: .3em;
-    font-size: 1.5em;
-    border-bottom: 1px solid #eaecef;
+    font-size: 2em;
+    line-height: 1.17;
+    color: #333333;
   }
   & > h3 {
-    font-size: 1.25em;
+    margin-top: 40px;
+    font-size: 1.5em;
   }
   & > h4 {
     font-size: 1em;
@@ -183,6 +204,9 @@ a {
   }
   & > p {
     line-height: 2;
+    font-size: 13px;
+    color: #666666;
+    margin-bottom: 20px;
   }
 
   & > ul, & > ol {
@@ -227,4 +251,5 @@ a {
     letter-spacing: -0.2em;
     content: '\00a0';
   }
+  
 }
