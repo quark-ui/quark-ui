@@ -67,7 +67,7 @@ export default class Home extends Component {
     const { paths, width, height } = this.state;
     return (
       <Layout {...this.props}>
-        <div id="lineDrawing">
+        <div id="lineDrawing" styleName="lineDrawing">
           <svg viewBox={`0 0 ${width} ${height}`} dangerouslySetInnerHTML={{ __html: paths.join('') }} />
         </div>
       </Layout>
