@@ -41,20 +41,15 @@ export default class Tab extends PureComponent {
   }
 
   render() {
-    let tabClass,
-        delTabStyle;
 
     const props = this.props;
-    console.log(props);
 
     const { closable,disabled,status,tabDeleteButton,title, connectDropTarget } = props;
-    tabClass = classNames({
+    let tabClass = classNames({
       ['disabled']:disabled === true,
       ['active']:status === 'active',
       ['tabs__tab']:true,
     })
-    
-    delTabStyle = status === "active" ? {display: 'inline-block'} : {display: 'none'};
 
     const delIcon = (
       <Icon
@@ -67,9 +62,9 @@ export default class Tab extends PureComponent {
     return (
       <div styleName={tabClass} onClick={this.clickTab}>
         {title}{
-          tabDeleteButton ? 
-          <div style={delTabStyle}>
-          {closable ? delIcon : null}
+          tabDeleteButton && closable ? 
+          <div styleName={'tab__del'}>
+          {delIcon}
           </div> :null
         }
       </div>
