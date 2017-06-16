@@ -44,14 +44,14 @@ exports.staticVariables = {
   'text-color-light': '#999',
 
   /* 链接色 */
-  'link-color': hsv(206, 74, 88),
+  'link-color': '#3b98e0',
 
   /* 警告 */
-  'warn-color': hsv(45, 89, 100),
+  'warn-color': '#ffc71b',
   /* 失败 */
-  'fail-color': hsv(6, 86, 100),
+  'fail-color': '#fe3824',
   /* 成功 */
-  'success-color': hsv(89, 94, 75),
+  'success-color': '#6ac00b',
 };
 
 exports.hsv = hsv;
