@@ -1,9 +1,9 @@
 
 ### 字体
 
-大号字体微软雅黑Regular 16px
-默认字体微软雅黑Regular 14px
-说明字体微软雅黑Regular 12px
+1. 大号字体微软雅黑Regular 16px
+2. 默认字体微软雅黑Regular 14px
+3. 说明字体微软雅黑Regular 12px
 
 ### 文字色
 
