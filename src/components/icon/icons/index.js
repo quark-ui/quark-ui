@@ -4,6 +4,7 @@ import arrowRight from './arrow-right.svg';
 import attachment from './attachment.svg';
 import caution from './caution.svg';
 import check from './check.svg';
+import clock from './clock.svg';
 import close from './close.svg';
 import doubleArrowLeft from './double-arrow-left.svg';
 import doubleArrowRight from './double-arrow-right.svg';
@@ -32,6 +33,7 @@ const ICONS = {
   attachment,
   caution,
   check,
+  clock,
   close,
   'double-arrow-left': doubleArrowLeft,
   'double-arrow-right': doubleArrowRight,
