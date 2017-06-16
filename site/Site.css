@@ -22,7 +22,7 @@ a {
   flex: 0 0 48px;
   display: flex;
   height: 100px;
-  width: 90%;
+  padding:0 50px;
   margin: 0 auto;
   justify-content: space-between;
   background-color: #fff;
@@ -73,6 +73,13 @@ a {
     color: var(--brand-primary);
   }
 }
+.footer{
+  height: 98px;
+  padding-top: 45px;
+  text-align: center;
+  background-color: #f4f4f4;
+  color: #666;
+}
 .main {
   flex: 1;
   display: flex;
@@ -92,8 +99,9 @@ a {
   flex: 0 0 340px;
   border-right: solid 1px #f7f7f7;
   box-sizing: border-box;
-  padding-left: 80px;
   background-color: #fff;
+  margin: 0 0 50px 50px;
+  
 }
 .aside__menu {
   margin: 0;
@@ -147,9 +155,10 @@ a {
     color: var(--brand-primary);
 }
 .DocPage {
-  padding: 20px;
+  /*padding: 20px;*/
   width: 100%;
   font-size: 16px;
+  margin: 20px 50px;
 }
 
 

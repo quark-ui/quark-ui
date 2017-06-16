@@ -25,6 +25,7 @@ export default class Layout extends PureComponent {
               <NavLink to="/component/alert">组件</NavLink>
               <NavLink to="/usage">如何使用</NavLink>
               <NavLink to="/changes">版本历史</NavLink>
+              <NavLink to="/design">视觉规范</NavLink>
             </nav>
             <ThemePicker />
           </header>
@@ -32,6 +33,9 @@ export default class Layout extends PureComponent {
         {
           Children.map(this.props.children, Comp => cloneElement(Comp))
         }
+        <footer styleName="footer">
+          Copyright © 易货嘀研发中心 货嘀UED
+        </footer>
       </div>
     );
   }
