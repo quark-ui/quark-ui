@@ -9,6 +9,8 @@ import IconGithub from '../icons/github.svg';
 import IconUser from '../icons/user.svg';
 import IconMail from '../icons/email.svg';
 import IconCopy from '../icons/copy.svg';
+import message from '../../src/components/message';
+
 import 'prismjs/themes/prism.css';
 
 import styles from './Component.css';
@@ -96,6 +98,7 @@ export default class ComponentBlock extends Component {
         <span
           onClick={(e)=>{
               copy(this.state.demoSourceCode);
+              message.success('复制成功',1); 
           }}>
           <IconCopy {...IconProps} />
         </span>
