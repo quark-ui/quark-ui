@@ -1,6 +1,9 @@
 .ThemePicker {
   align-self: center;
 }
+.ThemePicker:hover{
+  cursor: pointer;
+}
 
 .ThemePicker__palette {
   height: 24px;
@@ -12,4 +15,16 @@
   width: 24px;
   height: 24px;
   cursor: pointer;
+}
+.theme__tag{
+      margin-right: 10px;
+    display: inline-flex;
+    padding: 0 4px;
+    height: 24px;
+    /*border: 1px solid var(--border-color);*/
+    align-items: center;
+    border-radius: 5px;
+    & > span{
+      margin-left: 6px;
+    }
 }

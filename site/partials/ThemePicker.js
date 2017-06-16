@@ -4,6 +4,7 @@ import CSSModules from 'react-css-modules';
 import Colr from 'colr';
 import Trigger from 'quark-ui/trigger';
 import Button from 'quark-ui/button';
+import IconColor from '../icons/color.svg';
 
 import { allowMultiple } from '../../src/constants';
 import DefaultTheme from '../../src/styles/theme';
@@ -13,6 +14,10 @@ import styles from './ThemePicker.css';
 const AvailableColors = {
   Blue: { h: 206, s: 74, v: 88 },
   Orange: { h: 28, s: 79, v: 100 },
+};
+const IconProps = {
+  width: 18,
+  height: 18,
 };
 
 function hsv(...args) {
@@ -93,7 +98,10 @@ export default class ThemePicker extends Component {
     return (
       <div styleName="ThemePicker">
         <Trigger {...triggerProps}>
-          <Button type="secondary" size="normal">主题</Button>
+          <span styleName="theme__tag">
+            <IconColor {...IconProps} />
+            <span>主题</span>
+          </span>
         </Trigger>
       </div>
     );

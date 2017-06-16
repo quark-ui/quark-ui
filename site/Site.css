@@ -80,6 +80,9 @@ a {
   background-color: #f4f4f4;
   color: #666;
 }
+.lineDrawing{
+  height: 700px;
+}
 .main {
   flex: 1;
   display: flex;
