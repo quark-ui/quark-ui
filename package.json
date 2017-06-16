@@ -42,6 +42,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-1": "^6.24.1",
     "colr": "^1.2.2",
+    "copy-to-clipboard": "^3.0.6",
     "css-loader": "^0.28.0",
     "es5-shim": "^4.5.8",
     "eslint": "^3.19.0",

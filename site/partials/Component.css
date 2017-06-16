@@ -71,12 +71,35 @@
     color: var(--brand-primary);
     border-color: var(--brand-primary);
   }
-  & > i.show_demo:after{
+  & > i.demo__show:after{
     font-style: normal;
     display: block;
     content: "▼";
   }
-  & > i.show_demo.active:after{
+  & > i.demo__show.active:after{
     content: "▲";
+  }
+}
+
+.Component__demoCode{
+   position: relative;
+  & > span{
+    display: none;
+    position: absolute;
+    right: 14px;
+    top:36px;
+    cursor: pointer;
+    transition: all .3s;
+  }
+  & svg {
+    fill: var(--brand-primary-light);
+  }
+}
+.Component__demoCode:hover {
+  & > span{
+    display: block;
+  }
+  & svg {
+    fill: var(--brand-primary);
   }
 }

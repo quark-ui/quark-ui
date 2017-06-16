@@ -2,11 +2,13 @@ import { Component, createElement } from 'react';
 import marked from 'meta-marked';
 import Prism from 'prismjs';
 import CSSModules from 'react-css-modules';
+import copy from 'copy-to-clipboard';
 import classnames from 'classnames';
 import { allowMultiple } from '../../src/constants';
 import IconGithub from '../icons/github.svg';
 import IconUser from '../icons/user.svg';
 import IconMail from '../icons/email.svg';
+import IconCopy from '../icons/copy.svg';
 import 'prismjs/themes/prism.css';
 
 import styles from './Component.css';
@@ -74,10 +76,10 @@ export default class ComponentBlock extends Component {
   }
 
 
-  demoCopy =() => {
+  demoShow =() => {
       let cls = classnames({
         ['active']:this.state.showCode,
-        ['show_demo']:true,
+        ['demo__show']:true,
       })
       return (
         <i
@@ -88,6 +90,17 @@ export default class ComponentBlock extends Component {
         </i>
       )
     }
+
+  demoCopy =() =>{
+      return (
+        <span
+          onClick={(e)=>{
+              copy(this.state.demoSourceCode);
+          }}>
+          <IconCopy {...IconProps} />
+        </span>
+      )
+  }
 
   render() {
     const { match } = this.props;
@@ -107,11 +120,12 @@ export default class ComponentBlock extends Component {
               demo ? <div styleName="Component__demoBox">{createElement(demo)}</div> : null
             }
             <div styleName="Component__copy">
-              {this.demoCopy()}
+              {this.demoShow()}
             </div>
             {
               
               this.state.showCode ? <div styleName="Component__demoCode" className="markdown-code">
+                {this.demoCopy()}
               <pre className="language-javascript">
                 <code
                   className="language-javascript"
