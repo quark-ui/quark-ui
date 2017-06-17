@@ -5,6 +5,8 @@
 
 }
 .Component__demoCode {
+  border-top:solid 1px  var(--border-color);
+  padding-top: 20px;
   & pre {
     margin: 0;
   }
@@ -44,8 +46,60 @@
 }
 
 .Component__copy {
-  color: #fff;
-  position: absolute;
-  top: 0;
-  right: 0;
+  position: relative;
+  height: 80px;
+  & > i{
+    display: inline-block;
+    position: absolute;
+    right: 14px;
+    bottom: 22px;
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+    font-size: 14px;
+    line-height: 16px;
+    text-align: center;
+    transition: all .3s;
+    color: #999;
+    background: #fff;
+    user-select: none;
+    border-radius: 100%;
+    border: 1px solid var(--brand-primary-light);
+    color: var(--brand-primary-light);
+  }
+  & > i:hover{
+    color: var(--brand-primary);
+    border-color: var(--brand-primary);
+  }
+  & > i.demo__show:after{
+    font-style: normal;
+    display: block;
+    content: "▼";
+  }
+  & > i.demo__show.active:after{
+    content: "▲";
+  }
+}
+
+.Component__demoCode{
+   position: relative;
+  & > span{
+    display: none;
+    position: absolute;
+    right: 14px;
+    top:36px;
+    cursor: pointer;
+    transition: all .3s;
+  }
+  & svg {
+    fill: var(--brand-primary-light);
+  }
+}
+.Component__demoCode:hover {
+  & > span{
+    display: block;
+  }
+  & svg {
+    fill: var(--brand-primary);
+  }
 }
