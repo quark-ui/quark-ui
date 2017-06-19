@@ -2,36 +2,42 @@
  * QuarkUi Site Style
  * @author 
  */
-@import "../src/styles/base.css";
 
+@import "../src/styles/base.css";
 html, body {
   height: 100%;
 }
+
 a {
   color: var(--brand-primary);
 }
+
 .app {
   display: flex;
   flex-direction: column;
   height: 100%;
 }
-.container{
+
+.container {
   border-bottom: solid 1px #f1f4f9;
 }
+
 .head {
   flex: 0 0 48px;
   display: flex;
   height: 100px;
-  padding:0 50px;
+  padding: 0 50px;
   margin: 0 auto;
   justify-content: space-between;
   background-color: #fff;
 }
+
 .head__brandTitle {
   margin: 0;
   font-size: 32px;
   align-self: center;
 }
+
 .head__navigation {
   display: flex;
   flex: 1;
@@ -47,11 +53,11 @@ a {
     text-decoration: none;
     text-transform: uppercase;
     letter-spacing: 1px;
-    text-shadow: 0 0 1px rgba(255,255,255,0.3);
+    text-shadow: 0 0 1px rgba(255, 255, 255, 0.3);
   }
   & a:after {
     position: absolute;
-    bottom:-25px;
+    bottom: -25px;
     left: 0;
     width: 100%;
     height: 1px;
@@ -62,26 +68,28 @@ a {
     transition: height 0.3s, opacity 0.3s, transform 0.3s;
     transform: translateY(-10px);
   }
-  & a:hover:after{
+  & a:hover:after {
     height: 4px;
     opacity: 1;
     -webkit-transform: translateY(0px);
     -moz-transform: translateY(0px);
     transform: translateY(0px);
   }
-  & :global(.active) {
+  &:global(.active) {
     color: var(--brand-primary);
   }
 }
-.footer{
+
+.footer {
   height: 98px;
   padding-top: 45px;
   text-align: center;
   background-color: #f4f4f4;
   color: #666;
 }
-.lineDrawing{
-}
+
+.lineDrawing {}
+
 .main {
   flex: 1;
   display: flex;
@@ -89,29 +97,33 @@ a {
   background: #fff;
   width: 100%;
 }
+
 .content {
   flex: 1;
-  padding: 20px 20px 20px 50px;
+  padding: 20px;
   width: calc(100% - 240px);
   box-sizing: border-box;
-  background-color: #fbfbfb;
+  background-color: #f5f5f5;
 }
+
 .aside {
   flex: 0 0 240px;
   border-right: solid 1px #f7f7f7;
   box-sizing: border-box;
   background-color: #fff;
   margin: 0 0 50px 0;
-  
 }
+
 .aside__menu {
   margin: 0;
   padding: 0;
   list-style: none;
 }
+
 .aside__group {
   line-height: normal;
 }
+
 .aside__title {
   height: 48px;
   line-height: 48px;
@@ -125,6 +137,7 @@ a {
   padding: 0;
   list-style: none;*/
 }
+
 .aside__navItem {
   font-size: 16px;
   cursor: pointer;
@@ -132,10 +145,9 @@ a {
   transition: all .2s ease-in-out;
   & span {
     font-size: 14px;
-    display:inline-block;
+    display: inline-block;
     margin-left: 10px;
   }
-
   & a {
     padding: 14px 24px;
     display: block;
@@ -145,16 +157,16 @@ a {
     text-decoration: none;
     color: var(--brand-primary);
   }
-  & :global(.active) {
+  &:global(.active) {
     color: var(--brand-primary);
   }
-
 }
 
-.aside__navItem:hover{
-    background-color: #f7f7f7;
-    color: var(--brand-primary);
+.aside__navItem:hover {
+  background-color: #f7f7f7;
+  color: var(--brand-primary);
 }
+
 .DocPage {
   /*padding: 20px;*/
   width: 100%;
@@ -162,29 +174,22 @@ a {
   margin: 20px 50px;
 }
 
-
-:global(.markdown-demo){
+:global(.markdown-demo) {
   padding: 0 20px 20px 20px;
-  border: solid 1px #dddddd;
-  border-radius: 2px;
   background-color: #fff;
 }
 
-:global(.markdown-code){
-
-}
+:global(.markdown-code) {}
 
 :global(.markdown-block) {
   display: block;
   color: var(--text-color);
   line-height: 1.5;
-
   & > h1, & > h2, & > h3, & > h4, & > h5, & > h6 {
     margin: 24px 0 16px;
     font-weight: 600;
     line-height: 1.25;
   }
-
   & > h1 {
     padding-bottom: .3em;
     font-size: 2.5em;
@@ -216,14 +221,12 @@ a {
     color: #666666;
     margin-bottom: 20px;
   }
-
   & > ul, & > ol {
     padding-left: 2em;
     & li {
       list-style-type: disc;
     }
   }
-
   & > table {
     margin-bottom: 24px;
     width: 100%;
@@ -232,7 +235,6 @@ a {
     border-spacing: 0;
     empty-cells: show;
     background-color: #fff;
-
     & th {
       background: #f7f7f7;
       white-space: nowrap;
@@ -246,7 +248,6 @@ a {
       text-align: left;
     }
   }
-
   & code:not([class*="language"]) {
     padding: 0 .2em;
     background-color: rgba(27, 31, 35, 0.05);
@@ -254,11 +255,8 @@ a {
     border-radius: 3px;
     font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
   }
-
-  & code:not([class*="language"])::before,
-  & code:not([class*="language"])::after {
+  & code:not([class*="language"])::before, & code:not([class*="language"])::after {
     letter-spacing: -0.2em;
     content: '\00a0';
   }
-  
 }

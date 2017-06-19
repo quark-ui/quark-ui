@@ -2,6 +2,8 @@ import {
   Route,
   NavLink,
 } from 'react-router-dom';
+import { RouteTransition } from 'react-router-transition';
+import spring from 'react-motion/lib/spring';
 import lowerFirst from 'lodash/lowerFirst';
 import styles from '../Site.css';
 
@@ -11,6 +13,7 @@ import pages from './componentList';
 
 import Layout from '../layouts/Layout';
 
+const PopConfig = { stiffness: 360, damping: 25 };
 const ComponentList = Object.keys(QuarkUI).map(c => c);
 
 const renderNavGroup = group => (
@@ -19,9 +22,9 @@ const renderNavGroup = group => (
       group
         .filter(d => ComponentList.indexOf(d.name) !== -1)
         .map(d =>
-        <li className={styles.aside__navItem} key={d.name}>
-          <NavLink to={`/component/${lowerFirst(d.name)}`}>{d.name}<span>{d.title}</span></NavLink>
-        </li>,
+          <li className={styles.aside__navItem} key={d.name}>
+            <NavLink to={`/component/${lowerFirst(d.name)}`}>{d.name}<span>{d.title}</span></NavLink>
+          </li>,
       )
     }
   </ul>
@@ -48,9 +51,22 @@ const ComponentPage = props => (
       <div className={styles.content}>
         <Route
           path="/component/:name"
-          component={(data) => {
-            const { match } = data;
-            return <ComponentBlock key={match.params.name} {...data} />;
+          component={(props) => {
+            const { match, location } = props;
+            return (
+              <RouteTransition 
+                pathname={location.pathname}
+                atEnter={{ opacity: 0, scale: 0.95 }}
+                atLeave={{ scale: spring(0.95, PopConfig), opacity: spring(0, PopConfig) }}
+                atActive={{ scale: spring(1, PopConfig), opacity: 1 }}
+                mapStyles={s => ({
+                  opacity: s.opacity,
+                  transform: `scale(${s.scale})`,
+                })}
+              >
+                <ComponentBlock key={match.params.name} {...props} />
+              </RouteTransition>
+            );
           }}
         />
       </div>
