@@ -1,8 +1,8 @@
-import { Component } from 'react';
-import { NavLink } from 'react-router-dom';
-import TextToSVG from 'text-to-svg';
-import assign from 'object-assign';
-import fontPath from '../fonts/Audiowide-Regular.ttf';
+import { PureComponent } from 'react';
+// import { NavLink } from 'react-router-dom';
+// import TextToSVG from 'text-to-svg';
+// import assign from 'object-assign';
+// import fontPath from '../fonts/Audiowide-Regular.ttf';
 
 import Icon from '../../src/components/icon';
 
@@ -66,7 +66,7 @@ const Contributor = {
 const CubeNumber = 16;
 const CubeArray = new Array(CubeNumber).fill('');
 
-export default class Home extends Component {
+export default class Home extends PureComponent {
 
   static renderContributor = list => (
     list.map(o => (
