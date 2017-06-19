@@ -11,7 +11,7 @@ import marked from 'meta-marked';
 
 import styles from './Site.css';
 
-import HomePage from './pages/HomePage';
+import HomePage from './pages/HomePageC';
 import ComponentPage from './pages/ComponentPage';
 import DocPage from './pages/DocPage';
 
