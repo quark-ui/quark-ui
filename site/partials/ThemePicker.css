@@ -1,8 +1,19 @@
 .ThemePicker {
   align-self: center;
+  color: var(--brand-primary);
+  & svg {
+    fill:var(--brand-primary);
+  }
 }
 .ThemePicker:hover{
   cursor: pointer;
+  color: var(--brand-primary);
+  & svg {
+    fill:var(--brand-primary);
+  }
+  & a {
+    color: var(--brand-primary);
+  }
 }
 
 .ThemePicker__palette {
@@ -17,7 +28,7 @@
   cursor: pointer;
 }
 .theme__tag{
-      margin-right: 10px;
+    margin-right: 10px;
     display: inline-flex;
     padding: 0 4px;
     height: 24px;
