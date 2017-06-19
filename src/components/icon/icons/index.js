@@ -10,6 +10,7 @@ import clock from './clock.svg';
 import close from './close.svg';
 import code from './code.svg';
 import copy from './copy.svg';
+import customise from './customise.svg';
 import doubleArrowLeft from './double-arrow-left.svg';
 import doubleArrowRight from './double-arrow-right.svg';
 import ellipsis from './ellipsis.svg';
@@ -22,10 +23,12 @@ import paper from './paper.svg';
 import plus from './plus.svg';
 import question from './question.svg';
 import question2 from './question2.svg';
+import react from './react.svg';
 import recycle from './recycle.svg';
 import search from './search.svg';
 import setting from './setting.svg';
 import success from './success.svg';
+import theme from './theme.svg';
 import triangleDown from './triangle-down.svg';
 import triangleUp from './triangle-up.svg';
 import upload from './upload.svg';
@@ -45,6 +48,7 @@ const ICONS = {
   close,
   code,
   copy,
+  customise,
   'double-arrow-left': doubleArrowLeft,
   'double-arrow-right': doubleArrowRight,
   ellipsis,
@@ -57,10 +61,12 @@ const ICONS = {
   plus,
   question,
   question2,
+  react,
   recycle,
   search,
   setting,
   success,
+  theme,
   'triangle-down': triangleDown,
   'triangle-up': triangleUp,
   upload,

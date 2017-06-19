@@ -21,28 +21,165 @@ a {
 .home__con {
   width: 1000px;
   margin: 0 auto;
-  padding: 80px 0;
+  padding: 40px 0;
 }
+
+.home__stage {
+  position: relative;
+  height: 300px;
+}
+.stage__grid {
+  transform: rotateX(-35deg) rotateY(-45deg);
+  &, & * {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform-style: preserve-3d;
+  }
+}
+.cube {
+  &:nth-child(1) {
+    transform: translate3d(-7.5em, 0, -7.5em);
+  }
+  &:nth-child(1) .cube__squisher {
+    animation-delay: 0.225s;
+  }
+  &:nth-child(2) {
+    transform: translate3d(-2.5em, 0, -7.5em);
+  }
+  &:nth-child(2) .cube__squisher {
+    animation-delay: 0.3s;
+  }
+  &:nth-child(3) {
+    transform: translate3d(2.5em, 0, -7.5em);
+  }
+  &:nth-child(3) .cube__squisher {
+    animation-delay: 0.375s;
+  }
+  &:nth-child(4) {
+    transform: translate3d(7.5em, 0, -7.5em);
+  }
+  &:nth-child(4) .cube__squisher {
+    animation-delay: 0.45s;
+  }
+  &:nth-child(5) {
+    transform: translate3d(-7.5em, 0, -2.5em);
+  }
+  &:nth-child(5) .cube__squisher {
+    animation-delay: 0.15s;
+  }
+  &:nth-child(6) {
+    transform: translate3d(-2.5em, 0, -2.5em);
+  }
+  &:nth-child(6) .cube__squisher {
+    animation-delay: 0.225s;
+  }
+  &:nth-child(7) {
+    transform: translate3d(2.5em, 0, -2.5em);
+  }
+  &:nth-child(7) .cube__squisher {
+    animation-delay: 0.3s;
+  }
+  &:nth-child(8) {
+    transform: translate3d(7.5em, 0, -2.5em);
+  }
+  &:nth-child(8) .cube__squisher {
+    animation-delay: 0.375s;
+  }
+  &:nth-child(9) {
+    transform: translate3d(-7.5em, 0, 2.5em);
+  }
+  &:nth-child(9) .cube__squisher {
+    animation-delay: 0.075s;
+  }
+  &:nth-child(10) {
+    transform: translate3d(-2.5em, 0, 2.5em);
+  }
+  &:nth-child(10) .cube__squisher {
+    animation-delay: 0.15s;
+  }
+  &:nth-child(11) {
+    transform: translate3d(2.5em, 0, 2.5em);
+  }
+  &:nth-child(11) .cube__squisher {
+    animation-delay: 0.225s;
+  }
+  &:nth-child(12) {
+    transform: translate3d(7.5em, 0, 2.5em);
+  }
+  &:nth-child(12) .cube__squisher {
+    animation-delay: 0.3s;
+  }
+  &:nth-child(13) {
+    transform: translate3d(-7.5em, 0, 7.5em);
+  }
+  &:nth-child(13) .cube__squisher {
+    animation-delay: 0s;
+  }
+  &:nth-child(14) {
+    transform: translate3d(-2.5em, 0, 7.5em);
+  }
+  &:nth-child(14) .cube__squisher {
+    animation-delay: 0.075s;
+  }
+  &:nth-child(15) {
+    transform: translate3d(2.5em, 0, 7.5em);
+  }
+  &:nth-child(15) .cube__squisher {
+    animation-delay: 0.15s;
+  }
+  &:nth-child(16) {
+    transform: translate3d(7.5em, 0, 7.5em);
+  }
+  &:nth-child(16) .cube__squisher {
+    animation-delay: 0.225s;
+  }
+  & .cube__squisher {
+    transform-origin: 0 1.375em;
+    transform: scaleY(0);
+    animation: ani 1.5s ease-in-out infinite;
+  }
+}
+.cube__face {
+  margin: -2em;
+  width: 4em;
+  height: 4em;
+
+  &:nth-child(1) {
+    transform: rotateX(90deg) translateZ(2em);
+    background: #fff;
+  }
+  &:nth-child(2) {
+    transform: rotateY(90deg) translateZ(2em);
+    background: #a9a9a9;
+  }
+  &:nth-child(3) {
+    transform: translateZ(2em);
+    background: #dcdcdc;
+  }
+}
+
+@keyframes ani {
+  0%, 50%, 100% {
+    transform: scaleY(0);
+  }
+  25% {
+    transform: scaleY(0.5);
+  }
+}
+
 
 .home__box {
   text-align: center;
   margin-bottom: 70px;
   & h1 {
-    height: 50px;
+    display: inline-block;
+    margin: 0 auto 20px;
+    padding: 0 20px 10px;
     font-weight: normal;
     font-size: 30px;
     color: var(--brand-primary);
-    padding-bottom: 20px;
-  }
-  & h1:after {
-    content: "";
-    display: block;
-    width: 120px;
-    height: 1px;
-    margin-top: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: #ccc;
+    border-bottom: 1px solid var(--border-color);
   }
   & h2 {
     font-weight: normal;
@@ -50,12 +187,8 @@ a {
     color: #7a7a7a;
     margin-bottom: 5px;
   }
-  & img {}
   & p {
-    font-size: 14px;
-    line-height: 1.5;
     color: #7f8c8d;
-    /*margin-top: 26px;*/
   }
   & .bog__wrap {
     margin-bottom: 40px;
@@ -100,6 +233,28 @@ a {
       margin: 0 30px;
       border: solid 1px #ddd;
     }
+  }
+}
+.explain {
+  margin-bottom: 30px;
+  padding: 30px 0;
+  font-size: 16px;
+  line-height: 2;
+  text-align: left;
+}
+.advantages {
+  display: flex;
+  margin-top: 20px;
+  justify-content: space-between;   
+}
+.advantage__block {
+  & svg {
+    fill: var(--text-color);
+  }
+  & p {
+    margin-top: 10px;
+    line-height: 2;
+    font-size: 14px;
   }
 }
 
