@@ -30,6 +30,10 @@ const common = {
         use: 'raw-loader',
       },
       {
+        test: /\.(png|jpg)$/,
+        use: 'url-loader',
+      },
+      {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         use: {

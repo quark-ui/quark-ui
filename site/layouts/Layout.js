@@ -33,11 +33,9 @@ export default class Layout extends PureComponent {
         {
           Children.map(children, Comp => cloneElement(Comp))
         }
-        {
-          this.props.location && this.props.location.pathname == '/' ? null: <footer styleName="footer">
-          Copyright © 易货嘀研发中心 货嘀UED
+        <footer styleName="footer">
+          Copyright © &nbsp;&nbsp;&nbsp;&nbsp;易货嘀研发中心&nbsp;&nbsp;&nbsp;&nbsp;易货嘀UED
         </footer>
-        }
       </div>
     );
   }
