@@ -42,7 +42,6 @@ class Picker extends PureComponent {
     type: PropTypes.oneOf(['date', 'month', 'range']),
     changeDate: PropTypes.func,
     disabledDate: PropTypes.func,
-    children: PropTypes.isRequired,
   }
 
   constructor(props) {

@@ -8,11 +8,14 @@ import CSSModules from 'react-css-modules';
 import classnames from 'classnames';
 import { allowMultiple } from '../../constants';
 import styles from './Steps.css';
+import Step from './Step';
 
 @CSSModules(styles, { allowMultiple })
 class Steps extends PureComponent {
 
-  static displayName = 'Steps'
+  static displayName = 'Steps';
+
+  static Step = Step;
 
   static defaultProps = {
     direction: 'horizontal',

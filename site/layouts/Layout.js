@@ -12,9 +12,9 @@ import ThemePicker from '../partials/ThemePicker';
 export default class Layout extends PureComponent {
 
   render() {
-    const { match } = this.props;
+    const { match, children } = this.props;
     return (
-      <div>
+      <div className={styles.app}>
         <div styleName="container">
           <header styleName="head">
             <h1 styleName="head__brandTitle">
@@ -31,7 +31,7 @@ export default class Layout extends PureComponent {
           </header>
         </div>
         {
-          Children.map(this.props.children, Comp => cloneElement(Comp))
+          Children.map(children, Comp => cloneElement(Comp))
         }
         {
           this.props.location && this.props.location.pathname == '/' ? null: <footer styleName="footer">
