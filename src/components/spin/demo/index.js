@@ -31,14 +31,51 @@ export default class SpinDemo extends Component {
         <h3>基本用法</h3>
         <Spin />
         <h3>自定义大小</h3>
-        <b>小</b>
-        <Spin size="small" />
-        <b>中</b>
-        <Spin size="default" />
-        <b>大</b>
-        <Spin size="large" />
+        <table>
+          <thead>
+            <tr>
+              <th>小</th>
+              <th>中</th>
+              <th>大</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                  <Spin size="small" />
+              </td>
+              <td>
+                  <Spin size="default" />
+              </td>
+              <td>
+                  <Spin size="large" />
+              </td>
+            </tr>
+          </tbody>
+        </table>
         <h3>自定义描述文案</h3>
-        <Spin tip="loading..." />
+        <table>
+          <thead>
+            <tr>
+              <th>小</th>
+              <th>中</th>
+              <th>大</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                  <Spin size="small" tip="loading..." />
+              </td>
+              <td>
+                  <Spin size="default" tip="loading..." />
+              </td>
+              <td>
+                  <Spin size="large" tip="loading..." />
+              </td>
+            </tr>
+          </tbody>
+        </table>
         <h3>容器中使用</h3>
         <div className={style.example1}>
           <Spin />

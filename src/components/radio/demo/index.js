@@ -78,9 +78,9 @@ export default class RadioDemo extends Component {
     return (
       <div className="markdown-block">
         <h3>通过配置 options 参数来渲染单选框</h3>
-        <RadioGroup options={plainOptions} onChange={this.onChange1} value={value1} disabled={disabled} />
-        <RadioGroup options={options} onChange={this.onChange2} value={value2} disabled={disabled} />
-        <RadioGroup options={optionsWithDisabled} onChange={this.onChange3} value={value3} disabled={disabled} />
+        <p><RadioGroup options={plainOptions} onChange={this.onChange1} value={value1} disabled={disabled} /></p>
+        <p><RadioGroup options={options} onChange={this.onChange2} value={value2} disabled={disabled} /></p>
+        <p><RadioGroup options={optionsWithDisabled} onChange={this.onChange3} value={value3} disabled={disabled} /></p>
 
         <h3>嵌套的RadioGroup</h3>
         <RadioGroup onChange={this.onChange} value={value} disabled={disabled}>

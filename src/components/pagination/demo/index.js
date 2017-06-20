@@ -27,7 +27,7 @@ export default class PaginationDemo extends Component {
         <h3>迷你</h3>
         <p>用于弹窗等页面展示区域狭小的场景。</p>
         <h3>受控方式</h3>
-        <Pagination
+        <p><Pagination
           current={current}
           total={50}
           onChange={(c) => {
@@ -35,7 +35,7 @@ export default class PaginationDemo extends Component {
               current: c,
             });
           }}
-        />
+        /></p>
         <Pagination total={100} showQuickJumper showSizeChanger size="small" />
         <h3>非受控方式</h3>
         <Pagination defaultCurrent={1} total={50} />

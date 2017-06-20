@@ -22,29 +22,47 @@ export default class DatePickerDemo extends Component {
     const { date, disabled } = this.state;
     return (
       <div className="markdown-block">
-        <Checkbox
-          checked={disabled}
-          onChange={this.changeDisabled}
-        >
-          禁用
-        </Checkbox>
+        <h3>
+          <Checkbox
+            checked={disabled}
+            onChange={this.changeDisabled}
+          >
+            禁用
+          </Checkbox>
+        </h3>
+        
         <h3>日期选择</h3>
-        <p>非受控方式</p>
-        <DatePicker
-          disabled={disabled}
-          onChange={this.onChange}
-        />
-        <p>受控方式</p>
-        <DatePicker
-          disabled={disabled}
-          value={date}
-          onChange={(d) => {
-            this.setState({
-              date: d,
-            });
-          }}
-        />
-        <p>选择时间: {date.format()}</p>
+        <table>
+          <thead>
+            <tr>
+              <th>非受控方式</th>
+              <th>受控方式</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <DatePicker
+                  disabled={disabled}
+                  onChange={this.onChange}
+                />
+              </td>
+              <td style={{position: 'relative'}}>
+                <DatePicker
+                  disabled={disabled}
+                  value={date}
+                  onChange={(d) => {
+                    this.setState({
+                      date: d,
+                    });
+                  }}
+                />
+                <p style={{position: 'absolute', right: '20px', top: '15px'}}>选择时间: {date.format()}</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        
         <h3>不可选日期</h3>
         <p>可用 disabledDate 禁止选择部分日期</p>
         <DatePicker
