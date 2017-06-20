@@ -1,7 +1,7 @@
 ---
 author:
   name: Northerner
-  email: hefanan_1301@163.com
+  email: hefan_1301@163.com
 ---
 
 ## Spin
