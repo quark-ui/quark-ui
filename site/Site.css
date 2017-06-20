@@ -397,7 +397,7 @@ a {
     text-decoration: none;
     color: var(--brand-primary);
   }
-  &:global(.active) {
+  &.active {
     color: var(--brand-primary);
   }
 }

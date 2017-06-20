@@ -186,7 +186,7 @@
 }
 
 :global(.rc-input-number-handler-wrap:hover .rc-input-number-handler) {
-	height: 40%
+	/*height: 40%*/
 }
 
 :global(.rc-input-number:hover .rc-input-number-handler-wrap) {
@@ -208,7 +208,7 @@
 }
 
 :global(.rc-input-number-handler-up:hover) {
-	height: 60%!important
+	/*height: 60%!important*/
 }
 
 :global(.rc-input-number-handler-down) {
@@ -229,7 +229,7 @@
 
 :global(.rc-input-number-handler-down:hover) {
 	color: var(--brand-primary-light);
-	height: 60%!important
+	/*height: 60%!important*/
 }
 
 :global(.rc-input-number-disabled .rc-input-number-handler-down-inner),
