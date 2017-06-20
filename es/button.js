@@ -56,7 +56,7 @@ var index = createCommonjsModule(function (module) {
 }());
 });
 
-var styles = { "danger": "tPlnPEk", "dashed": "_35mc8WS", "secondary": "_3S37_fc", "primary": "_19BpMwo", "base": "XY-M_dO", "small": "fROe7ML", "normal": "_8FQcytX", "large": "_32FHQJI", "disabled": "_1h6x5iR", "button--primary": "_3hh9tei XY-M_dO _19BpMwo", "button--secondary": "vXJ9qrz XY-M_dO _3S37_fc", "button--dashed": "BNj9gmv XY-M_dO _35mc8WS", "button--danger": "_3x-do99 XY-M_dO tPlnPEk", "button--disabled": "_1CK7wLL XY-M_dO _1h6x5iR", "button--large": "yw7Pd8L _32FHQJI", "button--normal": "rZQNI_c _8FQcytX", "button--small": "_1duqZjn fROe7ML", "button-Primary": "_3hh9tei XY-M_dO _19BpMwo", "button-Secondary": "vXJ9qrz XY-M_dO _3S37_fc", "button-Dashed": "BNj9gmv XY-M_dO _35mc8WS", "button-Danger": "_3x-do99 XY-M_dO tPlnPEk", "button-Disabled": "_1CK7wLL XY-M_dO _1h6x5iR", "button-Large": "yw7Pd8L _32FHQJI", "button-Normal": "rZQNI_c _8FQcytX", "button-Small": "_1duqZjn fROe7ML" };
+var styles = { "danger": "_1IZL9la", "dashed": "_3YSE_nE", "secondary": "_16NdYXA", "primary": "_1rlU5o-", "base": "CTy3CHb", "small": "_1FNLWX0", "normal": "_1O7JoXn", "large": "_1JYFbqn", "disabled": "_3P6QXVt", "button--primary": "_11KqluX CTy3CHb _1rlU5o-", "button--secondary": "_1QjCEA1 CTy3CHb _16NdYXA", "button--dashed": "_1Ko5_w4 CTy3CHb _3YSE_nE", "button--danger": "_16108o6 CTy3CHb _1IZL9la", "button--disabled": "_3dqIZEv CTy3CHb _3P6QXVt", "button--large": "_3KW6hMp _1JYFbqn", "button--normal": "_3mBVgjk _1O7JoXn", "button--small": "_2HVyQfI _1FNLWX0", "buttonPrimary": "_11KqluX CTy3CHb _1rlU5o-", "buttonSecondary": "_1QjCEA1 CTy3CHb _16NdYXA", "buttonDashed": "_1Ko5_w4 CTy3CHb _3YSE_nE", "buttonDanger": "_16108o6 CTy3CHb _1IZL9la", "buttonDisabled": "_3dqIZEv CTy3CHb _3P6QXVt", "buttonLarge": "_3KW6hMp _1JYFbqn", "buttonNormal": "_3mBVgjk _1O7JoXn", "buttonSmall": "_2HVyQfI _1FNLWX0" };
 
 var classCallCheck = function (instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -158,17 +158,10 @@ var _temp;
 var Button = (_temp = _class = function (_PureComponent) {
   inherits(Button, _PureComponent);
 
-  function Button(props) {
+  function Button() {
     classCallCheck(this, Button);
-
-    var _this = possibleConstructorReturn(this, (Button.__proto__ || Object.getPrototypeOf(Button)).call(this, props));
-
-    _this.state = {};
-    return _this;
+    return possibleConstructorReturn(this, (Button.__proto__ || Object.getPrototypeOf(Button)).apply(this, arguments));
   }
-
-  // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
-
 
   createClass(Button, [{
     key: 'render',
@@ -177,11 +170,11 @@ var Button = (_temp = _class = function (_PureComponent) {
           children = _props.children,
           type = _props.type,
           size = _props.size,
-          disabled = _props.disabled,
+          disabled$$1 = _props.disabled,
           otherProps = objectWithoutProperties(_props, ['children', 'type', 'size', 'disabled']);
 
       var btnProps = _extends({}, otherProps, {
-        className: index(styles['button--' + (disabled ? 'disabled' : type)], styles['button--' + size])
+        className: index(styles['button--' + (disabled$$1 ? 'disabled' : type)], styles['button--' + size])
       });
       return React.createElement(
         'button',
@@ -189,14 +182,16 @@ var Button = (_temp = _class = function (_PureComponent) {
         children
       );
     }
+
+    // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
+
   }]);
   return Button;
 }(PureComponent), _class.displayName = 'Button', _class.defaultProps = {
   type: 'primary',
   size: 'normal' }, _class.propTypes = {
   type: PropTypes.oneOf(['primary', 'secondary', 'dashed', 'danger']),
-  size: PropTypes.oneOf(['normal', 'large', 'small']),
-  children: PropTypes.isRequired
+  size: PropTypes.oneOf(['normal', 'large', 'small'])
 }, _temp);
 
 export default Button;

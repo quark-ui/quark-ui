@@ -1,3 +1,14 @@
+## v0.0.1-beta8 (2017-06-12)
+
+NEW:
+  - `Spin` style
+  - `Progress` style
+  - `inputnumber` style
+
+Fixed:
+  - exclude dependence from build component.
+
+
 ## v0.0.1-beta7 (2017-06-13)
 
 Switch from `webpack` to `rollup` to build publish files

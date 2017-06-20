@@ -3,34 +3,34 @@
  * @author grootfish
  */
 
-._2FotuLn {
+._1hnABRb {
   width: 100%;
   line-height: 1.5;
 }
 
-._3kw29fb {
+.O2T4biQ {
   position: relative;
   display: inline-block;
   vertical-align: top;
 }
 
-._3kw29fb:last-child ._1gbd7tY {
+.O2T4biQ:last-child ._2vbHRHb {
   display: none;
 }
 
-.ILP3t70:not(:first-child) .emy5r36 {
+.WV34rPt:not(:first-child) ._2UU-kd6 {
   padding-left: 10px;
   margin-left: -10px;
 }
 
-._1gbd7tY {
+._2vbHRHb {
   position: absolute;
   left: 0;
   width: 100%;
   top: 13px
 }
 
-._1gbd7tY>i {
+._2vbHRHb>i {
   display: inline-block;
   vertical-align: top;
   background: #e9e9e9;
@@ -40,7 +40,7 @@
   position: relative;
 }
 
-._1gbd7tY>i:after {
+._2vbHRHb>i:after {
   position: absolute;
   content: "";
   top: 0;
@@ -50,14 +50,14 @@
   opacity: 0;
 }
 
-.emy5r36 {
+._2UU-kd6 {
   background: #fff;
   position: relative;
   display: inline-block;
   vertical-align: top;
 }
 
-.BylYoDj {
+._2JVCbOY {
   display: block;
   border: 1px solid #CECECE;
   width: 26px;
@@ -69,13 +69,13 @@
   margin-right: 8px;
 }
 
-.nY84V-C {
+._2jVCR-o {
   line-height: 1;
   color: rgb(255, 148, 54);
   position: relative;
 }
 
-._2b8KAtX {
+._35Vh_F5 {
   font-size: 14px;
   color: #333;
   font-weight: 700;
@@ -84,12 +84,12 @@
   padding-right: 10px;
 }
 
-.ecPtJpH {
+._1DxItRx {
   font-size: 12px;
   color: #333;
 }
 
-.dZz2aKo {
+._11Rome9 {
   position: relative;
   display: inline-block;
   vertical-align: top;
@@ -98,72 +98,72 @@
 
 /*未开始状态样式*/
 
-.-gThN4N{
+.XQtgjbi{
 }
 
-.-gThN4N ._2b8KAtX {
+.XQtgjbi ._35Vh_F5 {
   color: #CECECE;
 }
 
-.-gThN4N .ecPtJpH {
+.XQtgjbi ._1DxItRx {
   color: #CECECE;
 }
 
-.-gThN4N .BylYoDj {
+.XQtgjbi ._2JVCbOY {
   border-color: #CECECE;
   background-color: #fff;
 }
 
-.-gThN4N .BylYoDj>.nY84V-C {
+.XQtgjbi ._2JVCbOY>._2jVCR-o {
   color: #CECECE;
 }
 
 /*进行中状态样式*/
 
-._14-y2ob{
+.YRG4bmD{
 }
 
-._14-y2ob ._2b8KAtX {
+.YRG4bmD ._35Vh_F5 {
   color: #333;
 }
 
-._14-y2ob .ecPtJpH {
+.YRG4bmD ._1DxItRx {
   color: #333;
 }
 
-._14-y2ob .BylYoDj {
+.YRG4bmD ._2JVCbOY {
   border-color: rgb(255, 148, 54);
   background-color: rgb(255, 148, 54);
 }
 
-._14-y2ob .BylYoDj>.nY84V-C {
+.YRG4bmD ._2JVCbOY>._2jVCR-o {
   color: #fff;
 }
 
 /*完成状态样式*/
 
-._1-rom2b {
+._1VnV_nf {
 
 }
 
-._1-rom2b ._2b8KAtX {
+._1VnV_nf ._35Vh_F5 {
   color: #666;
 }
 
-._1-rom2b .ecPtJpH {
+._1VnV_nf ._1DxItRx {
   color: #666;
 }
 
-._1-rom2b .BylYoDj {
+._1VnV_nf ._2JVCbOY {
   border-color: rgb(255, 148, 54);
   background-color: #fff;
 }
 
-._1-rom2b .BylYoDj>.nY84V-C {
+._1VnV_nf ._2JVCbOY>._2jVCR-o {
   color: rgb(255, 148, 54);
 }
 
-._1-rom2b ._1gbd7tY>i:after {
+._1VnV_nf ._2vbHRHb>i:after {
   width: 100%;
   background: rgb(255, 148, 54);
   transition: all .6s;
@@ -173,20 +173,20 @@
 
 /*TODO*/
 
-._1Q6bhQx {}
+._2V3dCtV {}
 
-._2_Lo66c {}
+.WD5QBi2 {}
 
 /*竖向步骤条样式*/
 
-.VjLokFF{
+._1Z9B0MQ{
 }
 
-.VjLokFF ._3kw29fb {
+._1Z9B0MQ .O2T4biQ {
   display: block;
 }
 
-.VjLokFF ._1gbd7tY {
+._1Z9B0MQ ._2vbHRHb {
   position: absolute;
   left: 13px;
   top: 0;
@@ -195,20 +195,20 @@
   padding: 30px 0 4px;
 }
 
-.VjLokFF ._1gbd7tY>i {
+._1Z9B0MQ ._2vbHRHb>i {
   height: 100%;
   width: 1px;
 }
 
-.VjLokFF .ecPtJpH {
+._1Z9B0MQ ._1DxItRx {
   padding-bottom: 12px;
 }
 
-.VjLokFF .emy5r36 {
+._1Z9B0MQ ._2UU-kd6 {
   float: left;
 }
 
-.VjLokFF .dZz2aKo {
+._1Z9B0MQ ._11Rome9 {
   min-height: 72px;
   overflow: hidden;
   display: block;
