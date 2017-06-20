@@ -13,79 +13,105 @@
 .qui-spin-dot {
     position: relative;
     display: inline-block;
-    width: 20px;
-    height: 20px;
-    animation: uiRotate 1.2s infinite linear;
+    width: 54px;
+    height: 35px;
 }
 
 .small .qui-spin-dot {
-    width: 14px;
-    height: 14px;
+    width: 30px;
+    height: 23px;
 }
 
 .large .qui-spin-dot {
-    width: 32px;
-    height: 32px;
-}
-
-@keyframes uiRotate {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
+    width: 70px;
+    height: 47px;
 }
 
 .qui-spin-dot i {
     position: absolute;
-    width: 9px;
-    height: 9px;
-    border-radius: 100%;
+    width: 4px;
+    height: 35px;
+    border-radius:1em;
     background: var(--brand-primary);
-    transform: scale(.75);
     animation: uiFade 1s infinite linear alternate;
 }
 
 .small .qui-spin-dot i {
-    width: 6px;
-    height: 6px;
+    width: 3px;
+    height: 23px;
 }
 
 .large .qui-spin-dot i {
-    width: 14px;
-    height: 14px;
+    width: 6px;
+    height: 47px;
 }
 
 .qui-spin-dot i:nth-child(1) {
     left: 0;
-    top: 0;
+    animation-delay: 0s;
 }
 
 .qui-spin-dot i:nth-child(2) {
-    right: 0;
-    top: 0;
-    animation-delay: 0.4s;
+    left: 12px;
+    animation-delay: 0.2s;
 }
 
 .qui-spin-dot i:nth-child(3) {
-    left: 0;
-    bottom: 0;
-    animation-delay: 0.8s;
+    left: 24px;
+    animation-delay: 0.4s;
 }
 
 .qui-spin-dot i:nth-child(4) {
-    right: 0;
-    bottom: 0;
-    animation-delay: 1.2s;
+    left: 36px;
+    animation-delay: 0.6s;
+}
+
+.qui-spin-dot i:nth-child(5) {
+    left: 48px;
+    animation-delay: 0.8s;
+}
+
+
+.small .qui-spin-dot i:nth-child(2) {
+    left: 7px;
+}
+
+.small .qui-spin-dot i:nth-child(3) {
+    left: 14px;
+}
+
+.small .qui-spin-dot i:nth-child(4) {
+    left: 21px;
+}
+
+.small .qui-spin-dot i:nth-child(5) {
+    left: 28px;
+}
+
+.large .qui-spin-dot i:nth-child(2) {
+    left: 16px;
+}
+
+.large .qui-spin-dot i:nth-child(3) {
+    left: 32px;
+}
+
+.large .qui-spin-dot i:nth-child(4) {
+    left: 48px;
+}
+
+.large .qui-spin-dot i:nth-child(5) {
+    left: 64px;
 }
 
 @keyframes uiFade {
-    0% {
+    0%,100% {
         opacity: 0.3;
+        transform: scaleY(.5);
     }
-    100% {
+    50% {
         opacity: 1;
+        transform: scaleY(1);
     }
 }
 
