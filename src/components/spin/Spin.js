@@ -82,6 +82,7 @@ class Spin extends PureComponent {
           <i />
           <i />
           <i />
+          <i />
         </span>
         {
           tip ? <p styleName={'qui-spin-text'}>{tip}</p> : null

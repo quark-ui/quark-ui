@@ -31,8 +31,11 @@ export default class SpinDemo extends Component {
         <h3>基本用法</h3>
         <Spin />
         <h3>自定义大小</h3>
+        <b>小</b>
         <Spin size="small" />
+        <b>中</b>
         <Spin size="default" />
+        <b>大</b>
         <Spin size="large" />
         <h3>自定义描述文案</h3>
         <Spin tip="loading..." />
@@ -49,11 +52,11 @@ export default class SpinDemo extends Component {
             <Alert
               type="info"
               message="警告提示内容"
-              description="警告提示的辅助性文字介绍警告提示的辅助
+              description={`警告提示的辅助性文字介绍警告提示的辅助
               性文字介绍警告提示的辅助性文字介绍警告提示的辅助性文
               字介绍警告提示的辅助性文字介绍警告提示的辅助性文字介
               绍警告提示的辅助性文字介绍警告提示的辅助性文字介绍警
-              告提示的辅助性文字介绍警告提示的辅助性文字介绍"
+              告提示的辅助性文字介绍警告提示的辅助性文字介绍`}
             />
           </Spin>
           <p>
@@ -66,12 +69,12 @@ export default class SpinDemo extends Component {
             <Alert
               type="info"
               message="警告提示内容"
-              description="警告提示的辅助性文字介绍警告提示
+              description={`警告提示的辅助性文字介绍警告提示
               的辅助性文字介绍警告提示的辅助性文字介绍警告提示
               的辅助性文字介绍警告提示的辅助性文字介绍警告提示
               的辅助性文字介绍警告提示的辅助性文字介绍警告提示
               的辅助性文字介绍警告提示的辅助性文字介绍警告提示
-              的辅助性文字介绍"
+              的辅助性文字介绍`}
             />
           </Spin>
           <p>
