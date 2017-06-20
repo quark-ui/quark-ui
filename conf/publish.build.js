@@ -31,7 +31,7 @@ const getCssnextConfig = (theme = DEFAULT_THEME) => ({
     customProperties: {
       variables: theme,
     },
-  }
+  },
 });
 
 const cwd = process.cwd();
@@ -66,6 +66,7 @@ const external = [
   'react',
   'react-dom',
   'moment',
+  'rc-',
 ];
 const plugins = [
   resolve({
@@ -117,7 +118,10 @@ const build = (name) => {
   // pack js
   rollup.rollup({
     entry: `./src/components/${name}/index.js`,
-    external: external.concat(['lodash', 'prop-types']),
+    external(id) {
+      return external.concat(['lodash', 'prop-types']).some(n => id.startsWith(n));
+    },
+    // external: external.concat(['lodash', 'prop-types']),
     plugins,
     legacy: true,
   }).then(bundle => {
@@ -135,7 +139,7 @@ const build = (name) => {
   }).catch(err => console.error(err));
 
   generateCSS(name);
-}
+};
 
 // build separate component
 componentList.forEach(build);
@@ -143,7 +147,10 @@ componentList.forEach(build);
 // build one big package
 rollup.rollup({
   entry: './src/index.js',
-  external,
+  // external,
+  external(id) {
+    return external.some(n => id.startsWith(n));
+  },
   plugins: plugins.concat([
     uglify(),
   ]),
