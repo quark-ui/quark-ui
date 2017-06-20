@@ -42,7 +42,7 @@ const Contributor = {
       name: '何凡',
     },
     {
-      avatar: image6,
+      avatar: '//github.com/lhf-nife.png?size=64',
       name: '刘慧芬',
     },
   ],
