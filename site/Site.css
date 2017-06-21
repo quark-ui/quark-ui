@@ -315,7 +315,7 @@ a {
     -moz-transform: translateY(0px);
     transform: translateY(0px);
   }
-  &:global(.active) {
+  & :global(a.active) {
     color: var(--brand-primary);
   }
 }
@@ -397,7 +397,7 @@ a {
     text-decoration: none;
     color: var(--brand-primary);
   }
-  &.active {
+  & :global(a.active) {
     color: var(--brand-primary);
   }
 }

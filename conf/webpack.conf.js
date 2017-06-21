@@ -30,7 +30,7 @@ const common = {
         use: 'raw-loader',
       },
       {
-        test: /\.(png|jpg)$/,
+        test: /\.(png|gif|jpg)$/,
         use: 'url-loader',
       },
       {
