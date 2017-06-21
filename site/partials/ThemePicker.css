@@ -1,5 +1,19 @@
 .ThemePicker {
   align-self: center;
+  color: var(--brand-primary);
+  & svg {
+    fill:var(--brand-primary);
+  }
+}
+.ThemePicker:hover{
+  cursor: pointer;
+  color: var(--brand-primary);
+  & svg {
+    fill:var(--brand-primary);
+  }
+  & a {
+    color: var(--brand-primary);
+  }
 }
 
 .ThemePicker__palette {
@@ -12,4 +26,16 @@
   width: 24px;
   height: 24px;
   cursor: pointer;
+}
+.theme__tag{
+    margin-right: 10px;
+    display: inline-flex;
+    padding: 0 4px;
+    height: 24px;
+    /*border: 1px solid var(--border-color);*/
+    align-items: center;
+    border-radius: 5px;
+    & > span{
+      margin-left: 6px;
+    }
 }

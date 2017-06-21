@@ -9,7 +9,7 @@ import CSSModules from 'react-css-modules';
 import classnames from 'classnames';
 import moment from 'moment';
 import momentPropTypes from 'react-moment-proptypes';
-import Icon from 'quark-ui/icon';
+import Icon from '../../icon';
 import { allowMultiple } from '../../../constants';
 import styles from '../DatePicker.css';
 

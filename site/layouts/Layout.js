@@ -12,9 +12,9 @@ import ThemePicker from '../partials/ThemePicker';
 export default class Layout extends PureComponent {
 
   render() {
-    const { match } = this.props;
+    const { match, children } = this.props;
     return (
-      <div>
+      <div className={styles.app}>
         <div styleName="container">
           <header styleName="head">
             <h1 styleName="head__brandTitle">
@@ -25,13 +25,17 @@ export default class Layout extends PureComponent {
               <NavLink to="/component/alert">组件</NavLink>
               <NavLink to="/usage">如何使用</NavLink>
               <NavLink to="/changes">版本历史</NavLink>
+              <NavLink to="/design">视觉规范</NavLink>
             </nav>
             <ThemePicker />
           </header>
         </div>
         {
-          Children.map(this.props.children, Comp => cloneElement(Comp))
+          Children.map(children, Comp => cloneElement(Comp))
         }
+        <footer styleName="footer">
+          Copyright © &nbsp;&nbsp;&nbsp;&nbsp;易货嘀研发中心&nbsp;&nbsp;&nbsp;&nbsp;易货嘀UED
+        </footer>
       </div>
     );
   }

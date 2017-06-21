@@ -26,7 +26,6 @@ class Message extends PureComponent {
     duration: PropTypes.number,
     onClose: PropTypes.func,
     type: PropTypes.oneOf(['info', 'success', 'error', 'warning']),
-    children: PropTypes.isRequired,
   }
 
   constructor(props) {

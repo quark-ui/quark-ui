@@ -41,12 +41,13 @@
   line-height: 14px;
   text-align: center;
   display: inline-block;
-  margin-right: 6px
+  margin-right: 6px;
+  vertical-align: text-top
 }
 
 .y-He0IY span svg {
-  -webkit-transform: scale(0.6);
-          transform: scale(0.6)
+  -webkit-transform: scale(0.75);
+          transform: scale(0.75)
 }
 
 .y-He0IY span:hover {
@@ -62,4 +63,3 @@
 ._3v_bQW3 {
   margin: 0 5px;
 }
-/*# sourceMappingURL=breadcrumb.orange.css.map*/

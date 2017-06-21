@@ -30,7 +30,6 @@ export default class Popup extends PureComponent {
     visible: PropTypes.bool,
     onMouseEnter: PropTypes.func,
     onMouseLeave: PropTypes.func,
-    children: PropTypes.isRequired,
   }
   render() {
     const { children, popupRef, position, visible, onMouseEnter, onMouseLeave } = this.props;

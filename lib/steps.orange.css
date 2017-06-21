@@ -22,12 +22,14 @@
   padding-left: 10px;
   margin-left: -10px;
 }
+
 ._2vbHRHb {
   position: absolute;
   left: 0;
   width: 100%;
   top: 13px
 }
+
 ._2vbHRHb>i {
   display: inline-block;
   vertical-align: top;
@@ -37,6 +39,7 @@
   width: 100%;
   position: relative;
 }
+
 ._2vbHRHb>i:after {
   position: absolute;
   content: "";
@@ -46,7 +49,6 @@
   height: 100%;
   opacity: 0;
 }
-
 
 ._2UU-kd6 {
   background: #fff;
@@ -60,7 +62,7 @@
   border: 1px solid #CECECE;
   width: 26px;
   height: 26px;
-  line-height: 25px;
+  line-height: 26px;
   text-align: center;
   border-radius: 26px;
   font-size: 14px;
@@ -95,56 +97,72 @@
 }
 
 /*未开始状态样式*/
+
 .XQtgjbi{
 }
+
 .XQtgjbi ._35Vh_F5 {
   color: #CECECE;
 }
+
 .XQtgjbi ._1DxItRx {
   color: #CECECE;
 }
+
 .XQtgjbi ._2JVCbOY {
   border-color: #CECECE;
   background-color: #fff;
 }
+
 .XQtgjbi ._2JVCbOY>._2jVCR-o {
   color: #CECECE;
-} 
+}
 
 /*进行中状态样式*/
+
 .YRG4bmD{
 }
+
 .YRG4bmD ._35Vh_F5 {
   color: #333;
 }
+
 .YRG4bmD ._1DxItRx {
   color: #333;
 }
+
 .YRG4bmD ._2JVCbOY {
   border-color: rgb(255, 148, 54);
   background-color: rgb(255, 148, 54);
 }
+
 .YRG4bmD ._2JVCbOY>._2jVCR-o {
   color: #fff;
 }
 
 /*完成状态样式*/
+
 ._1VnV_nf {
 
 }
+
 ._1VnV_nf ._35Vh_F5 {
   color: #666;
 }
+
 ._1VnV_nf ._1DxItRx {
   color: #666;
 }
+
 ._1VnV_nf ._2JVCbOY {
   border-color: rgb(255, 148, 54);
   background-color: #fff;
 }
+
 ._1VnV_nf ._2JVCbOY>._2jVCR-o {
   color: rgb(255, 148, 54);
 }
+
 ._1VnV_nf ._2vbHRHb>i:after {
   width: 100%;
   background: rgb(255, 148, 54);
@@ -153,17 +171,21 @@
   box-shadow: 0 0 0 0 rgb(255, 148, 54);
 }
 
-
 /*TODO*/
+
 ._2V3dCtV {}
+
 .WD5QBi2 {}
 
 /*竖向步骤条样式*/
+
 ._1Z9B0MQ{
 }
+
 ._1Z9B0MQ .O2T4biQ {
   display: block;
 }
+
 ._1Z9B0MQ ._2vbHRHb {
   position: absolute;
   left: 13px;
@@ -172,20 +194,22 @@
   width: 1px;
   padding: 30px 0 4px;
 }
+
 ._1Z9B0MQ ._2vbHRHb>i {
   height: 100%;
   width: 1px;
 }
+
 ._1Z9B0MQ ._1DxItRx {
   padding-bottom: 12px;
 }
+
 ._1Z9B0MQ ._2UU-kd6 {
   float: left;
 }
+
 ._1Z9B0MQ ._11Rome9 {
   min-height: 72px;
   overflow: hidden;
   display: block;
 }
-
-/*# sourceMappingURL=steps.orange.css.map*/

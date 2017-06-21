@@ -28,13 +28,13 @@ export default class DatePickerDemo extends Component {
         >
           禁用
         </Checkbox>
-        <h2>日期选择</h2>
-        <h3>非受控方式</h3>
+        <h3>日期选择</h3>
+        <p>非受控方式</p>
         <DatePicker
           disabled={disabled}
           onChange={this.onChange}
         />
-        <h3>受控方式</h3>
+        <p>受控方式</p>
         <DatePicker
           disabled={disabled}
           value={date}
@@ -45,7 +45,7 @@ export default class DatePickerDemo extends Component {
           }}
         />
         <p>选择时间: {date.format()}</p>
-        <h2>不可选日期</h2>
+        <h3>不可选日期</h3>
         <p>可用 disabledDate 禁止选择部分日期</p>
         <DatePicker
           disabled={disabled}
@@ -53,9 +53,9 @@ export default class DatePickerDemo extends Component {
             return current && current.valueOf() < Date.now();
           }}
         ></DatePicker>
-        <h2>月份选择</h2>
+        <h3>月份选择</h3>
         <MonthPicker onChange={this.onChange} disabled={disabled} />
-        <h2>预设范围</h2>
+        <h3>预设范围</h3>
         <p>RangePicker 可以设置常用的 预设范围 提高用户体验。</p>
         <RangePicker onChange={this.onChange} disabled={disabled} />
       </div>

@@ -72,11 +72,11 @@
 ._1IZL9la {
   background-color: #fff;
   border-color: #e6e6e6;
-  color: rgb(255, 58, 36)
+  color: #fe3824
 }
 ._1IZL9la:hover {
-  background-color: rgb(255, 58, 36);
-  border-color: rgb(255, 58, 36);
+  background-color: #fe3824;
+  border-color: #fe3824;
   color: #fff;
 }
 ._1IZL9la:active {
@@ -90,7 +90,6 @@
   color: #999;
   cursor: not-allowed;
 }
-
 ._11KqluX {
 }
 ._1QjCEA1 {
@@ -107,4 +106,3 @@
 }
 ._2HVyQfI {
 }
-/*# sourceMappingURL=button.orange.css.map*/
