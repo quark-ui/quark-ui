@@ -31,7 +31,7 @@ const common = {
       },
       {
         test: /\.(png|gif|jpg)$/,
-        use: 'url-loader',
+        use: 'file-loader',
       },
       {
         test: /\.jsx?$/,
