@@ -7,6 +7,13 @@ import CSSModules from 'react-css-modules';
 import styles from '../Site.css';
 import { allowMultiple } from '../../src/constants';
 import ThemePicker from '../partials/ThemePicker';
+import IconUEDLogo from '../icons/uedlogo.svg';
+
+const IconProps = {
+  width: 14,
+  height: 14,
+};
+
 
 @CSSModules(styles, { allowMultiple })
 export default class Layout extends PureComponent {
@@ -34,7 +41,9 @@ export default class Layout extends PureComponent {
           Children.map(children, Comp => cloneElement(Comp))
         }
         <footer styleName="footer">
-          Copyright © &nbsp;&nbsp;&nbsp;&nbsp;易货嘀研发中心&nbsp;&nbsp;&nbsp;&nbsp;易货嘀UED
+          Copyright © &nbsp;&nbsp;&nbsp;&nbsp;易货嘀研发中心&nbsp;&nbsp;&nbsp;&nbsp;
+          <IconUEDLogo {...IconProps} />
+          易货嘀UED
         </footer>
       </div>
     );
