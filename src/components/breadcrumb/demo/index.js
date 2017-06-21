@@ -13,7 +13,7 @@ export default class BreadcrumbDemo extends Component {
           <Breadcrumb.Item>bbb</Breadcrumb.Item>
         </Breadcrumb>
 
-        <Breadcrumb separator="<">
+        <Breadcrumb separator=">">
           <Breadcrumb.Item>home</Breadcrumb.Item>
           <Breadcrumb.Item href="/component/button">Button</Breadcrumb.Item>
           <Breadcrumb.Item href="/component/steps">Steps</Breadcrumb.Item>
@@ -28,7 +28,7 @@ export default class BreadcrumbDemo extends Component {
           <Breadcrumb.Item>bbb</Breadcrumb.Item>
         </Breadcrumb>
 
-        <Breadcrumb hasBackIcon separator="<">
+        <Breadcrumb hasBackIcon separator=">">
           <Breadcrumb.Item href="/">home</Breadcrumb.Item>
           <Breadcrumb.Item href="/component/button">Button</Breadcrumb.Item>
           <Breadcrumb.Item href="/component/steps">Steps</Breadcrumb.Item>
