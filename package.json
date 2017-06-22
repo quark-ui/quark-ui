@@ -100,6 +100,7 @@
     "moment": "^2.18.1",
     "object-assign": "^4.1.0",
     "prop-types": "^15.5.8",
+    "pseudomap": "^1.0.2",
     "rc-animate": "~2.3.0",
     "rc-input-number": "^3.6.0",
     "rc-menu": "~5.0.9",
@@ -107,7 +108,8 @@
     "react-css-modules": "^4.2.1",
     "react-moment-proptypes": "^1.4.0",
     "react-tappable": "^1.0.0",
-    "shallowequal": "^1.0.1"
+    "shallowequal": "^1.0.1",
+    "yallist": "^3.0.2"
   },
   "peerDependencies": {
     "react": "^15.5.0",
