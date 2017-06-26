@@ -31,7 +31,6 @@
     "es"
   ],
   "devDependencies": {
-    "animejs": "^2.0.2",
     "babel-core": "^6.24.1",
     "babel-eslint": "^7.2.2",
     "babel-loader": "^6.4.1",
@@ -82,14 +81,13 @@
     "rollup-plugin-uglify": "^2.0.1",
     "script-ext-html-webpack-plugin": "^1.8.0",
     "style-loader": "^0.16.1",
-    "text-to-svg": "^3.1.0",
     "uglifyjs-webpack-plugin": "^0.4.3",
     "url-loader": "^0.5.9",
-    "webpack": "^2.4.1",
+    "webpack": "^3.0.0",
     "webpack-bundle-analyzer": "^2.8.1",
     "webpack-chunk-hash": "^0.4.0",
     "webpack-dashboard": "^0.4.0",
-    "webpack-dev-server": "^2.4.2",
+    "webpack-dev-server": "^2.5.0",
     "webpack-merge": "^4.1.0"
   },
   "dependencies": {
@@ -100,21 +98,21 @@
     "moment": "^2.18.1",
     "object-assign": "^4.1.0",
     "prop-types": "^15.5.8",
-    "pseudomap": "^1.0.2",
     "rc-animate": "~2.3.0",
     "rc-input-number": "^3.6.0",
     "rc-menu": "~5.0.9",
     "rc-upload": "~2.3.0",
     "react-css-modules": "^4.2.1",
     "react-moment-proptypes": "^1.4.0",
+    "react-motion": "^0.5.0",
     "react-tappable": "^1.0.0",
-    "shallowequal": "^1.0.1",
-    "yallist": "^3.0.2"
+    "shallowequal": "^1.0.1"
   },
   "peerDependencies": {
     "react": "^15.5.0",
     "react-dom": "^15.5.0"
   },
   "contributors": [],
-  "license": "MIT"
+  "license": "MIT",
+  "false": {}
 }

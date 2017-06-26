@@ -23,25 +23,16 @@ export default class Search extends PureComponent {
     onSearch: PropTypes.func,
   }
 
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  input: any;
-
   onSearch = () => {
     const { onSearch } = this.props;
     if (onSearch) {
-      onSearch(this.input.refs.input.value);
-      console.log(this.input.refs.input.value);
+      onSearch(this.input.input.value);
     }
-    this.input.refs.input.focus();
+    this.input.input.focus();
   }
 
-
   render() {
-    const {suffix ,onSearch, ...otherProps} = this.props;
+    const { onSearch, ...otherProps } = this.props;
 
     const searchSuffix = (
       <Icon
@@ -55,9 +46,8 @@ export default class Search extends PureComponent {
       <Input
         {...otherProps}
         suffix={searchSuffix}
-        ref={node => this.input = node}
+        ref={node => (this.input = node)}
       />
     );
-
   }
 }

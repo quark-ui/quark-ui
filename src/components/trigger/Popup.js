@@ -4,13 +4,11 @@
  */
 import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import CSSModules from 'react-css-modules';
-import { allowMultiple } from '../../constants';
+import { spring, TransitionMotion, presets } from 'react-motion';
 import renderTo from '../../enhancer/render-to';
 import styles from './Trigger.css';
 
 @renderTo()
-@CSSModules(styles, { allowMultiple })
 export default class Popup extends PureComponent {
 
   static displayName = 'Popup'
@@ -19,6 +17,7 @@ export default class Popup extends PureComponent {
     position: [0, 0],
     popupRef: null,
     visible: false,
+    ready: false,
     onMouseEnter() {},
     onMouseLeave() {},
   }
@@ -28,24 +27,65 @@ export default class Popup extends PureComponent {
     position: PropTypes.arrayOf(PropTypes.number),
     popupRef: PropTypes.func,
     visible: PropTypes.bool,
+    ready: PropTypes.bool,
     onMouseEnter: PropTypes.func,
     onMouseLeave: PropTypes.func,
   }
-  render() {
-    const { children, popupRef, position, visible, onMouseEnter, onMouseLeave } = this.props;
-    const stylePos = {
-      left: position[0],
-      top: position[1],
+  willLeave() {
+    return {
+      opacity: spring(0, presets.stiff),
     };
+  }
+  willEnter() {
+    return {
+      opacity: 0,
+    };
+  }
+  render() {
+    const { children, popupRef, position, visible, ready, ...otherProps } = this.props;
     const wrapProps = {
       ref: popupRef,
-      styleName: 'popup',
-      style: stylePos,
-      onMouseEnter,
-      onMouseLeave,
+      className: styles.popup,
+      style: {
+        left: position[0],
+        top: position[1],
+        visibility: ready ? 'visible' : 'hidden',
+      },
+    };
+    const innerProps = {
+      // style: stylePos,
+      ...otherProps,
     };
     return (
-      visible ? <div {...wrapProps}>{children}</div> : null
+      <TransitionMotion
+        willLeave={this.willLeave}
+        willEnter={this.willEnter}
+        styles={visible ? [
+          {
+            key: 'popup',
+            style: {
+              opacity: spring(1, presets.stiff),
+            },
+          },
+        ] : []}
+      >
+        {
+          interpolatedStyles =>
+            <div {...wrapProps}>
+              {
+                interpolatedStyles.map(({ key, style }) =>
+                  <div
+                    key={key}
+                    style={style}
+                    {...innerProps}
+                  >
+                    {children}
+                  </div>,
+                )
+              }
+            </div>
+        }
+      </TransitionMotion>
     );
   }
 }

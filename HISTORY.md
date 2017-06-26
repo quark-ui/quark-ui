@@ -1,9 +1,15 @@
+## v0.0.1-beta9 (2017-06-23)
+
+add animation to below components
+- Trigger
+
+
 ## v0.0.1-beta8 (2017-06-12)
 
 NEW:
-  - `Spin` style
-  - `Progress` style
-  - `inputnumber` style
+- `Spin` style
+- `Progress` style
+- `inputnumber` style
 
 Fixed:
   - exclude dependence from build component.

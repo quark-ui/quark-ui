@@ -6,9 +6,10 @@ import { PureComponent, cloneElement } from 'react';
 import PropTypes from 'prop-types';
 import assign from 'object-assign';
 import CSSModules from 'react-css-modules';
+import classnames from 'classnames';
 import { allowMultiple } from '../../constants';
-import styles from './Input.css';
 import calculateNodeHeight from './calculateNodeHeight';
+import styles from './Input.css';
 
 function fixControlledValue(value) {
   if (typeof value === 'undefined' || value === null) {
@@ -16,7 +17,6 @@ function fixControlledValue(value) {
   }
   return value;
 }
-
 
 @CSSModules(styles, { allowMultiple })
 class Input extends PureComponent {
@@ -26,9 +26,10 @@ class Input extends PureComponent {
   static defaultProps = {
     type: 'text',
     size: 'normal',
-    // wrapperCls:'input__wrapper',
     disabled: false,
     autosize: false,
+    prefix: undefined,
+    suffix: undefined,
     onChange() {},
   }
 
@@ -43,7 +44,6 @@ class Input extends PureComponent {
       'large',
       'small',
     ]),
-    // wrapperCls: PropTypes.string,
     disabled: PropTypes.bool,
     // value: PropTypes.any,
     // defaultValue: PropTypes.any,
@@ -82,39 +82,41 @@ class Input extends PureComponent {
 
 
   renderLabeledIcon(children) {
-    const props = this.props;
-    if (props.type === 'textarea' || !('prefix' in props || 'suffix' in props)) {
+    const { type, prefix, suffix, style } = this.props;
+    if (type === 'textarea' || !('prefix' in this.props || 'suffix' in this.props)) {
       return children;
     }
 
-    const prefix = props.prefix ? (
+    const prefixNode = prefix ? (
       <span styleName={'input__prefix'}>
-        {props.prefix}
+        {prefix}
       </span>
     ) : null;
 
-    const suffix = props.suffix ? (
+    const suffixNode = suffix ? (
       <span styleName={'input__suffix'}>
-        {props.suffix}
+        {suffix}
       </span>
     ) : null;
 
     const inputProps = {
-      styleName: `${props.prefix ? 'input__wrapper input__wrapper__prefix' : (props.suffix ? 'input__wrapper input__wrapper__suffix' : 'input__wrapper')}`,
+      styleName: classnames('input__wrapper', {
+        input__wrapper__prefix: prefix,
+        input__wrapper__suffix: suffix,
+      }),
     };
 
     return (
       <span
         {...inputProps}
-        style={props.style}
+        style={style}
       >
-        {prefix}
+        {prefixNode}
         {cloneElement(children)}
-        {suffix}
+        {suffixNode}
       </span>
     );
   }
-
 
   render() {
     const props = this.props;
@@ -132,11 +134,13 @@ class Input extends PureComponent {
     }
 
     if (type === 'textarea') {
-      return <textarea
-        {...fieldProps}
-        style={assign({}, props.style, this.state.textareaStyles)}
-        onChange={this.textareaChange}
-      />;
+      return (
+        <textarea
+          {...fieldProps}
+          style={assign({}, props.style, this.state.textareaStyles)}
+          onChange={this.textareaChange}
+        />
+      );
     }
     return this.renderLabeledIcon(
       <input {...fieldProps} />,
