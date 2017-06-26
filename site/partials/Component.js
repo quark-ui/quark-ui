@@ -135,7 +135,7 @@ export default class ComponentBlock extends Component {
                 </pre>
               </div>
               : null}
-              {demo
+            { demo
               ? <div styleName="Component__demoBox">{createElement(demo)}</div>
               : null}
           </div>

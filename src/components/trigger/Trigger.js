@@ -45,6 +45,7 @@ class Trigger extends PureComponent {
     this.state = {
       position: [],
       active: false,
+      ready: false,
     };
   }
 
@@ -56,7 +57,7 @@ class Trigger extends PureComponent {
     if (!prevState.active && this.state.active) {
       setTimeout(() => {
         this.applyPlacement(this.props);
-      }, 0);
+      }, 100);
     }
   }
 
@@ -115,6 +116,12 @@ class Trigger extends PureComponent {
     const [popupAlign, selfAlign] = props.placement;
     const selfRect = Trigger.getTargetRect(this.node);
     const popupRect = Trigger.getTargetRect(this.popNode);
+    if (popupRect.width === 0 && popupRect.height === 0) {
+      this.setState({
+        ready: false,
+      });
+      return;
+    }
     const scrollX = window.pageXOffset || document.documentElement.scrollLeft;
     const scrollY = window.pageYOffset || document.documentElement.scrollTop;
     let x = scrollX;
@@ -166,19 +173,28 @@ class Trigger extends PureComponent {
         break;
     }
     const { offset } = this.props;
-    this.setState({
-      position: [x + offset[0], y + offset[1]],
-    });
+    const { position } = this.state;
+    const newState = {
+      ready: true,
+    };
+    const newPostition = [x + offset[0], y + offset[1]];
+    if (position[0] !== newPostition[0] || position[0] !== newPostition[0]) {
+      assign(newState, {
+        position: newPostition,
+      });
+    }
+    this.setState(newState);
   }
 
   renderPopup() {
     const { action } = this.props;
-    const { position, active } = this.state;
+    const { position, active, ready } = this.state;
     const popupProps = {
       ref: n => (this.popup = n),
       popupRef: n => (this.popNode = n),
       position,
       visible: active,
+      ready,
     };
     if (action === 'hover') {
       assign(popupProps, {

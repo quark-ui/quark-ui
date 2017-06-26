@@ -1,9 +1,9 @@
 import assign from 'lodash/assign';
-import { Component } from 'react';
+import { PureComponent } from 'react';
 import CSSModules from 'react-css-modules';
 import Colr from 'colr';
 import Trigger from 'quark-ui/trigger';
-import Button from 'quark-ui/button';
+// import Button from 'quark-ui/button';
 import IconColor from '../icons/color.svg';
 
 import { allowMultiple } from '../../src/constants';
@@ -28,7 +28,7 @@ function hsv(...args) {
 }
 
 @CSSModules(styles, { allowMultiple })
-export default class ThemePicker extends Component {
+export default class ThemePicker extends PureComponent {
   constructor(props) {
     super(props);
     this.applyTheme();
@@ -80,7 +80,7 @@ export default class ThemePicker extends Component {
                 key={theme}
                 className={styles.ThemePicker__colorGrid}
                 onClick={this.handleChangeTheme.bind(this, theme)}
-              ></span>
+              />
             );
           })
         }
