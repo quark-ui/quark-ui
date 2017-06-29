@@ -42,3 +42,5 @@ export { default as Radio } from './components/radio/';
 export { default as InputNumber } from './components/inputNumber/';
 
 export { default as Tabs } from './components/tabs/';
+
+export { default as Select } from './components/select/';
