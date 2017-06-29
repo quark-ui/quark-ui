@@ -21,8 +21,10 @@ class Trigger extends PureComponent {
     placement: ['tl', 'bl'],
     offset: [0, 0],
     popup: '',
+    popupVisible: undefined,
     mouseEnterDelay: 0,
     mouseLeaveDelay: 100,
+    onPopupVisibleChange() {},
   }
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
@@ -33,24 +35,37 @@ class Trigger extends PureComponent {
     popup: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.element,
-    ]),
+    ]).isRequired,
+    popupVisible: PropTypes.bool,
     mouseEnterDelay: PropTypes.number,
     mouseLeaveDelay: PropTypes.number,
+    onPopupVisibleChange: PropTypes.func,
   }
 
   static getTargetRect = target => target.getBoundingClientRect()
+  static getVisibleStateByProps = (props) => {
+    return typeof props.popupVisible === 'undefined' ? false : props.popupVisible;
+  }
 
   constructor(props) {
     super(props);
     this.state = {
       position: [],
-      active: false,
+      active: Trigger.getVisibleStateByProps(props),
       ready: false,
     };
   }
 
   componentDidMount() {
     this.applyPlacement(this.props);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (typeof nextProps.popupVisible !== 'undefined') {
+      this.setState({
+        active: Trigger.getVisibleStateByProps(nextProps),
+      });
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -77,6 +92,8 @@ class Trigger extends PureComponent {
     this.enterTimer = setTimeout(() => {
       this.setState({
         active: true,
+      }, () => {
+        this.props.onPopupVisibleChange(true);
       });
     }, mouseEnterDelay);
   }
@@ -90,6 +107,8 @@ class Trigger extends PureComponent {
     this.leaveTimer = setTimeout(() => {
       this.setState({
         active: false,
+      }, () => {
+        this.props.onPopupVisibleChange(false);
       });
     }, mouseLeaveDelay);
   }
@@ -108,6 +127,7 @@ class Trigger extends PureComponent {
         // unbind close listener
         off(document.body, 'click', this.checkClosable);
       }
+      this.props.onPopupVisibleChange(this.state.active);
     });
   }
 
