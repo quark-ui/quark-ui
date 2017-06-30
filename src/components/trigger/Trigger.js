@@ -64,6 +64,10 @@ class Trigger extends PureComponent {
     if (typeof nextProps.popupVisible !== 'undefined') {
       this.setState({
         active: Trigger.getVisibleStateByProps(nextProps),
+      }, () => {
+        if (!this.state.active) {
+          off(document.body, 'click', this.checkClosable);
+        }
       });
     }
   }
