@@ -57,6 +57,7 @@ export default class TriggerDemo extends Component {
     });
   }
   onPopupVisibleChange = (visible) => {
+    console.log('onPopupVisibleChange', visible);
     this.setState({
       visible,
     });
