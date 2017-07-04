@@ -5,28 +5,49 @@
 
 import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 import styles from './Select.css';
 
 export default class Option extends PureComponent {
   static displayName = 'Option';
 
-  static defaultProps = {};
+  static defaultProps = {
+    value: '',
+    text: '',
+    children: null,
+  };
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
-  static propTypes = {};
+  static propTypes = {
+    value: PropTypes.string,
+    text: PropTypes.string,
+    children: PropTypes.arrayOf(PropTypes.element),
+  };
 
   static contextTypes = {
     childContext: PropTypes.any,
   };
 
-  click = (e) => {
-    let { context } = this;
-    let { childContext } = context;
-    let { children, value, text } = this.props;
-    childContext.setValue(value, text);
+  click = () => {
+    const { context } = this;
+    const { childContext } = context;
+    const { value, text } = this.props;
+    childContext.onOptionSelected(value, text);
   };
 
   render() {
-    let { children, text } = this.props;
-    return <li className={styles.option} onClick={this.click}>{children ? children : text}</li>;
+    const { children, text, value } = this.props;
+    const { context } = this;
+    const { childContext } = context;
+
+    const isActived = childContext.getSelectedValue() === value;
+
+    return (
+      <li
+        className={classnames(styles.option, isActived ? styles.active : '')}
+        onClick={this.click}
+      >
+        {children || text}
+      </li>
+    );
   }
 }

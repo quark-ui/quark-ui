@@ -10,16 +10,24 @@ import styles from './Select.css';
 export default class OptGroup extends PureComponent {
   static displayName = 'Option';
 
-  static defaultProps = {};
+  static defaultProps = {
+    children: null,
+    label: '',
+  };
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
-  static propTypes = {};
+  static propTypes = {
+    children: PropTypes.arrayOf(PropTypes.element),
+    label: PropTypes.string,
+  };
 
   render() {
-    let { children, label } = this.props;
+    const { children, label } = this.props;
     return (
       <ul>
-        <li>{label}</li>
-        {children}
+        <li className={styles.groupname}>{label}</li>
+        <ul>
+          {children}
+        </ul>
       </ul>
     );
   }
