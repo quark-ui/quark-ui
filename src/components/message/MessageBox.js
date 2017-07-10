@@ -4,6 +4,7 @@
  */
 
 import { PureComponent } from 'react';
+import ReactDOM from 'react-dom';
 import CSSModules from 'react-css-modules';
 import uniqueId from 'lodash/uniqueId';
 import assign from 'object-assign';
@@ -74,29 +75,30 @@ class MessageBox extends PureComponent {
   }
 }
 
-MessageBox.newInstance = function(properties){
-  const {getContainer,...props} = properties||{};
+MessageBox.newInstance = function newInstance(properties) {
+  const { getContainer, ...props } = properties || {};
   let div;
-  if(getContainer){
+  if (getContainer) {
     div = getContainer();
-  }else{
+  } else {
     div = document.createElement('div');
     document.body.appendChild(div);
   }
-  const messageBox = ReactDOM.render(<MessageBox {...props} />, div);
+  const DOM = ReactDOM;
+  const messageBox = DOM.render(<MessageBox {...props} />, div);
   return {
-    msg(noticeProps){
+    msg(noticeProps) {
       messageBox.add(noticeProps);
     },
-    removeMsg(key){
+    removeMsg(key) {
       messageBox.remove(key);
     },
-    component:messageBox,
-    destroy(){
-      ReactDOM.unmountComponentAtNode(div);
+    component: messageBox,
+    destroy() {
+      DOM.unmountComponentAtNode(div);
       document.body.removeChild(div);
     },
   };
-}
+};
 
 export default MessageBox;

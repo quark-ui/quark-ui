@@ -3,10 +3,10 @@
  * @author grootfish
  */
 :root{
-    --alert-info-bg:#E8F6FF;
-    --alert-success-bg:#F5FFE9;
-    --alert-error-bg:#FFEBE8;
-    --alert-warning-bg:#FFFAE8;
+  --alert-info-bg: #E8F6FF;
+  --alert-success-bg: #F5FFE9;
+  --alert-error-bg: #FFEBE8;
+  --alert-warning-bg: #FFFAE8;
 }
 .alert {
   position: relative;
@@ -57,6 +57,9 @@
   overflow: hidden;
   cursor: pointer;
   color:#999;
+  &:hover{
+    color:#666;
+  }
 }
 
 .alert__info {

@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom';
 import { Component } from 'react';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
-import Button from 'quark-ui/button';
+import Button from '../button';
 import { allowMultiple } from '../../constants';
 import styles from './Modal.css';
 import renderTo from '../../enhancer/render-to';
@@ -16,27 +16,32 @@ import Icon from '../icon';
 const renderNoticeModal = (type, config = {
   title: '',
   content: '',
-  closable: false
+  closable: false,
 }) => {
   const wrapNode = document.createElement('div');
-  const colorArr = {'info' : '#3b98e0', 'success' : '#73da7d' , 
-                    'error' : '#e6445e', 'warning' : '#ffd31a'}
+  const colorArr = {
+    info: '#3b98e0',
+    success: '#73da7d',
+    error: '#e6445e',
+    warning: '#ffd31a',
+  };
   document.body.appendChild(wrapNode);
   const modalProps = {
     title: (<p><Icon name={type} size={26} color={colorArr[type]} />
-            <span>{config.title || type}</span>
-            { config.closable ?
-            <a
-              styleName="modal__closable"
-              href="javascript:void(0)"
-              onClick={(e) => {
-                ReactDOM.unmountComponentAtNode(wrapNode);
-                document.body.removeChild(wrapNode);
-              }}
-            ><Icon name="close" size={18} color="#a6a6a6"/></a>
+      <span>{config.title || type}</span>
+      { config.closable ?
+        <a
+          styleName="modal__closable"
+          href=""
+          onClick={(e) => {
+            e.preventDefault();
+            ReactDOM.unmountComponentAtNode(wrapNode);
+            document.body.removeChild(wrapNode);
+          }}
+        ><Icon name="close" size={18} color="#a6a6a6" /></a>
             : null
           }
-            </p>),
+    </p>),
     visible: true,
     closable: false,
     footer: (
@@ -52,7 +57,7 @@ const renderNoticeModal = (type, config = {
   };
   ReactDOM.render(
     <Modal {...modalProps}>
-      
+
       {config.content}
     </Modal>
   , wrapNode);
@@ -72,7 +77,7 @@ class Modal extends Component {
     footer: undefined,
     onOk() {},
     onCancel() {},
-    afterClose() {}
+    afterClose() {},
   }
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
   static propTypes = {
@@ -90,7 +95,6 @@ class Modal extends Component {
     onOk: PropTypes.func,
     onCancel: PropTypes.func,
     afterClose: PropTypes.func,
-    children: PropTypes.isRequired
 
   }
 
@@ -149,7 +153,7 @@ class Modal extends Component {
                 e.preventDefault();
                 this.handleCancel(e);
               }}
-            ><Icon name="close" size={18} color="#a6a6a6"/></a>
+            ><Icon name="close" size={18} color="#a6a6a6" /></a>
             : null
           }
         </div>
@@ -182,14 +186,14 @@ class Modal extends Component {
   }
 
   render() {
-    const { visible, width, children} = this.props;
+    const { visible, width, children } = this.props;
     const modalProps = {
       style: {
         width,
       },
-      styleName: `modal${visible ? '--visible' : ''}`
+      styleName: `modal${visible ? '--visible' : ''}`,
 
-    };{
+    }; {
       return (
         <Mask visible={visible}>
           <div {...modalProps}>

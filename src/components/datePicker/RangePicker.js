@@ -12,6 +12,7 @@ import { allowMultiple } from '../../constants';
 import styles from './DatePicker.css';
 import Picker from './Picker';
 import { defaultProps, propTypes } from './props';
+import Input from '../input';
 
 @CSSModules(styles, { allowMultiple })
 class RangePicker extends PureComponent {
@@ -19,6 +20,7 @@ class RangePicker extends PureComponent {
   static displayName = 'RangePicker'
 
   static defaultProps = assign({}, defaultProps, {
+    fieldWidth: 100,
   })
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
@@ -51,28 +53,45 @@ class RangePicker extends PureComponent {
   }
 
   render() {
-    const { disabled, format } = this.props;
+    const { disabled, format, fieldSize, fieldWidth } = this.props;
     const { rangeValue } = this.state;
     const pickerProps = {
       rangeDate: rangeValue,
       type: 'range',
       changeDate: this.changeDateInternal,
     };
+    const fieldStyle = {};
     const field = {
-      type: 'text',
+      // type: 'text',
       disabled,
+      size: fieldSize,
     };
+    if (fieldWidth) {
+      assign(fieldStyle, {
+        width: fieldWidth,
+      });
+    }
     const startField = assign({}, field, {
       key: 'startDate',
       value: rangeValue[0].format(format),
+      style: assign({}, fieldStyle, {
+        borderTopRightRadius: 0,
+        borderBottomRightRadius: 0,
+        borderRight: '0 none',
+      }),
     });
     const endField = assign({}, field, {
       key: 'endDate',
       value: rangeValue[1].format(format),
+      style: assign({}, fieldStyle, {
+        borderTopLeftRadius: 0,
+        borderBottomLeftRadius: 0,
+        borderLeft: '0 none',
+      }),
     });
     const inputs = [
-      <input {...startField} />,
-      <input {...endField} />,
+      <Input {...startField} />,
+      <Input {...endField} />,
     ];
     return disabled ? <div>{inputs}</div> : (
       <Picker {...pickerProps}>

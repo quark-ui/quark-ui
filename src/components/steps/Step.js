@@ -22,6 +22,7 @@ class Step extends PureComponent {
     stepNumber: '',
     itemWidth: 0,
     adjustMarginRight: 0,
+    isFinishIcon: false,
   }
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
@@ -31,13 +32,14 @@ class Step extends PureComponent {
     description: PropTypes.string,
     stepNumber: PropTypes.string,
     itemWidth: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.string,
-  ]),
+      PropTypes.number,
+      PropTypes.string,
+    ]),
     adjustMarginRight: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.string,
-  ]),
+      PropTypes.number,
+      PropTypes.string,
+    ]),
+    isFinishIcon: PropTypes.bool,
   }
 
   constructor(props) {
@@ -47,18 +49,19 @@ class Step extends PureComponent {
 
   render() {
     const {
-      status='wait',
+      status = 'wait',
       description,
       title,
       stepNumber,
       itemWidth,
       adjustMarginRight,
+      isFinishIcon,
       ...restProps
     } = this.props;
 
     let iconNode;
 
-    if (status === 'finish') {
+    if (status === 'finish' && isFinishIcon) {
       iconNode = <span styleName={'steps--icon'}>{<Icon name="check" size={14} />}</span>;
     } else {
       iconNode = <span styleName={'steps--icon'}>{stepNumber}</span>;

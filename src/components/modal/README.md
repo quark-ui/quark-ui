@@ -1,6 +1,17 @@
+---
+author:
+  name: ryan.bian / lhf-nife
+  homepage: https://github.com/macisi/
+  email: macisi528@gmail.com
+---
+
 ## Modal
 
-Modal Component.
+模态对话框。
+
+### 何时使用
+
+需要用户处理事务，又不希望跳转页面以致打断工作流程时，可以使用 Modal 在当前页面正中打开一个浮层，承载相应的操作。
 
 ### Props
 |name|type|default|description|
@@ -16,11 +27,12 @@ Modal Component.
 
 ### Api
 #### Modal.method()
+
 - 包括：
-- Modal.info
-- Modal.success
-- Modal.error
-- Modal.warning
+  - Modal.info
+  - Modal.success
+  - Modal.error
+  - Modal.warning
 - 以上均为一个函数，参数为object，具体属性如下:
 
 |name|type|default|description|

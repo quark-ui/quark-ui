@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import assign from 'object-assign';
 import CSSModules from 'react-css-modules';
 import classnames from 'classnames';
-import Icon from 'quark-ui/icon';
+import Icon from '../../icon';
 import moment from 'moment';
 import momentPropTypes from 'react-moment-proptypes';
 

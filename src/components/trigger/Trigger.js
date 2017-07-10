@@ -21,8 +21,10 @@ class Trigger extends PureComponent {
     placement: ['tl', 'bl'],
     offset: [0, 0],
     popup: '',
+    popupVisible: undefined,
     mouseEnterDelay: 0,
     mouseLeaveDelay: 100,
+    onPopupVisibleChange() {},
   }
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
@@ -33,19 +35,25 @@ class Trigger extends PureComponent {
     popup: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.element,
-    ]),
+    ]).isRequired,
+    popupVisible: PropTypes.bool,
     mouseEnterDelay: PropTypes.number,
     mouseLeaveDelay: PropTypes.number,
-    children: PropTypes.isRequired,
+    onPopupVisibleChange: PropTypes.func,
   }
 
   static getTargetRect = target => target.getBoundingClientRect()
+  static getVisibleStateByProps = (props) => {
+    return Trigger.isPopupVisibleDefined(props) ? props.popupVisible : false;
+  }
+  static isPopupVisibleDefined = props => typeof props.popupVisible !== 'undefined'
 
   constructor(props) {
     super(props);
     this.state = {
       position: [],
-      active: false,
+      active: Trigger.getVisibleStateByProps(props),
+      ready: false,
     };
   }
 
@@ -53,11 +61,25 @@ class Trigger extends PureComponent {
     this.applyPlacement(this.props);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (Trigger.isPopupVisibleDefined(nextProps)) {
+      this.setState({
+        active: Trigger.getVisibleStateByProps(nextProps),
+      }, () => {
+        if (this.state.active) {
+          on(document.body, 'click', this.checkClosable);
+        } else {
+          off(document.body, 'click', this.checkClosable);
+        }
+      });
+    }
+  }
+
   componentDidUpdate(prevProps, prevState) {
     if (!prevState.active && this.state.active) {
       setTimeout(() => {
         this.applyPlacement(this.props);
-      }, 0);
+      }, 100);
     }
   }
 
@@ -75,9 +97,15 @@ class Trigger extends PureComponent {
     }
     const { mouseEnterDelay } = this.props;
     this.enterTimer = setTimeout(() => {
-      this.setState({
-        active: true,
-      });
+      if (Trigger.isPopupVisibleDefined(this.props)) {
+        this.props.onPopupVisibleChange(true);
+      } else {
+        this.setState({
+          active: true,
+        }, () => {
+          this.props.onPopupVisibleChange(true);
+        });
+      }
     }, mouseEnterDelay);
   }
 
@@ -88,9 +116,15 @@ class Trigger extends PureComponent {
     }
     const { mouseLeaveDelay } = this.props;
     this.leaveTimer = setTimeout(() => {
-      this.setState({
-        active: false,
-      });
+      if (Trigger.isPopupVisibleDefined(this.props)) {
+        this.props.onPopupVisibleChange(false);
+      } else {
+        this.setState({
+          active: false,
+        }, () => {
+          this.props.onPopupVisibleChange(false);
+        });
+      }
     }, mouseLeaveDelay);
   }
 
@@ -98,17 +132,22 @@ class Trigger extends PureComponent {
     if (e) {
       e.preventDefault();
     }
-    this.setState({
-      active: !this.state.active,
-    }, () => {
-      if (this.state.active) {
-        // bind close listener
-        on(document.body, 'click', this.checkClosable);
-      } else {
-        // unbind close listener
-        off(document.body, 'click', this.checkClosable);
-      }
-    });
+    if (Trigger.isPopupVisibleDefined(this.props)) {
+      this.props.onPopupVisibleChange(!this.state.active);
+    } else {
+      this.setState({
+        active: !this.state.active,
+      }, () => {
+        if (this.state.active) {
+          // bind close listener
+          on(document.body, 'click', this.checkClosable);
+        } else {
+          // unbind close listener
+          off(document.body, 'click', this.checkClosable);
+        }
+        this.props.onPopupVisibleChange(this.state.active);
+      });
+    }
   }
 
   applyPlacement(props) {
@@ -116,6 +155,12 @@ class Trigger extends PureComponent {
     const [popupAlign, selfAlign] = props.placement;
     const selfRect = Trigger.getTargetRect(this.node);
     const popupRect = Trigger.getTargetRect(this.popNode);
+    if (popupRect.width === 0 && popupRect.height === 0) {
+      this.setState({
+        ready: false,
+      });
+      return;
+    }
     const scrollX = window.pageXOffset || document.documentElement.scrollLeft;
     const scrollY = window.pageYOffset || document.documentElement.scrollTop;
     let x = scrollX;
@@ -167,19 +212,28 @@ class Trigger extends PureComponent {
         break;
     }
     const { offset } = this.props;
-    this.setState({
-      position: [x + offset[0], y + offset[1]],
-    });
+    const { position } = this.state;
+    const newState = {
+      ready: true,
+    };
+    const newPostition = [x + offset[0], y + offset[1]];
+    if (position[0] !== newPostition[0] || position[0] !== newPostition[0]) {
+      assign(newState, {
+        position: newPostition,
+      });
+    }
+    this.setState(newState);
   }
 
   renderPopup() {
     const { action } = this.props;
-    const { position, active } = this.state;
+    const { position, active, ready } = this.state;
     const popupProps = {
       ref: n => (this.popup = n),
       popupRef: n => (this.popNode = n),
       position,
       visible: active,
+      ready,
     };
     if (action === 'hover') {
       assign(popupProps, {

@@ -8,16 +8,20 @@ import CSSModules from 'react-css-modules';
 import classnames from 'classnames';
 import { allowMultiple } from '../../constants';
 import styles from './Steps.css';
+import Step from './Step';
 
 @CSSModules(styles, { allowMultiple })
 class Steps extends PureComponent {
 
-  static displayName = 'Steps'
+  static displayName = 'Steps';
+
+  static Step = Step;
 
   static defaultProps = {
     direction: 'horizontal',
     current: 0,
     status: 'process',
+    isFinishIcon: false,
   }
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
@@ -25,6 +29,7 @@ class Steps extends PureComponent {
     direction: PropTypes.oneOf(['horizontal', 'vertical']),
     current: PropTypes.number,
     status: PropTypes.string,
+    isFinishIcon: PropTypes.bool,
   }
 
   constructor(props) {
@@ -62,7 +67,7 @@ class Steps extends PureComponent {
   }
 
   render() {
-    const { children, direction, status, current, ...restProps } = this.props;
+    const { children, direction, status, current, isFinishIcon, ...restProps } = this.props;
     const lastIndex = children.length - 1;
     const reLayouted = this.state.lastStepOffsetWidth > 0;
     const classString = classnames({
@@ -81,8 +86,9 @@ class Steps extends PureComponent {
               stepNumber: (idx + 1).toString(),
               itemWidth,
               adjustMarginRight,
+              isFinishIcon,
             };
-            
+
             if (!ele.props.status) {
               if (idx === current) {
                 np.status = status;

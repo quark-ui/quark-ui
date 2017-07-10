@@ -9,7 +9,7 @@ import moment from 'moment';
 import momentPropTypes from 'react-moment-proptypes';
 import assign from 'object-assign';
 import partialRight from 'lodash/partialRight';
-import Trigger from 'quark-ui/trigger';
+import Trigger from '../trigger';
 import { allowMultiple } from '../../constants';
 import styles from './DatePicker.css';
 import DatePane from './panes/DatePane';
@@ -42,7 +42,6 @@ class Picker extends PureComponent {
     type: PropTypes.oneOf(['date', 'month', 'range']),
     changeDate: PropTypes.func,
     disabledDate: PropTypes.func,
-    children: PropTypes.isRequired,
   }
 
   constructor(props) {

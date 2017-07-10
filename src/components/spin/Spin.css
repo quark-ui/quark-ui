@@ -1,0 +1,146 @@
+/**
+ * Spin Style
+ * @author Northerner
+ */
+
+.Spin {
+    opacity: 1;
+    display: inline-block;
+    position: static;
+    text-align: center;
+}
+
+.qui-spin-dot {
+    position: relative;
+    display: inline-block;
+    width: 54px;
+    height: 35px;
+}
+
+.small .qui-spin-dot {
+    width: 30px;
+    height: 23px;
+}
+
+.large .qui-spin-dot {
+    width: 70px;
+    height: 47px;
+}
+
+.qui-spin-dot i {
+    position: absolute;
+    width: 4px;
+    height: 35px;
+    border-radius:1em;
+    background: var(--brand-primary);
+    animation-fill-mode: both;
+    animation: uiFade 0.9s 0s infinite cubic-bezier(.11, .49, .38, .78);
+}
+
+.qui-spin-dot i:nth-child(2), .qui-spin-dot i:nth-child(4){
+    animation-delay: 0.25s!important;
+}
+.qui-spin-dot i:nth-child(1), .qui-spin-dot i:nth-child(5){
+    animation-delay: 0.5s!important;
+}
+
+@keyframes uiFade {
+    0% {
+    -webkit-transform: scaley(1);
+            transform: scaley(1); }
+
+  80% {
+    -webkit-transform: scaley(0.3);
+            transform: scaley(0.3); }
+
+  90% {
+    -webkit-transform: scaley(1);
+            transform: scaley(1); }
+}
+
+
+.small .qui-spin-dot i {
+    width: 3px;
+    height: 23px;
+}
+
+.large .qui-spin-dot i {
+    width: 6px;
+    height: 47px;
+}
+
+.qui-spin-dot i:nth-child(1) {
+    left: 0;
+}
+
+.qui-spin-dot i:nth-child(2) {
+    left: 12px;
+}
+
+.qui-spin-dot i:nth-child(3) {
+    left: 24px;
+}
+
+.qui-spin-dot i:nth-child(4) {
+    left: 36px;
+}
+
+.qui-spin-dot i:nth-child(5) {
+    left: 48px;
+}
+
+
+.small .qui-spin-dot i:nth-child(2) {
+    left: 7px;
+}
+
+.small .qui-spin-dot i:nth-child(3) {
+    left: 14px;
+}
+
+.small .qui-spin-dot i:nth-child(4) {
+    left: 21px;
+}
+
+.small .qui-spin-dot i:nth-child(5) {
+    left: 28px;
+}
+
+.large .qui-spin-dot i:nth-child(2) {
+    left: 16px;
+}
+
+.large .qui-spin-dot i:nth-child(3) {
+    left: 32px;
+}
+
+.large .qui-spin-dot i:nth-child(4) {
+    left: 48px;
+}
+
+.large .qui-spin-dot i:nth-child(5) {
+    left: 64px;
+}
+
+.qui-spin-text {
+    font-size: 14px;
+    text-align: center;
+    color: var(--brand-primary);
+}
+.qui-spin-container{
+    position: relative;
+    transition: all 0.3s ease-in-out;
+}
+.qui-spin-blur{
+    opacity: 0.7;
+}
+.qui-spin-loading-wrap{
+    position: relative;
+}
+.qui-spin-wrap{
+    position: absolute;
+    z-index: 10;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

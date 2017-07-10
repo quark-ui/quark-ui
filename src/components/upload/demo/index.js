@@ -23,6 +23,20 @@ class UploadDemo1 extends Component {
       },
       multiple: true,
       disabled: false,
+      onResponse(response) {
+        response = { result: 'success', msg: '上传成功！' };
+        if (response.result === 'success') {
+          return {
+            success: true,
+            message: '上传成功',
+          };
+        }
+
+        return {
+          success: false,
+          message: response.msg,
+        };
+      },
       onChange(info) {
         if (info.file.status !== 'uploading') {
           // console.log(info.file, info.fileList);
@@ -36,11 +50,11 @@ class UploadDemo1 extends Component {
     };
 
     return (
-      <div>
-        1、经典款式，用户点击按钮弹出文件选择框。
+      <div className="markdown-block">
+        <h3>1、经典款式，用户点击按钮弹出文件选择框。</h3>
         <Upload {...props}>
           <Button size="small" type="secondary" disabled={props.disabled}>
-            <Icon size={12} name="home" /> 上传文件
+            <Icon size={12} name="upload" /> 上传文件
           </Button>
         </Upload>
       </div>
@@ -64,6 +78,20 @@ class UploadDemo2 extends Component {
       },
       multiple: true,
       disabled: false,
+      onResponse(response) {
+        response = { result: 'success', msg: '上传成功！' };
+        if (response.result === 'success') {
+          return {
+            success: true,
+            message: '上传成功',
+          };
+        }
+
+        return {
+          success: false,
+          message: response.msg,
+        };
+      },
       onChange(info) {
         if (info.file.status !== 'uploading') {
           // console.log(info.file, info.fileList);
@@ -78,7 +106,6 @@ class UploadDemo2 extends Component {
         uid: 1,
         name: '图片1.png',
         status: 'done',
-        reponse: 'Server Error 500',  // custom error message to show
         url: 'https://www.ehuodi.com/module/index/img/index2/line2_bg.png',
       }, {
         uid: 2,
@@ -89,19 +116,18 @@ class UploadDemo2 extends Component {
         uid: 3,
         name: '图片3.png',
         status: 'error',
-        reponse: 'Server Error 500',  // custom error message to show
-        url: 'https://www.ehuodi.com/module/index/img/index2/line2_bg.png',
+        response: '上传失败，图片太大',
       }],
     };
 
 
     return (
-      <div>
-        2、已上传文件的列表<br />
-        使用 defaultFileList 设置已上传的内容。
+      <div className="markdown-block">
+        <h3>2、已上传文件的列表</h3>
+        <p>使用 defaultFileList 设置已上传的内容。</p>
         <Upload {...props}>
           <Button size="small" type="secondary" disabled={props.disabled}>
-            <Icon size={12} name="home" /> 上传文件
+            <Icon size={12} name="upload" /> 上传文件
           </Button>
         </Upload>
       </div>
@@ -128,6 +154,20 @@ class UploadDemo3 extends Component {
     const props = {
       action: '//jsonplaceholder.typicode.com/posts/',
       disabled: false,
+      onResponse(response) {
+        response = { result: 'success', msg: '上传成功！' };
+        if (response.result === 'success') {
+          return {
+            success: true,
+            message: '上传成功',
+          };
+        }
+
+        return {
+          success: false,
+          message: response.msg,
+        };
+      },
       onChange(info) {
         let fileList = info.fileList;
 
@@ -142,26 +182,26 @@ class UploadDemo3 extends Component {
           return file;
         });
 
-        // 过滤上传成功的文件
-        fileList = fileList.filter((file) => {
-          if (file.response) {
-            return file.status === 'done';
-          }
-          return true;
-        });
+        // // 过滤上传成功的文件
+        // fileList = fileList.filter((file) => {
+        //   if (file.response) {
+        //     return file.status === 'done';
+        //   }
+        //   return true;
+        // });
 
         I.setState({ fileList });
       },
     };
     return (
-      <div>
-        3、使用 fileList 对列表进行完全控制，可以实现各种自定义功能，以下演示三种情况：<br />
-        1) 上传列表数量的限制。<br />
-        2) 读取远程路径并显示链接。<br />
-        3) 按照服务器返回信息筛选成功上传的文件。<br />
+      <div className="markdown-block">
+        <h3>3、使用 fileList 对列表进行完全控制，可以实现各种自定义功能，以下演示三种情况：</h3>
+        <p>1) 上传列表数量的限制。</p>
+        <p>2) 读取远程路径并显示链接。</p>
+        <p>3) 按照服务器返回信息筛选成功上传的文件。</p>
         <Upload {...props} fileList={this.state.fileList}>
           <Button size="small" type="secondary" disabled={props.disabled}>
-            <Icon size={12} name="home" /> 上传文件
+            <Icon size={12} name="upload" /> 上传文件
           </Button>
         </Upload>
       </div>
@@ -183,17 +223,17 @@ class UploadDemo4 extends Component {
     };
   }
 
-  handleChange = ({ fileList }) => {
-    this.setState({ fileList });
+  handleChange = (info) => {
+    this.setState({ fileList: info.fileList });
   }
   beforeUpload(file) {
     const isJPG = file.type === 'image/png';
     if (!isJPG) {
       message.error('请上传.png文件!');
     }
-    const isLt2M = file.size < 1024 * 50;
+    const isLt2M = file.size < 1024 * 1000;
     if (!isLt2M) {
-      message.error('图片不能超过50KB!');
+      message.error('图片不能超过1000KB!');
     }
     return isJPG && isLt2M;
   }
@@ -206,18 +246,32 @@ class UploadDemo4 extends Component {
       onPreview: this.handlePreview,
       onChange: this.handleChange,
       beforeUpload: this.beforeUpload,
+      onResponse(response) {
+        response = { result: 'success', msg: '上传成功！' };
+        if (response.result === 'success') {
+          return {
+            success: true,
+            message: '上传成功',
+          };
+        }
+
+        return {
+          success: false,
+          message: response.msg,
+        };
+      },
     };
 
     const uploadButton = (
       <div styleName="upload-btn">
-        <Icon name="setting" size={20} />
+        <Icon name="plus" size={25} />
         <div styleName="upload-text">上传</div>
       </div>
     );
     return (
-      <div>
-        4、显示上传缩略图
-        点击上传图片，并使用 beforeUpload 限制用户上传的图片格式和大小。
+      <div className="markdown-block">
+        <h3>4、显示上传缩略图</h3>
+        <p>点击上传图片，并使用 beforeUpload 限制用户上传的图片格式和大小。</p>
         <Upload {...props}>
           {this.state.fileList.length >= 3 ? null : uploadButton}
         </Upload>
@@ -229,7 +283,7 @@ class UploadDemo4 extends Component {
 export default class UploadDemo extends Component {
   render() {
     return (
-      <div>
+      <div className="markdown-block">
         <UploadDemo1 />
         <br /><br />
         <UploadDemo2 />

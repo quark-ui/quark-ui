@@ -30,6 +30,10 @@ const common = {
         use: 'raw-loader',
       },
       {
+        test: /\.(png|gif|jpg)$/,
+        use: 'file-loader',
+      },
+      {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         use: {
@@ -108,7 +112,7 @@ const siteConfig = {
 };
 
 let config;
-if (TARGET === 'start') {
+if (TARGET === 'start' || TARGET === 'start-nodash') {
   const host = ip.address();
   config = merge.strategy({
     entry: 'prepend',
@@ -130,6 +134,10 @@ if (TARGET === 'start') {
       rules: [
         {
           test: /\.css$/,
+          include: [
+            path.resolve(__dirname, '../src'),
+            path.resolve(__dirname, '../site'),
+          ],
           use: [
             { loader: 'style-loader' },
             {
@@ -155,6 +163,16 @@ if (TARGET === 'start') {
                 ],
               },
             },
+          ],
+        },
+        {
+          test: /\.css$/,
+          include: [
+            path.resolve(__dirname, '../node_modules'),
+          ],
+          use: [
+            { loader: 'style-loader' },
+            { loader: 'css-loader' },
           ],
         },
       ],
@@ -203,6 +221,10 @@ if (TARGET === 'gh-pages') {
       rules: [
         {
           test: /\.css$/,
+          include: [
+            path.resolve(__dirname, '../src'),
+            path.resolve(__dirname, '../site'),
+          ],
           use: ExtractTextPlugin.extract({
             fallback: 'style-loader',
             use: [
@@ -233,6 +255,23 @@ if (TARGET === 'gh-pages') {
             ],
           }),
         },
+        {
+          test: /\.css$/,
+          include: [
+            path.resolve(__dirname, '../node_modules'),
+          ],
+          use: ExtractTextPlugin.extract({
+            fallback: 'style-loader',
+            use: [
+              {
+                loader: 'css-loader',
+                options: {
+                  minimize: true,
+                },
+              },
+            ],
+          }),
+        },
       ],
     },
     plugins: [
@@ -246,7 +285,7 @@ if (TARGET === 'gh-pages') {
       new webpack.HashedModuleIdsPlugin(),
       new WebpackChunkHash(),
       new ExtractTextPlugin({
-        filename: 'style.css',
+        filename: '[contenthash].css',
       }),
       new UglifyJSPlugin({
         sourceMap: true,
@@ -331,116 +370,6 @@ if (TARGET === 'theme') {
       ],
     },
     plugins: [
-      extractCSS,
-    ],
-  });
-}
-
-if (TARGET === 'build') {
-  const extractCSS = new ExtractTextPlugin({
-    filename: '[name].css',
-  });
-  const componentsList = fs.readdirSync(path.resolve(__dirname, '../src/components'));
-  const componentEntries = {
-    index: './src/index',
-  };
-  componentsList.forEach((name) => {
-    Object.assign(componentEntries, {
-      [`${name}`]: `./src/components/${name}/`,
-    });
-  });
-
-  config = merge(common, {
-    entry: componentEntries,
-    output: {
-      path: path.join(__dirname, '../lib'),
-      filename: '[name].js',
-      publicPath: '/',
-      library: 'QuarkUI',
-      libraryTarget: 'umd',
-    },
-    module: {
-      rules: [
-        {
-          test: /\.css$/,
-          use: extractCSS.extract(
-            [
-              {
-                loader: 'css-loader',
-                options: {
-                  importLoaders: 1,
-                  modules: true,
-                  localIdentName: '[hash:base64:7]',
-                },
-              },
-              {
-                loader: 'postcss-loader',
-                options: {
-                  plugins: () => [
-                    cssnext({
-                      features: {
-                        browsers: [
-                          '> 1%',
-                          'last 2 versions',
-                          'ie >= 8',
-                        ],
-                        customProperties: {
-                          variables: DEFAULT_THEME,
-                        },
-                      },
-                    }),
-                  ],
-                },
-              },
-            ]
-          ),
-        },
-      ],
-    },
-    externals: [
-      {
-        react: {
-          root: 'React',
-          commonjs2: 'react',
-          commonjs: 'react',
-        },
-        'react-dom': {
-          root: 'ReactDOM',
-          commonjs2: 'react-dom',
-          commonjs: 'react-dom',
-        },
-        'prop-types': {
-          root: 'PropTypes',
-          commonjs2: 'prop-types',
-          commonjs: 'prop-types',
-        },
-        lodash: {
-          commonjs: 'lodash',
-          commonjs2: 'lodash',
-          root: '_',
-        },
-        moment: {
-          commonjs: 'moment',
-          commonjs2: 'moment',
-          root: 'moment',
-        },
-      },
-      /^lodash\//,
-      (context, request, callback) => {
-        if (/^quark-ui\//.test(request)) {
-          return callback(null, 'commonjs ' + request.replace('quark-ui', 'quark-ui/lib'));
-        }
-        callback();
-      },
-      'react-css-modules',
-      'object-assign',
-      'classnames',
-      'react-moment-proptypes',
-    ],
-    plugins: [
-      new webpack.SourceMapDevToolPlugin({
-        columns: false,
-      }),
       extractCSS,
     ],
   });

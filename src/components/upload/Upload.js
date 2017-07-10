@@ -16,9 +16,9 @@ import UploadList from './UploadList';
 import styles from './Upload.css';
 
 const defaultLocale = {
-  uploading: '文件上传中',
+  uploading: '上传中...',
+  uploadError: '上传失败',
   removeFile: '删除文件',
-  uploadError: '上传错误',
   previewFile: '预览文件',
 };
 
@@ -30,7 +30,6 @@ class Upload extends React.Component {
   static defaultProps = {
     name: 'file',
     defaultFileList: null,
-    // fileList: null,
     action: '',
     data: {},
     headers: null,
@@ -50,6 +49,19 @@ class Upload extends React.Component {
     // type: 'select',
     className: '',
     // supportServerRender: false,
+    onResponse: (response) => {
+      if (response.result === 'success') {
+        return {
+          success: true,
+          message: '上传成功',
+        };
+      }
+
+      return {
+        success: false,
+        message: response.msg,
+      };
+    },
   }
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
@@ -75,6 +87,7 @@ class Upload extends React.Component {
     prefixCls: PropTypes.string,
     className: PropTypes.string,
     children: PropTypes.element.isRequired,
+    onResponse: PropTypes.func,
     // supportServerRender: PropTypes.bool,
   }
 
@@ -147,7 +160,7 @@ class Upload extends React.Component {
       return;
     }
     targetItem.error = error;
-    targetItem.response = response;
+    targetItem.response = defaultLocale.uploadError;
     targetItem.status = 'error';
     this.onChange({
       file: { ...targetItem },
@@ -175,8 +188,16 @@ class Upload extends React.Component {
     if (!targetItem) {
       return;
     }
-    targetItem.status = 'done';
-    targetItem.response = response;
+
+    if (this.props.onResponse) {
+      const resultData = this.props.onResponse(response);
+      if (resultData.success) {
+        targetItem.status = 'done';
+      } else {
+        targetItem.status = 'error';
+        targetItem.response = resultData.message;
+      }
+    }
 
     this.onChange({
       file: { ...targetItem },
@@ -223,7 +244,7 @@ class Upload extends React.Component {
     const { onRemove } = this.props;
 
     Promise.resolve(typeof onRemove === 'function' ? onRemove(file) : onRemove)
-      .then(ret => {
+      .then((ret) => {
         // Prevent removing file
         if (ret === false) {
           return;
@@ -246,7 +267,7 @@ class Upload extends React.Component {
   render() {
     const {
       prefixCls = '', showUploadList, listType, onPreview,
-      // type, 
+      // type,
       disabled,
       children,
       className,
@@ -312,7 +333,8 @@ class Upload extends React.Component {
     // });
 
     const uploadButton = (
-      <div styleName={`${prefixCls} ${prefixCls}-select ${prefixCls}-select-${listType}`} style={{ display: children ? '' : 'none' }}>
+      // <div styleName={`${prefixCls} ${prefixCls}-select ${prefixCls}-select-${listType} `} style={{ display: children ? '' : 'none' }}>
+      <div styleName={`${prefixCls} ${prefixCls}-select ${prefixCls}-select-${listType} ${children ? '' : 'hide'}`}>
         <RcUpload {...rcUploadProps} ref="upload" />
       </div>
     );

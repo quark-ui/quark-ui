@@ -1,9 +1,10 @@
 import assign from 'lodash/assign';
-import { Component } from 'react';
+import { PureComponent } from 'react';
 import CSSModules from 'react-css-modules';
 import Colr from 'colr';
 import Trigger from 'quark-ui/trigger';
-import Button from 'quark-ui/button';
+// import Button from 'quark-ui/button';
+import IconColor from '../icons/color.svg';
 
 import { allowMultiple } from '../../src/constants';
 import DefaultTheme from '../../src/styles/theme';
@@ -14,6 +15,10 @@ const AvailableColors = {
   Blue: { h: 206, s: 74, v: 88 },
   Orange: { h: 28, s: 79, v: 100 },
 };
+const IconProps = {
+  width: 18,
+  height: 18,
+};
 
 function hsv(...args) {
   if (args.length === 1) {
@@ -23,7 +28,7 @@ function hsv(...args) {
 }
 
 @CSSModules(styles, { allowMultiple })
-export default class ThemePicker extends Component {
+export default class ThemePicker extends PureComponent {
   constructor(props) {
     super(props);
     this.applyTheme();
@@ -75,7 +80,7 @@ export default class ThemePicker extends Component {
                 key={theme}
                 className={styles.ThemePicker__colorGrid}
                 onClick={this.handleChangeTheme.bind(this, theme)}
-              ></span>
+              />
             );
           })
         }
@@ -93,7 +98,10 @@ export default class ThemePicker extends Component {
     return (
       <div styleName="ThemePicker">
         <Trigger {...triggerProps}>
-          <Button type="secondary" size="normal">主题</Button>
+          <span styleName="theme__tag">
+            <IconColor {...IconProps} />
+            <span>主题</span>
+          </span>
         </Trigger>
       </div>
     );

@@ -7,27 +7,44 @@ import CSSModules from 'react-css-modules';
 import styles from '../Site.css';
 import { allowMultiple } from '../../src/constants';
 import ThemePicker from '../partials/ThemePicker';
+import IconUEDLogo from '../icons/uedlogo.svg';
+
+const IconProps = {
+  width: 14,
+  height: 14,
+};
+
 
 @CSSModules(styles, { allowMultiple })
 export default class Layout extends PureComponent {
 
   render() {
-    const { match } = this.props;
+    const { match, children } = this.props;
     return (
-      <div>
-        <header styleName="head">
-          <h1 styleName="head__brandTitle">
-            <Link to="/">Quark UI</Link>
-          </h1>
-          <nav styleName="head__navigation">
-            <NavLink to="/" exact>首页</NavLink>
-            <NavLink to="/component/">组件</NavLink>
-          </nav>
-          <ThemePicker />
-        </header>
+      <div className={styles.app}>
+        <div styleName="container">
+          <header styleName="head">
+            <h1 styleName="head__brandTitle">
+              <Link to="/">Quark UI</Link>
+            </h1>
+            <nav styleName="head__navigation">
+              <NavLink to="/" exact>首页</NavLink>
+              <NavLink to="/component/alert">组件</NavLink>
+              <NavLink to="/usage">如何使用</NavLink>
+              <NavLink to="/changes">版本历史</NavLink>
+              <NavLink to="/design">视觉规范</NavLink>
+            </nav>
+            <ThemePicker />
+          </header>
+        </div>
         {
-          Children.map(this.props.children, Comp => cloneElement(Comp))
+          Children.map(children, Comp => cloneElement(Comp))
         }
+        <footer styleName="footer">
+          Copyright © &nbsp;&nbsp;&nbsp;&nbsp;易货嘀研发中心&nbsp;&nbsp;&nbsp;&nbsp;
+          <IconUEDLogo {...IconProps} />
+          易货嘀UED
+        </footer>
       </div>
     );
   }

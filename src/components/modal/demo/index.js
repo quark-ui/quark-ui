@@ -23,25 +23,26 @@ export default class ModalDemo extends Component {
   render() {
     const { visible } = this.state;
     const modalProps = {
-      title: 'title',
+      title: '标题',
       visible,
       onOk: () => { this.closeModal(); },
       onCancel: () => { this.closeModal(); },
     };
     return (
-      <div>
+      <div className="markdown-block">
         <h3>基本</h3>
         <Button type="secondary" onClick={this.openModal}>open modal</Button>
         <Modal {...modalProps}>
-          <p>first Modal</p>
+          <p>这是一段信息。</p>
         </Modal>
         <h3>信息提示</h3>
+        <p>各种类型的信息提示，只提供一个按钮用于关闭。</p>
         <Button
           type="secondary"
           onClick={() => {
             Modal.info({
               content: '这是提示信息',
-              closable: true
+              closable: true,
             });
           }}
         >info</Button>&emsp;

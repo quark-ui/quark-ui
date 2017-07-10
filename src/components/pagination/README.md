@@ -1,6 +1,18 @@
+---
+author:
+  name: ryan.bian
+  homepage: https://github.com/macisi/
+  email: macisi528@gmail.com
+---
+
 ## Pagination
 
-Pagination Component.
+采用分页的形式分隔长列表，每次只加载一个页面。
+
+### 何时使用
+
+- 当加载/渲染所有数据将花费很多时间时；
+- 可切换页码浏览数据。
 
 ### Props
 |name|type|default|description|
