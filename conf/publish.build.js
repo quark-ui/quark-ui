@@ -39,8 +39,8 @@ const cssExportMap = {};
 const componentList = fs.readdirSync(path.join(cwd, './src/components'));
 
 const generateCSS = (name) => {
-  const src = name ? `./src/components/${name}/${upperFirst(name)}.css`: './src/index.css';
-  const dest = name ? `./lib/${name}.orange.css`: './lib/index.orange.css';
+  const src = name ? `./src/components/${name}/${upperFirst(name)}.css` : './src/index.css';
+  const dest = name ? `./lib/${name}.orange.css` : './lib/index.orange.css';
   const cssPlugins = [
     cssnext(getCssnextConfig(ORANGE_THEME)),
     postcssModules({
@@ -48,7 +48,7 @@ const generateCSS = (name) => {
     }),
   ];
   fs.readFile(src, (err, data) => {
-      postcss(cssPlugins)
+    postcss(cssPlugins)
       .use(postcssImport({
         plugins: cssPlugins,
       }))
@@ -56,7 +56,7 @@ const generateCSS = (name) => {
         from: src,
         to: dest,
       })
-      .then(res => {
+      .then((res) => {
         fs.writeFile(dest, res.css);
       });
   });
@@ -76,19 +76,19 @@ const plugins = [
     include: 'node_modules/**',
   }),
   replace({
-    'process.env.NODE_ENV': JSON.stringify( 'production' ),
+    'process.env.NODE_ENV': JSON.stringify('production'),
   }),
   postcssPlugin({
     plugins: [
       cssnext(getCssnextConfig()),
       postcssModules({
         generateScopedName: CSSMODULE_NAME_PATTERN,
-        getJSON (id, exportTokens) {
+        getJSON(id, exportTokens) {
           cssExportMap[id] = exportTokens;
-        }
+        },
       }),
     ],
-    getExport (id) {
+    getExport(id) {
       return cssExportMap[id];
     },
     extract: true,
@@ -124,7 +124,7 @@ const build = (name) => {
     // external: external.concat(['lodash', 'prop-types']),
     plugins,
     legacy: true,
-  }).then(bundle => {
+  }).then((bundle) => {
     bundle.write({
       format: 'cjs',
       dest: `./lib/${name}.js`,
@@ -155,7 +155,7 @@ rollup.rollup({
     uglify(),
   ]),
   legacy: true,
-}).then(bundle => {
+}).then((bundle) => {
   bundle.write({
     format: 'umd',
     moduleName: 'QuarkUI',
@@ -174,7 +174,7 @@ rollup.rollup({
   external,
   plugins,
   legacy: true,
-}).then(bundle => {
+}).then((bundle) => {
   bundle.write({
     format: 'es',
     dest: './es/index.js',

@@ -70,7 +70,7 @@ const common = {
                 ],
                 'react',
                 'stage-1',
-              ],
+              ].concat(TARGET === 'gh-pages' ? ['react-optimize'] : []),
             },
           },
           {
