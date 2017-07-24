@@ -2,6 +2,7 @@
 author:
   name: heifade
   homepage: https://github.com/heifade/
+  email: heifade@126.com
 ---
 
 ## Menu

@@ -6,12 +6,12 @@ export default class BreadcrumbDemo extends Component {
     return (
       <div className="markdown-block">
         <h3>基本面包屑</h3>
-        <Breadcrumb>
+        <p><Breadcrumb>
           <Breadcrumb.Item>home</Breadcrumb.Item>
           <Breadcrumb.Item href="/component/button">Button</Breadcrumb.Item>
           <Breadcrumb.Item href="/component/steps">Steps</Breadcrumb.Item>
           <Breadcrumb.Item>bbb</Breadcrumb.Item>
-        </Breadcrumb>
+        </Breadcrumb></p>
 
         <Breadcrumb separator=">">
           <Breadcrumb.Item>home</Breadcrumb.Item>
@@ -21,12 +21,12 @@ export default class BreadcrumbDemo extends Component {
         </Breadcrumb>
 
         <h3>带返回的面包屑</h3>
-        <Breadcrumb hasBackIcon >
+        <p><Breadcrumb hasBackIcon >
           <Breadcrumb.Item href="/">home</Breadcrumb.Item>
           <Breadcrumb.Item href="/component/button">Button</Breadcrumb.Item>
           <Breadcrumb.Item href="/component/steps">Steps</Breadcrumb.Item>
           <Breadcrumb.Item>bbb</Breadcrumb.Item>
-        </Breadcrumb>
+        </Breadcrumb></p>
 
         <Breadcrumb hasBackIcon separator=">">
           <Breadcrumb.Item href="/">home</Breadcrumb.Item>

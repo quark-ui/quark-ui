@@ -31,7 +31,7 @@ const common = {
       },
       {
         test: /\.(png|gif|jpg)$/,
-        use: 'url-loader',
+        use: 'file-loader',
       },
       {
         test: /\.jsx?$/,
@@ -70,7 +70,7 @@ const common = {
                 ],
                 'react',
                 'stage-1',
-              ],
+              ].concat(TARGET === 'gh-pages' ? ['react-optimize'] : []),
             },
           },
           {

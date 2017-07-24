@@ -35,8 +35,8 @@ export default class StepDemo extends Component {
   render() {
     return (
       <div className="markdown-block">
-        <Button disabled={this.state.current <= 0} onClick={this.handlePrev}>上一步</Button>&nbsp;
-        <Button disabled={this.state.current >= 3} onClick={this.handleNext}>下一步</Button>
+        <h3><Button disabled={this.state.current <= 0} onClick={this.handlePrev}>上一步</Button>&nbsp;
+          <Button disabled={this.state.current >= 3} onClick={this.handleNext}>下一步</Button></h3>
         <h3>横向步骤条</h3>
         <Steps current={this.state.current} style={{ marginBottom: 10 }}>
           <Step title="步骤1" />
