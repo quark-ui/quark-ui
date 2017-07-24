@@ -67,7 +67,7 @@ export default class StepDemo extends Component {
           </Steps>
         </div>
         <div style={{ display: 'inline-block' }}>
-          <Steps current={this.state.current} direction="vertical" isFinishIcon>
+          <Steps current={this.state.current} size={'small'} direction="vertical" isFinishIcon>
             <Step title="已完成" description="这是一段很长很长很长的描述性文字" />
             <Step title="进行中" description="这是一段很长很长很长的描述性文字" />
             <Step title="未进行" description="这是一段很长很长很长的描述性文字" />

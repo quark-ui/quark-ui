@@ -163,6 +163,20 @@
 .steps--item__error {}
 .steps--step {}
 
+.steps__small{
+    & .steps--headinner {
+    width: 18px;
+    height: 18px;
+    line-height: 19px;
+    border-radius: 18px;
+    font-size: 12px;
+  }
+  &.steps__vertical .steps--tail {
+    position: absolute;
+    left: 10px;
+  }
+}
+
 /*竖向步骤条样式*/
 .steps__vertical{
   & .steps--item {
@@ -171,7 +185,7 @@
 
   & .steps--tail {
     position: absolute;
-    left: 11px;
+    left: 12px;
     top: 0;
     height: 100%;
     width: 1px;
@@ -180,10 +194,6 @@
       height: 100%;
     width: 1px;
     }
-  }
-
-  & .steps--description {
-    padding-bottom: 12px;
   }
 
   & .steps--head {
