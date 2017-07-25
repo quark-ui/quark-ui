@@ -24,7 +24,7 @@ author:
 |disabledDate|func|无|不可选择的日期|
 |disabled|boolean|false|禁用|
 |fieldSize|string|'normal'|'normal', 'large' or 'small'，输入框尺寸|
-|fieldWidth|number|null|输入框宽度|
+|fieldWidth|number|220|输入框宽度|
 |format|string|YYYY-MM-DD|展示日期格式，配置参考[moment](http://momentjs.com/)|
 |onChange|func|无|时间发生变化回调|
 
@@ -35,7 +35,7 @@ author:
 |defaultValue|[moment](http://momentjs.com/)|无|默认日期|
 |disabled|boolean|false|禁用|
 |fieldSize|string|'normal'|'normal', 'large' or 'small'，输入框尺寸|
-|fieldWidth|number|null|输入框宽度|
+|fieldWidth|number|220|输入框宽度|
 |format|string|YYYY-MM|展示日期格式，配置参考[moment](http://momentjs.com/)|
 |onChange|func|无|时间发生变化回调|
 

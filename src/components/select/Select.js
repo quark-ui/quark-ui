@@ -13,6 +13,8 @@ import styles from './Select.css';
 
 export default class Select extends PureComponent {
   static displayName = 'Select';
+  static OptGroup = OptGroup;
+  static Option = Option;
 
   static defaultProps = {
     placeholder: '请选择',
@@ -50,15 +52,15 @@ export default class Select extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      value: '',
-      text: '',
+      value: this.props.value || '',
+      title: undefined,
       dropdownVisible: false, // 下接弹层是否显示
     };
 
     // 记录上次选择的值，供取消时回滚
     this.lastState = {
-      value: '',
-      text: '',
+      value: this.state.value,
+      title: this.state.title,
     };
   }
 
@@ -72,11 +74,11 @@ export default class Select extends PureComponent {
   componentWillReceiveProps = (nextProps, nextContext) => {
     if (nextProps.value && nextProps.value !== this.state.value) {
       const value = nextProps.value;
-      const text = this.getValue(this.props.children, value);
+      const title = this.getValue(this.props.children, value);
 
       this.setState({
         value: nextProps.value,
-        text,
+        title,
       });
     }
   }
@@ -92,7 +94,7 @@ export default class Select extends PureComponent {
       if (!visible) {
         this.setState({
           value: this.lastState.value,
-          text: this.lastState.text,
+          title: this.lastState.title,
         });
         onCancelChange();
       }
@@ -107,70 +109,70 @@ export default class Select extends PureComponent {
     }
     if (value) {
       this.setState({
-        text: value,
+        title: value,
       });
     } else { // 当全部都删完时，清空历史
       this.lastState = {
         value: '',
-        text: '',
+        title: undefined,
       };
       this.setState({
-        text: '',
-        value: '',
+        title: '',
+        value: undefined,
       });
     }
   }
 
   // 选项选中时回调
-  onOptionSelected = (value, text) => {
+  onOptionSelected = (value, title) => {
     this.setState({
       value,
-      text,
+      title,
       dropdownVisible: false,
     });
 
-    this.lastState.text = text;
+    this.lastState.title = title;
     this.lastState.value = value;
     const { onChange } = this.props;
     if (onChange) {
       onChange({
         value,
-        text,
+        title,
       });
     }
   }
 
-  getSelectedValue = () => (this.state.value);
+  getSelectedValue = () => this.state.value;
 
   // 在子组件中，根据value获取text
   getValue = (children, value) => {
-    let text = '';
+    let title = '';
     React.Children.map(children, (child) => {
-      if (text) {
+      if (title) {
         return;
       }
       if (child.type === OptGroup) {
-        text = this.getValue(child.props.children, value);
+        title = this.getValue(child.props.children, value);
       } else if (child.type === Option) {
         if (child.props.value === value) {
-          text = child.props.text;
+          title = child.props.title || child.props.children;
         }
       } else {
-        text = this.getValue(child.props.children, value);
+        title = this.getValue(child.props.children, value);
       }
     });
-    return text;
+    return title;
   }
 
   remove = (e) => {
     if (e) {
       e.stopPropagation();
     }
-    this.lastState.text = '';
+    this.lastState.title = undefined;
     this.lastState.value = '';
     this.setState({
       value: '',
-      text: '',
+      title: undefined,
     });
 
     const { onChange } = this.props;
@@ -191,7 +193,7 @@ export default class Select extends PureComponent {
         <div className={styles.select} >
           <div className={classnames(styles.selection, styles.disabled)} style={{ width }}>
             {
-              this.state.text || <span className={styles.placeholder}>
+              this.state.title || <span className={styles.placeholder}>
                 { this.props.placeholder }
               </span>
             }
@@ -207,7 +209,7 @@ export default class Select extends PureComponent {
 
     let selection = '';
     if (type === 'dropdown') { // 简单下位
-      selection = this.state.text || <span className={styles.placeholder}>
+      selection = this.state.title || <span className={styles.placeholder}>
         { this.props.placeholder }
       </span>;
     } else if (type === 'combobox') {
@@ -216,7 +218,7 @@ export default class Select extends PureComponent {
         className={styles.comboboxInput}
         onChange={this.onComboboxInputChanged}
         placeholder={this.props.placeholder}
-        value={this.state.text}
+        value={this.state.title}
       />);
     }
 
