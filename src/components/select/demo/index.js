@@ -47,6 +47,18 @@ class SelectDemo1 extends Component {
           <Option value="G" text="GG" />
         </Select>
 
+        <h3>默认</h3>
+        <p />
+        <Select style={{ width: 250 }} disabled={this.state.disabled} defaultValue='B' onChange={this.onChange}>
+          <Option value="A" text="AA" />
+          <Option value="B" text="BB" />
+          <Option value="C" text="CC" />
+          <Option value="D" text="DD" />
+          <Option value="E" text="EE" />
+          <Option value="F" text="FF" />
+          <Option value="G" text="GG" />
+        </Select>
+
         <h3>分组</h3>
         <p />
         <Select style={{ width: 250 }} disabled={this.state.disabled} value={this.state.value} onChange={this.onChange}>

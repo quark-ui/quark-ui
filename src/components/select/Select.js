@@ -20,6 +20,7 @@ export default class Select extends PureComponent {
     style: { width: 200 },
     disabled: false,
     value: '',
+    defaultValue: '',
     children: null,
     onSearch: () => {},
     onChange: () => {},
@@ -36,6 +37,7 @@ export default class Select extends PureComponent {
     style: PropTypes.object,
     disabled: PropTypes.bool,
     value: PropTypes.string,
+    defaultValue: PropTypes.string,
     onSearch: PropTypes.func,
     children: PropTypes.arrayOf(PropTypes.element),
     // onSelect: PropTypes.func,
@@ -49,9 +51,13 @@ export default class Select extends PureComponent {
 
   constructor(props) {
     super(props);
+    
+    const value = this.props.defaultValue || this.props.value;
+    const text = value ? this.getValue(this.props.children, value) : '';
+    
     this.state = {
-      value: '',
-      text: '',
+      value: value || '',
+      text: text || '',
       dropdownVisible: false, // 下接弹层是否显示
     };
 
