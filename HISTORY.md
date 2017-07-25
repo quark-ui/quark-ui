@@ -3,6 +3,9 @@
 Optimization:
 - `DatePicker`:  rangePicker's interaction
 - `Modal`: change style
+- `Message`: change style
+- `Steps`: change style
+
 
 ## v0.0.1-beta9 (2017-06-23)
 
