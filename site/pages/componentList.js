@@ -10,6 +10,10 @@ export default {
         name: 'Icon',
         icon: 'icon',
         title: '图标',
+      }, {
+        name: 'Animation',
+        icon: 'animation',
+        title: '动画',
       }],
   }, {
     group: 'Form',

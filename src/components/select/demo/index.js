@@ -10,13 +10,13 @@ class SelectDemo1 extends Component {
   constructor() {
     super();
     this.state = {
-      disabled: false
+      disabled: false,
     };
   }
 
   setDisabled = () => {
     this.setState({
-      disabled: !this.state.disabled
+      disabled: !this.state.disabled,
     });
   }
 
@@ -26,8 +26,8 @@ class SelectDemo1 extends Component {
     });
   }
 
-  onChange = ({text, value}) => {
-    console.log(value, text);
+  onChange = ({ title, value }) => {
+    console.log(value, title);
   }
 
   render() {
@@ -38,13 +38,13 @@ class SelectDemo1 extends Component {
         <h3>基本使用。</h3>
         <p />
         <Select style={{ width: 250 }} disabled={this.state.disabled} value={this.state.value} onChange={this.onChange}>
-          <Option value="A" text="AA" />
-          <Option value="B" text="BB" />
-          <Option value="C" text="CC" />
-          <Option value="D" text="DD" />
-          <Option value="E" text="EE" />
-          <Option value="F" text="FF" />
-          <Option value="G" text="GG" />
+          <Option value="A">AA</Option>
+          <Option value="B">BB</Option>
+          <Option value="C">CC</Option>
+          <Option value="D">DD</Option>
+          <Option value="E">EE</Option>
+          <Option value="F">FF</Option>
+          <Option value="G">GG</Option>
         </Select>
 
         <h3>默认</h3>
@@ -63,36 +63,36 @@ class SelectDemo1 extends Component {
         <p />
         <Select style={{ width: 250 }} disabled={this.state.disabled} value={this.state.value} onChange={this.onChange}>
           <OptGroup label="分组1">
-            <Option value="A" text="AA" />
-            <Option value="B" text="BB" />
+            <Option value="A">AA</Option>
+            <Option value="B">BB</Option>
           </OptGroup>
           <OptGroup label="分组2">
-            <Option value="C" text="CC" />
-            <Option value="D" text="DD" />
+            <Option value="C">CC</Option>
+            <Option value="D">DD</Option>
           </OptGroup>
           <OptGroup label="分组3">
-            <Option value="E" text="EE" />
-            <Option value="F" text="FF" />
-            <Option value="G" text="GG" />
+            <Option value="E">EE</Option>
+            <Option value="F">FF</Option>
+            <Option value="G">GG</Option>
           </OptGroup>
         </Select>
 
         <h3>复杂选项。</h3>
         <p />
         <Select style={{ width: 250 }} disabled={this.state.disabled} value={this.state.value} onChange={this.onChange}>
-          <Option value="A" text="李大力">
+          <Option value="A" title="李大力">
             <div>李大力</div><div>1354534324</div><div>杭州萧山区民和路</div>
           </Option>
-          <Option value="B" text="李启">
+          <Option value="B" title="李启">
             <div>李启</div><div>1356664324</div><div>杭州江干区</div>
           </Option>
-          <Option value="C" text="李宇">
+          <Option value="C" title="李宇">
             <div>李宇</div><div>1377534324</div><div>杭州富阳</div>
           </Option>
-          <Option value="D" text="李琦">
+          <Option value="D" title="李琦">
             <div>李琦</div><div>1354554324</div><div>杭州滨江区江</div>
           </Option>
-          <Option value="E" text="李小燕">
+          <Option value="E" title="李小燕">
             <div>李小燕</div><div>1387564324</div><div>上海黄埔区</div>
           </Option>
         </Select>
@@ -114,7 +114,7 @@ class SelectDemo2 extends Component {
 
   setDisabled = () => {
     this.setState({
-      disabled: !this.state.disabled
+      disabled: !this.state.disabled,
     });
   }
 
@@ -142,8 +142,8 @@ class SelectDemo2 extends Component {
       });
   }
 
-  onChange = ({ value, text }) => {
-    console.log('onChange', value, text);
+  onChange = ({ value, title }) => {
+    console.log('onChange', value, title);
   }
 
   render() {
@@ -163,7 +163,7 @@ class SelectDemo2 extends Component {
           placeholder="请输入查询条件"
         >
           {
-            this.state.searchData.map(d => <Option key={d.value} value={d.value} text={d.text} />)
+            this.state.searchData.map(d => <Option key={d.value} value={d.value}>{d.text}</Option>)
           }
         </Select>
       </div>
@@ -183,16 +183,16 @@ class SelectDemo3 extends Component {
 
   setDisabled = () => {
     this.setState({
-      disabled: !this.state.disabled
+      disabled: !this.state.disabled,
     });
   }
 
-  onChangeProvince = ({ value, text }) => {
+  onChangeProvince = ({ value, title }) => {
     this.setState({
       province: value,
     });
   }
-  onChangeCity = ({ value, text }) => {
+  onChangeCity = ({ value, title }) => {
     // console.log('onChange', value, text);
   }
 
@@ -216,9 +216,7 @@ class SelectDemo3 extends Component {
   }
 
   render() {
-    const citys = this.getCitysByProvince(this.state.province).map((v, i) => {
-      return <Option value={v.value} text={v.text} key={i} />;
-    });
+    const citys = this.getCitysByProvince(this.state.province).map((v, i) => <Option value={v.value} text={v.text} key={i} />);
 
     return (
       <div className="markdown-block">
@@ -227,9 +225,9 @@ class SelectDemo3 extends Component {
         <p />
         省：
         <Select style={{ width: 250 }} disabled={this.state.disabled} value={this.state.value} onChange={this.onChangeProvince}>
-          <Option value="1" text="浙江省" />
-          <Option value="2" text="广东省" />
-          <Option value="3" text="福建省" />
+          <Option value="1">浙江省</Option>
+          <Option value="2">广东省</Option>
+          <Option value="3">福建省</Option>
         </Select>
         市：
         <Select style={{ width: 250 }} disabled={this.state.disabled} value={this.state.value} onChange={this.onChangeCity}>

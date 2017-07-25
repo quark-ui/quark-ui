@@ -169,7 +169,7 @@ class Pagination extends PureComponent {
       </li>,
     );
     if (start !== firstPage + 1 && start !== firstPage) {
-      items.push(<li key={'front'}><Icon name="ellipsis" size={12} /></li>);
+      items.push(<li key={'front'} styleName="pagination__ellipsis"><Icon name="ellipsis" size={12} /></li>);
     }
     for (let i = start; i <= end; i += 1) {
       const btnProps = this.getItemProps(i);
@@ -180,7 +180,7 @@ class Pagination extends PureComponent {
       );
     }
     if (end !== lastPage - 1 && end !== lastPage) {
-      items.push(<li key={'back'}><Icon name="ellipsis" size={12} /></li>);
+      items.push(<li key={'back'} styleName="pagination__ellipsis"><Icon name="ellipsis" size={12} /></li>);
     }
     items.push(
       <li key={lastPage}>
@@ -197,9 +197,9 @@ class Pagination extends PureComponent {
     };
     let content;
     if (direction === 'prev') {
-      content = <Icon name="arrow-left" size={12} />;
+      content = <Icon name="double-arrow-left" size={12} />;
     } else {
-      content = <Icon name="arrow-right" size={12} />;
+      content = <Icon name="double-arrow-right" size={12} />;
     }
     return <button {...ctrlProps}>{content}</button>;
   }
