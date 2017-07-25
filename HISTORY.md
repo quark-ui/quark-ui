@@ -1,8 +1,13 @@
+## v0.0.1 (2017-07-25)
+
+Optimization:
+- `DatePicker`:  rangePicker's interaction
+- `Modal`: change style
+
 ## v0.0.1-beta9 (2017-06-23)
 
 add animation to below components
 - Trigger
-
 
 ## v0.0.1-beta8 (2017-06-12)
 
