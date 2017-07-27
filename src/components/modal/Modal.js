@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom';
 import { Component } from 'react';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
+import classnames from 'classnames';
 import Button from '../button';
 import { allowMultiple } from '../../constants';
 import styles from './Modal.css';
@@ -153,7 +154,7 @@ class Modal extends Component {
                 e.preventDefault();
                 this.handleCancel(e);
               }}
-            ><Icon name="close" size={18} color="#a6a6a6" /></a>
+            ><Icon name="close" size={18} /></a>
             : null
           }
         </div>
@@ -170,14 +171,14 @@ class Modal extends Component {
         type="secondary"
         onClick={this.handleCancel}
       >
-        取消
+        取&emsp;消
       </Button>,
       <Button
         key="confirm"
         type="primary"
         onClick={this.handleOk}
       >
-        确定
+        确&emsp;定
       </Button>,
     ];
     return footer === undefined ? (
@@ -191,19 +192,20 @@ class Modal extends Component {
       style: {
         width,
       },
-      styleName: `modal${visible ? '--visible' : ''}`,
+      styleName: classnames('modal', {
+        'modal--visible': visible,
+      }),
 
-    }; {
-      return (
-        <Mask visible={visible}>
-          <div {...modalProps}>
-            { this.renderHeader() }
-            <div styleName="modal__content">{children}</div>
-            { this.renderFooter() }
-          </div>
-        </Mask>
-      );
-    }
+    };
+    return (
+      <Mask visible={visible}>
+        <div {...modalProps}>
+          { this.renderHeader() }
+          <div styleName="modal__content">{children}</div>
+          { this.renderFooter() }
+        </div>
+      </Mask>
+    );
   }
 }
 

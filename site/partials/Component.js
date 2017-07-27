@@ -1,17 +1,16 @@
+import 'prismjs/themes/prism.css';
+
 import { Component, createElement } from 'react';
 import marked from 'meta-marked';
 import Prism from 'prismjs';
 import CSSModules from 'react-css-modules';
 import copy from 'copy-to-clipboard';
-import classnames from 'classnames';
 import { allowMultiple } from '../../src/constants';
 import IconGithub from '../icons/github.svg';
 import IconUser from '../icons/user.svg';
 import IconMail from '../icons/email.svg';
 import message from '../../src/components/message';
 import Icon from '../../src/components/icon';
-
-import 'prismjs/themes/prism.css';
 
 import styles from './Component.css';
 

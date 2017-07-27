@@ -141,6 +141,7 @@
 }
 .datePicker__monthBody {
   margin-top: 12px;
+  white-space: normal;
 }
 .datePicker__monthGrid {
   composes: bodyGrid;
@@ -165,6 +166,7 @@
 }
 .datePicker__yearBody {
   margin-top: 12px;
+  white-space: normal;
 }
 .datePicker__yearGrid {
   composes: bodyGrid;
@@ -195,6 +197,7 @@
 }
 .datePicker__decadeBody {
   margin-top: 12px;
+  white-space: normal;
 }
 .datePicker__decadeGrid {
   composes: bodyGrid;
@@ -215,10 +218,14 @@
 
 /* rangePicker */
 .rangePicker {
+  background: #fff;
+  border: 1px solid var(--border-color);
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, .1);
+  border-radius: 3px;
   white-space: nowrap;
   & .datePicker__picker {
     display: inline-block;
+    padding-bottom: 10px;
     vertical-align: top;
     box-shadow: none;
   }
@@ -227,7 +234,7 @@
   & .datePicker__yearPane,
   & .datePicker__decadePane {
     width: 306px;
-    height: 327px;
+    height: 322px;
   }
 
   & .datePicker__monthGrid,
@@ -237,11 +244,27 @@
     height: 65px;
   }
 }
+.rangePicker__picker {
+  & .datePicker__picker {
+    border: 0 none;
+  }
+}
+.rangePicker__quickSelect {
+  padding: 0 15px 10px;
+  border-bottom: 1px solid var(--border-color);
+  & button {
+    margin-right: 10px;
+  }
+}
+.rangePicker__action {
+  padding: 12px 0;
+  text-align: center;
+  & button {
+    margin: 0 20px;
+    width: 180px;
+  }
+}
 .picker--start {
-  border-right: 0 none;
-  border-radius: 3px 0 0 3px;
 }
 .picker--end {
-  border-left: 0 none;
-  border-radius: 0 3px 3px 0;
 }

@@ -29,7 +29,7 @@
   position: absolute;
   left: 0;
   width: 100%;
-  top: 13px;
+  top: 12px;
   &>i{
     display: inline-block;
     vertical-align: top;
@@ -61,13 +61,13 @@
 .steps--headinner {
   display: block;
   border: 1px solid var(--inactive-color);
-  width: 26px;
-  height: 26px;
-  line-height: 26px;
+  width: 22px;
+  height: 22px;
+  line-height: 22px;
   text-align: center;
-  border-radius: 26px;
+  border-radius: 22px;
   font-size: 14px;
-  margin-right: 8px;
+  margin-right: 6px;
 }
 
 .steps--icon {
@@ -83,6 +83,7 @@
   background-color: #fff;
   display: inline-block;
   padding-right: 10px;
+  margin-bottom: 5px;
 }
 
 .steps--description {
@@ -162,6 +163,20 @@
 .steps--item__error {}
 .steps--step {}
 
+.steps__small{
+    & .steps--headinner {
+    width: 18px;
+    height: 18px;
+    line-height: 19px;
+    border-radius: 18px;
+    font-size: 12px;
+  }
+  &.steps__vertical .steps--tail {
+    position: absolute;
+    left: 10px;
+  }
+}
+
 /*竖向步骤条样式*/
 .steps__vertical{
   & .steps--item {
@@ -170,19 +185,15 @@
 
   & .steps--tail {
     position: absolute;
-    left: 13px;
+    left: 12px;
     top: 0;
     height: 100%;
     width: 1px;
-    padding: 30px 0 4px;
+    padding: 20px 0 4px;
     &>i{
       height: 100%;
     width: 1px;
     }
-  }
-
-  & .steps--description {
-    padding-bottom: 12px;
   }
 
   & .steps--head {

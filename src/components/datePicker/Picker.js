@@ -16,6 +16,7 @@ import DatePane from './panes/DatePane';
 import MonthPane from './panes/MonthPane';
 import YearPane from './panes/YearPane';
 import DecadePane from './panes/DecadePane';
+import Button from '../button';
 
 @CSSModules(styles, { allowMultiple })
 class Picker extends PureComponent {
@@ -28,6 +29,8 @@ class Picker extends PureComponent {
     type: 'date',
     changeDate() {},
     disabledDate() {},
+    onVisibleChange() {},
+    paneVisible: false,
   }
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
@@ -42,6 +45,8 @@ class Picker extends PureComponent {
     type: PropTypes.oneOf(['date', 'month', 'range']),
     changeDate: PropTypes.func,
     disabledDate: PropTypes.func,
+    onVisibleChange: PropTypes.func,
+    paneVisible: PropTypes.bool,
   }
 
   constructor(props) {
@@ -56,6 +61,10 @@ class Picker extends PureComponent {
 
   componentWillReceiveProps(nextProps) {
     this.setState(this.getDateFromProps(nextProps));
+  }
+
+  onPaneVisibleChange = (visible) => {
+    this.props.onVisibleChange(visible);
   }
 
   onSetDecade = (decadeYear, e, nativeEvent, position) => {
@@ -125,6 +134,38 @@ class Picker extends PureComponent {
     }
   }
 
+  setRange(range) {
+    const rangeDate = [];
+    switch (range) {
+      case 'today':
+      default:
+        const today = moment();
+        rangeDate.push(today);
+        rangeDate.push(today);
+        break;
+      case 'week':
+        rangeDate.push(moment().startOf('week'));
+        rangeDate.push(moment().endOf('week'));
+        break;
+      case 'month':
+        rangeDate.push(moment().startOf('month'));
+        rangeDate.push(moment().endOf('month'));
+        break;
+    }
+    this.setState({
+      rangeDate,
+    });
+  }
+
+  cancelAction = () => {
+    this.props.onVisibleChange(false);
+  }
+
+  confirmAction = () => {
+    this.props.changeDate(this.state.rangeDate);
+    this.props.onVisibleChange(false);
+  }
+
   getDateFromProps(props) {
     if (props.type === 'range') {
       return {
@@ -145,7 +186,11 @@ class Picker extends PureComponent {
       date,
     };
     if (this.props.type === 'range') {
-      this.props.changeDate(d, position);
+      const rangeDate = this.state.rangeDate.slice(0);
+      rangeDate[position] = moment(d);
+      this.setState({
+        rangeDate,
+      });
     } else {
       this.props.changeDate(d);
     }
@@ -154,9 +199,11 @@ class Picker extends PureComponent {
   changeMonth = (month, position) => {
     switch (this.props.type) {
       case 'range':
-        this.props.changeDate({
-          month,
-        }, position);
+        const { rangeDate } = this.state;
+        rangeDate[position].set('month', month);
+        this.setState({
+          rangeDate,
+        });
         break;
       case 'month':
         this.props.changeDate({
@@ -193,7 +240,8 @@ class Picker extends PureComponent {
   }
 
   renderPane(date, currentPane, decadeYear, position, className = '') {
-    const { type, rangeDate } = this.props;
+    const { type } = this.props;
+    const { rangeDate } = this.state;
     const paneProps = {
       date,
       manipulateDate: partialRight(this.manipulateDate, position),
@@ -252,14 +300,50 @@ class Picker extends PureComponent {
   }
 
   render() {
-    const { children, type } = this.props;
-    const { date, rangeDate, decadeYear, decadeYears, currentPane, currentRangePane } = this.state;
+    const { children, type, paneVisible } = this.props;
+    const {
+      date,
+      rangeDate,
+      decadeYear,
+      decadeYears,
+      currentPane,
+      currentRangePane,
+    } = this.state;
     let popup;
     if (type === 'range') {
       popup = (
         <div className={styles.rangePicker}>
-          {this.renderPane(rangeDate[0], currentRangePane[0], decadeYears[0], 0, styles['picker--start'])}
-          {this.renderPane(rangeDate[1], currentRangePane[1], decadeYears[1], 1, styles['picker--end'])}
+          <div className={styles.rangePicker__picker}>
+            {this.renderPane(rangeDate[0], currentRangePane[0], decadeYears[0], 0, styles['picker--start'])}
+            {this.renderPane(rangeDate[1], currentRangePane[1], decadeYears[1], 1, styles['picker--end'])}
+          </div>
+          <div className={styles.rangePicker__quickSelect}>
+            <Button
+              size="small"
+              type="secondary"
+              onClick={() => {
+                this.setRange('today');
+              }}
+            >今天</Button>
+            <Button
+              size="small"
+              type="secondary"
+              onClick={() => {
+                this.setRange('week');
+              }}
+            >本周</Button>
+            <Button
+              size="small"
+              type="secondary"
+              onClick={() => {
+                this.setRange('month');
+              }}
+            >本月</Button>
+          </div>
+          <div className={styles.rangePicker__action}>
+            <Button type="secondary" onClick={this.cancelAction}>取消</Button>
+            <Button type="primary" onClick={this.confirmAction}>确定</Button>
+          </div>
         </div>
       );
     } else {
@@ -269,6 +353,8 @@ class Picker extends PureComponent {
       <Trigger
         popup={popup}
         action={'click'}
+        popupVisible={paneVisible}
+        onPopupVisibleChange={this.onPaneVisibleChange}
       >
         {children}
       </Trigger>

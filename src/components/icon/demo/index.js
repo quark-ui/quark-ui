@@ -12,7 +12,7 @@ export default class IconDemo extends Component {
   componentDidMount() {
     if (typeof MutationObserver === 'function') {
       const observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutationRecord) => {
+        mutations.forEach(() => {
           this.setState({
             color: document.documentElement.style.getPropertyValue('--brand-primary'),
           });
@@ -30,9 +30,9 @@ export default class IconDemo extends Component {
       <div className={styles.Icon__wrap}>
         {
           IconList.map(name => (
-            <div className={styles['Icon__grid']} key={name}>
+            <div className={styles.Icon__grid} key={name}>
               <Icon size={36} name={name} color={this.state.color} />
-              <span className={styles['Icon__name']}>{name}</span>
+              <span className={styles.Icon__name}>{name}</span>
             </div>
           ))
         }

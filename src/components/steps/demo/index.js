@@ -36,42 +36,42 @@ export default class StepDemo extends Component {
     return (
       <div className="markdown-block">
         <h3><Button disabled={this.state.current <= 0} onClick={this.handlePrev}>上一步</Button>&nbsp;
-        <Button disabled={this.state.current >= 3} onClick={this.handleNext}>下一步</Button></h3>
+          <Button disabled={this.state.current >= 3} onClick={this.handleNext}>下一步</Button></h3>
         <h3>横向步骤条</h3>
-        <p><Steps current={this.state.current} isFinishIcon>
-          <Step title="Finished" description="This is a description." />
-          <Step title="In Progress" />
-          <Step title="Waiting" />
-          <Step title="In Progress" />
-        </Steps></p>
-        <p><Steps current={this.state.current}>
-          <Step title="Finished" description="This is a description." />
-          <Step title="In Progress" description="This is a description." />
-          <Step title="Waiting" description="This is a description." />
-          <Step title="In Progress" description="This is a description." />
-        </Steps></p>
-        <p><Steps current={this.state.current}>
-          <Step title="Finished" />
-          <Step title="In Progress" />
-          <Step title="Waiting" />
-          <Step title="In Progress" />
-        </Steps></p>
+        <Steps current={this.state.current} style={{ marginBottom: 10 }}>
+          <Step title="步骤1" />
+          <Step title="步骤2" />
+          <Step title="步骤3" />
+          <Step title="步骤4" />
+        </Steps>
+        <Steps current={this.state.current} isFinishIcon style={{ marginBottom: 10 }}>
+          <Step title="已完成" />
+          <Step title="进行中" />
+          <Step title="未进行" />
+          <Step title="未进行" />
+        </Steps>
+        <Steps current={this.state.current} style={{ marginBottom: 10 }}>
+          <Step title="步骤1" description="这是一段很长很长很长的描述性文字" />
+          <Step title="步骤2" description="这是一段很长很长很长的描述性文字" />
+          <Step title="步骤3" description="这是一段很长很长很长的描述性文字" />
+          <Step title="步骤4" description="这是一段很长很长很长的描述性文字" />
+        </Steps>
 
         <h3>竖向步骤条</h3>
-        <div style={{ width: 200, display: 'inline-block' }}>
+        <div style={{ width: 400, display: 'inline-block' }}>
           <Steps current={this.state.current} direction="vertical">
-            <Step title="Finished" description="This is a description." />
-            <Step title="In Progress" description="This is a description." />
-            <Step title="Waiting" description="This is a description." />
-            <Step title="In Progress" />
+            <Step title="步骤1" description="这是一段很长很长很长的描述性文字" />
+            <Step title="步骤2" description="这是一段很长很长很长的描述性文字" />
+            <Step title="步骤3" description="这是一段很长很长很长的描述性文字" />
+            <Step title="步骤4" />
           </Steps>
         </div>
         <div style={{ display: 'inline-block' }}>
-          <Steps current={this.state.current} direction="vertical" isFinishIcon>
-            <Step title="Finished" description="This is a description." />
-            <Step title="In Progress" description="This is a description." />
-            <Step title="Waiting" description="This is a description." />
-            <Step title="In Progress" />
+          <Steps current={this.state.current} size={'small'} direction="vertical" isFinishIcon>
+            <Step title="已完成" description="这是一段很长很长很长的描述性文字" />
+            <Step title="进行中" description="这是一段很长很长很长的描述性文字" />
+            <Step title="未进行" description="这是一段很长很长很长的描述性文字" />
+            <Step title="未进行" description="这是一段很长很长很长的描述性文字" />
           </Steps>
         </div>
       </div>
