@@ -3,8 +3,7 @@ import Animation from '../Animation';
 import Select from '../../select';
 import Button from '../../button';
 import MOTIONS, { TIMING_FUNCTION } from '../motions';
-const { Option, OptGroup } = Select;
-
+const { Option } = Select;
 
 export default class AnimationDemo extends Component {
   state = {
@@ -41,7 +40,7 @@ export default class AnimationDemo extends Component {
           }}
         >
           {
-            Object.keys(MOTIONS).map(name => (
+            MOTIONS.map(name => (
               <Option key={name} value={name}>{name}</Option>
             ))
           }
@@ -53,13 +52,23 @@ export default class AnimationDemo extends Component {
             });
           }}
         >toggle</Button>
-        <Animation
-          in={this.state.status}
-          timingFunction={this.state.timeFunction}
-          motion={this.state.motion}
-        >
-          xxxx
-        </Animation>
+        <div>
+          <Animation
+            in={this.state.status}
+            timingFunction={this.state.timeFunction}
+            motion={this.state.motion}
+            style={{
+              marginTop: 20,
+              display: 'inline-block',
+            }}
+          >
+            <div style={{
+              width: 100,
+              height: 100,
+              border: '1px solid var(--brand-primary)',
+            }}></div>
+          </Animation>
+        </div>
       </div>
     );
   }

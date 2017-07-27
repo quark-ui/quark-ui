@@ -145,7 +145,7 @@ if (TARGET === 'start' || TARGET === 'start-nodash') {
               options: {
                 importLoaders: 1,
                 modules: true,
-                localIdentName: '[local]__[hash:base64:5]',
+                localIdentName: '[local]__[hash:base64:4]',
               },
             },
             {

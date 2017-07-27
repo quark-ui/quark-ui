@@ -5,6 +5,8 @@
 
 export { default as Alert } from './components/alert/';
 
+export { default as Animation } from './components/animation/';
+
 export { default as Breadcrumb } from './components/breadcrumb/';
 
 export { default as Button } from './components/button/';

@@ -6,14 +6,10 @@ import Transition from 'react-transition-group/Transition';
 
 import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import CSSModules from 'react-css-modules';
-import { allowMultiple } from '../../constants';
+import classnames from 'classnames';
 import styles from './Animation.css';
 import MOTIONS, { TIMING_FUNCTION } from './motions';
 
-console.log(MOTIONS, TIMING_FUNCTION);
-
-@CSSModules(styles, { allowMultiple })
 class Animation extends PureComponent {
 
   static displayName = 'Animation'
@@ -22,36 +18,58 @@ class Animation extends PureComponent {
     duration: 500,
     motion: 'fade',
     timingFunction: 'linear',
+    style: undefined,
+    in: PropTypes.bool,
+    mountOnEnter: false,
+    unmountOnExit: false,
+    enter: true,
+    exit: true,
+    onEnter() {},
+    onEntering() {},
+    onEntered() {},
+    onExit() {},
+    onExiting() {},
+    onExited() {},
   }
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
   static propTypes = {
-  }
-
-  constructor(props) {
-    super(props);
-    this.state = {};
+    duration: PropTypes.number,
+    motion: PropTypes.oneOf(MOTIONS),
+    timingFunction: PropTypes.oneOf(Object.keys(TIMING_FUNCTION)),
+    style: PropTypes.object,
+    in: PropTypes.bool,
+    mountOnEnter: PropTypes.bool,
+    unmountOnExit: PropTypes.bool,
+    enter: PropTypes.bool,
+    exit: PropTypes.bool,
+    onEnter: PropTypes.func,
+    onEntering: PropTypes.func,
+    onEntered: PropTypes.func,
+    onExit: PropTypes.func,
+    onExiting: PropTypes.func,
+    onExited: PropTypes.func,
   }
 
   render() {
-    const { duration, motion, timingFunction } = this.props;
+    const { duration, motion, timingFunction, style, children, ...otherProps } = this.props;
     const transitionProps = {
       in: this.props.in,
       timeout: duration,
+      ...otherProps,
     };
     const defaultStyle = {
-      transition: `all ${duration}ms ${TIMING_FUNCTION[timingFunction]}`,
-      ...MOTIONS[motion].default,
+      ...style,
+      animationDuration: `${duration}ms`,
+      animationTimingFunction: TIMING_FUNCTION[timingFunction],
     };
     return (
       <Transition {...transitionProps}>
-        {state => (
+        {status => (
           <div
-            style={{
-              ...defaultStyle,
-              ...MOTIONS[motion][state],
-            }}
-          >{state}</div>
+            style={defaultStyle}
+            className={classnames(styles[motion], styles[`${motion}--${status}`])}
+          >{children}</div>
         )}
       </Transition>
     );

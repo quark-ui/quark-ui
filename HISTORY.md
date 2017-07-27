@@ -6,6 +6,9 @@ Optimization:
 - `Message`: change style
 - `Steps`: change style
 
+NEW:
+- `Animation` component
+- add animation in `Modal`
 
 ## v0.0.1-beta9 (2017-06-23)
 
