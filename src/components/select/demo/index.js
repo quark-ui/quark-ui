@@ -35,7 +35,7 @@ class SelectDemo1 extends Component {
       <div className="markdown-block">
         <Button onClick={this.setDisabled}>{ this.state.disabled ? '启用' : '禁用'}</Button> &nbsp;&nbsp;
         <Button onClick={this.setSelect}>{ '选中BB' }</Button>
-        <h3>基本使用。</h3>
+        <h3>基本使用</h3>
         <p />
         <Select style={{ width: 250 }} disabled={this.state.disabled} value={this.state.value} onChange={this.onChange}>
           <Option value="A">AA</Option>
@@ -47,19 +47,7 @@ class SelectDemo1 extends Component {
           <Option value="G">GG</Option>
         </Select>
 
-        <h3>基本使用。</h3>
-        <p />
-        <Select style={{ width: 250 }} disabled={this.state.disabled} value='B' onChange={this.onChange}>
-          <Option value="A">AA</Option>
-          <Option value="B">BB</Option>
-          <Option value="C">CC</Option>
-          <Option value="D">DD</Option>
-          <Option value="E">EE</Option>
-          <Option value="F">FF</Option>
-          <Option value="G">GG</Option>
-        </Select>
-
-        <h3>默认</h3>
+        <h3>非受控</h3>
         <p />
         <Select style={{ width: 250 }} disabled={this.state.disabled} defaultValue='B' onChange={this.onChange}>
           <Option value="A">AA</Option>

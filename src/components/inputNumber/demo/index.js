@@ -19,7 +19,7 @@ export default class InputNumberDemo extends Component {
                 <InputNumber min={1} max={10} disabled={true} defaultValue={3} />
              <h3>小数</h3>
               <p>和原生的数字输入框一样，鼠标离开输入框时自动取值。目前设定小数位两位。</p>
-                <InputNumber min={0} max={10} defaultValue={3} step={0.11} onChange={this.onChange}/>
+                <InputNumber min={0} max={10} defaultValue={3} step={1.00} onChange={this.onChange}/>
              <h3>大小</h3>
               <p>三种大小的数字输入框。</p>
                 <InputNumber size="large" min={1} max={100000} defaultValue={3} onChange={this.onChange}/>
