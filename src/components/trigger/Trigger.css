@@ -9,5 +9,8 @@
   display: inline-block;
 }
 .popup {
-  position: absolute;
+  /* position: absolute; */
+}
+.popup--hidden {
+  display: none;
 }

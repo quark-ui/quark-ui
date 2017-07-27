@@ -227,13 +227,12 @@ class Trigger extends PureComponent {
 
   renderPopup() {
     const { action } = this.props;
-    const { position, active, ready } = this.state;
+    const { position, active } = this.state;
     const popupProps = {
       ref: n => (this.popup = n),
       popupRef: n => (this.popNode = n),
       position,
       visible: active,
-      ready,
     };
     if (action === 'hover') {
       assign(popupProps, {
