@@ -5,7 +5,8 @@
 .menu {
     outline: none;
     margin-bottom: 0;
-    padding-left: 0;
+    /*padding-left: 0;*/
+    padding: 0px 10px;
     list-style: none;
     z-index: 1050;
     line-height: 46px;
@@ -83,7 +84,7 @@
     & :global(.menu-item),
     & :global(.menu-submenu-title){
         margin: 0;
-        padding: 0 20px;
+        padding: 0 10px;
         position: relative;
         display: block;
         white-space: nowrap;
@@ -100,7 +101,7 @@
 .menu:global(.menu-horizontal-h){
 
     border: solid 1px #dddddd;
-    padding: 4px 0;
+    padding: 4px 10px;
 
     /*颜色-暖色*/
     &:global(.color-warm) {
@@ -110,6 +111,7 @@
         & :global(.menu-item-selected), 
         & > :global(.menu-submenu-selected){
             border-bottom: solid 1px #ff9536;
+            border-bottom-width: 50%;
         }
     }
     /*颜色-冷色*/
@@ -130,7 +132,7 @@
 
     & > :global(.menu-item) {
         display: inline-block;
-        margin-left: 10px;
+        margin-left: 20px;
         line-height: 44px;
     }
 
@@ -166,7 +168,7 @@
 .menu:global(.menu-horizontal){
 
     border: solid 1px #dddddd;
-    padding: 4px 0;
+    padding: 4px 10px;
 
     /*颜色-暖色*/
     &:global(.color-warm) {
@@ -177,7 +179,8 @@
             border-bottom: solid 1px #ff9536;
         }
 
-        & :global(.menu) :global(.menu-item-selected) {
+        & :global(.menu) :global(.menu-item-selected),
+        & :global(.menu) :global(.menu-item-active)  {
             background-color: #f6f8fc;
         }
         & :global(.menu) :global(.menu-item-selected:after){
@@ -219,8 +222,10 @@
     
     & > :global(.menu-item) {
         display: inline-block;
-        margin-left: 10px;
+        margin-left: 20px;
         line-height: 44px;
+        /*padding: 0px ;*/
+        /*margin: 0px 20px;*/
     }
 
     /*一级菜单*/
@@ -262,7 +267,8 @@
     &:global(.color-warm) {
         color: #666666;
 
-        & :global(.menu-item-selected){
+        & :global(.menu-item-selected),
+        & :global(.menu-item-active){
             background-color: #f6f8fc;
         }
 
@@ -333,7 +339,8 @@
     &:global(.color-warm) {
         color: #666666;
 
-        & :global(.menu-item-selected){
+        & :global(.menu-item-selected),
+        & :global(.menu-item-active){
             background-color: #f6f8fc;
         }
 
