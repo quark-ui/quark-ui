@@ -21,8 +21,7 @@ export default class Select extends PureComponent {
     type: 'dropdown',
     style: { width: 200 },
     disabled: false,
-    value: '',
-    defaultValue:'',
+    // defaultValue:'',
     children: null,
     onSearch: () => {},
     onChange: () => {},
@@ -133,19 +132,26 @@ export default class Select extends PureComponent {
   // 选项选中时回调
   onOptionSelected = (value, title) => {
     this.setState({
-      value,
-      title,
       dropdownVisible: false,
     });
 
-    this.lastState.title = title;
-    this.lastState.value = value;
-    const { onChange } = this.props;
-    if (onChange) {
-      onChange({
+
+    if(this.props.value !== 'undefined'){
+      // 受控组件
+     this.props.onChange({
         value,
         title,
       });
+    }else{
+      // 非受控组件
+      this.setState({
+        value,
+        title,
+      });
+      this.props.onChange(
+        value,
+        title,
+      );
     }
   }
 

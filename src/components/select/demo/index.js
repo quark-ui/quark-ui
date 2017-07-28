@@ -11,6 +11,7 @@ class SelectDemo1 extends Component {
     super();
     this.state = {
       disabled: false,
+      value:'',
     };
   }
 
@@ -25,19 +26,24 @@ class SelectDemo1 extends Component {
       value: 'B',
     });
   }
-
+  
   onChange = ({ title, value }) => {
-    console.log(value, title);
+      this.setState({
+        value,
+        title,
+      });
   }
 
   render() {
+    const { value, disabled } = this.state;
+
     return (
       <div className="markdown-block">
-        <Button onClick={this.setDisabled}>{ this.state.disabled ? '启用' : '禁用'}</Button> &nbsp;&nbsp;
+        <Button onClick={this.setDisabled}>{ disabled ? '启用' : '禁用'}</Button> &nbsp;&nbsp;
         <Button onClick={this.setSelect}>{ '选中BB' }</Button>
-        <h3>基本使用</h3>
+        <h3>受控</h3>
         <p />
-        <Select style={{ width: 250 }} disabled={this.state.disabled} value={this.state.value} onChange={this.onChange}>
+        <Select style={{ width: 250 }} disabled={disabled} value={value} onChange={this.onChange}>
           <Option value="A">AA</Option>
           <Option value="B">BB</Option>
           <Option value="C">CC</Option>
@@ -49,7 +55,7 @@ class SelectDemo1 extends Component {
 
         <h3>非受控</h3>
         <p />
-        <Select style={{ width: 250 }} disabled={this.state.disabled} defaultValue='B' onChange={this.onChange}>
+        <Select style={{ width: 250 }} disabled={disabled} defaultValue='B'onChange={(m)=>console.log(m)}>
           <Option value="A">AA</Option>
           <Option value="B">BB</Option>
           <Option value="C">CC</Option>
@@ -58,10 +64,48 @@ class SelectDemo1 extends Component {
           <Option value="F">FF</Option>
           <Option value="G">GG</Option>
         </Select>
+      </div>
+    );
+  }
+}
 
+
+class SelectDemo4 extends Component {
+  constructor() {
+    super();
+    this.state = {
+      disabled: false,
+      value:'',
+    };
+  }
+
+  setDisabled = () => {
+    this.setState({
+      disabled: !this.state.disabled,
+    });
+  }
+
+  setSelect = () => {
+    this.setState({
+      value: 'B',
+    });
+  }
+  
+  onChange = ({ title, value }) => {
+      this.setState({
+        value,
+        title,
+      });
+  }
+
+  render() {
+    const { value, disabled } = this.state;
+
+    return (
+      <div className="markdown-block">
         <h3>分组</h3>
         <p />
-        <Select style={{ width: 250 }} disabled={this.state.disabled} value={this.state.value} onChange={this.onChange}>
+        <Select style={{ width: 250 }} disabled={disabled} value={value} onChange={this.onChange}>
           <OptGroup label="分组1">
             <Option value="A">AA</Option>
             <Option value="B">BB</Option>
@@ -79,7 +123,7 @@ class SelectDemo1 extends Component {
 
         <h3>复杂选项。</h3>
         <p />
-        <Select style={{ width: 250 }} disabled={this.state.disabled} value={this.state.value} onChange={this.onChange}>
+        <Select style={{ width: 250 }} disabled={disabled} value={value} onChange={this.onChange}>
           <Option value="A" title="李大力">
             <div>李大力</div><div>1354534324</div><div>杭州萧山区民和路</div>
           </Option>
@@ -100,6 +144,7 @@ class SelectDemo1 extends Component {
     );
   }
 }
+
 
 class SelectDemo2 extends Component {
 
@@ -189,6 +234,8 @@ class SelectDemo3 extends Component {
 
   onChangeProvince = ({ value, title }) => {
     this.setState({
+      value,
+      title,
       province: value,
     });
   }
@@ -243,6 +290,8 @@ export default class UploadDemo extends Component {
     return (
       <div className="markdown-block">
         <SelectDemo1 />
+        <br /><br />
+        <SelectDemo4 />
         <br /><br />
         <SelectDemo2 />
         <br /><br />
