@@ -53,12 +53,12 @@ export default class Select extends PureComponent {
   constructor(props) {
     super(props);
 
-    const value = this.props.defaultValue || this.props.value;
+    const value = this.props.value || this.props.defaultValue;
     const title = this.getValue(this.props.children, value);
 
 
     this.state = {
-      value: value || '',
+      value,
       title: title || undefined,
       dropdownVisible: false, // 下接弹层是否显示
     };
@@ -135,8 +135,7 @@ export default class Select extends PureComponent {
       dropdownVisible: false,
     });
 
-
-    if(this.props.value !== 'undefined'){
+    if(typeof this.props.value !== 'undefined'){
       // 受控组件
      this.props.onChange({
         value,
