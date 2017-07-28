@@ -255,7 +255,7 @@ export default class Select extends PureComponent {
           popupVisible={popupVisible}
           onPopupVisibleChange={this.onDropdownVisibleChanged}
         >
-          <div className={styles.selection} style={{ width }}>
+          <div className={this.state.value ? styles.selectionClose: styles.selection} style={{ width }}>
             { selection }
             <Icon
               name={popupVisible ? 'arrow-up' : 'arrow-down'}
