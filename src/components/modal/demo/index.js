@@ -25,8 +25,17 @@ export default class ModalDemo extends Component {
     const modalProps = {
       title: '标题',
       visible,
-      onOk: () => { this.closeModal(); },
-      onCancel: () => { this.closeModal(); },
+      onOk: () => {
+        this.closeModal();
+        console.log('onOK');
+      },
+      onCancel: () => {
+        this.closeModal();
+        console.log('onCancel');
+      },
+      afterClose() {
+        console.log('afterClose');
+      },
     };
     return (
       <div className="markdown-block">

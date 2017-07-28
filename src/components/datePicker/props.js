@@ -8,7 +8,7 @@ export const defaultProps = {
   format: 'YYYY-MM-DD',
   onChange() {},
   fieldSize: 'normal',
-  fieldWidth: null,
+  fieldWidth: 220,
 };
 
 // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
