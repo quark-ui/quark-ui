@@ -115,6 +115,7 @@ export default class Select extends PureComponent {
     }
     if (value) {
       this.setState({
+        value,
         title: value,
       });
     } else { // 当全部都删完时，清空历史
@@ -134,7 +135,6 @@ export default class Select extends PureComponent {
     this.setState({
       dropdownVisible: false,
     });
-
     if(typeof this.props.value !== 'undefined'){
       // 受控组件
      this.props.onChange({
@@ -230,7 +230,7 @@ export default class Select extends PureComponent {
         className={styles.comboboxInput}
         onChange={this.onComboboxInputChanged}
         placeholder={this.props.placeholder}
-        value={this.state.title}
+        value={this.state.value}
       />);
     }
 

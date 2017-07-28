@@ -153,6 +153,7 @@ class SelectDemo2 extends Component {
     this.state = {
       disabled: false,
       searchFetching: false,
+      value:'',
       searchData: [],
     };
   }
@@ -188,7 +189,10 @@ class SelectDemo2 extends Component {
   }
 
   onChange = ({ value, title }) => {
-    console.log('onChange', value, title);
+    this.setState({
+      value,
+      title,
+    });
   }
 
   render() {
@@ -201,6 +205,7 @@ class SelectDemo2 extends Component {
         <Select
           style={{ width: 250 }}
           disabled={this.state.disabled}
+          value={this.state.value}
           type="combobox"
           onSearch={this.onSearch}
           onCancelChange={this.onCancelChange}
@@ -221,9 +226,12 @@ class SelectDemo3 extends Component {
   constructor() {
     super();
     this.state = {
+      value:'',
       disabled: false,
       province: null,
+      city:null,
     };
+
   }
 
   setDisabled = () => {
@@ -237,9 +245,14 @@ class SelectDemo3 extends Component {
       value,
       title,
       province: value,
+      city:null,
     });
   }
   onChangeCity = ({ value, title }) => {
+    this.setState({
+      city:value,
+      title,
+    });
     // console.log('onChange', value, text);
   }
 
@@ -263,7 +276,7 @@ class SelectDemo3 extends Component {
   }
 
   render() {
-    const citys = this.getCitysByProvince(this.state.province).map((v, i) => <Option value={v.value} text={v.text} key={i} />);
+    const citys = this.getCitysByProvince(this.state.province).map((v, i) => <Option value={v.value} key={i}>{v.text}</Option>);
 
     return (
       <div className="markdown-block">
@@ -277,7 +290,7 @@ class SelectDemo3 extends Component {
           <Option value="3">福建省</Option>
         </Select>
         市：
-        <Select style={{ width: 250 }} disabled={this.state.disabled} value={this.state.value} onChange={this.onChangeCity}>
+        <Select style={{ width: 250 }} disabled={this.state.disabled} value={this.state.city} onChange={this.onChangeCity}>
           {citys}
         </Select>
       </div>
