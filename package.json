@@ -109,7 +109,8 @@
     "react-motion": "^0.5.0",
     "react-tappable": "^1.0.0",
     "react-transition-group": "^2.2.0",
-    "shallowequal": "^1.0.1"
+    "shallowequal": "^1.0.1",
+    "util-deprecate": "^1.0.2"
   },
   "peerDependencies": {
     "react": "^15.5.0",
