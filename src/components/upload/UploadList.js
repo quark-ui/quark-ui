@@ -37,6 +37,7 @@ export default class UploadList extends React.Component {
     progressAttr: {
       strokeWidth: 2,
       showInfo: false,
+      size : 'mini'
     },
     locale: { },
   }
