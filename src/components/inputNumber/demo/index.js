@@ -23,7 +23,9 @@ export default class InputNumberDemo extends Component {
              <h3>大小</h3>
               <p>三种大小的数字输入框。</p>
                 <InputNumber size="large" min={1} max={100000} defaultValue={3} onChange={this.onChange}/>
+                <br /><br />
                 <InputNumber min={1} max={100000} defaultValue={3} onChange={this.onChange} />
+                <br /><br />
                 <InputNumber size="small" min={1} max={100000} defaultValue={3} onChange={this.onChange}/>
              <h3>格式化展示</h3>
               <p>展示具有具体含义的数据</p>
@@ -31,11 +33,13 @@ export default class InputNumberDemo extends Component {
               formatter={value => `$ ${value.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}
               parser={value => value.replace(/\$\s?|(,*)/g, '')}
               onChange={this.onChange}/>
+              <br /><br />
             <InputNumber
                 defaultValue={1000}
                 formatter={value => `¥ ${value.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}
                 parser={value => value.replace(/\¥\s?|(,*)/g, '')}
                 onChange={this.onChange}/>
+                <br /><br />
             <InputNumber
               defaultValue={1}
               min={0}
@@ -43,6 +47,7 @@ export default class InputNumberDemo extends Component {
               formatter={value => `${value} m`}
               parser={value => value.replace(/[^\d]/g, '')}
               onChange={this.onChange}/>
+              <br /><br />
             <InputNumber
               defaultValue={1}
               min={0}
@@ -50,6 +55,7 @@ export default class InputNumberDemo extends Component {
               formatter={value => `${value} ㎡`}
               parser={value => value.replace(/[^\d]/g, '')}
               onChange={this.onChange}/>
+              <br /><br />
             <InputNumber
               defaultValue={1}
               min={0}
@@ -57,6 +63,7 @@ export default class InputNumberDemo extends Component {
               formatter={value => `${value} t`}
               parser={value => value.replace(/[^\d]/g, '')}
               onChange={this.onChange}/>
+              <br /><br />
             <InputNumber
               defaultValue={1}
               min={0}
@@ -64,6 +71,7 @@ export default class InputNumberDemo extends Component {
               formatter={value => `${value} L`}
               parser={value => value.replace(/[^\d]/g, '')}
               onChange={this.onChange}/>
+              <br /><br />
               <InputNumber
               defaultValue={1}
               min={0}
@@ -71,6 +79,7 @@ export default class InputNumberDemo extends Component {
               formatter={value => `${value} min`}
               parser={value => value.replace(/[^\d]/g, '')}
               onChange={this.onChange}/>
+              <br /><br />
               <InputNumber
               defaultValue={1}
               min={0}
