@@ -92,9 +92,62 @@ var index = shouldUseNative() ? Object.assign : function (target, source) {
 	return to;
 };
 
-var allowMultiple = true;
+function createCommonjsModule(fn, module) {
+	return module = { exports: {} }, fn(module, module.exports), module.exports;
+}
 
-var styles = { "input__wrapper": "_3qf4zVS", "input__prefix": "_3HOujdo", "input__suffix": "_2kHrSHK", "base": "_3d8Ip3y", "disabled": "_23bMeMN", "normal": "_2zTE3Ne", "large": "_3XuYOM0", "small": "_2t3xTWo", "input__text": "_3hkY6oH _3d8Ip3y", "input__textarea": "_1whAjSd _3d8Ip3y", "input__card": "_1_MWs1W _3d8Ip3y", "input__disabled": "_1SNztTO _3d8Ip3y _23bMeMN", "input__large": "_3PBNxgP _3d8Ip3y _3XuYOM0", "input__normal": "_1Ulh8TU _3d8Ip3y _2zTE3Ne", "input__small": "jvPBoLu _3d8Ip3y _2t3xTWo", "input__group": "VQEgDJZ", "input__19": "_3BWtBIU", "input__20": "_1k-xfqh", "input__wrapper__suffix": "_1f7L6KL", "input__wrapper__prefix": "_3WR4EVH" };
+var index$1 = createCommonjsModule(function (module) {
+/*!
+  Copyright (c) 2016 Jed Watson.
+  Licensed under the MIT License (MIT), see
+  http://jedwatson.github.io/classnames
+*/
+/* global define */
+
+(function () {
+	'use strict';
+
+	var hasOwn = {}.hasOwnProperty;
+
+	function classNames () {
+		var classes = [];
+
+		for (var i = 0; i < arguments.length; i++) {
+			var arg = arguments[i];
+			if (!arg) continue;
+
+			var argType = typeof arg;
+
+			if (argType === 'string' || argType === 'number') {
+				classes.push(arg);
+			} else if (Array.isArray(arg)) {
+				classes.push(classNames.apply(null, arg));
+			} else if (argType === 'object') {
+				for (var key in arg) {
+					if (hasOwn.call(arg, key) && arg[key]) {
+						classes.push(key);
+					}
+				}
+			}
+		}
+
+		return classes.join(' ');
+	}
+
+	if ('object' !== 'undefined' && module.exports) {
+		module.exports = classNames;
+	} else if (typeof undefined === 'function' && typeof undefined.amd === 'object' && undefined.amd) {
+		// register as 'classnames', consistent with npm package name
+		undefined('classnames', [], function () {
+			return classNames;
+		});
+	} else {
+		window.classNames = classNames;
+	}
+}());
+});
+
+var allowMultiple = true;
 
 // Thanks to https://github.com/andreypopp/react-textarea-autosize/
 
@@ -183,6 +236,8 @@ function calculateNodeHeight(uiTextNode) {
 
   return { height: height, minHeight: minHeight, maxHeight: maxHeight };
 }
+
+var styles = { "input__wrapper": "_3qf4zVS", "input__prefix": "_3HOujdo", "input__suffix": "_2kHrSHK", "base": "_3d8Ip3y", "disabled": "_23bMeMN", "normal": "_2zTE3Ne", "large": "_3XuYOM0", "small": "_2t3xTWo", "input__text": "_3hkY6oH _3d8Ip3y", "input__textarea": "_1whAjSd _3d8Ip3y", "input__card": "_1_MWs1W _3d8Ip3y", "input__disabled": "_1SNztTO _3d8Ip3y _23bMeMN", "input__large": "_3PBNxgP _3d8Ip3y _3XuYOM0", "input__normal": "_1Ulh8TU _3d8Ip3y _2zTE3Ne", "input__small": "jvPBoLu _3d8Ip3y _2t3xTWo", "input__group": "VQEgDJZ", "input__19": "_3BWtBIU", "input__20": "_1k-xfqh", "input__wrapper__suffix": "_1f7L6KL", "input__wrapper__prefix": "_3WR4EVH" };
 
 var classCallCheck = function (instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -330,35 +385,43 @@ var Input$1 = (_dec = CSSModules(styles, { allowMultiple: allowMultiple }), _dec
   createClass(Input, [{
     key: 'renderLabeledIcon',
     value: function renderLabeledIcon(children) {
-      var props = this.props;
-      if (props.type === 'textarea' || !('prefix' in props || 'suffix' in props)) {
+      var _props = this.props,
+          type = _props.type,
+          prefix = _props.prefix,
+          suffix = _props.suffix,
+          style = _props.style;
+
+      if (type === 'textarea' || !('prefix' in this.props || 'suffix' in this.props)) {
         return children;
       }
 
-      var prefix = props.prefix ? React.createElement(
+      var prefixNode = prefix ? React.createElement(
         'span',
         { styleName: 'input__prefix' },
-        props.prefix
+        prefix
       ) : null;
 
-      var suffix = props.suffix ? React.createElement(
+      var suffixNode = suffix ? React.createElement(
         'span',
         { styleName: 'input__suffix' },
-        props.suffix
+        suffix
       ) : null;
 
       var inputProps = {
-        styleName: '' + (props.prefix ? 'input__wrapper input__wrapper__prefix' : props.suffix ? 'input__wrapper input__wrapper__suffix' : 'input__wrapper')
+        styleName: index$1('input__wrapper', {
+          input__wrapper__prefix: prefix,
+          input__wrapper__suffix: suffix
+        })
       };
 
       return React.createElement(
         'span',
         _extends({}, inputProps, {
-          style: props.style
+          style: style
         }),
-        prefix,
+        prefixNode,
         cloneElement(children),
-        suffix
+        suffixNode
       );
     }
   }, {
@@ -400,15 +463,15 @@ var Input$1 = (_dec = CSSModules(styles, { allowMultiple: allowMultiple }), _dec
 }(PureComponent), _class2.displayName = 'Input', _class2.defaultProps = {
   type: 'text',
   size: 'normal',
-  // wrapperCls:'input__wrapper',
   disabled: false,
   autosize: false,
+  prefix: undefined,
+  suffix: undefined,
   onChange: function onChange() {}
 }, _class2.propTypes = {
   // style: PropTypes.CSSProperties,
   type: PropTypes.oneOf(['text', 'textarea']),
   size: PropTypes.oneOf(['normal', 'large', 'small']),
-  // wrapperCls: PropTypes.string,
   disabled: PropTypes.bool,
   // value: PropTypes.any,
   // defaultValue: PropTypes.any,
@@ -417,61 +480,6 @@ var Input$1 = (_dec = CSSModules(styles, { allowMultiple: allowMultiple }), _dec
   suffix: PropTypes.node,
   onChange: PropTypes.func
 }, _temp)) || _class);
-
-function createCommonjsModule(fn, module) {
-	return module = { exports: {} }, fn(module, module.exports), module.exports;
-}
-
-var index$1 = createCommonjsModule(function (module) {
-/*!
-  Copyright (c) 2016 Jed Watson.
-  Licensed under the MIT License (MIT), see
-  http://jedwatson.github.io/classnames
-*/
-/* global define */
-
-(function () {
-	'use strict';
-
-	var hasOwn = {}.hasOwnProperty;
-
-	function classNames () {
-		var classes = [];
-
-		for (var i = 0; i < arguments.length; i++) {
-			var arg = arguments[i];
-			if (!arg) continue;
-
-			var argType = typeof arg;
-
-			if (argType === 'string' || argType === 'number') {
-				classes.push(arg);
-			} else if (Array.isArray(arg)) {
-				classes.push(classNames.apply(null, arg));
-			} else if (argType === 'object') {
-				for (var key in arg) {
-					if (hasOwn.call(arg, key) && arg[key]) {
-						classes.push(key);
-					}
-				}
-			}
-		}
-
-		return classes.join(' ');
-	}
-
-	if ('object' !== 'undefined' && module.exports) {
-		module.exports = classNames;
-	} else if (typeof undefined === 'function' && typeof undefined.amd === 'object' && undefined.amd) {
-		// register as 'classnames', consistent with npm package name
-		undefined('classnames', [], function () {
-			return classNames;
-		});
-	} else {
-		window.classNames = classNames;
-	}
-}());
-});
 
 var styles$1 = { "Icon": "_2jSl5RJ" };
 
@@ -1257,13 +1265,13 @@ var ICONS = {
 };
 
 var _class$2;
-var _temp$2;
+var _temp$1;
 
 /**
  * Icon Component
  * @author ryan.bian
  */
-var Icon = (_temp$2 = _class$2 = function (_PureComponent) {
+var Icon = (_temp$1 = _class$2 = function (_PureComponent) {
   inherits(Icon, _PureComponent);
 
   function Icon(props) {
@@ -1308,37 +1316,39 @@ var Icon = (_temp$2 = _class$2 = function (_PureComponent) {
   name: PropTypes.string,
   size: PropTypes.number,
   color: PropTypes.string
-}, _temp$2);
+}, _temp$1);
 
 var _dec$1;
 var _class$1;
 var _class2$1;
-var _temp$1;
+var _temp2;
 
 /**
  * Input Component
  * @author yan
  */
-var Search = (_dec$1 = CSSModules(styles, { allowMultiple: allowMultiple }), _dec$1(_class$1 = (_temp$1 = _class2$1 = function (_PureComponent) {
+var Search = (_dec$1 = CSSModules(styles, { allowMultiple: allowMultiple }), _dec$1(_class$1 = (_temp2 = _class2$1 = function (_PureComponent) {
   inherits(Search, _PureComponent);
 
-  function Search(props) {
+  function Search() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
     classCallCheck(this, Search);
 
-    var _this = possibleConstructorReturn(this, (Search.__proto__ || Object.getPrototypeOf(Search)).call(this, props));
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
 
-    _this.onSearch = function () {
+    return _ret = (_temp = (_this = possibleConstructorReturn(this, (_ref = Search.__proto__ || Object.getPrototypeOf(Search)).call.apply(_ref, [this].concat(args))), _this), _this.onSearch = function () {
       var onSearch = _this.props.onSearch;
 
       if (onSearch) {
-        onSearch(_this.input.refs.input.value);
-        console.log(_this.input.refs.input.value);
+        onSearch(_this.input.input.value);
       }
-      _this.input.refs.input.focus();
-    };
-
-    _this.state = {};
-    return _this;
+      _this.input.input.focus();
+    }, _temp), possibleConstructorReturn(_this, _ret);
   }
 
   createClass(Search, [{
@@ -1347,9 +1357,8 @@ var Search = (_dec$1 = CSSModules(styles, { allowMultiple: allowMultiple }), _de
       var _this2 = this;
 
       var _props = this.props,
-          suffix = _props.suffix,
           onSearch = _props.onSearch,
-          otherProps = objectWithoutProperties(_props, ['suffix', 'onSearch']);
+          otherProps = objectWithoutProperties(_props, ['onSearch']);
 
 
       var searchSuffix = React.createElement(Icon, {
@@ -1371,7 +1380,7 @@ var Search = (_dec$1 = CSSModules(styles, { allowMultiple: allowMultiple }), _de
   onSearch: function onSearch() {}
 }, _class2$1.propTypes = {
   onSearch: PropTypes.func
-}, _temp$1)) || _class$1);
+}, _temp2)) || _class$1);
 
 Input$1.Search = Search;
 

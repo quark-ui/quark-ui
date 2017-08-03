@@ -5,15 +5,11 @@ Optimization:
 - `Modal`: change style
 - `Message`: change style
 - `Steps`: change style
+- `Input`: change style
 
 NEW:
 - `Animation` component
 - add animation in `Modal`
-
-## v0.0.1-beta9 (2017-06-23)
-
-add animation to below components
-- Trigger
 
 ## v0.0.1-beta8 (2017-06-12)
 
