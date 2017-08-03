@@ -21,7 +21,7 @@ export default class Select extends PureComponent {
     type: 'dropdown',
     style: { width: 200 },
     disabled: false,
-    value: '',
+    // defaultValue:'',
     children: null,
     onSearch: () => {},
     onChange: () => {},
@@ -38,6 +38,7 @@ export default class Select extends PureComponent {
     style: PropTypes.object,
     disabled: PropTypes.bool,
     value: PropTypes.string,
+    defaultValue: PropTypes.string,
     onSearch: PropTypes.func,
     children: PropTypes.arrayOf(PropTypes.element),
     // onSelect: PropTypes.func,
@@ -51,9 +52,14 @@ export default class Select extends PureComponent {
 
   constructor(props) {
     super(props);
+
+    const value = this.props.value || this.props.defaultValue;
+    const title = this.getValue(this.props.children, value);
+
+
     this.state = {
-      value: this.props.value || '',
-      title: undefined,
+      value,
+      title: title || undefined,
       dropdownVisible: false, // 下接弹层是否显示
     };
 
@@ -109,6 +115,7 @@ export default class Select extends PureComponent {
     }
     if (value) {
       this.setState({
+        value,
         title: value,
       });
     } else { // 当全部都删完时，清空历史
@@ -126,19 +133,24 @@ export default class Select extends PureComponent {
   // 选项选中时回调
   onOptionSelected = (value, title) => {
     this.setState({
-      value,
-      title,
       dropdownVisible: false,
     });
-
-    this.lastState.title = title;
-    this.lastState.value = value;
-    const { onChange } = this.props;
-    if (onChange) {
-      onChange({
+    if(typeof this.props.value !== 'undefined'){
+      // 受控组件
+     this.props.onChange({
         value,
         title,
       });
+    }else{
+      // 非受控组件
+      this.setState({
+        value,
+        title,
+      });
+      this.props.onChange(
+        value,
+        title,
+      );
     }
   }
 
@@ -218,7 +230,7 @@ export default class Select extends PureComponent {
         className={styles.comboboxInput}
         onChange={this.onComboboxInputChanged}
         placeholder={this.props.placeholder}
-        value={this.state.title}
+        value={this.state.value}
       />);
     }
 
@@ -242,7 +254,7 @@ export default class Select extends PureComponent {
           popupVisible={popupVisible}
           onPopupVisibleChange={this.onDropdownVisibleChanged}
         >
-          <div className={styles.selection} style={{ width }}>
+          <div className={this.state.value ? styles.selectionClose: styles.selection} style={{ width }}>
             { selection }
             <Icon
               name={popupVisible ? 'arrow-up' : 'arrow-down'}

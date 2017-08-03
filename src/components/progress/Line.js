@@ -8,9 +8,12 @@ import Icon from '../icon';
 import styles from './Progress.css';
 
 const Line = ({ percent, status, size, showInfo }) => {
+  console.log(showInfo);
+
+
   const lineProps = {
     className: classnames(
-      styles['progress__line'],
+      styles[`progress__${showInfo ? 'showinfo' : 'line'}`],
       styles[`progress__line--${size}Size`],
       styles[`progress__line--${status}`],
     ),
