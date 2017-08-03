@@ -1,6 +1,6 @@
 {
   "name": "quark-ui",
-  "version": "0.0.1-beta8",
+  "version": "0.0.1",
   "description": "Quark UI, Components base on react.",
   "repository": "https://github.com/quark-ui/quark-ui.git",
   "author": "",
