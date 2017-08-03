@@ -4,11 +4,21 @@
  */
 .nd0QJ7p {
   position: relative;
+  margin: 5px 0
+  /*padding-right: 42px;*/
+  
+}
+.nd0QJ7p, .nd0QJ7p *, .nd0QJ7p *:after, .nd0QJ7p *:before {
+  box-sizing: border-box
+  
+}
+._3JkNO59 {
+  position: relative;
   margin: 5px 0;
   padding-right: 42px
   
 }
-.nd0QJ7p, .nd0QJ7p *, .nd0QJ7p *:after, .nd0QJ7p *:before {
+._3JkNO59, ._3JkNO59 *, ._3JkNO59 *:after, ._3JkNO59 *:before {
   box-sizing: border-box
   
 }
@@ -42,8 +52,8 @@
   padding-bottom: 5px
 }
 ._2Gk1yz_ .IL7D3Op, ._2Gk1yz_ ._27NBzV3 {
-  height: 4px;
-  border-radius: 2px
+  height: 2px;
+  border-radius: 1px
   
 }
 .cFwj8pO {

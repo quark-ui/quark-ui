@@ -99,8 +99,6 @@ var _temp;
  * InputNumber Component
  * @author yan
  */
-// import CSSModules from 'react-css-modules';
-// @CSSModules(styles, { allowMultiple })
 var InputNumber = (_temp = _class = function (_PureComponent) {
   inherits(InputNumber, _PureComponent);
 
