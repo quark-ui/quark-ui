@@ -1,0 +1,73 @@
+/**
+ * Alert Style
+ * @author yanwei
+ */
+:root{
+  --alert-info-bg: #E8F6FF;
+  --alert-success-bg: #F5FFE9;
+  --alert-error-bg: #FFEBE8;
+  --alert-warning-bg: #FFFAE8;
+}
+.notification--box{
+  position: fixed;
+  z-index: 1000;
+  top: 200px;
+  left: 50%;
+  transform:translate(-50%,0);
+  pointer-events: none;
+  background: #fff;
+}
+
+.notification{
+    padding: 14px 24px;
+    border-radius: 3px 3px;
+    box-shadow: 0 0 10px #999;
+    border: 1px solid #999;
+    border: 0px solid rgba(0, 0, 0, 0);
+    background: #fff;
+    display: block;
+    line-height: 1.5;
+    vertical-align: middle;
+    position: relative;
+    margin-bottom: 10px;
+}
+.notification--content{
+  display:inline-block;
+  vertical-align: middle;
+  font-size:14px;
+}
+.notification--close{
+
+}
+.notification--closex{
+  
+}
+
+
+.notification--icon{
+    display:inline-block;
+    margin-right:14px;
+    margin-left:1px;
+    vertical-align: middle;
+}
+.notification__info{
+    color:var(--link-color);
+    background-color:var(--notification-info-bg);
+    box-shadow: 0 0 1px var(--link-color);
+}
+.notification__success{
+    color:var(--success-color);
+    background-color:var(--notification-success-bg);
+    box-shadow: 0 0 1px var(--success-color);
+}
+.notification__error{
+    color:var(--fail-color);
+    background-color:var(--notification-error-bg);
+    box-shadow: 0 0 1px var(--fail-color);
+}
+.notification__warning{
+    color:var(--warn-color);
+    background-color:var(--notification-warning-bg);
+    box-shadow: 0 0 1px var(--warn-color);
+}
+
