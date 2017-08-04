@@ -18,7 +18,7 @@ var propTypes = {
   showInfo: PropTypes.bool
 };
 
-var styles = { "progress__line--pause": "_2rhabTG", "progress__line--exception": "_1Gn0LqM", "progress__line--success": "_2iMadZh", "progress__line--normal": "cFwj8pO", "progress__lineIndicator": "_1YQZnrM", "progress__line--normalSize": "_28IlOCf", "progress__line": "nd0QJ7p", "progress__lineOuter": "IL7D3Op", "progress__lineInner": "_27NBzV3", "progress__line--miniSize": "_2Gk1yz_", "progress-animation": "_2uAdRt5", "progress__linePause": "_2rhabTG", "progress__lineException": "_1Gn0LqM", "progress__lineSuccess": "_2iMadZh", "progress__lineNormal": "cFwj8pO", "progress__lineNormalSize": "_28IlOCf", "progress__lineMiniSize": "_2Gk1yz_", "progressAnimation": "_2uAdRt5" };
+var styles = { "progress__line--pause": "_2rhabTG", "progress__line--exception": "_1Gn0LqM", "progress__line--success": "_2iMadZh", "progress__line--normal": "cFwj8pO", "progress__lineIndicator": "_1YQZnrM", "progress__line--normalSize": "_28IlOCf", "progress__line": "nd0QJ7p", "progress__showinfo": "_3JkNO59", "progress__lineOuter": "IL7D3Op", "progress__lineInner": "_27NBzV3", "progress__line--miniSize": "_2Gk1yz_", "progress-animation": "_2uAdRt5", "progress__linePause": "_2rhabTG", "progress__lineException": "_1Gn0LqM", "progress__lineSuccess": "_2iMadZh", "progress__lineNormal": "cFwj8pO", "progress__lineNormalSize": "_28IlOCf", "progress__lineMiniSize": "_2Gk1yz_", "progressAnimation": "_2uAdRt5" };
 
 function createCommonjsModule(fn, module) {
 	return module = { exports: {} }, fn(module, module.exports), module.exports;
@@ -1012,8 +1012,10 @@ var Line = function Line(_ref) {
       size = _ref.size,
       showInfo = _ref.showInfo;
 
+  console.log(showInfo);
+
   var lineProps = {
-    className: index(styles['progress__line'], styles['progress__line--' + size + 'Size'], styles['progress__line--' + status])
+    className: index(styles['progress__' + (showInfo ? 'showinfo' : 'line')], styles['progress__line--' + size + 'Size'], styles['progress__line--' + status])
   };
   var innerProps = {
     className: styles['progress__lineInner'],

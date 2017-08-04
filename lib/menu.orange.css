@@ -5,7 +5,8 @@
 ._37XJzyY {
     outline: none;
     margin-bottom: 0;
-    padding-left: 0;
+    /*padding-left: 0;*/
+    padding: 0px 10px;
     list-style: none;
     z-index: 1050;
     line-height: 46px;
@@ -75,7 +76,7 @@
 ._37XJzyY .menu-item,
     ._37XJzyY .menu-submenu-title {
     margin: 0;
-    padding: 0 20px;
+    padding: 0 10px;
     position: relative;
     display: block;
     white-space: nowrap;
@@ -85,7 +86,7 @@
 ._37XJzyY.menu-horizontal-h{
 
     border: solid 1px #dddddd;
-    padding: 4px 0
+    padding: 4px 10px
 
     /*颜色-暖色*/
     /*颜色-冷色*/
@@ -98,7 +99,8 @@
 }
 ._37XJzyY.menu-horizontal-h.color-warm .menu-item-selected, 
         ._37XJzyY.menu-horizontal-h.color-warm > .menu-submenu-selected {
-    border-bottom: solid 1px #ff9536
+    border-bottom: solid 1px #ff9536;
+    border-bottom-width: 50%
 }
 ._37XJzyY.menu-horizontal-h.color-cold {
     background-color: #242424;/*一级菜单背景色(黑)*/
@@ -114,7 +116,7 @@
 }
 ._37XJzyY.menu-horizontal-h > .menu-item {
     display: inline-block;
-    margin-left: 10px;
+    margin-left: 20px;
     line-height: 44px
 }
 ._37XJzyY.menu-horizontal-h .menu-submenu-horizontal-h {
@@ -143,7 +145,7 @@
 ._37XJzyY.menu-horizontal{
 
     border: solid 1px #dddddd;
-    padding: 4px 0
+    padding: 4px 10px
 
     /*颜色-暖色*/
 
@@ -159,7 +161,8 @@
         ._37XJzyY.menu-horizontal.color-warm > .menu-submenu-selected {
     border-bottom: solid 1px #ff9536
 }
-._37XJzyY.menu-horizontal.color-warm .menu .menu-item-selected {
+._37XJzyY.menu-horizontal.color-warm .menu .menu-item-selected,
+        ._37XJzyY.menu-horizontal.color-warm .menu .menu-item-active {
     background-color: #f6f8fc
 }
 ._37XJzyY.menu-horizontal.color-warm .menu .menu-item-selected:after {
@@ -195,8 +198,8 @@
 }
 ._37XJzyY.menu-horizontal > .menu-item {
     display: inline-block;
-    margin-left: 10px;
-    line-height: 44px
+    margin-left: 20px;
+    line-height: 44px/*padding: 0px ;*//*margin: 0px 20px;*/
 }
 ._37XJzyY.menu-horizontal .menu-submenu-horizontal {
     display: inline-block;
@@ -235,7 +238,8 @@
 ._37XJzyY.menu-vertical.color-warm {
     color: #666666/*二级菜单弹出层*/
 }
-._37XJzyY.menu-vertical.color-warm .menu-item-selected {
+._37XJzyY.menu-vertical.color-warm .menu-item-selected,
+        ._37XJzyY.menu-vertical.color-warm .menu-item-active {
     background-color: #f6f8fc
 }
 ._37XJzyY.menu-vertical.color-warm .menu {
@@ -291,7 +295,8 @@
 ._37XJzyY.menu-inline.color-warm {
     color: #666666
 }
-._37XJzyY.menu-inline.color-warm .menu-item-selected {
+._37XJzyY.menu-inline.color-warm .menu-item-selected,
+        ._37XJzyY.menu-inline.color-warm .menu-item-active {
     background-color: #f6f8fc
 }
 ._37XJzyY.menu-inline.color-warm .menu-item-selected:after {

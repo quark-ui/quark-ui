@@ -6,6 +6,7 @@ import isEqual from 'lodash/isEqual';
 import momentPropTypes from 'react-moment-proptypes';
 import partialRight from 'lodash/partialRight';
 import ReactDOM from 'react-dom';
+import Transition from 'react-transition-group/Transition';
 
 /*
 object-assign
@@ -101,7 +102,7 @@ var allowMultiple = true;
 
 var ALIGN_ENUM = new Set(['tl', 'tr', 'tc', 'bl', 'br', 'bc', 'cl', 'cr']);
 
-var styles = { "rangePicker": "mhJTXha", "datePicker__monthGrid": "_3ZvcDzC _3wVlW_K sdFN-uB", "datePicker__yearGrid": "_2PKGdIS _3wVlW_K sdFN-uB", "datePicker__decadeGrid": "JvjXwwi _3wVlW_K sdFN-uB", "datePicker__datePane": "_1vTxJWA", "datePicker__monthPane": "_1oFHW95", "datePicker__yearPane": "_2EHXPQJ", "datePicker__decadePane": "_2z1RIYt", "datePicker__dayGrid--disabled": "_24C4K3t", "bodyGrid": "_3wVlW_K sdFN-uB", "datePicker": "_1VtG7Tm", "datePicker__picker": "_217Ab1l", "datePicker_PaneHead": "dktwrcK", "datePicker__headControlBtn": "_3B8hXtV", "datePicker__headJump": "_2iQiPWX", "datePicker__headJumpBtn": "_2L0StoH", "grid": "sdFN-uB", "titleGrid": "P3D5cpz sdFN-uB", "datePicker__datePaneHead": "WXNwsuK dktwrcK", "datePicker_weekTitle": "_317pkpI", "datePicker__weekTitleGrid": "gkVLoZp P3D5cpz sdFN-uB", "datePicker__weekRow": "_13BCOGA", "datePicker__dayGrid": "-LL8IDY _3wVlW_K sdFN-uB", "datePicker__dayGrid--range": "_3CFoqir", "datePicker__dayGrid--active": "ZJlZATL", "datePicker__dayGrid--curMonth": "_15xKysL", "datePicker__dayGrid--lastMonth": "_2jU5NSX", "datePicker__dayGrid--nextMonth": "kOzFgDQ", "datePicker__monthPaneHead": "_2HpgBMq dktwrcK", "datePicker__monthBody": "_2bCDQ5L", "datePicker__monthGrid--active": "_2ap2U0a ZJlZATL", "datePicker__yearPaneHead": "_1jrn9B0 dktwrcK", "datePicker__yearBody": "_1FZQqhV", "datePicker__yearGrid--active": "_1CyKfmD ZJlZATL", "datePicker__yearGrid--jump": "LLlseBd", "datePicker__decadePaneHead": "_3xBV3EY dktwrcK", "datePicker__decadePane--current": "_2gXcwbk", "datePicker__decadeBody": "_3Hf0Ape", "datePicker__decadeGrid--jump": "_2rjwFZK", "datePicker__decadeGrid--active": "YqtKrRl ZJlZATL", "picker--start": "_1lDj7SY", "picker--end": "_4LScnzl", "datePicker__dayGridDisabled": "_24C4K3t", "datePicker__dayGridRange": "_3CFoqir", "datePicker__dayGridActive": "ZJlZATL", "datePicker__dayGridCurMonth": "_15xKysL", "datePicker__dayGridLastMonth": "_2jU5NSX", "datePicker__dayGridNextMonth": "kOzFgDQ", "datePicker__monthGridActive": "_2ap2U0a ZJlZATL", "datePicker__yearGridActive": "_1CyKfmD ZJlZATL", "datePicker__yearGridJump": "LLlseBd", "datePicker__decadePaneCurrent": "_2gXcwbk", "datePicker__decadeGridJump": "_2rjwFZK", "datePicker__decadeGridActive": "YqtKrRl ZJlZATL", "pickerStart": "_1lDj7SY", "pickerEnd": "_4LScnzl" };
+var styles = { "rangePicker": "mhJTXha", "datePicker__monthGrid": "_3ZvcDzC _3wVlW_K sdFN-uB", "datePicker__yearGrid": "_2PKGdIS _3wVlW_K sdFN-uB", "datePicker__decadeGrid": "JvjXwwi _3wVlW_K sdFN-uB", "datePicker__datePane": "_1vTxJWA", "datePicker__monthPane": "_1oFHW95", "datePicker__yearPane": "_2EHXPQJ", "datePicker__decadePane": "_2z1RIYt", "datePicker__dayGrid--disabled": "_24C4K3t", "bodyGrid": "_3wVlW_K sdFN-uB", "datePicker": "_1VtG7Tm", "datePicker__picker": "_217Ab1l", "datePicker_PaneHead": "dktwrcK", "datePicker__headControlBtn": "_3B8hXtV", "datePicker__headJump": "_2iQiPWX", "datePicker__headJumpBtn": "_2L0StoH", "grid": "sdFN-uB", "titleGrid": "P3D5cpz sdFN-uB", "datePicker__datePaneHead": "WXNwsuK dktwrcK", "datePicker_weekTitle": "_317pkpI", "datePicker__weekTitleGrid": "gkVLoZp P3D5cpz sdFN-uB", "datePicker__weekRow": "_13BCOGA", "datePicker__dayGrid": "-LL8IDY _3wVlW_K sdFN-uB", "datePicker__dayGrid--range": "_3CFoqir", "datePicker__dayGrid--active": "ZJlZATL", "datePicker__dayGrid--curMonth": "_15xKysL", "datePicker__dayGrid--lastMonth": "_2jU5NSX", "datePicker__dayGrid--nextMonth": "kOzFgDQ", "datePicker__monthPaneHead": "_2HpgBMq dktwrcK", "datePicker__monthBody": "_2bCDQ5L", "datePicker__monthGrid--active": "_2ap2U0a ZJlZATL", "datePicker__yearPaneHead": "_1jrn9B0 dktwrcK", "datePicker__yearBody": "_1FZQqhV", "datePicker__yearGrid--active": "_1CyKfmD ZJlZATL", "datePicker__yearGrid--jump": "LLlseBd", "datePicker__decadePaneHead": "_3xBV3EY dktwrcK", "datePicker__decadePane--current": "_2gXcwbk", "datePicker__decadeBody": "_3Hf0Ape", "datePicker__decadeGrid--jump": "_2rjwFZK", "datePicker__decadeGrid--active": "YqtKrRl ZJlZATL", "rangePicker__picker": "_1UC2-sP", "rangePicker__quickSelect": "Fc-Col-", "rangePicker__action": "_3LU7GfZ", "picker--start": "_1lDj7SY", "picker--end": "_4LScnzl", "datePicker__dayGridDisabled": "_24C4K3t", "datePicker__dayGridRange": "_3CFoqir", "datePicker__dayGridActive": "ZJlZATL", "datePicker__dayGridCurMonth": "_15xKysL", "datePicker__dayGridLastMonth": "_2jU5NSX", "datePicker__dayGridNextMonth": "kOzFgDQ", "datePicker__monthGridActive": "_2ap2U0a ZJlZATL", "datePicker__yearGridActive": "_1CyKfmD ZJlZATL", "datePicker__yearGridJump": "LLlseBd", "datePicker__decadePaneCurrent": "_2gXcwbk", "datePicker__decadeGridJump": "_2rjwFZK", "datePicker__decadeGridActive": "YqtKrRl ZJlZATL", "pickerStart": "_1lDj7SY", "pickerEnd": "_4LScnzl" };
 
 var defaultProps = {
   value: undefined,
@@ -111,7 +112,7 @@ var defaultProps = {
   onChange: function onChange() {},
 
   fieldSize: 'normal',
-  fieldWidth: null
+  fieldWidth: 220
 };
 
 // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
@@ -125,7 +126,60 @@ var propTypes = {
   fieldWidth: PropTypes.number
 };
 
-var styles$1 = { "input__wrapper": "_3qf4zVS", "input__prefix": "_3HOujdo", "input__suffix": "_2kHrSHK", "base": "_3d8Ip3y", "disabled": "_23bMeMN", "normal": "_2zTE3Ne", "large": "_3XuYOM0", "small": "_2t3xTWo", "input__text": "_3hkY6oH _3d8Ip3y", "input__textarea": "_1whAjSd _3d8Ip3y", "input__card": "_1_MWs1W _3d8Ip3y", "input__disabled": "_1SNztTO _3d8Ip3y _23bMeMN", "input__large": "_3PBNxgP _3d8Ip3y _3XuYOM0", "input__normal": "_1Ulh8TU _3d8Ip3y _2zTE3Ne", "input__small": "jvPBoLu _3d8Ip3y _2t3xTWo", "input__group": "VQEgDJZ", "input__19": "_3BWtBIU", "input__20": "_1k-xfqh", "input__wrapper__suffix": "_1f7L6KL", "input__wrapper__prefix": "_3WR4EVH" };
+function createCommonjsModule(fn, module) {
+	return module = { exports: {} }, fn(module, module.exports), module.exports;
+}
+
+var index$2 = createCommonjsModule(function (module) {
+/*!
+  Copyright (c) 2016 Jed Watson.
+  Licensed under the MIT License (MIT), see
+  http://jedwatson.github.io/classnames
+*/
+/* global define */
+
+(function () {
+	'use strict';
+
+	var hasOwn = {}.hasOwnProperty;
+
+	function classNames () {
+		var classes = [];
+
+		for (var i = 0; i < arguments.length; i++) {
+			var arg = arguments[i];
+			if (!arg) continue;
+
+			var argType = typeof arg;
+
+			if (argType === 'string' || argType === 'number') {
+				classes.push(arg);
+			} else if (Array.isArray(arg)) {
+				classes.push(classNames.apply(null, arg));
+			} else if (argType === 'object') {
+				for (var key in arg) {
+					if (hasOwn.call(arg, key) && arg[key]) {
+						classes.push(key);
+					}
+				}
+			}
+		}
+
+		return classes.join(' ');
+	}
+
+	if ('object' !== 'undefined' && module.exports) {
+		module.exports = classNames;
+	} else if (typeof undefined === 'function' && typeof undefined.amd === 'object' && undefined.amd) {
+		// register as 'classnames', consistent with npm package name
+		undefined('classnames', [], function () {
+			return classNames;
+		});
+	} else {
+		window.classNames = classNames;
+	}
+}());
+});
 
 // Thanks to https://github.com/andreypopp/react-textarea-autosize/
 
@@ -215,6 +269,8 @@ function calculateNodeHeight(uiTextNode) {
   return { height: height, minHeight: minHeight, maxHeight: maxHeight };
 }
 
+var styles$1 = { "input__wrapper": "_3qf4zVS", "input__prefix": "_3HOujdo", "input__suffix": "_2kHrSHK", "base": "_3d8Ip3y", "disabled": "_23bMeMN", "normal": "_2zTE3Ne", "large": "_3XuYOM0", "small": "_2t3xTWo", "input__text": "_3hkY6oH _3d8Ip3y", "input__textarea": "_1whAjSd _3d8Ip3y", "input__card": "_1_MWs1W _3d8Ip3y", "input__disabled": "_1SNztTO _3d8Ip3y _23bMeMN", "input__large": "_3PBNxgP _3d8Ip3y _3XuYOM0", "input__normal": "_1Ulh8TU _3d8Ip3y _2zTE3Ne", "input__small": "jvPBoLu _3d8Ip3y _2t3xTWo", "input__group": "VQEgDJZ", "input__19": "_3BWtBIU", "input__20": "_1k-xfqh", "input__wrapper__suffix": "_1f7L6KL", "input__wrapper__prefix": "_3WR4EVH" };
+
 var classCallCheck = function (instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
@@ -243,7 +299,20 @@ var createClass = function () {
 
 
 
+var defineProperty = function (obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
 
+  return obj;
+};
 
 var _extends = Object.assign || function (target) {
   for (var i = 1; i < arguments.length; i++) {
@@ -425,35 +494,43 @@ var Input$1 = (_dec$1 = CSSModules(styles$1, { allowMultiple: allowMultiple }), 
   createClass(Input, [{
     key: 'renderLabeledIcon',
     value: function renderLabeledIcon(children) {
-      var props = this.props;
-      if (props.type === 'textarea' || !('prefix' in props || 'suffix' in props)) {
+      var _props = this.props,
+          type = _props.type,
+          prefix = _props.prefix,
+          suffix = _props.suffix,
+          style = _props.style;
+
+      if (type === 'textarea' || !('prefix' in this.props || 'suffix' in this.props)) {
         return children;
       }
 
-      var prefix = props.prefix ? React.createElement(
+      var prefixNode = prefix ? React.createElement(
         'span',
         { styleName: 'input__prefix' },
-        props.prefix
+        prefix
       ) : null;
 
-      var suffix = props.suffix ? React.createElement(
+      var suffixNode = suffix ? React.createElement(
         'span',
         { styleName: 'input__suffix' },
-        props.suffix
+        suffix
       ) : null;
 
       var inputProps = {
-        styleName: '' + (props.prefix ? 'input__wrapper input__wrapper__prefix' : props.suffix ? 'input__wrapper input__wrapper__suffix' : 'input__wrapper')
+        styleName: index$2('input__wrapper', {
+          input__wrapper__prefix: prefix,
+          input__wrapper__suffix: suffix
+        })
       };
 
       return React.createElement(
         'span',
         _extends({}, inputProps, {
-          style: props.style
+          style: style
         }),
-        prefix,
+        prefixNode,
         cloneElement(children),
-        suffix
+        suffixNode
       );
     }
   }, {
@@ -495,15 +572,15 @@ var Input$1 = (_dec$1 = CSSModules(styles$1, { allowMultiple: allowMultiple }), 
 }(PureComponent), _class2$1.displayName = 'Input', _class2$1.defaultProps = {
   type: 'text',
   size: 'normal',
-  // wrapperCls:'input__wrapper',
   disabled: false,
   autosize: false,
+  prefix: undefined,
+  suffix: undefined,
   onChange: function onChange() {}
 }, _class2$1.propTypes = {
   // style: PropTypes.CSSProperties,
   type: PropTypes.oneOf(['text', 'textarea']),
   size: PropTypes.oneOf(['normal', 'large', 'small']),
-  // wrapperCls: PropTypes.string,
   disabled: PropTypes.bool,
   // value: PropTypes.any,
   // defaultValue: PropTypes.any,
@@ -512,61 +589,6 @@ var Input$1 = (_dec$1 = CSSModules(styles$1, { allowMultiple: allowMultiple }), 
   suffix: PropTypes.node,
   onChange: PropTypes.func
 }, _temp$1)) || _class$1);
-
-function createCommonjsModule(fn, module) {
-	return module = { exports: {} }, fn(module, module.exports), module.exports;
-}
-
-var index$2 = createCommonjsModule(function (module) {
-/*!
-  Copyright (c) 2016 Jed Watson.
-  Licensed under the MIT License (MIT), see
-  http://jedwatson.github.io/classnames
-*/
-/* global define */
-
-(function () {
-	'use strict';
-
-	var hasOwn = {}.hasOwnProperty;
-
-	function classNames () {
-		var classes = [];
-
-		for (var i = 0; i < arguments.length; i++) {
-			var arg = arguments[i];
-			if (!arg) continue;
-
-			var argType = typeof arg;
-
-			if (argType === 'string' || argType === 'number') {
-				classes.push(arg);
-			} else if (Array.isArray(arg)) {
-				classes.push(classNames.apply(null, arg));
-			} else if (argType === 'object') {
-				for (var key in arg) {
-					if (hasOwn.call(arg, key) && arg[key]) {
-						classes.push(key);
-					}
-				}
-			}
-		}
-
-		return classes.join(' ');
-	}
-
-	if ('object' !== 'undefined' && module.exports) {
-		module.exports = classNames;
-	} else if (typeof undefined === 'function' && typeof undefined.amd === 'object' && undefined.amd) {
-		// register as 'classnames', consistent with npm package name
-		undefined('classnames', [], function () {
-			return classNames;
-		});
-	} else {
-		window.classNames = classNames;
-	}
-}());
-});
 
 var styles$2 = { "Icon": "_2jSl5RJ" };
 
@@ -1352,13 +1374,13 @@ var ICONS = {
 };
 
 var _class$3;
-var _temp$3;
+var _temp$2;
 
 /**
  * Icon Component
  * @author ryan.bian
  */
-var Icon = (_temp$3 = _class$3 = function (_PureComponent) {
+var Icon = (_temp$2 = _class$3 = function (_PureComponent) {
   inherits(Icon, _PureComponent);
 
   function Icon(props) {
@@ -1403,37 +1425,39 @@ var Icon = (_temp$3 = _class$3 = function (_PureComponent) {
   name: PropTypes.string,
   size: PropTypes.number,
   color: PropTypes.string
-}, _temp$3);
+}, _temp$2);
 
 var _dec$2;
 var _class$2;
 var _class2$2;
-var _temp$2;
+var _temp2;
 
 /**
  * Input Component
  * @author yan
  */
-var Search = (_dec$2 = CSSModules(styles$1, { allowMultiple: allowMultiple }), _dec$2(_class$2 = (_temp$2 = _class2$2 = function (_PureComponent) {
+var Search = (_dec$2 = CSSModules(styles$1, { allowMultiple: allowMultiple }), _dec$2(_class$2 = (_temp2 = _class2$2 = function (_PureComponent) {
   inherits(Search, _PureComponent);
 
-  function Search(props) {
+  function Search() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
     classCallCheck(this, Search);
 
-    var _this = possibleConstructorReturn(this, (Search.__proto__ || Object.getPrototypeOf(Search)).call(this, props));
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
 
-    _this.onSearch = function () {
+    return _ret = (_temp = (_this = possibleConstructorReturn(this, (_ref = Search.__proto__ || Object.getPrototypeOf(Search)).call.apply(_ref, [this].concat(args))), _this), _this.onSearch = function () {
       var onSearch = _this.props.onSearch;
 
       if (onSearch) {
-        onSearch(_this.input.refs.input.value);
-        console.log(_this.input.refs.input.value);
+        onSearch(_this.input.input.value);
       }
-      _this.input.refs.input.focus();
-    };
-
-    _this.state = {};
-    return _this;
+      _this.input.input.focus();
+    }, _temp), possibleConstructorReturn(_this, _ret);
   }
 
   createClass(Search, [{
@@ -1442,9 +1466,8 @@ var Search = (_dec$2 = CSSModules(styles$1, { allowMultiple: allowMultiple }), _
       var _this2 = this;
 
       var _props = this.props,
-          suffix = _props.suffix,
           onSearch = _props.onSearch,
-          otherProps = objectWithoutProperties(_props, ['suffix', 'onSearch']);
+          otherProps = objectWithoutProperties(_props, ['onSearch']);
 
 
       var searchSuffix = React.createElement(Icon, {
@@ -1466,7 +1489,7 @@ var Search = (_dec$2 = CSSModules(styles$1, { allowMultiple: allowMultiple }), _
   onSearch: function onSearch() {}
 }, _class2$2.propTypes = {
   onSearch: PropTypes.func
-}, _temp$2)) || _class$2);
+}, _temp2)) || _class$2);
 
 Input$1.Search = Search;
 
@@ -1577,57 +1600,187 @@ function renderTo() {
   };
 }
 
-var styles$3 = { "trigger": "_3A_xDs1", "trigger--wrap": "_1fJcokE", "popup": "_3WT1yrT", "triggerWrap": "_1fJcokE" };
+var styles$3 = { "trigger": "_3A_xDs1", "trigger--wrap": "_1fJcokE", "popup": "_3WT1yrT", "popup--hidden": "_3CuSPSp", "triggerWrap": "_1fJcokE", "popupHidden": "_3CuSPSp" };
+
+var styles$4 = { "fade--entering": "_1mp5FXi", "fadeIn": "gbiUlUN", "fade--entered": "_26DcFZN", "fade--exiting": "_2wSC5er", "fadeOut": "_2OnzTOe", "fade--exited": "_2K6mlzL", "flipX": "sCG0bzF", "flipX--entering": "_3cdJQI5", "flipInX": "_1FsXcPX", "flipX--entered": "qGmSxIW", "flipX--exiting": "_3NfjJC-", "flipOutX": "_24wLE9d", "flipX--exited": "_24MsE6n", "slideUp": "_1oUCufa", "slideUp--entering": "_1mO_SWR", "slideInUp": "_12qhs-A", "slideUp--entered": "_3-WipgH", "slideUp--exiting": "_27bTj8j", "slideOutUp": "_20eULFb", "slideUp--exited": "_34-gsuv", "slideDown": "_706TJ5I", "slideDown--entering": "_1ieQGlB", "slideInDown": "_21y5cl_", "slideDown--entered": "_3FYkJ5S", "slideDown--exiting": "desE714", "slideOutDown": "_16Yi8is", "slideDown--exited": "_3FJ4sR6", "zoom": "_2aGrmGr", "zoom--entering": "EdoD2Q2", "zoomIn": "gybKzsL", "zoom--entered": "_3kIgIBr", "zoom--exiting": "k0tHLpV", "zoomOut": "_689sLoR", "zoom--exited": "_6jD7wgI", "bounce": "_38IQtyb", "bounce--entering": "_1_uO8bU", "bounceIn": "_2j4EhAR", "bounce--entered": "_1hNAImH", "bounce--exiting": "Hpxa8Tt", "bounceOut": "_2yWAe_R", "bounce--exited": "_3VDKDtK", "fadeEntering": "_1mp5FXi", "fadeEntered": "_26DcFZN", "fadeExiting": "_2wSC5er", "fadeExited": "_2K6mlzL", "flipXEntering": "_3cdJQI5", "flipXEntered": "qGmSxIW", "flipXExiting": "_3NfjJC-", "flipXExited": "_24MsE6n", "slideUpEntering": "_1mO_SWR", "slideUpEntered": "_3-WipgH", "slideUpExiting": "_27bTj8j", "slideUpExited": "_34-gsuv", "slideDownEntering": "_1ieQGlB", "slideDownEntered": "_3FYkJ5S", "slideDownExiting": "desE714", "slideDownExited": "_3FJ4sR6", "zoomEntering": "EdoD2Q2", "zoomEntered": "_3kIgIBr", "zoomExiting": "k0tHLpV", "zoomExited": "_6jD7wgI", "bounceEntering": "_1_uO8bU", "bounceEntered": "_1hNAImH", "bounceExiting": "Hpxa8Tt", "bounceExited": "_3VDKDtK" };
+
+var MOTIONS = ['fade', 'flipX', 'slideUp', 'slideDown', 'zoom', 'bounce'];
+
+var TIMING_FUNCTION = {
+  ease: 'cubic-bezier(.25, .1, .25, 1)',
+  linear: 'cubic-bezier(0,0,1,1)',
+  'ease-in': 'cubic-bezier(.42,0,1,1)',
+  'ease-out': 'cubic-bezier(0,0,.58,1)',
+  'ease-in-out': 'cubic-bezier(.42,0,.58,1)'
+};
+
+var _class$7;
+var _temp$6;
+
+/**
+ * Animation Component
+ * @author ryan.bian
+ */
+var Animation = (_temp$6 = _class$7 = function (_PureComponent) {
+  inherits(Animation, _PureComponent);
+
+  function Animation() {
+    classCallCheck(this, Animation);
+    return possibleConstructorReturn(this, (Animation.__proto__ || Object.getPrototypeOf(Animation)).apply(this, arguments));
+  }
+
+  createClass(Animation, [{
+    key: 'render',
+    value: function render() {
+      var _props = this.props,
+          duration = _props.duration,
+          motion = _props.motion,
+          timingFunction = _props.timingFunction,
+          style = _props.style,
+          children = _props.children,
+          otherProps = objectWithoutProperties(_props, ['duration', 'motion', 'timingFunction', 'style', 'children']);
+
+      var transitionProps = _extends({
+        in: this.props.in,
+        timeout: duration
+      }, otherProps);
+      var defaultStyle = _extends({}, style, {
+        animationDuration: duration + 'ms',
+        animationTimingFunction: TIMING_FUNCTION[timingFunction]
+      });
+      return React.createElement(
+        Transition,
+        transitionProps,
+        function (status) {
+          return React.createElement(
+            'div',
+            {
+              style: defaultStyle,
+              className: index$2(styles$4[motion], styles$4[motion + '--' + status])
+            },
+            children
+          );
+        }
+      );
+    }
+
+    // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
+
+  }]);
+  return Animation;
+}(PureComponent), _class$7.displayName = 'Animation', _class$7.defaultProps = {
+  duration: 500,
+  motion: 'fade',
+  timingFunction: 'linear',
+  style: undefined,
+  in: PropTypes.bool,
+  mountOnEnter: false,
+  unmountOnExit: false,
+  enter: true,
+  exit: true,
+  onEnter: function onEnter() {},
+  onEntering: function onEntering() {},
+  onEntered: function onEntered() {},
+  onExit: function onExit() {},
+  onExiting: function onExiting() {},
+  onExited: function onExited() {}
+}, _class$7.propTypes = {
+  duration: PropTypes.number,
+  motion: PropTypes.oneOf(MOTIONS),
+  timingFunction: PropTypes.oneOf(Object.keys(TIMING_FUNCTION)),
+  style: PropTypes.object,
+  in: PropTypes.bool,
+  mountOnEnter: PropTypes.bool,
+  unmountOnExit: PropTypes.bool,
+  enter: PropTypes.bool,
+  exit: PropTypes.bool,
+  onEnter: PropTypes.func,
+  onEntering: PropTypes.func,
+  onEntered: PropTypes.func,
+  onExit: PropTypes.func,
+  onExiting: PropTypes.func,
+  onExited: PropTypes.func
+}, _temp$6);
 
 var _dec$5;
-var _dec2;
 var _class$6;
 var _class2$5;
-var _temp$6;
+var _temp$5;
 
 /**
  * Popup Component
  * @author ryan.bian
  */
-var Popup = (_dec$5 = renderTo(), _dec2 = CSSModules(styles$3, { allowMultiple: allowMultiple }), _dec$5(_class$6 = _dec2(_class$6 = (_temp$6 = _class2$5 = function (_PureComponent) {
+var Popup = (_dec$5 = renderTo(), _dec$5(_class$6 = (_temp$5 = _class2$5 = function (_PureComponent) {
   inherits(Popup, _PureComponent);
 
-  function Popup() {
+  function Popup(props) {
     classCallCheck(this, Popup);
-    return possibleConstructorReturn(this, (Popup.__proto__ || Object.getPrototypeOf(Popup)).apply(this, arguments));
+
+    var _this = possibleConstructorReturn(this, (Popup.__proto__ || Object.getPrototypeOf(Popup)).call(this, props));
+
+    _this.state = {
+      popupVisible: props.visible
+    };
+    return _this;
   }
 
+  // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
+
+
   createClass(Popup, [{
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      if (nextProps.visible && !this.props.visible) {
+        this.setState({
+          popupVisible: true
+        });
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       var _props = this.props,
           children = _props.children,
           popupRef = _props.popupRef,
           position = _props.position,
           visible = _props.visible,
-          onMouseEnter = _props.onMouseEnter,
-          onMouseLeave = _props.onMouseLeave;
+          otherProps = objectWithoutProperties(_props, ['children', 'popupRef', 'position', 'visible']);
+      var popupVisible = this.state.popupVisible;
 
-      var stylePos = {
-        left: position[0],
-        top: position[1]
-      };
-      var wrapProps = {
+      var wrapProps = _extends({
         ref: popupRef,
-        styleName: 'popup',
-        style: stylePos,
-        onMouseEnter: onMouseEnter,
-        onMouseLeave: onMouseLeave
-      };
-      return visible ? React.createElement(
-        'div',
-        wrapProps,
-        children
-      ) : null;
+        className: index$2(styles$3.popup, defineProperty({}, styles$3['popup--hidden'], !popupVisible))
+      }, otherProps);
+      return React.createElement(
+        Animation,
+        {
+          duration: 300,
+          timingFunction: 'ease-in-out',
+          'in': visible,
+          motion: 'fade',
+          mountOnEnter: true,
+          appear: true,
+          onExited: function onExited() {
+            _this2.setState({
+              popupVisible: false
+            });
+          },
+          style: {
+            position: 'absolute',
+            left: position[0],
+            top: position[1]
+          }
+        },
+        React.createElement(
+          'div',
+          wrapProps,
+          children
+        )
+      );
     }
-
-    // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
-
   }]);
   return Popup;
 }(PureComponent), _class2$5.displayName = 'Popup', _class2$5.defaultProps = {
@@ -1642,7 +1795,7 @@ var Popup = (_dec$5 = renderTo(), _dec2 = CSSModules(styles$3, { allowMultiple: 
   visible: PropTypes.bool,
   onMouseEnter: PropTypes.func,
   onMouseLeave: PropTypes.func
-}, _temp$6)) || _class$6) || _class$6);
+}, _temp$5)) || _class$6);
 
 /**
  * 绑定事件
@@ -1666,13 +1819,14 @@ var off = function off(node, type, listener) {
 var _dec$4;
 var _class$5;
 var _class2$4;
-var _temp$5;
+var _temp$4;
+var _initialiseProps;
 
 /**
  * Trigger Component
  * @author ryan.bian
  */
-var Trigger = (_dec$4 = CSSModules(styles$3, { allowMultiple: allowMultiple }), _dec$4(_class$5 = (_temp$5 = _class2$4 = function (_PureComponent) {
+var Trigger = (_dec$4 = CSSModules(styles$3, { allowMultiple: allowMultiple }), _dec$4(_class$5 = (_temp$4 = _class2$4 = function (_PureComponent) {
   inherits(Trigger, _PureComponent);
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
@@ -1681,61 +1835,12 @@ var Trigger = (_dec$4 = CSSModules(styles$3, { allowMultiple: allowMultiple }), 
 
     var _this = possibleConstructorReturn(this, (Trigger.__proto__ || Object.getPrototypeOf(Trigger)).call(this, props));
 
-    _this.checkClosable = function (e) {
-      if (!_this.node || _this.node.contains(e.target)) return;
-      if (_this.popNode && !_this.popNode.contains(e.target)) {
-        _this.handleClickTrigger();
-      }
-    };
-
-    _this.handleMouseEnter = function () {
-      if (_this.leaveTimer) {
-        clearTimeout(_this.leaveTimer);
-        _this.leaveTimer = null;
-      }
-      var mouseEnterDelay = _this.props.mouseEnterDelay;
-
-      _this.enterTimer = setTimeout(function () {
-        _this.setState({
-          active: true
-        });
-      }, mouseEnterDelay);
-    };
-
-    _this.handleMouseLeave = function () {
-      if (_this.enterTimer) {
-        clearTimeout(_this.enterTimer);
-        _this.enterTimer = null;
-      }
-      var mouseLeaveDelay = _this.props.mouseLeaveDelay;
-
-      _this.leaveTimer = setTimeout(function () {
-        _this.setState({
-          active: false
-        });
-      }, mouseLeaveDelay);
-    };
-
-    _this.handleClickTrigger = function (e) {
-      if (e) {
-        e.preventDefault();
-      }
-      _this.setState({
-        active: !_this.state.active
-      }, function () {
-        if (_this.state.active) {
-          // bind close listener
-          on(document.body, 'click', _this.checkClosable);
-        } else {
-          // unbind close listener
-          off(document.body, 'click', _this.checkClosable);
-        }
-      });
-    };
+    _initialiseProps.call(_this);
 
     _this.state = {
       position: [],
-      active: false
+      active: Trigger.getVisibleStateByProps(props),
+      ready: false
     };
     return _this;
   }
@@ -1746,14 +1851,31 @@ var Trigger = (_dec$4 = CSSModules(styles$3, { allowMultiple: allowMultiple }), 
       this.applyPlacement(this.props);
     }
   }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      var _this2 = this;
+
+      if (Trigger.isPopupVisibleDefined(nextProps)) {
+        this.setState({
+          active: Trigger.getVisibleStateByProps(nextProps)
+        }, function () {
+          if (_this2.state.active) {
+            on(document.body, 'click', _this2.checkClosable);
+          } else {
+            off(document.body, 'click', _this2.checkClosable);
+          }
+        });
+      }
+    }
+  }, {
     key: 'componentDidUpdate',
     value: function componentDidUpdate(prevProps, prevState) {
-      var _this2 = this;
+      var _this3 = this;
 
       if (!prevState.active && this.state.active) {
         setTimeout(function () {
-          _this2.applyPlacement(_this2.props);
-        }, 0);
+          _this3.applyPlacement(_this3.props);
+        }, 100);
       }
     }
   }, {
@@ -1767,6 +1889,12 @@ var Trigger = (_dec$4 = CSSModules(styles$3, { allowMultiple: allowMultiple }), 
 
       var selfRect = Trigger.getTargetRect(this.node);
       var popupRect = Trigger.getTargetRect(this.popNode);
+      if (popupRect.width === 0 && popupRect.height === 0) {
+        this.setState({
+          ready: false
+        });
+        return;
+      }
       var scrollX = window.pageXOffset || document.documentElement.scrollLeft;
       var scrollY = window.pageYOffset || document.documentElement.scrollTop;
       var x = scrollX;
@@ -1818,15 +1946,23 @@ var Trigger = (_dec$4 = CSSModules(styles$3, { allowMultiple: allowMultiple }), 
           break;
       }
       var offset = this.props.offset;
+      var position = this.state.position;
 
-      this.setState({
-        position: [x + offset[0], y + offset[1]]
-      });
+      var newState = {
+        ready: true
+      };
+      var newPostition = [x + offset[0], y + offset[1]];
+      if (position[0] !== newPostition[0] || position[0] !== newPostition[0]) {
+        index$1(newState, {
+          position: newPostition
+        });
+      }
+      this.setState(newState);
     }
   }, {
     key: 'renderPopup',
     value: function renderPopup() {
-      var _this3 = this;
+      var _this4 = this;
 
       var action = this.props.action;
       var _state = this.state,
@@ -1835,10 +1971,10 @@ var Trigger = (_dec$4 = CSSModules(styles$3, { allowMultiple: allowMultiple }), 
 
       var popupProps = {
         ref: function ref(n) {
-          return _this3.popup = n;
+          return _this4.popup = n;
         },
         popupRef: function popupRef(n) {
-          return _this3.popNode = n;
+          return _this4.popNode = n;
         },
         position: position,
         visible: active
@@ -1858,7 +1994,7 @@ var Trigger = (_dec$4 = CSSModules(styles$3, { allowMultiple: allowMultiple }), 
   }, {
     key: 'render',
     value: function render() {
-      var _this4 = this;
+      var _this5 = this;
 
       var _props = this.props,
           action = _props.action,
@@ -1866,7 +2002,7 @@ var Trigger = (_dec$4 = CSSModules(styles$3, { allowMultiple: allowMultiple }), 
 
       var triggerProps = {
         ref: function ref(n) {
-          return _this4.node = n;
+          return _this5.node = n;
         },
         styleName: 'trigger--wrap'
       };
@@ -1898,20 +2034,100 @@ var Trigger = (_dec$4 = CSSModules(styles$3, { allowMultiple: allowMultiple }), 
   placement: ['tl', 'bl'],
   offset: [0, 0],
   popup: '',
+  popupVisible: undefined,
   mouseEnterDelay: 0,
-  mouseLeaveDelay: 100 }, _class2$4.propTypes = {
+  mouseLeaveDelay: 100,
+  onPopupVisibleChange: function onPopupVisibleChange() {}
+}, _class2$4.propTypes = {
   action: PropTypes.oneOf(['hover', 'click']),
   placement: PropTypes.arrayOf(PropTypes.oneOf(Array.from(ALIGN_ENUM))),
   offset: PropTypes.arrayOf(PropTypes.number),
-  popup: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+  popup: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired,
+  popupVisible: PropTypes.bool,
   mouseEnterDelay: PropTypes.number,
-  mouseLeaveDelay: PropTypes.number
+  mouseLeaveDelay: PropTypes.number,
+  onPopupVisibleChange: PropTypes.func
 }, _class2$4.getTargetRect = function (target) {
   return target.getBoundingClientRect();
-}, _temp$5)) || _class$5);
+}, _class2$4.getVisibleStateByProps = function (props) {
+  return Trigger.isPopupVisibleDefined(props) ? props.popupVisible : false;
+}, _class2$4.isPopupVisibleDefined = function (props) {
+  return typeof props.popupVisible !== 'undefined';
+}, _initialiseProps = function _initialiseProps() {
+  var _this6 = this;
+
+  this.checkClosable = function (e) {
+    if (!_this6.node || _this6.node.contains(e.target)) return;
+    if (_this6.popNode && !_this6.popNode.contains(e.target)) {
+      _this6.handleClickTrigger();
+    }
+  };
+
+  this.handleMouseEnter = function () {
+    if (_this6.leaveTimer) {
+      clearTimeout(_this6.leaveTimer);
+      _this6.leaveTimer = null;
+    }
+    var mouseEnterDelay = _this6.props.mouseEnterDelay;
+
+    _this6.enterTimer = setTimeout(function () {
+      if (Trigger.isPopupVisibleDefined(_this6.props)) {
+        _this6.props.onPopupVisibleChange(true);
+      } else {
+        _this6.setState({
+          active: true
+        }, function () {
+          _this6.props.onPopupVisibleChange(true);
+        });
+      }
+    }, mouseEnterDelay);
+  };
+
+  this.handleMouseLeave = function () {
+    if (_this6.enterTimer) {
+      clearTimeout(_this6.enterTimer);
+      _this6.enterTimer = null;
+    }
+    var mouseLeaveDelay = _this6.props.mouseLeaveDelay;
+
+    _this6.leaveTimer = setTimeout(function () {
+      if (Trigger.isPopupVisibleDefined(_this6.props)) {
+        _this6.props.onPopupVisibleChange(false);
+      } else {
+        _this6.setState({
+          active: false
+        }, function () {
+          _this6.props.onPopupVisibleChange(false);
+        });
+      }
+    }, mouseLeaveDelay);
+  };
+
+  this.handleClickTrigger = function (e) {
+    if (e) {
+      e.preventDefault();
+    }
+    if (Trigger.isPopupVisibleDefined(_this6.props)) {
+      _this6.props.onPopupVisibleChange(!_this6.state.active);
+    } else {
+      _this6.setState({
+        active: !_this6.state.active
+      }, function () {
+        if (_this6.state.active) {
+          // bind close listener
+          on(document.body, 'click', _this6.checkClosable);
+        } else {
+          // unbind close listener
+          off(document.body, 'click', _this6.checkClosable);
+        }
+        _this6.props.onPopupVisibleChange(_this6.state.active);
+      });
+    }
+  };
+}, _temp$4)) || _class$5);
 
 var _dec$6;
-var _class$7;
+var _class$8;
 var _class2$6;
 var _temp$7;
 
@@ -1919,7 +2135,7 @@ var _temp$7;
  * DatePane Component
  * @author ryan.bian
  */
-var DatePane = (_dec$6 = CSSModules(styles, { allowMultiple: allowMultiple }), _dec$6(_class$7 = (_temp$7 = _class2$6 = function (_PureComponent) {
+var DatePane = (_dec$6 = CSSModules(styles, { allowMultiple: allowMultiple }), _dec$6(_class$8 = (_temp$7 = _class2$6 = function (_PureComponent) {
   inherits(DatePane, _PureComponent);
 
   function DatePane(props) {
@@ -2130,10 +2346,10 @@ var DatePane = (_dec$6 = CSSModules(styles, { allowMultiple: allowMultiple }), _
   disabledDate: PropTypes.func,
   inRange: PropTypes.func,
   alwaysShowEqualWeeks: PropTypes.bool
-}, _temp$7)) || _class$7);
+}, _temp$7)) || _class$8);
 
 var _dec$7;
-var _class$8;
+var _class$9;
 var _class2$7;
 var _temp$8;
 
@@ -2141,7 +2357,7 @@ var _temp$8;
  * MonthPane Component
  * @author ryan.bian
  */
-var MonthPane = (_dec$7 = CSSModules(styles, { allowMultiple: allowMultiple }), _dec$7(_class$8 = (_temp$8 = _class2$7 = function (_PureComponent) {
+var MonthPane = (_dec$7 = CSSModules(styles, { allowMultiple: allowMultiple }), _dec$7(_class$9 = (_temp$8 = _class2$7 = function (_PureComponent) {
   inherits(MonthPane, _PureComponent);
 
   function MonthPane(props) {
@@ -2251,10 +2467,10 @@ var MonthPane = (_dec$7 = CSSModules(styles, { allowMultiple: allowMultiple }), 
   showDatePane: PropTypes.func,
   changeMonth: PropTypes.func,
   manipulateDate: PropTypes.func
-}, _temp$8)) || _class$8);
+}, _temp$8)) || _class$9);
 
 var _dec$8;
-var _class$9;
+var _class$10;
 var _class2$8;
 var _temp$9;
 
@@ -2262,7 +2478,7 @@ var _temp$9;
  * YearPane Component
  * @author ryan.bian
  */
-var YearPane = (_dec$8 = CSSModules(styles, { allowMultiple: allowMultiple }), _dec$8(_class$9 = (_temp$9 = _class2$8 = function (_PureComponent) {
+var YearPane = (_dec$8 = CSSModules(styles, { allowMultiple: allowMultiple }), _dec$8(_class$10 = (_temp$9 = _class2$8 = function (_PureComponent) {
   inherits(YearPane, _PureComponent);
 
   function YearPane(props) {
@@ -2431,10 +2647,10 @@ var YearPane = (_dec$8 = CSSModules(styles, { allowMultiple: allowMultiple }), _
   showMonthPane: PropTypes.func,
   changeYear: PropTypes.func,
   manipulateDate: PropTypes.func
-}, _temp$9)) || _class$9);
+}, _temp$9)) || _class$10);
 
 var _dec$9;
-var _class$10;
+var _class$11;
 var _class2$9;
 var _temp$10;
 
@@ -2442,7 +2658,7 @@ var _temp$10;
  * DecadePane Component
  * @author ryan.bian
  */
-var DecadePane = (_dec$9 = CSSModules(styles, { allowMultiple: allowMultiple }), _dec$9(_class$10 = (_temp$10 = _class2$9 = function (_PureComponent) {
+var DecadePane = (_dec$9 = CSSModules(styles, { allowMultiple: allowMultiple }), _dec$9(_class$11 = (_temp$10 = _class2$9 = function (_PureComponent) {
   inherits(DecadePane, _PureComponent);
 
   function DecadePane(props) {
@@ -2605,24 +2821,76 @@ var DecadePane = (_dec$9 = CSSModules(styles, { allowMultiple: allowMultiple }),
   decadeYear: PropTypes.number,
   changeYear: PropTypes.func,
   showYearPane: PropTypes.func
-}, _temp$10)) || _class$10);
+}, _temp$10)) || _class$11);
+
+var styles$5 = { "danger": "_1IZL9la", "dashed": "_3YSE_nE", "secondary": "_16NdYXA", "primary": "_1rlU5o-", "base": "CTy3CHb", "small": "_1FNLWX0", "normal": "_1O7JoXn", "large": "_1JYFbqn", "disabled": "_3P6QXVt", "button--primary": "_11KqluX CTy3CHb _1rlU5o-", "button--secondary": "_1QjCEA1 CTy3CHb _16NdYXA", "button--dashed": "_1Ko5_w4 CTy3CHb _3YSE_nE", "button--danger": "_16108o6 CTy3CHb _1IZL9la", "button--disabled": "_3dqIZEv CTy3CHb _3P6QXVt", "button--large": "_3KW6hMp _1JYFbqn", "button--normal": "_3mBVgjk _1O7JoXn", "button--small": "_2HVyQfI _1FNLWX0", "buttonPrimary": "_11KqluX CTy3CHb _1rlU5o-", "buttonSecondary": "_1QjCEA1 CTy3CHb _16NdYXA", "buttonDashed": "_1Ko5_w4 CTy3CHb _3YSE_nE", "buttonDanger": "_16108o6 CTy3CHb _1IZL9la", "buttonDisabled": "_3dqIZEv CTy3CHb _3P6QXVt", "buttonLarge": "_3KW6hMp _1JYFbqn", "buttonNormal": "_3mBVgjk _1O7JoXn", "buttonSmall": "_2HVyQfI _1FNLWX0" };
+
+var _class$12;
+var _temp$11;
+
+/**
+ * Button Component
+ * @author ryan.bian
+ */
+var Button = (_temp$11 = _class$12 = function (_PureComponent) {
+  inherits(Button, _PureComponent);
+
+  function Button() {
+    classCallCheck(this, Button);
+    return possibleConstructorReturn(this, (Button.__proto__ || Object.getPrototypeOf(Button)).apply(this, arguments));
+  }
+
+  createClass(Button, [{
+    key: 'render',
+    value: function render() {
+      var _props = this.props,
+          children = _props.children,
+          type = _props.type,
+          size = _props.size,
+          disabled = _props.disabled,
+          otherProps = objectWithoutProperties(_props, ['children', 'type', 'size', 'disabled']);
+
+      var btnProps = _extends({}, otherProps, {
+        className: index$2(styles$5['button--' + (disabled ? 'disabled' : type)], styles$5['button--' + size])
+      });
+      return React.createElement(
+        'button',
+        btnProps,
+        children
+      );
+    }
+
+    // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
+
+  }]);
+  return Button;
+}(PureComponent), _class$12.displayName = 'Button', _class$12.defaultProps = {
+  type: 'primary',
+  size: 'normal' }, _class$12.propTypes = {
+  type: PropTypes.oneOf(['primary', 'secondary', 'dashed', 'danger']),
+  size: PropTypes.oneOf(['normal', 'large', 'small'])
+}, _temp$11);
 
 var _dec$3;
 var _class$4;
 var _class2$3;
-var _temp$4;
+var _temp$3;
 
 /**
  * Picker Component
  * @author ryan.bian
  */
-var Picker = (_dec$3 = CSSModules(styles, { allowMultiple: allowMultiple }), _dec$3(_class$4 = (_temp$4 = _class2$3 = function (_PureComponent) {
+var Picker = (_dec$3 = CSSModules(styles, { allowMultiple: allowMultiple }), _dec$3(_class$4 = (_temp$3 = _class2$3 = function (_PureComponent) {
   inherits(Picker, _PureComponent);
 
   function Picker(props) {
     classCallCheck(this, Picker);
 
     var _this = possibleConstructorReturn(this, (Picker.__proto__ || Object.getPrototypeOf(Picker)).call(this, props));
+
+    _this.onPaneVisibleChange = function (visible) {
+      _this.props.onVisibleChange(visible);
+    };
 
     _this.onSetDecade = function (decadeYear, e, nativeEvent, position) {
       if (_this.props.type === 'range') {
@@ -2703,6 +2971,15 @@ var Picker = (_dec$3 = CSSModules(styles, { allowMultiple: allowMultiple }), _de
       }
     };
 
+    _this.cancelAction = function () {
+      _this.props.onVisibleChange(false);
+    };
+
+    _this.confirmAction = function () {
+      _this.props.changeDate(_this.state.rangeDate);
+      _this.props.onVisibleChange(false);
+    };
+
     _this.changeDate = function (year, month, date, position) {
       var d = {
         year: year,
@@ -2710,7 +2987,11 @@ var Picker = (_dec$3 = CSSModules(styles, { allowMultiple: allowMultiple }), _de
         date: date
       };
       if (_this.props.type === 'range') {
-        _this.props.changeDate(d, position);
+        var rangeDate = _this.state.rangeDate.slice(0);
+        rangeDate[position] = moment(d);
+        _this.setState({
+          rangeDate: rangeDate
+        });
       } else {
         _this.props.changeDate(d);
       }
@@ -2719,9 +3000,12 @@ var Picker = (_dec$3 = CSSModules(styles, { allowMultiple: allowMultiple }), _de
     _this.changeMonth = function (month, position) {
       switch (_this.props.type) {
         case 'range':
-          _this.props.changeDate({
-            month: month
-          }, position);
+          var rangeDate = _this.state.rangeDate;
+
+          rangeDate[position].set('month', month);
+          _this.setState({
+            rangeDate: rangeDate
+          });
           break;
         case 'month':
           _this.props.changeDate({
@@ -2775,6 +3059,30 @@ var Picker = (_dec$3 = CSSModules(styles, { allowMultiple: allowMultiple }), _de
       this.setState(this.getDateFromProps(nextProps));
     }
   }, {
+    key: 'setRange',
+    value: function setRange(range) {
+      var rangeDate = [];
+      switch (range) {
+        case 'today':
+        default:
+          var today = moment();
+          rangeDate.push(today);
+          rangeDate.push(today);
+          break;
+        case 'week':
+          rangeDate.push(moment().startOf('week'));
+          rangeDate.push(moment().endOf('week'));
+          break;
+        case 'month':
+          rangeDate.push(moment().startOf('month'));
+          rangeDate.push(moment().endOf('month'));
+          break;
+      }
+      this.setState({
+        rangeDate: rangeDate
+      });
+    }
+  }, {
     key: 'getDateFromProps',
     value: function getDateFromProps(props) {
       if (props.type === 'range') {
@@ -2794,9 +3102,8 @@ var Picker = (_dec$3 = CSSModules(styles, { allowMultiple: allowMultiple }), _de
     key: 'renderPane',
     value: function renderPane(date, currentPane, decadeYear, position) {
       var className = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : '';
-      var _props = this.props,
-          type = _props.type,
-          rangeDate = _props.rangeDate;
+      var type = this.props.type;
+      var rangeDate = this.state.rangeDate;
 
       var paneProps = {
         date: date,
@@ -2859,9 +3166,12 @@ var Picker = (_dec$3 = CSSModules(styles, { allowMultiple: allowMultiple }), _de
   }, {
     key: 'render',
     value: function render() {
-      var _props2 = this.props,
-          children = _props2.children,
-          type = _props2.type;
+      var _this2 = this;
+
+      var _props = this.props,
+          children = _props.children,
+          type = _props.type,
+          paneVisible = _props.paneVisible;
       var _state = this.state,
           date = _state.date,
           rangeDate = _state.rangeDate,
@@ -2875,8 +3185,63 @@ var Picker = (_dec$3 = CSSModules(styles, { allowMultiple: allowMultiple }), _de
         popup = React.createElement(
           'div',
           { className: styles.rangePicker },
-          this.renderPane(rangeDate[0], currentRangePane[0], decadeYears[0], 0, styles['picker--start']),
-          this.renderPane(rangeDate[1], currentRangePane[1], decadeYears[1], 1, styles['picker--end'])
+          React.createElement(
+            'div',
+            { className: styles.rangePicker__picker },
+            this.renderPane(rangeDate[0], currentRangePane[0], decadeYears[0], 0, styles['picker--start']),
+            this.renderPane(rangeDate[1], currentRangePane[1], decadeYears[1], 1, styles['picker--end'])
+          ),
+          React.createElement(
+            'div',
+            { className: styles.rangePicker__quickSelect },
+            React.createElement(
+              Button,
+              {
+                size: 'small',
+                type: 'secondary',
+                onClick: function onClick() {
+                  _this2.setRange('today');
+                }
+              },
+              '\u4ECA\u5929'
+            ),
+            React.createElement(
+              Button,
+              {
+                size: 'small',
+                type: 'secondary',
+                onClick: function onClick() {
+                  _this2.setRange('week');
+                }
+              },
+              '\u672C\u5468'
+            ),
+            React.createElement(
+              Button,
+              {
+                size: 'small',
+                type: 'secondary',
+                onClick: function onClick() {
+                  _this2.setRange('month');
+                }
+              },
+              '\u672C\u6708'
+            )
+          ),
+          React.createElement(
+            'div',
+            { className: styles.rangePicker__action },
+            React.createElement(
+              Button,
+              { type: 'secondary', onClick: this.cancelAction },
+              '\u53D6\u6D88'
+            ),
+            React.createElement(
+              Button,
+              { type: 'primary', onClick: this.confirmAction },
+              '\u786E\u5B9A'
+            )
+          )
         );
       } else {
         popup = this.renderPane(date, currentPane, decadeYear);
@@ -2885,7 +3250,9 @@ var Picker = (_dec$3 = CSSModules(styles, { allowMultiple: allowMultiple }), _de
         Trigger,
         {
           popup: popup,
-          action: 'click'
+          action: 'click',
+          popupVisible: paneVisible,
+          onPopupVisibleChange: this.onPaneVisibleChange
         },
         children
       );
@@ -2897,8 +3264,10 @@ var Picker = (_dec$3 = CSSModules(styles, { allowMultiple: allowMultiple }), _de
   rangeDate: [moment(), moment()],
   type: 'date',
   changeDate: function changeDate() {},
-  disabledDate: function disabledDate() {}
-}, _class2$3.propTypes = {
+  disabledDate: function disabledDate() {},
+  onVisibleChange: function onVisibleChange() {},
+
+  paneVisible: false }, _class2$3.propTypes = {
   date: momentPropTypes.momentObj,
   rangeDate: PropTypes.arrayOf(momentPropTypes.momentObj),
   /**
@@ -2908,8 +3277,10 @@ var Picker = (_dec$3 = CSSModules(styles, { allowMultiple: allowMultiple }), _de
    */
   type: PropTypes.oneOf(['date', 'month', 'range']),
   changeDate: PropTypes.func,
-  disabledDate: PropTypes.func
-}, _temp$4)) || _class$4);
+  disabledDate: PropTypes.func,
+  onVisibleChange: PropTypes.func,
+  paneVisible: PropTypes.bool
+}, _temp$3)) || _class$4);
 
 var _dec;
 var _class;
@@ -2928,6 +3299,18 @@ var DatePicker$1 = (_dec = CSSModules(styles, { allowMultiple: allowMultiple }),
 
     var _this = possibleConstructorReturn(this, (DatePicker.__proto__ || Object.getPrototypeOf(DatePicker)).call(this, props));
 
+    _this.handleClickField = function () {
+      _this.setState({
+        paneVisible: true
+      });
+    };
+
+    _this.handlePickerVisibleChange = function (visible) {
+      _this.setState({
+        paneVisible: visible
+      });
+    };
+
     _this.changeDateInternal = function (changeData) {
       var value = _this.state.value;
 
@@ -2942,10 +3325,14 @@ var DatePicker$1 = (_dec = CSSModules(styles, { allowMultiple: allowMultiple }),
         });
         _this.props.onChange(newValue);
       }
+      _this.setState({
+        paneVisible: false
+      });
     };
 
     _this.state = {
-      value: moment(props.value || props.defaultValue)
+      value: moment(props.value || props.defaultValue),
+      paneVisible: false
     };
     return _this;
   }
@@ -2972,12 +3359,15 @@ var DatePicker$1 = (_dec = CSSModules(styles, { allowMultiple: allowMultiple }),
     value: function shouldComponentUpdate(nextProps, nextState) {
       if (!isEqual(nextProps, this.props)) return true;
       if (!this.state.value.isSame(nextState.value)) return true;
+      if (this.state.paneVisible !== nextState.paneVisible) return true;
       return false;
     }
   }, {
     key: 'render',
     value: function render() {
-      var value = this.state.value;
+      var _state = this.state,
+          value = _state.value,
+          paneVisible = _state.paneVisible;
       var _props = this.props,
           pickerType = _props.pickerType,
           disabled = _props.disabled,
@@ -2990,7 +3380,9 @@ var DatePicker$1 = (_dec = CSSModules(styles, { allowMultiple: allowMultiple }),
         date: value,
         changeDate: this.changeDateInternal,
         type: pickerType,
-        disabledDate: disabledDate
+        disabledDate: disabledDate,
+        paneVisible: paneVisible,
+        onVisibleChange: this.handlePickerVisibleChange
       };
       var fieldStyle = {};
       if (fieldWidth) {
@@ -3003,7 +3395,8 @@ var DatePicker$1 = (_dec = CSSModules(styles, { allowMultiple: allowMultiple }),
         disabled: disabled,
         value: value.format(format),
         size: fieldSize,
-        style: fieldStyle
+        style: fieldStyle,
+        onClick: this.handleClickField
       };
       return disabled ? React.createElement(Input$1, inputProps) : React.createElement(
         Picker,
@@ -3022,15 +3415,15 @@ var DatePicker$1 = (_dec = CSSModules(styles, { allowMultiple: allowMultiple }),
 }), _temp)) || _class);
 
 var _dec$10;
-var _class$11;
+var _class$13;
 var _class2$10;
-var _temp$11;
+var _temp$12;
 
 /**
  * MonthPicker Component
  * @author ryan.bian
  */
-var MonthPicker = (_dec$10 = CSSModules(styles, { allowMultiple: allowMultiple }), _dec$10(_class$11 = (_temp$11 = _class2$10 = function (_PureComponent) {
+var MonthPicker = (_dec$10 = CSSModules(styles, { allowMultiple: allowMultiple }), _dec$10(_class$13 = (_temp$12 = _class2$10 = function (_PureComponent) {
   inherits(MonthPicker, _PureComponent);
 
   function MonthPicker() {
@@ -3057,18 +3450,18 @@ var MonthPicker = (_dec$10 = CSSModules(styles, { allowMultiple: allowMultiple }
   return MonthPicker;
 }(PureComponent), _class2$10.displayName = 'MonthPicker', _class2$10.defaultProps = index$1({}, defaultProps, {
   format: 'YYYY-MM'
-}), _class2$10.propTypes = propTypes, _temp$11)) || _class$11);
+}), _class2$10.propTypes = propTypes, _temp$12)) || _class$13);
 
 var _dec$11;
-var _class$12;
+var _class$14;
 var _class2$11;
-var _temp$12;
+var _temp$13;
 
 /**
  * RangePicker Component
  * @author ryan.bian
  */
-var RangePicker = (_dec$11 = CSSModules(styles, { allowMultiple: allowMultiple }), _dec$11(_class$12 = (_temp$12 = _class2$11 = function (_PureComponent) {
+var RangePicker = (_dec$11 = CSSModules(styles, { allowMultiple: allowMultiple }), _dec$11(_class$14 = (_temp$13 = _class2$11 = function (_PureComponent) {
   inherits(RangePicker, _PureComponent);
 
   function RangePicker(props) {
@@ -3076,10 +3469,19 @@ var RangePicker = (_dec$11 = CSSModules(styles, { allowMultiple: allowMultiple }
 
     var _this = possibleConstructorReturn(this, (RangePicker.__proto__ || Object.getPrototypeOf(RangePicker)).call(this, props));
 
-    _this.changeDateInternal = function (changeData, position) {
-      var rangeValue = _this.state.rangeValue;
+    _this.handleClickField = function () {
+      _this.setState({
+        paneVisible: true
+      });
+    };
 
-      rangeValue[position] = moment(rangeValue[position]).set(changeData);
+    _this.handlePickerVisibleChange = function (visible) {
+      _this.setState({
+        paneVisible: visible
+      });
+    };
+
+    _this.changeDateInternal = function (rangeValue) {
       if (typeof _this.props.value !== 'undefined') {
         // 受控组件
         _this.props.onChange(rangeValue);
@@ -3094,7 +3496,8 @@ var RangePicker = (_dec$11 = CSSModules(styles, { allowMultiple: allowMultiple }
 
     var value = props.value || props.defaultValue || [moment(), moment()];
     _this.state = {
-      rangeValue: value
+      rangeValue: value,
+      paneVisible: false
     };
     return _this;
   }
@@ -3110,18 +3513,23 @@ var RangePicker = (_dec$11 = CSSModules(styles, { allowMultiple: allowMultiple }
           format = _props.format,
           fieldSize = _props.fieldSize,
           fieldWidth = _props.fieldWidth;
-      var rangeValue = this.state.rangeValue;
+      var _state = this.state,
+          rangeValue = _state.rangeValue,
+          paneVisible = _state.paneVisible;
 
       var pickerProps = {
         rangeDate: rangeValue,
         type: 'range',
-        changeDate: this.changeDateInternal
+        changeDate: this.changeDateInternal,
+        paneVisible: paneVisible,
+        onVisibleChange: this.handlePickerVisibleChange
       };
       var fieldStyle = {};
       var field = {
         // type: 'text',
         disabled: disabled,
-        size: fieldSize
+        size: fieldSize,
+        onClick: this.handleClickField
       };
       if (fieldWidth) {
         index$1(fieldStyle, {
@@ -3164,7 +3572,7 @@ var RangePicker = (_dec$11 = CSSModules(styles, { allowMultiple: allowMultiple }
 }), _class2$11.propTypes = index$1({}, propTypes, {
   value: PropTypes.arrayOf(momentPropTypes.momentObj),
   defaultValue: PropTypes.arrayOf(momentPropTypes.momentObj)
-}), _temp$12)) || _class$12);
+}), _temp$13)) || _class$14);
 
 DatePicker$1.MonthPicker = MonthPicker;
 DatePicker$1.RangePicker = RangePicker;

@@ -27,7 +27,7 @@
   position: absolute;
   left: 0;
   width: 100%;
-  top: 13px
+  top: 12px
 }
 
 ._2vbHRHb>i {
@@ -60,13 +60,13 @@
 ._2JVCbOY {
   display: block;
   border: 1px solid #CECECE;
-  width: 26px;
-  height: 26px;
-  line-height: 26px;
+  width: 22px;
+  height: 22px;
+  line-height: 22px;
   text-align: center;
-  border-radius: 26px;
+  border-radius: 22px;
   font-size: 14px;
-  margin-right: 8px;
+  margin-right: 6px;
 }
 
 ._2jVCR-o {
@@ -82,6 +82,7 @@
   background-color: #fff;
   display: inline-block;
   padding-right: 10px;
+  margin-bottom: 5px;
 }
 
 ._1DxItRx {
@@ -177,6 +178,22 @@
 
 .WD5QBi2 {}
 
+._2kmh_Rc{
+}
+
+._2kmh_Rc ._2JVCbOY {
+  width: 18px;
+  height: 18px;
+  line-height: 19px;
+  border-radius: 18px;
+  font-size: 12px;
+}
+
+._2kmh_Rc._1Z9B0MQ ._2vbHRHb {
+  position: absolute;
+  left: 10px;
+}
+
 /*竖向步骤条样式*/
 
 ._1Z9B0MQ{
@@ -188,20 +205,16 @@
 
 ._1Z9B0MQ ._2vbHRHb {
   position: absolute;
-  left: 13px;
+  left: 12px;
   top: 0;
   height: 100%;
   width: 1px;
-  padding: 30px 0 4px;
+  padding: 20px 0 4px;
 }
 
 ._1Z9B0MQ ._2vbHRHb>i {
   height: 100%;
   width: 1px;
-}
-
-._1Z9B0MQ ._1DxItRx {
-  padding-bottom: 12px;
 }
 
 ._1Z9B0MQ ._2UU-kd6 {

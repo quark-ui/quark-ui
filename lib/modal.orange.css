@@ -3,7 +3,7 @@
  * @author ryan.bian
  */
 ._3v9JpJU {
-  display: none;
+  /* display: none; */
 }
 ._10G5ebT {
   position: fixed;
@@ -14,19 +14,20 @@
   background: rgba(0, 0, 0, .3)!important;
 }
 .LrsEe32 {
-  display: none;
-}
-._3gon6Oj {
+  /* display: none; */
   position: absolute;
   left: 0;
   right: 0;
   top: 50%;
   margin: 0 auto;
-  display: block;
   background-color: #fff;
-  border: 1px solid border-color;
+  border-radius: 3px;
+  border: 1px solid #e6e6e6;
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
+}
+._3gon6Oj {
+  display: block;
 }
 ._5faeo8s {
   position: relative;
@@ -38,37 +39,44 @@
 ._5faeo8s p{
   display: inline-block;
 }
-._5faeo8s>p>span{
+._5faeo8s > p > span{
   padding-left: 10px;
   vertical-align: 3px;
 }
 .a1dhyEV {
   position: absolute;
-  right: 15px;
-  color: #a6a6a6;
+  right: 15px
 }
-.a1dhyEV:hover{
-  text-decoration: none;
+.a1dhyEV svg {
+  fill: #999;
+}
+.a1dhyEV:active {}
+.a1dhyEV:active svg {
+  fill: #666!important;
 }
 .yb8LdV1 {
-  margin: 16px 16px;
+  margin: 16px;
   text-align: right;
 }
-.yb8LdV1 button{
+.yb8LdV1 {
   /*width: 80px;*/
-  margin-left: 16px;
 }
-._3lViuPm{
+.yb8LdV1 button {
+  margin-left: 16px;
+  min-width: 80px;
+  text-align: center;
+}
+._3lViuPm {
   width: 370px;
   padding: 0px 20px;
   word-wrap: break-word;
   font-size: 14px;
   margin-bottom: 40px;
 }
-._2vid6jg{
+._2vid6jg {
   margin-bottom: 20px;
 }
-._2m2QgJW ._3lViuPm{}
-._2Ucmr_b ._3lViuPm{}
-._2KpbEF9 ._3lViuPm{}
-._3KYqRkO ._3lViuPm{}
+._2m2QgJW ._3lViuPm {}
+._2Ucmr_b ._3lViuPm {}
+._2KpbEF9 ._3lViuPm {}
+._3KYqRkO ._3lViuPm {}

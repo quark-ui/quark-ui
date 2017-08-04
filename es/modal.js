@@ -1,7 +1,8 @@
-import ReactDOM from 'react-dom';
 import { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
+import ReactDOM from 'react-dom';
+import Transition from 'react-transition-group/Transition';
 
 function createCommonjsModule(fn, module) {
 	return module = { exports: {} }, fn(module, module.exports), module.exports;
@@ -58,7 +59,58 @@ var index = createCommonjsModule(function (module) {
 }());
 });
 
-var styles = { "danger": "_1IZL9la", "dashed": "_3YSE_nE", "secondary": "_16NdYXA", "primary": "_1rlU5o-", "base": "CTy3CHb", "small": "_1FNLWX0", "normal": "_1O7JoXn", "large": "_1JYFbqn", "disabled": "_3P6QXVt", "button--primary": "_11KqluX CTy3CHb _1rlU5o-", "button--secondary": "_1QjCEA1 CTy3CHb _16NdYXA", "button--dashed": "_1Ko5_w4 CTy3CHb _3YSE_nE", "button--danger": "_16108o6 CTy3CHb _1IZL9la", "button--disabled": "_3dqIZEv CTy3CHb _3P6QXVt", "button--large": "_3KW6hMp _1JYFbqn", "button--normal": "_3mBVgjk _1O7JoXn", "button--small": "_2HVyQfI _1FNLWX0", "buttonPrimary": "_11KqluX CTy3CHb _1rlU5o-", "buttonSecondary": "_1QjCEA1 CTy3CHb _16NdYXA", "buttonDashed": "_1Ko5_w4 CTy3CHb _3YSE_nE", "buttonDanger": "_16108o6 CTy3CHb _1IZL9la", "buttonDisabled": "_3dqIZEv CTy3CHb _3P6QXVt", "buttonLarge": "_3KW6hMp _1JYFbqn", "buttonNormal": "_3mBVgjk _1O7JoXn", "buttonSmall": "_2HVyQfI _1FNLWX0" };
+var allowMultiple = true;
+
+var styles = { "modal__closable": "a1dhyEV", "-webkit-mask": "_3v9JpJU", "mask": "_3v9JpJU", "mask--visible": "_10G5ebT", "modal": "LrsEe32", "modal--visible": "_3gon6Oj", "modal__header": "_5faeo8s", "modal__footer": "yb8LdV1", "modal__content": "_3lViuPm", "modal__icon": "_2vid6jg", "modal--info": "_2m2QgJW", "modal--success": "_2Ucmr_b", "modal--error": "_2KpbEF9", "modal--warning": "_3KYqRkO", "WebkitMask": "_3v9JpJU", "maskVisible": "_10G5ebT", "modalVisible": "_3gon6Oj", "modalInfo": "_2m2QgJW", "modalSuccess": "_2Ucmr_b", "modalError": "_2KpbEF9", "modalWarning": "_3KYqRkO" };
+
+/**
+ * Copyright 2015, Yahoo! Inc.
+ * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
+ */
+var REACT_STATICS = {
+    childContextTypes: true,
+    contextTypes: true,
+    defaultProps: true,
+    displayName: true,
+    getDefaultProps: true,
+    mixins: true,
+    propTypes: true,
+    type: true
+};
+
+var KNOWN_STATICS = {
+    name: true,
+    length: true,
+    prototype: true,
+    caller: true,
+    arguments: true,
+    arity: true
+};
+
+var isGetOwnPropertySymbolsAvailable = typeof Object.getOwnPropertySymbols === 'function';
+
+var index$1 = function hoistNonReactStatics(targetComponent, sourceComponent, customStatics) {
+    if (typeof sourceComponent !== 'string') { // don't hoist over string (html) components
+        var keys = Object.getOwnPropertyNames(sourceComponent);
+
+        /* istanbul ignore else */
+        if (isGetOwnPropertySymbolsAvailable) {
+            keys = keys.concat(Object.getOwnPropertySymbols(sourceComponent));
+        }
+
+        for (var i = 0; i < keys.length; ++i) {
+            if (!REACT_STATICS[keys[i]] && !KNOWN_STATICS[keys[i]] && (!customStatics || !customStatics[keys[i]])) {
+                try {
+                    targetComponent[keys[i]] = sourceComponent[keys[i]];
+                } catch (error) {
+
+                }
+            }
+        }
+    }
+
+    return targetComponent;
+};
 
 var classCallCheck = function (instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -150,105 +202,6 @@ var possibleConstructorReturn = function (self, call) {
   return call && (typeof call === "object" || typeof call === "function") ? call : self;
 };
 
-var _class$1;
-var _temp$1;
-
-/**
- * Button Component
- * @author ryan.bian
- */
-var Button = (_temp$1 = _class$1 = function (_PureComponent) {
-  inherits(Button, _PureComponent);
-
-  function Button() {
-    classCallCheck(this, Button);
-    return possibleConstructorReturn(this, (Button.__proto__ || Object.getPrototypeOf(Button)).apply(this, arguments));
-  }
-
-  createClass(Button, [{
-    key: 'render',
-    value: function render() {
-      var _props = this.props,
-          children = _props.children,
-          type = _props.type,
-          size = _props.size,
-          disabled$$1 = _props.disabled,
-          otherProps = objectWithoutProperties(_props, ['children', 'type', 'size', 'disabled']);
-
-      var btnProps = _extends({}, otherProps, {
-        className: index(styles['button--' + (disabled$$1 ? 'disabled' : type)], styles['button--' + size])
-      });
-      return React.createElement(
-        'button',
-        btnProps,
-        children
-      );
-    }
-
-    // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
-
-  }]);
-  return Button;
-}(PureComponent), _class$1.displayName = 'Button', _class$1.defaultProps = {
-  type: 'primary',
-  size: 'normal' }, _class$1.propTypes = {
-  type: PropTypes.oneOf(['primary', 'secondary', 'dashed', 'danger']),
-  size: PropTypes.oneOf(['normal', 'large', 'small'])
-}, _temp$1);
-
-var allowMultiple = true;
-
-var styles$1 = { "-webkit-mask": "_3v9JpJU", "mask": "_3v9JpJU", "mask--visible": "_10G5ebT", "modal": "LrsEe32", "modal--visible": "_3gon6Oj", "modal__header": "_5faeo8s", "modal__closable": "a1dhyEV", "modal__footer": "yb8LdV1", "modal__content": "_3lViuPm", "modal__icon": "_2vid6jg", "modal--info": "_2m2QgJW", "modal--success": "_2Ucmr_b", "modal--error": "_2KpbEF9", "modal--warning": "_3KYqRkO", "WebkitMask": "_3v9JpJU", "maskVisible": "_10G5ebT", "modalVisible": "_3gon6Oj", "modalInfo": "_2m2QgJW", "modalSuccess": "_2Ucmr_b", "modalError": "_2KpbEF9", "modalWarning": "_3KYqRkO" };
-
-/**
- * Copyright 2015, Yahoo! Inc.
- * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
- */
-var REACT_STATICS = {
-    childContextTypes: true,
-    contextTypes: true,
-    defaultProps: true,
-    displayName: true,
-    getDefaultProps: true,
-    mixins: true,
-    propTypes: true,
-    type: true
-};
-
-var KNOWN_STATICS = {
-    name: true,
-    length: true,
-    prototype: true,
-    caller: true,
-    arguments: true,
-    arity: true
-};
-
-var isGetOwnPropertySymbolsAvailable = typeof Object.getOwnPropertySymbols === 'function';
-
-var index$1 = function hoistNonReactStatics(targetComponent, sourceComponent, customStatics) {
-    if (typeof sourceComponent !== 'string') { // don't hoist over string (html) components
-        var keys = Object.getOwnPropertyNames(sourceComponent);
-
-        /* istanbul ignore else */
-        if (isGetOwnPropertySymbolsAvailable) {
-            keys = keys.concat(Object.getOwnPropertySymbols(sourceComponent));
-        }
-
-        for (var i = 0; i < keys.length; ++i) {
-            if (!REACT_STATICS[keys[i]] && !KNOWN_STATICS[keys[i]] && (!customStatics || !customStatics[keys[i]])) {
-                try {
-                    targetComponent[keys[i]] = sourceComponent[keys[i]];
-                } catch (error) {
-
-                }
-            }
-        }
-    }
-
-    return targetComponent;
-};
-
 /**
  * HOC enhancer
  * render Component into target node
@@ -307,6 +260,54 @@ function renderTo() {
   };
 }
 
+var styles$1 = { "danger": "_1IZL9la", "dashed": "_3YSE_nE", "secondary": "_16NdYXA", "primary": "_1rlU5o-", "base": "CTy3CHb", "small": "_1FNLWX0", "normal": "_1O7JoXn", "large": "_1JYFbqn", "disabled": "_3P6QXVt", "button--primary": "_11KqluX CTy3CHb _1rlU5o-", "button--secondary": "_1QjCEA1 CTy3CHb _16NdYXA", "button--dashed": "_1Ko5_w4 CTy3CHb _3YSE_nE", "button--danger": "_16108o6 CTy3CHb _1IZL9la", "button--disabled": "_3dqIZEv CTy3CHb _3P6QXVt", "button--large": "_3KW6hMp _1JYFbqn", "button--normal": "_3mBVgjk _1O7JoXn", "button--small": "_2HVyQfI _1FNLWX0", "buttonPrimary": "_11KqluX CTy3CHb _1rlU5o-", "buttonSecondary": "_1QjCEA1 CTy3CHb _16NdYXA", "buttonDashed": "_1Ko5_w4 CTy3CHb _3YSE_nE", "buttonDanger": "_16108o6 CTy3CHb _1IZL9la", "buttonDisabled": "_3dqIZEv CTy3CHb _3P6QXVt", "buttonLarge": "_3KW6hMp _1JYFbqn", "buttonNormal": "_3mBVgjk _1O7JoXn", "buttonSmall": "_2HVyQfI _1FNLWX0" };
+
+var _class$1;
+var _temp$1;
+
+/**
+ * Button Component
+ * @author ryan.bian
+ */
+var Button = (_temp$1 = _class$1 = function (_PureComponent) {
+  inherits(Button, _PureComponent);
+
+  function Button() {
+    classCallCheck(this, Button);
+    return possibleConstructorReturn(this, (Button.__proto__ || Object.getPrototypeOf(Button)).apply(this, arguments));
+  }
+
+  createClass(Button, [{
+    key: 'render',
+    value: function render() {
+      var _props = this.props,
+          children = _props.children,
+          type = _props.type,
+          size = _props.size,
+          disabled$$1 = _props.disabled,
+          otherProps = objectWithoutProperties(_props, ['children', 'type', 'size', 'disabled']);
+
+      var btnProps = _extends({}, otherProps, {
+        className: index(styles$1['button--' + (disabled$$1 ? 'disabled' : type)], styles$1['button--' + size])
+      });
+      return React.createElement(
+        'button',
+        btnProps,
+        children
+      );
+    }
+
+    // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
+
+  }]);
+  return Button;
+}(PureComponent), _class$1.displayName = 'Button', _class$1.defaultProps = {
+  type: 'primary',
+  size: 'normal' }, _class$1.propTypes = {
+  type: PropTypes.oneOf(['primary', 'secondary', 'dashed', 'danger']),
+  size: PropTypes.oneOf(['normal', 'large', 'small'])
+}, _temp$1);
+
 var _dec$1;
 var _class$2;
 var _class2$1;
@@ -316,7 +317,7 @@ var _temp$2;
  * Mask Component
  * @author ryan.bian
  */
-var Mask = (_dec$1 = CSSModules(styles$1, { allowMultiple: allowMultiple }), _dec$1(_class$2 = (_temp$2 = _class2$1 = function (_Component) {
+var Mask = (_dec$1 = CSSModules(styles, { allowMultiple: allowMultiple }), _dec$1(_class$2 = (_temp$2 = _class2$1 = function (_Component) {
   inherits(Mask, _Component);
 
   function Mask(props) {
@@ -1191,6 +1192,237 @@ var Icon = (_temp$3 = _class$3 = function (_PureComponent) {
   color: PropTypes.string
 }, _temp$3);
 
+var styles$3 = { "fade--entering": "_1mp5FXi", "fadeIn": "gbiUlUN", "fade--entered": "_26DcFZN", "fade--exiting": "_2wSC5er", "fadeOut": "_2OnzTOe", "fade--exited": "_2K6mlzL", "flipX": "sCG0bzF", "flipX--entering": "_3cdJQI5", "flipInX": "_1FsXcPX", "flipX--entered": "qGmSxIW", "flipX--exiting": "_3NfjJC-", "flipOutX": "_24wLE9d", "flipX--exited": "_24MsE6n", "slideUp": "_1oUCufa", "slideUp--entering": "_1mO_SWR", "slideInUp": "_12qhs-A", "slideUp--entered": "_3-WipgH", "slideUp--exiting": "_27bTj8j", "slideOutUp": "_20eULFb", "slideUp--exited": "_34-gsuv", "slideDown": "_706TJ5I", "slideDown--entering": "_1ieQGlB", "slideInDown": "_21y5cl_", "slideDown--entered": "_3FYkJ5S", "slideDown--exiting": "desE714", "slideOutDown": "_16Yi8is", "slideDown--exited": "_3FJ4sR6", "zoom": "_2aGrmGr", "zoom--entering": "EdoD2Q2", "zoomIn": "gybKzsL", "zoom--entered": "_3kIgIBr", "zoom--exiting": "k0tHLpV", "zoomOut": "_689sLoR", "zoom--exited": "_6jD7wgI", "bounce": "_38IQtyb", "bounce--entering": "_1_uO8bU", "bounceIn": "_2j4EhAR", "bounce--entered": "_1hNAImH", "bounce--exiting": "Hpxa8Tt", "bounceOut": "_2yWAe_R", "bounce--exited": "_3VDKDtK", "fadeEntering": "_1mp5FXi", "fadeEntered": "_26DcFZN", "fadeExiting": "_2wSC5er", "fadeExited": "_2K6mlzL", "flipXEntering": "_3cdJQI5", "flipXEntered": "qGmSxIW", "flipXExiting": "_3NfjJC-", "flipXExited": "_24MsE6n", "slideUpEntering": "_1mO_SWR", "slideUpEntered": "_3-WipgH", "slideUpExiting": "_27bTj8j", "slideUpExited": "_34-gsuv", "slideDownEntering": "_1ieQGlB", "slideDownEntered": "_3FYkJ5S", "slideDownExiting": "desE714", "slideDownExited": "_3FJ4sR6", "zoomEntering": "EdoD2Q2", "zoomEntered": "_3kIgIBr", "zoomExiting": "k0tHLpV", "zoomExited": "_6jD7wgI", "bounceEntering": "_1_uO8bU", "bounceEntered": "_1hNAImH", "bounceExiting": "Hpxa8Tt", "bounceExited": "_3VDKDtK" };
+
+var MOTIONS = ['fade', 'flipX', 'slideUp', 'slideDown', 'zoom', 'bounce'];
+
+var TIMING_FUNCTION = {
+  ease: 'cubic-bezier(.25, .1, .25, 1)',
+  linear: 'cubic-bezier(0,0,1,1)',
+  'ease-in': 'cubic-bezier(.42,0,1,1)',
+  'ease-out': 'cubic-bezier(0,0,.58,1)',
+  'ease-in-out': 'cubic-bezier(.42,0,.58,1)'
+};
+
+var _class$4;
+var _temp$4;
+
+/**
+ * Animation Component
+ * @author ryan.bian
+ */
+var Animation = (_temp$4 = _class$4 = function (_PureComponent) {
+  inherits(Animation, _PureComponent);
+
+  function Animation() {
+    classCallCheck(this, Animation);
+    return possibleConstructorReturn(this, (Animation.__proto__ || Object.getPrototypeOf(Animation)).apply(this, arguments));
+  }
+
+  createClass(Animation, [{
+    key: 'render',
+    value: function render() {
+      var _props = this.props,
+          duration = _props.duration,
+          motion = _props.motion,
+          timingFunction = _props.timingFunction,
+          style = _props.style,
+          children = _props.children,
+          otherProps = objectWithoutProperties(_props, ['duration', 'motion', 'timingFunction', 'style', 'children']);
+
+      var transitionProps = _extends({
+        in: this.props.in,
+        timeout: duration
+      }, otherProps);
+      var defaultStyle = _extends({}, style, {
+        animationDuration: duration + 'ms',
+        animationTimingFunction: TIMING_FUNCTION[timingFunction]
+      });
+      return React.createElement(
+        Transition,
+        transitionProps,
+        function (status) {
+          return React.createElement(
+            'div',
+            {
+              style: defaultStyle,
+              className: index(styles$3[motion], styles$3[motion + '--' + status])
+            },
+            children
+          );
+        }
+      );
+    }
+
+    // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
+
+  }]);
+  return Animation;
+}(PureComponent), _class$4.displayName = 'Animation', _class$4.defaultProps = {
+  duration: 500,
+  motion: 'fade',
+  timingFunction: 'linear',
+  style: undefined,
+  in: PropTypes.bool,
+  mountOnEnter: false,
+  unmountOnExit: false,
+  enter: true,
+  exit: true,
+  onEnter: function onEnter() {},
+  onEntering: function onEntering() {},
+  onEntered: function onEntered() {},
+  onExit: function onExit() {},
+  onExiting: function onExiting() {},
+  onExited: function onExited() {}
+}, _class$4.propTypes = {
+  duration: PropTypes.number,
+  motion: PropTypes.oneOf(MOTIONS),
+  timingFunction: PropTypes.oneOf(Object.keys(TIMING_FUNCTION)),
+  style: PropTypes.object,
+  in: PropTypes.bool,
+  mountOnEnter: PropTypes.bool,
+  unmountOnExit: PropTypes.bool,
+  enter: PropTypes.bool,
+  exit: PropTypes.bool,
+  onEnter: PropTypes.func,
+  onEntering: PropTypes.func,
+  onEntered: PropTypes.func,
+  onExit: PropTypes.func,
+  onExiting: PropTypes.func,
+  onExited: PropTypes.func
+}, _temp$4);
+
+var _class$5;
+var _temp2;
+
+var colorArr = {
+  info: '#3b98e0',
+  success: '#73da7d',
+  error: '#e6445e',
+  warning: '#ffd31a'
+};
+
+var NoticeModal = (_temp2 = _class$5 = function (_PureComponent) {
+  inherits(NoticeModal, _PureComponent);
+
+  function NoticeModal() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
+    classCallCheck(this, NoticeModal);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = possibleConstructorReturn(this, (_ref = NoticeModal.__proto__ || Object.getPrototypeOf(NoticeModal)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+      visible: false
+    }, _temp), possibleConstructorReturn(_this, _ret);
+  }
+
+  createClass(NoticeModal, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.setState({
+        visible: true
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      var _props = this.props,
+          type = _props.type,
+          config = _props.config,
+          _afterClose = _props.afterClose;
+      var visible = this.state.visible;
+
+      var modalProps = {
+        title: React.createElement(
+          'p',
+          null,
+          React.createElement(Icon, { name: type, size: 26, color: colorArr[type] }),
+          React.createElement(
+            'span',
+            null,
+            config.title || type
+          ),
+          config.closable ? React.createElement(
+            'a',
+            {
+              className: styles.modal__closable,
+              href: '',
+              onClick: function onClick(e) {
+                e.preventDefault();
+                _this2.setState({
+                  visible: false
+                });
+              }
+            },
+            React.createElement(Icon, { name: 'close', size: 18, color: '#a6a6a6' })
+          ) : null
+        ),
+        visible: visible,
+        closable: false,
+        footer: React.createElement(
+          Button,
+          {
+            key: 'confirm',
+            type: 'primary',
+            onClick: function onClick() {
+              _this2.setState({
+                visible: false
+              });
+            }
+          },
+          '\u6211\u77E5\u9053\u4E86'
+        ),
+        afterClose: function afterClose() {
+          setTimeout(function () {
+            _afterClose();
+          }, 500);
+        }
+      };
+      return React.createElement(
+        Modal,
+        modalProps,
+        config.content
+      );
+    }
+  }]);
+  return NoticeModal;
+}(PureComponent), _class$5.defaultProps = {
+  type: undefined,
+  config: undefined,
+  afterClose: function afterClose() {}
+}, _class$5.propTypes = {
+  type: PropTypes.oneOf(['info', 'success', 'error', 'warning']),
+  config: PropTypes.object,
+  afterClose: PropTypes.func
+}, _temp2);
+
+
+var renderNoticeModal = function renderNoticeModal(type) {
+  var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {
+    title: '',
+    content: '',
+    closable: false
+  };
+
+  var wrapNode = document.createElement('div');
+  document.body.appendChild(wrapNode);
+  ReactDOM.render(React.createElement(NoticeModal, {
+    type: type,
+    config: config,
+    afterClose: function afterClose() {
+      ReactDOM.unmountComponentAtNode(wrapNode);
+      document.body.removeChild(wrapNode);
+    }
+  }), wrapNode);
+};
+
 var _dec;
 var _dec2;
 var _class;
@@ -1201,68 +1433,7 @@ var _temp;
  * Modal Component
  * @author ryan.bian
  */
-var renderNoticeModal = function renderNoticeModal(type) {
-  var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {
-    title: '',
-    content: '',
-    closable: false
-  };
-
-  var wrapNode = document.createElement('div');
-  var colorArr = {
-    info: '#3b98e0',
-    success: '#73da7d',
-    error: '#e6445e',
-    warning: '#ffd31a'
-  };
-  document.body.appendChild(wrapNode);
-  var modalProps = {
-    title: React.createElement(
-      'p',
-      null,
-      React.createElement(Icon, { name: type, size: 26, color: colorArr[type] }),
-      React.createElement(
-        'span',
-        null,
-        config.title || type
-      ),
-      config.closable ? React.createElement(
-        'a',
-        {
-          styleName: 'modal__closable',
-          href: '',
-          onClick: function onClick(e) {
-            e.preventDefault();
-            ReactDOM.unmountComponentAtNode(wrapNode);
-            document.body.removeChild(wrapNode);
-          }
-        },
-        React.createElement(Icon, { name: 'close', size: 18, color: '#a6a6a6' })
-      ) : null
-    ),
-    visible: true,
-    closable: false,
-    footer: React.createElement(
-      Button,
-      {
-        key: 'confirm',
-        type: 'primary',
-        onClick: function onClick() {
-          ReactDOM.unmountComponentAtNode(wrapNode);
-          document.body.removeChild(wrapNode);
-        }
-      },
-      '\u6211\u77E5\u9053\u4E86'
-    )
-  };
-  ReactDOM.render(React.createElement(
-    Modal,
-    modalProps,
-    config.content
-  ), wrapNode);
-};
-
-var Modal = (_dec = renderTo(), _dec2 = CSSModules(styles$1, { allowMultiple: allowMultiple }), _dec(_class = _dec2(_class = (_temp = _class2 = function (_Component) {
+var Modal = (_dec = renderTo(), _dec2 = CSSModules(styles, { allowMultiple: allowMultiple }), _dec(_class = _dec2(_class = (_temp = _class2 = function (_Component) {
   inherits(Modal, _Component);
   createClass(Modal, null, [{
     key: 'info',
@@ -1293,35 +1464,38 @@ var Modal = (_dec = renderTo(), _dec2 = CSSModules(styles$1, { allowMultiple: al
 
     var _this = possibleConstructorReturn(this, (Modal.__proto__ || Object.getPrototypeOf(Modal)).call(this, props));
 
-    _this.state = {};
-    _this.handleOk = _this.handleOk.bind(_this);
-    _this.handleCancel = _this.handleCancel.bind(_this);
-    return _this;
-  }
-
-  createClass(Modal, [{
-    key: 'componentDidUpdate',
-    value: function componentDidUpdate(prevProps) {
-      if (!this.props.visible && prevProps.visible) {
-        this.props.afterClose();
-      }
-    }
-  }, {
-    key: 'handleOk',
-    value: function handleOk(e) {
-      var onOk = this.props.onOk;
+    _this.handleOk = function (e) {
+      var onOk = _this.props.onOk;
 
       if (onOk) {
         onOk(e);
       }
-    }
-  }, {
-    key: 'handleCancel',
-    value: function handleCancel(e) {
-      var onCancel = this.props.onCancel;
+    };
+
+    _this.handleCancel = function (e) {
+      var onCancel = _this.props.onCancel;
 
       if (onCancel) {
         onCancel(e);
+      }
+    };
+
+    _this.state = {
+      maskVisible: props.visible
+    };
+    return _this;
+  }
+
+  createClass(Modal, [{
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      if (!nextProps.visible && this.props.visible) {
+        this.props.afterClose();
+      }
+      if (nextProps.visible && !this.props.visible) {
+        this.setState({
+          maskVisible: true
+        });
       }
     }
   }, {
@@ -1349,7 +1523,7 @@ var Modal = (_dec = renderTo(), _dec2 = CSSModules(styles$1, { allowMultiple: al
                 _this2.handleCancel(e);
               }
             },
-            React.createElement(Icon, { name: 'close', size: 18, color: '#a6a6a6' })
+            React.createElement(Icon, { name: 'close', size: 18 })
           ) : null
         );
       }
@@ -1367,7 +1541,7 @@ var Modal = (_dec = renderTo(), _dec2 = CSSModules(styles$1, { allowMultiple: al
           type: 'secondary',
           onClick: this.handleCancel
         },
-        '\u53D6\u6D88'
+        '\u53D6\u2003\u6D88'
       ), React.createElement(
         Button,
         {
@@ -1375,7 +1549,7 @@ var Modal = (_dec = renderTo(), _dec2 = CSSModules(styles$1, { allowMultiple: al
           type: 'primary',
           onClick: this.handleOk
         },
-        '\u786E\u5B9A'
+        '\u786E\u2003\u5B9A'
       )];
       return footer === undefined ? React.createElement(
         'div',
@@ -1390,21 +1564,39 @@ var Modal = (_dec = renderTo(), _dec2 = CSSModules(styles$1, { allowMultiple: al
   }, {
     key: 'render',
     value: function render() {
+      var _this3 = this;
+
       var _props2 = this.props,
-          visible = _props2.visible,
           width = _props2.width,
+          visible = _props2.visible,
           children = _props2.children;
+      var maskVisible$$1 = this.state.maskVisible;
 
       var modalProps = {
         style: {
           width: width
         },
-        styleName: 'modal' + (visible ? '--visible' : '')
-
-      };{
-        return React.createElement(
-          Mask,
-          { visible: visible },
+        styleName: index('modal', {
+          'modal--visible': visible
+        })
+      };
+      return React.createElement(
+        Mask,
+        { visible: maskVisible$$1 },
+        React.createElement(
+          Animation,
+          {
+            'in': visible,
+            motion: 'flipX',
+            style: {
+              height: '100%'
+            },
+            onExited: function onExited() {
+              _this3.setState({
+                maskVisible: false
+              });
+            }
+          },
           React.createElement(
             'div',
             modalProps,
@@ -1416,8 +1608,8 @@ var Modal = (_dec = renderTo(), _dec2 = CSSModules(styles$1, { allowMultiple: al
             ),
             this.renderFooter()
           )
-        );
-      }
+        )
+      );
     }
   }]);
   return Modal;

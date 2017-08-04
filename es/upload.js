@@ -1151,7 +1151,7 @@ var propTypes = {
   showInfo: PropTypes.bool
 };
 
-var styles$1 = { "progress__line--pause": "_2rhabTG", "progress__line--exception": "_1Gn0LqM", "progress__line--success": "_2iMadZh", "progress__line--normal": "cFwj8pO", "progress__lineIndicator": "_1YQZnrM", "progress__line--normalSize": "_28IlOCf", "progress__line": "nd0QJ7p", "progress__lineOuter": "IL7D3Op", "progress__lineInner": "_27NBzV3", "progress__line--miniSize": "_2Gk1yz_", "progress-animation": "_2uAdRt5", "progress__linePause": "_2rhabTG", "progress__lineException": "_1Gn0LqM", "progress__lineSuccess": "_2iMadZh", "progress__lineNormal": "cFwj8pO", "progress__lineNormalSize": "_28IlOCf", "progress__lineMiniSize": "_2Gk1yz_", "progressAnimation": "_2uAdRt5" };
+var styles$1 = { "progress__line--pause": "_2rhabTG", "progress__line--exception": "_1Gn0LqM", "progress__line--success": "_2iMadZh", "progress__line--normal": "cFwj8pO", "progress__lineIndicator": "_1YQZnrM", "progress__line--normalSize": "_28IlOCf", "progress__line": "nd0QJ7p", "progress__showinfo": "_3JkNO59", "progress__lineOuter": "IL7D3Op", "progress__lineInner": "_27NBzV3", "progress__line--miniSize": "_2Gk1yz_", "progress-animation": "_2uAdRt5", "progress__linePause": "_2rhabTG", "progress__lineException": "_1Gn0LqM", "progress__lineSuccess": "_2iMadZh", "progress__lineNormal": "cFwj8pO", "progress__lineNormalSize": "_28IlOCf", "progress__lineMiniSize": "_2Gk1yz_", "progressAnimation": "_2uAdRt5" };
 
 /**
  * Line Component
@@ -1163,8 +1163,10 @@ var Line = function Line(_ref) {
       size = _ref.size,
       showInfo = _ref.showInfo;
 
+  console.log(showInfo);
+
   var lineProps = {
-    className: index$1(styles$1['progress__line'], styles$1['progress__line--' + size + 'Size'], styles$1['progress__line--' + status])
+    className: index$1(styles$1['progress__' + (showInfo ? 'showinfo' : 'line')], styles$1['progress__line--' + size + 'Size'], styles$1['progress__line--' + status])
   };
   var innerProps = {
     className: styles$1['progress__lineInner'],
@@ -1523,7 +1525,8 @@ var UploadList = (_dec$1 = CSSModules(styles$2, { allowMultiple: allowMultiple }
   disabled: false,
   progressAttr: {
     strokeWidth: 2,
-    showInfo: false
+    showInfo: false,
+    size: 'mini'
   },
   locale: {} }, _class2$1.propTypes = {
   listType: PropTypes.oneOf('text', 'picture-card'),

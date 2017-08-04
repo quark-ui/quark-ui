@@ -139,6 +139,7 @@
 }
 ._2bCDQ5L {
   margin-top: 12px;
+  white-space: normal;
 }
 ._3ZvcDzC {
   margin-left: -1px;
@@ -159,6 +160,7 @@
 }
 ._1FZQqhV {
   margin-top: 12px;
+  white-space: normal;
 }
 ._2PKGdIS {
   margin-left: -1px;
@@ -185,6 +187,7 @@
 }
 ._3Hf0Ape {
   margin-top: 12px;
+  white-space: normal;
 }
 .JvjXwwi {
   margin-left: -1px;
@@ -202,11 +205,15 @@
 }
 /* rangePicker */
 .mhJTXha {
+  background: #fff;
+  border: 1px solid #e6e6e6;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, .1);
+  border-radius: 3px;
   white-space: nowrap
 }
 .mhJTXha ._217Ab1l {
   display: inline-block;
+  padding-bottom: 10px;
   vertical-align: top;
   box-shadow: none;
 }
@@ -215,7 +222,7 @@
   .mhJTXha ._2EHXPQJ,
   .mhJTXha ._2z1RIYt {
   width: 306px;
-  height: 327px;
+  height: 322px;
 }
 .mhJTXha ._3ZvcDzC,
   .mhJTXha ._2PKGdIS,
@@ -223,11 +230,27 @@
   width: 92px;
   height: 65px;
 }
+._1UC2-sP {
+}
+._1UC2-sP ._217Ab1l {
+  border: 0 none;
+}
+.Fc-Col- {
+  padding: 0 15px 10px;
+  border-bottom: 1px solid #e6e6e6
+}
+.Fc-Col- button {
+  margin-right: 10px;
+}
+._3LU7GfZ {
+  padding: 12px 0;
+  text-align: center
+}
+._3LU7GfZ button {
+  margin: 0 20px;
+  width: 180px;
+}
 ._1lDj7SY {
-  border-right: 0 none;
-  border-radius: 3px 0 0 3px;
 }
 ._4LScnzl {
-  border-left: 0 none;
-  border-radius: 0 3px 3px 0;
 }
