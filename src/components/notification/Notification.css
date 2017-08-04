@@ -3,19 +3,18 @@
  * @author yanwei
  */
 :root{
-  --alert-info-bg: #E8F6FF;
-  --alert-success-bg: #F5FFE9;
-  --alert-error-bg: #FFEBE8;
-  --alert-warning-bg: #FFFAE8;
+  --notification-info-bg: #E8F6FF;
+  --notification-success-bg: #F5FFE9;
+  --notification-error-bg: #FFEBE8;
+  --notification-warning-bg: #FFFAE8;
 }
 .notification--box{
   position: fixed;
   z-index: 1000;
-  top: 200px;
-  left: 50%;
+  /*top: 200px;*/
+  /*left: 50%;*/
   transform:translate(-50%,0);
   pointer-events: none;
-  background: #fff;
 }
 
 .notification{

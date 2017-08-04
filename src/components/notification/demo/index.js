@@ -10,7 +10,6 @@ export default class PopoverDemo extends Component {
 
   render() {
     notification.config({
-      top: 60,
       duration: 10,
     });
 

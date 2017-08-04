@@ -4,6 +4,7 @@
  */
 import NotificationBox from './NotificationBox';
 
+
 let defaultDuration = 4.5;
 let defaultTop = 24;
 let defaultBottom = 24;
@@ -52,7 +53,6 @@ function getPlacementStyle(placement){
 
 
 function getNotificationInstance(){
-  debugger
   notificationInstance = notificationInstance || NotificationBox.newInstance({
     style:getPlacementStyle(defaultPlacement),
     getContainer,

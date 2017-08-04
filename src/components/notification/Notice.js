@@ -19,9 +19,6 @@ class Notice extends PureComponent {
     onEnd(){},
     onClose(){},
     duration:1.5,
-    style:{
-      right:'50%',
-    }
   }
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
