@@ -18,14 +18,17 @@ class Notice extends PureComponent {
   static defaultProps = {
     onEnd(){},
     onClose(){},
-    duration:1.5,
+    duration:4.5,
   }
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
   static propTypes = {
+    message: PropTypes.string,
+    description: PropTypes.string,
     duration : PropTypes.number,
-    onclose : PropTypes.func,
-    content : PropTypes.any,
+    btn: PropTypes.node,
+    icon: PropTypes.node,
+    onClose : PropTypes.func,
   }
 
   constructor(props) {
@@ -38,7 +41,7 @@ class Notice extends PureComponent {
   componentDidMount(){
     if(this.props.duration){
       this.closeTimer = setTimeout(() => {
-        this.close();
+        this.handleClose();
       },this.props.duration * 1000);
     }
   }
@@ -54,7 +57,7 @@ class Notice extends PureComponent {
     }
   }
 
-  close = () =>{
+  handleClose = ()=>{
     this.clearCloseTimer();
     this.props.onClose();
   }
@@ -62,22 +65,32 @@ class Notice extends PureComponent {
 
   render() {
     const props = this.props;
-    const { type, children } = props;
-
-    const className = {
+    const { type,icon,btn, children } = props;
+    const cls = classnames({
       ['notification']:1,
-    };
-
+      ['notification--icon']:type || icon,
+    });
 
     return (
-      <div styleName={classnames('notification', `notification__${type}`)} style={props.style}>
-        <div className={'notification--content'}></div>
-          {children}
-          {props.closeable ?
-            <a tabIndex="0" onclick={this.close} className={'notification--close'}>
-              <span className={'notification--closex'}></span>
-            </a> : null
+      <div styleName={cls} style={props.style}>
+        <div styleName={'notification--content'}>
+          {type ? <Icon styleName={'notification__icon'} name={type} size={24} /> : null}
+          {icon ? icon : null}
+          <div styleName={'notification__mes'}>
+            {props.message}
+          </div>
+          <div styleName={'notification__des'}>
+            {props.description}
+          </div>
+          {
+            btn ? <div styleName={'notification__btn'}>
+              {btn}
+            </div>: null
           }
+        </div>
+          <div onclick={this.handleClose} styleName={'notification--close'}>
+            <span styleName={'notification--closex'}>X</span>
+          </div>
       </div>
     );
   }

@@ -23,7 +23,7 @@ function getPlacementStyle(placement){
       top:defaultTop,
       bottom:'auto',
     };
-    breack;
+    break;
 
     case 'bottomLeft':
     style ={
@@ -31,7 +31,7 @@ function getPlacementStyle(placement){
       top:'auto',
       bottom:defaultTop,
     };
-    breack;
+    break;
 
     case 'bottomRight':
     style ={
@@ -39,7 +39,7 @@ function getPlacementStyle(placement){
       top:'auto',
       bottom:defaultTop,
     };
-    breack;
+    break;
 
     default:
     style = {
@@ -52,9 +52,9 @@ function getPlacementStyle(placement){
 }
 
 
-function getNotificationInstance(){
+function getNotificationInstance(placement){
   notificationInstance = notificationInstance || NotificationBox.newInstance({
-    style:getPlacementStyle(defaultPlacement),
+    style:getPlacementStyle(placement),
     getContainer,
   })
 
@@ -63,11 +63,11 @@ function getNotificationInstance(){
 
 function noop() {}
 
-export default{
-  info(content='',duration = defaultDuration, onClose = noop) {
-    getNotificationInstance().notice({type:'info',content,duration,onClose});
+export default {
+  open(parms) {
+    getNotificationInstance(parms.placement).notice(parms);
   },
-  config(options ={}){
+  config(options = {}) {
     if(options.duration !== undefined){
       defaultDuration = options.duration
     }
@@ -81,4 +81,6 @@ export default{
       notificationInstance = null;
     }
   },
-}
+};
+
+

@@ -14,59 +14,68 @@
   /*top: 200px;*/
   /*left: 50%;*/
   transform:translate(-50%,0);
-  pointer-events: none;
+    pointer-events: none;
+    width: 335px;
 }
 
 .notification{
-    padding: 14px 24px;
-    border-radius: 3px 3px;
-    box-shadow: 0 0 10px #999;
-    border: 1px solid #999;
-    border: 0px solid rgba(0, 0, 0, 0);
+    padding: 16px;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.2);
     background: #fff;
-    display: block;
     line-height: 1.5;
-    vertical-align: middle;
     position: relative;
     margin-bottom: 10px;
+    overflow: hidden;
+
 }
 .notification--content{
   display:inline-block;
   vertical-align: middle;
   font-size:14px;
 }
-.notification--close{
+.notification--icon{
+    & > .notification--content{
+        margin-left: 50px;
+    }
+}
+.notification__mes{
+    padding-right: 24px;
+    font-size: 14px;
+    color: rgba(0,0,0,.85);
+    margin-bottom: 4px;
+    line-height: 20px;
+    display: inline-block;
+}
+.notification__des{
+    font-size: 12px;
+    color: rgba(0,0,0,.65);
+}
+.notification__icon{
+  top: 16px;
+  left: 24px;
+  position: absolute;
+}
 
+.notification--close{
+    position: absolute;
+    right: 16px;
+    top: 10px;
+    color: rgba(0,0,0,.43);
+    outline: none;
+    text-decoration: none;
 }
 .notification--closex{
   
 }
-
-
+.notification__btn{
+    
+}
 .notification--icon{
     display:inline-block;
     margin-right:14px;
     margin-left:1px;
     vertical-align: middle;
 }
-.notification__info{
-    color:var(--link-color);
-    background-color:var(--notification-info-bg);
-    box-shadow: 0 0 1px var(--link-color);
-}
-.notification__success{
-    color:var(--success-color);
-    background-color:var(--notification-success-bg);
-    box-shadow: 0 0 1px var(--success-color);
-}
-.notification__error{
-    color:var(--fail-color);
-    background-color:var(--notification-error-bg);
-    box-shadow: 0 0 1px var(--fail-color);
-}
-.notification__warning{
-    color:var(--warn-color);
-    background-color:var(--notification-warning-bg);
-    box-shadow: 0 0 1px var(--warn-color);
-}
+
 

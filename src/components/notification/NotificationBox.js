@@ -69,10 +69,8 @@ class NotificationBox extends PureComponent {
         }
         this.remove(notice.key);
       };
-
       return (
         <Notice {...notice} onClose={onClose}>
-          {notice.content}
         </Notice>
       );
     });
@@ -90,10 +88,11 @@ class NotificationBox extends PureComponent {
 NotificationBox.newInstance = function newInstance(properties){
   const {getContainer, ...props } = properties || {};
   let div;
+
+  div = document.createElement('div');
   if(getContainer){
-    div = getContainer();
+    document.getElementById(getContainer).appendChild(div);
   } else {
-    div = document.createElement('div');
     document.body.appendChild(div);
   }
   const DOM = ReactDOM;
