@@ -65,8 +65,7 @@ export default class PopoverDemo extends Component {
     const openNoDuration = () =>{
       notification.open({
         message: '需要及时知道的系统通知',
-        description: '文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案',
-        duration:0
+        description: '文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案'
       })
     }
 
