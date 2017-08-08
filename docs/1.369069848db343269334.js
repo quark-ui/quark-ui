@@ -1,0 +1,2 @@
+webpackJsonp([1],{"4bKY":function(n,t,r){function e(n){return r(o(n))}function o(n){var t=u[n];if(!(t+1))throw new Error("Cannot find module '"+n+"'.");return t}var u={"./button/repl/index":"xyEo"};e.keys=function(){return Object.keys(u)},e.resolve=o,n.exports=e,e.id="4bKY"},xyEo:function(n,t){n.exports="class Playground extends React.Component {\n  render() {\n    return <Button>Button</Button>;\n  }\n}\n\nreturn <Playground />;"}});
+//# sourceMappingURL=1.369069848db343269334.js.map
