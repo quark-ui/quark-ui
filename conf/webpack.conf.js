@@ -121,7 +121,7 @@ if (TARGET === 'start' || TARGET === 'start-nodash') {
       site: [
         'react-hot-loader/patch',
         `webpack-dev-server/client?http://${host}:3000`,
-        'webpack/hot/only-dev-server',
+        // 'webpack/hot/only-dev-server',
       ],
     },
     output: {

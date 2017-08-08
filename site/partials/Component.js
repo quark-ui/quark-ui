@@ -1,6 +1,6 @@
 import 'prismjs/themes/prism.css';
 
-import { Component, createElement } from 'react';
+import React, { Component, createElement } from 'react';
 import marked from 'meta-marked';
 import Prism from 'prismjs';
 import CSSModules from 'react-css-modules';
@@ -25,14 +25,15 @@ export default class ComponentBlock extends Component {
     readme: '',
     demo: undefined,
     demoSourceCode: '',
-    showCode: false,
+    showCode: true,
   };
   componentWillMount() {
     const { match } = this.props;
     this.load(match.params.name);
   }
   load(name) {
-    require.ensure([], (require) => {
+    const { scope } = this.props;
+    require.ensure([], require => {
       const readme = require(`!raw-loader!../../src/components/${name}/README.md`);
       const demoSourceCode = require(`!raw-loader!../../src/components/${name}/demo/index`);
       const demo = require(`../../src/components/${name}/demo/index`).default;
@@ -84,6 +85,11 @@ export default class ComponentBlock extends Component {
     });
   }
 
+  buildScope() {
+    const { scope } = this.props;
+    return Object.keys(scope).map(key => scope[key]);
+  }
+
   render() {
     const { match } = this.props;
     const { readme, demo, demoSourceCode } = this.state;
@@ -100,6 +106,7 @@ export default class ComponentBlock extends Component {
           styleName="Component__doc"
           dangerouslySetInnerHTML={{ __html: html }}
         />
+
         <section styleName="Component__demo">
           <div styleName="Component__demoHead">
             <h3>DEMO</h3>
