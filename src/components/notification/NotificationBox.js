@@ -6,6 +6,7 @@ import { PureComponent } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
+import classnames from 'classnames';
 import uniqueId from 'lodash/uniqueId';
 import assign from 'object-assign';
 import Notice from './Notice';
@@ -40,15 +41,12 @@ class NotificationBox extends PureComponent {
 
     this.setState(preState =>{
       const notices = preState.notices;
-
       if(!notices.filter(v=>v.key === key).length){
         return {
           notices: notices.concat(notice),
         }
       }
-
       return { notices };
-
     })
   }
 
@@ -62,6 +60,8 @@ class NotificationBox extends PureComponent {
 
   render() {
     const props = this.props;
+    const{placement,style} = props;
+
     const Nodes = this.state.notices.map((notice) => {
       const onClose = () => {
         if (notice.onClose) {
@@ -75,15 +75,18 @@ class NotificationBox extends PureComponent {
       );
     });
 
+    const cls = classnames({
+      ['notification--box']:1,
+      [`notification--box--${placement}`]:placement
+    })
     return (
-      <div styleName="notification--box" style={props.style}>
+      <div styleName={cls} style={style}>
         {Nodes}
       </div> 
     )
 
   }
 }
-
 
 NotificationBox.newInstance = function newInstance(properties){
   const {getContainer, ...props } = properties || {};
@@ -99,13 +102,12 @@ NotificationBox.newInstance = function newInstance(properties){
   const notificationBox = DOM.render(<NotificationBox {...props} />,div);
 
     return {
-      notice(noticeProps) {
+      addNotice(noticeProps) {
         notificationBox.add(noticeProps);
       },
       removeNotice(key) {
         notificationBox.remove(key);
       },
-      component: notificationBox,
       destroy() {
         DOM.unmountComponentAtNode(div);
         if (!getContainer) {

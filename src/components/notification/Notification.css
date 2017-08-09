@@ -2,22 +2,23 @@
  * Alert Style
  * @author yanwei
  */
-:root{
-  --notification-info-bg: #E8F6FF;
-  --notification-success-bg: #F5FFE9;
-  --notification-error-bg: #FFEBE8;
-  --notification-warning-bg: #FFFAE8;
-}
 .notification--box{
-  position: fixed;
-  z-index: 1000;
-  /*top: 200px;*/
-  /*left: 50%;*/
-  transform:translate(-50%,0);
-    pointer-events: none;
+    position: fixed;
+    z-index: 1000;
     width: 335px;
 }
+.notification--box--topLeft{
 
+}
+.notification--box--topRight{
+    
+}
+.notification--box--bottomLeft{
+    
+}
+.notification--box--bottomRight{
+    
+}
 .notification{
     padding: 16px;
     border-radius: 4px;
@@ -27,7 +28,6 @@
     position: relative;
     margin-bottom: 10px;
     overflow: hidden;
-
 }
 .notification--content{
   display:inline-block;
@@ -48,6 +48,7 @@
     display: inline-block;
 }
 .notification__des{
+    margin-bottom: 4px;
     font-size: 12px;
     color: rgba(0,0,0,.65);
 }
@@ -58,6 +59,7 @@
 }
 
 .notification--close{
+    cursor: pointer;
     position: absolute;
     right: 16px;
     top: 10px;
@@ -65,16 +67,11 @@
     outline: none;
     text-decoration: none;
 }
-.notification--closex{
-  
-}
+
 .notification__btn{
-    
 }
 .notification--icon{
     display:inline-block;
-    margin-right:14px;
-    margin-left:1px;
     vertical-align: middle;
 }
 

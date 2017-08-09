@@ -2,6 +2,8 @@ import { Component } from 'react';
 import Button from '../../button';
 import notification from '../index';
 import Icon from '../../icon';
+import message from '../../message';
+
 
 export default class PopoverDemo extends Component {
   constructor(props) {
@@ -10,9 +12,16 @@ export default class PopoverDemo extends Component {
   }
 
   render() {
-    notification.config({
-      getContainer:'App'
-    });
+    
+    const config =() =>{
+      notification.config({
+        placement: 'bottomRight',
+        bottom:50,
+        duration:0,
+        getContainer:'App'
+      });
+      message.success('全局配置成功');
+    }
 
     const openNotification = () =>{
       notification.open({
@@ -25,8 +34,7 @@ export default class PopoverDemo extends Component {
       notification.open({
         type:"info",
         message: '需要及时知道的系统通知',
-        description: '文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案',
-        duration:0
+        description: '文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案'
       })
     }
     
@@ -65,55 +73,56 @@ export default class PopoverDemo extends Component {
     const openNoDuration = () =>{
       notification.open({
         message: '需要及时知道的系统通知',
-        description: '文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案'
+        description: '文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案',
+        duration:0
       })
     }
-
 
     const openIcon = () =>{
       notification.open({
         message: '需要及时知道的系统通知',
         description: '文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案',
+        duration:0,
         icon:<Icon style={{
             top: '16px',
             left: '24px',
             position: 'absolute',
-          }} 
-          name={'clock'}
-          size={24}
+          }} name={'clock'}
            />,
       })
     }
 
-    const btnClick=() =>{
-
-    }
-
-
-    const btn =(
+    const openButton =()=>{
+      const key = `open${Date.now()}`;
+      const btnClick=() =>{
+        notification.close(key);
+      }
+      const btn =(
       <div>
         <Button type="primary" size="small" onClick={btnClick}>
           立即更新
         </Button>
+        &emsp;
         <Button type="secondary" size="small" onClick={btnClick}>
           今晚提醒
         </Button>
       </div>
     )
 
-    const openButton =()=>{
       notification.open({
         type:"warning",
         message: '请更新系统',
         description: '如果描述超过60字，请延长展示时间，一般人的阅读速度为，8-10字每秒。',
+        key,
         btn,
       })
     }
     
-    const btnlink=(
-      <a>查看</a>
-    )
+    
     const openButtonLink =()=>{
+      const btnlink=(
+        <a href='./notification'>查看</a>
+      )
       notification.open({
         type:"warning",
         message: '请更新系统',
@@ -134,9 +143,7 @@ export default class PopoverDemo extends Component {
       <div className="markdown-block">
         <h3>基本使用</h3>
         <p>最简单的用法，4.5 秒后自动关闭</p>
-        <Button onClick={openNotification}>
-          open
-        </Button>&emsp;
+        <Button onClick={openNotification}>open</Button>&emsp;
         <h3>带有图标的通知提醒框</h3>
         <p>通知提醒框左侧有图标</p>
         <Button onClick={openInfo}>info</Button>&emsp;
@@ -158,6 +165,20 @@ export default class PopoverDemo extends Component {
         <p>从右上角、右下角、左下角、左上角弹出</p>
         <Button onClick={()=>openPlacement('topRight')}>topRight</Button>&emsp;
         <Button onClick={()=>openPlacement('topLeft')}>topLeft</Button>&emsp;
+        <Button onClick={()=>openPlacement('bottomLeft')}>bottomLeft</Button>&emsp;
+        <Button onClick={()=>openPlacement('bottomRight')}>bottomRight</Button>&emsp;
+        <h3>全局配置</h3>
+        <p>在调用前提前配置，全局一次生效</p>
+        <p>
+          {`notification.config({
+            placement: 'bottomRight',
+            bottom:50,
+            duration:0,
+            getContainer:'App'
+          });`}
+        </p>
+        <Button onClick={()=>config()}>config</Button>&emsp;
+        <Button onClick={openNotification}>open</Button>&emsp;
       </div>
     );
   }

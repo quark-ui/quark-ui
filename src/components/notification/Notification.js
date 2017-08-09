@@ -1,6 +1,6 @@
 /**
  * Alert Component
- * @author yanwei
+ * @author yan
  */
 import NotificationBox from './NotificationBox';
 
@@ -9,8 +9,9 @@ let defaultDuration = 4.5;
 let defaultTop = 24;
 let defaultBottom = 24;
 let defaultPlacement = 'topRight';
-let notificationInstance;
+let notificationInstance = {};
 let getContainer;
+
 
 export type notificationPlacement = 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight';
 
@@ -29,7 +30,7 @@ function getPlacementStyle(placement){
     style ={
       left:0,
       top:'auto',
-      bottom:defaultTop,
+      bottom:defaultBottom,
     };
     break;
 
@@ -37,7 +38,7 @@ function getPlacementStyle(placement){
     style ={
       right:0,
       top:'auto',
-      bottom:defaultTop,
+      bottom:defaultBottom,
     };
     break;
 
@@ -53,34 +54,60 @@ function getPlacementStyle(placement){
 
 
 function getNotificationInstance(placement){
-  notificationInstance = notificationInstance || NotificationBox.newInstance({
+  if(notificationInstance[placement]){
+    return notificationInstance[placement]
+  }
+  notificationInstance[placement] = NotificationBox.newInstance({
+    placement:placement,
     style:getPlacementStyle(placement),
     getContainer,
   })
-
-  return notificationInstance;
+  return notificationInstance[placement];
 }
 
-function noop() {}
+const api ={
+  open(parms){
+    if(!parms.placement){
+      parms.placement = defaultPlacement;
+    }
 
-export default {
-  open(parms) {
-    getNotificationInstance(parms.placement).notice(parms);
+    if(parms.duration == undefined){
+      parms.duration = defaultDuration;
+    }
+    getNotificationInstance(parms.placement).addNotice(parms);
+  },
+  close(key){
+    if (notificationInstance[defaultPlacement]) {
+      notificationInstance[defaultPlacement].removeNotice(key);
+    }
   },
   config(options = {}) {
     if(options.duration !== undefined){
       defaultDuration = options.duration
     }
+
+    if (options.top !== undefined) {
+      defaultTop = options.top;
+    }
+
+    if (options.bottom !== undefined) {
+      defaultBottom = options.bottom;
+    }
+
+    if (options.placement !== undefined) {
+      defaultPlacement = options.placement;
+    }
+
     if (options.getContainer !== undefined) {
       getContainer = options.getContainer;
     }
   },
-  destroy() {
-    if (notificationInstance) {
-      notificationInstance.destroy();
-      notificationInstance = null;
-    }
-  },
-};
+  destroy(){
+    Object.keys(notificationInstance).forEach(key =>{
+      notificationInstance[key].destroy();
+      delete notificationInstance[key];
+    })
+  }
+}
 
-
+export default api;

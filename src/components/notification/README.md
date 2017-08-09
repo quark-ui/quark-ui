@@ -25,4 +25,15 @@ author:
 |icon|ReactNode||自定义图标|
 |btn|ReactNode||自定义关闭按钮|
 |placement|string|topRight|弹出位置，可选 topLeft topRight bottomLeft bottomRight|
+
+
+#### notification.config(options)
+|name|type|default|description|
+|---|---|---|---|
+|placement|string|topRight|弹出位置，可选 topLeft topRight bottomLeft bottomRight|
+|top|number|24|消息从顶部弹出时，距离顶部的位置，单位像素|
+|bottom|number|24|消息从底部弹出时，距离底部的位置，单位像素|
+|duration|number|4.5|默认自动关闭延时，单位秒|
+
+
 ### Api

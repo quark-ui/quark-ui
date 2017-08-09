@@ -88,9 +88,9 @@ class Notice extends PureComponent {
             </div>: null
           }
         </div>
-          <div onclick={this.handleClose} styleName={'notification--close'}>
-            <span styleName={'notification--closex'}>X</span>
-          </div>
+          <span onClick={this.handleClose} styleName={'notification--close'}>
+            <Icon name="close" size={14} />
+          </span>
       </div>
     );
   }
