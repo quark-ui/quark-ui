@@ -1,17 +1,19 @@
+import 'codemirror/lib/codemirror.css';
+import 'codemirror/theme/material.css';
+
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import { transform } from 'babel-standalone';
 import classnames from 'classnames';
-import CodeMirror from './Codemirror';
 import 'codemirror/mode/javascript/javascript';
 import PropTypes from 'prop-types';
 import Transition from 'react-transition-group/Transition';
+import CodeMirror from './Codemirror';
 import * as QuarkUI from '../../src/index';
 import RunningIcon from '../icons/run.svg';
 
 import styles from './PlayGround.css';
 
-import 'codemirror/lib/codemirror.css';
-import 'codemirror/theme/material.css';
 
 export default class PlayGround extends Component {
   static defaultProps = {
@@ -47,7 +49,6 @@ export default class PlayGround extends Component {
     return transform(code, {
       presets: [
         'es2015',
-        'es2016',
         'react',
         'stage-1',
       ],
@@ -57,15 +58,15 @@ export default class PlayGround extends Component {
     const { scope } = this.props;
     return Object.keys(scope).map(key => scope[key]);
   }
-  loadRepl() {
+  async loadRepl() {
     const { componentName } = this.props;
-    require.ensure([], require => {
-      const repl = require(`!raw-loader!../../src/components/${componentName}/repl/index`);
+    try {
+      const repl = await import(`!raw-loader!../../src/components/${componentName}/repl/index`);
       this.setState({
         repl,
       });
       this.executeCode(repl);
-    });
+    } catch (e) {}
   }
   executeCode(code) {
     const scope = this.buildScope();
@@ -122,7 +123,7 @@ export default class PlayGround extends Component {
                 <p className={styles.PlayGround__ErrorMsg}>{errorMsg}</p> :
                 null
               }
-              <div className={styles.PlayGround__Preview} ref={node => (this.mount = node)} />
+              <div className={styles.PlayGround__Preview} ref={node => this.mount = node} />
               <button
                 className={styles.PlayGround__Trigger}
                 onClick={this.handleClickTrgger}

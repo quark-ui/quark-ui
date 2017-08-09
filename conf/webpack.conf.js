@@ -44,6 +44,10 @@ const common = {
                 'env',
                 {
                   modules: false,
+                  targets: {
+                    browsers: ['last 2 versions'],
+                  },
+                  useBuiltIns: true,
                 },
               ],
               'react',
@@ -66,6 +70,10 @@ const common = {
                   'env',
                   {
                     modules: false,
+                    targets: {
+                      browsers: ['last 2 versions'],
+                    },
+                    useBuiltIns: true,
                   },
                 ],
                 'react',
