@@ -15,8 +15,8 @@ module.exports = {
   },
   output: {
     path: path.join(__dirname, '../docs'),
-    filename: '[name].[chunkhash].js',
-    library: '[name]',
+    filename: '[name].[hash].js',
+    library: '[name]_[hash]',
   },
   plugins: [
     new webpack.DllPlugin({
