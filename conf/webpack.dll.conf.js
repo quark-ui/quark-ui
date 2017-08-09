@@ -17,6 +17,7 @@ module.exports = {
     path: path.join(__dirname, '../docs'),
     filename: '[name].[hash].js',
     library: '[name]_[hash]',
+    publicPath: '/quark-ui/',
   },
   plugins: [
     new webpack.DllPlugin({
