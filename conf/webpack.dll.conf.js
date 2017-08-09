@@ -1,0 +1,34 @@
+const path = require('path');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+module.exports = {
+  entry: {
+    'dll-bundle': [
+      'babel-standalone',
+      'codemirror',
+      'moment',
+      'core-js',
+      'esprima',
+    ],
+  },
+  output: {
+    path: path.join(__dirname, '../docs'),
+    filename: '[name].[chunkhash].js',
+    library: '[name]',
+  },
+  plugins: [
+    new webpack.DllPlugin({
+      context: path.resolve(__dirname, '../'),
+      path: path.join(__dirname, '../docs/manifest.json'),
+      name: '[name]_[hash]',
+    }),
+    new HtmlWebpackPlugin({
+      title: 'Quark UI',
+      filename: 'index.dll.html',
+      template: './site/index.html',
+      inject: 'head',
+      version: 'min.',
+    }),
+  ],
+};

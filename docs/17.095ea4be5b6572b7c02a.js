@@ -1,0 +1,2 @@
+webpackJsonp([17],{YWGe:function(n,e){n.exports="---\nauthor:\n  name: Northerner\n  email: hefan_1301@163.com\n---\n\n## Spin\n\nSpin Component.\n\n### Props\n|name|type|default|description|\n|---|---|:---:|:---:|\n|size|String|'default'|spin size,`default` `large` or `small`|\n|tip|String|-|延迟显示加载效果的时间|\n|spinning|boolean|true|是否旋转|\n|delay|number|-|延迟显示加载效果的时间|\n\n### Api"}});
+//# sourceMappingURL=17.095ea4be5b6572b7c02a.js.map

@@ -1,0 +1,2 @@
+webpackJsonp([24],{"y/Xd":function(n,e){n.exports="---\nauthor:\n  name: heifade\n  homepage: https://github.com/heifade/\n---\n\n## Progress\n\nProgress Component.\n\n### Props\n|name|type|default|description|\n|---|---|---|---|\n|status|string|normal|`normal` `exception` `pause` or `success`|\n|percent|number|0|进度百分比|\n|showInfo|true|boolean|是否显示进度数值或状态图标|\n|size|string|normal|进度条尺寸，`normal` or `mini`|\n\n### Api"}});
+//# sourceMappingURL=24.16eca54507400c39c5ef.js.map

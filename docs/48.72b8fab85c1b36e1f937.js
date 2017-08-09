@@ -1,0 +1,2 @@
+webpackJsonp([48],{yL0p:function(n,e){n.exports="---\nauthor:\n  name: grootfish\n  homepage: https://github.com/grootfish/\n  email: yuyangjie0@163.com\n---\n\n## Breadcrumb\n\nBreadcrumb Component.\n\n### Props\n|name|type|default|description|\n|---|---|:---:|---|\n|prefixCls|String|'breadcrumb'|预先定义的样式前缀|\n|separator|String|'/'|面包屑的分隔符|\n|hasBackIcon|Boolean|false|是否显示回退按钮|\n### Api\n"}});
+//# sourceMappingURL=48.72b8fab85c1b36e1f937.js.map

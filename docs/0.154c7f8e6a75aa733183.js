@@ -1,0 +1,2 @@
+webpackJsonp([0],{o3DI:function(n,t){n.exports="class Playground extends React.Component {\n  render() {\n    return <Button>Button</Button>;\n  }\n}\n\nreturn <Playground />;"}});
+//# sourceMappingURL=common0.154c7f8e6a75aa733183.js.map

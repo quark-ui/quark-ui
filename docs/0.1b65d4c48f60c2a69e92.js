@@ -1,0 +1,2 @@
+webpackJsonp([0],{CFF0:function(n,e){n.exports="class Playground extends React.Component {\n  render() {\n    return <div>PlayGround</div>;\n  }\n}\n\nreturn <Playground />;"}});
+//# sourceMappingURL=0.1b65d4c48f60c2a69e92.js.map

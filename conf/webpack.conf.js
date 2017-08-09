@@ -129,7 +129,6 @@ if (TARGET === 'start' || TARGET === 'start-nodash') {
       site: [
         'react-hot-loader/patch',
         `webpack-dev-server/client?http://${host}:3000`,
-        // 'webpack/hot/only-dev-server',
       ],
     },
     output: {
@@ -283,12 +282,18 @@ if (TARGET === 'gh-pages') {
       ],
     },
     plugins: [
+      new webpack.DllReferencePlugin({
+        context: path.resolve(__dirname, '../'),
+        manifest: require('../docs/manifest.json'),
+      }),
       new webpack.DefinePlugin({
         BASEPATH: JSON.stringify('/quark-ui'),
       }),
       new webpack.optimize.CommonsChunkPlugin({
-        name: 'vendor',
-        minChunks: Infinity,
+        name: 'site',
+        children: true,
+        async: true,
+        minChunks: 1,
       }),
       new webpack.HashedModuleIdsPlugin(),
       new WebpackChunkHash(),
@@ -300,11 +305,11 @@ if (TARGET === 'gh-pages') {
       }),
       ...['index.html', '404.html'].map(page => (
         new HtmlWebpackPlugin({
-          title: 'Quark UI',
+          // title: 'Quark UI',
           filename: page,
-          template: './site/index.html',
-          inject: 'head',
-          version: 'min.',
+          template: './docs/index.dll.html',
+          inject: 'body',
+          // version: 'min.',
         })
       )),
       new ScriptExtHtmlWebpackPlugin({
@@ -372,7 +377,7 @@ if (TARGET === 'theme') {
                   ],
                 },
               },
-            ]
+            ],
           ),
         },
       ],

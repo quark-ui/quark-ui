@@ -10,6 +10,7 @@
     "start": "webpack-dashboard -- webpack-dev-server --config ./conf/webpack.conf.js --port 3000 --open",
     "start-nodash": "webpack-dev-server --config ./conf/webpack.conf.js --port 3000 --open",
     "theme": "webpack --config ./conf/webpack.conf.js",
+    "dll": "webpack --config ./conf/webpack.dll.conf.js",
     "gh-pages": "webpack --config ./conf/webpack.conf.js -p",
     "pub": "git push origin master & npm publish",
     "new": "yo quarkui",
