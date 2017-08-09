@@ -44,6 +44,10 @@ const common = {
                 'env',
                 {
                   modules: false,
+                  targets: {
+                    browsers: ['last 2 versions'],
+                  },
+                  useBuiltIns: true,
                 },
               ],
               'react',
@@ -66,6 +70,10 @@ const common = {
                   'env',
                   {
                     modules: false,
+                    targets: {
+                      browsers: ['last 2 versions'],
+                    },
+                    useBuiltIns: true,
                   },
                 ],
                 'react',
@@ -121,7 +129,7 @@ if (TARGET === 'start' || TARGET === 'start-nodash') {
       site: [
         'react-hot-loader/patch',
         `webpack-dev-server/client?http://${host}:3000`,
-        'webpack/hot/only-dev-server',
+        // 'webpack/hot/only-dev-server',
       ],
     },
     output: {

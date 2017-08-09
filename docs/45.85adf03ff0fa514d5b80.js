@@ -1,0 +1,2 @@
+webpackJsonp([45],{KOOh:function(n,a){n.exports="---\nauthor:\n  name: ryan.bian\n  homepage: https://github.com/macisi/\n  email: macisi528@gmail.com\n---\n\n## Button\n\n按钮用于开始一个即时操作。\n\n### 何时使用\n\n标记了一个（或封装一组）操作命令，响应用户点击行为，触发相应的业务逻辑。\n\n### Props\n|name|type|default|description|\n|---|---|---|---|\n|type|String|'primary'|button type, `primary` `secondary` `dashed` or `danger`|\n|size|String|'normal'|button size, `normal` `large` or `small` |\n\n### Api"}});
+//# sourceMappingURL=45.85adf03ff0fa514d5b80.js.map
