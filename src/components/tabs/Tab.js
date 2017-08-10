@@ -17,10 +17,16 @@ export default class Tab extends PureComponent {
 
   static defaultProps = {
     closable: true,
+    tabKey: null,
+    deleteButton() {},
+    onClick() {},
   };
 
   static propTypes = {
     closable: PropTypes.bool,
+    tabKey: PropTypes.string,
+    deleteButton: PropTypes.func,
+    onClick: PropTypes.func,
   };
 
   constructor(props) {
@@ -29,14 +35,14 @@ export default class Tab extends PureComponent {
     this.clickTab = this.clickTab.bind(this);
   }
 
-  deleteButton = e => {
-    e.stopPropagation(); //prevent trigger clickTab function
+  deleteButton = (e) => {
+    e.stopPropagation();
     this.props.deleteButton(this.props.tabKey);
-  };
+  }
 
   clickTab = () => {
     this.props.onClick(this.props.tabKey);
-  };
+  }
 
   render() {
     const props = this.props;
@@ -47,12 +53,12 @@ export default class Tab extends PureComponent {
       status,
       tabDeleteButton,
       title,
-      connectDropTarget,
     } = props;
-    let tabClass = classNames({
-      ['disabled']: disabled === true,
-      ['active']: status === 'active',
-      ['tabs__tab']: true,
+
+    const tabClass = classNames({
+      disabled: disabled === true,
+      active: status === 'active',
+      tabs__tab: true,
     });
 
     const delIcon = (
@@ -60,12 +66,15 @@ export default class Tab extends PureComponent {
     );
 
     return (
-      <div styleName={tabClass} onClick={this.clickTab}>
+      <div
+        styleName={tabClass}
+        onClick={this.clickTab}
+      >
         {title}
         {tabDeleteButton && closable
           ? <div styleName={'tab__del'}>
-              {delIcon}
-            </div>
+            {delIcon}
+          </div>
           : null}
       </div>
     );

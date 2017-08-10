@@ -11,6 +11,7 @@ module.exports = {
       'moment',
       'core-js',
       'esprima',
+      'meta-marked',
     ],
   },
   output: {
