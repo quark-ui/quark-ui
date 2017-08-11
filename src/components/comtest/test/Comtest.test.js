@@ -28,17 +28,16 @@ describe('Comtest shallow',()=>{
   afterEach(function() {
     // 在本区块的每个测试用例之后执行
   });
-});
+})
 describe('Comtest render',()=>{
 	it('Comtest render is ok',()=>{
-		let com = render(<Comtest />);
-		// console.log(com,888);
-   		expect(com.text()).to.equal('Comtest');
+		const com = render(<Comtest />);
+   	expect(com.text()).to.equal('Comtest');
 	});
 })
 describe('Comtest mount',()=>{
 	it('Comtest mount is ok',()=>{
-		let com = mount(<Comtest />);
+		const com = mount(<Comtest />);
    		expect(com.text()).to.equal('Comtest');
 	});
 })

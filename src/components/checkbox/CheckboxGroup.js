@@ -18,7 +18,7 @@ class CheckboxGroup extends PureComponent {
   static defaultProps = {
     type: 'checkbox',
     defaultValue: [],
-    optoins: [],
+    options: [],
     onChange() {},
   }
 
@@ -79,9 +79,9 @@ class CheckboxGroup extends PureComponent {
   }
 
   toggleOption=(option) => {
-    const optionIndex = this.state.value.indexOf(option.value);
+    const optionIndex = this.state.value.indexOf(option.value);s
     const value = [...this.state.value];
-
+console.log(option,222,optionIndex);
     if (optionIndex === -1) {
       value.push(option.value);
     } else {
