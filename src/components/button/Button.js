@@ -2,7 +2,7 @@
  * Button Component
  * @author ryan.bian
  */
-import { PureComponent } from 'react';
+import React,{ PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import styles from './Button.css';

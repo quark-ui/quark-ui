@@ -18,6 +18,7 @@
     "lint-c": "eslint --color -f table",
     "build": "node ./conf/publish.build.js",
     "test": "mocha --compilers js:babel-core/register --require ./test/setup.js --recursive ./src/**/**/*.test.js",
+    "test-unit": "mocha --compilers js:babel-core/register --require ./test/setup.js --recursive",
     "test-chrome": "karma start ./conf/karma.conf.js",
     "test-all": "karma start ./conf/karma.conf.js --browers PhantomJS Chrome Firefox"
   },
