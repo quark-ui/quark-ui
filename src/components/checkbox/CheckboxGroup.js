@@ -2,7 +2,7 @@
  * Checkbox Component
  * @author grootfish
  */
-import { PureComponent } from 'react';
+import React,{ PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
 import shallowEqual from 'shallowequal';
@@ -18,7 +18,7 @@ class CheckboxGroup extends PureComponent {
   static defaultProps = {
     type: 'checkbox',
     defaultValue: [],
-    optoins: [],
+    options: [],
     onChange() {},
   }
 
@@ -81,7 +81,6 @@ class CheckboxGroup extends PureComponent {
   toggleOption=(option) => {
     const optionIndex = this.state.value.indexOf(option.value);
     const value = [...this.state.value];
-
     if (optionIndex === -1) {
       value.push(option.value);
     } else {

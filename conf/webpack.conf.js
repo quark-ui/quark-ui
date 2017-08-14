@@ -56,8 +56,10 @@ const common = {
             plugins: [
               'transform-decorators-legacy',
             ],
+            babelrc : false
           },
         },
+
       },
       {
         test: /\.svg$/,
