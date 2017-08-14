@@ -3,388 +3,398 @@
  * @author heifade
  */
 .menu {
-  outline: none;
-  margin-bottom: 0;
-  /*padding-left: 0;*/
-  padding: 0px 10px;
-  list-style: none;
-  z-index: 1050;
-  line-height: 46px;
-  background-color: #ffffff;
+    outline: none;
+    margin-bottom: 0;
+    /*padding-left: 0;*/
+    padding: 0px 10px;
+    list-style: none;
+    z-index: 1050;
+    line-height: 46px;
+    background-color: #ffffff;
 
-  & :global(.menu-submenu) {
-    position: relative;
-  }
+    & :global(.menu-submenu){
+        position: relative;
+    }
 
-  /*颜色-暖色*/
-  &:global(.color-warm) {
-    & :global(.menu-item-active),
-    & :global(.menu-submenu-active) > :global(.menu-submenu-title) {
-      color: #ff9536;
+    /*颜色-暖色*/
+    &:global(.color-warm) {
+        & :global(.menu-item-active),
+        & :global(.menu-submenu-active) > :global(.menu-submenu-title) {
+            color: #ff9536;
+        }
+        & :global(.menu-item-selected),
+        & :global(.menu-submenu-selected) > :global(.menu-submenu-title) {
+            color: #f27102;
+        }
+        & :global(.menu-item-disabled), 
+        & :global(.menu-submenu-disabled) :global(.menu-submenu-title) {
+            color: #999999;
+        }
+        & :global(.menu) {
+            border: solid 1px #ffa85c;
+        }
     }
-    & :global(.menu-item-selected),
-    & :global(.menu-submenu-selected) > :global(.menu-submenu-title) {
-      color: #f27102;
+    /*颜色-冷色*/
+    &:global(.color-cold) {
+        & :global(.menu-item-active),
+        & :global(.menu-submenu-active) > :global(.menu-submenu-title) {
+            color: #dddddd;
+        }
+        & :global(.menu) :global(.menu-item-active),
+        & :global(.menu) :global(.menu-submenu-active) > :global(.menu-submenu-title) {
+            color: #3b98e0;
+        }
+        & :global(.menu-item-selected),
+        & :global(.menu-submenu-selected) > :global(.menu-submenu-title) {
+            color: #ffffff;
+        }
+        & :global(.menu-item-disabled), 
+        & :global(.menu-submenu-disabled) :global(.menu-submenu-title) {
+            color: #666666;
+        }
+        & :global(.menu) {
+            border: solid 1px #64afe8;
+        }
     }
-    & :global(.menu-item-disabled),
+    
+
+    & :global(.menu-item-disabled), 
     & :global(.menu-submenu-disabled) :global(.menu-submenu-title) {
-      color: #999999;
+        cursor: not-allowed;
+        background: none;
     }
-    & :global(.menu) {
-      border: solid 1px #ffa85c;
-    }
-  }
-  /*颜色-冷色*/
-  &:global(.color-cold) {
-    & :global(.menu-item-active),
-    & :global(.menu-submenu-active) > :global(.menu-submenu-title) {
-      color: #dddddd;
-    }
-    & :global(.menu) :global(.menu-item-active),
-    & :global(.menu) :global(.menu-submenu-active)
-      > :global(.menu-submenu-title) {
-      color: #3b98e0;
-    }
-    & :global(.menu-item-selected),
-    & :global(.menu-submenu-selected) > :global(.menu-submenu-title) {
-      color: #ffffff;
-    }
-    & :global(.menu-item-disabled),
-    & :global(.menu-submenu-disabled) :global(.menu-submenu-title) {
-      color: #666666;
-    }
-    & :global(.menu) {
-      border: solid 1px #64afe8;
-    }
-  }
 
-  & :global(.menu-item-disabled),
-  & :global(.menu-submenu-disabled) :global(.menu-submenu-title) {
-    cursor: not-allowed;
-    background: none;
-  }
+    & :global(.menu-item-group-title){
+        padding-left: 32px;
+        color: rgba(0,0,0,.43);
+        font-size: 12px;
+        line-height: 1.8;
+        padding: 16px 18px 0 18px;
+    }
 
-  & :global(.menu-item-group-title) {
-    padding-left: 32px;
-    color: rgba(0, 0, 0, .43);
-    font-size: 12px;
-    line-height: 1.8;
-    padding: 16px 18px 0 18px;
-  }
+    & :global(.menu-item-group-list) :global(.menu-item), 
+    & :global(.menu-item-group-list) :global(.menu-submenu-title) {
+        padding: 0 18px 0 40px;
+    }
 
-  & :global(.menu-item-group-list) :global(.menu-item),
-  & :global(.menu-item-group-list) :global(.menu-submenu-title) {
-    padding: 0 18px 0 40px;
-  }
+    & :global(.menu-hidden){
+        display: none;
+    }
 
-  & :global(.menu-hidden) {
-    display: none;
-  }
-
-  & :global(.menu-item),
-  & :global(.menu-submenu-title) {
-    margin: 0;
-    padding: 0 10px;
-    position: relative;
-    display: block;
-    white-space: nowrap;
-    cursor: pointer;
-  }
+    & :global(.menu-item),
+    & :global(.menu-submenu-title){
+        margin: 0;
+        padding: 0 10px;
+        position: relative;
+        display: block;
+        white-space: nowrap;
+        cursor: pointer;
+    }
 }
 
+
+
+
+
+
 /*水平菜单，子菜单水平*/
-.menu:global(.menu-horizontal-h) {
-  border: solid 1px #dddddd;
-  padding: 4px 10px;
+.menu:global(.menu-horizontal-h){
 
-  /*颜色-暖色*/
-  &:global(.color-warm) {
-    background-color: #ffffff; /*一级菜单背景色(白)*/
-    color: #666666;
+    border: solid 1px #dddddd;
+    padding: 4px 10px;
 
-    & :global(.menu-item-selected),
-    & > :global(.menu-submenu-selected) {
-      border-bottom: solid 1px #ff9536;
-      border-bottom-width: 50%;
+    /*颜色-暖色*/
+    &:global(.color-warm) {
+        background-color: #ffffff;/*一级菜单背景色(白)*/
+        color: #666666;
+
+        & :global(.menu-item-selected), 
+        & > :global(.menu-submenu-selected){
+            border-bottom: solid 1px #ff9536;
+            border-bottom-width: 50%;
+        }
     }
-  }
-  /*颜色-冷色*/
-  &:global(.color-cold) {
-    background-color: #242424; /*一级菜单背景色(黑)*/
-    color: #999999;
+    /*颜色-冷色*/
+    &:global(.color-cold) {
+        background-color: #242424;/*一级菜单背景色(黑)*/
+        color: #999999;
 
-    & > :global(.menu-item-selected),
-    & > :global(.menu-submenu-selected) {
-      border-bottom: solid 1px #ffffff;
-    }
+        & > :global(.menu-item-selected), 
+        & > :global(.menu-submenu-selected){
+            border-bottom: solid 1px #ffffff;
+        }
 
-    & :global(.menu) :global(.menu-item-selected) {
-      color: #0c7dd4;
-      border-bottom: solid 1px #0c7dd4;
-    }
-  }
-
-  & > :global(.menu-item) {
-    display: inline-block;
-    margin-left: 20px;
-    line-height: 44px;
-  }
-
-  /*一级菜单*/
-  & :global(.menu-submenu-horizontal-h) {
-    display: inline-block;
-    margin-left: 10px;
-
-    /*二级菜单弹出层*/
-    & > :global(.menu) {
-      top: 110%;
-      left: 50%;
-      transform: translateX(-50%);
-      position: absolute;
-      padding: 4px 10px 4px 10px;
-
-      margin-top: 7px;
-      background-color: #fff;
-      box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.13);
-      border-radius: 4px;
-      z-index: 10;
+        & :global(.menu) :global(.menu-item-selected){
+            color: #0c7dd4;
+            border-bottom: solid 1px #0c7dd4;
+        }
     }
 
-    & > :global(.menu) :global(.menu-item) {
-      position: relative;
-      display: table-cell;
-      line-height: 44px;
+    & > :global(.menu-item) {
+        display: inline-block;
+        margin-left: 20px;
+        line-height: 44px;
     }
-  }
+
+    /*一级菜单*/
+    & :global(.menu-submenu-horizontal-h){
+        display: inline-block;
+        margin-left: 10px;
+
+        /*二级菜单弹出层*/
+        & > :global(.menu) {
+            top: 110%;
+            left: 50%;
+            transform: translateX(-50%);
+            position: absolute;
+            padding: 4px 10px 4px 10px;
+            
+            margin-top: 7px;
+            background-color: #fff;
+            box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.13);
+            border-radius: 4px;
+            z-index: 10;
+        }
+
+        & > :global(.menu) :global(.menu-item){
+            position: relative;
+            display: table-cell;
+            line-height: 44px;
+        }
+    }
 }
 
 /*水平菜单，子菜单垂直*/
-.menu:global(.menu-horizontal) {
-  border: solid 1px #dddddd;
-  padding: 4px 10px;
+.menu:global(.menu-horizontal){
 
-  /*颜色-暖色*/
-  &:global(.color-warm) {
-    background-color: #ffffff; /*一级菜单背景色(白)*/
-    color: #666666;
-    & > :global(.menu-item-selected),
-    & > :global(.menu-submenu-selected) {
-      border-bottom: solid 1px #ff9536;
+    border: solid 1px #dddddd;
+    padding: 4px 10px;
+
+    /*颜色-暖色*/
+    &:global(.color-warm) {
+        background-color: #ffffff;/*一级菜单背景色(白)*/
+        color: #666666;
+        & > :global(.menu-item-selected), 
+        & > :global(.menu-submenu-selected){
+            border-bottom: solid 1px #ff9536;
+        }
+
+        & :global(.menu) :global(.menu-item-selected),
+        & :global(.menu) :global(.menu-item-active)  {
+            background-color: #f6f8fc;
+        }
+        & :global(.menu) :global(.menu-item-selected:after){
+            content: "";
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            border-right: 3px solid #ff9536;
+        }
     }
 
-    & :global(.menu) :global(.menu-item-selected),
-    & :global(.menu) :global(.menu-item-active) {
-      background-color: #f6f8fc;
-    }
-    & :global(.menu) :global(.menu-item-selected:after) {
-      content: "";
-      position: absolute;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      border-right: 3px solid #ff9536;
-    }
-  }
+    /*颜色-冷色*/
+    &:global(.color-cold) {
+        background-color: #242424;/*一级菜单背景色(黑)*/
+        color: #999999;
+        & > :global(.menu-item-selected), 
+        & > :global(.menu-submenu-selected){
+            border-bottom: solid 1px #ffffff;
+        }
 
-  /*颜色-冷色*/
-  &:global(.color-cold) {
-    background-color: #242424; /*一级菜单背景色(黑)*/
-    color: #999999;
-    & > :global(.menu-item-selected),
-    & > :global(.menu-submenu-selected) {
-      border-bottom: solid 1px #ffffff;
+        & :global(.menu) :global(.menu-submenu-selected) > :global(.menu-submenu-title) {
+            color: #0c7dd4;
+        }
+
+        & :global(.menu) :global(.menu-item-selected) {
+            background-color: #f6f8fc;
+            color: #0c7dd4;
+        }
+        & :global(.menu) :global(.menu-item-selected:after){
+            content: "";
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            border-right: 3px solid #3b98e0;
+        }
     }
-
-    & :global(.menu) :global(.menu-submenu-selected)
-      > :global(.menu-submenu-title) {
-      color: #0c7dd4;
-    }
-
-    & :global(.menu) :global(.menu-item-selected) {
-      background-color: #f6f8fc;
-      color: #0c7dd4;
-    }
-    & :global(.menu) :global(.menu-item-selected:after) {
-      content: "";
-      position: absolute;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      border-right: 3px solid #3b98e0;
-    }
-  }
-
-  & > :global(.menu-item) {
-    display: inline-block;
-    margin-left: 20px;
-    line-height: 44px;
-    /*padding: 0px ;*/
-    /*margin: 0px 20px;*/
-  }
-
-  /*一级菜单*/
-  & :global(.menu-submenu-horizontal) {
-    display: inline-block;
-    margin-left: 10px;
-
-    /*二级菜单弹出层*/
-    & > :global(.menu) {
-      top: 100%;
-      left: 0;
-      position: absolute;
-      min-width: 150px;
-      margin-top: 7px;
-      background-color: #fff;
-      border-radius: 4px;
-      z-index: 10;
+    
+    & > :global(.menu-item) {
+        display: inline-block;
+        margin-left: 20px;
+        line-height: 44px;
+        /*padding: 0px ;*/
+        /*margin: 0px 20px;*/
     }
 
-    /*三级菜单弹出层*/
-    & :global(.menu) :global(.menu) {
-      top: 0;
-      left: 105%;
-      position: absolute;
-      min-width: 100%;
-      margin-top: 7px;
-      background-color: #fff;
-      border-radius: 4px;
-      z-index: 10;
+    /*一级菜单*/
+    & :global(.menu-submenu-horizontal){
+        display: inline-block;
+        margin-left: 10px;
+
+        /*二级菜单弹出层*/
+        &  > :global(.menu) {
+            top: 100%;
+            left: 0;
+            position: absolute;
+            min-width: 150px;
+            margin-top: 7px;
+            background-color: #fff;
+            border-radius: 4px;
+            z-index: 10;
+        }
+
+        /*三级菜单弹出层*/
+        & :global(.menu) :global(.menu) {
+            top: 0;
+            left: 105%;
+            position: absolute;
+            min-width: 100%;
+            margin-top: 7px;
+            background-color: #fff;
+            border-radius: 4px;
+            z-index: 10;
+        }
     }
-  }
 }
 
 /*垂直菜单，子菜单水平向右弹出*/
-.menu:global(.menu-vertical) {
-  box-shadow: 0 1px 6px rgba(0, 0, 0, .2);
+.menu:global(.menu-vertical){
+    box-shadow: 0 1px 6px rgba(0,0,0,.2);
 
-  /*颜色-暖色*/
-  &:global(.color-warm) {
-    color: #666666;
+    /*颜色-暖色*/
+    &:global(.color-warm) {
+        color: #666666;
 
-    & :global(.menu-item-selected),
-    & :global(.menu-item-active) {
-      background-color: #f6f8fc;
+        & :global(.menu-item-selected),
+        & :global(.menu-item-active){
+            background-color: #f6f8fc;
+        }
+
+        /*二级菜单弹出层*/
+        & :global(.menu){
+            background-color: #ffffff;
+            & :global(.menu-item-selected:after){
+                content: "";
+                position: absolute;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                border-right: 3px solid #ff9536;
+            }
+
+            & :global(.menu-item-group-title){
+                color: #999999;
+            }
+        }
+    }
+
+    /*颜色-冷色*/
+    &:global(.color-cold) {
+        color: #999999;
+        background-color: #242424;
+
+        & :global(.menu-item-selected){
+            background-color: #3b98e0;
+        }
+
+        /*二级菜单弹出层*/
+        & :global(.menu){
+            background-color: #242424;
+
+            & :global(.menu-item-active),
+            & :global(.menu-submenu-active) :global(.menu-submenu-title) {
+                color: #dddddd;
+            }
+            & :global(.menu-item-selected){
+                color: #ffffff;
+            }
+            & :global(.menu-item-group-title){
+                color: #666666;
+            }
+        }
     }
 
     /*二级菜单弹出层*/
-    & :global(.menu) {
-      background-color: #ffffff;
-      & :global(.menu-item-selected:after) {
+    & :global(.menu){
+        top: 0;
+        left: 105%;
+        position: absolute;
+        min-width: 160px;
+        border-radius: 4px;
+        z-index: 10;
+    }
+}
+
+
+
+
+
+/*垂直菜单，子菜单内嵌在菜单区域*/
+.menu:global(.menu-inline){
+    box-shadow: 0 1px 6px rgba(0,0,0,.2);
+
+    /*颜色-暖色*/
+    &:global(.color-warm) {
+        color: #666666;
+
+        & :global(.menu-item-selected),
+        & :global(.menu-item-active){
+            background-color: #f6f8fc;
+        }
+
+        & :global(.menu-item-selected:after){
+            content: "";
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            border-right: 3px solid #ff9536;
+        }
+
+        & :global(.menu-item-group-title){
+            color: #999999;
+        }
+    }
+
+    /*颜色-冷色*/
+    &:global(.color-cold) {
+        color: #999999;
+        background-color: #242424;
+
+        & :global(.menu-item-selected){
+            background-color: #3b98e0;
+        }
+
+        & :global(.menu-item-active),
+        & :global(.menu-submenu-active) > :global(.menu-submenu-title) {
+            color: #dddddd;
+        }
+        & :global(.menu-item-selected) > :global(.menu-submenu-title) {
+            color: #ffffff;
+        }
+        & :global(.menu-item-group-title){
+            color: #666666;
+        }
+        & :global(.menu){
+            background-color: #111111;
+        }
+    }
+
+    & :global(.menu-item-selected) {
+        background-color: #ecf6fd;
+    }
+
+    & :global(.menu-item-selected):after{
         content: "";
         position: absolute;
         right: 0;
         top: 0;
         bottom: 0;
-        border-right: 3px solid #ff9536;
-      }
-
-      & :global(.menu-item-group-title) {
-        color: #999999;
-      }
+        border-right: 3px solid #108ee9;
     }
-  }
-
-  /*颜色-冷色*/
-  &:global(.color-cold) {
-    color: #999999;
-    background-color: #242424;
-
-    & :global(.menu-item-selected) {
-      background-color: #3b98e0;
+    & :global(.menu){
+        border: none;
     }
-
-    /*二级菜单弹出层*/
-    & :global(.menu) {
-      background-color: #242424;
-
-      & :global(.menu-item-active),
-      & :global(.menu-submenu-active) :global(.menu-submenu-title) {
-        color: #dddddd;
-      }
-      & :global(.menu-item-selected) {
-        color: #ffffff;
-      }
-      & :global(.menu-item-group-title) {
-        color: #666666;
-      }
-    }
-  }
-
-  /*二级菜单弹出层*/
-  & :global(.menu) {
-    top: 0;
-    left: 105%;
-    position: absolute;
-    min-width: 160px;
-    border-radius: 4px;
-    z-index: 10;
-  }
-}
-
-/*垂直菜单，子菜单内嵌在菜单区域*/
-.menu:global(.menu-inline) {
-  box-shadow: 0 1px 6px rgba(0, 0, 0, .2);
-
-  /*颜色-暖色*/
-  &:global(.color-warm) {
-    color: #666666;
-
-    & :global(.menu-item-selected),
-    & :global(.menu-item-active) {
-      background-color: #f6f8fc;
-    }
-
-    & :global(.menu-item-selected:after) {
-      content: "";
-      position: absolute;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      border-right: 3px solid #ff9536;
-    }
-
-    & :global(.menu-item-group-title) {
-      color: #999999;
-    }
-  }
-
-  /*颜色-冷色*/
-  &:global(.color-cold) {
-    color: #999999;
-    background-color: #242424;
-
-    & :global(.menu-item-selected) {
-      background-color: #3b98e0;
-    }
-
-    & :global(.menu-item-active),
-    & :global(.menu-submenu-active) > :global(.menu-submenu-title) {
-      color: #dddddd;
-    }
-    & :global(.menu-item-selected) > :global(.menu-submenu-title) {
-      color: #ffffff;
-    }
-    & :global(.menu-item-group-title) {
-      color: #666666;
-    }
-    & :global(.menu) {
-      background-color: #111111;
-    }
-  }
-
-  & :global(.menu-item-selected) {
-    background-color: #ecf6fd;
-  }
-
-  & :global(.menu-item-selected):after {
-    content: "";
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    border-right: 3px solid #108ee9;
-  }
-  & :global(.menu) {
-    border: none;
-  }
 }

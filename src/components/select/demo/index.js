@@ -11,7 +11,7 @@ class SelectDemo1 extends Component {
     super();
     this.state = {
       disabled: false,
-      value: '',
+      value:'',
     };
   }
 
@@ -26,12 +26,12 @@ class SelectDemo1 extends Component {
       value: 'B',
     });
   }
-
+  
   onChange = ({ title, value }) => {
-    this.setState({
-      value,
-      title,
-    });
+      this.setState({
+        value,
+        title,
+      });
   }
 
   render() {
@@ -55,7 +55,7 @@ class SelectDemo1 extends Component {
 
         <h3>非受控</h3>
         <p />
-        <Select style={{ width: 250 }} disabled={disabled} defaultValue="B"onChange={m => console.log(m)}>
+        <Select style={{ width: 250 }} disabled={disabled} defaultValue='B'onChange={(m)=>console.log(m)}>
           <Option value="A">AA</Option>
           <Option value="B">BB</Option>
           <Option value="C">CC</Option>
@@ -75,7 +75,7 @@ class SelectDemo4 extends Component {
     super();
     this.state = {
       disabled: false,
-      value: '',
+      value:'',
     };
   }
 
@@ -90,12 +90,12 @@ class SelectDemo4 extends Component {
       value: 'B',
     });
   }
-
+  
   onChange = ({ title, value }) => {
-    this.setState({
-      value,
-      title,
-    });
+      this.setState({
+        value,
+        title,
+      });
   }
 
   render() {
@@ -147,12 +147,13 @@ class SelectDemo4 extends Component {
 
 
 class SelectDemo2 extends Component {
+
   constructor() {
     super();
     this.state = {
       disabled: false,
       searchFetching: false,
-      value: '',
+      value:'',
       searchData: [],
     };
   }
@@ -221,14 +222,16 @@ class SelectDemo2 extends Component {
 }
 
 class SelectDemo3 extends Component {
+
   constructor() {
     super();
     this.state = {
-      value: '',
+      value:'',
       disabled: false,
       province: null,
-      city: null,
+      city:null,
     };
+
   }
 
   setDisabled = () => {
@@ -242,12 +245,12 @@ class SelectDemo3 extends Component {
       value,
       title,
       province: value,
-      city: null,
+      city:null,
     });
   }
   onChangeCity = ({ value, title }) => {
     this.setState({
-      city: value,
+      city:value,
       title,
     });
     // console.log('onChange', value, text);
@@ -257,16 +260,16 @@ class SelectDemo3 extends Component {
     switch (province) {
       case '1':
         return [{ value: '11', text: '杭州' },
-          { value: '12', text: '湖州' },
-          { value: '13', text: '绍兴' }];
+        { value: '12', text: '湖州' },
+        { value: '13', text: '绍兴' }];
       case '2':
         return [{ value: '21', text: '广州' },
-          { value: '22', text: '东莞' },
-          { value: '23', text: '中山' }];
+        { value: '22', text: '东莞' },
+        { value: '23', text: '中山' }];
       case '3':
         return [{ value: '31', text: '福州' },
-          { value: '32', text: '泉州' },
-          { value: '33', text: '厦门' }];
+        { value: '32', text: '泉州' },
+        { value: '33', text: '厦门' }];
       default:
         return [];
     }

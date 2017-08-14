@@ -2,20 +2,40 @@
  * Mask Component
  * @author ryan.bian
  */
+import { Component } from 'react';
 import PropTypes from 'prop-types';
+import CSSModules from 'react-css-modules';
+import { allowMultiple } from '../../constants';
 import styles from './Modal.css';
 
-const Mask = ({ visible, children }) => (
-  <div className={styles[`mask${visible ? '--visible' : ''}`]}>
-    {children}
-  </div>
-);
+@CSSModules(styles, { allowMultiple })
+export default class Mask extends Component {
 
-Mask.defaultProps = {
-  visible: false,
-};
-Mask.propTypes = {
-  visible: PropTypes.bool,
-};
+  static displayName = 'Modal'
 
-export default Mask;
+  static defaultProps = {
+    visible: false,
+  }
+  // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
+  static propTypes = {
+    visible: PropTypes.bool,
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  render() {
+    const { visible, children } = this.props;
+    const maskProps = {
+      styleName: `mask${visible ? '--visible' : ''}`,
+    };
+
+    return (
+      <div {...maskProps}>
+        {children}
+      </div>
+    );
+  }
+}

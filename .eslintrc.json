@@ -15,8 +15,7 @@
     "react/no-multi-comp": 0,
     "class-methods-use-this": 0,
     "import/no-unresolved": 1,
-    "import/extensions": 0,
-    "jsx-a11y/href-no-hash": 0
+    "import/extensions": 0
   },
   "parser": "babel-eslint"
 }

@@ -1,6 +1,6 @@
 import 'prismjs/themes/prism.css';
 
-import React, { Component, createElement } from 'react';
+import { Component, createElement } from 'react';
 import marked from 'meta-marked';
 import Prism from 'prismjs';
 import CSSModules from 'react-css-modules';
@@ -21,6 +21,28 @@ const IconProps = {
 
 @CSSModules(styles, { allowMultiple })
 export default class ComponentBlock extends Component {
+  state = {
+    readme: '',
+    demo: undefined,
+    demoSourceCode: '',
+    showCode: false,
+  };
+  componentWillMount() {
+    const { match } = this.props;
+    this.load(match.params.name);
+  }
+  load(name) {
+    require.ensure([], (require) => {
+      const readme = require(`!raw-loader!../../src/components/${name}/README.md`);
+      const demoSourceCode = require(`!raw-loader!../../src/components/${name}/demo/index`);
+      const demo = require(`../../src/components/${name}/demo/index`).default;
+      this.setState({
+        readme,
+        demo,
+        demoSourceCode,
+      });
+    });
+  }
   static renderMetaData = ({ author = {} }, match) => {
     const { name, homepage, email } = author;
     return (
@@ -50,27 +72,6 @@ export default class ComponentBlock extends Component {
       </div>
     );
   }
-  state = {
-    readme: '',
-    demo: undefined,
-    demoSourceCode: '',
-    showCode: true,
-  };
-  componentWillMount() {
-    const { match } = this.props;
-    this.load(match.params.name);
-  }
-  async load(name) {
-    const { scope } = this.props;
-    const readme = await import(`!raw-loader!../../src/components/${name}/README.md`);
-    const demoSourceCode = await import(`!raw-loader!../../src/components/${name}/demo/index`);
-    const { default: demo } = await import(`../../src/components/${name}/demo/index`);
-    this.setState({
-      readme,
-      demo,
-      demoSourceCode,
-    });
-  }
 
   copyCode = () => {
     copy(this.state.demoSourceCode);
@@ -81,11 +82,6 @@ export default class ComponentBlock extends Component {
     this.setState({
       showCode: !this.state.showCode,
     });
-  }
-
-  buildScope() {
-    const { scope } = this.props;
-    return Object.keys(scope).map(key => scope[key]);
   }
 
   render() {
@@ -104,7 +100,6 @@ export default class ComponentBlock extends Component {
           styleName="Component__doc"
           dangerouslySetInnerHTML={{ __html: html }}
         />
-
         <section styleName="Component__demo">
           <div styleName="Component__demoHead">
             <h3>DEMO</h3>
@@ -131,9 +126,9 @@ export default class ComponentBlock extends Component {
                     className="language-javascript"
                     dangerouslySetInnerHTML={{
                       __html: Prism.highlight(
-                        demoSourceCode,
-                        Prism.languages.javascript,
-                      ),
+                          demoSourceCode,
+                          Prism.languages.javascript,
+                        ),
                     }}
                   />
                 </pre>

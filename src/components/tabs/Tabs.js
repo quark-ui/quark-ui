@@ -2,11 +2,12 @@
  * Tabs Component
  * @author yan
  */
-import React, { PureComponent, cloneElement, Children } from 'react';
+import React,{ PureComponent, cloneElement, Children } from 'react';
 import PropTypes from 'prop-types';
+import Tab from './Tab';
+import Icon from '../icon';
 import CSSModules from 'react-css-modules';
 import classNames from 'classnames';
-import Tab from './Tab';
 import { allowMultiple } from '../../constants';
 import styles from './Tabs.css';
 
@@ -16,22 +17,22 @@ export default class Tabs extends PureComponent {
 
   static defaultProps = {
     defaultActiveKey: 0,
-    type: 'line',
-    size: 'default',
-    tabPosition: 'top',
+    type:'line',
+    size:'default',
+    tabPosition:'top',
   }
 
   static propTypes = {
-    type: PropTypes.oneOf([
+    type:PropTypes.oneOf([
       'line',
       'card',
-      'button',
+      'button'
     ]),
-    size: PropTypes.oneOf([
+    size:PropTypes.oneOf([
       'default',
       'small',
     ]),
-    tabPosition: PropTypes.oneOf([
+    tabPosition:PropTypes.oneOf([
       'top',
       'left',
     ]),
@@ -48,100 +49,96 @@ export default class Tabs extends PureComponent {
     this.state = {
       activeKey: props.activeKey || props.defaultActiveKey,
       children: props.children,
-    };
+    }
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.activeKey !== this.state.activeKey) {
       this.setState({
-        activeKey: nextProps.activeKey,
-      });
+        activeKey: nextProps.activeKey
+      })
     }
     if (nextProps.children !== this.state.children) {
       this.setState({
-        children: nextProps.children,
-      });
+        children: nextProps.children
+      })
     }
   }
 
-  onClick=(activeKey) => {
+  onClick=(activeKey)=> {
     const props = this.props;
 
-    if (props.children[activeKey].props.disabled) {
-      return;
-    }
+    if(props.children[activeKey].props.disabled){
+      return
+    }    
     if (props.onClick) {
       props.onClick(activeKey);
     }
 
     this.setState({
-      activeKey,
-      panelUpdateKey: -1,
-    });
+      activeKey: activeKey,
+      panelUpdateKey: -1
+    })
   }
 
-  deleteButton = (key) => {
+  deleteButton = (key)=> {
     this.props.deleteButton();
     this.setState({
-      panelUpdateKey: key,
-    });
+      panelUpdateKey: key
+    })
   }
 
   getPanel = () => {
-    const { activeKey, panelUpdateKey, style } = this.state;
-    const { tabDeleteButton } = this.props;
-    const tab = [];
-    const panel = [];
-
-    const tabProps = {
-      style,
-      onClick: this.onClick,
-      tabDeleteButton,
-      deleteButton: this.deleteButton,
-    };
-
-    Children.forEach(this.state.children, (children, index) => {
+    var that = this;
+    let tab = [];
+    let panel = [];
+    Children.forEach(this.state.children, function(children, index) {
       // add tabs
-      const status = index === activeKey ? 'active' : 'inactive';
-      const selfProps = {
-        key: `tab${index}`,
+      let status, className;
+
+      status = index === that.state.activeKey ? 'active' : 'inactive';
+
+      var props = {
+        key: 'tab'+index,
         tabKey: index,
         title: children.props.title,
-        status,
-        disabled: children.props.disabled,
-        closable: children.props.closable,
-      };
-
-      tab.push(<Tab {...tabProps} {...selfProps} />);
-
-      if (index === activeKey) {
-        const panelProps = {
-          className: classNames('tabs__panel', status),
-          status,
-          key: index,
-          update: panelUpdateKey === index,
-        };
-        panel.push(cloneElement(children, panelProps));
+        status: status,
+        disabled:children.props.disabled,
+        closable:children.props.closable,
+        style: that.state.style,
+        onClick: that.onClick,
+        tabDeleteButton: that.props.tabDeleteButton,
+        deleteButton: that.deleteButton,
       }
-    });
+      
+      tab.push(<Tab {...props}/>);
 
-    return { tab, panel };
+      if (index === that.state.activeKey) {
+        var props = {className: classNames('tabs__panel', status), status: status, key: index};
+        if (that.state.panelUpdateKey === index) {
+          props.update = true;
+        }
+        panel.push(cloneElement(children, props));
+      }
+    })
+
+    return {tab: tab, panel: panel};
   }
 
 
   render() {
-    const opt = this.getPanel();
+    var opt = this.getPanel();
     const props = this.props;
-    const { type, size, tabPosition } = props;
+    const{type,size,tabPosition, ...otherProps} = props;
     const cls = classNames({
-      tabs__card: type === 'card',
-      tabs__button: type === 'button',
-      tabs__small: size === 'small',
-      'tabs__left clearfix': tabPosition === 'left',
-      tabs__wrap: true,
-    });
+        ['tabs__card'] : type === 'card',
+        ['tabs__button'] : type === 'button',
+        ['tabs__small'] : size === 'small',
+        ['tabs__left clearfix'] : tabPosition === 'left',
+        ['tabs__wrap'] : true,
+      })
 
-    return (
+    return(
       <div styleName={cls}>
         <div styleName={'tabs__bar'}>
           {opt.tab}

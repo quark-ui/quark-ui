@@ -135,13 +135,13 @@ export default class Select extends PureComponent {
     this.setState({
       dropdownVisible: false,
     });
-    if (typeof this.props.value !== 'undefined') {
+    if(typeof this.props.value !== 'undefined'){
       // 受控组件
-      this.props.onChange({
+     this.props.onChange({
         value,
         title,
       });
-    }else {
+    }else{
       // 非受控组件
       this.setState({
         value,
@@ -254,7 +254,7 @@ export default class Select extends PureComponent {
           popupVisible={popupVisible}
           onPopupVisibleChange={this.onDropdownVisibleChanged}
         >
-          <div className={this.state.value ? styles.selectionClose : styles.selection} style={{ width }}>
+          <div className={this.state.value ? styles.selectionClose: styles.selection} style={{ width }}>
             { selection }
             <Icon
               name={popupVisible ? 'arrow-up' : 'arrow-down'}

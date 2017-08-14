@@ -2,21 +2,22 @@
  * Tabs Component
  * @author yan
  */
-import { PureComponent } from 'react';
+import { PureComponent, cloneElement, Children } from 'react';
 import PropTypes from 'prop-types';
+import Icon from '../icon';
+import CSSModules from 'react-css-modules';
 import classNames from 'classnames';
+import { allowMultiple } from '../../constants';
+import styles from './Tabs.css';
 
-export default class FunctionTab extends PureComponent {
+@CSSModules(styles, { allowMultiple })
+export default class FunctionTab  extends PureComponent {
   static displayName = 'FunctionTab'
 
   static defaultProps = {
-    title: '',
-    handleTabClick() {},
   }
 
   static propTypes = {
-    title: PropTypes.string,
-    handleTabClick: PropTypes.func,
   }
 
   constructor(props) {
@@ -29,15 +30,16 @@ export default class FunctionTab extends PureComponent {
   }
 
   render() {
-    const tabClass = classNames('tabs__tab', 'add');
+    var tabClass;
+
+    tabClass = classNames('tabs__tab', 'add');
 
     return (
-      <li
-        className={tabClass}
-        onClick={this.clickTab}
-      >
-        {this.props.title}
-      </li>
+      <span>
+        <li className={tabClass} onClick={this.clickTab}>
+          {this.props.title}
+        </li>
+      </span>
     );
   }
 }

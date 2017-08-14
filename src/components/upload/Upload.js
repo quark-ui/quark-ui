@@ -24,6 +24,7 @@ const defaultLocale = {
 
 @CSSModules(styles, { allowMultiple })
 class Upload extends React.Component {
+
   static displayName = 'Upload'
 
   static defaultProps = {

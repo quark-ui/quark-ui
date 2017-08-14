@@ -2,16 +2,18 @@ import {
   Route,
   NavLink,
 } from 'react-router-dom';
+import { RouteTransition } from 'react-router-transition';
+import spring from 'react-motion/lib/spring';
 import lowerFirst from 'lodash/lowerFirst';
 import styles from '../Site.css';
 
 import ComponentBlock from '../partials/Component';
-import PlayGround from '../partials/PlayGround';
 import * as QuarkUI from '../../src/index';
 import pages from './componentList';
 
 import Layout from '../layouts/Layout';
 
+const PopConfig = { stiffness: 360, damping: 25 };
 const ComponentList = Object.keys(QuarkUI).map(c => c);
 
 const renderNavGroup = group => (
@@ -50,12 +52,20 @@ const ComponentPage = props => (
         <Route
           path="/component/:name"
           component={(props) => {
-            const { match } = props;
+            const { match, location } = props;
             return (
-              <div>
+              <RouteTransition 
+                pathname={location.pathname}
+                atEnter={{ opacity: 0, scale: 0.95 }}
+                atLeave={{ scale: spring(0.95, PopConfig), opacity: spring(0, PopConfig) }}
+                atActive={{ scale: spring(1, PopConfig), opacity: 1 }}
+                mapStyles={s => ({
+                  opacity: s.opacity,
+                  transform: `scale(${s.scale})`,
+                })}
+              >
                 <ComponentBlock key={match.params.name} {...props} />
-                <PlayGround componentName={match.params.name} />
-              </div>
+              </RouteTransition>
             );
           }}
         />

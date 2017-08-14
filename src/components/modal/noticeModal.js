@@ -43,17 +43,20 @@ class NoticeModal extends PureComponent {
           <span>
             {config.title || type}
           </span>
-          {config.closable ?
-            <button
-              className={styles.modal__closable}
-              onClick={() => {
-                this.setState({
-                  visible: false,
-                });
-              }}
-            >
-              <Icon name="close" size={18} color="#a6a6a6" />
-            </button>
+          {config.closable
+            ?
+              <a
+                className={styles.modal__closable}
+                href=""
+                onClick={(e) => {
+                  e.preventDefault();
+                  this.setState({
+                    visible: false,
+                  });
+                }}
+              >
+                <Icon name="close" size={18} color="#a6a6a6" />
+              </a>
             : null}
         </p>
       ),
