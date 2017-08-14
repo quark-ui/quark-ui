@@ -1,6 +1,6 @@
-import Modal from '../Modal';
-import Button from 'quark-ui/button';
 import { Component } from 'react';
+import Modal from '../Modal';
+import Button from '../../button';
 
 export default class ModalDemo extends Component {
   constructor(props) {

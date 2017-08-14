@@ -11,7 +11,6 @@ import styles from './Spin.css';
 
 @CSSModules(styles, { allowMultiple })
 class Spin extends PureComponent {
-
   static displayName = 'Spin'
 
   static defaultProps = {

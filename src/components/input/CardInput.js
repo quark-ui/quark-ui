@@ -81,6 +81,7 @@ class CardInput extends PureComponent {
     size: 'normal',
     disabled: false,
     value: '',
+    onChange() {},
   };
 
   static propTypes = {
@@ -89,11 +90,19 @@ class CardInput extends PureComponent {
     mask: PropTypes.string.isRequired,
     formatCharacters: PropTypes.object,
     placeholderChar: PropTypes.string,
+    onChange: PropTypes.func,
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {};
+  componentWillMount() {
+    const options = {
+      pattern: this.props.mask,
+      value: this.props.value,
+      formatCharacters: this.props.formatCharacters,
+    };
+    if (this.props.placeholderChar) {
+      options.placeholderChar = this.props.placeholderChar;
+    }
+    this.mask = new InputMask(options);
   }
 
   onChange = (e) => {
@@ -210,18 +219,6 @@ class CardInput extends PureComponent {
     onPaste: this.onPaste,
     onKeyPress: this.onKeyPress,
   });
-
-  componentWillMount() {
-    const options = {
-      pattern: this.props.mask,
-      value: this.props.value,
-      formatCharacters: this.props.formatCharacters,
-    };
-    if (this.props.placeholderChar) {
-      options.placeholderChar = this.props.placeholderChar;
-    }
-    this.mask = new InputMask(options);
-  }
 
   render() {
     const ref = r => this.input = r;
