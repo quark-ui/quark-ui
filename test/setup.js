@@ -1,7 +1,9 @@
-import jsdom from 'jsdom';
+import { JSDOM } from 'jsdom';
 
 if (typeof document === 'undefined') {
-  global.document = jsdom.jsdom('<!doctype html><html><body></body></html>');
-  global.window = document.defaultView;
-  global.navigator = global.window.navigator;
+  const { window } = new JSDOM('<!DOCTYPE html><html><body></body></html>');
+  const { document, navigator } = window;
+  global.document = document;
+  global.window = window;
+  global.navigator = navigator;
 }
