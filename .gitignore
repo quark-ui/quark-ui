@@ -28,3 +28,4 @@ yarn.lock
 build
 .history
 coverage
+mochawesome-report
