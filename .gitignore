@@ -27,3 +27,4 @@ build
 yarn.lock
 build
 .history
+coverage

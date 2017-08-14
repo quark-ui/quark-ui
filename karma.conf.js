@@ -10,7 +10,6 @@ module.exports = function(config) {
     ],
     exclude:['react'],
     preprocessors: {
-      // 'src/**/*.js': [ 'webpack','sourcemap','coverage'],
       'src/components/**/test/*.test.js' : ['webpack','sourcemap'],
       'test/karma/*.js':[ 'webpack','sourcemap'],
       'test/*.test.js': ['webpack','sourcemap']
@@ -99,6 +98,7 @@ module.exports = function(config) {
       'karma-chai',
       'karma-sourcemap-loader',
       'karma-chrome-launcher',
+      'karma-firefox-launcher',
       'karma-coverage',
       'karma-spec-reporter'
     ],
@@ -119,11 +119,8 @@ module.exports = function(config) {
 
 
     reporters: ['progress','spec','coverage'],
-    // port: 9002,
     logLevel: config.LOG_INFO,
-    browsers: ['Chrome'
-    // ,'Firefox','Safari'
-    ],
+    browsers: ['Chrome','Firefox'],
     singleRun: false,
   })
 
