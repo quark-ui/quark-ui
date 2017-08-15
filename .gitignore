@@ -29,3 +29,4 @@ build
 .history
 coverage
 mochawesome-report
+.coveralls.yml
