@@ -21,11 +21,7 @@
     "test-unit": "mocha --compilers js:babel-core/register --require ./test/setup.js --recursive",
     "test-chrome": "karma start ./conf/karma.conf.js",
     "test-all": "karma start ./conf/karma.conf.js --browers PhantomJS Chrome Firefox",
-    "coverage": "istanbul cover _mocha --report lcovonly -- ./src/**/**/*.test.js --compilers babel-core/register  -R spec && rm -rf ./coverage",
-    "cc" : "istanbul cover _mocha -- ./src/**/**/*.test.js --compilers js:babel-core/register "
-  },
-   "bin": {
-    "coveralls": "./bin/coveralls.js"
+    "coverage" : "istanbul cover ./node_modules/mocha/bin/_mocha -- --require ./test/setup.js  ./src/**/**/*.test.js --compilers babel-core/register "
   },
   "bugs": {
     "url": "http://github.com/quark-ui/quark-ui/issues"
