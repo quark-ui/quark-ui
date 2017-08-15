@@ -1,17 +1,28 @@
 {
-  "presets": [ "es2015", "stage-0", "react"],
-  "plugins": ["transform-decorators-legacy","transform-runtime","css-modules-transform"],
+  "presets": [
+    "es2015",
+    "stage-0",
+    "react"
+  ],
+  "plugins": [
+    "transform-decorators-legacy",
+    "transform-runtime",
+    "css-modules-transform"
+  ],
   "env": {
     "build": {
-      "optional": ["optimisation", "minification"]
+      "optional": [
+        "optimisation",
+        "minification"
+      ]
     },
-    "test":{
-    	"plugins":[
+    "test": {
+      "plugins": [
         [
-      		"babel-plugin-webpack-loaders",
+          "babel-plugin-webpack-loaders",
           {
-      		"config":"./conf/webpack.conf.js",
-      		"verbose":false
+            "config": "./conf/webpack.conf.js",
+            "verbose": false
           }
         ]
       ]
