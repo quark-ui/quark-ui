@@ -9,6 +9,9 @@ Component for quark-ui.
 [![](https://img.shields.io/github/issues-raw/quark-ui/quark-ui.svg)]()
 [![label](https://img.shields.io/github/issues-raw/quark-ui/quark-ui/website.svg)]()
 [![GitHub contributors](https://img.shields.io/github/contributors/quark-ui/quark-ui.svg)]()
+[![Build Status](https://travis-ci.org/quark-ui/quark-ui.svg?branch=master)](https://travis-ci.org/quark-ui/quark-ui)
+[![Coverage Status](https://coveralls.io/repos/github/quark-ui/quark-ui/badge.svg)](https://coveralls.io/github/quark-ui/quark-ui)
+
 
 [npm-image]: http://img.shields.io/npm/v/quark-ui.svg?style=flat-square
 [npm-url]: http://npmjs.org/package/quark-ui
