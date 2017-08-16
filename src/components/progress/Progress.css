@@ -5,6 +5,17 @@
 .progress__line {
   position: relative;
   margin: 5px 0;
+  /*padding-right: 42px;*/
+
+  &, & *, & *:after, & *:before {
+    box-sizing: border-box;
+  }
+  
+}
+
+.progress__showinfo {
+  position: relative;
+  margin: 5px 0;
   padding-right: 42px;
 
   &, & *, & *:after, & *:before {
@@ -12,6 +23,7 @@
   }
   
 }
+
 .progress__lineOuter {
   background-color: #ececec;
 }
@@ -39,8 +51,8 @@
   padding-top: 5px;
   padding-bottom: 5px;
   & .progress__lineOuter, & .progress__lineInner {
-    height: 4px;
-    border-radius: 2px;
+    height: 2px;
+    border-radius: 1px;
   }
 }
 .progress__line--normal {

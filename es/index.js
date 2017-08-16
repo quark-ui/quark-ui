@@ -1,6 +1,6 @@
 import React$1, { Children, Component, PureComponent, cloneElement, createElement } from 'react';
-import moment from 'moment';
 import ReactDOM from 'react-dom';
+import moment from 'moment';
 
 var commonjsGlobal = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -5866,18 +5866,581 @@ var Alert = (_dec = CSSModules(styles$1, { allowMultiple: allowMultiple }), _dec
   onClose: index$1.func
 }, _temp)) || _class);
 
-var styles$2 = { "breadcrumb--icon": "y-He0IY", "breadcrumb": "_26mKfx-", "breadcrumb--separator": "_3v_bQW3", "breadcrumb--link": "_35am08f", "breadcrumbIcon": "y-He0IY", "breadcrumbSeparator": "_3v_bQW3", "breadcrumbLink": "_35am08f" };
+var PropTypes$1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+exports.__esModule = true;
+exports.classNamesShape = exports.timeoutsShape = undefined;
+exports.transitionTimeout = transitionTimeout;
+
+
+
+var _propTypes2 = _interopRequireDefault(index$1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function transitionTimeout(transitionType) {
+  var timeoutPropName = 'transition' + transitionType + 'Timeout';
+  var enabledPropName = 'transition' + transitionType;
+
+  return function (props) {
+    // If the transition is enabled
+    if (props[enabledPropName]) {
+      // If no timeout duration is provided
+      if (props[timeoutPropName] == null) {
+        return new Error(timeoutPropName + ' wasn\'t supplied to CSSTransitionGroup: ' + 'this can cause unreliable animations and won\'t be supported in ' + 'a future version of React. See ' + 'https://fb.me/react-animation-transition-group-timeout for more ' + 'information.');
+
+        // If the duration isn't a number
+      } else if (typeof props[timeoutPropName] !== 'number') {
+        return new Error(timeoutPropName + ' must be a number (in milliseconds)');
+      }
+    }
+
+    return null;
+  };
+}
+
+var timeoutsShape = exports.timeoutsShape = _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.shape({
+  enter: _propTypes2.default.number,
+  exit: _propTypes2.default.number
+}).isRequired]);
+
+var classNamesShape = exports.classNamesShape = _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.shape({
+  enter: _propTypes2.default.string,
+  exit: _propTypes2.default.string,
+  active: _propTypes2.default.string
+}), _propTypes2.default.shape({
+  enter: _propTypes2.default.string,
+  enterActive: _propTypes2.default.string,
+  exit: _propTypes2.default.string,
+  exitActive: _propTypes2.default.string
+})]);
+});
+
+var Transition_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+exports.__esModule = true;
+exports.EXITING = exports.ENTERED = exports.ENTERING = exports.EXITED = exports.UNMOUNTED = undefined;
+
+
+
+var PropTypes = _interopRequireWildcard(index$1);
+
+
+
+var _react2 = _interopRequireDefault(React$1);
+
+
+
+var _reactDom2 = _interopRequireDefault(ReactDOM);
+
+
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var UNMOUNTED = exports.UNMOUNTED = 'unmounted';
+var EXITED = exports.EXITED = 'exited';
+var ENTERING = exports.ENTERING = 'entering';
+var ENTERED = exports.ENTERED = 'entered';
+var EXITING = exports.EXITING = 'exiting';
+
+/**
+ * The Transition component lets you describe a transition from one component
+ * state to another _over time_ with a simple declarative API. Most commonly
+ * it's used to animate the mounting and unmounting of a component, but can also
+ * be used to describe in-place transition states as well.
+ *
+ * By default the `Transition` component does not alter the behavior of the
+ * component it renders, it only tracks "enter" and "exit" states for the components.
+ * It's up to you to give meaning and effect to those states. For example we can
+ * add styles to a component when it enters or exits:
+ *
+ * ```jsx
+ * import Transition from 'react-transition-group/Transition';
+ *
+ * const duration = 300;
+ *
+ * const defaultStyle = {
+ *   transition: `opacity ${duration}ms ease-in-out`,
+ *   opacity: 0,
+ * }
+ *
+ * const transitionStyles = {
+ *   entering: { opacity: 1 },
+ *   entered:  { opacity: 1 },
+ * };
+ *
+ * const Fade = ({ in: inProp }) => (
+ *   <Transition in={inProp} timeout={duration}>
+ *     {(state) => (
+ *       <div style={{
+ *         ...defaultStyle,
+ *         ...transitionStyles[state]
+ *       }}>
+ *         I'm A fade Transition!
+ *       </div>
+ *     )}
+ *   </Transition>
+ * );
+ * ```
+ *
+ * As noted the `Transition` component doesn't _do_ anything by itself to its child component.
+ * What it does do is track transition states over time so you can update the
+ * component (such as by adding styles or classes) when it changes states.
+ *
+ * There are 4 main states a Transition can be in:
+ *  - `ENTERING`
+ *  - `ENTERED`
+ *  - `EXITING`
+ *  - `EXITED`
+ *
+ * Transition state is toggled via the `in` prop. When `true` the component begins the
+ * "Enter" stage. During this stage, the component will shift from its current transition state,
+ * to `'entering'` for the duration of the transition and then to the `'entered'` stage once
+ * it's complete. Let's take the following example:
+ *
+ * ```jsx
+ * state= { in: false };
+ *
+ * toggleEnterState = () => {
+ *   this.setState({ in: true });
+ * }
+ *
+ * render() {
+ *   return (
+ *     <div>
+ *       <Transition in={this.state.in} timeout={500} />
+ *       <button onClick={this.toggleEnterState}>Click to Enter</button>
+ *     </div>
+ *   );
+ * }
+ * ```
+ *
+ * When the button is clicked the component will shift to the `'entering'` state and
+ * stay there for 500ms (the value of `timeout`) when finally switches to `'entered'`.
+ *
+ * When `in` is `false` the same thing happens except the state moves from `'exiting'` to `'exited'`.
+ */
+
+var Transition = function (_React$Component) {
+  _inherits(Transition, _React$Component);
+
+  function Transition(props, context) {
+    _classCallCheck(this, Transition);
+
+    var _this = _possibleConstructorReturn(this, _React$Component.call(this, props, context));
+
+    var parentGroup = context.transitionGroup;
+    // In the context of a TransitionGroup all enters are really appears
+    var appear = parentGroup && !parentGroup.isMounting ? props.enter : props.appear;
+
+    var initialStatus = void 0;
+    _this.nextStatus = null;
+
+    if (props.in) {
+      if (appear) {
+        initialStatus = EXITED;
+        _this.nextStatus = ENTERING;
+      } else {
+        initialStatus = ENTERED;
+      }
+    } else {
+      if (props.unmountOnExit || props.mountOnEnter) {
+        initialStatus = UNMOUNTED;
+      } else {
+        initialStatus = EXITED;
+      }
+    }
+
+    _this.state = { status: initialStatus };
+
+    _this.nextCallback = null;
+    return _this;
+  }
+
+  Transition.prototype.getChildContext = function getChildContext() {
+    return { transitionGroup: null }; // allows for nested Transitions
+  };
+
+  Transition.prototype.componentDidMount = function componentDidMount() {
+    this.updateStatus(true);
+  };
+
+  Transition.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+    var status = this.state.status;
+
+
+    if (nextProps.in) {
+      if (status === UNMOUNTED) {
+        this.setState({ status: EXITED });
+      }
+      if (status !== ENTERING && status !== ENTERED) {
+        this.nextStatus = ENTERING;
+      }
+    } else {
+      if (status === ENTERING || status === ENTERED) {
+        this.nextStatus = EXITING;
+      }
+    }
+  };
+
+  Transition.prototype.componentDidUpdate = function componentDidUpdate() {
+    this.updateStatus();
+  };
+
+  Transition.prototype.componentWillUnmount = function componentWillUnmount() {
+    this.cancelNextCallback();
+  };
+
+  Transition.prototype.getTimeouts = function getTimeouts() {
+    var timeout = this.props.timeout;
+
+    var exit = void 0,
+        enter = void 0,
+        appear = void 0;
+
+    exit = enter = appear = timeout;
+
+    if (timeout != null && typeof timeout !== 'number') {
+      exit = timeout.exit;
+      enter = timeout.enter;
+      appear = timeout.appear;
+    }
+    return { exit: exit, enter: enter, appear: appear };
+  };
+
+  Transition.prototype.updateStatus = function updateStatus() {
+    var mounting = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
+
+    if (this.nextStatus !== null) {
+      // nextStatus will always be ENTERING or EXITING.
+      this.cancelNextCallback();
+      var node = _reactDom2.default.findDOMNode(this);
+
+      if (this.nextStatus === ENTERING) {
+        this.performEnter(node, mounting);
+      } else {
+        this.performExit(node);
+      }
+
+      this.nextStatus = null;
+    } else if (this.props.unmountOnExit && this.state.status === EXITED) {
+      this.setState({ status: UNMOUNTED });
+    }
+  };
+
+  Transition.prototype.performEnter = function performEnter(node, mounting) {
+    var _this2 = this;
+
+    var enter = this.props.enter;
+
+    var appearing = this.context.transitionGroup ? this.context.transitionGroup.isMounting : mounting;
+
+    var timeouts = this.getTimeouts();
+
+    // no enter animation skip right to ENTERED
+    // if we are mounting and running this it means appear _must_ be set
+    if (!mounting && !enter) {
+      this.safeSetState({ status: ENTERED }, function () {
+        _this2.props.onEntered(node);
+      });
+      return;
+    }
+
+    this.props.onEnter(node, appearing);
+
+    this.safeSetState({ status: ENTERING }, function () {
+      _this2.props.onEntering(node, appearing);
+
+      // FIXME: appear timeout?
+      _this2.onTransitionEnd(node, timeouts.enter, function () {
+        _this2.safeSetState({ status: ENTERED }, function () {
+          _this2.props.onEntered(node, appearing);
+        });
+      });
+    });
+  };
+
+  Transition.prototype.performExit = function performExit(node) {
+    var _this3 = this;
+
+    var exit = this.props.exit;
+
+    var timeouts = this.getTimeouts();
+
+    // no exit animation skip right to EXITED
+    if (!exit) {
+      this.safeSetState({ status: EXITED }, function () {
+        _this3.props.onExited(node);
+      });
+      return;
+    }
+    this.props.onExit(node);
+
+    this.safeSetState({ status: EXITING }, function () {
+      _this3.props.onExiting(node);
+
+      _this3.onTransitionEnd(node, timeouts.exit, function () {
+        _this3.safeSetState({ status: EXITED }, function () {
+          _this3.props.onExited(node);
+        });
+      });
+    });
+  };
+
+  Transition.prototype.cancelNextCallback = function cancelNextCallback() {
+    if (this.nextCallback !== null) {
+      this.nextCallback.cancel();
+      this.nextCallback = null;
+    }
+  };
+
+  Transition.prototype.safeSetState = function safeSetState(nextState, callback) {
+    // This shouldn't be necessary, but there are weird race conditions with
+    // setState callbacks and unmounting in testing, so always make sure that
+    // we can cancel any pending setState callbacks after we unmount.
+    this.setState(nextState, this.setNextCallback(callback));
+  };
+
+  Transition.prototype.setNextCallback = function setNextCallback(callback) {
+    var _this4 = this;
+
+    var active = true;
+
+    this.nextCallback = function (event) {
+      if (active) {
+        active = false;
+        _this4.nextCallback = null;
+
+        callback(event);
+      }
+    };
+
+    this.nextCallback.cancel = function () {
+      active = false;
+    };
+
+    return this.nextCallback;
+  };
+
+  Transition.prototype.onTransitionEnd = function onTransitionEnd(node, timeout, handler) {
+    this.setNextCallback(handler);
+
+    if (node) {
+      if (this.props.addEndListener) {
+        this.props.addEndListener(node, this.nextCallback);
+      }
+      if (timeout != null) {
+        setTimeout(this.nextCallback, timeout);
+      }
+    } else {
+      setTimeout(this.nextCallback, 0);
+    }
+  };
+
+  Transition.prototype.render = function render() {
+    var status = this.state.status;
+    if (status === UNMOUNTED) {
+      return null;
+    }
+
+    var _props = this.props,
+        children = _props.children,
+        childProps = _objectWithoutProperties(_props, ['children']);
+    // filter props for Transtition
+
+
+    delete childProps.in;
+    delete childProps.mountOnEnter;
+    delete childProps.unmountOnExit;
+    delete childProps.appear;
+    delete childProps.enter;
+    delete childProps.exit;
+    delete childProps.timeout;
+    delete childProps.addEndListener;
+    delete childProps.onEnter;
+    delete childProps.onEntering;
+    delete childProps.onEntered;
+    delete childProps.onExit;
+    delete childProps.onExiting;
+    delete childProps.onExited;
+
+    if (typeof children === 'function') {
+      return children(status, childProps);
+    }
+
+    var child = _react2.default.Children.only(children);
+    return _react2.default.cloneElement(child, childProps);
+  };
+
+  return Transition;
+}(_react2.default.Component);
+
+Transition.contextTypes = {
+  transitionGroup: PropTypes.object
+};
+Transition.childContextTypes = {
+  transitionGroup: function transitionGroup() {}
+};
+
+
+Transition.propTypes = {};
+
+// Name the function so it is clearer in the documentation
+function noop() {}
+
+Transition.defaultProps = {
+  in: false,
+  mountOnEnter: false,
+  unmountOnExit: false,
+  appear: false,
+  enter: true,
+  exit: true,
+
+  onEnter: noop,
+  onEntering: noop,
+  onEntered: noop,
+
+  onExit: noop,
+  onExiting: noop,
+  onExited: noop
+};
+
+Transition.UNMOUNTED = 0;
+Transition.EXITED = 1;
+Transition.ENTERING = 2;
+Transition.ENTERED = 3;
+Transition.EXITING = 4;
+
+exports.default = Transition;
+});
+
+var Transition = unwrapExports(Transition_1);
+
+var styles$2 = { "fade--entering": "_1mp5FXi", "fadeIn": "gbiUlUN", "fade--entered": "_26DcFZN", "fade--exiting": "_2wSC5er", "fadeOut": "_2OnzTOe", "fade--exited": "_2K6mlzL", "flipX": "sCG0bzF", "flipX--entering": "_3cdJQI5", "flipInX": "_1FsXcPX", "flipX--entered": "qGmSxIW", "flipX--exiting": "_3NfjJC-", "flipOutX": "_24wLE9d", "flipX--exited": "_24MsE6n", "slideUp": "_1oUCufa", "slideUp--entering": "_1mO_SWR", "slideInUp": "_12qhs-A", "slideUp--entered": "_3-WipgH", "slideUp--exiting": "_27bTj8j", "slideOutUp": "_20eULFb", "slideUp--exited": "_34-gsuv", "slideDown": "_706TJ5I", "slideDown--entering": "_1ieQGlB", "slideInDown": "_21y5cl_", "slideDown--entered": "_3FYkJ5S", "slideDown--exiting": "desE714", "slideOutDown": "_16Yi8is", "slideDown--exited": "_3FJ4sR6", "zoom": "_2aGrmGr", "zoom--entering": "EdoD2Q2", "zoomIn": "gybKzsL", "zoom--entered": "_3kIgIBr", "zoom--exiting": "k0tHLpV", "zoomOut": "_689sLoR", "zoom--exited": "_6jD7wgI", "bounce": "_38IQtyb", "bounce--entering": "_1_uO8bU", "bounceIn": "_2j4EhAR", "bounce--entered": "_1hNAImH", "bounce--exiting": "Hpxa8Tt", "bounceOut": "_2yWAe_R", "bounce--exited": "_3VDKDtK", "fadeEntering": "_1mp5FXi", "fadeEntered": "_26DcFZN", "fadeExiting": "_2wSC5er", "fadeExited": "_2K6mlzL", "flipXEntering": "_3cdJQI5", "flipXEntered": "qGmSxIW", "flipXExiting": "_3NfjJC-", "flipXExited": "_24MsE6n", "slideUpEntering": "_1mO_SWR", "slideUpEntered": "_3-WipgH", "slideUpExiting": "_27bTj8j", "slideUpExited": "_34-gsuv", "slideDownEntering": "_1ieQGlB", "slideDownEntered": "_3FYkJ5S", "slideDownExiting": "desE714", "slideDownExited": "_3FJ4sR6", "zoomEntering": "EdoD2Q2", "zoomEntered": "_3kIgIBr", "zoomExiting": "k0tHLpV", "zoomExited": "_6jD7wgI", "bounceEntering": "_1_uO8bU", "bounceEntered": "_1hNAImH", "bounceExiting": "Hpxa8Tt", "bounceExited": "_3VDKDtK" };
+
+var MOTIONS = ['fade', 'flipX', 'slideUp', 'slideDown', 'zoom', 'bounce'];
+
+var TIMING_FUNCTION = {
+  ease: 'cubic-bezier(.25, .1, .25, 1)',
+  linear: 'cubic-bezier(0,0,1,1)',
+  'ease-in': 'cubic-bezier(.42,0,1,1)',
+  'ease-out': 'cubic-bezier(0,0,.58,1)',
+  'ease-in-out': 'cubic-bezier(.42,0,.58,1)'
+};
+
+var _class$2;
+var _temp$2;
+
+/**
+ * Animation Component
+ * @author ryan.bian
+ */
+var Animation = (_temp$2 = _class$2 = function (_PureComponent) {
+  inherits(Animation, _PureComponent);
+
+  function Animation() {
+    classCallCheck(this, Animation);
+    return possibleConstructorReturn(this, (Animation.__proto__ || Object.getPrototypeOf(Animation)).apply(this, arguments));
+  }
+
+  createClass(Animation, [{
+    key: 'render',
+    value: function render() {
+      var _props = this.props,
+          duration = _props.duration,
+          motion = _props.motion,
+          timingFunction = _props.timingFunction,
+          style = _props.style,
+          children = _props.children,
+          otherProps = objectWithoutProperties(_props, ['duration', 'motion', 'timingFunction', 'style', 'children']);
+
+      var transitionProps = _extends({
+        in: this.props.in,
+        timeout: duration
+      }, otherProps);
+      var defaultStyle = _extends({}, style, {
+        animationDuration: duration + 'ms',
+        animationTimingFunction: TIMING_FUNCTION[timingFunction]
+      });
+      return React.createElement(
+        Transition,
+        transitionProps,
+        function (status) {
+          return React.createElement(
+            'div',
+            {
+              style: defaultStyle,
+              className: index$4(styles$2[motion], styles$2[motion + '--' + status])
+            },
+            children
+          );
+        }
+      );
+    }
+
+    // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
+
+  }]);
+  return Animation;
+}(PureComponent), _class$2.displayName = 'Animation', _class$2.defaultProps = {
+  duration: 500,
+  motion: 'fade',
+  timingFunction: 'linear',
+  style: undefined,
+  in: index$1.bool,
+  mountOnEnter: false,
+  unmountOnExit: false,
+  enter: true,
+  exit: true,
+  onEnter: function onEnter() {},
+  onEntering: function onEntering() {},
+  onEntered: function onEntered() {},
+  onExit: function onExit() {},
+  onExiting: function onExiting() {},
+  onExited: function onExited() {}
+}, _class$2.propTypes = {
+  duration: index$1.number,
+  motion: index$1.oneOf(MOTIONS),
+  timingFunction: index$1.oneOf(Object.keys(TIMING_FUNCTION)),
+  style: index$1.object,
+  in: index$1.bool,
+  mountOnEnter: index$1.bool,
+  unmountOnExit: index$1.bool,
+  enter: index$1.bool,
+  exit: index$1.bool,
+  onEnter: index$1.func,
+  onEntering: index$1.func,
+  onEntered: index$1.func,
+  onExit: index$1.func,
+  onExiting: index$1.func,
+  onExited: index$1.func
+}, _temp$2);
+
+var styles$3 = { "breadcrumb--icon": "y-He0IY", "breadcrumb": "_26mKfx-", "breadcrumb--separator": "_3v_bQW3", "breadcrumb--link": "_35am08f", "breadcrumbIcon": "y-He0IY", "breadcrumbSeparator": "_3v_bQW3", "breadcrumbLink": "_35am08f" };
 
 var _dec$1;
-var _class$2;
+var _class$3;
 var _class2$1;
-var _temp$2;
+var _temp$3;
 
 /**
  * Breadcrumb Component
  * @author grootfish
  */
-var Breadcrumb$1 = (_dec$1 = CSSModules(styles$2, { allowMultiple: allowMultiple }), _dec$1(_class$2 = (_temp$2 = _class2$1 = function (_PureComponent) {
+var Breadcrumb$1 = (_dec$1 = CSSModules(styles$3, { allowMultiple: allowMultiple }), _dec$1(_class$3 = (_temp$3 = _class2$1 = function (_PureComponent) {
   inherits(Breadcrumb, _PureComponent);
 
   function Breadcrumb(props) {
@@ -5957,18 +6520,18 @@ var Breadcrumb$1 = (_dec$1 = CSSModules(styles$2, { allowMultiple: allowMultiple
   separator: index$1.node,
   hasBackIcon: index$1.bool,
   hasHomeIcon: index$1.bool
-}, _temp$2)) || _class$2);
+}, _temp$3)) || _class$3);
 
 var _dec$2;
-var _class$3;
+var _class$4;
 var _class2$2;
-var _temp$3;
+var _temp$4;
 
 /**
  * Breadcrumb Component
  * @author grootfish
  */
-var BreadcrumbItem = (_dec$2 = CSSModules(styles$2, { allowMultiple: allowMultiple }), _dec$2(_class$3 = (_temp$3 = _class2$2 = function (_PureComponent) {
+var BreadcrumbItem = (_dec$2 = CSSModules(styles$3, { allowMultiple: allowMultiple }), _dec$2(_class$4 = (_temp$4 = _class2$2 = function (_PureComponent) {
   inherits(BreadcrumbItem, _PureComponent);
 
   function BreadcrumbItem(props) {
@@ -6032,20 +6595,20 @@ var BreadcrumbItem = (_dec$2 = CSSModules(styles$2, { allowMultiple: allowMultip
   separator: '/' }, _class2$2.propTypes = {
   separator: index$1.oneOfType([index$1.string, index$1.element]),
   href: index$1.string
-}, _temp$3)) || _class$3);
+}, _temp$4)) || _class$4);
 
 Breadcrumb$1.Item = BreadcrumbItem;
 
-var styles$3 = { "danger": "_1IZL9la", "dashed": "_3YSE_nE", "secondary": "_16NdYXA", "primary": "_1rlU5o-", "base": "CTy3CHb", "small": "_1FNLWX0", "normal": "_1O7JoXn", "large": "_1JYFbqn", "disabled": "_3P6QXVt", "button--primary": "_11KqluX CTy3CHb _1rlU5o-", "button--secondary": "_1QjCEA1 CTy3CHb _16NdYXA", "button--dashed": "_1Ko5_w4 CTy3CHb _3YSE_nE", "button--danger": "_16108o6 CTy3CHb _1IZL9la", "button--disabled": "_3dqIZEv CTy3CHb _3P6QXVt", "button--large": "_3KW6hMp _1JYFbqn", "button--normal": "_3mBVgjk _1O7JoXn", "button--small": "_2HVyQfI _1FNLWX0", "buttonPrimary": "_11KqluX CTy3CHb _1rlU5o-", "buttonSecondary": "_1QjCEA1 CTy3CHb _16NdYXA", "buttonDashed": "_1Ko5_w4 CTy3CHb _3YSE_nE", "buttonDanger": "_16108o6 CTy3CHb _1IZL9la", "buttonDisabled": "_3dqIZEv CTy3CHb _3P6QXVt", "buttonLarge": "_3KW6hMp _1JYFbqn", "buttonNormal": "_3mBVgjk _1O7JoXn", "buttonSmall": "_2HVyQfI _1FNLWX0" };
+var styles$4 = { "danger": "_1IZL9la", "dashed": "_3YSE_nE", "secondary": "_16NdYXA", "primary": "_1rlU5o-", "base": "CTy3CHb", "small": "_1FNLWX0", "normal": "_1O7JoXn", "large": "_1JYFbqn", "disabled": "_3P6QXVt", "button--primary": "_11KqluX CTy3CHb _1rlU5o-", "button--secondary": "_1QjCEA1 CTy3CHb _16NdYXA", "button--dashed": "_1Ko5_w4 CTy3CHb _3YSE_nE", "button--danger": "_16108o6 CTy3CHb _1IZL9la", "button--disabled": "_3dqIZEv CTy3CHb _3P6QXVt", "button--large": "_3KW6hMp _1JYFbqn", "button--normal": "_3mBVgjk _1O7JoXn", "button--small": "_2HVyQfI _1FNLWX0", "buttonPrimary": "_11KqluX CTy3CHb _1rlU5o-", "buttonSecondary": "_1QjCEA1 CTy3CHb _16NdYXA", "buttonDashed": "_1Ko5_w4 CTy3CHb _3YSE_nE", "buttonDanger": "_16108o6 CTy3CHb _1IZL9la", "buttonDisabled": "_3dqIZEv CTy3CHb _3P6QXVt", "buttonLarge": "_3KW6hMp _1JYFbqn", "buttonNormal": "_3mBVgjk _1O7JoXn", "buttonSmall": "_2HVyQfI _1FNLWX0" };
 
-var _class$4;
-var _temp$4;
+var _class$5;
+var _temp$5;
 
 /**
  * Button Component
  * @author ryan.bian
  */
-var Button = (_temp$4 = _class$4 = function (_PureComponent) {
+var Button = (_temp$5 = _class$5 = function (_PureComponent) {
   inherits(Button, _PureComponent);
 
   function Button() {
@@ -6064,7 +6627,7 @@ var Button = (_temp$4 = _class$4 = function (_PureComponent) {
           otherProps = objectWithoutProperties(_props, ['children', 'type', 'size', 'disabled']);
 
       var btnProps = _extends({}, otherProps, {
-        className: index$4(styles$3['button--' + (disabled$$1 ? 'disabled' : type)], styles$3['button--' + size])
+        className: index$4(styles$4['button--' + (disabled$$1 ? 'disabled' : type)], styles$4['button--' + size])
       });
       return React.createElement(
         'button',
@@ -6077,12 +6640,352 @@ var Button = (_temp$4 = _class$4 = function (_PureComponent) {
 
   }]);
   return Button;
-}(PureComponent), _class$4.displayName = 'Button', _class$4.defaultProps = {
+}(PureComponent), _class$5.displayName = 'Button', _class$5.defaultProps = {
   type: 'primary',
-  size: 'normal' }, _class$4.propTypes = {
+  size: 'normal' }, _class$5.propTypes = {
   type: index$1.oneOf(['primary', 'secondary', 'dashed', 'danger']),
   size: index$1.oneOf(['normal', 'large', 'small'])
-}, _temp$4);
+}, _temp$5);
+
+var index$5 = function shallowEqual(objA, objB, compare, compareContext) {
+
+    var ret = compare ? compare.call(compareContext, objA, objB) : void 0;
+
+    if(ret !== void 0) {
+        return !!ret;
+    }
+
+    if(objA === objB) {
+        return true;
+    }
+
+    if(typeof objA !== 'object' || !objA ||
+       typeof objB !== 'object' || !objB) {
+        return false;
+    }
+
+    var keysA = Object.keys(objA);
+    var keysB = Object.keys(objB);
+
+    if(keysA.length !== keysB.length) {
+        return false;
+    }
+
+    var bHasOwnProperty = Object.prototype.hasOwnProperty.bind(objB);
+
+    // Test for A's keys different from B.
+    for(var idx = 0; idx < keysA.length; idx++) {
+
+        var key = keysA[idx];
+
+        if(!bHasOwnProperty(key)) {
+            return false;
+        }
+
+        var valueA = objA[key];
+        var valueB = objB[key];
+
+        ret = compare ? compare.call(compareContext, valueA, valueB, key) : void 0;
+
+        if(ret === false ||
+           ret === void 0 && valueA !== valueB) {
+            return false;
+        }
+
+    }
+
+    return true;
+
+};
+
+var styles$5 = { "radio-button": "lUPswOB", "radio-button--inner": "_3hWcrmt", "radio-button__disabled": "_3X8pavo", "radio-button__checked": "_1ereod6", "radio-button--wrapper": "_1Ef7vg1", "radio-button--wrapper__disabled": "_1fdGpBG", "radio-button--wrapper__checked": "_3iHso93", "radio--wrapper": "mMWdf-U", "radio--wrapper__disabled": "_1LDcYMA", "radio": "_21TqesI", "radio__disabled": "_1hhoRJ8", "radio--inner": "_3o1Rgpv", "radio__checked": "_1szddfu", "checkbox__disabled": "_1M9TcZm", "checkbox--inner": "_3Gl9_Qw", "none": "_14pGKgJ", "checkbox": "_1XpDkQN", "checkbox--wrapper": "_2GLX7p1", "checkbox--wrapper__disabled": "xSwX73t", "checkbox--wrapper__checked": "HtPNyzB", "checkbox__checked": "We2e_be", "checkbox--group": "_3Rx63VG", "radio--wrapper__checked": "_35FhbyT", "radioButton": "lUPswOB", "radioButtonInner": "_3hWcrmt", "radioButton__disabled": "_3X8pavo", "radioButton__checked": "_1ereod6", "radioButtonWrapper": "_1Ef7vg1", "radioButtonWrapper__disabled": "_1fdGpBG", "radioButtonWrapper__checked": "_3iHso93", "radioWrapper": "mMWdf-U", "radioWrapper__disabled": "_1LDcYMA", "radioInner": "_3o1Rgpv", "checkboxInner": "_3Gl9_Qw", "checkboxWrapper": "_2GLX7p1", "checkboxWrapper__disabled": "xSwX73t", "checkboxWrapper__checked": "HtPNyzB", "checkboxGroup": "_3Rx63VG", "radioWrapper__checked": "_35FhbyT" };
+
+var _dec$4;
+var _class$7;
+var _class2$4;
+var _temp$7;
+var _initialiseProps$1;
+
+/**
+ * Checkbox Component
+ * @author grootfish
+ */
+var CheckboxGroup = (_dec$4 = CSSModules(styles$5, { allowMultiple: allowMultiple }), _dec$4(_class$7 = (_temp$7 = _class2$4 = function (_PureComponent) {
+  inherits(CheckboxGroup, _PureComponent);
+
+  // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
+  function CheckboxGroup(props) {
+    classCallCheck(this, CheckboxGroup);
+
+    var _this = possibleConstructorReturn(this, (CheckboxGroup.__proto__ || Object.getPrototypeOf(CheckboxGroup)).call(this, props));
+
+    _initialiseProps$1.call(_this);
+
+    var value = 'value' in props ? props.value : props.defaultValue;
+
+    _this.state = {
+      value: value
+    };
+    return _this;
+  }
+
+  createClass(CheckboxGroup, [{
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      if ('value' in nextProps) {
+        this.setState({
+          value: nextProps.value || []
+        });
+      }
+    }
+  }, {
+    key: 'shouldComponentUpdate',
+    value: function shouldComponentUpdate(nextProps, nextState) {
+      return !index$5(this.props, nextProps) || !index$5(this.state, nextState);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      var props = this.props,
+          state = this.state;
+      var options = props.options,
+          children = props.children;
+
+      if (options && options.length > 0) {
+        children = this.getOptions().map(function (option) {
+          return React.createElement(
+            Checkbox$1,
+            {
+              key: option.value,
+              disabled: 'disabled' in option ? option.disabled : props.disabled,
+              value: option.value,
+              checked: state.value.indexOf(option.value) !== -1,
+              onChange: function onChange() {
+                _this2.toggleOption(option);
+              }
+            },
+            option.label
+          );
+        });
+      }
+
+      return React.createElement(
+        'div',
+        { styleName: 'checkbox--group' },
+        children
+      );
+    }
+  }]);
+  return CheckboxGroup;
+}(PureComponent), _class2$4.displayName = 'CheckboxGroup', _class2$4.defaultProps = {
+  type: 'checkbox',
+  defaultValue: [],
+  optoins: [],
+  onChange: function onChange() {}
+}, _class2$4.propTypes = {
+  defaultValue: index$1.array,
+  value: index$1.array,
+  options: index$1.array,
+  onChange: index$1.func,
+  disabled: index$1.bool
+}, _class2$4.childContextTypes = {
+  checkboxGroup: index$1.any
+}, _initialiseProps$1 = function _initialiseProps() {
+  var _this3 = this;
+
+  this.getChildContext = function () {
+    return {
+      checkboxGroup: {
+        toggleOption: _this3.toggleOption,
+        value: _this3.state.value,
+        disabled: _this3.props.disabled
+      }
+    };
+  };
+
+  this.getOptions = function () {
+    var options = _this3.props.options;
+
+    return options.map(function (option) {
+      if (typeof option === 'string') {
+        return {
+          label: option,
+          value: option
+        };
+      }
+      return option;
+    });
+  };
+
+  this.toggleOption = function (option) {
+    var optionIndex = _this3.state.value.indexOf(option.value);
+    var value = [].concat(toConsumableArray(_this3.state.value));
+
+    if (optionIndex === -1) {
+      value.push(option.value);
+    } else {
+      value.splice(optionIndex, 1);
+    }
+
+    if (!('value' in _this3.props)) {
+      _this3.setState({ value: value });
+    }
+
+    if (_this3.props.onChange) {
+      _this3.props.onChange(value);
+    }
+  };
+}, _temp$7)) || _class$7);
+
+var _dec$3;
+var _class$6;
+var _class2$3;
+var _temp$6;
+var _initialiseProps;
+
+/**
+ * Checkbox Component
+ * @author grootfish
+ */
+var Checkbox$1 = (_dec$3 = CSSModules(styles$5, { allowMultiple: allowMultiple }), _dec$3(_class$6 = (_temp$6 = _class2$3 = function (_PureComponent) {
+  inherits(Checkbox, _PureComponent);
+
+  // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
+  function Checkbox(props) {
+    classCallCheck(this, Checkbox);
+
+    var _this = possibleConstructorReturn(this, (Checkbox.__proto__ || Object.getPrototypeOf(Checkbox)).call(this, props));
+
+    _initialiseProps.call(_this);
+
+    var checked = 'checked' in props ? props.checked : props.defaultChecked;
+
+    _this.state = {
+      checked: checked
+    };
+    return _this;
+  }
+
+  createClass(Checkbox, [{
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      if ('checked' in nextProps) {
+        this.setState({
+          checked: nextProps.checked
+        });
+      }
+    }
+  }, {
+    key: 'shouldComponentUpdate',
+    value: function shouldComponentUpdate(nextProps, nextState, nextContext) {
+      return !index$5(this.props, nextProps) || !index$5(this.state, nextState) || !index$5(this.context.checkboxGroup, nextContext.checkboxGroup);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _classNames, _classNames2;
+
+      var context = this.context,
+          props = this.props,
+          state = this.state;
+      var children = props.children,
+          name = props.name,
+          type = props.type,
+          readOnly = props.readOnly,
+          onClick = props.onClick,
+          onFocus = props.onFocus,
+          onBlur = props.onBlur,
+          prefixCls = props.prefixCls,
+          otherProps = objectWithoutProperties(props, ['children', 'name', 'type', 'readOnly', 'onClick', 'onFocus', 'onBlur', 'prefixCls']);
+
+      var checkboxProps = otherProps;
+      var checked = state.checked;
+      var disabled = props.disabled;
+      var checkboxGroup$$1 = context.checkboxGroup;
+
+      if (checkboxGroup$$1) {
+        this.handleChange = function () {
+          return checkboxGroup$$1.toggleOption({ label: children, value: props.value });
+        };
+        checked = checkboxGroup$$1.value.indexOf(props.value) !== -1;
+        disabled = 'disabled' in props ? props.disabled : checkboxGroup$$1.disabled;
+      }
+
+      var classString = index$4(prefixCls, (_classNames = {}, defineProperty$2(_classNames, prefixCls + '__checked', checked), defineProperty$2(_classNames, prefixCls + '__disabled', disabled), _classNames));
+      var wrapperString = index$4((_classNames2 = {}, defineProperty$2(_classNames2, prefixCls + '--wrapper', true), defineProperty$2(_classNames2, prefixCls + '--wrapper__checked', checked), defineProperty$2(_classNames2, prefixCls + '--wrapper__disabled', disabled), _classNames2));
+      var innerString = index$4(defineProperty$2({}, prefixCls + '--inner', true));
+      return React.createElement(
+        'label',
+        { styleName: wrapperString },
+        React.createElement(
+          'span',
+          { styleName: classString },
+          React.createElement('input', {
+            name: name,
+            type: type,
+            readOnly: readOnly,
+            disabled: disabled,
+            checked: !!checked,
+            onChange: this.handleChange
+          }),
+          React.createElement('span', { styleName: innerString })
+        ),
+        children !== undefined ? React.createElement(
+          'span',
+          null,
+          children
+        ) : null
+      );
+    }
+  }]);
+  return Checkbox;
+}(PureComponent), _class2$3.Group = CheckboxGroup, _class2$3.displayName = 'Checkbox', _class2$3.defaultProps = {
+  prefixCls: 'checkbox',
+  type: 'checkbox',
+  defaultChecked: false,
+  onChange: function onChange() {},
+  onFocus: function onFocus() {},
+  onBlur: function onBlur() {},
+  onClick: function onClick() {}
+}, _class2$3.propTypes = {
+  prefixCls: index$1.string,
+  defaultChecked: index$1.oneOfType([index$1.number, index$1.bool]),
+  onChange: index$1.func,
+  name: index$1.string,
+  type: index$1.string,
+  disabled: index$1.bool,
+  readOnly: index$1.bool
+}, _class2$3.contextTypes = {
+  checkboxGroup: index$1.any
+}, _initialiseProps = function _initialiseProps() {
+  var _this2 = this;
+
+  this.handleChange = function (e) {
+    var props = _this2.props;
+
+    if (props.disabled) {
+      return;
+    }
+    if (!('checked' in props)) {
+      _this2.setState({
+        checked: e.target.checked
+      });
+    }
+    props.onChange({
+      target: _extends({}, props, {
+        checked: e.target.checked
+      }),
+      stopPropagation: function stopPropagation() {
+        e.stopPropagation();
+      },
+      preventDefault: function preventDefault() {
+        e.preventDefault();
+      }
+    });
+  };
+}, _temp$6)) || _class$6);
 
 /**
  * Performs a deep comparison between two values to determine if they are
@@ -6181,7 +7084,7 @@ function shouldUseNative() {
 	}
 }
 
-var index$5 = shouldUseNative() ? Object.assign : function (target, source) {
+var index$6 = shouldUseNative() ? Object.assign : function (target, source) {
 	var from;
 	var to = toObject(target);
 	var symbols;
@@ -6208,7 +7111,7 @@ var index$5 = shouldUseNative() ? Object.assign : function (target, source) {
 	return to;
 };
 
-var styles$4 = { "rangePicker": "mhJTXha", "datePicker__monthGrid": "_3ZvcDzC _3wVlW_K sdFN-uB", "datePicker__yearGrid": "_2PKGdIS _3wVlW_K sdFN-uB", "datePicker__decadeGrid": "JvjXwwi _3wVlW_K sdFN-uB", "datePicker__datePane": "_1vTxJWA", "datePicker__monthPane": "_1oFHW95", "datePicker__yearPane": "_2EHXPQJ", "datePicker__decadePane": "_2z1RIYt", "datePicker__dayGrid--disabled": "_24C4K3t", "bodyGrid": "_3wVlW_K sdFN-uB", "datePicker": "_1VtG7Tm", "datePicker__picker": "_217Ab1l", "datePicker_PaneHead": "dktwrcK", "datePicker__headControlBtn": "_3B8hXtV", "datePicker__headJump": "_2iQiPWX", "datePicker__headJumpBtn": "_2L0StoH", "grid": "sdFN-uB", "titleGrid": "P3D5cpz sdFN-uB", "datePicker__datePaneHead": "WXNwsuK dktwrcK", "datePicker_weekTitle": "_317pkpI", "datePicker__weekTitleGrid": "gkVLoZp P3D5cpz sdFN-uB", "datePicker__weekRow": "_13BCOGA", "datePicker__dayGrid": "-LL8IDY _3wVlW_K sdFN-uB", "datePicker__dayGrid--range": "_3CFoqir", "datePicker__dayGrid--active": "ZJlZATL", "datePicker__dayGrid--curMonth": "_15xKysL", "datePicker__dayGrid--lastMonth": "_2jU5NSX", "datePicker__dayGrid--nextMonth": "kOzFgDQ", "datePicker__monthPaneHead": "_2HpgBMq dktwrcK", "datePicker__monthBody": "_2bCDQ5L", "datePicker__monthGrid--active": "_2ap2U0a ZJlZATL", "datePicker__yearPaneHead": "_1jrn9B0 dktwrcK", "datePicker__yearBody": "_1FZQqhV", "datePicker__yearGrid--active": "_1CyKfmD ZJlZATL", "datePicker__yearGrid--jump": "LLlseBd", "datePicker__decadePaneHead": "_3xBV3EY dktwrcK", "datePicker__decadePane--current": "_2gXcwbk", "datePicker__decadeBody": "_3Hf0Ape", "datePicker__decadeGrid--jump": "_2rjwFZK", "datePicker__decadeGrid--active": "YqtKrRl ZJlZATL", "picker--start": "_1lDj7SY", "picker--end": "_4LScnzl", "datePicker__dayGridDisabled": "_24C4K3t", "datePicker__dayGridRange": "_3CFoqir", "datePicker__dayGridActive": "ZJlZATL", "datePicker__dayGridCurMonth": "_15xKysL", "datePicker__dayGridLastMonth": "_2jU5NSX", "datePicker__dayGridNextMonth": "kOzFgDQ", "datePicker__monthGridActive": "_2ap2U0a ZJlZATL", "datePicker__yearGridActive": "_1CyKfmD ZJlZATL", "datePicker__yearGridJump": "LLlseBd", "datePicker__decadePaneCurrent": "_2gXcwbk", "datePicker__decadeGridJump": "_2rjwFZK", "datePicker__decadeGridActive": "YqtKrRl ZJlZATL", "pickerStart": "_1lDj7SY", "pickerEnd": "_4LScnzl" };
+var styles$6 = { "rangePicker": "mhJTXha", "datePicker__monthGrid": "_3ZvcDzC _3wVlW_K sdFN-uB", "datePicker__yearGrid": "_2PKGdIS _3wVlW_K sdFN-uB", "datePicker__decadeGrid": "JvjXwwi _3wVlW_K sdFN-uB", "datePicker__datePane": "_1vTxJWA", "datePicker__monthPane": "_1oFHW95", "datePicker__yearPane": "_2EHXPQJ", "datePicker__decadePane": "_2z1RIYt", "datePicker__dayGrid--disabled": "_24C4K3t", "bodyGrid": "_3wVlW_K sdFN-uB", "datePicker": "_1VtG7Tm", "datePicker__picker": "_217Ab1l", "datePicker_PaneHead": "dktwrcK", "datePicker__headControlBtn": "_3B8hXtV", "datePicker__headJump": "_2iQiPWX", "datePicker__headJumpBtn": "_2L0StoH", "grid": "sdFN-uB", "titleGrid": "P3D5cpz sdFN-uB", "datePicker__datePaneHead": "WXNwsuK dktwrcK", "datePicker_weekTitle": "_317pkpI", "datePicker__weekTitleGrid": "gkVLoZp P3D5cpz sdFN-uB", "datePicker__weekRow": "_13BCOGA", "datePicker__dayGrid": "-LL8IDY _3wVlW_K sdFN-uB", "datePicker__dayGrid--range": "_3CFoqir", "datePicker__dayGrid--active": "ZJlZATL", "datePicker__dayGrid--curMonth": "_15xKysL", "datePicker__dayGrid--lastMonth": "_2jU5NSX", "datePicker__dayGrid--nextMonth": "kOzFgDQ", "datePicker__monthPaneHead": "_2HpgBMq dktwrcK", "datePicker__monthBody": "_2bCDQ5L", "datePicker__monthGrid--active": "_2ap2U0a ZJlZATL", "datePicker__yearPaneHead": "_1jrn9B0 dktwrcK", "datePicker__yearBody": "_1FZQqhV", "datePicker__yearGrid--active": "_1CyKfmD ZJlZATL", "datePicker__yearGrid--jump": "LLlseBd", "datePicker__decadePaneHead": "_3xBV3EY dktwrcK", "datePicker__decadePane--current": "_2gXcwbk", "datePicker__decadeBody": "_3Hf0Ape", "datePicker__decadeGrid--jump": "_2rjwFZK", "datePicker__decadeGrid--active": "YqtKrRl ZJlZATL", "rangePicker__picker": "_1UC2-sP", "rangePicker__quickSelect": "Fc-Col-", "rangePicker__action": "_3LU7GfZ", "picker--start": "_1lDj7SY", "picker--end": "_4LScnzl", "datePicker__dayGridDisabled": "_24C4K3t", "datePicker__dayGridRange": "_3CFoqir", "datePicker__dayGridActive": "ZJlZATL", "datePicker__dayGridCurMonth": "_15xKysL", "datePicker__dayGridLastMonth": "_2jU5NSX", "datePicker__dayGridNextMonth": "kOzFgDQ", "datePicker__monthGridActive": "_2ap2U0a ZJlZATL", "datePicker__yearGridActive": "_1CyKfmD ZJlZATL", "datePicker__yearGridJump": "LLlseBd", "datePicker__decadePaneCurrent": "_2gXcwbk", "datePicker__decadeGridJump": "_2rjwFZK", "datePicker__decadeGridActive": "YqtKrRl ZJlZATL", "pickerStart": "_1lDj7SY", "pickerEnd": "_4LScnzl" };
 
 var hookCallback;
 
@@ -10764,7 +11667,7 @@ function createMomentChecker(type, typeValidator, validator, momentType) {
 
 }
 
-var index$6 = {
+var index$7 = {
 
   momentObj : createMomentChecker(
     'object',
@@ -10809,21 +11712,19 @@ var defaultProps = {
   onChange: function onChange() {},
 
   fieldSize: 'normal',
-  fieldWidth: null
+  fieldWidth: 220
 };
 
 // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
 var propTypes = {
-  value: index$1.oneOfType([index$6.momentObj, index$1.string]),
-  defaultValue: index$1.oneOfType([index$6.momentObj, index$1.string]),
+  value: index$1.oneOfType([index$7.momentObj, index$1.string]),
+  defaultValue: index$1.oneOfType([index$7.momentObj, index$1.string]),
   disabled: index$1.bool,
   format: index$1.string,
   onChange: index$1.func,
   fieldSize: index$1.oneOf(['normal', 'large', 'small']),
   fieldWidth: index$1.number
 };
-
-var styles$5 = { "input__wrapper": "_3qf4zVS", "input__prefix": "_3HOujdo", "input__suffix": "_2kHrSHK", "base": "_3d8Ip3y", "disabled": "_23bMeMN", "normal": "_2zTE3Ne", "large": "_3XuYOM0", "small": "_2t3xTWo", "input__text": "_3hkY6oH _3d8Ip3y", "input__textarea": "_1whAjSd _3d8Ip3y", "input__card": "_1_MWs1W _3d8Ip3y", "input__disabled": "_1SNztTO _3d8Ip3y _23bMeMN", "input__large": "_3PBNxgP _3d8Ip3y _3XuYOM0", "input__normal": "_1Ulh8TU _3d8Ip3y _2zTE3Ne", "input__small": "jvPBoLu _3d8Ip3y _2t3xTWo", "input__group": "VQEgDJZ", "input__19": "_3BWtBIU", "input__20": "_1k-xfqh", "input__wrapper__suffix": "_1f7L6KL", "input__wrapper__prefix": "_3WR4EVH" };
 
 // Thanks to https://github.com/andreypopp/react-textarea-autosize/
 
@@ -10913,10 +11814,12 @@ function calculateNodeHeight(uiTextNode) {
   return { height: height, minHeight: minHeight, maxHeight: maxHeight };
 }
 
-var _dec$4;
-var _class$6;
-var _class2$4;
-var _temp$6;
+var styles$7 = { "input__wrapper": "_3qf4zVS", "input__prefix": "_3HOujdo", "input__suffix": "_2kHrSHK", "base": "_3d8Ip3y", "disabled": "_23bMeMN", "normal": "_2zTE3Ne", "large": "_3XuYOM0", "small": "_2t3xTWo", "input__text": "_3hkY6oH _3d8Ip3y", "input__textarea": "_1whAjSd _3d8Ip3y", "input__card": "_1_MWs1W _3d8Ip3y", "input__disabled": "_1SNztTO _3d8Ip3y _23bMeMN", "input__large": "_3PBNxgP _3d8Ip3y _3XuYOM0", "input__normal": "_1Ulh8TU _3d8Ip3y _2zTE3Ne", "input__small": "jvPBoLu _3d8Ip3y _2t3xTWo", "input__group": "VQEgDJZ", "input__19": "_3BWtBIU", "input__20": "_1k-xfqh", "input__wrapper__suffix": "_1f7L6KL", "input__wrapper__prefix": "_3WR4EVH" };
+
+var _dec$6;
+var _class$9;
+var _class2$6;
+var _temp$9;
 
 /**
  * Input Component
@@ -10929,7 +11832,7 @@ function fixControlledValue(value) {
   return value;
 }
 
-var Input$1 = (_dec$4 = CSSModules(styles$5, { allowMultiple: allowMultiple }), _dec$4(_class$6 = (_temp$6 = _class2$4 = function (_PureComponent) {
+var Input$1 = (_dec$6 = CSSModules(styles$7, { allowMultiple: allowMultiple }), _dec$6(_class$9 = (_temp$9 = _class2$6 = function (_PureComponent) {
   inherits(Input, _PureComponent);
 
   function Input(props) {
@@ -10969,35 +11872,43 @@ var Input$1 = (_dec$4 = CSSModules(styles$5, { allowMultiple: allowMultiple }), 
   createClass(Input, [{
     key: 'renderLabeledIcon',
     value: function renderLabeledIcon(children) {
-      var props = this.props;
-      if (props.type === 'textarea' || !('prefix' in props || 'suffix' in props)) {
+      var _props = this.props,
+          type = _props.type,
+          prefix = _props.prefix,
+          suffix = _props.suffix,
+          style = _props.style;
+
+      if (type === 'textarea' || !('prefix' in this.props || 'suffix' in this.props)) {
         return children;
       }
 
-      var prefix = props.prefix ? React.createElement(
+      var prefixNode = prefix ? React.createElement(
         'span',
         { styleName: 'input__prefix' },
-        props.prefix
+        prefix
       ) : null;
 
-      var suffix = props.suffix ? React.createElement(
+      var suffixNode = suffix ? React.createElement(
         'span',
         { styleName: 'input__suffix' },
-        props.suffix
+        suffix
       ) : null;
 
       var inputProps = {
-        styleName: '' + (props.prefix ? 'input__wrapper input__wrapper__prefix' : props.suffix ? 'input__wrapper input__wrapper__suffix' : 'input__wrapper')
+        styleName: index$4('input__wrapper', {
+          input__wrapper__prefix: prefix,
+          input__wrapper__suffix: suffix
+        })
       };
 
       return React.createElement(
         'span',
         _extends({}, inputProps, {
-          style: props.style
+          style: style
         }),
-        prefix,
+        prefixNode,
         cloneElement(children),
-        suffix
+        suffixNode
       );
     }
   }, {
@@ -11028,7 +11939,7 @@ var Input$1 = (_dec$4 = CSSModules(styles$5, { allowMultiple: allowMultiple }), 
 
       if (type === 'textarea') {
         return React.createElement('textarea', _extends({}, fieldProps, {
-          style: index$5({}, props.style, this.state.textareaStyles),
+          style: index$6({}, props.style, this.state.textareaStyles),
           onChange: this.textareaChange
         }));
       }
@@ -11036,18 +11947,18 @@ var Input$1 = (_dec$4 = CSSModules(styles$5, { allowMultiple: allowMultiple }), 
     }
   }]);
   return Input;
-}(PureComponent), _class2$4.displayName = 'Input', _class2$4.defaultProps = {
+}(PureComponent), _class2$6.displayName = 'Input', _class2$6.defaultProps = {
   type: 'text',
   size: 'normal',
-  // wrapperCls:'input__wrapper',
   disabled: false,
   autosize: false,
+  prefix: undefined,
+  suffix: undefined,
   onChange: function onChange() {}
-}, _class2$4.propTypes = {
+}, _class2$6.propTypes = {
   // style: PropTypes.CSSProperties,
   type: index$1.oneOf(['text', 'textarea']),
   size: index$1.oneOf(['normal', 'large', 'small']),
-  // wrapperCls: PropTypes.string,
   disabled: index$1.bool,
   // value: PropTypes.any,
   // defaultValue: PropTypes.any,
@@ -11055,37 +11966,39 @@ var Input$1 = (_dec$4 = CSSModules(styles$5, { allowMultiple: allowMultiple }), 
   prefix: index$1.node,
   suffix: index$1.node,
   onChange: index$1.func
-}, _temp$6)) || _class$6);
+}, _temp$9)) || _class$9);
 
-var _dec$5;
-var _class$7;
-var _class2$5;
-var _temp$7;
+var _dec$7;
+var _class$10;
+var _class2$7;
+var _temp2;
 
 /**
  * Input Component
  * @author yan
  */
-var Search = (_dec$5 = CSSModules(styles$5, { allowMultiple: allowMultiple }), _dec$5(_class$7 = (_temp$7 = _class2$5 = function (_PureComponent) {
+var Search = (_dec$7 = CSSModules(styles$7, { allowMultiple: allowMultiple }), _dec$7(_class$10 = (_temp2 = _class2$7 = function (_PureComponent) {
   inherits(Search, _PureComponent);
 
-  function Search(props) {
+  function Search() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
     classCallCheck(this, Search);
 
-    var _this = possibleConstructorReturn(this, (Search.__proto__ || Object.getPrototypeOf(Search)).call(this, props));
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
 
-    _this.onSearch = function () {
+    return _ret = (_temp = (_this = possibleConstructorReturn(this, (_ref = Search.__proto__ || Object.getPrototypeOf(Search)).call.apply(_ref, [this].concat(args))), _this), _this.onSearch = function () {
       var onSearch = _this.props.onSearch;
 
       if (onSearch) {
-        onSearch(_this.input.refs.input.value);
-        console.log(_this.input.refs.input.value);
+        onSearch(_this.input.input.value);
       }
-      _this.input.refs.input.focus();
-    };
-
-    _this.state = {};
-    return _this;
+      _this.input.input.focus();
+    }, _temp), possibleConstructorReturn(_this, _ret);
   }
 
   createClass(Search, [{
@@ -11094,9 +12007,8 @@ var Search = (_dec$5 = CSSModules(styles$5, { allowMultiple: allowMultiple }), _
       var _this2 = this;
 
       var _props = this.props,
-          suffix = _props.suffix,
           onSearch = _props.onSearch,
-          otherProps = objectWithoutProperties(_props, ['suffix', 'onSearch']);
+          otherProps = objectWithoutProperties(_props, ['onSearch']);
 
 
       var searchSuffix = React.createElement(Icon, {
@@ -11114,11 +12026,11 @@ var Search = (_dec$5 = CSSModules(styles$5, { allowMultiple: allowMultiple }), _
     }
   }]);
   return Search;
-}(PureComponent), _class2$5.displayName = 'Search', _class2$5.defaultProps = {
+}(PureComponent), _class2$7.displayName = 'Search', _class2$7.defaultProps = {
   onSearch: function onSearch() {}
-}, _class2$5.propTypes = {
+}, _class2$7.propTypes = {
   onSearch: index$1.func
-}, _temp$7)) || _class$7);
+}, _temp2)) || _class$10);
 
 Input$1.Search = Search;
 
@@ -12514,72 +13426,102 @@ function renderTo() {
   };
 }
 
-var styles$6 = { "trigger": "_3A_xDs1", "trigger--wrap": "_1fJcokE", "popup": "_3WT1yrT", "triggerWrap": "_1fJcokE" };
+var styles$8 = { "trigger": "_3A_xDs1", "trigger--wrap": "_1fJcokE", "popup": "_3WT1yrT", "popup--hidden": "_3CuSPSp", "triggerWrap": "_1fJcokE", "popupHidden": "_3CuSPSp" };
 
-var _dec$8;
-var _dec2;
-var _class$10;
-var _class2$8;
-var _temp$10;
+var _dec$10;
+var _class$13;
+var _class2$10;
+var _temp$12;
 
 /**
  * Popup Component
  * @author ryan.bian
  */
-var Popup = (_dec$8 = renderTo(), _dec2 = CSSModules(styles$6, { allowMultiple: allowMultiple }), _dec$8(_class$10 = _dec2(_class$10 = (_temp$10 = _class2$8 = function (_PureComponent) {
+var Popup = (_dec$10 = renderTo(), _dec$10(_class$13 = (_temp$12 = _class2$10 = function (_PureComponent) {
   inherits(Popup, _PureComponent);
 
-  function Popup() {
+  function Popup(props) {
     classCallCheck(this, Popup);
-    return possibleConstructorReturn(this, (Popup.__proto__ || Object.getPrototypeOf(Popup)).apply(this, arguments));
+
+    var _this = possibleConstructorReturn(this, (Popup.__proto__ || Object.getPrototypeOf(Popup)).call(this, props));
+
+    _this.state = {
+      popupVisible: props.visible
+    };
+    return _this;
   }
 
+  // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
+
+
   createClass(Popup, [{
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      if (nextProps.visible && !this.props.visible) {
+        this.setState({
+          popupVisible: true
+        });
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       var _props = this.props,
           children = _props.children,
           popupRef = _props.popupRef,
           position = _props.position,
           visible = _props.visible,
-          onMouseEnter = _props.onMouseEnter,
-          onMouseLeave = _props.onMouseLeave;
+          otherProps = objectWithoutProperties(_props, ['children', 'popupRef', 'position', 'visible']);
+      var popupVisible = this.state.popupVisible;
 
-      var stylePos = {
-        left: position[0],
-        top: position[1]
-      };
-      var wrapProps = {
+      var wrapProps = _extends({
         ref: popupRef,
-        styleName: 'popup',
-        style: stylePos,
-        onMouseEnter: onMouseEnter,
-        onMouseLeave: onMouseLeave
-      };
-      return visible ? React.createElement(
-        'div',
-        wrapProps,
-        children
-      ) : null;
+        className: index$4(styles$8.popup, defineProperty$2({}, styles$8['popup--hidden'], !popupVisible))
+      }, otherProps);
+      return React.createElement(
+        Animation,
+        {
+          duration: 300,
+          timingFunction: 'ease-in-out',
+          'in': visible,
+          motion: 'fade',
+          mountOnEnter: true,
+          appear: true,
+          onExited: function onExited() {
+            _this2.setState({
+              popupVisible: false
+            });
+          },
+          style: {
+            position: 'absolute',
+            left: position[0],
+            top: position[1]
+          }
+        },
+        React.createElement(
+          'div',
+          wrapProps,
+          children
+        )
+      );
     }
-
-    // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
-
   }]);
   return Popup;
-}(PureComponent), _class2$8.displayName = 'Popup', _class2$8.defaultProps = {
+}(PureComponent), _class2$10.displayName = 'Popup', _class2$10.defaultProps = {
   position: [0, 0],
   popupRef: null,
   visible: false,
   onMouseEnter: function onMouseEnter() {},
   onMouseLeave: function onMouseLeave() {}
-}, _class2$8.propTypes = {
+}, _class2$10.propTypes = {
   position: index$1.arrayOf(index$1.number),
   popupRef: index$1.func,
   visible: index$1.bool,
   onMouseEnter: index$1.func,
   onMouseLeave: index$1.func
-}, _temp$10)) || _class$10) || _class$10);
+}, _temp$12)) || _class$13);
 
 /**
  * 绑定事件
@@ -12600,16 +13542,17 @@ var off = function off(node, type, listener) {
   node.removeEventListener(type, listener, false);
 };
 
-var _dec$7;
-var _class$9;
-var _class2$7;
-var _temp$9;
+var _dec$9;
+var _class$12;
+var _class2$9;
+var _temp$11;
+var _initialiseProps$2;
 
 /**
  * Trigger Component
  * @author ryan.bian
  */
-var Trigger = (_dec$7 = CSSModules(styles$6, { allowMultiple: allowMultiple }), _dec$7(_class$9 = (_temp$9 = _class2$7 = function (_PureComponent) {
+var Trigger = (_dec$9 = CSSModules(styles$8, { allowMultiple: allowMultiple }), _dec$9(_class$12 = (_temp$11 = _class2$9 = function (_PureComponent) {
   inherits(Trigger, _PureComponent);
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
@@ -12618,61 +13561,12 @@ var Trigger = (_dec$7 = CSSModules(styles$6, { allowMultiple: allowMultiple }), 
 
     var _this = possibleConstructorReturn(this, (Trigger.__proto__ || Object.getPrototypeOf(Trigger)).call(this, props));
 
-    _this.checkClosable = function (e) {
-      if (!_this.node || _this.node.contains(e.target)) return;
-      if (_this.popNode && !_this.popNode.contains(e.target)) {
-        _this.handleClickTrigger();
-      }
-    };
-
-    _this.handleMouseEnter = function () {
-      if (_this.leaveTimer) {
-        clearTimeout(_this.leaveTimer);
-        _this.leaveTimer = null;
-      }
-      var mouseEnterDelay = _this.props.mouseEnterDelay;
-
-      _this.enterTimer = setTimeout(function () {
-        _this.setState({
-          active: true
-        });
-      }, mouseEnterDelay);
-    };
-
-    _this.handleMouseLeave = function () {
-      if (_this.enterTimer) {
-        clearTimeout(_this.enterTimer);
-        _this.enterTimer = null;
-      }
-      var mouseLeaveDelay = _this.props.mouseLeaveDelay;
-
-      _this.leaveTimer = setTimeout(function () {
-        _this.setState({
-          active: false
-        });
-      }, mouseLeaveDelay);
-    };
-
-    _this.handleClickTrigger = function (e) {
-      if (e) {
-        e.preventDefault();
-      }
-      _this.setState({
-        active: !_this.state.active
-      }, function () {
-        if (_this.state.active) {
-          // bind close listener
-          on(document.body, 'click', _this.checkClosable);
-        } else {
-          // unbind close listener
-          off(document.body, 'click', _this.checkClosable);
-        }
-      });
-    };
+    _initialiseProps$2.call(_this);
 
     _this.state = {
       position: [],
-      active: false
+      active: Trigger.getVisibleStateByProps(props),
+      ready: false
     };
     return _this;
   }
@@ -12683,14 +13577,31 @@ var Trigger = (_dec$7 = CSSModules(styles$6, { allowMultiple: allowMultiple }), 
       this.applyPlacement(this.props);
     }
   }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      var _this2 = this;
+
+      if (Trigger.isPopupVisibleDefined(nextProps)) {
+        this.setState({
+          active: Trigger.getVisibleStateByProps(nextProps)
+        }, function () {
+          if (_this2.state.active) {
+            on(document.body, 'click', _this2.checkClosable);
+          } else {
+            off(document.body, 'click', _this2.checkClosable);
+          }
+        });
+      }
+    }
+  }, {
     key: 'componentDidUpdate',
     value: function componentDidUpdate(prevProps, prevState) {
-      var _this2 = this;
+      var _this3 = this;
 
       if (!prevState.active && this.state.active) {
         setTimeout(function () {
-          _this2.applyPlacement(_this2.props);
-        }, 0);
+          _this3.applyPlacement(_this3.props);
+        }, 100);
       }
     }
   }, {
@@ -12704,6 +13615,12 @@ var Trigger = (_dec$7 = CSSModules(styles$6, { allowMultiple: allowMultiple }), 
 
       var selfRect = Trigger.getTargetRect(this.node);
       var popupRect = Trigger.getTargetRect(this.popNode);
+      if (popupRect.width === 0 && popupRect.height === 0) {
+        this.setState({
+          ready: false
+        });
+        return;
+      }
       var scrollX = window.pageXOffset || document.documentElement.scrollLeft;
       var scrollY = window.pageYOffset || document.documentElement.scrollTop;
       var x = scrollX;
@@ -12755,15 +13672,23 @@ var Trigger = (_dec$7 = CSSModules(styles$6, { allowMultiple: allowMultiple }), 
           break;
       }
       var offset = this.props.offset;
+      var position = this.state.position;
 
-      this.setState({
-        position: [x + offset[0], y + offset[1]]
-      });
+      var newState = {
+        ready: true
+      };
+      var newPostition = [x + offset[0], y + offset[1]];
+      if (position[0] !== newPostition[0] || position[0] !== newPostition[0]) {
+        index$6(newState, {
+          position: newPostition
+        });
+      }
+      this.setState(newState);
     }
   }, {
     key: 'renderPopup',
     value: function renderPopup() {
-      var _this3 = this;
+      var _this4 = this;
 
       var action = this.props.action;
       var _state = this.state,
@@ -12772,16 +13697,16 @@ var Trigger = (_dec$7 = CSSModules(styles$6, { allowMultiple: allowMultiple }), 
 
       var popupProps = {
         ref: function ref(n) {
-          return _this3.popup = n;
+          return _this4.popup = n;
         },
         popupRef: function popupRef(n) {
-          return _this3.popNode = n;
+          return _this4.popNode = n;
         },
         position: position,
         visible: active
       };
       if (action === 'hover') {
-        index$5(popupProps, {
+        index$6(popupProps, {
           onMouseEnter: this.handleMouseEnter,
           onMouseLeave: this.handleMouseLeave
         });
@@ -12795,7 +13720,7 @@ var Trigger = (_dec$7 = CSSModules(styles$6, { allowMultiple: allowMultiple }), 
   }, {
     key: 'render',
     value: function render() {
-      var _this4 = this;
+      var _this5 = this;
 
       var _props = this.props,
           action = _props.action,
@@ -12803,17 +13728,17 @@ var Trigger = (_dec$7 = CSSModules(styles$6, { allowMultiple: allowMultiple }), 
 
       var triggerProps = {
         ref: function ref(n) {
-          return _this4.node = n;
+          return _this5.node = n;
         },
         styleName: 'trigger--wrap'
       };
       if (action === 'hover') {
-        index$5(triggerProps, {
+        index$6(triggerProps, {
           onMouseEnter: this.handleMouseEnter,
           onMouseLeave: this.handleMouseLeave
         });
       } else if (action === 'click') {
-        index$5(triggerProps, {
+        index$6(triggerProps, {
           onClick: this.handleClickTrigger
         });
       }
@@ -12830,33 +13755,113 @@ var Trigger = (_dec$7 = CSSModules(styles$6, { allowMultiple: allowMultiple }), 
     }
   }]);
   return Trigger;
-}(PureComponent), _class2$7.displayName = 'Trigger', _class2$7.defaultProps = {
+}(PureComponent), _class2$9.displayName = 'Trigger', _class2$9.defaultProps = {
   action: 'hover',
   placement: ['tl', 'bl'],
   offset: [0, 0],
   popup: '',
+  popupVisible: undefined,
   mouseEnterDelay: 0,
-  mouseLeaveDelay: 100 }, _class2$7.propTypes = {
+  mouseLeaveDelay: 100,
+  onPopupVisibleChange: function onPopupVisibleChange() {}
+}, _class2$9.propTypes = {
   action: index$1.oneOf(['hover', 'click']),
   placement: index$1.arrayOf(index$1.oneOf(Array.from(ALIGN_ENUM))),
   offset: index$1.arrayOf(index$1.number),
-  popup: index$1.oneOfType([index$1.string, index$1.element]),
+  popup: index$1.oneOfType([index$1.string, index$1.element]).isRequired,
+  popupVisible: index$1.bool,
   mouseEnterDelay: index$1.number,
-  mouseLeaveDelay: index$1.number
-}, _class2$7.getTargetRect = function (target) {
+  mouseLeaveDelay: index$1.number,
+  onPopupVisibleChange: index$1.func
+}, _class2$9.getTargetRect = function (target) {
   return target.getBoundingClientRect();
-}, _temp$9)) || _class$9);
+}, _class2$9.getVisibleStateByProps = function (props) {
+  return Trigger.isPopupVisibleDefined(props) ? props.popupVisible : false;
+}, _class2$9.isPopupVisibleDefined = function (props) {
+  return typeof props.popupVisible !== 'undefined';
+}, _initialiseProps$2 = function _initialiseProps() {
+  var _this6 = this;
 
-var _dec$9;
-var _class$11;
-var _class2$9;
-var _temp$11;
+  this.checkClosable = function (e) {
+    if (!_this6.node || _this6.node.contains(e.target)) return;
+    if (_this6.popNode && !_this6.popNode.contains(e.target)) {
+      _this6.handleClickTrigger();
+    }
+  };
+
+  this.handleMouseEnter = function () {
+    if (_this6.leaveTimer) {
+      clearTimeout(_this6.leaveTimer);
+      _this6.leaveTimer = null;
+    }
+    var mouseEnterDelay = _this6.props.mouseEnterDelay;
+
+    _this6.enterTimer = setTimeout(function () {
+      if (Trigger.isPopupVisibleDefined(_this6.props)) {
+        _this6.props.onPopupVisibleChange(true);
+      } else {
+        _this6.setState({
+          active: true
+        }, function () {
+          _this6.props.onPopupVisibleChange(true);
+        });
+      }
+    }, mouseEnterDelay);
+  };
+
+  this.handleMouseLeave = function () {
+    if (_this6.enterTimer) {
+      clearTimeout(_this6.enterTimer);
+      _this6.enterTimer = null;
+    }
+    var mouseLeaveDelay = _this6.props.mouseLeaveDelay;
+
+    _this6.leaveTimer = setTimeout(function () {
+      if (Trigger.isPopupVisibleDefined(_this6.props)) {
+        _this6.props.onPopupVisibleChange(false);
+      } else {
+        _this6.setState({
+          active: false
+        }, function () {
+          _this6.props.onPopupVisibleChange(false);
+        });
+      }
+    }, mouseLeaveDelay);
+  };
+
+  this.handleClickTrigger = function (e) {
+    if (e) {
+      e.preventDefault();
+    }
+    if (Trigger.isPopupVisibleDefined(_this6.props)) {
+      _this6.props.onPopupVisibleChange(!_this6.state.active);
+    } else {
+      _this6.setState({
+        active: !_this6.state.active
+      }, function () {
+        if (_this6.state.active) {
+          // bind close listener
+          on(document.body, 'click', _this6.checkClosable);
+        } else {
+          // unbind close listener
+          off(document.body, 'click', _this6.checkClosable);
+        }
+        _this6.props.onPopupVisibleChange(_this6.state.active);
+      });
+    }
+  };
+}, _temp$11)) || _class$12);
+
+var _dec$11;
+var _class$14;
+var _class2$11;
+var _temp$13;
 
 /**
  * DatePane Component
  * @author ryan.bian
  */
-var DatePane = (_dec$9 = CSSModules(styles$4, { allowMultiple: allowMultiple }), _dec$9(_class$11 = (_temp$11 = _class2$9 = function (_PureComponent) {
+var DatePane = (_dec$11 = CSSModules(styles$6, { allowMultiple: allowMultiple }), _dec$11(_class$14 = (_temp$13 = _class2$11 = function (_PureComponent) {
   inherits(DatePane, _PureComponent);
 
   function DatePane(props) {
@@ -12983,14 +13988,14 @@ var DatePane = (_dec$9 = CSSModules(styles$4, { allowMultiple: allowMultiple }),
         if (i < 0) {
           // last month
           dateNum = moveDate.date();
-          index$5(gridProps, {
+          index$6(gridProps, {
             styleName: 'datePicker__dayGrid datePicker__dayGrid--lastMonth',
             onClick: this.handleClickDate.bind(this, moveYear, month - 1, dateNum)
           });
         } else if (i >= lastDayIndex) {
           // next month
           dateNum = moveDate.date();
-          index$5(gridProps, {
+          index$6(gridProps, {
             styleName: 'datePicker__dayGrid datePicker__dayGrid--nextMonth',
             onClick: this.handleClickDate.bind(this, moveYear, month + 1, dateNum)
           });
@@ -12998,7 +14003,7 @@ var DatePane = (_dec$9 = CSSModules(styles$4, { allowMultiple: allowMultiple }),
           // this month
           dateNum = i + 1;
           var disabled = disabledDate && disabledDate(moveDate);
-          index$5(gridProps, {
+          index$6(gridProps, {
             styleName: index$4('datePicker__dayGrid', 'datePicker__dayGrid--curMonth', {
               'datePicker__dayGrid--active': dateNum === curDate && !disabled,
               'datePicker__dayGrid--disabled': disabled,
@@ -13047,7 +14052,7 @@ var DatePane = (_dec$9 = CSSModules(styles$4, { allowMultiple: allowMultiple }),
     }
   }]);
   return DatePane;
-}(PureComponent), _class2$9.displayName = 'DatePane', _class2$9.defaultProps = {
+}(PureComponent), _class2$11.displayName = 'DatePane', _class2$11.defaultProps = {
   className: '',
   date: moment(),
   showYearPane: function showYearPane() {},
@@ -13057,9 +14062,9 @@ var DatePane = (_dec$9 = CSSModules(styles$4, { allowMultiple: allowMultiple }),
   disabledDate: function disabledDate() {},
 
   inRange: undefined,
-  alwaysShowEqualWeeks: false }, _class2$9.propTypes = {
+  alwaysShowEqualWeeks: false }, _class2$11.propTypes = {
   className: index$1.string,
-  date: index$6.momentObj,
+  date: index$7.momentObj,
   showYearPane: index$1.func,
   showMonthPane: index$1.func,
   changeDate: index$1.func,
@@ -13067,18 +14072,18 @@ var DatePane = (_dec$9 = CSSModules(styles$4, { allowMultiple: allowMultiple }),
   disabledDate: index$1.func,
   inRange: index$1.func,
   alwaysShowEqualWeeks: index$1.bool
-}, _temp$11)) || _class$11);
+}, _temp$13)) || _class$14);
 
-var _dec$10;
-var _class$12;
-var _class2$10;
-var _temp$12;
+var _dec$12;
+var _class$15;
+var _class2$12;
+var _temp$14;
 
 /**
  * MonthPane Component
  * @author ryan.bian
  */
-var MonthPane = (_dec$10 = CSSModules(styles$4, { allowMultiple: allowMultiple }), _dec$10(_class$12 = (_temp$12 = _class2$10 = function (_PureComponent) {
+var MonthPane = (_dec$12 = CSSModules(styles$6, { allowMultiple: allowMultiple }), _dec$12(_class$15 = (_temp$14 = _class2$12 = function (_PureComponent) {
   inherits(MonthPane, _PureComponent);
 
   function MonthPane(props) {
@@ -13174,32 +14179,32 @@ var MonthPane = (_dec$10 = CSSModules(styles$4, { allowMultiple: allowMultiple }
     }
   }]);
   return MonthPane;
-}(PureComponent), _class2$10.displayName = 'MonthPane', _class2$10.defaultProps = {
+}(PureComponent), _class2$12.displayName = 'MonthPane', _class2$12.defaultProps = {
   className: '',
   date: moment(),
   showYearPane: function showYearPane() {},
   showDatePane: function showDatePane() {},
   changeMonth: function changeMonth() {},
   manipulateDate: function manipulateDate() {}
-}, _class2$10.propTypes = {
+}, _class2$12.propTypes = {
   className: index$1.string,
-  date: index$6.momentObj,
+  date: index$7.momentObj,
   showYearPane: index$1.func,
   showDatePane: index$1.func,
   changeMonth: index$1.func,
   manipulateDate: index$1.func
-}, _temp$12)) || _class$12);
+}, _temp$14)) || _class$15);
 
-var _dec$11;
-var _class$13;
-var _class2$11;
-var _temp$13;
+var _dec$13;
+var _class$16;
+var _class2$13;
+var _temp$15;
 
 /**
  * YearPane Component
  * @author ryan.bian
  */
-var YearPane = (_dec$11 = CSSModules(styles$4, { allowMultiple: allowMultiple }), _dec$11(_class$13 = (_temp$13 = _class2$11 = function (_PureComponent) {
+var YearPane = (_dec$13 = CSSModules(styles$6, { allowMultiple: allowMultiple }), _dec$13(_class$16 = (_temp$15 = _class2$13 = function (_PureComponent) {
   inherits(YearPane, _PureComponent);
 
   function YearPane(props) {
@@ -13245,13 +14250,13 @@ var YearPane = (_dec$11 = CSSModules(styles$4, { allowMultiple: allowMultiple })
 
       var newState = {};
       if (backward) {
-        index$5(newState, {
+        index$6(newState, {
           currentYear: currentYear - 10,
           startYear: startYear - 10,
           endYear: endYear - 10
         });
       } else {
-        index$5(newState, {
+        index$6(newState, {
           currentYear: currentYear + 10,
           startYear: startYear + 10,
           endYear: endYear + 10
@@ -13290,11 +14295,11 @@ var YearPane = (_dec$11 = CSSModules(styles$4, { allowMultiple: allowMultiple })
           key: i
         };
         if (i === startYear || i === endYear) {
-          index$5(yearProps, {
+          index$6(yearProps, {
             onClick: this.onJumpDecade.bind(this, i === startYear)
           });
         } else {
-          index$5(yearProps, {
+          index$6(yearProps, {
             onClick: this.onChangeYear.bind(this, i)
           });
         }
@@ -13354,32 +14359,32 @@ var YearPane = (_dec$11 = CSSModules(styles$4, { allowMultiple: allowMultiple })
     }
   }]);
   return YearPane;
-}(PureComponent), _class2$11.displayName = 'YearPane', _class2$11.defaultProps = {
+}(PureComponent), _class2$13.displayName = 'YearPane', _class2$13.defaultProps = {
   className: '',
   date: moment(),
   showDecadePane: function showDecadePane() {},
   showMonthPane: function showMonthPane() {},
   changeYear: function changeYear() {},
   manipulateDate: function manipulateDate() {}
-}, _class2$11.propTypes = {
+}, _class2$13.propTypes = {
   className: index$1.string,
-  date: index$6.momentObj,
+  date: index$7.momentObj,
   showDecadePane: index$1.func,
   showMonthPane: index$1.func,
   changeYear: index$1.func,
   manipulateDate: index$1.func
-}, _temp$13)) || _class$13);
+}, _temp$15)) || _class$16);
 
-var _dec$12;
-var _class$14;
-var _class2$12;
-var _temp$14;
+var _dec$14;
+var _class$17;
+var _class2$14;
+var _temp$16;
 
 /**
  * DecadePane Component
  * @author ryan.bian
  */
-var DecadePane = (_dec$12 = CSSModules(styles$4, { allowMultiple: allowMultiple }), _dec$12(_class$14 = (_temp$14 = _class2$12 = function (_PureComponent) {
+var DecadePane = (_dec$14 = CSSModules(styles$6, { allowMultiple: allowMultiple }), _dec$14(_class$17 = (_temp$16 = _class2$14 = function (_PureComponent) {
   inherits(DecadePane, _PureComponent);
 
   function DecadePane(props) {
@@ -13436,13 +14441,13 @@ var DecadePane = (_dec$12 = CSSModules(styles$4, { allowMultiple: allowMultiple 
 
       var newState = {};
       if (backward) {
-        index$5(newState, {
+        index$6(newState, {
           startYear: startYear - 100,
           endYear: endYear - 100,
           decadeYear: decadeYear - 100
         });
       } else {
-        index$5(newState, {
+        index$6(newState, {
           startYear: startYear + 100,
           endYear: endYear + 100,
           decadeYear: decadeYear + 100
@@ -13496,11 +14501,11 @@ var DecadePane = (_dec$12 = CSSModules(styles$4, { allowMultiple: allowMultiple 
           })
         };
         if (i === startYear - 10 || i === endYear + 1) {
-          index$5(decadeProps, {
+          index$6(decadeProps, {
             onClick: this.onJumpCentury.bind(this, i === startYear - 10)
           });
         } else {
-          index$5(decadeProps, {
+          index$6(decadeProps, {
             onClick: this.onChangeDecade.bind(this, i)
           });
         }
@@ -13530,36 +14535,40 @@ var DecadePane = (_dec$12 = CSSModules(styles$4, { allowMultiple: allowMultiple 
     }
   }]);
   return DecadePane;
-}(PureComponent), _class2$12.displayName = 'DecadePane', _class2$12.defaultProps = {
+}(PureComponent), _class2$14.displayName = 'DecadePane', _class2$14.defaultProps = {
   className: '',
   date: moment(),
   decadeYear: undefined,
   changeYear: function changeYear() {},
   showYearPane: function showYearPane() {}
-}, _class2$12.propTypes = {
+}, _class2$14.propTypes = {
   className: index$1.string,
-  date: index$6.momentObj,
+  date: index$7.momentObj,
   decadeYear: index$1.number,
   changeYear: index$1.func,
   showYearPane: index$1.func
-}, _temp$14)) || _class$14);
+}, _temp$16)) || _class$17);
 
-var _dec$6;
-var _class$8;
-var _class2$6;
-var _temp$8;
+var _dec$8;
+var _class$11;
+var _class2$8;
+var _temp$10;
 
 /**
  * Picker Component
  * @author ryan.bian
  */
-var Picker = (_dec$6 = CSSModules(styles$4, { allowMultiple: allowMultiple }), _dec$6(_class$8 = (_temp$8 = _class2$6 = function (_PureComponent) {
+var Picker = (_dec$8 = CSSModules(styles$6, { allowMultiple: allowMultiple }), _dec$8(_class$11 = (_temp$10 = _class2$8 = function (_PureComponent) {
   inherits(Picker, _PureComponent);
 
   function Picker(props) {
     classCallCheck(this, Picker);
 
     var _this = possibleConstructorReturn(this, (Picker.__proto__ || Object.getPrototypeOf(Picker)).call(this, props));
+
+    _this.onPaneVisibleChange = function (visible) {
+      _this.props.onVisibleChange(visible);
+    };
 
     _this.onSetDecade = function (decadeYear, e, nativeEvent, position) {
       if (_this.props.type === 'range') {
@@ -13640,6 +14649,15 @@ var Picker = (_dec$6 = CSSModules(styles$4, { allowMultiple: allowMultiple }), _
       }
     };
 
+    _this.cancelAction = function () {
+      _this.props.onVisibleChange(false);
+    };
+
+    _this.confirmAction = function () {
+      _this.props.changeDate(_this.state.rangeDate);
+      _this.props.onVisibleChange(false);
+    };
+
     _this.changeDate = function (year, month, date, position) {
       var d = {
         year: year,
@@ -13647,7 +14665,11 @@ var Picker = (_dec$6 = CSSModules(styles$4, { allowMultiple: allowMultiple }), _
         date: date
       };
       if (_this.props.type === 'range') {
-        _this.props.changeDate(d, position);
+        var rangeDate = _this.state.rangeDate.slice(0);
+        rangeDate[position] = moment(d);
+        _this.setState({
+          rangeDate: rangeDate
+        });
       } else {
         _this.props.changeDate(d);
       }
@@ -13656,9 +14678,12 @@ var Picker = (_dec$6 = CSSModules(styles$4, { allowMultiple: allowMultiple }), _
     _this.changeMonth = function (month, position) {
       switch (_this.props.type) {
         case 'range':
-          _this.props.changeDate({
-            month: month
-          }, position);
+          var rangeDate = _this.state.rangeDate;
+
+          rangeDate[position].set('month', month);
+          _this.setState({
+            rangeDate: rangeDate
+          });
           break;
         case 'month':
           _this.props.changeDate({
@@ -13694,7 +14719,7 @@ var Picker = (_dec$6 = CSSModules(styles$4, { allowMultiple: allowMultiple }), _
       }
     };
 
-    _this.state = index$5({
+    _this.state = index$6({
       currentPane: props.type,
       currentRangePane: ['date', 'date'],
       decadeYear: undefined,
@@ -13710,6 +14735,30 @@ var Picker = (_dec$6 = CSSModules(styles$4, { allowMultiple: allowMultiple }), _
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
       this.setState(this.getDateFromProps(nextProps));
+    }
+  }, {
+    key: 'setRange',
+    value: function setRange(range) {
+      var rangeDate = [];
+      switch (range) {
+        case 'today':
+        default:
+          var today = moment();
+          rangeDate.push(today);
+          rangeDate.push(today);
+          break;
+        case 'week':
+          rangeDate.push(moment().startOf('week'));
+          rangeDate.push(moment().endOf('week'));
+          break;
+        case 'month':
+          rangeDate.push(moment().startOf('month'));
+          rangeDate.push(moment().endOf('month'));
+          break;
+      }
+      this.setState({
+        rangeDate: rangeDate
+      });
     }
   }, {
     key: 'getDateFromProps',
@@ -13731,9 +14780,8 @@ var Picker = (_dec$6 = CSSModules(styles$4, { allowMultiple: allowMultiple }), _
     key: 'renderPane',
     value: function renderPane(date, currentPane, decadeYear, position) {
       var className = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : '';
-      var _props = this.props,
-          type = _props.type,
-          rangeDate = _props.rangeDate;
+      var type = this.props.type;
+      var rangeDate = this.state.rangeDate;
 
       var paneProps = {
         date: date,
@@ -13748,7 +14796,7 @@ var Picker = (_dec$6 = CSSModules(styles$4, { allowMultiple: allowMultiple }), _
             disabledDate = function disabledDate(current) {
               return position === 1 ? current.isBefore(rangeDate[0]) : current.isAfter(rangeDate[1]);
             };
-            index$5(paneProps, {
+            index$6(paneProps, {
               inRange: function inRange(current) {
                 return current.isBetween(rangeDate[0], rangeDate[1]);
               },
@@ -13757,7 +14805,7 @@ var Picker = (_dec$6 = CSSModules(styles$4, { allowMultiple: allowMultiple }), _
           } else {
             disabledDate = this.props.disabledDate;
           }
-          index$5(paneProps, {
+          index$6(paneProps, {
             changeDate: partialRight_1(this.changeDate, position),
             showYearPane: partialRight_1(this.onSetYear, position),
             showMonthPane: partialRight_1(this.onSetMonth, position),
@@ -13767,7 +14815,7 @@ var Picker = (_dec$6 = CSSModules(styles$4, { allowMultiple: allowMultiple }), _
           pane = DatePane;
           break;
         case 'month':
-          index$5(paneProps, {
+          index$6(paneProps, {
             changeMonth: partialRight_1(this.changeMonth, position),
             showYearPane: partialRight_1(this.onSetYear, position),
             showDatePane: partialRight_1(this.onSetDate, position)
@@ -13775,7 +14823,7 @@ var Picker = (_dec$6 = CSSModules(styles$4, { allowMultiple: allowMultiple }), _
           pane = MonthPane;
           break;
         case 'year':
-          index$5(paneProps, {
+          index$6(paneProps, {
             changeYear: partialRight_1(this.changeYear, position),
             showMonthPane: partialRight_1(this.onSetMonth, position),
             showDecadePane: partialRight_1(this.onSetDecade, position)
@@ -13783,7 +14831,7 @@ var Picker = (_dec$6 = CSSModules(styles$4, { allowMultiple: allowMultiple }), _
           pane = YearPane;
           break;
         case 'decade':
-          index$5(paneProps, {
+          index$6(paneProps, {
             changeYear: partialRight_1(this.changeYear, position),
             showYearPane: partialRight_1(this.onSetYear, position),
             decadeYear: decadeYear
@@ -13796,9 +14844,12 @@ var Picker = (_dec$6 = CSSModules(styles$4, { allowMultiple: allowMultiple }), _
   }, {
     key: 'render',
     value: function render() {
-      var _props2 = this.props,
-          children = _props2.children,
-          type = _props2.type;
+      var _this2 = this;
+
+      var _props = this.props,
+          children = _props.children,
+          type = _props.type,
+          paneVisible = _props.paneVisible;
       var _state = this.state,
           date = _state.date,
           rangeDate = _state.rangeDate,
@@ -13811,9 +14862,64 @@ var Picker = (_dec$6 = CSSModules(styles$4, { allowMultiple: allowMultiple }), _
       if (type === 'range') {
         popup = React.createElement(
           'div',
-          { className: styles$4.rangePicker },
-          this.renderPane(rangeDate[0], currentRangePane[0], decadeYears[0], 0, styles$4['picker--start']),
-          this.renderPane(rangeDate[1], currentRangePane[1], decadeYears[1], 1, styles$4['picker--end'])
+          { className: styles$6.rangePicker },
+          React.createElement(
+            'div',
+            { className: styles$6.rangePicker__picker },
+            this.renderPane(rangeDate[0], currentRangePane[0], decadeYears[0], 0, styles$6['picker--start']),
+            this.renderPane(rangeDate[1], currentRangePane[1], decadeYears[1], 1, styles$6['picker--end'])
+          ),
+          React.createElement(
+            'div',
+            { className: styles$6.rangePicker__quickSelect },
+            React.createElement(
+              Button,
+              {
+                size: 'small',
+                type: 'secondary',
+                onClick: function onClick() {
+                  _this2.setRange('today');
+                }
+              },
+              '\u4ECA\u5929'
+            ),
+            React.createElement(
+              Button,
+              {
+                size: 'small',
+                type: 'secondary',
+                onClick: function onClick() {
+                  _this2.setRange('week');
+                }
+              },
+              '\u672C\u5468'
+            ),
+            React.createElement(
+              Button,
+              {
+                size: 'small',
+                type: 'secondary',
+                onClick: function onClick() {
+                  _this2.setRange('month');
+                }
+              },
+              '\u672C\u6708'
+            )
+          ),
+          React.createElement(
+            'div',
+            { className: styles$6.rangePicker__action },
+            React.createElement(
+              Button,
+              { type: 'secondary', onClick: this.cancelAction },
+              '\u53D6\u6D88'
+            ),
+            React.createElement(
+              Button,
+              { type: 'primary', onClick: this.confirmAction },
+              '\u786E\u5B9A'
+            )
+          )
         );
       } else {
         popup = this.renderPane(date, currentPane, decadeYear);
@@ -13822,22 +14928,26 @@ var Picker = (_dec$6 = CSSModules(styles$4, { allowMultiple: allowMultiple }), _
         Trigger,
         {
           popup: popup,
-          action: 'click'
+          action: 'click',
+          popupVisible: paneVisible,
+          onPopupVisibleChange: this.onPaneVisibleChange
         },
         children
       );
     }
   }]);
   return Picker;
-}(PureComponent), _class2$6.displayName = 'Picker', _class2$6.defaultProps = {
+}(PureComponent), _class2$8.displayName = 'Picker', _class2$8.defaultProps = {
   date: moment(),
   rangeDate: [moment(), moment()],
   type: 'date',
   changeDate: function changeDate() {},
-  disabledDate: function disabledDate() {}
-}, _class2$6.propTypes = {
-  date: index$6.momentObj,
-  rangeDate: index$1.arrayOf(index$6.momentObj),
+  disabledDate: function disabledDate() {},
+  onVisibleChange: function onVisibleChange() {},
+
+  paneVisible: false }, _class2$8.propTypes = {
+  date: index$7.momentObj,
+  rangeDate: index$1.arrayOf(index$7.momentObj),
   /**
    * 'date' for datePicker
    * 'month' for monthPicker
@@ -13845,25 +14955,39 @@ var Picker = (_dec$6 = CSSModules(styles$4, { allowMultiple: allowMultiple }), _
    */
   type: index$1.oneOf(['date', 'month', 'range']),
   changeDate: index$1.func,
-  disabledDate: index$1.func
-}, _temp$8)) || _class$8);
+  disabledDate: index$1.func,
+  onVisibleChange: index$1.func,
+  paneVisible: index$1.bool
+}, _temp$10)) || _class$11);
 
-var _dec$3;
-var _class$5;
-var _class2$3;
-var _temp$5;
+var _dec$5;
+var _class$8;
+var _class2$5;
+var _temp$8;
 
 /**
  * DatePicker Component
  * @author ryan.bian
  */
-var DatePicker$1 = (_dec$3 = CSSModules(styles$4, { allowMultiple: allowMultiple }), _dec$3(_class$5 = (_temp$5 = _class2$3 = function (_PureComponent) {
+var DatePicker$1 = (_dec$5 = CSSModules(styles$6, { allowMultiple: allowMultiple }), _dec$5(_class$8 = (_temp$8 = _class2$5 = function (_PureComponent) {
   inherits(DatePicker, _PureComponent);
 
   function DatePicker(props) {
     classCallCheck(this, DatePicker);
 
     var _this = possibleConstructorReturn(this, (DatePicker.__proto__ || Object.getPrototypeOf(DatePicker)).call(this, props));
+
+    _this.handleClickField = function () {
+      _this.setState({
+        paneVisible: true
+      });
+    };
+
+    _this.handlePickerVisibleChange = function (visible) {
+      _this.setState({
+        paneVisible: visible
+      });
+    };
 
     _this.changeDateInternal = function (changeData) {
       var value = _this.state.value;
@@ -13879,10 +15003,14 @@ var DatePicker$1 = (_dec$3 = CSSModules(styles$4, { allowMultiple: allowMultiple
         });
         _this.props.onChange(newValue);
       }
+      _this.setState({
+        paneVisible: false
+      });
     };
 
     _this.state = {
-      value: moment(props.value || props.defaultValue)
+      value: moment(props.value || props.defaultValue),
+      paneVisible: false
     };
     return _this;
   }
@@ -13909,12 +15037,15 @@ var DatePicker$1 = (_dec$3 = CSSModules(styles$4, { allowMultiple: allowMultiple
     value: function shouldComponentUpdate(nextProps, nextState) {
       if (!isEqual_1(nextProps, this.props)) return true;
       if (!this.state.value.isSame(nextState.value)) return true;
+      if (this.state.paneVisible !== nextState.paneVisible) return true;
       return false;
     }
   }, {
     key: 'render',
     value: function render() {
-      var value = this.state.value;
+      var _state = this.state,
+          value = _state.value,
+          paneVisible = _state.paneVisible;
       var _props = this.props,
           pickerType = _props.pickerType,
           disabled = _props.disabled,
@@ -13927,11 +15058,13 @@ var DatePicker$1 = (_dec$3 = CSSModules(styles$4, { allowMultiple: allowMultiple
         date: value,
         changeDate: this.changeDateInternal,
         type: pickerType,
-        disabledDate: disabledDate
+        disabledDate: disabledDate,
+        paneVisible: paneVisible,
+        onVisibleChange: this.handlePickerVisibleChange
       };
       var fieldStyle = {};
       if (fieldWidth) {
-        index$5(fieldStyle, {
+        index$6(fieldStyle, {
           width: fieldWidth
         });
       }
@@ -13940,7 +15073,8 @@ var DatePicker$1 = (_dec$3 = CSSModules(styles$4, { allowMultiple: allowMultiple
         disabled: disabled,
         value: value.format(format),
         size: fieldSize,
-        style: fieldStyle
+        style: fieldStyle,
+        onClick: this.handleClickField
       };
       return disabled ? React.createElement(Input$1, inputProps) : React.createElement(
         Picker,
@@ -13950,24 +15084,24 @@ var DatePicker$1 = (_dec$3 = CSSModules(styles$4, { allowMultiple: allowMultiple
     }
   }]);
   return DatePicker;
-}(PureComponent), _class2$3.displayName = 'DatePicker', _class2$3.defaultProps = index$5({}, defaultProps, {
+}(PureComponent), _class2$5.displayName = 'DatePicker', _class2$5.defaultProps = index$6({}, defaultProps, {
   pickerType: 'date',
   disabledDate: function disabledDate() {}
-}), _class2$3.propTypes = index$5(propTypes, {
+}), _class2$5.propTypes = index$6(propTypes, {
   pickerType: index$1.oneOf(['date', 'month', 'range']),
   disabledDate: index$1.func
-}), _temp$5)) || _class$5);
+}), _temp$8)) || _class$8);
 
-var _dec$13;
-var _class$15;
-var _class2$13;
-var _temp$15;
+var _dec$15;
+var _class$18;
+var _class2$15;
+var _temp$17;
 
 /**
  * MonthPicker Component
  * @author ryan.bian
  */
-var MonthPicker = (_dec$13 = CSSModules(styles$4, { allowMultiple: allowMultiple }), _dec$13(_class$15 = (_temp$15 = _class2$13 = function (_PureComponent) {
+var MonthPicker = (_dec$15 = CSSModules(styles$6, { allowMultiple: allowMultiple }), _dec$15(_class$18 = (_temp$17 = _class2$15 = function (_PureComponent) {
   inherits(MonthPicker, _PureComponent);
 
   function MonthPicker() {
@@ -13992,20 +15126,20 @@ var MonthPicker = (_dec$13 = CSSModules(styles$4, { allowMultiple: allowMultiple
 
   }]);
   return MonthPicker;
-}(PureComponent), _class2$13.displayName = 'MonthPicker', _class2$13.defaultProps = index$5({}, defaultProps, {
+}(PureComponent), _class2$15.displayName = 'MonthPicker', _class2$15.defaultProps = index$6({}, defaultProps, {
   format: 'YYYY-MM'
-}), _class2$13.propTypes = propTypes, _temp$15)) || _class$15);
+}), _class2$15.propTypes = propTypes, _temp$17)) || _class$18);
 
-var _dec$14;
-var _class$16;
-var _class2$14;
-var _temp$16;
+var _dec$16;
+var _class$19;
+var _class2$16;
+var _temp$18;
 
 /**
  * RangePicker Component
  * @author ryan.bian
  */
-var RangePicker = (_dec$14 = CSSModules(styles$4, { allowMultiple: allowMultiple }), _dec$14(_class$16 = (_temp$16 = _class2$14 = function (_PureComponent) {
+var RangePicker = (_dec$16 = CSSModules(styles$6, { allowMultiple: allowMultiple }), _dec$16(_class$19 = (_temp$18 = _class2$16 = function (_PureComponent) {
   inherits(RangePicker, _PureComponent);
 
   function RangePicker(props) {
@@ -14013,10 +15147,19 @@ var RangePicker = (_dec$14 = CSSModules(styles$4, { allowMultiple: allowMultiple
 
     var _this = possibleConstructorReturn(this, (RangePicker.__proto__ || Object.getPrototypeOf(RangePicker)).call(this, props));
 
-    _this.changeDateInternal = function (changeData, position) {
-      var rangeValue = _this.state.rangeValue;
+    _this.handleClickField = function () {
+      _this.setState({
+        paneVisible: true
+      });
+    };
 
-      rangeValue[position] = moment(rangeValue[position]).set(changeData);
+    _this.handlePickerVisibleChange = function (visible) {
+      _this.setState({
+        paneVisible: visible
+      });
+    };
+
+    _this.changeDateInternal = function (rangeValue) {
       if (typeof _this.props.value !== 'undefined') {
         // 受控组件
         _this.props.onChange(rangeValue);
@@ -14031,7 +15174,8 @@ var RangePicker = (_dec$14 = CSSModules(styles$4, { allowMultiple: allowMultiple
 
     var value = props.value || props.defaultValue || [moment(), moment()];
     _this.state = {
-      rangeValue: value
+      rangeValue: value,
+      paneVisible: false
     };
     return _this;
   }
@@ -14047,37 +15191,42 @@ var RangePicker = (_dec$14 = CSSModules(styles$4, { allowMultiple: allowMultiple
           format = _props.format,
           fieldSize = _props.fieldSize,
           fieldWidth = _props.fieldWidth;
-      var rangeValue = this.state.rangeValue;
+      var _state = this.state,
+          rangeValue = _state.rangeValue,
+          paneVisible = _state.paneVisible;
 
       var pickerProps = {
         rangeDate: rangeValue,
         type: 'range',
-        changeDate: this.changeDateInternal
+        changeDate: this.changeDateInternal,
+        paneVisible: paneVisible,
+        onVisibleChange: this.handlePickerVisibleChange
       };
       var fieldStyle = {};
       var field = {
         // type: 'text',
         disabled: disabled,
-        size: fieldSize
+        size: fieldSize,
+        onClick: this.handleClickField
       };
       if (fieldWidth) {
-        index$5(fieldStyle, {
+        index$6(fieldStyle, {
           width: fieldWidth
         });
       }
-      var startField = index$5({}, field, {
+      var startField = index$6({}, field, {
         key: 'startDate',
         value: rangeValue[0].format(format),
-        style: index$5({}, fieldStyle, {
+        style: index$6({}, fieldStyle, {
           borderTopRightRadius: 0,
           borderBottomRightRadius: 0,
           borderRight: '0 none'
         })
       });
-      var endField = index$5({}, field, {
+      var endField = index$6({}, field, {
         key: 'endDate',
         value: rangeValue[1].format(format),
-        style: index$5({}, fieldStyle, {
+        style: index$6({}, fieldStyle, {
           borderTopLeftRadius: 0,
           borderBottomLeftRadius: 0,
           borderLeft: '0 none'
@@ -14096,32 +15245,32 @@ var RangePicker = (_dec$14 = CSSModules(styles$4, { allowMultiple: allowMultiple
     }
   }]);
   return RangePicker;
-}(PureComponent), _class2$14.displayName = 'RangePicker', _class2$14.defaultProps = index$5({}, defaultProps, {
+}(PureComponent), _class2$16.displayName = 'RangePicker', _class2$16.defaultProps = index$6({}, defaultProps, {
   fieldWidth: 100
-}), _class2$14.propTypes = index$5({}, propTypes, {
-  value: index$1.arrayOf(index$6.momentObj),
-  defaultValue: index$1.arrayOf(index$6.momentObj)
-}), _temp$16)) || _class$16);
+}), _class2$16.propTypes = index$6({}, propTypes, {
+  value: index$1.arrayOf(index$7.momentObj),
+  defaultValue: index$1.arrayOf(index$7.momentObj)
+}), _temp$18)) || _class$19);
 
 DatePicker$1.MonthPicker = MonthPicker;
 DatePicker$1.RangePicker = RangePicker;
 
-var styles$7 = { "dropdown--buttonWrap": "gLXAOiI", "dropdown--menuItem": "_2pDhaod", "dropdown": "_2wHqwX6", "dropdown--menu": "Hze9W1M", "dropdownButtonWrap": "gLXAOiI", "dropdownMenuItem": "_2pDhaod", "dropdownMenu": "Hze9W1M" };
+var styles$9 = { "dropdown--buttonWrap": "gLXAOiI", "dropdown--menuItem": "_2pDhaod", "dropdown": "_2wHqwX6", "dropdown--menu": "Hze9W1M", "dropdownButtonWrap": "gLXAOiI", "dropdownMenuItem": "_2pDhaod", "dropdownMenu": "Hze9W1M" };
 
-var _dec$16;
-var _class$18;
-var _class2$16;
-var _temp$18;
-var _dec2$2;
+var _dec$18;
+var _class$21;
+var _class2$18;
+var _temp$20;
+var _dec2$1;
 var _class3$1;
 var _class4$1;
-var _temp2$1;
+var _temp2$2;
 
 /**
  * Dropdown.Menu Component
  * @author ryan.bian
  */
-var Menu = (_dec$16 = CSSModules(styles$7, { allowMultiple: allowMultiple }), _dec$16(_class$18 = (_temp$18 = _class2$16 = function (_PureComponent) {
+var Menu = (_dec$18 = CSSModules(styles$9, { allowMultiple: allowMultiple }), _dec$18(_class$21 = (_temp$20 = _class2$18 = function (_PureComponent) {
   inherits(Menu, _PureComponent);
 
   function Menu(props) {
@@ -14151,8 +15300,8 @@ var Menu = (_dec$16 = CSSModules(styles$7, { allowMultiple: allowMultiple }), _d
     }
   }]);
   return Menu;
-}(PureComponent), _class2$16.displayName = 'Menu', _class2$16.defaultProps = {}, _class2$16.propTypes = {}, _temp$18)) || _class$18);
-var Item = (_dec2$2 = CSSModules(styles$7, { allowMultiple: allowMultiple }), _dec2$2(_class3$1 = (_temp2$1 = _class4$1 = function (_PureComponent2) {
+}(PureComponent), _class2$18.displayName = 'Menu', _class2$18.defaultProps = {}, _class2$18.propTypes = {}, _temp$20)) || _class$21);
+var Item = (_dec2$1 = CSSModules(styles$9, { allowMultiple: allowMultiple }), _dec2$1(_class3$1 = (_temp2$2 = _class4$1 = function (_PureComponent2) {
   inherits(Item, _PureComponent2);
 
   function Item(props) {
@@ -14180,7 +15329,7 @@ var Item = (_dec2$2 = CSSModules(styles$7, { allowMultiple: allowMultiple }), _d
     }
   }]);
   return Item;
-}(PureComponent), _class4$1.displayName = 'Item', _class4$1.defaultProps = {}, _class4$1.propTypes = {}, _temp2$1)) || _class3$1);
+}(PureComponent), _class4$1.displayName = 'Item', _class4$1.defaultProps = {}, _class4$1.propTypes = {}, _temp2$2)) || _class3$1);
 
 
 Menu.Item = Item;
@@ -14212,20 +15361,20 @@ var Placements = {
   }
 };
 
-var _dec$15;
-var _class$17;
-var _class2$15;
-var _temp$17;
-var _dec2$1;
+var _dec$17;
+var _class$20;
+var _class2$17;
+var _temp$19;
+var _dec2;
 var _class3;
 var _class4;
-var _temp2;
+var _temp2$1;
 
 /**
  * Dropdown Component
  * @author ryan.bian
  */
-var Dropdown = (_dec$15 = CSSModules(styles$7, { allowMultiple: allowMultiple }), _dec$15(_class$17 = (_temp$17 = _class2$15 = function (_PureComponent) {
+var Dropdown = (_dec$17 = CSSModules(styles$9, { allowMultiple: allowMultiple }), _dec$17(_class$20 = (_temp$19 = _class2$17 = function (_PureComponent) {
   inherits(Dropdown, _PureComponent);
 
   function Dropdown(props) {
@@ -14265,15 +15414,15 @@ var Dropdown = (_dec$15 = CSSModules(styles$7, { allowMultiple: allowMultiple })
     }
   }]);
   return Dropdown;
-}(PureComponent), _class2$15.displayName = 'Dropdown', _class2$15.defaultProps = {
+}(PureComponent), _class2$17.displayName = 'Dropdown', _class2$17.defaultProps = {
   trigger: 'click',
   overlay: undefined,
-  placement: 'bottomLeft' }, _class2$15.propTypes = {
+  placement: 'bottomLeft' }, _class2$17.propTypes = {
   trigger: index$1.oneOf(['hover', 'click']),
   overlay: index$1.instanceOf(Menu),
   placement: index$1.oneOf(['bottomLeft', 'bottomCenter', 'bottomRight', 'topLeft', 'topCenter', 'topRight'])
-}, _temp$17)) || _class$17);
-var DropdownButton = (_dec2$1 = CSSModules(styles$7, { allowMultiple: allowMultiple }), _dec2$1(_class3 = (_temp2 = _class4 = function (_PureComponent2) {
+}, _temp$19)) || _class$20);
+var DropdownButton = (_dec2 = CSSModules(styles$9, { allowMultiple: allowMultiple }), _dec2(_class3 = (_temp2$1 = _class4 = function (_PureComponent2) {
   inherits(DropdownButton, _PureComponent2);
 
   function DropdownButton(props) {
@@ -14321,7 +15470,7 @@ var DropdownButton = (_dec2$1 = CSSModules(styles$7, { allowMultiple: allowMulti
   type: Button.defaultProps.type,
   placement: 'bottomRight' }), _class4.propTypes = _extends({}, Dropdown.propTypes, {
   type: Button.propTypes.type
-}), _temp2)) || _class3);
+}), _temp2$1)) || _class3);
 
 
 Dropdown.Menu = Menu;
@@ -14501,6 +15650,47 @@ $export.W = 32;  // wrap
 $export.U = 64;  // safe
 $export.R = 128; // real proto method for `library` 
 var _export = $export;
+
+// 19.1.2.4 / 15.2.3.6 Object.defineProperty(O, P, Attributes)
+_export(_export.S + _export.F * !_descriptors, 'Object', {defineProperty: _objectDp.f});
+
+var $Object = _core.Object;
+var defineProperty$6 = function defineProperty(it, key, desc){
+  return $Object.defineProperty(it, key, desc);
+};
+
+var defineProperty$4 = createCommonjsModule(function (module) {
+module.exports = { "default": defineProperty$6, __esModule: true };
+});
+
+var defineProperty$3 = createCommonjsModule(function (module, exports) {
+"use strict";
+
+exports.__esModule = true;
+
+
+
+var _defineProperty2 = _interopRequireDefault(defineProperty$4);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function (obj, key, value) {
+  if (key in obj) {
+    (0, _defineProperty2.default)(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+};
+});
+
+var _defineProperty$2 = unwrapExports(defineProperty$3);
 
 var hasOwnProperty$14 = {}.hasOwnProperty;
 var _has = function(it, key){
@@ -14997,14 +16187,14 @@ function factory(ReactComponent, isValidElement, ReactNoopUpdateQueue) {
       }
     },
     childContextTypes: function(Constructor, childContextTypes) {
-      Constructor.childContextTypes = index$5(
+      Constructor.childContextTypes = index$6(
         {},
         Constructor.childContextTypes,
         childContextTypes
       );
     },
     contextTypes: function(Constructor, contextTypes) {
-      Constructor.contextTypes = index$5(
+      Constructor.contextTypes = index$6(
         {},
         Constructor.contextTypes,
         contextTypes
@@ -15025,7 +16215,7 @@ function factory(ReactComponent, isValidElement, ReactNoopUpdateQueue) {
       }
     },
     propTypes: function(Constructor, propTypes) {
-      Constructor.propTypes = index$5({}, Constructor.propTypes, propTypes);
+      Constructor.propTypes = index$6({}, Constructor.propTypes, propTypes);
     },
     statics: function(Constructor, statics) {
       mixStaticSpecIntoComponent(Constructor, statics);
@@ -15319,7 +16509,7 @@ function factory(ReactComponent, isValidElement, ReactNoopUpdateQueue) {
   };
 
   var ReactClassComponent = function() {};
-  index$5(
+  index$6(
     ReactClassComponent.prototype,
     ReactComponent.prototype,
     ReactClassMixin
@@ -15414,19 +16604,329 @@ var index$8 = factory_1(
   ReactNoopUpdateQueue
 );
 
-// 19.1.2.4 / 15.2.3.6 Object.defineProperty(O, P, Attributes)
-_export(_export.S + _export.F * !_descriptors, 'Object', {defineProperty: _objectDp.f});
+function noop$4() {}
 
-var $Object = _core.Object;
-var defineProperty$6 = function defineProperty(it, key, desc){
-  return $Object.defineProperty(it, key, desc);
+function defaultParser(input) {
+  return input.replace(/[^\w\.-]+/g, '');
+}
+
+/**
+ * When click and hold on a button - the speed of auto changin the value.
+ */
+var SPEED = 200;
+
+/**
+ * When click and hold on a button - the delay before auto changin the value.
+ */
+var DELAY = 600;
+
+var mixin = {
+  getDefaultProps: function getDefaultProps() {
+    return {
+      max: Infinity,
+      min: -Infinity,
+      step: 1,
+      style: {},
+      onChange: noop$4,
+      onKeyDown: noop$4,
+      onFocus: noop$4,
+      onBlur: noop$4,
+      parser: defaultParser
+    };
+  },
+  getInitialState: function getInitialState() {
+    var value = void 0;
+    var props = this.props;
+    if ('value' in props) {
+      value = props.value;
+    } else {
+      value = props.defaultValue;
+    }
+    value = this.toNumber(value);
+    return {
+      inputValue: this.toPrecisionAsStep(value),
+      value: value,
+      focused: props.autoFocus
+    };
+  },
+  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+    if ('value' in nextProps) {
+      this.setState({
+        inputValue: nextProps.value,
+        value: nextProps.value
+      });
+    }
+  },
+  componentWillUnmount: function componentWillUnmount() {
+    this.stop();
+  },
+  onChange: function onChange(e) {
+    var input = this.props.parser(this.getValueFromEvent(e).trim());
+    this.setState({ inputValue: input });
+    this.props.onChange(this.toNumberWhenUserInput(input)); // valid number or invalid string
+  },
+  onFocus: function onFocus() {
+    var _props;
+
+    this.setState({
+      focused: true
+    });
+    (_props = this.props).onFocus.apply(_props, arguments);
+  },
+  onBlur: function onBlur(e) {
+    var _this = this;
+
+    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      args[_key - 1] = arguments[_key];
+    }
+
+    this.setState({
+      focused: false
+    });
+    var value = this.getCurrentValidValue(this.state.inputValue);
+    e.persist(); // fix https://github.com/react-component/input-number/issues/51
+    this.setValue(value, function () {
+      var _props2;
+
+      (_props2 = _this.props).onBlur.apply(_props2, [e].concat(args));
+    });
+  },
+  getCurrentValidValue: function getCurrentValidValue(value) {
+    var val = value;
+    var props = this.props;
+    if (val === '') {
+      val = '';
+    } else if (!this.isNotCompleteNumber(val)) {
+      val = Number(val);
+      if (val < props.min) {
+        val = props.min;
+      }
+      if (val > props.max) {
+        val = props.max;
+      }
+    } else {
+      val = this.state.value;
+    }
+    return this.toNumber(val);
+  },
+  setValue: function setValue(v, callback) {
+    // trigger onChange
+    var newValue = this.isNotCompleteNumber(parseFloat(v, 10)) ? undefined : parseFloat(v, 10);
+    var changed = newValue !== this.state.value;
+    if (!('value' in this.props)) {
+      this.setState({
+        value: newValue,
+        inputValue: this.toPrecisionAsStep(v)
+      }, callback);
+    } else {
+      // always set input value same as value
+      this.setState({
+        inputValue: this.toPrecisionAsStep(this.state.value)
+      }, callback);
+    }
+    if (changed) {
+      this.props.onChange(newValue);
+    }
+  },
+  getPrecision: function getPrecision(value) {
+    if ('precision' in this.props) {
+      return this.props.precision;
+    }
+    var valueString = value.toString();
+    if (valueString.indexOf('e-') >= 0) {
+      return parseInt(valueString.slice(valueString.indexOf('e-') + 2), 10);
+    }
+    var precision = 0;
+    if (valueString.indexOf('.') >= 0) {
+      precision = valueString.length - valueString.indexOf('.') - 1;
+    }
+    return precision;
+  },
+
+
+  // step={1.0} value={1.51}
+  // press +
+  // then value should be 2.51, rather than 2.5
+  // if this.props.precision is undefined
+  // https://github.com/react-component/input-number/issues/39
+  getMaxPrecision: function getMaxPrecision(currentValue) {
+    var ratio = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+
+    if ('precision' in this.props) {
+      return this.props.precision;
+    }
+    var step = this.props.step;
+
+    var ratioPrecision = this.getPrecision(ratio);
+    var stepPrecision = this.getPrecision(step);
+    var currentValuePrecision = this.getPrecision(currentValue);
+    if (!currentValue) {
+      return ratioPrecision + stepPrecision;
+    }
+    return Math.max(currentValuePrecision, ratioPrecision + stepPrecision);
+  },
+  getPrecisionFactor: function getPrecisionFactor(currentValue) {
+    var ratio = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+
+    var precision = this.getMaxPrecision(currentValue, ratio);
+    return Math.pow(10, precision);
+  },
+  toPrecisionAsStep: function toPrecisionAsStep(num) {
+    if (this.isNotCompleteNumber(num) || num === '') {
+      return num;
+    }
+    var precision = Math.abs(this.getMaxPrecision(num));
+    if (precision) {
+      return Number(num).toFixed(precision);
+    }
+    return num.toString();
+  },
+
+
+  // '1.' '1x' 'xx' '' => are not complete numbers
+  isNotCompleteNumber: function isNotCompleteNumber(num) {
+    return isNaN(num) || num === '' || num === null || num && num.toString().indexOf('.') === num.toString().length - 1;
+  },
+  toNumber: function toNumber(num) {
+    if (this.isNotCompleteNumber(num)) {
+      return num;
+    }
+    if ('precision' in this.props) {
+      return Number(Number(num).toFixed(this.props.precision));
+    }
+    return Number(num);
+  },
+
+
+  // '1.0' '1.00'  => may be a inputing number
+  toNumberWhenUserInput: function toNumberWhenUserInput(num) {
+    // num.length > 16 => prevent input large number will became Infinity
+    if ((/\.\d*0$/.test(num) || num.length > 16) && this.state.focused) {
+      return num;
+    }
+    return this.toNumber(num);
+  },
+  upStep: function upStep(val, rat) {
+    var _props3 = this.props,
+        step = _props3.step,
+        min = _props3.min;
+
+    var precisionFactor = this.getPrecisionFactor(val, rat);
+    var precision = Math.abs(this.getMaxPrecision(val, rat));
+    var result = void 0;
+    if (typeof val === 'number') {
+      result = ((precisionFactor * val + precisionFactor * step * rat) / precisionFactor).toFixed(precision);
+    } else {
+      result = min === -Infinity ? step : min;
+    }
+    return this.toNumber(result);
+  },
+  downStep: function downStep(val, rat) {
+    var _props4 = this.props,
+        step = _props4.step,
+        min = _props4.min;
+
+    var precisionFactor = this.getPrecisionFactor(val, rat);
+    var precision = Math.abs(this.getMaxPrecision(val, rat));
+    var result = void 0;
+    if (typeof val === 'number') {
+      result = ((precisionFactor * val - precisionFactor * step * rat) / precisionFactor).toFixed(precision);
+    } else {
+      result = min === -Infinity ? -step : min;
+    }
+    return this.toNumber(result);
+  },
+  step: function step(type, e) {
+    var ratio = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
+
+    if (e) {
+      e.preventDefault();
+    }
+    var props = this.props;
+    if (props.disabled) {
+      return;
+    }
+    var value = this.getCurrentValidValue(this.state.inputValue) || 0;
+    if (this.isNotCompleteNumber(value)) {
+      return;
+    }
+    var val = this[type + 'Step'](value, ratio);
+    if (val > props.max) {
+      val = props.max;
+    } else if (val < props.min) {
+      val = props.min;
+    }
+    this.setValue(val);
+    this.setState({
+      focused: true
+    });
+  },
+  stop: function stop() {
+    if (this.autoStepTimer) {
+      clearTimeout(this.autoStepTimer);
+    }
+  },
+  down: function down(e, ratio, recursive) {
+    var _this2 = this;
+
+    if (e.persist) {
+      e.persist();
+    }
+    this.stop();
+    this.step('down', e, ratio);
+    this.autoStepTimer = setTimeout(function () {
+      _this2.down(e, ratio, true);
+    }, recursive ? SPEED : DELAY);
+  },
+  up: function up(e, ratio, recursive) {
+    var _this3 = this;
+
+    if (e.persist) {
+      e.persist();
+    }
+    this.stop();
+    this.step('up', e, ratio);
+    this.autoStepTimer = setTimeout(function () {
+      _this3.up(e, ratio, true);
+    }, recursive ? SPEED : DELAY);
+  }
 };
 
-var defineProperty$4 = createCommonjsModule(function (module) {
-module.exports = { "default": defineProperty$6, __esModule: true };
+var objectWithoutProperties$1 = createCommonjsModule(function (module, exports) {
+"use strict";
+
+exports.__esModule = true;
+
+exports.default = function (obj, keys) {
+  var target = {};
+
+  for (var i in obj) {
+    if (keys.indexOf(i) >= 0) continue;
+    if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;
+    target[i] = obj[i];
+  }
+
+  return target;
+};
 });
 
-var defineProperty$3 = createCommonjsModule(function (module, exports) {
+var _objectWithoutProperties = unwrapExports(objectWithoutProperties$1);
+
+var classCallCheck$1 = createCommonjsModule(function (module, exports) {
+"use strict";
+
+exports.__esModule = true;
+
+exports.default = function (instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+};
+});
+
+var _classCallCheck = unwrapExports(classCallCheck$1);
+
+var createClass$1 = createCommonjsModule(function (module, exports) {
 "use strict";
 
 exports.__esModule = true;
@@ -15437,1883 +16937,26 @@ var _defineProperty2 = _interopRequireDefault(defineProperty$4);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = function (obj, key, value) {
-  if (key in obj) {
-    (0, _defineProperty2.default)(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-};
-});
-
-var _defineProperty$2 = unwrapExports(defineProperty$3);
-
-var KeyCode_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-/**
- * @ignore
- * some key-codes definition and utils from closure-library
- * @author yiminghe@gmail.com
- */
-
-var KeyCode = {
-  /**
-   * MAC_ENTER
-   */
-  MAC_ENTER: 3,
-  /**
-   * BACKSPACE
-   */
-  BACKSPACE: 8,
-  /**
-   * TAB
-   */
-  TAB: 9,
-  /**
-   * NUMLOCK on FF/Safari Mac
-   */
-  NUM_CENTER: 12, // NUMLOCK on FF/Safari Mac
-  /**
-   * ENTER
-   */
-  ENTER: 13,
-  /**
-   * SHIFT
-   */
-  SHIFT: 16,
-  /**
-   * CTRL
-   */
-  CTRL: 17,
-  /**
-   * ALT
-   */
-  ALT: 18,
-  /**
-   * PAUSE
-   */
-  PAUSE: 19,
-  /**
-   * CAPS_LOCK
-   */
-  CAPS_LOCK: 20,
-  /**
-   * ESC
-   */
-  ESC: 27,
-  /**
-   * SPACE
-   */
-  SPACE: 32,
-  /**
-   * PAGE_UP
-   */
-  PAGE_UP: 33, // also NUM_NORTH_EAST
-  /**
-   * PAGE_DOWN
-   */
-  PAGE_DOWN: 34, // also NUM_SOUTH_EAST
-  /**
-   * END
-   */
-  END: 35, // also NUM_SOUTH_WEST
-  /**
-   * HOME
-   */
-  HOME: 36, // also NUM_NORTH_WEST
-  /**
-   * LEFT
-   */
-  LEFT: 37, // also NUM_WEST
-  /**
-   * UP
-   */
-  UP: 38, // also NUM_NORTH
-  /**
-   * RIGHT
-   */
-  RIGHT: 39, // also NUM_EAST
-  /**
-   * DOWN
-   */
-  DOWN: 40, // also NUM_SOUTH
-  /**
-   * PRINT_SCREEN
-   */
-  PRINT_SCREEN: 44,
-  /**
-   * INSERT
-   */
-  INSERT: 45, // also NUM_INSERT
-  /**
-   * DELETE
-   */
-  DELETE: 46, // also NUM_DELETE
-  /**
-   * ZERO
-   */
-  ZERO: 48,
-  /**
-   * ONE
-   */
-  ONE: 49,
-  /**
-   * TWO
-   */
-  TWO: 50,
-  /**
-   * THREE
-   */
-  THREE: 51,
-  /**
-   * FOUR
-   */
-  FOUR: 52,
-  /**
-   * FIVE
-   */
-  FIVE: 53,
-  /**
-   * SIX
-   */
-  SIX: 54,
-  /**
-   * SEVEN
-   */
-  SEVEN: 55,
-  /**
-   * EIGHT
-   */
-  EIGHT: 56,
-  /**
-   * NINE
-   */
-  NINE: 57,
-  /**
-   * QUESTION_MARK
-   */
-  QUESTION_MARK: 63, // needs localization
-  /**
-   * A
-   */
-  A: 65,
-  /**
-   * B
-   */
-  B: 66,
-  /**
-   * C
-   */
-  C: 67,
-  /**
-   * D
-   */
-  D: 68,
-  /**
-   * E
-   */
-  E: 69,
-  /**
-   * F
-   */
-  F: 70,
-  /**
-   * G
-   */
-  G: 71,
-  /**
-   * H
-   */
-  H: 72,
-  /**
-   * I
-   */
-  I: 73,
-  /**
-   * J
-   */
-  J: 74,
-  /**
-   * K
-   */
-  K: 75,
-  /**
-   * L
-   */
-  L: 76,
-  /**
-   * M
-   */
-  M: 77,
-  /**
-   * N
-   */
-  N: 78,
-  /**
-   * O
-   */
-  O: 79,
-  /**
-   * P
-   */
-  P: 80,
-  /**
-   * Q
-   */
-  Q: 81,
-  /**
-   * R
-   */
-  R: 82,
-  /**
-   * S
-   */
-  S: 83,
-  /**
-   * T
-   */
-  T: 84,
-  /**
-   * U
-   */
-  U: 85,
-  /**
-   * V
-   */
-  V: 86,
-  /**
-   * W
-   */
-  W: 87,
-  /**
-   * X
-   */
-  X: 88,
-  /**
-   * Y
-   */
-  Y: 89,
-  /**
-   * Z
-   */
-  Z: 90,
-  /**
-   * META
-   */
-  META: 91, // WIN_KEY_LEFT
-  /**
-   * WIN_KEY_RIGHT
-   */
-  WIN_KEY_RIGHT: 92,
-  /**
-   * CONTEXT_MENU
-   */
-  CONTEXT_MENU: 93,
-  /**
-   * NUM_ZERO
-   */
-  NUM_ZERO: 96,
-  /**
-   * NUM_ONE
-   */
-  NUM_ONE: 97,
-  /**
-   * NUM_TWO
-   */
-  NUM_TWO: 98,
-  /**
-   * NUM_THREE
-   */
-  NUM_THREE: 99,
-  /**
-   * NUM_FOUR
-   */
-  NUM_FOUR: 100,
-  /**
-   * NUM_FIVE
-   */
-  NUM_FIVE: 101,
-  /**
-   * NUM_SIX
-   */
-  NUM_SIX: 102,
-  /**
-   * NUM_SEVEN
-   */
-  NUM_SEVEN: 103,
-  /**
-   * NUM_EIGHT
-   */
-  NUM_EIGHT: 104,
-  /**
-   * NUM_NINE
-   */
-  NUM_NINE: 105,
-  /**
-   * NUM_MULTIPLY
-   */
-  NUM_MULTIPLY: 106,
-  /**
-   * NUM_PLUS
-   */
-  NUM_PLUS: 107,
-  /**
-   * NUM_MINUS
-   */
-  NUM_MINUS: 109,
-  /**
-   * NUM_PERIOD
-   */
-  NUM_PERIOD: 110,
-  /**
-   * NUM_DIVISION
-   */
-  NUM_DIVISION: 111,
-  /**
-   * F1
-   */
-  F1: 112,
-  /**
-   * F2
-   */
-  F2: 113,
-  /**
-   * F3
-   */
-  F3: 114,
-  /**
-   * F4
-   */
-  F4: 115,
-  /**
-   * F5
-   */
-  F5: 116,
-  /**
-   * F6
-   */
-  F6: 117,
-  /**
-   * F7
-   */
-  F7: 118,
-  /**
-   * F8
-   */
-  F8: 119,
-  /**
-   * F9
-   */
-  F9: 120,
-  /**
-   * F10
-   */
-  F10: 121,
-  /**
-   * F11
-   */
-  F11: 122,
-  /**
-   * F12
-   */
-  F12: 123,
-  /**
-   * NUMLOCK
-   */
-  NUMLOCK: 144,
-  /**
-   * SEMICOLON
-   */
-  SEMICOLON: 186, // needs localization
-  /**
-   * DASH
-   */
-  DASH: 189, // needs localization
-  /**
-   * EQUALS
-   */
-  EQUALS: 187, // needs localization
-  /**
-   * COMMA
-   */
-  COMMA: 188, // needs localization
-  /**
-   * PERIOD
-   */
-  PERIOD: 190, // needs localization
-  /**
-   * SLASH
-   */
-  SLASH: 191, // needs localization
-  /**
-   * APOSTROPHE
-   */
-  APOSTROPHE: 192, // needs localization
-  /**
-   * SINGLE_QUOTE
-   */
-  SINGLE_QUOTE: 222, // needs localization
-  /**
-   * OPEN_SQUARE_BRACKET
-   */
-  OPEN_SQUARE_BRACKET: 219, // needs localization
-  /**
-   * BACKSLASH
-   */
-  BACKSLASH: 220, // needs localization
-  /**
-   * CLOSE_SQUARE_BRACKET
-   */
-  CLOSE_SQUARE_BRACKET: 221, // needs localization
-  /**
-   * WIN_KEY
-   */
-  WIN_KEY: 224,
-  /**
-   * MAC_FF_META
-   */
-  MAC_FF_META: 224, // Firefox (Gecko) fires this for the meta key instead of 91
-  /**
-   * WIN_IME
-   */
-  WIN_IME: 229
-};
-
-/*
- whether text and modified key is entered at the same time.
- */
-KeyCode.isTextModifyingKeyEvent = function isTextModifyingKeyEvent(e) {
-  var keyCode = e.keyCode;
-  if (e.altKey && !e.ctrlKey || e.metaKey ||
-  // Function keys don't generate text
-  keyCode >= KeyCode.F1 && keyCode <= KeyCode.F12) {
-    return false;
-  }
-
-  // The following keys are quite harmless, even in combination with
-  // CTRL, ALT or SHIFT.
-  switch (keyCode) {
-    case KeyCode.ALT:
-    case KeyCode.CAPS_LOCK:
-    case KeyCode.CONTEXT_MENU:
-    case KeyCode.CTRL:
-    case KeyCode.DOWN:
-    case KeyCode.END:
-    case KeyCode.ESC:
-    case KeyCode.HOME:
-    case KeyCode.INSERT:
-    case KeyCode.LEFT:
-    case KeyCode.MAC_FF_META:
-    case KeyCode.META:
-    case KeyCode.NUMLOCK:
-    case KeyCode.NUM_CENTER:
-    case KeyCode.PAGE_DOWN:
-    case KeyCode.PAGE_UP:
-    case KeyCode.PAUSE:
-    case KeyCode.PRINT_SCREEN:
-    case KeyCode.RIGHT:
-    case KeyCode.SHIFT:
-    case KeyCode.UP:
-    case KeyCode.WIN_KEY:
-    case KeyCode.WIN_KEY_RIGHT:
-      return false;
-    default:
-      return true;
-  }
-};
-
-/*
- whether character is entered.
- */
-KeyCode.isCharacterKey = function isCharacterKey(keyCode) {
-  if (keyCode >= KeyCode.ZERO && keyCode <= KeyCode.NINE) {
-    return true;
-  }
-
-  if (keyCode >= KeyCode.NUM_ZERO && keyCode <= KeyCode.NUM_MULTIPLY) {
-    return true;
-  }
-
-  if (keyCode >= KeyCode.A && keyCode <= KeyCode.Z) {
-    return true;
-  }
-
-  // Safari sends zero key code for non-latin characters.
-  if (window.navigation.userAgent.indexOf('WebKit') !== -1 && keyCode === 0) {
-    return true;
-  }
-
-  switch (keyCode) {
-    case KeyCode.SPACE:
-    case KeyCode.QUESTION_MARK:
-    case KeyCode.NUM_PLUS:
-    case KeyCode.NUM_MINUS:
-    case KeyCode.NUM_PERIOD:
-    case KeyCode.NUM_DIVISION:
-    case KeyCode.SEMICOLON:
-    case KeyCode.DASH:
-    case KeyCode.EQUALS:
-    case KeyCode.COMMA:
-    case KeyCode.PERIOD:
-    case KeyCode.SLASH:
-    case KeyCode.APOSTROPHE:
-    case KeyCode.SINGLE_QUOTE:
-    case KeyCode.OPEN_SQUARE_BRACKET:
-    case KeyCode.BACKSLASH:
-    case KeyCode.CLOSE_SQUARE_BRACKET:
-      return true;
-    default:
-      return false;
-  }
-};
-
-exports['default'] = KeyCode;
-module.exports = exports['default'];
-});
-
-var createChainedFunction_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports["default"] = createChainedFunction;
-/**
- * Safe chained function
- *
- * Will only create a new function if needed,
- * otherwise will pass back existing functions or null.
- *
- * @returns {function|null}
- */
-function createChainedFunction() {
-  var args = [].slice.call(arguments, 0);
-  if (args.length === 1) {
-    return args[0];
-  }
-
-  return function chainedFunction() {
-    for (var i = 0; i < args.length; i++) {
-      if (args[i] && args[i].apply) {
-        args[i].apply(this, arguments);
-      }
+exports.default = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      (0, _defineProperty2.default)(target, descriptor.key, descriptor);
     }
+  }
+
+  return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) defineProperties(Constructor, staticProps);
+    return Constructor;
   };
-}
-module.exports = exports['default'];
+}();
 });
 
-var _extends$3 = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _typeof$1 = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
-
-var RE_NUM = /[\-+]?(?:\d*\.|)\d+(?:[eE][\-+]?\d+|)/.source;
-
-function getClientPosition(elem) {
-  var box = undefined;
-  var x = undefined;
-  var y = undefined;
-  var doc = elem.ownerDocument;
-  var body = doc.body;
-  var docElem = doc && doc.documentElement;
-  // 根据 GBS 最新数据，A-Grade Browsers 都已支持 getBoundingClientRect 方法，不用再考虑传统的实现方式
-  box = elem.getBoundingClientRect();
-
-  // 注：jQuery 还考虑减去 docElem.clientLeft/clientTop
-  // 但测试发现，这样反而会导致当 html 和 body 有边距/边框样式时，获取的值不正确
-  // 此外，ie6 会忽略 html 的 margin 值，幸运地是没有谁会去设置 html 的 margin
-
-  x = box.left;
-  y = box.top;
-
-  // In IE, most of the time, 2 extra pixels are added to the top and left
-  // due to the implicit 2-pixel inset border.  In IE6/7 quirks mode and
-  // IE6 standards mode, this border can be overridden by setting the
-  // document element's border to zero -- thus, we cannot rely on the
-  // offset always being 2 pixels.
-
-  // In quirks mode, the offset can be determined by querying the body's
-  // clientLeft/clientTop, but in standards mode, it is found by querying
-  // the document element's clientLeft/clientTop.  Since we already called
-  // getClientBoundingRect we have already forced a reflow, so it is not
-  // too expensive just to query them all.
-
-  // ie 下应该减去窗口的边框吧，毕竟默认 absolute 都是相对窗口定位的
-  // 窗口边框标准是设 documentElement ,quirks 时设置 body
-  // 最好禁止在 body 和 html 上边框 ，但 ie < 9 html 默认有 2px ，减去
-  // 但是非 ie 不可能设置窗口边框，body html 也不是窗口 ,ie 可以通过 html,body 设置
-  // 标准 ie 下 docElem.clientTop 就是 border-top
-  // ie7 html 即窗口边框改变不了。永远为 2
-  // 但标准 firefox/chrome/ie9 下 docElem.clientTop 是窗口边框，即使设了 border-top 也为 0
-
-  x -= docElem.clientLeft || body.clientLeft || 0;
-  y -= docElem.clientTop || body.clientTop || 0;
-
-  return {
-    left: x,
-    top: y
-  };
-}
-
-function getScroll(w, top) {
-  var ret = w['page' + (top ? 'Y' : 'X') + 'Offset'];
-  var method = 'scroll' + (top ? 'Top' : 'Left');
-  if (typeof ret !== 'number') {
-    var d = w.document;
-    // ie6,7,8 standard mode
-    ret = d.documentElement[method];
-    if (typeof ret !== 'number') {
-      // quirks mode
-      ret = d.body[method];
-    }
-  }
-  return ret;
-}
-
-function getScrollLeft(w) {
-  return getScroll(w);
-}
-
-function getScrollTop(w) {
-  return getScroll(w, true);
-}
-
-function getOffset(el) {
-  var pos = getClientPosition(el);
-  var doc = el.ownerDocument;
-  var w = doc.defaultView || doc.parentWindow;
-  pos.left += getScrollLeft(w);
-  pos.top += getScrollTop(w);
-  return pos;
-}
-function _getComputedStyle(elem, name, computedStyle_) {
-  var val = '';
-  var d = elem.ownerDocument;
-  var computedStyle = computedStyle_ || d.defaultView.getComputedStyle(elem, null);
-
-  // https://github.com/kissyteam/kissy/issues/61
-  if (computedStyle) {
-    val = computedStyle.getPropertyValue(name) || computedStyle[name];
-  }
-
-  return val;
-}
-
-var _RE_NUM_NO_PX = new RegExp('^(' + RE_NUM + ')(?!px)[a-z%]+$', 'i');
-var RE_POS = /^(top|right|bottom|left)$/;
-var CURRENT_STYLE = 'currentStyle';
-var RUNTIME_STYLE = 'runtimeStyle';
-var LEFT = 'left';
-var PX = 'px';
-
-function _getComputedStyleIE(elem, name) {
-  // currentStyle maybe null
-  // http://msdn.microsoft.com/en-us/library/ms535231.aspx
-  var ret = elem[CURRENT_STYLE] && elem[CURRENT_STYLE][name];
-
-  // 当 width/height 设置为百分比时，通过 pixelLeft 方式转换的 width/height 值
-  // 一开始就处理了! CUSTOM_STYLE.height,CUSTOM_STYLE.width ,cssHook 解决@2011-08-19
-  // 在 ie 下不对，需要直接用 offset 方式
-  // borderWidth 等值也有问题，但考虑到 borderWidth 设为百分比的概率很小，这里就不考虑了
-
-  // From the awesome hack by Dean Edwards
-  // http://erik.eae.net/archives/2007/07/27/18.54.15/#comment-102291
-  // If we're not dealing with a regular pixel number
-  // but a number that has a weird ending, we need to convert it to pixels
-  // exclude left right for relativity
-  if (_RE_NUM_NO_PX.test(ret) && !RE_POS.test(name)) {
-    // Remember the original values
-    var style = elem.style;
-    var left = style[LEFT];
-    var rsLeft = elem[RUNTIME_STYLE][LEFT];
-
-    // prevent flashing of content
-    elem[RUNTIME_STYLE][LEFT] = elem[CURRENT_STYLE][LEFT];
-
-    // Put in the new values to get a computed value out
-    style[LEFT] = name === 'fontSize' ? '1em' : ret || 0;
-    ret = style.pixelLeft + PX;
-
-    // Revert the changed values
-    style[LEFT] = left;
-
-    elem[RUNTIME_STYLE][LEFT] = rsLeft;
-  }
-  return ret === '' ? 'auto' : ret;
-}
-
-var getComputedStyleX = undefined;
-if (typeof window !== 'undefined') {
-  getComputedStyleX = window.getComputedStyle ? _getComputedStyle : _getComputedStyleIE;
-}
-
-function each(arr, fn) {
-  for (var i = 0; i < arr.length; i++) {
-    fn(arr[i]);
-  }
-}
-
-function isBorderBoxFn(elem) {
-  return getComputedStyleX(elem, 'boxSizing') === 'border-box';
-}
-
-var BOX_MODELS = ['margin', 'border', 'padding'];
-var CONTENT_INDEX = -1;
-var PADDING_INDEX = 2;
-var BORDER_INDEX = 1;
-var MARGIN_INDEX = 0;
-
-function swap(elem, options, callback) {
-  var old = {};
-  var style = elem.style;
-  var name = undefined;
-
-  // Remember the old values, and insert the new ones
-  for (name in options) {
-    if (options.hasOwnProperty(name)) {
-      old[name] = style[name];
-      style[name] = options[name];
-    }
-  }
-
-  callback.call(elem);
-
-  // Revert the old values
-  for (name in options) {
-    if (options.hasOwnProperty(name)) {
-      style[name] = old[name];
-    }
-  }
-}
-
-function getPBMWidth(elem, props, which) {
-  var value = 0;
-  var prop = undefined;
-  var j = undefined;
-  var i = undefined;
-  for (j = 0; j < props.length; j++) {
-    prop = props[j];
-    if (prop) {
-      for (i = 0; i < which.length; i++) {
-        var cssProp = undefined;
-        if (prop === 'border') {
-          cssProp = prop + which[i] + 'Width';
-        } else {
-          cssProp = prop + which[i];
-        }
-        value += parseFloat(getComputedStyleX(elem, cssProp)) || 0;
-      }
-    }
-  }
-  return value;
-}
-
-/**
- * A crude way of determining if an object is a window
- * @member util
- */
-function isWindow(obj) {
-  // must use == for ie8
-  /* eslint eqeqeq:0 */
-  return obj != null && obj == obj.window;
-}
-
-var domUtils = {};
-
-each(['Width', 'Height'], function (name) {
-  domUtils['doc' + name] = function (refWin) {
-    var d = refWin.document;
-    return Math.max(
-    // firefox chrome documentElement.scrollHeight< body.scrollHeight
-    // ie standard mode : documentElement.scrollHeight> body.scrollHeight
-    d.documentElement['scroll' + name],
-    // quirks : documentElement.scrollHeight 最大等于可视窗口多一点？
-    d.body['scroll' + name], domUtils['viewport' + name](d));
-  };
-
-  domUtils['viewport' + name] = function (win) {
-    // pc browser includes scrollbar in window.innerWidth
-    var prop = 'client' + name;
-    var doc = win.document;
-    var body = doc.body;
-    var documentElement = doc.documentElement;
-    var documentElementProp = documentElement[prop];
-    // 标准模式取 documentElement
-    // backcompat 取 body
-    return doc.compatMode === 'CSS1Compat' && documentElementProp || body && body[prop] || documentElementProp;
-  };
-});
-
-/*
- 得到元素的大小信息
- @param elem
- @param name
- @param {String} [extra]  'padding' : (css width) + padding
- 'border' : (css width) + padding + border
- 'margin' : (css width) + padding + border + margin
- */
-function getWH(elem, name, extra) {
-  if (isWindow(elem)) {
-    return name === 'width' ? domUtils.viewportWidth(elem) : domUtils.viewportHeight(elem);
-  } else if (elem.nodeType === 9) {
-    return name === 'width' ? domUtils.docWidth(elem) : domUtils.docHeight(elem);
-  }
-  var which = name === 'width' ? ['Left', 'Right'] : ['Top', 'Bottom'];
-  var borderBoxValue = name === 'width' ? elem.offsetWidth : elem.offsetHeight;
-  var computedStyle = getComputedStyleX(elem);
-  var isBorderBox = isBorderBoxFn(elem, computedStyle);
-  var cssBoxValue = 0;
-  if (borderBoxValue == null || borderBoxValue <= 0) {
-    borderBoxValue = undefined;
-    // Fall back to computed then un computed css if necessary
-    cssBoxValue = getComputedStyleX(elem, name);
-    if (cssBoxValue == null || Number(cssBoxValue) < 0) {
-      cssBoxValue = elem.style[name] || 0;
-    }
-    // Normalize '', auto, and prepare for extra
-    cssBoxValue = parseFloat(cssBoxValue) || 0;
-  }
-  if (extra === undefined) {
-    extra = isBorderBox ? BORDER_INDEX : CONTENT_INDEX;
-  }
-  var borderBoxValueOrIsBorderBox = borderBoxValue !== undefined || isBorderBox;
-  var val = borderBoxValue || cssBoxValue;
-  if (extra === CONTENT_INDEX) {
-    if (borderBoxValueOrIsBorderBox) {
-      return val - getPBMWidth(elem, ['border', 'padding'], which, computedStyle);
-    }
-    return cssBoxValue;
-  }
-  if (borderBoxValueOrIsBorderBox) {
-    var padding = extra === PADDING_INDEX ? -getPBMWidth(elem, ['border'], which, computedStyle) : getPBMWidth(elem, ['margin'], which, computedStyle);
-    return val + (extra === BORDER_INDEX ? 0 : padding);
-  }
-  return cssBoxValue + getPBMWidth(elem, BOX_MODELS.slice(extra), which, computedStyle);
-}
-
-var cssShow = {
-  position: 'absolute',
-  visibility: 'hidden',
-  display: 'block'
-};
-
-// fix #119 : https://github.com/kissyteam/kissy/issues/119
-function getWHIgnoreDisplay(elem) {
-  var val = undefined;
-  var args = arguments;
-  // in case elem is window
-  // elem.offsetWidth === undefined
-  if (elem.offsetWidth !== 0) {
-    val = getWH.apply(undefined, args);
-  } else {
-    swap(elem, cssShow, function () {
-      val = getWH.apply(undefined, args);
-    });
-  }
-  return val;
-}
-
-function css(el, name, v) {
-  var value = v;
-  if ((typeof name === 'undefined' ? 'undefined' : _typeof$1(name)) === 'object') {
-    for (var i in name) {
-      if (name.hasOwnProperty(i)) {
-        css(el, i, name[i]);
-      }
-    }
-    return undefined;
-  }
-  if (typeof value !== 'undefined') {
-    if (typeof value === 'number') {
-      value += 'px';
-    }
-    el.style[name] = value;
-    return undefined;
-  }
-  return getComputedStyleX(el, name);
-}
-
-each(['width', 'height'], function (name) {
-  var first = name.charAt(0).toUpperCase() + name.slice(1);
-  domUtils['outer' + first] = function (el, includeMargin) {
-    return el && getWHIgnoreDisplay(el, name, includeMargin ? MARGIN_INDEX : BORDER_INDEX);
-  };
-  var which = name === 'width' ? ['Left', 'Right'] : ['Top', 'Bottom'];
-
-  domUtils[name] = function (elem, val) {
-    if (val !== undefined) {
-      if (elem) {
-        var computedStyle = getComputedStyleX(elem);
-        var isBorderBox = isBorderBoxFn(elem);
-        if (isBorderBox) {
-          val += getPBMWidth(elem, ['padding', 'border'], which, computedStyle);
-        }
-        return css(elem, name, val);
-      }
-      return undefined;
-    }
-    return elem && getWHIgnoreDisplay(elem, name, CONTENT_INDEX);
-  };
-});
-
-// 设置 elem 相对 elem.ownerDocument 的坐标
-function setOffset(elem, offset) {
-  // set position first, in-case top/left are set even on static elem
-  if (css(elem, 'position') === 'static') {
-    elem.style.position = 'relative';
-  }
-
-  var old = getOffset(elem);
-  var ret = {};
-  var current = undefined;
-  var key = undefined;
-
-  for (key in offset) {
-    if (offset.hasOwnProperty(key)) {
-      current = parseFloat(css(elem, key)) || 0;
-      ret[key] = current + offset[key] - old[key];
-    }
-  }
-  css(elem, ret);
-}
-
-var util = _extends$3({
-  getWindow: function getWindow(node) {
-    var doc = node.ownerDocument || node;
-    return doc.defaultView || doc.parentWindow;
-  },
-  offset: function offset(el, value) {
-    if (typeof value !== 'undefined') {
-      setOffset(el, value);
-    } else {
-      return getOffset(el);
-    }
-  },
-
-  isWindow: isWindow,
-  each: each,
-  css: css,
-  clone: function clone(obj) {
-    var ret = {};
-    for (var i in obj) {
-      if (obj.hasOwnProperty(i)) {
-        ret[i] = obj[i];
-      }
-    }
-    var overflow = obj.overflow;
-    if (overflow) {
-      for (var i in obj) {
-        if (obj.hasOwnProperty(i)) {
-          ret.overflow[i] = obj.overflow[i];
-        }
-      }
-    }
-    return ret;
-  },
-  scrollLeft: function scrollLeft(w, v) {
-    if (isWindow(w)) {
-      if (v === undefined) {
-        return getScrollLeft(w);
-      }
-      window.scrollTo(v, getScrollTop(w));
-    } else {
-      if (v === undefined) {
-        return w.scrollLeft;
-      }
-      w.scrollLeft = v;
-    }
-  },
-  scrollTop: function scrollTop(w, v) {
-    if (isWindow(w)) {
-      if (v === undefined) {
-        return getScrollTop(w);
-      }
-      window.scrollTo(getScrollLeft(w), v);
-    } else {
-      if (v === undefined) {
-        return w.scrollTop;
-      }
-      w.scrollTop = v;
-    }
-  },
-
-  viewportWidth: 0,
-  viewportHeight: 0
-}, domUtils);
-
-function scrollIntoView(elem, container, config) {
-  config = config || {};
-  // document 归一化到 window
-  if (container.nodeType === 9) {
-    container = util.getWindow(container);
-  }
-
-  var allowHorizontalScroll = config.allowHorizontalScroll;
-  var onlyScrollIfNeeded = config.onlyScrollIfNeeded;
-  var alignWithTop = config.alignWithTop;
-  var alignWithLeft = config.alignWithLeft;
-  var offsetTop = config.offsetTop || 0;
-  var offsetLeft = config.offsetLeft || 0;
-  var offsetBottom = config.offsetBottom || 0;
-  var offsetRight = config.offsetRight || 0;
-
-  allowHorizontalScroll = allowHorizontalScroll === undefined ? true : allowHorizontalScroll;
-
-  var isWin = util.isWindow(container);
-  var elemOffset = util.offset(elem);
-  var eh = util.outerHeight(elem);
-  var ew = util.outerWidth(elem);
-  var containerOffset = undefined;
-  var ch = undefined;
-  var cw = undefined;
-  var containerScroll = undefined;
-  var diffTop = undefined;
-  var diffBottom = undefined;
-  var win = undefined;
-  var winScroll = undefined;
-  var ww = undefined;
-  var wh = undefined;
-
-  if (isWin) {
-    win = container;
-    wh = util.height(win);
-    ww = util.width(win);
-    winScroll = {
-      left: util.scrollLeft(win),
-      top: util.scrollTop(win)
-    };
-    // elem 相对 container 可视视窗的距离
-    diffTop = {
-      left: elemOffset.left - winScroll.left - offsetLeft,
-      top: elemOffset.top - winScroll.top - offsetTop
-    };
-    diffBottom = {
-      left: elemOffset.left + ew - (winScroll.left + ww) + offsetRight,
-      top: elemOffset.top + eh - (winScroll.top + wh) + offsetBottom
-    };
-    containerScroll = winScroll;
-  } else {
-    containerOffset = util.offset(container);
-    ch = container.clientHeight;
-    cw = container.clientWidth;
-    containerScroll = {
-      left: container.scrollLeft,
-      top: container.scrollTop
-    };
-    // elem 相对 container 可视视窗的距离
-    // 注意边框, offset 是边框到根节点
-    diffTop = {
-      left: elemOffset.left - (containerOffset.left + (parseFloat(util.css(container, 'borderLeftWidth')) || 0)) - offsetLeft,
-      top: elemOffset.top - (containerOffset.top + (parseFloat(util.css(container, 'borderTopWidth')) || 0)) - offsetTop
-    };
-    diffBottom = {
-      left: elemOffset.left + ew - (containerOffset.left + cw + (parseFloat(util.css(container, 'borderRightWidth')) || 0)) + offsetRight,
-      top: elemOffset.top + eh - (containerOffset.top + ch + (parseFloat(util.css(container, 'borderBottomWidth')) || 0)) + offsetBottom
-    };
-  }
-
-  if (diffTop.top < 0 || diffBottom.top > 0) {
-    // 强制向上
-    if (alignWithTop === true) {
-      util.scrollTop(container, containerScroll.top + diffTop.top);
-    } else if (alignWithTop === false) {
-      util.scrollTop(container, containerScroll.top + diffBottom.top);
-    } else {
-      // 自动调整
-      if (diffTop.top < 0) {
-        util.scrollTop(container, containerScroll.top + diffTop.top);
-      } else {
-        util.scrollTop(container, containerScroll.top + diffBottom.top);
-      }
-    }
-  } else {
-    if (!onlyScrollIfNeeded) {
-      alignWithTop = alignWithTop === undefined ? true : !!alignWithTop;
-      if (alignWithTop) {
-        util.scrollTop(container, containerScroll.top + diffTop.top);
-      } else {
-        util.scrollTop(container, containerScroll.top + diffBottom.top);
-      }
-    }
-  }
-
-  if (allowHorizontalScroll) {
-    if (diffTop.left < 0 || diffBottom.left > 0) {
-      // 强制向上
-      if (alignWithLeft === true) {
-        util.scrollLeft(container, containerScroll.left + diffTop.left);
-      } else if (alignWithLeft === false) {
-        util.scrollLeft(container, containerScroll.left + diffBottom.left);
-      } else {
-        // 自动调整
-        if (diffTop.left < 0) {
-          util.scrollLeft(container, containerScroll.left + diffTop.left);
-        } else {
-          util.scrollLeft(container, containerScroll.left + diffBottom.left);
-        }
-      }
-    } else {
-      if (!onlyScrollIfNeeded) {
-        alignWithLeft = alignWithLeft === undefined ? true : !!alignWithLeft;
-        if (alignWithLeft) {
-          util.scrollLeft(container, containerScroll.left + diffTop.left);
-        } else {
-          util.scrollLeft(container, containerScroll.left + diffBottom.left);
-        }
-      }
-    }
-  }
-}
-
-var domScrollIntoView = scrollIntoView;
-
-var index$9 = domScrollIntoView;
-
-var util$3 = createCommonjsModule(function (module, exports) {
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.noop = noop;
-exports.getKeyFromChildrenIndex = getKeyFromChildrenIndex;
-exports.loopMenuItem = loopMenuItem;
-exports.loopMenuItemRecusively = loopMenuItemRecusively;
-
-
-
-var _react2 = _interopRequireDefault(React$1);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function noop() {}
-
-function getKeyFromChildrenIndex(child, menuEventKey, index) {
-  var prefix = menuEventKey || '';
-  return child.key || prefix + 'item_' + index;
-}
-
-function loopMenuItem(children, cb) {
-  var index = -1;
-  _react2["default"].Children.forEach(children, function (c) {
-    index++;
-    if (c && c.type && c.type.isMenuItemGroup) {
-      _react2["default"].Children.forEach(c.props.children, function (c2) {
-        index++;
-        cb(c2, index);
-      });
-    } else {
-      cb(c, index);
-    }
-  });
-}
-
-function loopMenuItemRecusively(children, keys, ret) {
-  if (!children || ret.find) {
-    return;
-  }
-  _react2["default"].Children.forEach(children, function (c) {
-    if (ret.find) {
-      return;
-    }
-    if (c) {
-      var construt = c.type;
-      if (!construt || !(construt.isSubMenu || construt.isMenuItem || construt.isMenuItemGroup)) {
-        return;
-      }
-      if (keys.indexOf(c.key) !== -1) {
-        ret.find = true;
-      } else if (c.props.children) {
-        loopMenuItemRecusively(c.props.children, keys, ret);
-      }
-    }
-  });
-}
-});
-
-var DOMWrap_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-
-
-var _extends3 = _interopRequireDefault(_extends$1);
-
-
-
-var _react2 = _interopRequireDefault(React$1);
-
-
-
-var _propTypes2 = _interopRequireDefault(index$1);
-
-
-
-var _createReactClass2 = _interopRequireDefault(index$8);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-var DOMWrap = (0, _createReactClass2["default"])({
-  displayName: 'DOMWrap',
-
-  propTypes: {
-    tag: _propTypes2["default"].string,
-    hiddenClassName: _propTypes2["default"].string,
-    visible: _propTypes2["default"].bool
-  },
-
-  getDefaultProps: function getDefaultProps() {
-    return {
-      tag: 'div'
-    };
-  },
-  render: function render() {
-    var props = (0, _extends3["default"])({}, this.props);
-    if (!props.visible) {
-      props.className = props.className || '';
-      props.className += ' ' + props.hiddenClassName;
-    }
-    var Tag = props.tag;
-    delete props.tag;
-    delete props.hiddenClassName;
-    delete props.visible;
-    return _react2["default"].createElement(Tag, props);
-  }
-});
-
-exports["default"] = DOMWrap;
-module.exports = exports['default'];
-});
-
-var MenuMixin_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-
-
-var _defineProperty3 = _interopRequireDefault(defineProperty$3);
-
-
-
-var _extends3 = _interopRequireDefault(_extends$1);
-
-
-
-var _react2 = _interopRequireDefault(React$1);
-
-
-
-var _propTypes2 = _interopRequireDefault(index$1);
-
-
-
-var _reactDom2 = _interopRequireDefault(ReactDOM);
-
-
-
-var _KeyCode2 = _interopRequireDefault(KeyCode_1);
-
-
-
-var _createChainedFunction2 = _interopRequireDefault(createChainedFunction_1);
-
-
-
-var _classnames2 = _interopRequireDefault(index$4);
-
-
-
-var _domScrollIntoView2 = _interopRequireDefault(index$9);
-
-
-
-
-
-var _DOMWrap2 = _interopRequireDefault(DOMWrap_1);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function allDisabled(arr) {
-  if (!arr.length) {
-    return true;
-  }
-  return arr.every(function (c) {
-    return !!c.props.disabled;
-  });
-}
-
-function getActiveKey(props, originalActiveKey) {
-  var activeKey = originalActiveKey;
-  var children = props.children,
-      eventKey = props.eventKey;
-
-  if (activeKey) {
-    var found = void 0;
-    (0, util$3.loopMenuItem)(children, function (c, i) {
-      if (c && !c.props.disabled && activeKey === (0, util$3.getKeyFromChildrenIndex)(c, eventKey, i)) {
-        found = true;
-      }
-    });
-    if (found) {
-      return activeKey;
-    }
-  }
-  activeKey = null;
-  if (props.defaultActiveFirst) {
-    (0, util$3.loopMenuItem)(children, function (c, i) {
-      if (!activeKey && c && !c.props.disabled) {
-        activeKey = (0, util$3.getKeyFromChildrenIndex)(c, eventKey, i);
-      }
-    });
-    return activeKey;
-  }
-  return activeKey;
-}
-
-function saveRef(index, subIndex, c) {
-  if (c) {
-    if (subIndex !== undefined) {
-      this.instanceArray[index] = this.instanceArray[index] || [];
-      this.instanceArray[index][subIndex] = c;
-    } else {
-      this.instanceArray[index] = c;
-    }
-  }
-}
-
-var MenuMixin = {
-  propTypes: {
-    focusable: _propTypes2["default"].bool,
-    multiple: _propTypes2["default"].bool,
-    style: _propTypes2["default"].object,
-    defaultActiveFirst: _propTypes2["default"].bool,
-    visible: _propTypes2["default"].bool,
-    activeKey: _propTypes2["default"].string,
-    selectedKeys: _propTypes2["default"].arrayOf(_propTypes2["default"].string),
-    defaultSelectedKeys: _propTypes2["default"].arrayOf(_propTypes2["default"].string),
-    defaultOpenKeys: _propTypes2["default"].arrayOf(_propTypes2["default"].string),
-    openKeys: _propTypes2["default"].arrayOf(_propTypes2["default"].string),
-    children: _propTypes2["default"].any
-  },
-
-  getDefaultProps: function getDefaultProps() {
-    return {
-      prefixCls: 'rc-menu',
-      className: '',
-      mode: 'vertical',
-      level: 1,
-      inlineIndent: 24,
-      visible: true,
-      focusable: true,
-      style: {}
-    };
-  },
-  getInitialState: function getInitialState() {
-    var props = this.props;
-    return {
-      activeKey: getActiveKey(props, props.activeKey)
-    };
-  },
-  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-    var props = void 0;
-    if ('activeKey' in nextProps) {
-      props = {
-        activeKey: getActiveKey(nextProps, nextProps.activeKey)
-      };
-    } else {
-      var originalActiveKey = this.state.activeKey;
-      var activeKey = getActiveKey(nextProps, originalActiveKey);
-      // fix: this.setState(), parent.render(),
-      if (activeKey !== originalActiveKey) {
-        props = {
-          activeKey: activeKey
-        };
-      }
-    }
-    if (props) {
-      this.setState(props);
-    }
-  },
-  shouldComponentUpdate: function shouldComponentUpdate(nextProps) {
-    return this.props.visible || nextProps.visible;
-  },
-  componentWillMount: function componentWillMount() {
-    this.instanceArray = [];
-  },
-
-
-  // all keyboard events callbacks run from here at first
-  onKeyDown: function onKeyDown(e) {
-    var _this = this;
-
-    var keyCode = e.keyCode;
-    var handled = void 0;
-    this.getFlatInstanceArray().forEach(function (obj) {
-      if (obj && obj.props.active) {
-        handled = obj.onKeyDown(e);
-      }
-    });
-    if (handled) {
-      return 1;
-    }
-    var activeItem = null;
-    if (keyCode === _KeyCode2["default"].UP || keyCode === _KeyCode2["default"].DOWN) {
-      activeItem = this.step(keyCode === _KeyCode2["default"].UP ? -1 : 1);
-    }
-    if (activeItem) {
-      e.preventDefault();
-      this.setState({
-        activeKey: activeItem.props.eventKey
-      }, function () {
-        (0, _domScrollIntoView2["default"])(_reactDom2["default"].findDOMNode(activeItem), _reactDom2["default"].findDOMNode(_this), {
-          onlyScrollIfNeeded: true
-        });
-      });
-      return 1;
-    } else if (activeItem === undefined) {
-      e.preventDefault();
-      this.setState({
-        activeKey: null
-      });
-      return 1;
-    }
-  },
-  getOpenChangesOnItemHover: function getOpenChangesOnItemHover(e) {
-    var mode = this.props.mode;
-    var key = e.key,
-        hover = e.hover,
-        trigger = e.trigger;
-
-    var activeKey = this.state.activeKey;
-    if (!trigger || hover || this.props.closeSubMenuOnMouseLeave || !e.item.isSubMenu || mode === 'inline') {
-      this.setState({
-        activeKey: hover ? key : null
-      });
-    } else {}
-    // keep active for sub menu for click active
-    // empty
-
-    // clear last open status
-    if (hover && mode !== 'inline') {
-      var activeItem = this.getFlatInstanceArray().filter(function (c) {
-        return c && c.props.eventKey === activeKey;
-      })[0];
-      if (activeItem && activeItem.isSubMenu && activeItem.props.eventKey !== key) {
-        return {
-          item: activeItem,
-          originalEvent: e,
-          key: activeItem.props.eventKey,
-          open: false
-        };
-      }
-    }
-    return [];
-  },
-  getFlatInstanceArray: function getFlatInstanceArray() {
-    var instanceArray = this.instanceArray;
-    var hasInnerArray = instanceArray.some(function (a) {
-      return Array.isArray(a);
-    });
-    if (hasInnerArray) {
-      instanceArray = [];
-      this.instanceArray.forEach(function (a) {
-        if (Array.isArray(a)) {
-          instanceArray.push.apply(instanceArray, a);
-        } else {
-          instanceArray.push(a);
-        }
-      });
-      this.instanceArray = instanceArray;
-    }
-    return instanceArray;
-  },
-  renderCommonMenuItem: function renderCommonMenuItem(child, i, subIndex, extraProps) {
-    var state = this.state;
-    var props = this.props;
-    var key = (0, util$3.getKeyFromChildrenIndex)(child, props.eventKey, i);
-    var childProps = child.props;
-    var isActive = key === state.activeKey;
-    var newChildProps = (0, _extends3["default"])({
-      mode: props.mode,
-      level: props.level,
-      inlineIndent: props.inlineIndent,
-      renderMenuItem: this.renderMenuItem,
-      rootPrefixCls: props.prefixCls,
-      index: i,
-      parentMenu: this,
-      ref: childProps.disabled ? undefined : (0, _createChainedFunction2["default"])(child.ref, saveRef.bind(this, i, subIndex)),
-      eventKey: key,
-      closeSubMenuOnMouseLeave: props.closeSubMenuOnMouseLeave,
-      onItemHover: this.onItemHover,
-      active: !childProps.disabled && isActive,
-      multiple: props.multiple,
-      onClick: this.onClick,
-      openTransitionName: this.getOpenTransitionName(),
-      openAnimation: props.openAnimation,
-      onOpenChange: this.onOpenChange,
-      onDeselect: this.onDeselect,
-      onDestroy: this.onDestroy,
-      onSelect: this.onSelect
-    }, extraProps);
-    if (props.mode === 'inline') {
-      newChildProps.closeSubMenuOnMouseLeave = newChildProps.openSubMenuOnMouseEnter = false;
-    }
-    return _react2["default"].cloneElement(child, newChildProps);
-  },
-  renderRoot: function renderRoot(props) {
-    var _classes;
-
-    this.instanceArray = [];
-    var classes = (_classes = {}, (0, _defineProperty3["default"])(_classes, props.prefixCls, 1), (0, _defineProperty3["default"])(_classes, props.prefixCls + '-' + props.mode, 1), (0, _defineProperty3["default"])(_classes, props.className, !!props.className), _classes);
-    var domProps = {
-      className: (0, _classnames2["default"])(classes),
-      role: 'menu',
-      'aria-activedescendant': ''
-    };
-    if (props.id) {
-      domProps.id = props.id;
-    }
-    if (props.focusable) {
-      domProps.tabIndex = '0';
-      domProps.onKeyDown = this.onKeyDown;
-    }
-    return (
-      // ESLint is not smart enough to know that the type of `children` was checked.
-      /* eslint-disable */
-      _react2["default"].createElement(
-        _DOMWrap2["default"],
-        (0, _extends3["default"])({
-          style: props.style,
-          tag: 'ul',
-          hiddenClassName: props.prefixCls + '-hidden',
-          visible: props.visible
-        }, domProps),
-        _react2["default"].Children.map(props.children, this.renderMenuItem)
-      )
-      /*eslint-enable */
-
-    );
-  },
-  step: function step(direction) {
-    var children = this.getFlatInstanceArray();
-    var activeKey = this.state.activeKey;
-    var len = children.length;
-    if (!len) {
-      return null;
-    }
-    if (direction < 0) {
-      children = children.concat().reverse();
-    }
-    // find current activeIndex
-    var activeIndex = -1;
-    children.every(function (c, ci) {
-      if (c && c.props.eventKey === activeKey) {
-        activeIndex = ci;
-        return false;
-      }
-      return true;
-    });
-    if (!this.props.defaultActiveFirst && activeIndex !== -1) {
-      if (allDisabled(children.slice(activeIndex, len - 1))) {
-        return undefined;
-      }
-    }
-    var start = (activeIndex + 1) % len;
-    var i = start;
-    for (;;) {
-      var child = children[i];
-      if (!child || child.props.disabled) {
-        i = (i + 1 + len) % len;
-        // complete a loop
-        if (i === start) {
-          return null;
-        }
-      } else {
-        return child;
-      }
-    }
-  }
-};
-
-exports["default"] = MenuMixin;
-module.exports = exports['default'];
-});
-
-var Menu_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-
-
-var _extends3 = _interopRequireDefault(_extends$1);
-
-
-
-var _propTypes2 = _interopRequireDefault(index$1);
-
-
-
-var _createReactClass2 = _interopRequireDefault(index$8);
-
-
-
-var _MenuMixin2 = _interopRequireDefault(MenuMixin_1);
-
-
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-// import React from 'react';
-var Menu = (0, _createReactClass2["default"])({
-  displayName: 'Menu',
-
-  propTypes: {
-    openSubMenuOnMouseEnter: _propTypes2["default"].bool,
-    closeSubMenuOnMouseLeave: _propTypes2["default"].bool,
-    selectedKeys: _propTypes2["default"].arrayOf(_propTypes2["default"].string),
-    defaultSelectedKeys: _propTypes2["default"].arrayOf(_propTypes2["default"].string),
-    defaultOpenKeys: _propTypes2["default"].arrayOf(_propTypes2["default"].string),
-    openKeys: _propTypes2["default"].arrayOf(_propTypes2["default"].string),
-    mode: _propTypes2["default"].string,
-    onClick: _propTypes2["default"].func,
-    onSelect: _propTypes2["default"].func,
-    onDeselect: _propTypes2["default"].func,
-    onDestroy: _propTypes2["default"].func,
-    openTransitionName: _propTypes2["default"].string,
-    openAnimation: _propTypes2["default"].oneOfType([_propTypes2["default"].string, _propTypes2["default"].object]),
-    level: _propTypes2["default"].number,
-    eventKey: _propTypes2["default"].string,
-    selectable: _propTypes2["default"].bool,
-    children: _propTypes2["default"].any
-  },
-
-  mixins: [_MenuMixin2["default"]],
-
-  getDefaultProps: function getDefaultProps() {
-    return {
-      openSubMenuOnMouseEnter: true,
-      closeSubMenuOnMouseLeave: true,
-      selectable: true,
-      onClick: util$3.noop,
-      onSelect: util$3.noop,
-      onOpenChange: util$3.noop,
-      onDeselect: util$3.noop,
-      defaultSelectedKeys: [],
-      defaultOpenKeys: []
-    };
-  },
-  getInitialState: function getInitialState() {
-    var props = this.props;
-    var selectedKeys = props.defaultSelectedKeys;
-    var openKeys = props.defaultOpenKeys;
-    if ('selectedKeys' in props) {
-      selectedKeys = props.selectedKeys || [];
-    }
-    if ('openKeys' in props) {
-      openKeys = props.openKeys || [];
-    }
-    return {
-      selectedKeys: selectedKeys,
-      openKeys: openKeys
-    };
-  },
-  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-    var props = {};
-    if ('selectedKeys' in nextProps) {
-      props.selectedKeys = nextProps.selectedKeys || [];
-    }
-    if ('openKeys' in nextProps) {
-      props.openKeys = nextProps.openKeys || [];
-    }
-    this.setState(props);
-  },
-  onDestroy: function onDestroy(key) {
-    var state = this.state;
-    var props = this.props;
-    var selectedKeys = state.selectedKeys;
-    var openKeys = state.openKeys;
-    var index = selectedKeys.indexOf(key);
-    if (!('selectedKeys' in props) && index !== -1) {
-      selectedKeys.splice(index, 1);
-    }
-    index = openKeys.indexOf(key);
-    if (!('openKeys' in props) && index !== -1) {
-      openKeys.splice(index, 1);
-    }
-  },
-  onItemHover: function onItemHover(e) {
-    var _this = this;
-
-    var item = e.item;
-    var _props = this.props,
-        mode = _props.mode,
-        closeSubMenuOnMouseLeave = _props.closeSubMenuOnMouseLeave;
-    var _e$openChanges = e.openChanges,
-        openChanges = _e$openChanges === undefined ? [] : _e$openChanges;
-    // special for top sub menu
-
-    if (mode !== 'inline' && !closeSubMenuOnMouseLeave && item.isSubMenu) {
-      (function () {
-        var activeKey = _this.state.activeKey;
-        var activeItem = _this.getFlatInstanceArray().filter(function (c) {
-          return c && c.props.eventKey === activeKey;
-        })[0];
-        if (activeItem && activeItem.props.open) {
-          openChanges = openChanges.concat({
-            key: item.props.eventKey,
-            item: item,
-            originalEvent: e,
-            open: true
-          });
-        }
-      })();
-    }
-    openChanges = openChanges.concat(this.getOpenChangesOnItemHover(e));
-    if (openChanges.length) {
-      this.onOpenChange(openChanges);
-    }
-  },
-  onSelect: function onSelect(selectInfo) {
-    var props = this.props;
-    if (props.selectable) {
-      // root menu
-      var selectedKeys = this.state.selectedKeys;
-      var selectedKey = selectInfo.key;
-      if (props.multiple) {
-        selectedKeys = selectedKeys.concat([selectedKey]);
-      } else {
-        selectedKeys = [selectedKey];
-      }
-      if (!('selectedKeys' in props)) {
-        this.setState({
-          selectedKeys: selectedKeys
-        });
-      }
-      props.onSelect((0, _extends3["default"])({}, selectInfo, {
-        selectedKeys: selectedKeys
-      }));
-    }
-  },
-  onClick: function onClick(e) {
-    this.props.onClick(e);
-  },
-  onOpenChange: function onOpenChange(e_) {
-    var props = this.props;
-    var openKeys = this.state.openKeys.concat();
-    var changed = false;
-    var processSingle = function processSingle(e) {
-      var oneChanged = false;
-      if (e.open) {
-        oneChanged = openKeys.indexOf(e.key) === -1;
-        if (oneChanged) {
-          openKeys.push(e.key);
-        }
-      } else {
-        var index = openKeys.indexOf(e.key);
-        oneChanged = index !== -1;
-        if (oneChanged) {
-          openKeys.splice(index, 1);
-        }
-      }
-      changed = changed || oneChanged;
-    };
-    if (Array.isArray(e_)) {
-      // batch change call
-      e_.forEach(processSingle);
-    } else {
-      processSingle(e_);
-    }
-    if (changed) {
-      if (!('openKeys' in this.props)) {
-        this.setState({ openKeys: openKeys });
-      }
-      props.onOpenChange(openKeys);
-    }
-  },
-  onDeselect: function onDeselect(selectInfo) {
-    var props = this.props;
-    if (props.selectable) {
-      var selectedKeys = this.state.selectedKeys.concat();
-      var selectedKey = selectInfo.key;
-      var index = selectedKeys.indexOf(selectedKey);
-      if (index !== -1) {
-        selectedKeys.splice(index, 1);
-      }
-      if (!('selectedKeys' in props)) {
-        this.setState({
-          selectedKeys: selectedKeys
-        });
-      }
-      props.onDeselect((0, _extends3["default"])({}, selectInfo, {
-        selectedKeys: selectedKeys
-      }));
-    }
-  },
-  getOpenTransitionName: function getOpenTransitionName() {
-    var props = this.props;
-    var transitionName = props.openTransitionName;
-    var animationName = props.openAnimation;
-    if (!transitionName && typeof animationName === 'string') {
-      transitionName = props.prefixCls + '-open-' + animationName;
-    }
-    return transitionName;
-  },
-  isInlineMode: function isInlineMode() {
-    return this.props.mode === 'inline';
-  },
-  lastOpenSubMenu: function lastOpenSubMenu() {
-    var lastOpen = [];
-    var openKeys = this.state.openKeys;
-
-    if (openKeys.length) {
-      lastOpen = this.getFlatInstanceArray().filter(function (c) {
-        return c && openKeys.indexOf(c.props.eventKey) !== -1;
-      });
-    }
-    return lastOpen[0];
-  },
-  renderMenuItem: function renderMenuItem(c, i, subIndex) {
-    if (!c) {
-      return null;
-    }
-    var state = this.state;
-    var extraProps = {
-      openKeys: state.openKeys,
-      selectedKeys: state.selectedKeys,
-      openSubMenuOnMouseEnter: this.props.openSubMenuOnMouseEnter
-    };
-    return this.renderCommonMenuItem(c, i, subIndex, extraProps);
-  },
-  render: function render() {
-    var props = (0, _extends3["default"])({}, this.props);
-    props.className += ' ' + props.prefixCls + '-root';
-    return this.renderRoot(props);
-  }
-});
-
-exports["default"] = Menu;
-module.exports = exports['default'];
-});
+var _createClass = unwrapExports(createClass$1);
 
 // true  -> String#at
 // false -> String#codePointAt
@@ -17918,10 +17561,10 @@ _wksDefine('asyncIterator');
 
 _wksDefine('observable');
 
-var index$11 = _core.Symbol;
+var index$9 = _core.Symbol;
 
 var symbol = createCommonjsModule(function (module) {
-module.exports = { "default": index$11, __esModule: true };
+module.exports = { "default": index$9, __esModule: true };
 });
 
 var _typeof_1 = createCommonjsModule(function (module, exports) {
@@ -17946,6 +17589,2997 @@ exports.default = typeof _symbol2.default === "function" && _typeof(_iterator2.d
 } : function (obj) {
   return obj && typeof _symbol2.default === "function" && obj.constructor === _symbol2.default && obj !== _symbol2.default.prototype ? "symbol" : typeof obj === "undefined" ? "undefined" : _typeof(obj);
 };
+});
+
+var possibleConstructorReturn$1 = createCommonjsModule(function (module, exports) {
+"use strict";
+
+exports.__esModule = true;
+
+
+
+var _typeof3 = _interopRequireDefault(_typeof_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function (self, call) {
+  if (!self) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return call && ((typeof call === "undefined" ? "undefined" : (0, _typeof3.default)(call)) === "object" || typeof call === "function") ? call : self;
+};
+});
+
+var _possibleConstructorReturn = unwrapExports(possibleConstructorReturn$1);
+
+// Works with __proto__ only. Old v8 can't work with null proto objects.
+/* eslint-disable no-proto */
+
+var check$1 = function(O, proto){
+  _anObject(O);
+  if(!_isObject(proto) && proto !== null)throw TypeError(proto + ": can't set as prototype!");
+};
+var _setProto = {
+  set: Object.setPrototypeOf || ('__proto__' in {} ? // eslint-disable-line
+    function(test, buggy, set){
+      try {
+        set = _ctx(Function.call, _objectGopd.f(Object.prototype, '__proto__').set, 2);
+        set(test, []);
+        buggy = !(test instanceof Array);
+      } catch(e){ buggy = true; }
+      return function setPrototypeOf(O, proto){
+        check$1(O, proto);
+        if(buggy)O.__proto__ = proto;
+        else set(O, proto);
+        return O;
+      };
+    }({}, false) : undefined),
+  check: check$1
+};
+
+// 19.1.3.19 Object.setPrototypeOf(O, proto)
+
+_export(_export.S, 'Object', {setPrototypeOf: _setProto.set});
+
+var setPrototypeOf$2 = _core.Object.setPrototypeOf;
+
+var setPrototypeOf = createCommonjsModule(function (module) {
+module.exports = { "default": setPrototypeOf$2, __esModule: true };
+});
+
+// 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
+_export(_export.S, 'Object', {create: _objectCreate});
+
+var $Object$1 = _core.Object;
+var create$2 = function create(P, D){
+  return $Object$1.create(P, D);
+};
+
+var create = createCommonjsModule(function (module) {
+module.exports = { "default": create$2, __esModule: true };
+});
+
+var inherits$1 = createCommonjsModule(function (module, exports) {
+"use strict";
+
+exports.__esModule = true;
+
+
+
+var _setPrototypeOf2 = _interopRequireDefault(setPrototypeOf);
+
+
+
+var _create2 = _interopRequireDefault(create);
+
+
+
+var _typeof3 = _interopRequireDefault(_typeof_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function (subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : (0, _typeof3.default)(superClass)));
+  }
+
+  subClass.prototype = (0, _create2.default)(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      enumerable: false,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) _setPrototypeOf2.default ? (0, _setPrototypeOf2.default)(subClass, superClass) : subClass.__proto__ = superClass;
+};
+});
+
+var _inherits = unwrapExports(inherits$1);
+
+function PressEvent(nativeEvent) {
+    var _this = this;
+
+    this.nativeEvent = nativeEvent;
+    ['type', 'currentTarget', 'target', 'touches', 'changedTouches'].forEach(function (m) {
+        _this[m] = nativeEvent[m];
+    });
+    if (!nativeEvent.$pressSeq) {
+        nativeEvent.$pressSeq = 1;
+    } else {
+        nativeEvent.$pressSeq += 1;
+    }
+    this.$pressSeq = nativeEvent.$pressSeq;
+}
+index$6(PressEvent.prototype, {
+    preventDefault: function preventDefault() {
+        this.nativeEvent.preventDefault();
+    },
+    stopPropagation: function stopPropagation() {
+        var nativeEvent = this.nativeEvent,
+            $pressSeq = this.$pressSeq;
+
+        if (nativeEvent.$stopPressSeq) {
+            return;
+        }
+        nativeEvent.$stopPressSeq = $pressSeq;
+    }
+});
+function shouldFirePress(e) {
+    var nativeEvent = e.nativeEvent,
+        $pressSeq = e.$pressSeq;
+
+    if (!nativeEvent.$stopPressSeq) {
+        return true;
+    }
+    return nativeEvent.$stopPressSeq >= $pressSeq;
+}
+
+// inspired by react-native
+function keyMirror(obj) {
+    Object.keys(obj).forEach(function (k) {
+        return obj[k] = k;
+    });
+    return obj;
+}
+function copy$1(from, list) {
+    var to = {};
+    list.forEach(function (k) {
+        to[k] = from[k];
+    });
+    return to;
+}
+function extractSingleTouch(_nativeEvent) {
+    var nativeEvent = _nativeEvent;
+    if (nativeEvent.nativeEvent) {
+        nativeEvent = nativeEvent.nativeEvent;
+    }
+    var touches = nativeEvent.touches;
+    var changedTouches = nativeEvent.changedTouches;
+    var hasTouches = touches && touches.length > 0;
+    var hasChangedTouches = changedTouches && changedTouches.length > 0;
+    return !hasTouches && hasChangedTouches ? changedTouches[0] : hasTouches ? touches[0] : nativeEvent;
+}
+/**
+ * Touchable states.
+ */
+var States = keyMirror({
+    NOT_RESPONDER: null,
+    RESPONDER_INACTIVE_PRESS_IN: null,
+    RESPONDER_INACTIVE_PRESS_OUT: null,
+    RESPONDER_ACTIVE_PRESS_IN: null,
+    RESPONDER_ACTIVE_PRESS_OUT: null,
+    RESPONDER_ACTIVE_LONG_PRESS_IN: null,
+    RESPONDER_ACTIVE_LONG_PRESS_OUT: null,
+    ERROR: null
+});
+/**
+ * Quick lookup map for states that are considered to be "active"
+ */
+var IsActive = {
+    RESPONDER_ACTIVE_PRESS_OUT: true,
+    RESPONDER_ACTIVE_PRESS_IN: true
+};
+/**
+ * Quick lookup for states that are considered to be "pressing" and are
+ * therefore eligible to result in a "selection" if the press stops.
+ */
+var IsPressingIn = {
+    RESPONDER_INACTIVE_PRESS_IN: true,
+    RESPONDER_ACTIVE_PRESS_IN: true,
+    RESPONDER_ACTIVE_LONG_PRESS_IN: true
+};
+var IsLongPressingIn = {
+    RESPONDER_ACTIVE_LONG_PRESS_IN: true
+};
+/**
+ * Inputs to the state machine.
+ */
+var Signals = keyMirror({
+    DELAY: null,
+    RESPONDER_GRANT: null,
+    RESPONDER_RELEASE: null,
+    RESPONDER_TERMINATED: null,
+    ENTER_PRESS_RECT: null,
+    LEAVE_PRESS_RECT: null,
+    LONG_PRESS_DETECTED: null
+});
+/**
+ * Mapping from States x Signals => States
+ */
+var Transitions = {
+    NOT_RESPONDER: {
+        DELAY: States.ERROR,
+        RESPONDER_GRANT: States.RESPONDER_INACTIVE_PRESS_IN,
+        RESPONDER_RELEASE: States.ERROR,
+        RESPONDER_TERMINATED: States.ERROR,
+        ENTER_PRESS_RECT: States.ERROR,
+        LEAVE_PRESS_RECT: States.ERROR,
+        LONG_PRESS_DETECTED: States.ERROR
+    },
+    RESPONDER_INACTIVE_PRESS_IN: {
+        DELAY: States.RESPONDER_ACTIVE_PRESS_IN,
+        RESPONDER_GRANT: States.ERROR,
+        RESPONDER_RELEASE: States.NOT_RESPONDER,
+        RESPONDER_TERMINATED: States.NOT_RESPONDER,
+        ENTER_PRESS_RECT: States.RESPONDER_INACTIVE_PRESS_IN,
+        LEAVE_PRESS_RECT: States.RESPONDER_INACTIVE_PRESS_OUT,
+        LONG_PRESS_DETECTED: States.ERROR
+    },
+    RESPONDER_INACTIVE_PRESS_OUT: {
+        DELAY: States.RESPONDER_ACTIVE_PRESS_OUT,
+        RESPONDER_GRANT: States.ERROR,
+        RESPONDER_RELEASE: States.NOT_RESPONDER,
+        RESPONDER_TERMINATED: States.NOT_RESPONDER,
+        ENTER_PRESS_RECT: States.RESPONDER_INACTIVE_PRESS_IN,
+        LEAVE_PRESS_RECT: States.RESPONDER_INACTIVE_PRESS_OUT,
+        LONG_PRESS_DETECTED: States.ERROR
+    },
+    RESPONDER_ACTIVE_PRESS_IN: {
+        DELAY: States.ERROR,
+        RESPONDER_GRANT: States.ERROR,
+        RESPONDER_RELEASE: States.NOT_RESPONDER,
+        RESPONDER_TERMINATED: States.NOT_RESPONDER,
+        ENTER_PRESS_RECT: States.RESPONDER_ACTIVE_PRESS_IN,
+        LEAVE_PRESS_RECT: States.RESPONDER_ACTIVE_PRESS_OUT,
+        LONG_PRESS_DETECTED: States.RESPONDER_ACTIVE_LONG_PRESS_IN
+    },
+    RESPONDER_ACTIVE_PRESS_OUT: {
+        DELAY: States.ERROR,
+        RESPONDER_GRANT: States.ERROR,
+        RESPONDER_RELEASE: States.NOT_RESPONDER,
+        RESPONDER_TERMINATED: States.NOT_RESPONDER,
+        ENTER_PRESS_RECT: States.RESPONDER_ACTIVE_PRESS_IN,
+        LEAVE_PRESS_RECT: States.RESPONDER_ACTIVE_PRESS_OUT,
+        LONG_PRESS_DETECTED: States.ERROR
+    },
+    RESPONDER_ACTIVE_LONG_PRESS_IN: {
+        DELAY: States.ERROR,
+        RESPONDER_GRANT: States.ERROR,
+        RESPONDER_RELEASE: States.NOT_RESPONDER,
+        RESPONDER_TERMINATED: States.NOT_RESPONDER,
+        ENTER_PRESS_RECT: States.RESPONDER_ACTIVE_LONG_PRESS_IN,
+        LEAVE_PRESS_RECT: States.RESPONDER_ACTIVE_LONG_PRESS_OUT,
+        LONG_PRESS_DETECTED: States.RESPONDER_ACTIVE_LONG_PRESS_IN
+    },
+    RESPONDER_ACTIVE_LONG_PRESS_OUT: {
+        DELAY: States.ERROR,
+        RESPONDER_GRANT: States.ERROR,
+        RESPONDER_RELEASE: States.NOT_RESPONDER,
+        RESPONDER_TERMINATED: States.NOT_RESPONDER,
+        ENTER_PRESS_RECT: States.RESPONDER_ACTIVE_LONG_PRESS_IN,
+        LEAVE_PRESS_RECT: States.RESPONDER_ACTIVE_LONG_PRESS_OUT,
+        LONG_PRESS_DETECTED: States.ERROR
+    },
+    error: {
+        DELAY: States.NOT_RESPONDER,
+        RESPONDER_GRANT: States.RESPONDER_INACTIVE_PRESS_IN,
+        RESPONDER_RELEASE: States.NOT_RESPONDER,
+        RESPONDER_TERMINATED: States.NOT_RESPONDER,
+        ENTER_PRESS_RECT: States.NOT_RESPONDER,
+        LEAVE_PRESS_RECT: States.NOT_RESPONDER,
+        LONG_PRESS_DETECTED: States.NOT_RESPONDER
+    }
+};
+// ==== Typical Constants for integrating into UI components ====
+// const HIT_EXPAND_PX = 20;
+// const HIT_VERT_OFFSET_PX = 10;
+var HIGHLIGHT_DELAY_MS = 130;
+var PRESS_EXPAND_PX = 20;
+var LONG_PRESS_THRESHOLD = 500;
+var LONG_PRESS_DELAY_MS = LONG_PRESS_THRESHOLD - HIGHLIGHT_DELAY_MS;
+var LONG_PRESS_ALLOWED_MOVEMENT = 10;
+var lastClickTime = 0;
+var pressDelay = 200;
+function isAllowPress() {
+    // avoid click penetration
+    return Date.now() - lastClickTime >= pressDelay;
+}
+
+var Touchable = function (_React$Component) {
+    _inherits(Touchable, _React$Component);
+
+    function Touchable() {
+        _classCallCheck(this, Touchable);
+
+        var _this = _possibleConstructorReturn(this, (Touchable.__proto__ || Object.getPrototypeOf(Touchable)).apply(this, arguments));
+
+        _this.state = {
+            active: false
+        };
+        _this.onTouchStart = function (e) {
+            _this.callChildEvent('onTouchStart', e);
+            _this.lockMouse = true;
+            if (_this.releaseLockTimer) {
+                clearTimeout(_this.releaseLockTimer);
+            }
+            _this.touchableHandleResponderGrant(e.nativeEvent);
+        };
+        _this.onTouchMove = function (e) {
+            _this.callChildEvent('onTouchMove', e);
+            _this.touchableHandleResponderMove(e.nativeEvent);
+        };
+        _this.onTouchEnd = function (e) {
+            _this.callChildEvent('onTouchEnd', e);
+            _this.releaseLockTimer = setTimeout(function () {
+                _this.lockMouse = false;
+            }, 300);
+            _this.touchableHandleResponderRelease(new PressEvent(e.nativeEvent));
+        };
+        _this.onTouchCancel = function (e) {
+            _this.callChildEvent('onTouchCancel', e);
+            _this.releaseLockTimer = setTimeout(function () {
+                _this.lockMouse = false;
+            }, 300);
+            _this.touchableHandleResponderTerminate(e.nativeEvent);
+        };
+        _this.onMouseDown = function (e) {
+            _this.callChildEvent('onMouseDown', e);
+            if (_this.lockMouse) {
+                return;
+            }
+            _this.touchableHandleResponderGrant(e.nativeEvent);
+            document.addEventListener('mousemove', _this.touchableHandleResponderMove, false);
+            document.addEventListener('mouseup', _this.onMouseUp, false);
+        };
+        _this.onMouseUp = function (e) {
+            document.removeEventListener('mousemove', _this.touchableHandleResponderMove, false);
+            document.removeEventListener('mouseup', _this.onMouseUp, false);
+            _this.touchableHandleResponderRelease(new PressEvent(e));
+        };
+        _this.touchableHandleResponderMove = function (e) {
+            if (!_this.touchable.startMouse) {
+                return;
+            }
+            // Measurement may not have returned yet.
+            if (!_this.touchable.dimensionsOnActivate || _this.touchable.touchState === States.NOT_RESPONDER) {
+                return;
+            }
+            // Not enough time elapsed yet, wait for highlight -
+            // this is just a perf optimization.
+            if (_this.touchable.touchState === States.RESPONDER_INACTIVE_PRESS_IN) {
+                return;
+            }
+            var touch = extractSingleTouch(e);
+            var pageX = touch && touch.pageX;
+            var pageY = touch && touch.pageY;
+            if (_this.pressInLocation) {
+                var movedDistance = _this._getDistanceBetweenPoints(pageX, pageY, _this.pressInLocation.pageX, _this.pressInLocation.pageY);
+                if (movedDistance > LONG_PRESS_ALLOWED_MOVEMENT) {
+                    _this._cancelLongPressDelayTimeout();
+                }
+            }
+            if (_this.checkTouchWithinActive(e)) {
+                _this._receiveSignal(Signals.ENTER_PRESS_RECT, e);
+                var curState = _this.touchable.touchState;
+                if (curState === States.RESPONDER_INACTIVE_PRESS_IN) {
+                    _this._cancelLongPressDelayTimeout();
+                }
+            } else {
+                _this._cancelLongPressDelayTimeout();
+                _this._receiveSignal(Signals.LEAVE_PRESS_RECT, e);
+            }
+        };
+        return _this;
+    }
+
+    _createClass(Touchable, [{
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            this.touchable = { touchState: undefined };
+        }
+    }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            this.root = ReactDOM.findDOMNode(this);
+        }
+    }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate() {
+            this.root = ReactDOM.findDOMNode(this);
+            // disabled auto clear active state
+            if (this.props.disabled && this.state.active) {
+                this.setState({
+                    active: false
+                });
+            }
+        }
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            if (this.releaseLockTimer) {
+                clearTimeout(this.releaseLockTimer);
+            }
+            if (this.touchableDelayTimeout) {
+                clearTimeout(this.touchableDelayTimeout);
+            }
+            if (this.longPressDelayTimeout) {
+                clearTimeout(this.longPressDelayTimeout);
+            }
+            if (this.pressOutDelayTimeout) {
+                clearTimeout(this.pressOutDelayTimeout);
+            }
+        }
+    }, {
+        key: 'callChildEvent',
+        value: function callChildEvent(event, e) {
+            var childHandle = React$1.Children.only(this.props.children).props[event];
+            if (childHandle) {
+                childHandle(e);
+            }
+        }
+    }, {
+        key: '_remeasureMetricsOnInit',
+        value: function _remeasureMetricsOnInit(e) {
+            var root = this.root;
+
+            var touch = extractSingleTouch(e);
+            var boundingRect = root.getBoundingClientRect();
+            this.touchable = {
+                touchState: this.touchable.touchState,
+                startMouse: {
+                    pageX: touch.pageX,
+                    pageY: touch.pageY
+                },
+                positionOnGrant: {
+                    left: boundingRect.left + window.pageXOffset,
+                    top: boundingRect.top + window.pageYOffset,
+                    width: boundingRect.width,
+                    height: boundingRect.height,
+                    clientLeft: boundingRect.left,
+                    clientTop: boundingRect.top
+                }
+            };
+        }
+    }, {
+        key: 'touchableHandleResponderGrant',
+        value: function touchableHandleResponderGrant(e) {
+            var _this2 = this;
+
+            this.touchable.touchState = States.NOT_RESPONDER;
+            if (this.pressOutDelayTimeout) {
+                clearTimeout(this.pressOutDelayTimeout);
+                this.pressOutDelayTimeout = null;
+            }
+            if (this.props.fixClickPenetration && !isAllowPress()) {
+                return;
+            }
+            this._remeasureMetricsOnInit(e);
+            this._receiveSignal(Signals.RESPONDER_GRANT, e);
+            var delayMS = this.props.delayPressIn;
+            if (delayMS) {
+                this.touchableDelayTimeout = setTimeout(function () {
+                    _this2._handleDelay(e);
+                }, delayMS);
+            } else {
+                this._handleDelay(e);
+            }
+            var longPressEvent = new PressEvent(e);
+            var longDelayMS = this.props.delayLongPress;
+            this.longPressDelayTimeout = setTimeout(function () {
+                _this2._handleLongDelay(longPressEvent);
+            }, longDelayMS + delayMS);
+        }
+    }, {
+        key: 'checkScroll',
+        value: function checkScroll(e) {
+            var positionOnGrant = this.touchable.positionOnGrant;
+            // container or window scroll
+            var boundingRect = this.root.getBoundingClientRect();
+            if (boundingRect.left !== positionOnGrant.clientLeft || boundingRect.top !== positionOnGrant.clientTop) {
+                this._receiveSignal(Signals.RESPONDER_TERMINATED, e);
+                return false;
+            }
+        }
+    }, {
+        key: 'touchableHandleResponderRelease',
+        value: function touchableHandleResponderRelease(e) {
+            if (!this.touchable.startMouse) {
+                return;
+            }
+            var touch = extractSingleTouch(e);
+            if (Math.abs(touch.pageX - this.touchable.startMouse.pageX) > 30 || Math.abs(touch.pageY - this.touchable.startMouse.pageY) > 30) {
+                this._receiveSignal(Signals.RESPONDER_TERMINATED, e);
+                return;
+            }
+            if (this.checkScroll(e) === false) {
+                return;
+            }
+            this._receiveSignal(Signals.RESPONDER_RELEASE, e);
+        }
+    }, {
+        key: 'touchableHandleResponderTerminate',
+        value: function touchableHandleResponderTerminate(e) {
+            if (!this.touchable.startMouse) {
+                return;
+            }
+            this._receiveSignal(Signals.RESPONDER_TERMINATED, e);
+        }
+    }, {
+        key: 'checkTouchWithinActive',
+        value: function checkTouchWithinActive(e) {
+            var positionOnGrant = this.touchable.positionOnGrant;
+            var _props = this.props,
+                _props$pressRetention = _props.pressRetentionOffset,
+                pressRetentionOffset = _props$pressRetention === undefined ? {} : _props$pressRetention,
+                hitSlop = _props.hitSlop;
+
+            var pressExpandLeft = pressRetentionOffset.left;
+            var pressExpandTop = pressRetentionOffset.top;
+            var pressExpandRight = pressRetentionOffset.right;
+            var pressExpandBottom = pressRetentionOffset.bottom;
+            if (hitSlop) {
+                pressExpandLeft += hitSlop.left;
+                pressExpandTop += hitSlop.top;
+                pressExpandRight += hitSlop.right;
+                pressExpandBottom += hitSlop.bottom;
+            }
+            var touch = extractSingleTouch(e);
+            var pageX = touch && touch.pageX;
+            var pageY = touch && touch.pageY;
+            return pageX > positionOnGrant.left - pressExpandLeft && pageY > positionOnGrant.top - pressExpandTop && pageX < positionOnGrant.left + positionOnGrant.width + pressExpandRight && pageY < positionOnGrant.top + positionOnGrant.height + pressExpandBottom;
+        }
+    }, {
+        key: 'callProp',
+        value: function callProp(name, e) {
+            if (this.props[name] && !this.props.disabled) {
+                this.props[name](e);
+            }
+        }
+    }, {
+        key: 'touchableHandleActivePressIn',
+        value: function touchableHandleActivePressIn(e) {
+            this.setActive(true);
+            this.callProp('onPressIn', e);
+        }
+    }, {
+        key: 'touchableHandleActivePressOut',
+        value: function touchableHandleActivePressOut(e) {
+            this.setActive(false);
+            this.callProp('onPressOut', e);
+        }
+    }, {
+        key: 'touchableHandlePress',
+        value: function touchableHandlePress(e) {
+            if (shouldFirePress(e)) {
+                this.callProp('onPress', e);
+            }
+            lastClickTime = Date.now();
+        }
+    }, {
+        key: 'touchableHandleLongPress',
+        value: function touchableHandleLongPress(e) {
+            if (shouldFirePress(e)) {
+                this.callProp('onLongPress', e);
+            }
+        }
+    }, {
+        key: 'setActive',
+        value: function setActive(active) {
+            if (this.props.activeClassName || this.props.activeStyle) {
+                this.setState({
+                    active: active
+                });
+            }
+        }
+    }, {
+        key: '_remeasureMetricsOnActivation',
+        value: function _remeasureMetricsOnActivation() {
+            this.touchable.dimensionsOnActivate = this.touchable.positionOnGrant;
+        }
+    }, {
+        key: '_handleDelay',
+        value: function _handleDelay(e) {
+            this.touchableDelayTimeout = null;
+            this._receiveSignal(Signals.DELAY, e);
+        }
+    }, {
+        key: '_handleLongDelay',
+        value: function _handleLongDelay(e) {
+            this.longPressDelayTimeout = null;
+            var curState = this.touchable.touchState;
+            if (curState !== States.RESPONDER_ACTIVE_PRESS_IN && curState !== States.RESPONDER_ACTIVE_LONG_PRESS_IN) {
+                console.error('Attempted to transition from state `' + curState + '` to `' + States.RESPONDER_ACTIVE_LONG_PRESS_IN + '`, which is not supported. This is ' + 'most likely due to `Touchable.longPressDelayTimeout` not being cancelled.');
+            } else {
+                this._receiveSignal(Signals.LONG_PRESS_DETECTED, e);
+            }
+        }
+    }, {
+        key: '_receiveSignal',
+        value: function _receiveSignal(signal, e) {
+            var curState = this.touchable.touchState;
+            var nextState = Transitions[curState] && Transitions[curState][signal];
+            if (!nextState) {
+                return;
+            }
+            if (nextState === States.ERROR) {
+                return;
+            }
+            if (curState !== nextState) {
+                this._performSideEffectsForTransition(curState, nextState, signal, e);
+                this.touchable.touchState = nextState;
+            }
+        }
+    }, {
+        key: '_cancelLongPressDelayTimeout',
+        value: function _cancelLongPressDelayTimeout() {
+            if (this.longPressDelayTimeout) {
+                clearTimeout(this.longPressDelayTimeout);
+                this.longPressDelayTimeout = null;
+            }
+        }
+    }, {
+        key: '_isHighlight',
+        value: function _isHighlight(state) {
+            return state === States.RESPONDER_ACTIVE_PRESS_IN || state === States.RESPONDER_ACTIVE_LONG_PRESS_IN;
+        }
+    }, {
+        key: '_savePressInLocation',
+        value: function _savePressInLocation(e) {
+            var touch = extractSingleTouch(e);
+            var pageX = touch && touch.pageX;
+            var pageY = touch && touch.pageY;
+            this.pressInLocation = { pageX: pageX, pageY: pageY };
+        }
+    }, {
+        key: '_getDistanceBetweenPoints',
+        value: function _getDistanceBetweenPoints(aX, aY, bX, bY) {
+            var deltaX = aX - bX;
+            var deltaY = aY - bY;
+            return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+        }
+    }, {
+        key: '_performSideEffectsForTransition',
+        value: function _performSideEffectsForTransition(curState, nextState, signal, e) {
+            var curIsHighlight = this._isHighlight(curState);
+            var newIsHighlight = this._isHighlight(nextState);
+            var isFinalSignal = signal === Signals.RESPONDER_TERMINATED || signal === Signals.RESPONDER_RELEASE;
+            if (isFinalSignal) {
+                this._cancelLongPressDelayTimeout();
+            }
+            if (!IsActive[curState] && IsActive[nextState]) {
+                this._remeasureMetricsOnActivation();
+            }
+            if (IsPressingIn[curState] && signal === Signals.LONG_PRESS_DETECTED) {
+                this.touchableHandleLongPress(e);
+            }
+            if (newIsHighlight && !curIsHighlight) {
+                this._startHighlight(e);
+            } else if (!newIsHighlight && curIsHighlight) {
+                this._endHighlight(e);
+            }
+            if (IsPressingIn[curState] && signal === Signals.RESPONDER_RELEASE) {
+                var hasLongPressHandler = !!this.props.onLongPress;
+                var pressIsLongButStillCallOnPress = IsLongPressingIn[curState] && (!hasLongPressHandler || !this.props.longPressCancelsPress // or we're told to ignore it.
+                );
+                var shouldInvokePress = !IsLongPressingIn[curState] || pressIsLongButStillCallOnPress;
+                if (shouldInvokePress) {
+                    if (!newIsHighlight && !curIsHighlight) {
+                        // we never highlighted because of delay, but we should highlight now
+                        this._startHighlight(e);
+                        this._endHighlight(e);
+                    }
+                    this.touchableHandlePress(e);
+                }
+            }
+            if (this.touchableDelayTimeout) {
+                clearTimeout(this.touchableDelayTimeout);
+                this.touchableDelayTimeout = null;
+            }
+        }
+    }, {
+        key: '_startHighlight',
+        value: function _startHighlight(e) {
+            this._savePressInLocation(e);
+            this.touchableHandleActivePressIn(e);
+        }
+    }, {
+        key: '_endHighlight',
+        value: function _endHighlight(e) {
+            var _this3 = this;
+
+            if (this.props.delayPressOut) {
+                this.pressOutDelayTimeout = setTimeout(function () {
+                    _this3.touchableHandleActivePressOut(e);
+                }, this.props.delayPressOut);
+            } else {
+                this.touchableHandleActivePressOut(e);
+            }
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _props2 = this.props,
+                children = _props2.children,
+                disabled = _props2.disabled,
+                activeStyle = _props2.activeStyle,
+                activeClassName = _props2.activeClassName;
+
+            var events = disabled ? undefined : copy$1(this, ['onTouchStart', 'onTouchMove', 'onTouchEnd', 'onTouchCancel', 'onMouseDown']);
+            var child = React$1.Children.only(children);
+            if (!disabled && this.state.active) {
+                var _child$props = child.props,
+                    style = _child$props.style,
+                    className = _child$props.className;
+
+                if (activeStyle) {
+                    style = index$6({}, style, activeStyle);
+                }
+                if (activeClassName) {
+                    if (className) {
+                        className += ' ' + activeClassName;
+                    } else {
+                        className = activeClassName;
+                    }
+                }
+                return React$1.cloneElement(child, index$6({
+                    className: className,
+                    style: style
+                }, events));
+            }
+            return React$1.cloneElement(child, events);
+        }
+    }]);
+
+    return Touchable;
+}(React$1.Component);
+
+Touchable.defaultProps = {
+    fixClickPenetration: false,
+    disabled: false,
+    delayPressIn: HIGHLIGHT_DELAY_MS,
+    delayLongPress: LONG_PRESS_DELAY_MS,
+    delayPressOut: 100,
+    pressRetentionOffset: {
+        left: PRESS_EXPAND_PX,
+        right: PRESS_EXPAND_PX,
+        top: PRESS_EXPAND_PX,
+        bottom: PRESS_EXPAND_PX
+    },
+    hitSlop: undefined,
+    longPressCancelsPress: true
+};
+
+var InputHandler = function (_Component) {
+  _inherits(InputHandler, _Component);
+
+  function InputHandler() {
+    _classCallCheck(this, InputHandler);
+
+    return _possibleConstructorReturn(this, (InputHandler.__proto__ || Object.getPrototypeOf(InputHandler)).apply(this, arguments));
+  }
+
+  _createClass(InputHandler, [{
+    key: 'render',
+    value: function render() {
+      var _props = this.props,
+          prefixCls = _props.prefixCls,
+          disabled = _props.disabled,
+          otherProps = _objectWithoutProperties(_props, ['prefixCls', 'disabled']);
+
+      return React$1.createElement(
+        Touchable,
+        { disabled: disabled, activeClassName: prefixCls + '-handler-active' },
+        React$1.createElement('span', otherProps)
+      );
+    }
+  }]);
+
+  return InputHandler;
+}(Component);
+
+InputHandler.propTypes = {
+  prefixCls: index$1.string,
+  disabled: index$1.bool
+};
+
+function noop$3() {}
+
+function preventDefault(e) {
+  e.preventDefault();
+}
+
+var InputNumber$2 = index$8({
+  propTypes: {
+    focusOnUpDown: index$1.bool,
+    onChange: index$1.func,
+    onKeyDown: index$1.func,
+    onKeyUp: index$1.func,
+    prefixCls: index$1.string,
+    disabled: index$1.bool,
+    onFocus: index$1.func,
+    onBlur: index$1.func,
+    readOnly: index$1.bool,
+    max: index$1.number,
+    min: index$1.number,
+    step: index$1.oneOfType([index$1.number, index$1.string]),
+    upHandler: index$1.node,
+    downHandler: index$1.node,
+    useTouch: index$1.bool,
+    formatter: index$1.func,
+    parser: index$1.func,
+    onMouseEnter: index$1.func,
+    onMouseLeave: index$1.func,
+    onMouseOver: index$1.func,
+    onMouseOut: index$1.func,
+    precision: index$1.number
+  },
+
+  mixins: [mixin],
+
+  getDefaultProps: function getDefaultProps() {
+    return {
+      focusOnUpDown: true,
+      useTouch: false,
+      prefixCls: 'rc-input-number'
+    };
+  },
+  componentDidMount: function componentDidMount() {
+    this.componentDidUpdate();
+  },
+  componentWillUpdate: function componentWillUpdate() {
+    try {
+      this.start = this.refs.input.selectionStart;
+      this.end = this.refs.input.selectionEnd;
+    } catch (e) {
+      // Fix error in Chrome:
+      // Failed to read the 'selectionStart' property from 'HTMLInputElement'
+      // http://stackoverflow.com/q/21177489/3040605
+    }
+  },
+  componentDidUpdate: function componentDidUpdate() {
+    if (this.props.focusOnUpDown && this.state.focused) {
+      var selectionRange = this.refs.input.setSelectionRange;
+      if (selectionRange && typeof selectionRange === 'function' && this.start !== undefined && this.end !== undefined && this.start !== this.end) {
+        this.refs.input.setSelectionRange(this.start, this.end);
+      } else {
+        this.focus();
+      }
+    }
+  },
+  onKeyDown: function onKeyDown(e) {
+    if (e.keyCode === 38) {
+      var ratio = this.getRatio(e);
+      this.up(e, ratio);
+      this.stop();
+    } else if (e.keyCode === 40) {
+      var _ratio = this.getRatio(e);
+      this.down(e, _ratio);
+      this.stop();
+    }
+    var onKeyDown = this.props.onKeyDown;
+
+    if (onKeyDown) {
+      for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+      }
+
+      onKeyDown.apply(undefined, [e].concat(args));
+    }
+  },
+  onKeyUp: function onKeyUp(e) {
+    this.stop();
+    var onKeyUp = this.props.onKeyUp;
+
+    if (onKeyUp) {
+      for (var _len2 = arguments.length, args = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+        args[_key2 - 1] = arguments[_key2];
+      }
+
+      onKeyUp.apply(undefined, [e].concat(args));
+    }
+  },
+  getRatio: function getRatio(e) {
+    var ratio = 1;
+    if (e.metaKey || e.ctrlKey) {
+      ratio = 0.1;
+    } else if (e.shiftKey) {
+      ratio = 10;
+    }
+    return ratio;
+  },
+  getValueFromEvent: function getValueFromEvent(e) {
+    return e.target.value;
+  },
+  focus: function focus() {
+    this.refs.input.focus();
+  },
+  formatWrapper: function formatWrapper(num) {
+    if (this.props.formatter) {
+      return this.props.formatter(num);
+    }
+    return num;
+  },
+  render: function render() {
+    var _classNames;
+
+    var props = _extends$2({}, this.props);
+    var prefixCls = props.prefixCls,
+        disabled = props.disabled,
+        readOnly = props.readOnly,
+        useTouch = props.useTouch;
+
+    var classes = index$4((_classNames = {}, _defineProperty$2(_classNames, prefixCls, true), _defineProperty$2(_classNames, props.className, !!props.className), _defineProperty$2(_classNames, prefixCls + '-disabled', disabled), _defineProperty$2(_classNames, prefixCls + '-focused', this.state.focused), _classNames));
+    var upDisabledClass = '';
+    var downDisabledClass = '';
+    var value = this.state.value;
+
+    if (value) {
+      if (!isNaN(value)) {
+        var val = Number(value);
+        if (val >= props.max) {
+          upDisabledClass = prefixCls + '-handler-up-disabled';
+        }
+        if (val <= props.min) {
+          downDisabledClass = prefixCls + '-handler-down-disabled';
+        }
+      } else {
+        upDisabledClass = prefixCls + '-handler-up-disabled';
+        downDisabledClass = prefixCls + '-handler-down-disabled';
+      }
+    }
+
+    var editable = !props.readOnly && !props.disabled;
+
+    // focus state, show input value
+    // unfocus state, show valid value
+    var inputDisplayValue = void 0;
+    if (this.state.focused) {
+      inputDisplayValue = this.state.inputValue;
+    } else {
+      inputDisplayValue = this.toPrecisionAsStep(this.state.value);
+    }
+
+    if (inputDisplayValue === undefined || inputDisplayValue === null) {
+      inputDisplayValue = '';
+    }
+
+    var upEvents = void 0;
+    var downEvents = void 0;
+    if (useTouch) {
+      upEvents = {
+        onTouchStart: editable && !upDisabledClass ? this.up : noop$3,
+        onTouchEnd: this.stop
+      };
+      downEvents = {
+        onTouchStart: editable && !downDisabledClass ? this.down : noop$3,
+        onTouchEnd: this.stop
+      };
+    } else {
+      upEvents = {
+        onMouseDown: editable && !upDisabledClass ? this.up : noop$3,
+        onMouseUp: this.stop,
+        onMouseLeave: this.stop
+      };
+      downEvents = {
+        onMouseDown: editable && !downDisabledClass ? this.down : noop$3,
+        onMouseUp: this.stop,
+        onMouseLeave: this.stop
+      };
+    }
+    var inputDisplayValueFormat = this.formatWrapper(inputDisplayValue);
+    var isUpDisabled = !!upDisabledClass || disabled || readOnly;
+    var isDownDisabled = !!downDisabledClass || disabled || readOnly;
+    // ref for test
+    return React$1.createElement(
+      'div',
+      {
+        className: classes,
+        style: props.style,
+        onMouseEnter: props.onMouseEnter,
+        onMouseLeave: props.onMouseLeave,
+        onMouseOver: props.onMouseOver,
+        onMouseOut: props.onMouseOut
+      },
+      React$1.createElement(
+        'div',
+        { className: prefixCls + '-handler-wrap' },
+        React$1.createElement(
+          InputHandler,
+          _extends$2({
+            ref: 'up',
+            disabled: isUpDisabled,
+            prefixCls: prefixCls,
+            unselectable: 'unselectable'
+          }, upEvents, {
+            role: 'button',
+            'aria-label': 'Increase Value',
+            'aria-disabled': !!isUpDisabled,
+            className: prefixCls + '-handler ' + prefixCls + '-handler-up ' + upDisabledClass
+          }),
+          this.props.upHandler || React$1.createElement('span', {
+            unselectable: 'unselectable',
+            className: prefixCls + '-handler-up-inner',
+            onClick: preventDefault
+          })
+        ),
+        React$1.createElement(
+          InputHandler,
+          _extends$2({
+            ref: 'down',
+            disabled: isDownDisabled,
+            prefixCls: prefixCls,
+            unselectable: 'unselectable'
+          }, downEvents, {
+            role: 'button',
+            'aria-label': 'Decrease Value',
+            'aria-disabled': !!isDownDisabled,
+            className: prefixCls + '-handler ' + prefixCls + '-handler-down ' + downDisabledClass
+          }),
+          this.props.downHandler || React$1.createElement('span', {
+            unselectable: 'unselectable',
+            className: prefixCls + '-handler-down-inner',
+            onClick: preventDefault
+          })
+        )
+      ),
+      React$1.createElement(
+        'div',
+        {
+          className: prefixCls + '-input-wrap',
+          role: 'spinbutton',
+          'aria-valuemin': props.min,
+          'aria-valuemax': props.max,
+          'aria-valuenow': value
+        },
+        React$1.createElement('input', {
+          type: props.type,
+          placeholder: props.placeholder,
+          onClick: props.onClick,
+          className: prefixCls + '-input',
+          autoComplete: 'off',
+          onFocus: this.onFocus,
+          onBlur: this.onBlur,
+          onKeyDown: editable ? this.onKeyDown : noop$3,
+          onKeyUp: editable ? this.onKeyUp : noop$3,
+          autoFocus: props.autoFocus,
+          maxLength: props.maxLength,
+          readOnly: props.readOnly,
+          disabled: props.disabled,
+          max: props.max,
+          min: props.min,
+          name: props.name,
+          id: props.id,
+          onChange: this.onChange,
+          ref: 'input',
+          value: inputDisplayValueFormat
+        })
+      )
+    );
+  }
+});
+
+var _class$22;
+var _temp$21;
+
+/**
+ * InputNumber Component
+ * @author yan
+ */
+var InputNumber = (_temp$21 = _class$22 = function (_PureComponent) {
+  inherits(InputNumber, _PureComponent);
+
+  function InputNumber(props) {
+    classCallCheck(this, InputNumber);
+
+    var _this = possibleConstructorReturn(this, (InputNumber.__proto__ || Object.getPrototypeOf(InputNumber)).call(this, props));
+
+    _this.state = {};
+    return _this;
+  }
+
+  createClass(InputNumber, [{
+    key: 'render',
+    value: function render() {
+      var _props = this.props,
+          className = _props.className,
+          size = _props.size,
+          otherProps = objectWithoutProperties(_props, ['className', 'size']);
+
+
+      var inputNumberClass = 'input-number-' + size;
+
+      return React.createElement(InputNumber$2, _extends({ className: inputNumberClass }, otherProps));
+    }
+  }]);
+  return InputNumber;
+}(PureComponent), _class$22.displayName = 'InputNumber', _class$22.defaultProps = {
+  step: 1,
+  size: 'normal'
+}, _class$22.propTypes = {
+  min: index$1.number,
+  max: index$1.number,
+  value: index$1.number,
+  step: index$1.oneOfType([index$1.number, index$1.string]),
+  defaultValue: index$1.number,
+  onChange: index$1.func,
+  disabled: index$1.bool,
+  size: index$1.oneOf(['normal', 'large', 'small']),
+  formatter: index$1.func,
+  parser: index$1.func,
+  placeholder: index$1.string,
+  className: index$1.string
+}, _temp$21);
+
+var KeyCode_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+/**
+ * @ignore
+ * some key-codes definition and utils from closure-library
+ * @author yiminghe@gmail.com
+ */
+
+var KeyCode = {
+  /**
+   * MAC_ENTER
+   */
+  MAC_ENTER: 3,
+  /**
+   * BACKSPACE
+   */
+  BACKSPACE: 8,
+  /**
+   * TAB
+   */
+  TAB: 9,
+  /**
+   * NUMLOCK on FF/Safari Mac
+   */
+  NUM_CENTER: 12, // NUMLOCK on FF/Safari Mac
+  /**
+   * ENTER
+   */
+  ENTER: 13,
+  /**
+   * SHIFT
+   */
+  SHIFT: 16,
+  /**
+   * CTRL
+   */
+  CTRL: 17,
+  /**
+   * ALT
+   */
+  ALT: 18,
+  /**
+   * PAUSE
+   */
+  PAUSE: 19,
+  /**
+   * CAPS_LOCK
+   */
+  CAPS_LOCK: 20,
+  /**
+   * ESC
+   */
+  ESC: 27,
+  /**
+   * SPACE
+   */
+  SPACE: 32,
+  /**
+   * PAGE_UP
+   */
+  PAGE_UP: 33, // also NUM_NORTH_EAST
+  /**
+   * PAGE_DOWN
+   */
+  PAGE_DOWN: 34, // also NUM_SOUTH_EAST
+  /**
+   * END
+   */
+  END: 35, // also NUM_SOUTH_WEST
+  /**
+   * HOME
+   */
+  HOME: 36, // also NUM_NORTH_WEST
+  /**
+   * LEFT
+   */
+  LEFT: 37, // also NUM_WEST
+  /**
+   * UP
+   */
+  UP: 38, // also NUM_NORTH
+  /**
+   * RIGHT
+   */
+  RIGHT: 39, // also NUM_EAST
+  /**
+   * DOWN
+   */
+  DOWN: 40, // also NUM_SOUTH
+  /**
+   * PRINT_SCREEN
+   */
+  PRINT_SCREEN: 44,
+  /**
+   * INSERT
+   */
+  INSERT: 45, // also NUM_INSERT
+  /**
+   * DELETE
+   */
+  DELETE: 46, // also NUM_DELETE
+  /**
+   * ZERO
+   */
+  ZERO: 48,
+  /**
+   * ONE
+   */
+  ONE: 49,
+  /**
+   * TWO
+   */
+  TWO: 50,
+  /**
+   * THREE
+   */
+  THREE: 51,
+  /**
+   * FOUR
+   */
+  FOUR: 52,
+  /**
+   * FIVE
+   */
+  FIVE: 53,
+  /**
+   * SIX
+   */
+  SIX: 54,
+  /**
+   * SEVEN
+   */
+  SEVEN: 55,
+  /**
+   * EIGHT
+   */
+  EIGHT: 56,
+  /**
+   * NINE
+   */
+  NINE: 57,
+  /**
+   * QUESTION_MARK
+   */
+  QUESTION_MARK: 63, // needs localization
+  /**
+   * A
+   */
+  A: 65,
+  /**
+   * B
+   */
+  B: 66,
+  /**
+   * C
+   */
+  C: 67,
+  /**
+   * D
+   */
+  D: 68,
+  /**
+   * E
+   */
+  E: 69,
+  /**
+   * F
+   */
+  F: 70,
+  /**
+   * G
+   */
+  G: 71,
+  /**
+   * H
+   */
+  H: 72,
+  /**
+   * I
+   */
+  I: 73,
+  /**
+   * J
+   */
+  J: 74,
+  /**
+   * K
+   */
+  K: 75,
+  /**
+   * L
+   */
+  L: 76,
+  /**
+   * M
+   */
+  M: 77,
+  /**
+   * N
+   */
+  N: 78,
+  /**
+   * O
+   */
+  O: 79,
+  /**
+   * P
+   */
+  P: 80,
+  /**
+   * Q
+   */
+  Q: 81,
+  /**
+   * R
+   */
+  R: 82,
+  /**
+   * S
+   */
+  S: 83,
+  /**
+   * T
+   */
+  T: 84,
+  /**
+   * U
+   */
+  U: 85,
+  /**
+   * V
+   */
+  V: 86,
+  /**
+   * W
+   */
+  W: 87,
+  /**
+   * X
+   */
+  X: 88,
+  /**
+   * Y
+   */
+  Y: 89,
+  /**
+   * Z
+   */
+  Z: 90,
+  /**
+   * META
+   */
+  META: 91, // WIN_KEY_LEFT
+  /**
+   * WIN_KEY_RIGHT
+   */
+  WIN_KEY_RIGHT: 92,
+  /**
+   * CONTEXT_MENU
+   */
+  CONTEXT_MENU: 93,
+  /**
+   * NUM_ZERO
+   */
+  NUM_ZERO: 96,
+  /**
+   * NUM_ONE
+   */
+  NUM_ONE: 97,
+  /**
+   * NUM_TWO
+   */
+  NUM_TWO: 98,
+  /**
+   * NUM_THREE
+   */
+  NUM_THREE: 99,
+  /**
+   * NUM_FOUR
+   */
+  NUM_FOUR: 100,
+  /**
+   * NUM_FIVE
+   */
+  NUM_FIVE: 101,
+  /**
+   * NUM_SIX
+   */
+  NUM_SIX: 102,
+  /**
+   * NUM_SEVEN
+   */
+  NUM_SEVEN: 103,
+  /**
+   * NUM_EIGHT
+   */
+  NUM_EIGHT: 104,
+  /**
+   * NUM_NINE
+   */
+  NUM_NINE: 105,
+  /**
+   * NUM_MULTIPLY
+   */
+  NUM_MULTIPLY: 106,
+  /**
+   * NUM_PLUS
+   */
+  NUM_PLUS: 107,
+  /**
+   * NUM_MINUS
+   */
+  NUM_MINUS: 109,
+  /**
+   * NUM_PERIOD
+   */
+  NUM_PERIOD: 110,
+  /**
+   * NUM_DIVISION
+   */
+  NUM_DIVISION: 111,
+  /**
+   * F1
+   */
+  F1: 112,
+  /**
+   * F2
+   */
+  F2: 113,
+  /**
+   * F3
+   */
+  F3: 114,
+  /**
+   * F4
+   */
+  F4: 115,
+  /**
+   * F5
+   */
+  F5: 116,
+  /**
+   * F6
+   */
+  F6: 117,
+  /**
+   * F7
+   */
+  F7: 118,
+  /**
+   * F8
+   */
+  F8: 119,
+  /**
+   * F9
+   */
+  F9: 120,
+  /**
+   * F10
+   */
+  F10: 121,
+  /**
+   * F11
+   */
+  F11: 122,
+  /**
+   * F12
+   */
+  F12: 123,
+  /**
+   * NUMLOCK
+   */
+  NUMLOCK: 144,
+  /**
+   * SEMICOLON
+   */
+  SEMICOLON: 186, // needs localization
+  /**
+   * DASH
+   */
+  DASH: 189, // needs localization
+  /**
+   * EQUALS
+   */
+  EQUALS: 187, // needs localization
+  /**
+   * COMMA
+   */
+  COMMA: 188, // needs localization
+  /**
+   * PERIOD
+   */
+  PERIOD: 190, // needs localization
+  /**
+   * SLASH
+   */
+  SLASH: 191, // needs localization
+  /**
+   * APOSTROPHE
+   */
+  APOSTROPHE: 192, // needs localization
+  /**
+   * SINGLE_QUOTE
+   */
+  SINGLE_QUOTE: 222, // needs localization
+  /**
+   * OPEN_SQUARE_BRACKET
+   */
+  OPEN_SQUARE_BRACKET: 219, // needs localization
+  /**
+   * BACKSLASH
+   */
+  BACKSLASH: 220, // needs localization
+  /**
+   * CLOSE_SQUARE_BRACKET
+   */
+  CLOSE_SQUARE_BRACKET: 221, // needs localization
+  /**
+   * WIN_KEY
+   */
+  WIN_KEY: 224,
+  /**
+   * MAC_FF_META
+   */
+  MAC_FF_META: 224, // Firefox (Gecko) fires this for the meta key instead of 91
+  /**
+   * WIN_IME
+   */
+  WIN_IME: 229
+};
+
+/*
+ whether text and modified key is entered at the same time.
+ */
+KeyCode.isTextModifyingKeyEvent = function isTextModifyingKeyEvent(e) {
+  var keyCode = e.keyCode;
+  if (e.altKey && !e.ctrlKey || e.metaKey ||
+  // Function keys don't generate text
+  keyCode >= KeyCode.F1 && keyCode <= KeyCode.F12) {
+    return false;
+  }
+
+  // The following keys are quite harmless, even in combination with
+  // CTRL, ALT or SHIFT.
+  switch (keyCode) {
+    case KeyCode.ALT:
+    case KeyCode.CAPS_LOCK:
+    case KeyCode.CONTEXT_MENU:
+    case KeyCode.CTRL:
+    case KeyCode.DOWN:
+    case KeyCode.END:
+    case KeyCode.ESC:
+    case KeyCode.HOME:
+    case KeyCode.INSERT:
+    case KeyCode.LEFT:
+    case KeyCode.MAC_FF_META:
+    case KeyCode.META:
+    case KeyCode.NUMLOCK:
+    case KeyCode.NUM_CENTER:
+    case KeyCode.PAGE_DOWN:
+    case KeyCode.PAGE_UP:
+    case KeyCode.PAUSE:
+    case KeyCode.PRINT_SCREEN:
+    case KeyCode.RIGHT:
+    case KeyCode.SHIFT:
+    case KeyCode.UP:
+    case KeyCode.WIN_KEY:
+    case KeyCode.WIN_KEY_RIGHT:
+      return false;
+    default:
+      return true;
+  }
+};
+
+/*
+ whether character is entered.
+ */
+KeyCode.isCharacterKey = function isCharacterKey(keyCode) {
+  if (keyCode >= KeyCode.ZERO && keyCode <= KeyCode.NINE) {
+    return true;
+  }
+
+  if (keyCode >= KeyCode.NUM_ZERO && keyCode <= KeyCode.NUM_MULTIPLY) {
+    return true;
+  }
+
+  if (keyCode >= KeyCode.A && keyCode <= KeyCode.Z) {
+    return true;
+  }
+
+  // Safari sends zero key code for non-latin characters.
+  if (window.navigation.userAgent.indexOf('WebKit') !== -1 && keyCode === 0) {
+    return true;
+  }
+
+  switch (keyCode) {
+    case KeyCode.SPACE:
+    case KeyCode.QUESTION_MARK:
+    case KeyCode.NUM_PLUS:
+    case KeyCode.NUM_MINUS:
+    case KeyCode.NUM_PERIOD:
+    case KeyCode.NUM_DIVISION:
+    case KeyCode.SEMICOLON:
+    case KeyCode.DASH:
+    case KeyCode.EQUALS:
+    case KeyCode.COMMA:
+    case KeyCode.PERIOD:
+    case KeyCode.SLASH:
+    case KeyCode.APOSTROPHE:
+    case KeyCode.SINGLE_QUOTE:
+    case KeyCode.OPEN_SQUARE_BRACKET:
+    case KeyCode.BACKSLASH:
+    case KeyCode.CLOSE_SQUARE_BRACKET:
+      return true;
+    default:
+      return false;
+  }
+};
+
+exports['default'] = KeyCode;
+module.exports = exports['default'];
+});
+
+var createChainedFunction_1 = createCommonjsModule(function (module, exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = createChainedFunction;
+/**
+ * Safe chained function
+ *
+ * Will only create a new function if needed,
+ * otherwise will pass back existing functions or null.
+ *
+ * @returns {function|null}
+ */
+function createChainedFunction() {
+  var args = [].slice.call(arguments, 0);
+  if (args.length === 1) {
+    return args[0];
+  }
+
+  return function chainedFunction() {
+    for (var i = 0; i < args.length; i++) {
+      if (args[i] && args[i].apply) {
+        args[i].apply(this, arguments);
+      }
+    }
+  };
+}
+module.exports = exports['default'];
+});
+
+var _extends$3 = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _typeof$2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
+var RE_NUM = /[\-+]?(?:\d*\.|)\d+(?:[eE][\-+]?\d+|)/.source;
+
+function getClientPosition(elem) {
+  var box = undefined;
+  var x = undefined;
+  var y = undefined;
+  var doc = elem.ownerDocument;
+  var body = doc.body;
+  var docElem = doc && doc.documentElement;
+  // 根据 GBS 最新数据，A-Grade Browsers 都已支持 getBoundingClientRect 方法，不用再考虑传统的实现方式
+  box = elem.getBoundingClientRect();
+
+  // 注：jQuery 还考虑减去 docElem.clientLeft/clientTop
+  // 但测试发现，这样反而会导致当 html 和 body 有边距/边框样式时，获取的值不正确
+  // 此外，ie6 会忽略 html 的 margin 值，幸运地是没有谁会去设置 html 的 margin
+
+  x = box.left;
+  y = box.top;
+
+  // In IE, most of the time, 2 extra pixels are added to the top and left
+  // due to the implicit 2-pixel inset border.  In IE6/7 quirks mode and
+  // IE6 standards mode, this border can be overridden by setting the
+  // document element's border to zero -- thus, we cannot rely on the
+  // offset always being 2 pixels.
+
+  // In quirks mode, the offset can be determined by querying the body's
+  // clientLeft/clientTop, but in standards mode, it is found by querying
+  // the document element's clientLeft/clientTop.  Since we already called
+  // getClientBoundingRect we have already forced a reflow, so it is not
+  // too expensive just to query them all.
+
+  // ie 下应该减去窗口的边框吧，毕竟默认 absolute 都是相对窗口定位的
+  // 窗口边框标准是设 documentElement ,quirks 时设置 body
+  // 最好禁止在 body 和 html 上边框 ，但 ie < 9 html 默认有 2px ，减去
+  // 但是非 ie 不可能设置窗口边框，body html 也不是窗口 ,ie 可以通过 html,body 设置
+  // 标准 ie 下 docElem.clientTop 就是 border-top
+  // ie7 html 即窗口边框改变不了。永远为 2
+  // 但标准 firefox/chrome/ie9 下 docElem.clientTop 是窗口边框，即使设了 border-top 也为 0
+
+  x -= docElem.clientLeft || body.clientLeft || 0;
+  y -= docElem.clientTop || body.clientTop || 0;
+
+  return {
+    left: x,
+    top: y
+  };
+}
+
+function getScroll(w, top) {
+  var ret = w['page' + (top ? 'Y' : 'X') + 'Offset'];
+  var method = 'scroll' + (top ? 'Top' : 'Left');
+  if (typeof ret !== 'number') {
+    var d = w.document;
+    // ie6,7,8 standard mode
+    ret = d.documentElement[method];
+    if (typeof ret !== 'number') {
+      // quirks mode
+      ret = d.body[method];
+    }
+  }
+  return ret;
+}
+
+function getScrollLeft(w) {
+  return getScroll(w);
+}
+
+function getScrollTop(w) {
+  return getScroll(w, true);
+}
+
+function getOffset(el) {
+  var pos = getClientPosition(el);
+  var doc = el.ownerDocument;
+  var w = doc.defaultView || doc.parentWindow;
+  pos.left += getScrollLeft(w);
+  pos.top += getScrollTop(w);
+  return pos;
+}
+function _getComputedStyle(elem, name, computedStyle_) {
+  var val = '';
+  var d = elem.ownerDocument;
+  var computedStyle = computedStyle_ || d.defaultView.getComputedStyle(elem, null);
+
+  // https://github.com/kissyteam/kissy/issues/61
+  if (computedStyle) {
+    val = computedStyle.getPropertyValue(name) || computedStyle[name];
+  }
+
+  return val;
+}
+
+var _RE_NUM_NO_PX = new RegExp('^(' + RE_NUM + ')(?!px)[a-z%]+$', 'i');
+var RE_POS = /^(top|right|bottom|left)$/;
+var CURRENT_STYLE = 'currentStyle';
+var RUNTIME_STYLE = 'runtimeStyle';
+var LEFT = 'left';
+var PX = 'px';
+
+function _getComputedStyleIE(elem, name) {
+  // currentStyle maybe null
+  // http://msdn.microsoft.com/en-us/library/ms535231.aspx
+  var ret = elem[CURRENT_STYLE] && elem[CURRENT_STYLE][name];
+
+  // 当 width/height 设置为百分比时，通过 pixelLeft 方式转换的 width/height 值
+  // 一开始就处理了! CUSTOM_STYLE.height,CUSTOM_STYLE.width ,cssHook 解决@2011-08-19
+  // 在 ie 下不对，需要直接用 offset 方式
+  // borderWidth 等值也有问题，但考虑到 borderWidth 设为百分比的概率很小，这里就不考虑了
+
+  // From the awesome hack by Dean Edwards
+  // http://erik.eae.net/archives/2007/07/27/18.54.15/#comment-102291
+  // If we're not dealing with a regular pixel number
+  // but a number that has a weird ending, we need to convert it to pixels
+  // exclude left right for relativity
+  if (_RE_NUM_NO_PX.test(ret) && !RE_POS.test(name)) {
+    // Remember the original values
+    var style = elem.style;
+    var left = style[LEFT];
+    var rsLeft = elem[RUNTIME_STYLE][LEFT];
+
+    // prevent flashing of content
+    elem[RUNTIME_STYLE][LEFT] = elem[CURRENT_STYLE][LEFT];
+
+    // Put in the new values to get a computed value out
+    style[LEFT] = name === 'fontSize' ? '1em' : ret || 0;
+    ret = style.pixelLeft + PX;
+
+    // Revert the changed values
+    style[LEFT] = left;
+
+    elem[RUNTIME_STYLE][LEFT] = rsLeft;
+  }
+  return ret === '' ? 'auto' : ret;
+}
+
+var getComputedStyleX = undefined;
+if (typeof window !== 'undefined') {
+  getComputedStyleX = window.getComputedStyle ? _getComputedStyle : _getComputedStyleIE;
+}
+
+function each(arr, fn) {
+  for (var i = 0; i < arr.length; i++) {
+    fn(arr[i]);
+  }
+}
+
+function isBorderBoxFn(elem) {
+  return getComputedStyleX(elem, 'boxSizing') === 'border-box';
+}
+
+var BOX_MODELS = ['margin', 'border', 'padding'];
+var CONTENT_INDEX = -1;
+var PADDING_INDEX = 2;
+var BORDER_INDEX = 1;
+var MARGIN_INDEX = 0;
+
+function swap(elem, options, callback) {
+  var old = {};
+  var style = elem.style;
+  var name = undefined;
+
+  // Remember the old values, and insert the new ones
+  for (name in options) {
+    if (options.hasOwnProperty(name)) {
+      old[name] = style[name];
+      style[name] = options[name];
+    }
+  }
+
+  callback.call(elem);
+
+  // Revert the old values
+  for (name in options) {
+    if (options.hasOwnProperty(name)) {
+      style[name] = old[name];
+    }
+  }
+}
+
+function getPBMWidth(elem, props, which) {
+  var value = 0;
+  var prop = undefined;
+  var j = undefined;
+  var i = undefined;
+  for (j = 0; j < props.length; j++) {
+    prop = props[j];
+    if (prop) {
+      for (i = 0; i < which.length; i++) {
+        var cssProp = undefined;
+        if (prop === 'border') {
+          cssProp = prop + which[i] + 'Width';
+        } else {
+          cssProp = prop + which[i];
+        }
+        value += parseFloat(getComputedStyleX(elem, cssProp)) || 0;
+      }
+    }
+  }
+  return value;
+}
+
+/**
+ * A crude way of determining if an object is a window
+ * @member util
+ */
+function isWindow(obj) {
+  // must use == for ie8
+  /* eslint eqeqeq:0 */
+  return obj != null && obj == obj.window;
+}
+
+var domUtils = {};
+
+each(['Width', 'Height'], function (name) {
+  domUtils['doc' + name] = function (refWin) {
+    var d = refWin.document;
+    return Math.max(
+    // firefox chrome documentElement.scrollHeight< body.scrollHeight
+    // ie standard mode : documentElement.scrollHeight> body.scrollHeight
+    d.documentElement['scroll' + name],
+    // quirks : documentElement.scrollHeight 最大等于可视窗口多一点？
+    d.body['scroll' + name], domUtils['viewport' + name](d));
+  };
+
+  domUtils['viewport' + name] = function (win) {
+    // pc browser includes scrollbar in window.innerWidth
+    var prop = 'client' + name;
+    var doc = win.document;
+    var body = doc.body;
+    var documentElement = doc.documentElement;
+    var documentElementProp = documentElement[prop];
+    // 标准模式取 documentElement
+    // backcompat 取 body
+    return doc.compatMode === 'CSS1Compat' && documentElementProp || body && body[prop] || documentElementProp;
+  };
+});
+
+/*
+ 得到元素的大小信息
+ @param elem
+ @param name
+ @param {String} [extra]  'padding' : (css width) + padding
+ 'border' : (css width) + padding + border
+ 'margin' : (css width) + padding + border + margin
+ */
+function getWH(elem, name, extra) {
+  if (isWindow(elem)) {
+    return name === 'width' ? domUtils.viewportWidth(elem) : domUtils.viewportHeight(elem);
+  } else if (elem.nodeType === 9) {
+    return name === 'width' ? domUtils.docWidth(elem) : domUtils.docHeight(elem);
+  }
+  var which = name === 'width' ? ['Left', 'Right'] : ['Top', 'Bottom'];
+  var borderBoxValue = name === 'width' ? elem.offsetWidth : elem.offsetHeight;
+  var computedStyle = getComputedStyleX(elem);
+  var isBorderBox = isBorderBoxFn(elem, computedStyle);
+  var cssBoxValue = 0;
+  if (borderBoxValue == null || borderBoxValue <= 0) {
+    borderBoxValue = undefined;
+    // Fall back to computed then un computed css if necessary
+    cssBoxValue = getComputedStyleX(elem, name);
+    if (cssBoxValue == null || Number(cssBoxValue) < 0) {
+      cssBoxValue = elem.style[name] || 0;
+    }
+    // Normalize '', auto, and prepare for extra
+    cssBoxValue = parseFloat(cssBoxValue) || 0;
+  }
+  if (extra === undefined) {
+    extra = isBorderBox ? BORDER_INDEX : CONTENT_INDEX;
+  }
+  var borderBoxValueOrIsBorderBox = borderBoxValue !== undefined || isBorderBox;
+  var val = borderBoxValue || cssBoxValue;
+  if (extra === CONTENT_INDEX) {
+    if (borderBoxValueOrIsBorderBox) {
+      return val - getPBMWidth(elem, ['border', 'padding'], which, computedStyle);
+    }
+    return cssBoxValue;
+  }
+  if (borderBoxValueOrIsBorderBox) {
+    var padding = extra === PADDING_INDEX ? -getPBMWidth(elem, ['border'], which, computedStyle) : getPBMWidth(elem, ['margin'], which, computedStyle);
+    return val + (extra === BORDER_INDEX ? 0 : padding);
+  }
+  return cssBoxValue + getPBMWidth(elem, BOX_MODELS.slice(extra), which, computedStyle);
+}
+
+var cssShow = {
+  position: 'absolute',
+  visibility: 'hidden',
+  display: 'block'
+};
+
+// fix #119 : https://github.com/kissyteam/kissy/issues/119
+function getWHIgnoreDisplay(elem) {
+  var val = undefined;
+  var args = arguments;
+  // in case elem is window
+  // elem.offsetWidth === undefined
+  if (elem.offsetWidth !== 0) {
+    val = getWH.apply(undefined, args);
+  } else {
+    swap(elem, cssShow, function () {
+      val = getWH.apply(undefined, args);
+    });
+  }
+  return val;
+}
+
+function css(el, name, v) {
+  var value = v;
+  if ((typeof name === 'undefined' ? 'undefined' : _typeof$2(name)) === 'object') {
+    for (var i in name) {
+      if (name.hasOwnProperty(i)) {
+        css(el, i, name[i]);
+      }
+    }
+    return undefined;
+  }
+  if (typeof value !== 'undefined') {
+    if (typeof value === 'number') {
+      value += 'px';
+    }
+    el.style[name] = value;
+    return undefined;
+  }
+  return getComputedStyleX(el, name);
+}
+
+each(['width', 'height'], function (name) {
+  var first = name.charAt(0).toUpperCase() + name.slice(1);
+  domUtils['outer' + first] = function (el, includeMargin) {
+    return el && getWHIgnoreDisplay(el, name, includeMargin ? MARGIN_INDEX : BORDER_INDEX);
+  };
+  var which = name === 'width' ? ['Left', 'Right'] : ['Top', 'Bottom'];
+
+  domUtils[name] = function (elem, val) {
+    if (val !== undefined) {
+      if (elem) {
+        var computedStyle = getComputedStyleX(elem);
+        var isBorderBox = isBorderBoxFn(elem);
+        if (isBorderBox) {
+          val += getPBMWidth(elem, ['padding', 'border'], which, computedStyle);
+        }
+        return css(elem, name, val);
+      }
+      return undefined;
+    }
+    return elem && getWHIgnoreDisplay(elem, name, CONTENT_INDEX);
+  };
+});
+
+// 设置 elem 相对 elem.ownerDocument 的坐标
+function setOffset(elem, offset) {
+  // set position first, in-case top/left are set even on static elem
+  if (css(elem, 'position') === 'static') {
+    elem.style.position = 'relative';
+  }
+
+  var old = getOffset(elem);
+  var ret = {};
+  var current = undefined;
+  var key = undefined;
+
+  for (key in offset) {
+    if (offset.hasOwnProperty(key)) {
+      current = parseFloat(css(elem, key)) || 0;
+      ret[key] = current + offset[key] - old[key];
+    }
+  }
+  css(elem, ret);
+}
+
+var util = _extends$3({
+  getWindow: function getWindow(node) {
+    var doc = node.ownerDocument || node;
+    return doc.defaultView || doc.parentWindow;
+  },
+  offset: function offset(el, value) {
+    if (typeof value !== 'undefined') {
+      setOffset(el, value);
+    } else {
+      return getOffset(el);
+    }
+  },
+
+  isWindow: isWindow,
+  each: each,
+  css: css,
+  clone: function clone(obj) {
+    var ret = {};
+    for (var i in obj) {
+      if (obj.hasOwnProperty(i)) {
+        ret[i] = obj[i];
+      }
+    }
+    var overflow = obj.overflow;
+    if (overflow) {
+      for (var i in obj) {
+        if (obj.hasOwnProperty(i)) {
+          ret.overflow[i] = obj.overflow[i];
+        }
+      }
+    }
+    return ret;
+  },
+  scrollLeft: function scrollLeft(w, v) {
+    if (isWindow(w)) {
+      if (v === undefined) {
+        return getScrollLeft(w);
+      }
+      window.scrollTo(v, getScrollTop(w));
+    } else {
+      if (v === undefined) {
+        return w.scrollLeft;
+      }
+      w.scrollLeft = v;
+    }
+  },
+  scrollTop: function scrollTop(w, v) {
+    if (isWindow(w)) {
+      if (v === undefined) {
+        return getScrollTop(w);
+      }
+      window.scrollTo(getScrollLeft(w), v);
+    } else {
+      if (v === undefined) {
+        return w.scrollTop;
+      }
+      w.scrollTop = v;
+    }
+  },
+
+  viewportWidth: 0,
+  viewportHeight: 0
+}, domUtils);
+
+function scrollIntoView(elem, container, config) {
+  config = config || {};
+  // document 归一化到 window
+  if (container.nodeType === 9) {
+    container = util.getWindow(container);
+  }
+
+  var allowHorizontalScroll = config.allowHorizontalScroll;
+  var onlyScrollIfNeeded = config.onlyScrollIfNeeded;
+  var alignWithTop = config.alignWithTop;
+  var alignWithLeft = config.alignWithLeft;
+  var offsetTop = config.offsetTop || 0;
+  var offsetLeft = config.offsetLeft || 0;
+  var offsetBottom = config.offsetBottom || 0;
+  var offsetRight = config.offsetRight || 0;
+
+  allowHorizontalScroll = allowHorizontalScroll === undefined ? true : allowHorizontalScroll;
+
+  var isWin = util.isWindow(container);
+  var elemOffset = util.offset(elem);
+  var eh = util.outerHeight(elem);
+  var ew = util.outerWidth(elem);
+  var containerOffset = undefined;
+  var ch = undefined;
+  var cw = undefined;
+  var containerScroll = undefined;
+  var diffTop = undefined;
+  var diffBottom = undefined;
+  var win = undefined;
+  var winScroll = undefined;
+  var ww = undefined;
+  var wh = undefined;
+
+  if (isWin) {
+    win = container;
+    wh = util.height(win);
+    ww = util.width(win);
+    winScroll = {
+      left: util.scrollLeft(win),
+      top: util.scrollTop(win)
+    };
+    // elem 相对 container 可视视窗的距离
+    diffTop = {
+      left: elemOffset.left - winScroll.left - offsetLeft,
+      top: elemOffset.top - winScroll.top - offsetTop
+    };
+    diffBottom = {
+      left: elemOffset.left + ew - (winScroll.left + ww) + offsetRight,
+      top: elemOffset.top + eh - (winScroll.top + wh) + offsetBottom
+    };
+    containerScroll = winScroll;
+  } else {
+    containerOffset = util.offset(container);
+    ch = container.clientHeight;
+    cw = container.clientWidth;
+    containerScroll = {
+      left: container.scrollLeft,
+      top: container.scrollTop
+    };
+    // elem 相对 container 可视视窗的距离
+    // 注意边框, offset 是边框到根节点
+    diffTop = {
+      left: elemOffset.left - (containerOffset.left + (parseFloat(util.css(container, 'borderLeftWidth')) || 0)) - offsetLeft,
+      top: elemOffset.top - (containerOffset.top + (parseFloat(util.css(container, 'borderTopWidth')) || 0)) - offsetTop
+    };
+    diffBottom = {
+      left: elemOffset.left + ew - (containerOffset.left + cw + (parseFloat(util.css(container, 'borderRightWidth')) || 0)) + offsetRight,
+      top: elemOffset.top + eh - (containerOffset.top + ch + (parseFloat(util.css(container, 'borderBottomWidth')) || 0)) + offsetBottom
+    };
+  }
+
+  if (diffTop.top < 0 || diffBottom.top > 0) {
+    // 强制向上
+    if (alignWithTop === true) {
+      util.scrollTop(container, containerScroll.top + diffTop.top);
+    } else if (alignWithTop === false) {
+      util.scrollTop(container, containerScroll.top + diffBottom.top);
+    } else {
+      // 自动调整
+      if (diffTop.top < 0) {
+        util.scrollTop(container, containerScroll.top + diffTop.top);
+      } else {
+        util.scrollTop(container, containerScroll.top + diffBottom.top);
+      }
+    }
+  } else {
+    if (!onlyScrollIfNeeded) {
+      alignWithTop = alignWithTop === undefined ? true : !!alignWithTop;
+      if (alignWithTop) {
+        util.scrollTop(container, containerScroll.top + diffTop.top);
+      } else {
+        util.scrollTop(container, containerScroll.top + diffBottom.top);
+      }
+    }
+  }
+
+  if (allowHorizontalScroll) {
+    if (diffTop.left < 0 || diffBottom.left > 0) {
+      // 强制向上
+      if (alignWithLeft === true) {
+        util.scrollLeft(container, containerScroll.left + diffTop.left);
+      } else if (alignWithLeft === false) {
+        util.scrollLeft(container, containerScroll.left + diffBottom.left);
+      } else {
+        // 自动调整
+        if (diffTop.left < 0) {
+          util.scrollLeft(container, containerScroll.left + diffTop.left);
+        } else {
+          util.scrollLeft(container, containerScroll.left + diffBottom.left);
+        }
+      }
+    } else {
+      if (!onlyScrollIfNeeded) {
+        alignWithLeft = alignWithLeft === undefined ? true : !!alignWithLeft;
+        if (alignWithLeft) {
+          util.scrollLeft(container, containerScroll.left + diffTop.left);
+        } else {
+          util.scrollLeft(container, containerScroll.left + diffBottom.left);
+        }
+      }
+    }
+  }
+}
+
+var domScrollIntoView = scrollIntoView;
+
+var index$12 = domScrollIntoView;
+
+var util$3 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.noop = noop;
+exports.getKeyFromChildrenIndex = getKeyFromChildrenIndex;
+exports.loopMenuItem = loopMenuItem;
+exports.loopMenuItemRecusively = loopMenuItemRecusively;
+
+
+
+var _react2 = _interopRequireDefault(React$1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function noop() {}
+
+function getKeyFromChildrenIndex(child, menuEventKey, index) {
+  var prefix = menuEventKey || '';
+  return child.key || prefix + 'item_' + index;
+}
+
+function loopMenuItem(children, cb) {
+  var index = -1;
+  _react2["default"].Children.forEach(children, function (c) {
+    index++;
+    if (c && c.type && c.type.isMenuItemGroup) {
+      _react2["default"].Children.forEach(c.props.children, function (c2) {
+        index++;
+        cb(c2, index);
+      });
+    } else {
+      cb(c, index);
+    }
+  });
+}
+
+function loopMenuItemRecusively(children, keys, ret) {
+  if (!children || ret.find) {
+    return;
+  }
+  _react2["default"].Children.forEach(children, function (c) {
+    if (ret.find) {
+      return;
+    }
+    if (c) {
+      var construt = c.type;
+      if (!construt || !(construt.isSubMenu || construt.isMenuItem || construt.isMenuItemGroup)) {
+        return;
+      }
+      if (keys.indexOf(c.key) !== -1) {
+        ret.find = true;
+      } else if (c.props.children) {
+        loopMenuItemRecusively(c.props.children, keys, ret);
+      }
+    }
+  });
+}
+});
+
+var DOMWrap_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+
+
+var _extends3 = _interopRequireDefault(_extends$1);
+
+
+
+var _react2 = _interopRequireDefault(React$1);
+
+
+
+var _propTypes2 = _interopRequireDefault(index$1);
+
+
+
+var _createReactClass2 = _interopRequireDefault(index$8);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+var DOMWrap = (0, _createReactClass2["default"])({
+  displayName: 'DOMWrap',
+
+  propTypes: {
+    tag: _propTypes2["default"].string,
+    hiddenClassName: _propTypes2["default"].string,
+    visible: _propTypes2["default"].bool
+  },
+
+  getDefaultProps: function getDefaultProps() {
+    return {
+      tag: 'div'
+    };
+  },
+  render: function render() {
+    var props = (0, _extends3["default"])({}, this.props);
+    if (!props.visible) {
+      props.className = props.className || '';
+      props.className += ' ' + props.hiddenClassName;
+    }
+    var Tag = props.tag;
+    delete props.tag;
+    delete props.hiddenClassName;
+    delete props.visible;
+    return _react2["default"].createElement(Tag, props);
+  }
+});
+
+exports["default"] = DOMWrap;
+module.exports = exports['default'];
+});
+
+var MenuMixin_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+
+
+var _defineProperty3 = _interopRequireDefault(defineProperty$3);
+
+
+
+var _extends3 = _interopRequireDefault(_extends$1);
+
+
+
+var _react2 = _interopRequireDefault(React$1);
+
+
+
+var _propTypes2 = _interopRequireDefault(index$1);
+
+
+
+var _reactDom2 = _interopRequireDefault(ReactDOM);
+
+
+
+var _KeyCode2 = _interopRequireDefault(KeyCode_1);
+
+
+
+var _createChainedFunction2 = _interopRequireDefault(createChainedFunction_1);
+
+
+
+var _classnames2 = _interopRequireDefault(index$4);
+
+
+
+var _domScrollIntoView2 = _interopRequireDefault(index$12);
+
+
+
+
+
+var _DOMWrap2 = _interopRequireDefault(DOMWrap_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function allDisabled(arr) {
+  if (!arr.length) {
+    return true;
+  }
+  return arr.every(function (c) {
+    return !!c.props.disabled;
+  });
+}
+
+function getActiveKey(props, originalActiveKey) {
+  var activeKey = originalActiveKey;
+  var children = props.children,
+      eventKey = props.eventKey;
+
+  if (activeKey) {
+    var found = void 0;
+    (0, util$3.loopMenuItem)(children, function (c, i) {
+      if (c && !c.props.disabled && activeKey === (0, util$3.getKeyFromChildrenIndex)(c, eventKey, i)) {
+        found = true;
+      }
+    });
+    if (found) {
+      return activeKey;
+    }
+  }
+  activeKey = null;
+  if (props.defaultActiveFirst) {
+    (0, util$3.loopMenuItem)(children, function (c, i) {
+      if (!activeKey && c && !c.props.disabled) {
+        activeKey = (0, util$3.getKeyFromChildrenIndex)(c, eventKey, i);
+      }
+    });
+    return activeKey;
+  }
+  return activeKey;
+}
+
+function saveRef(index, subIndex, c) {
+  if (c) {
+    if (subIndex !== undefined) {
+      this.instanceArray[index] = this.instanceArray[index] || [];
+      this.instanceArray[index][subIndex] = c;
+    } else {
+      this.instanceArray[index] = c;
+    }
+  }
+}
+
+var MenuMixin = {
+  propTypes: {
+    focusable: _propTypes2["default"].bool,
+    multiple: _propTypes2["default"].bool,
+    style: _propTypes2["default"].object,
+    defaultActiveFirst: _propTypes2["default"].bool,
+    visible: _propTypes2["default"].bool,
+    activeKey: _propTypes2["default"].string,
+    selectedKeys: _propTypes2["default"].arrayOf(_propTypes2["default"].string),
+    defaultSelectedKeys: _propTypes2["default"].arrayOf(_propTypes2["default"].string),
+    defaultOpenKeys: _propTypes2["default"].arrayOf(_propTypes2["default"].string),
+    openKeys: _propTypes2["default"].arrayOf(_propTypes2["default"].string),
+    children: _propTypes2["default"].any
+  },
+
+  getDefaultProps: function getDefaultProps() {
+    return {
+      prefixCls: 'rc-menu',
+      className: '',
+      mode: 'vertical',
+      level: 1,
+      inlineIndent: 24,
+      visible: true,
+      focusable: true,
+      style: {}
+    };
+  },
+  getInitialState: function getInitialState() {
+    var props = this.props;
+    return {
+      activeKey: getActiveKey(props, props.activeKey)
+    };
+  },
+  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+    var props = void 0;
+    if ('activeKey' in nextProps) {
+      props = {
+        activeKey: getActiveKey(nextProps, nextProps.activeKey)
+      };
+    } else {
+      var originalActiveKey = this.state.activeKey;
+      var activeKey = getActiveKey(nextProps, originalActiveKey);
+      // fix: this.setState(), parent.render(),
+      if (activeKey !== originalActiveKey) {
+        props = {
+          activeKey: activeKey
+        };
+      }
+    }
+    if (props) {
+      this.setState(props);
+    }
+  },
+  shouldComponentUpdate: function shouldComponentUpdate(nextProps) {
+    return this.props.visible || nextProps.visible;
+  },
+  componentWillMount: function componentWillMount() {
+    this.instanceArray = [];
+  },
+
+
+  // all keyboard events callbacks run from here at first
+  onKeyDown: function onKeyDown(e) {
+    var _this = this;
+
+    var keyCode = e.keyCode;
+    var handled = void 0;
+    this.getFlatInstanceArray().forEach(function (obj) {
+      if (obj && obj.props.active) {
+        handled = obj.onKeyDown(e);
+      }
+    });
+    if (handled) {
+      return 1;
+    }
+    var activeItem = null;
+    if (keyCode === _KeyCode2["default"].UP || keyCode === _KeyCode2["default"].DOWN) {
+      activeItem = this.step(keyCode === _KeyCode2["default"].UP ? -1 : 1);
+    }
+    if (activeItem) {
+      e.preventDefault();
+      this.setState({
+        activeKey: activeItem.props.eventKey
+      }, function () {
+        (0, _domScrollIntoView2["default"])(_reactDom2["default"].findDOMNode(activeItem), _reactDom2["default"].findDOMNode(_this), {
+          onlyScrollIfNeeded: true
+        });
+      });
+      return 1;
+    } else if (activeItem === undefined) {
+      e.preventDefault();
+      this.setState({
+        activeKey: null
+      });
+      return 1;
+    }
+  },
+  getOpenChangesOnItemHover: function getOpenChangesOnItemHover(e) {
+    var mode = this.props.mode;
+    var key = e.key,
+        hover = e.hover,
+        trigger = e.trigger;
+
+    var activeKey = this.state.activeKey;
+    if (!trigger || hover || this.props.closeSubMenuOnMouseLeave || !e.item.isSubMenu || mode === 'inline') {
+      this.setState({
+        activeKey: hover ? key : null
+      });
+    } else {}
+    // keep active for sub menu for click active
+    // empty
+
+    // clear last open status
+    if (hover && mode !== 'inline') {
+      var activeItem = this.getFlatInstanceArray().filter(function (c) {
+        return c && c.props.eventKey === activeKey;
+      })[0];
+      if (activeItem && activeItem.isSubMenu && activeItem.props.eventKey !== key) {
+        return {
+          item: activeItem,
+          originalEvent: e,
+          key: activeItem.props.eventKey,
+          open: false
+        };
+      }
+    }
+    return [];
+  },
+  getFlatInstanceArray: function getFlatInstanceArray() {
+    var instanceArray = this.instanceArray;
+    var hasInnerArray = instanceArray.some(function (a) {
+      return Array.isArray(a);
+    });
+    if (hasInnerArray) {
+      instanceArray = [];
+      this.instanceArray.forEach(function (a) {
+        if (Array.isArray(a)) {
+          instanceArray.push.apply(instanceArray, a);
+        } else {
+          instanceArray.push(a);
+        }
+      });
+      this.instanceArray = instanceArray;
+    }
+    return instanceArray;
+  },
+  renderCommonMenuItem: function renderCommonMenuItem(child, i, subIndex, extraProps) {
+    var state = this.state;
+    var props = this.props;
+    var key = (0, util$3.getKeyFromChildrenIndex)(child, props.eventKey, i);
+    var childProps = child.props;
+    var isActive = key === state.activeKey;
+    var newChildProps = (0, _extends3["default"])({
+      mode: props.mode,
+      level: props.level,
+      inlineIndent: props.inlineIndent,
+      renderMenuItem: this.renderMenuItem,
+      rootPrefixCls: props.prefixCls,
+      index: i,
+      parentMenu: this,
+      ref: childProps.disabled ? undefined : (0, _createChainedFunction2["default"])(child.ref, saveRef.bind(this, i, subIndex)),
+      eventKey: key,
+      closeSubMenuOnMouseLeave: props.closeSubMenuOnMouseLeave,
+      onItemHover: this.onItemHover,
+      active: !childProps.disabled && isActive,
+      multiple: props.multiple,
+      onClick: this.onClick,
+      openTransitionName: this.getOpenTransitionName(),
+      openAnimation: props.openAnimation,
+      onOpenChange: this.onOpenChange,
+      onDeselect: this.onDeselect,
+      onDestroy: this.onDestroy,
+      onSelect: this.onSelect
+    }, extraProps);
+    if (props.mode === 'inline') {
+      newChildProps.closeSubMenuOnMouseLeave = newChildProps.openSubMenuOnMouseEnter = false;
+    }
+    return _react2["default"].cloneElement(child, newChildProps);
+  },
+  renderRoot: function renderRoot(props) {
+    var _classes;
+
+    this.instanceArray = [];
+    var classes = (_classes = {}, (0, _defineProperty3["default"])(_classes, props.prefixCls, 1), (0, _defineProperty3["default"])(_classes, props.prefixCls + '-' + props.mode, 1), (0, _defineProperty3["default"])(_classes, props.className, !!props.className), _classes);
+    var domProps = {
+      className: (0, _classnames2["default"])(classes),
+      role: 'menu',
+      'aria-activedescendant': ''
+    };
+    if (props.id) {
+      domProps.id = props.id;
+    }
+    if (props.focusable) {
+      domProps.tabIndex = '0';
+      domProps.onKeyDown = this.onKeyDown;
+    }
+    return (
+      // ESLint is not smart enough to know that the type of `children` was checked.
+      /* eslint-disable */
+      _react2["default"].createElement(
+        _DOMWrap2["default"],
+        (0, _extends3["default"])({
+          style: props.style,
+          tag: 'ul',
+          hiddenClassName: props.prefixCls + '-hidden',
+          visible: props.visible
+        }, domProps),
+        _react2["default"].Children.map(props.children, this.renderMenuItem)
+      )
+      /*eslint-enable */
+
+    );
+  },
+  step: function step(direction) {
+    var children = this.getFlatInstanceArray();
+    var activeKey = this.state.activeKey;
+    var len = children.length;
+    if (!len) {
+      return null;
+    }
+    if (direction < 0) {
+      children = children.concat().reverse();
+    }
+    // find current activeIndex
+    var activeIndex = -1;
+    children.every(function (c, ci) {
+      if (c && c.props.eventKey === activeKey) {
+        activeIndex = ci;
+        return false;
+      }
+      return true;
+    });
+    if (!this.props.defaultActiveFirst && activeIndex !== -1) {
+      if (allDisabled(children.slice(activeIndex, len - 1))) {
+        return undefined;
+      }
+    }
+    var start = (activeIndex + 1) % len;
+    var i = start;
+    for (;;) {
+      var child = children[i];
+      if (!child || child.props.disabled) {
+        i = (i + 1 + len) % len;
+        // complete a loop
+        if (i === start) {
+          return null;
+        }
+      } else {
+        return child;
+      }
+    }
+  }
+};
+
+exports["default"] = MenuMixin;
+module.exports = exports['default'];
+});
+
+var Menu_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+
+
+var _extends3 = _interopRequireDefault(_extends$1);
+
+
+
+var _propTypes2 = _interopRequireDefault(index$1);
+
+
+
+var _createReactClass2 = _interopRequireDefault(index$8);
+
+
+
+var _MenuMixin2 = _interopRequireDefault(MenuMixin_1);
+
+
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+// import React from 'react';
+var Menu = (0, _createReactClass2["default"])({
+  displayName: 'Menu',
+
+  propTypes: {
+    openSubMenuOnMouseEnter: _propTypes2["default"].bool,
+    closeSubMenuOnMouseLeave: _propTypes2["default"].bool,
+    selectedKeys: _propTypes2["default"].arrayOf(_propTypes2["default"].string),
+    defaultSelectedKeys: _propTypes2["default"].arrayOf(_propTypes2["default"].string),
+    defaultOpenKeys: _propTypes2["default"].arrayOf(_propTypes2["default"].string),
+    openKeys: _propTypes2["default"].arrayOf(_propTypes2["default"].string),
+    mode: _propTypes2["default"].string,
+    onClick: _propTypes2["default"].func,
+    onSelect: _propTypes2["default"].func,
+    onDeselect: _propTypes2["default"].func,
+    onDestroy: _propTypes2["default"].func,
+    openTransitionName: _propTypes2["default"].string,
+    openAnimation: _propTypes2["default"].oneOfType([_propTypes2["default"].string, _propTypes2["default"].object]),
+    level: _propTypes2["default"].number,
+    eventKey: _propTypes2["default"].string,
+    selectable: _propTypes2["default"].bool,
+    children: _propTypes2["default"].any
+  },
+
+  mixins: [_MenuMixin2["default"]],
+
+  getDefaultProps: function getDefaultProps() {
+    return {
+      openSubMenuOnMouseEnter: true,
+      closeSubMenuOnMouseLeave: true,
+      selectable: true,
+      onClick: util$3.noop,
+      onSelect: util$3.noop,
+      onOpenChange: util$3.noop,
+      onDeselect: util$3.noop,
+      defaultSelectedKeys: [],
+      defaultOpenKeys: []
+    };
+  },
+  getInitialState: function getInitialState() {
+    var props = this.props;
+    var selectedKeys = props.defaultSelectedKeys;
+    var openKeys = props.defaultOpenKeys;
+    if ('selectedKeys' in props) {
+      selectedKeys = props.selectedKeys || [];
+    }
+    if ('openKeys' in props) {
+      openKeys = props.openKeys || [];
+    }
+    return {
+      selectedKeys: selectedKeys,
+      openKeys: openKeys
+    };
+  },
+  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+    var props = {};
+    if ('selectedKeys' in nextProps) {
+      props.selectedKeys = nextProps.selectedKeys || [];
+    }
+    if ('openKeys' in nextProps) {
+      props.openKeys = nextProps.openKeys || [];
+    }
+    this.setState(props);
+  },
+  onDestroy: function onDestroy(key) {
+    var state = this.state;
+    var props = this.props;
+    var selectedKeys = state.selectedKeys;
+    var openKeys = state.openKeys;
+    var index = selectedKeys.indexOf(key);
+    if (!('selectedKeys' in props) && index !== -1) {
+      selectedKeys.splice(index, 1);
+    }
+    index = openKeys.indexOf(key);
+    if (!('openKeys' in props) && index !== -1) {
+      openKeys.splice(index, 1);
+    }
+  },
+  onItemHover: function onItemHover(e) {
+    var _this = this;
+
+    var item = e.item;
+    var _props = this.props,
+        mode = _props.mode,
+        closeSubMenuOnMouseLeave = _props.closeSubMenuOnMouseLeave;
+    var _e$openChanges = e.openChanges,
+        openChanges = _e$openChanges === undefined ? [] : _e$openChanges;
+    // special for top sub menu
+
+    if (mode !== 'inline' && !closeSubMenuOnMouseLeave && item.isSubMenu) {
+      (function () {
+        var activeKey = _this.state.activeKey;
+        var activeItem = _this.getFlatInstanceArray().filter(function (c) {
+          return c && c.props.eventKey === activeKey;
+        })[0];
+        if (activeItem && activeItem.props.open) {
+          openChanges = openChanges.concat({
+            key: item.props.eventKey,
+            item: item,
+            originalEvent: e,
+            open: true
+          });
+        }
+      })();
+    }
+    openChanges = openChanges.concat(this.getOpenChangesOnItemHover(e));
+    if (openChanges.length) {
+      this.onOpenChange(openChanges);
+    }
+  },
+  onSelect: function onSelect(selectInfo) {
+    var props = this.props;
+    if (props.selectable) {
+      // root menu
+      var selectedKeys = this.state.selectedKeys;
+      var selectedKey = selectInfo.key;
+      if (props.multiple) {
+        selectedKeys = selectedKeys.concat([selectedKey]);
+      } else {
+        selectedKeys = [selectedKey];
+      }
+      if (!('selectedKeys' in props)) {
+        this.setState({
+          selectedKeys: selectedKeys
+        });
+      }
+      props.onSelect((0, _extends3["default"])({}, selectInfo, {
+        selectedKeys: selectedKeys
+      }));
+    }
+  },
+  onClick: function onClick(e) {
+    this.props.onClick(e);
+  },
+  onOpenChange: function onOpenChange(e_) {
+    var props = this.props;
+    var openKeys = this.state.openKeys.concat();
+    var changed = false;
+    var processSingle = function processSingle(e) {
+      var oneChanged = false;
+      if (e.open) {
+        oneChanged = openKeys.indexOf(e.key) === -1;
+        if (oneChanged) {
+          openKeys.push(e.key);
+        }
+      } else {
+        var index = openKeys.indexOf(e.key);
+        oneChanged = index !== -1;
+        if (oneChanged) {
+          openKeys.splice(index, 1);
+        }
+      }
+      changed = changed || oneChanged;
+    };
+    if (Array.isArray(e_)) {
+      // batch change call
+      e_.forEach(processSingle);
+    } else {
+      processSingle(e_);
+    }
+    if (changed) {
+      if (!('openKeys' in this.props)) {
+        this.setState({ openKeys: openKeys });
+      }
+      props.onOpenChange(openKeys);
+    }
+  },
+  onDeselect: function onDeselect(selectInfo) {
+    var props = this.props;
+    if (props.selectable) {
+      var selectedKeys = this.state.selectedKeys.concat();
+      var selectedKey = selectInfo.key;
+      var index = selectedKeys.indexOf(selectedKey);
+      if (index !== -1) {
+        selectedKeys.splice(index, 1);
+      }
+      if (!('selectedKeys' in props)) {
+        this.setState({
+          selectedKeys: selectedKeys
+        });
+      }
+      props.onDeselect((0, _extends3["default"])({}, selectInfo, {
+        selectedKeys: selectedKeys
+      }));
+    }
+  },
+  getOpenTransitionName: function getOpenTransitionName() {
+    var props = this.props;
+    var transitionName = props.openTransitionName;
+    var animationName = props.openAnimation;
+    if (!transitionName && typeof animationName === 'string') {
+      transitionName = props.prefixCls + '-open-' + animationName;
+    }
+    return transitionName;
+  },
+  isInlineMode: function isInlineMode() {
+    return this.props.mode === 'inline';
+  },
+  lastOpenSubMenu: function lastOpenSubMenu() {
+    var lastOpen = [];
+    var openKeys = this.state.openKeys;
+
+    if (openKeys.length) {
+      lastOpen = this.getFlatInstanceArray().filter(function (c) {
+        return c && openKeys.indexOf(c.props.eventKey) !== -1;
+      });
+    }
+    return lastOpen[0];
+  },
+  renderMenuItem: function renderMenuItem(c, i, subIndex) {
+    if (!c) {
+      return null;
+    }
+    var state = this.state;
+    var extraProps = {
+      openKeys: state.openKeys,
+      selectedKeys: state.selectedKeys,
+      openSubMenuOnMouseEnter: this.props.openSubMenuOnMouseEnter
+    };
+    return this.renderCommonMenuItem(c, i, subIndex, extraProps);
+  },
+  render: function render() {
+    var props = (0, _extends3["default"])({}, this.props);
+    props.className += ' ' + props.prefixCls + '-root';
+    return this.renderRoot(props);
+  }
+});
+
+exports["default"] = Menu;
+module.exports = exports['default'];
 });
 
 var ChildrenUtils = createCommonjsModule(function (module, exports) {
@@ -18161,7 +20795,7 @@ module.exports = exports['default'];
 
 var indexOf$1 = [].indexOf;
 
-var index$17 = function(arr, obj){
+var index$18 = function(arr, obj){
   if (indexOf$1) return arr.indexOf(obj);
   for (var i = 0; i < arr.length; ++i) {
     if (arr[i] === obj) return i;
@@ -18169,7 +20803,7 @@ var index$17 = function(arr, obj){
   return -1;
 };
 
-var index$19 = function(arr, obj){
+var index$20 = function(arr, obj){
   if (arr.indexOf) return arr.indexOf(obj);
   for (var i = 0; i < arr.length; ++i) {
     if (arr[i] === obj) return i;
@@ -18182,9 +20816,9 @@ var index$19 = function(arr, obj){
  */
 
 try {
-  var index$16 = index$17;
+  var index$17 = index$18;
 } catch (err) {
-  var index$16 = index$19;
+  var index$17 = index$20;
 }
 
 /**
@@ -18243,7 +20877,7 @@ ClassList.prototype.add = function(name){
 
   // fallback
   var arr = this.array();
-  var i = index$16(arr, name);
+  var i = index$17(arr, name);
   if (!~i) arr.push(name);
   this.el.className = arr.join(' ');
   return this;
@@ -18272,7 +20906,7 @@ ClassList.prototype.remove = function(name){
 
   // fallback
   var arr = this.array();
-  var i = index$16(arr, name);
+  var i = index$17(arr, name);
   if (~i) arr.splice(i, 1);
   this.el.className = arr.join(' ');
   return this;
@@ -18366,10 +21000,10 @@ ClassList.prototype.has =
 ClassList.prototype.contains = function(name){
   return this.list
     ? this.list.contains(name)
-    : !! ~index$16(this.array(), name);
+    : !! ~index$17(this.array(), name);
 };
 
-var index$14 = createCommonjsModule(function (module, exports) {
+var index$15 = createCommonjsModule(function (module, exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -18615,7 +21249,7 @@ var _propTypes2 = _interopRequireDefault(index$1);
 
 
 
-var _cssAnimation2 = _interopRequireDefault(index$14);
+var _cssAnimation2 = _interopRequireDefault(index$15);
 
 
 
@@ -18689,7 +21323,7 @@ var AnimateChild = function (_React$Component) {
       _this2.stopper = null;
       finishCallback();
     };
-    if ((index$14.isCssAnimationSupported || !props.animation[animationType]) && transitionName && props[transitionMap[animationType]]) {
+    if ((index$15.isCssAnimationSupported || !props.animation[animationType]) && transitionName && props[transitionMap[animationType]]) {
       var name = nameIsObj ? transitionName[animationType] : transitionName + '-' + animationType;
       var activeName = name + '-active';
       if (nameIsObj && transitionName[animationType + 'Active']) {
@@ -19095,7 +21729,7 @@ module.exports = exports['default'];
 });
 
 // export this package's api
-var index$13 = Animate_1;
+var index$14 = Animate_1;
 
 var SubPopupMenu_1 = createCommonjsModule(function (module, exports) {
 'use strict';
@@ -19130,7 +21764,7 @@ var _MenuMixin2 = _interopRequireDefault(MenuMixin_1);
 
 
 
-var _rcAnimate2 = _interopRequireDefault(index$13);
+var _rcAnimate2 = _interopRequireDefault(index$14);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -19306,7 +21940,7 @@ var _EventBaseObject2 = _interopRequireDefault(EventBaseObject_1);
 
 
 
-var _objectAssign2 = _interopRequireDefault(index$5);
+var _objectAssign2 = _interopRequireDefault(index$6);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -19573,7 +22207,7 @@ exports["default"] = DomEventObject;
 module.exports = exports['default'];
 });
 
-var index$21 = createCommonjsModule(function (module, exports) {
+var index$22 = createCommonjsModule(function (module, exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -19622,7 +22256,7 @@ exports['default'] = addEventListenerWrap;
 
 
 
-var _addDomEventListener2 = _interopRequireDefault(index$21);
+var _addDomEventListener2 = _interopRequireDefault(index$22);
 
 
 
@@ -20555,7 +23189,7 @@ exports["default"] = Divider;
 module.exports = exports['default'];
 });
 
-var index$7 = createCommonjsModule(function (module, exports) {
+var index$11 = createCommonjsModule(function (module, exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -20594,24 +23228,24 @@ exports.Divider = _Divider2["default"];
 exports["default"] = _Menu2["default"];
 });
 
-var RcMenu = unwrapExports(index$7);
-var index_2 = index$7.ItemGroup;
-var index_5 = index$7.Item;
-var index_6 = index$7.SubMenu;
+var RcMenu = unwrapExports(index$11);
+var index_2 = index$11.ItemGroup;
+var index_5 = index$11.Item;
+var index_6 = index$11.SubMenu;
 
-var styles$8 = { "menu": "_37XJzyY" };
+var styles$10 = { "menu": "_37XJzyY" };
 
-var _dec$17;
-var _class$19;
-var _class2$17;
-var _temp$19;
-var _initialiseProps;
+var _dec$19;
+var _class$23;
+var _class2$19;
+var _temp$22;
+var _initialiseProps$3;
 
 /**
  * Menu Component
  * @author heifade
  */
-var Menu$2 = (_dec$17 = CSSModules(styles$8, { allowMultiple: allowMultiple }), _dec$17(_class$19 = (_temp$19 = _class2$17 = function (_PureComponent) {
+var Menu$2 = (_dec$19 = CSSModules(styles$10, { allowMultiple: allowMultiple }), _dec$19(_class$23 = (_temp$22 = _class2$19 = function (_PureComponent) {
   inherits(Menu, _PureComponent);
 
   function Menu(props) {
@@ -20619,7 +23253,7 @@ var Menu$2 = (_dec$17 = CSSModules(styles$8, { allowMultiple: allowMultiple }), 
 
     var _this = possibleConstructorReturn(this, (Menu.__proto__ || Object.getPrototypeOf(Menu)).call(this, props));
 
-    _initialiseProps.call(_this);
+    _initialiseProps$3.call(_this);
 
     var openKeys = null;
     if ('defaultOpenKeys' in props) {
@@ -20695,7 +23329,7 @@ var Menu$2 = (_dec$17 = CSSModules(styles$8, { allowMultiple: allowMultiple }), 
     }
   }]);
   return Menu;
-}(PureComponent), _class2$17.SubMenu = index_6, _class2$17.Item = index_5, _class2$17.ItemGroup = index_2, _class2$17.displayName = 'Menu', _class2$17.defaultProps = {
+}(PureComponent), _class2$19.SubMenu = index_6, _class2$19.Item = index_5, _class2$19.ItemGroup = index_2, _class2$19.displayName = 'Menu', _class2$19.defaultProps = {
   // className: '',
   type: 'inline',
   colorType: 'warm',
@@ -20707,7 +23341,7 @@ var Menu$2 = (_dec$17 = CSSModules(styles$8, { allowMultiple: allowMultiple }), 
 
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
-}, _class2$17.propTypes = {
+}, _class2$19.propTypes = {
   // className: PropTypes.string,
   type: index$1.oneOf(['horizontal-h', // 水平菜单，子菜单水平
   'horizontal-v', // 水平菜单，子菜单垂直
@@ -20719,7 +23353,7 @@ var Menu$2 = (_dec$17 = CSSModules(styles$8, { allowMultiple: allowMultiple }), 
   openKeys: index$1.arrayOf(index$1.string),
   onClick: index$1.func,
   onOpenChange: index$1.func
-}, _initialiseProps = function _initialiseProps() {
+}, _initialiseProps$3 = function _initialiseProps() {
   var _this2 = this;
 
   this.handleOpenChange = function (openKeys) {
@@ -20740,7 +23374,7 @@ var Menu$2 = (_dec$17 = CSSModules(styles$8, { allowMultiple: allowMultiple }), 
       onClick(e);
     }
   };
-}, _temp$19)) || _class$19);
+}, _temp$22)) || _class$23);
 
 /** Used to generate unique IDs. */
 var idCounter = 0;
@@ -20769,18 +23403,18 @@ function uniqueId(prefix) {
 
 var uniqueId_1 = uniqueId;
 
-var styles$9 = { "message--box": "_3_LyTzy", "message": "rvYOolG", "message--content": "_2VEwa73", "message--icon": "_1o8wQ0I", "message__info": "_23xuyLQ", "message__success": "_22HZ3wd", "message__error": "_1XT6zY1", "message__warning": "_3SWQ13b", "messageBox": "_3_LyTzy", "messageContent": "_2VEwa73", "messageIcon": "_1o8wQ0I" };
+var styles$11 = { "message--box": "_3_LyTzy", "message": "rvYOolG", "message--content": "_2VEwa73", "message--icon": "_1o8wQ0I", "message__info": "_23xuyLQ", "message__success": "_22HZ3wd", "message__error": "_1XT6zY1", "message__warning": "_3SWQ13b", "messageBox": "_3_LyTzy", "messageContent": "_2VEwa73", "messageIcon": "_1o8wQ0I" };
 
-var _dec$19;
-var _class$21;
-var _class2$19;
-var _temp$21;
+var _dec$21;
+var _class$25;
+var _class2$21;
+var _temp$24;
 
 /**
  * Message Component
  * @author grootfish
  */
-var Message = (_dec$19 = CSSModules(styles$9, { allowMultiple: allowMultiple }), _dec$19(_class$21 = (_temp$21 = _class2$19 = function (_PureComponent) {
+var Message = (_dec$21 = CSSModules(styles$11, { allowMultiple: allowMultiple }), _dec$21(_class$25 = (_temp$24 = _class2$21 = function (_PureComponent) {
   inherits(Message, _PureComponent);
 
   function Message(props) {
@@ -20848,27 +23482,27 @@ var Message = (_dec$19 = CSSModules(styles$9, { allowMultiple: allowMultiple }),
     }
   }]);
   return Message;
-}(PureComponent), _class2$19.displayName = 'Message', _class2$19.defaultProps = {
+}(PureComponent), _class2$21.displayName = 'Message', _class2$21.defaultProps = {
   onClose: function onClose() {},
 
   duration: 1.8,
-  type: 'info' }, _class2$19.propTypes = {
+  type: 'info' }, _class2$21.propTypes = {
   duration: index$1.number,
   onClose: index$1.func,
   type: index$1.oneOf(['info', 'success', 'error', 'warning'])
-}, _temp$21)) || _class$21);
+}, _temp$24)) || _class$25);
 
-var _dec$18;
-var _class$20;
-var _class2$18;
-var _temp$20;
+var _dec$20;
+var _class$24;
+var _class2$20;
+var _temp$23;
 
 /**
  * Message Component
  * @author grootfish
  */
 
-var MessageBox = (_dec$18 = CSSModules(styles$9, { allowMultiple: allowMultiple }), _dec$18(_class$20 = (_temp$20 = _class2$18 = function (_PureComponent) {
+var MessageBox = (_dec$20 = CSSModules(styles$11, { allowMultiple: allowMultiple }), _dec$20(_class$24 = (_temp$23 = _class2$20 = function (_PureComponent) {
   inherits(MessageBox, _PureComponent);
 
   function MessageBox(props) {
@@ -20878,7 +23512,7 @@ var MessageBox = (_dec$18 = CSSModules(styles$9, { allowMultiple: allowMultiple 
 
     _this.add = function (message$$1) {
       var key = message$$1.key || uniqueId_1();
-      index$5(message$$1, {
+      index$6(message$$1, {
         key: key
       });
       _this.setState(function (preState) {
@@ -20942,7 +23576,7 @@ var MessageBox = (_dec$18 = CSSModules(styles$9, { allowMultiple: allowMultiple 
     }
   }]);
   return MessageBox;
-}(PureComponent), _class2$18.displayName = 'MessageBox', _class2$18.defaultProps = {}, _class2$18.propTypes = {}, _temp$20)) || _class$20);
+}(PureComponent), _class2$20.displayName = 'MessageBox', _class2$20.defaultProps = {}, _class2$20.propTypes = {}, _temp$23)) || _class$24);
 
 
 MessageBox.newInstance = function newInstance(properties) {
@@ -20988,33 +23622,33 @@ function getMessageInstance() {
   return messageInstance;
 }
 
-function noop$3() {}
-var index$23 = {
+function noop$5() {}
+var index$24 = {
   info: function info() {
     var content = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
     var duration = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultDuration;
-    var onClose = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : noop$3;
+    var onClose = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : noop$5;
 
     getMessageInstance().msg({ type: 'info', content: content, duration: duration, onClose: onClose });
   },
   success: function success() {
     var content = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
     var duration = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultDuration;
-    var onClose = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : noop$3;
+    var onClose = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : noop$5;
 
     getMessageInstance().msg({ type: 'success', content: content, duration: duration, onClose: onClose });
   },
   error: function error() {
     var content = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
     var duration = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultDuration;
-    var onClose = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : noop$3;
+    var onClose = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : noop$5;
 
     getMessageInstance().msg({ type: 'error', content: content, duration: duration, onClose: onClose });
   },
   warning: function warning() {
     var content = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
     var duration = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultDuration;
-    var onClose = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : noop$3;
+    var onClose = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : noop$5;
 
     getMessageInstance().msg({ type: 'warning', content: content, duration: duration, onClose: onClose });
   },
@@ -21040,18 +23674,18 @@ var index$23 = {
   }
 };
 
-var styles$10 = { "-webkit-mask": "_3v9JpJU", "mask": "_3v9JpJU", "mask--visible": "_10G5ebT", "modal": "LrsEe32", "modal--visible": "_3gon6Oj", "modal__header": "_5faeo8s", "modal__closable": "a1dhyEV", "modal__footer": "yb8LdV1", "modal__content": "_3lViuPm", "modal__icon": "_2vid6jg", "modal--info": "_2m2QgJW", "modal--success": "_2Ucmr_b", "modal--error": "_2KpbEF9", "modal--warning": "_3KYqRkO", "WebkitMask": "_3v9JpJU", "maskVisible": "_10G5ebT", "modalVisible": "_3gon6Oj", "modalInfo": "_2m2QgJW", "modalSuccess": "_2Ucmr_b", "modalError": "_2KpbEF9", "modalWarning": "_3KYqRkO" };
+var styles$12 = { "modal__closable": "a1dhyEV", "-webkit-mask": "_3v9JpJU", "mask": "_3v9JpJU", "mask--visible": "_10G5ebT", "modal": "LrsEe32", "modal--visible": "_3gon6Oj", "modal__header": "_5faeo8s", "modal__footer": "yb8LdV1", "modal__content": "_3lViuPm", "modal__icon": "_2vid6jg", "modal--info": "_2m2QgJW", "modal--success": "_2Ucmr_b", "modal--error": "_2KpbEF9", "modal--warning": "_3KYqRkO", "WebkitMask": "_3v9JpJU", "maskVisible": "_10G5ebT", "modalVisible": "_3gon6Oj", "modalInfo": "_2m2QgJW", "modalSuccess": "_2Ucmr_b", "modalError": "_2KpbEF9", "modalWarning": "_3KYqRkO" };
 
-var _dec$21;
-var _class$23;
-var _class2$21;
-var _temp$23;
+var _dec$23;
+var _class$27;
+var _class2$23;
+var _temp$26;
 
 /**
  * Mask Component
  * @author ryan.bian
  */
-var Mask = (_dec$21 = CSSModules(styles$10, { allowMultiple: allowMultiple }), _dec$21(_class$23 = (_temp$23 = _class2$21 = function (_Component) {
+var Mask = (_dec$23 = CSSModules(styles$12, { allowMultiple: allowMultiple }), _dec$23(_class$27 = (_temp$26 = _class2$23 = function (_Component) {
   inherits(Mask, _Component);
 
   function Mask(props) {
@@ -21084,21 +23718,123 @@ var Mask = (_dec$21 = CSSModules(styles$10, { allowMultiple: allowMultiple }), _
     }
   }]);
   return Mask;
-}(Component), _class2$21.displayName = 'Modal', _class2$21.defaultProps = {
-  visible: false }, _class2$21.propTypes = {
+}(Component), _class2$23.displayName = 'Modal', _class2$23.defaultProps = {
+  visible: false }, _class2$23.propTypes = {
   visible: index$1.bool
-}, _temp$23)) || _class$23);
+}, _temp$26)) || _class$27);
 
-var _dec$20;
-var _dec2$3;
-var _class$22;
-var _class2$20;
-var _temp$22;
+var _class$28;
+var _temp2$3;
 
-/**
- * Modal Component
- * @author ryan.bian
- */
+var colorArr = {
+  info: '#3b98e0',
+  success: '#73da7d',
+  error: '#e6445e',
+  warning: '#ffd31a'
+};
+
+var NoticeModal = (_temp2$3 = _class$28 = function (_PureComponent) {
+  inherits(NoticeModal, _PureComponent);
+
+  function NoticeModal() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
+    classCallCheck(this, NoticeModal);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = possibleConstructorReturn(this, (_ref = NoticeModal.__proto__ || Object.getPrototypeOf(NoticeModal)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+      visible: false
+    }, _temp), possibleConstructorReturn(_this, _ret);
+  }
+
+  createClass(NoticeModal, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.setState({
+        visible: true
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      var _props = this.props,
+          type = _props.type,
+          config = _props.config,
+          _afterClose = _props.afterClose;
+      var visible = this.state.visible;
+
+      var modalProps = {
+        title: React.createElement(
+          'p',
+          null,
+          React.createElement(Icon, { name: type, size: 26, color: colorArr[type] }),
+          React.createElement(
+            'span',
+            null,
+            config.title || type
+          ),
+          config.closable ? React.createElement(
+            'a',
+            {
+              className: styles$12.modal__closable,
+              href: '',
+              onClick: function onClick(e) {
+                e.preventDefault();
+                _this2.setState({
+                  visible: false
+                });
+              }
+            },
+            React.createElement(Icon, { name: 'close', size: 18, color: '#a6a6a6' })
+          ) : null
+        ),
+        visible: visible,
+        closable: false,
+        footer: React.createElement(
+          Button,
+          {
+            key: 'confirm',
+            type: 'primary',
+            onClick: function onClick() {
+              _this2.setState({
+                visible: false
+              });
+            }
+          },
+          '\u6211\u77E5\u9053\u4E86'
+        ),
+        afterClose: function afterClose() {
+          setTimeout(function () {
+            _afterClose();
+          }, 500);
+        }
+      };
+      return React.createElement(
+        Modal,
+        modalProps,
+        config.content
+      );
+    }
+  }]);
+  return NoticeModal;
+}(PureComponent), _class$28.defaultProps = {
+  type: undefined,
+  config: undefined,
+  afterClose: function afterClose() {}
+}, _class$28.propTypes = {
+  type: index$1.oneOf(['info', 'success', 'error', 'warning']),
+  config: index$1.object,
+  afterClose: index$1.func
+}, _temp2$3);
+
+
 var renderNoticeModal = function renderNoticeModal(type) {
   var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {
     title: '',
@@ -21107,60 +23843,28 @@ var renderNoticeModal = function renderNoticeModal(type) {
   };
 
   var wrapNode = document.createElement('div');
-  var colorArr = {
-    info: '#3b98e0',
-    success: '#73da7d',
-    error: '#e6445e',
-    warning: '#ffd31a'
-  };
   document.body.appendChild(wrapNode);
-  var modalProps = {
-    title: React.createElement(
-      'p',
-      null,
-      React.createElement(Icon, { name: type, size: 26, color: colorArr[type] }),
-      React.createElement(
-        'span',
-        null,
-        config.title || type
-      ),
-      config.closable ? React.createElement(
-        'a',
-        {
-          styleName: 'modal__closable',
-          href: '',
-          onClick: function onClick(e) {
-            e.preventDefault();
-            ReactDOM.unmountComponentAtNode(wrapNode);
-            document.body.removeChild(wrapNode);
-          }
-        },
-        React.createElement(Icon, { name: 'close', size: 18, color: '#a6a6a6' })
-      ) : null
-    ),
-    visible: true,
-    closable: false,
-    footer: React.createElement(
-      Button,
-      {
-        key: 'confirm',
-        type: 'primary',
-        onClick: function onClick() {
-          ReactDOM.unmountComponentAtNode(wrapNode);
-          document.body.removeChild(wrapNode);
-        }
-      },
-      '\u6211\u77E5\u9053\u4E86'
-    )
-  };
-  ReactDOM.render(React.createElement(
-    Modal,
-    modalProps,
-    config.content
-  ), wrapNode);
+  ReactDOM.render(React.createElement(NoticeModal, {
+    type: type,
+    config: config,
+    afterClose: function afterClose() {
+      ReactDOM.unmountComponentAtNode(wrapNode);
+      document.body.removeChild(wrapNode);
+    }
+  }), wrapNode);
 };
 
-var Modal = (_dec$20 = renderTo(), _dec2$3 = CSSModules(styles$10, { allowMultiple: allowMultiple }), _dec$20(_class$22 = _dec2$3(_class$22 = (_temp$22 = _class2$20 = function (_Component) {
+var _dec$22;
+var _dec2$2;
+var _class$26;
+var _class2$22;
+var _temp$25;
+
+/**
+ * Modal Component
+ * @author ryan.bian
+ */
+var Modal = (_dec$22 = renderTo(), _dec2$2 = CSSModules(styles$12, { allowMultiple: allowMultiple }), _dec$22(_class$26 = _dec2$2(_class$26 = (_temp$25 = _class2$22 = function (_Component) {
   inherits(Modal, _Component);
   createClass(Modal, null, [{
     key: 'info',
@@ -21191,35 +23895,38 @@ var Modal = (_dec$20 = renderTo(), _dec2$3 = CSSModules(styles$10, { allowMultip
 
     var _this = possibleConstructorReturn(this, (Modal.__proto__ || Object.getPrototypeOf(Modal)).call(this, props));
 
-    _this.state = {};
-    _this.handleOk = _this.handleOk.bind(_this);
-    _this.handleCancel = _this.handleCancel.bind(_this);
-    return _this;
-  }
-
-  createClass(Modal, [{
-    key: 'componentDidUpdate',
-    value: function componentDidUpdate(prevProps) {
-      if (!this.props.visible && prevProps.visible) {
-        this.props.afterClose();
-      }
-    }
-  }, {
-    key: 'handleOk',
-    value: function handleOk(e) {
-      var onOk = this.props.onOk;
+    _this.handleOk = function (e) {
+      var onOk = _this.props.onOk;
 
       if (onOk) {
         onOk(e);
       }
-    }
-  }, {
-    key: 'handleCancel',
-    value: function handleCancel(e) {
-      var onCancel = this.props.onCancel;
+    };
+
+    _this.handleCancel = function (e) {
+      var onCancel = _this.props.onCancel;
 
       if (onCancel) {
         onCancel(e);
+      }
+    };
+
+    _this.state = {
+      maskVisible: props.visible
+    };
+    return _this;
+  }
+
+  createClass(Modal, [{
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      if (!nextProps.visible && this.props.visible) {
+        this.props.afterClose();
+      }
+      if (nextProps.visible && !this.props.visible) {
+        this.setState({
+          maskVisible: true
+        });
       }
     }
   }, {
@@ -21247,7 +23954,7 @@ var Modal = (_dec$20 = renderTo(), _dec2$3 = CSSModules(styles$10, { allowMultip
                 _this2.handleCancel(e);
               }
             },
-            React.createElement(Icon, { name: 'close', size: 18, color: '#a6a6a6' })
+            React.createElement(Icon, { name: 'close', size: 18 })
           ) : null
         );
       }
@@ -21265,7 +23972,7 @@ var Modal = (_dec$20 = renderTo(), _dec2$3 = CSSModules(styles$10, { allowMultip
           type: 'secondary',
           onClick: this.handleCancel
         },
-        '\u53D6\u6D88'
+        '\u53D6\u2003\u6D88'
       ), React.createElement(
         Button,
         {
@@ -21273,7 +23980,7 @@ var Modal = (_dec$20 = renderTo(), _dec2$3 = CSSModules(styles$10, { allowMultip
           type: 'primary',
           onClick: this.handleOk
         },
-        '\u786E\u5B9A'
+        '\u786E\u2003\u5B9A'
       )];
       return footer === undefined ? React.createElement(
         'div',
@@ -21288,21 +23995,39 @@ var Modal = (_dec$20 = renderTo(), _dec2$3 = CSSModules(styles$10, { allowMultip
   }, {
     key: 'render',
     value: function render() {
+      var _this3 = this;
+
       var _props2 = this.props,
-          visible = _props2.visible,
           width = _props2.width,
+          visible = _props2.visible,
           children = _props2.children;
+      var maskVisible$$1 = this.state.maskVisible;
 
       var modalProps = {
         style: {
           width: width
         },
-        styleName: 'modal' + (visible ? '--visible' : '')
-
-      };{
-        return React.createElement(
-          Mask,
-          { visible: visible },
+        styleName: index$4('modal', {
+          'modal--visible': visible
+        })
+      };
+      return React.createElement(
+        Mask,
+        { visible: maskVisible$$1 },
+        React.createElement(
+          Animation,
+          {
+            'in': visible,
+            motion: 'flipX',
+            style: {
+              height: '100%'
+            },
+            onExited: function onExited() {
+              _this3.setState({
+                maskVisible: false
+              });
+            }
+          },
           React.createElement(
             'div',
             modalProps,
@@ -21314,12 +24039,12 @@ var Modal = (_dec$20 = renderTo(), _dec2$3 = CSSModules(styles$10, { allowMultip
             ),
             this.renderFooter()
           )
-        );
-      }
+        )
+      );
     }
   }]);
   return Modal;
-}(Component), _class2$20.displayName = 'Modal', _class2$20.defaultProps = {
+}(Component), _class2$22.displayName = 'Modal', _class2$22.defaultProps = {
   title: '',
   closable: true,
   width: 520,
@@ -21328,7 +24053,7 @@ var Modal = (_dec$20 = renderTo(), _dec2$3 = CSSModules(styles$10, { allowMultip
   onOk: function onOk() {},
   onCancel: function onCancel() {},
   afterClose: function afterClose() {}
-}, _class2$20.propTypes = {
+}, _class2$22.propTypes = {
   title: index$1.oneOfType([index$1.string, index$1.element]),
   closable: index$1.bool,
   width: index$1.number,
@@ -21338,20 +24063,20 @@ var Modal = (_dec$20 = renderTo(), _dec2$3 = CSSModules(styles$10, { allowMultip
   onCancel: index$1.func,
   afterClose: index$1.func
 
-}, _temp$22)) || _class$22) || _class$22);
+}, _temp$25)) || _class$26) || _class$26);
 
-var styles$11 = { "pagination--small": "_2CnmpyB", "pagination__jumperField": "_280nkVW", "pagination__jumper": "wBezPz9", "pagination__sizeChanger": "_3O0s4JU", "pagination__total": "_2KQ0PhC", "pagination__item--active": "_1ZyqWB7", "pagination__pages": "cfbKU8w", "pagination__ctrl": "_2tvnb-l", "pagination__item": "jsRFs8b", "pagination--normal": "_3HZDVl5", "pagination": "_1L_-sT1", "paginationSmall": "_2CnmpyB", "pagination__itemActive": "_1ZyqWB7", "paginationNormal": "_3HZDVl5" };
+var styles$13 = { "pagination--small": "_2CnmpyB", "pagination__jumperField": "_280nkVW", "pagination__jumper": "wBezPz9", "pagination__sizeChanger": "_3O0s4JU", "pagination__total": "_2KQ0PhC", "pagination__item--active": "_1ZyqWB7", "pagination__pages": "cfbKU8w", "pagination__ctrl": "_2tvnb-l", "pagination__item": "jsRFs8b", "pagination--normal": "_3HZDVl5", "pagination__ellipsis": "_13KUpSV", "pagination": "_1L_-sT1", "paginationSmall": "_2CnmpyB", "pagination__itemActive": "_1ZyqWB7", "paginationNormal": "_3HZDVl5" };
 
-var _dec$22;
-var _class$24;
-var _class2$22;
-var _temp$24;
+var _dec$24;
+var _class$29;
+var _class2$24;
+var _temp$27;
 
 /**
  * Pagination Component
  * @author ryan.bian
  */
-var Pagination = (_dec$22 = CSSModules(styles$11, { allowMultiple: allowMultiple }), _dec$22(_class$24 = (_temp$24 = _class2$22 = function (_PureComponent) {
+var Pagination = (_dec$24 = CSSModules(styles$13, { allowMultiple: allowMultiple }), _dec$24(_class$29 = (_temp$27 = _class2$24 = function (_PureComponent) {
   inherits(Pagination, _PureComponent);
 
   function Pagination(props) {
@@ -21432,12 +24157,12 @@ var Pagination = (_dec$22 = CSSModules(styles$11, { allowMultiple: allowMultiple
     value: function componentWillReceiveProps(nextProps) {
       var state = {};
       if (typeof nextProps.current !== 'undefined') {
-        index$5(state, {
+        index$6(state, {
           current: nextProps.current
         });
       }
       if (typeof nextProps.pageSize !== 'undefined') {
-        index$5(state, {
+        index$6(state, {
           pageSize: nextProps.pageSize
         });
       }
@@ -21502,7 +24227,7 @@ var Pagination = (_dec$22 = CSSModules(styles$11, { allowMultiple: allowMultiple
       if (start !== firstPage + 1 && start !== firstPage) {
         items.push(React.createElement(
           'li',
-          { key: 'front' },
+          { key: 'front', styleName: 'pagination__ellipsis' },
           React.createElement(Icon, { name: 'ellipsis', size: 12 })
         ));
       }
@@ -21521,7 +24246,7 @@ var Pagination = (_dec$22 = CSSModules(styles$11, { allowMultiple: allowMultiple
       if (end !== lastPage - 1 && end !== lastPage) {
         items.push(React.createElement(
           'li',
-          { key: 'back' },
+          { key: 'back', styleName: 'pagination__ellipsis' },
           React.createElement(Icon, { name: 'ellipsis', size: 12 })
         ));
       }
@@ -21549,9 +24274,9 @@ var Pagination = (_dec$22 = CSSModules(styles$11, { allowMultiple: allowMultiple
       };
       var content = void 0;
       if (direction === 'prev') {
-        content = React.createElement(Icon, { name: 'arrow-left', size: 12 });
+        content = React.createElement(Icon, { name: 'double-arrow-left', size: 12 });
       } else {
-        content = React.createElement(Icon, { name: 'arrow-right', size: 12 });
+        content = React.createElement(Icon, { name: 'double-arrow-right', size: 12 });
       }
       return React.createElement(
         'button',
@@ -21649,7 +24374,7 @@ var Pagination = (_dec$22 = CSSModules(styles$11, { allowMultiple: allowMultiple
     }
   }]);
   return Pagination;
-}(PureComponent), _class2$22.displayName = 'Pagination', _class2$22.defaultProps = {
+}(PureComponent), _class2$24.displayName = 'Pagination', _class2$24.defaultProps = {
   current: undefined,
   defaultCurrent: 1,
   total: 0,
@@ -21663,7 +24388,7 @@ var Pagination = (_dec$22 = CSSModules(styles$11, { allowMultiple: allowMultiple
   pageSizeOptions: [10, 20, 30, 40],
   showQuickJumper: false,
   size: '',
-  showTotal: false }, _class2$22.propTypes = {
+  showTotal: false }, _class2$24.propTypes = {
   current: index$1.number,
   defaultCurrent: index$1.number,
   total: index$1.number,
@@ -21676,7 +24401,7 @@ var Pagination = (_dec$22 = CSSModules(styles$11, { allowMultiple: allowMultiple
   showQuickJumper: index$1.bool,
   size: index$1.string,
   showTotal: index$1.bool
-}, _temp$24)) || _class$24);
+}, _temp$27)) || _class$29);
 
 var defaultProps$1 = {
   percent: 0,
@@ -21692,7 +24417,7 @@ var propTypes$1 = {
   showInfo: index$1.bool
 };
 
-var styles$12 = { "progress__line--pause": "_2rhabTG", "progress__line--exception": "_1Gn0LqM", "progress__line--success": "_2iMadZh", "progress__line--normal": "cFwj8pO", "progress__lineIndicator": "_1YQZnrM", "progress__line--normalSize": "_28IlOCf", "progress__line": "nd0QJ7p", "progress__lineOuter": "IL7D3Op", "progress__lineInner": "_27NBzV3", "progress__line--miniSize": "_2Gk1yz_", "progress-animation": "_2uAdRt5", "progress__linePause": "_2rhabTG", "progress__lineException": "_1Gn0LqM", "progress__lineSuccess": "_2iMadZh", "progress__lineNormal": "cFwj8pO", "progress__lineNormalSize": "_28IlOCf", "progress__lineMiniSize": "_2Gk1yz_", "progressAnimation": "_2uAdRt5" };
+var styles$14 = { "progress__line--pause": "_2rhabTG", "progress__line--exception": "_1Gn0LqM", "progress__line--success": "_2iMadZh", "progress__line--normal": "cFwj8pO", "progress__lineIndicator": "_1YQZnrM", "progress__line--normalSize": "_28IlOCf", "progress__line": "nd0QJ7p", "progress__showinfo": "_3JkNO59", "progress__lineOuter": "IL7D3Op", "progress__lineInner": "_27NBzV3", "progress__line--miniSize": "_2Gk1yz_", "progress-animation": "_2uAdRt5", "progress__linePause": "_2rhabTG", "progress__lineException": "_1Gn0LqM", "progress__lineSuccess": "_2iMadZh", "progress__lineNormal": "cFwj8pO", "progress__lineNormalSize": "_28IlOCf", "progress__lineMiniSize": "_2Gk1yz_", "progressAnimation": "_2uAdRt5" };
 
 /**
  * Line Component
@@ -21704,11 +24429,13 @@ var Line = function Line(_ref) {
       size = _ref.size,
       showInfo = _ref.showInfo;
 
+  console.log(showInfo);
+
   var lineProps = {
-    className: index$4(styles$12['progress__line'], styles$12['progress__line--' + size + 'Size'], styles$12['progress__line--' + status])
+    className: index$4(styles$14['progress__' + (showInfo ? 'showinfo' : 'line')], styles$14['progress__line--' + size + 'Size'], styles$14['progress__line--' + status])
   };
   var innerProps = {
-    className: styles$12['progress__lineInner'],
+    className: styles$14['progress__lineInner'],
     style: {
       width: percent + '%'
     }
@@ -21735,12 +24462,12 @@ var Line = function Line(_ref) {
     lineProps,
     React.createElement(
       'div',
-      { className: styles$12.progress__lineOuter },
+      { className: styles$14.progress__lineOuter },
       React.createElement('div', innerProps)
     ),
     showInfo ? React.createElement(
       'span',
-      { className: styles$12.progress__lineIndicator },
+      { className: styles$14.progress__lineIndicator },
       indicator
     ) : null
   );
@@ -21750,10 +24477,10 @@ Line.defaultProps = defaultProps$1;
 
 Line.propTypes = propTypes$1;
 
-var _dec$23;
-var _class$25;
-var _class2$23;
-var _temp$25;
+var _dec$25;
+var _class$30;
+var _class2$25;
+var _temp$28;
 
 /**
  * Progress Component
@@ -21761,7 +24488,7 @@ var _temp$25;
  */
 // import Circle from './Circle';
 
-var Progress = (_dec$23 = CSSModules(styles$12, { allowMultiple: allowMultiple }), _dec$23(_class$25 = (_temp$25 = _class2$23 = function (_PureComponent) {
+var Progress = (_dec$25 = CSSModules(styles$14, { allowMultiple: allowMultiple }), _dec$25(_class$30 = (_temp$28 = _class2$25 = function (_PureComponent) {
   inherits(Progress, _PureComponent);
 
   function Progress() {
@@ -21787,20 +24514,847 @@ var Progress = (_dec$23 = CSSModules(styles$12, { allowMultiple: allowMultiple }
 
   }]);
   return Progress;
-}(PureComponent), _class2$23.displayName = 'Progress', _class2$23.defaultProps = _extends({}, defaultProps$1), _class2$23.propTypes = _extends({}, propTypes$1), _temp$25)) || _class$25);
+}(PureComponent), _class2$25.displayName = 'Progress', _class2$25.defaultProps = _extends({}, defaultProps$1), _class2$25.propTypes = _extends({}, propTypes$1), _temp$28)) || _class$30);
 
-var styles$13 = { "steps__vertical": "_1Z9B0MQ", "steps--main": "_11Rome9", "steps--head": "_2UU-kd6", "steps--description": "_1DxItRx", "steps--tail": "_2vbHRHb", "steps--item__finish": "_1VnV_nf", "steps--headinner": "_2JVCbOY", "steps--icon": "_2jVCR-o", "steps--item__process": "YRG4bmD", "steps--item__wait": "XQtgjbi", "steps": "_1hnABRb", "steps--item": "O2T4biQ", "steps__horizontal": "WV34rPt", "steps--title": "_35Vh_F5", "steps--item__error": "_2V3dCtV", "steps--step": "WD5QBi2", "stepsMain": "_11Rome9", "stepsHead": "_2UU-kd6", "stepsDescription": "_1DxItRx", "stepsTail": "_2vbHRHb", "stepsItem__finish": "_1VnV_nf", "stepsHeadinner": "_2JVCbOY", "stepsIcon": "_2jVCR-o", "stepsItem__process": "YRG4bmD", "stepsItem__wait": "XQtgjbi", "stepsItem": "O2T4biQ", "stepsTitle": "_35Vh_F5", "stepsItem__error": "_2V3dCtV", "stepsStep": "WD5QBi2" };
+var styles$15 = { "radio--group": "_2AmYsBu", "radioGroup": "_2AmYsBu" };
 
-var _dec$25;
-var _class$27;
-var _class2$25;
-var _temp$27;
+var _dec$27;
+var _class$32;
+var _class2$27;
+var _temp$30;
+var _initialiseProps$4;
+
+/**
+ * Radio Component
+ * @author grootfish
+ */
+function getCheckedValue(children) {
+  var value = null;
+  var matched = false;
+  React$1.Children.forEach(children, function (radio) {
+    if (radio && radio.props && radio.props.checked) {
+      value = radio.props.value;
+      matched = true;
+    }
+  });
+  return matched ? { value: value } : undefined;
+}
+
+var RadioGroup = (_dec$27 = CSSModules(styles$15, { allowMultiple: allowMultiple }), _dec$27(_class$32 = (_temp$30 = _class2$27 = function (_PureComponent) {
+  inherits(RadioGroup, _PureComponent);
+
+  // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
+  function RadioGroup(props) {
+    classCallCheck(this, RadioGroup);
+
+    var _this = possibleConstructorReturn(this, (RadioGroup.__proto__ || Object.getPrototypeOf(RadioGroup)).call(this, props));
+
+    _initialiseProps$4.call(_this);
+
+    var value = void 0;
+    if ('value' in props) {
+      value = props.value;
+    } else if ('defaultValue' in props) {
+      value = props.defaultValue;
+    } else {
+      var checkedValue = getCheckedValue(props.children);
+      value = checkedValue && checkedValue.value;
+    }
+
+    _this.state = {
+      value: value
+    };
+    return _this;
+  }
+
+  createClass(RadioGroup, [{
+    key: 'getChildContext',
+    value: function getChildContext() {
+      return {
+        radioGroup: {
+          onChange: this.onRadioChange,
+          value: this.state.value,
+          disabled: this.props.disabled
+        }
+      };
+    }
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      if ('value' in nextProps) {
+        this.setState({
+          value: nextProps.value
+        });
+      } else {
+        var checkedValue = getCheckedValue(nextProps.children);
+        if (checkedValue) {
+          this.setState({ value: checkedValue.value });
+        }
+      }
+    }
+  }, {
+    key: 'shouldComponentUpdate',
+    value: function shouldComponentUpdate(nextProps, nextState) {
+      return !index$5(this.props, nextProps) || !index$5(this.state, nextState);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      var props = this.props,
+          state = this.state,
+          getOptions = this.getOptions;
+      var options = props.options;
+      var children = props.children;
+
+      if (options && options.length > 0) {
+        children = getOptions().map(function (option) {
+          return React$1.createElement(
+            Radio$1,
+            {
+              key: option.value,
+              disabled: option.disabled || props.disabled,
+              value: option.value,
+              onChange: _this2.onRadioChange,
+              checked: state.value === option.value
+            },
+            option.label
+          );
+        });
+      }
+
+      return React$1.createElement(
+        'div',
+        { styleName: 'radio--group' },
+        children
+      );
+    }
+  }]);
+  return RadioGroup;
+}(PureComponent), _class2$27.displayName = 'RadioGroup', _class2$27.defaultProps = {
+  disabled: false }, _class2$27.propTypes = {
+  disabled: index$1.bool,
+  defaultValue: index$1.any,
+  value: index$1.any,
+  children: index$1.any,
+  onChange: index$1.func,
+  options: index$1.array
+}, _class2$27.childContextTypes = {
+  radioGroup: index$1.any
+}, _initialiseProps$4 = function _initialiseProps() {
+  var _this3 = this;
+
+  this.onRadioChange = function (e) {
+    var lastValue = _this3.state.value;
+    var value = e.target.value;
+
+    if (!('value' in _this3.props)) {
+      _this3.setState({ value: value });
+    }
+
+    var onChange = _this3.props.onChange;
+
+    if (onChange && value !== lastValue) {
+      onChange(e);
+    }
+  };
+
+  this.getOptions = function () {
+    var options = _this3.props.options;
+
+    return options.map(function (option) {
+      if (typeof option === 'string') {
+        return {
+          label: option,
+          value: option
+        };
+      }
+      return option;
+    });
+  };
+}, _temp$30)) || _class$32);
+
+var _dec$28;
+var _class$33;
+var _class2$28;
+var _temp$31;
+
+/**
+ * RadioButton Component
+ * @author grootfish
+ */
+var RadioButton = (_dec$28 = CSSModules(styles$15, { allowMultiple: allowMultiple }), _dec$28(_class$33 = (_temp$31 = _class2$28 = function (_PureComponent) {
+  inherits(RadioButton, _PureComponent);
+
+  // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
+  function RadioButton(props) {
+    classCallCheck(this, RadioButton);
+
+    var _this = possibleConstructorReturn(this, (RadioButton.__proto__ || Object.getPrototypeOf(RadioButton)).call(this, props));
+
+    _this.state = {};
+    return _this;
+  }
+
+  createClass(RadioButton, [{
+    key: 'shouldComponentUpdate',
+    value: function shouldComponentUpdate(nextProps, nextState, nextContext) {
+      return !index$5(this.props, nextProps) || !index$5(this.state, nextState) || !index$5(this.context.radioGroup, nextContext.radioGroup);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var props = this.props,
+          context = this.context;
+      var radioGroup$$1 = context.radioGroup;
+
+      var radioProps = props;
+      if (radioGroup$$1) {
+        radioProps.onChange = radioGroup$$1.onChange;
+        radioProps.checked = props.value == radioGroup$$1.value;
+        radioProps.disabled = props.disabled || radioGroup$$1.disabled;
+      }
+      return React.createElement(Radio$1, radioProps);
+    }
+  }]);
+  return RadioButton;
+}(PureComponent), _class2$28.displayName = 'RadioButton', _class2$28.defaultProps = {
+  prefixCls: 'radio-button' }, _class2$28.propTypes = {
+  prefixCls: index$1.string
+}, _class2$28.contextTypes = {
+  radioGroup: index$1.any
+}, _temp$31)) || _class$33);
+
+var _dec$26;
+var _class$31;
+var _class2$26;
+var _temp$29;
+
+/**
+ * Radio Component
+ * @author grootfish
+ */
+var Radio$1 = (_dec$26 = CSSModules(styles$15, { allowMultiple: allowMultiple }), _dec$26(_class$31 = (_temp$29 = _class2$26 = function (_PureComponent) {
+  inherits(Radio, _PureComponent);
+
+  // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
+  function Radio(props) {
+    classCallCheck(this, Radio);
+
+    var _this = possibleConstructorReturn(this, (Radio.__proto__ || Object.getPrototypeOf(Radio)).call(this, props));
+
+    _this.state = {};
+    return _this;
+  }
+
+  createClass(Radio, [{
+    key: 'shouldComponentUpdate',
+    value: function shouldComponentUpdate(nextProps, nextState, nextContext) {
+      return !index$5(this.props, nextProps) || !index$5(this.state, nextState) || !index$5(this.context.radioGroup, nextContext.radioGroup);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var props = this.props,
+          context = this.context;
+      var children = props.children,
+          prefixCls = props.prefixCls,
+          restProps = objectWithoutProperties(props, ['children', 'prefixCls']);
+      var radioGroup$$1 = context.radioGroup;
+
+      var radioProps = restProps;
+
+      if (radioGroup$$1) {
+        radioProps.onChange = radioGroup$$1.onChange;
+        radioProps.checked = props.value == radioGroup$$1.value;
+        radioProps.disabled = props.disabled || radioGroup$$1.disabled;
+      }
+      return React.createElement(
+        Checkbox$1,
+        _extends({}, radioProps, { prefixCls: prefixCls }),
+        children !== undefined ? children : null
+      );
+    }
+  }]);
+  return Radio;
+}(PureComponent), _class2$26.Group = RadioGroup, _class2$26.Button = RadioButton, _class2$26.displayName = 'Radio', _class2$26.defaultProps = {
+  type: 'radio',
+  prefixCls: 'radio' }, _class2$26.propTypes = {
+  type: index$1.string
+}, _class2$26.contextTypes = {
+  radioGroup: index$1.any
+}, _temp$29)) || _class$31);
+
+var styles$16 = { "dropdown": "_3o8aQDc", "option": "cedYGLy", "active": "_277sAcu", "groupname": "_2l6K4Hj", "nooption": "_2VOOJRO", "select": "_2D7oHJo", "selection": "_1eA_hRH", "selectionClose": "_2VrW67D", "disabled": "_1vBDpEz", "comboboxInput": "_2qf1_gi", "placeholder": "_2y2eMaK", "selectionCloseIcon": "_2WFFW7r", "selectionDownIcon": "_2rJhLTb" };
+
+var _class$35;
+var _temp$33;
+
+/**
+ * Select Component
+ * @author heifade
+ */
+
+var OptGroup = (_temp$33 = _class$35 = function (_PureComponent) {
+  inherits(OptGroup, _PureComponent);
+
+  function OptGroup() {
+    classCallCheck(this, OptGroup);
+    return possibleConstructorReturn(this, (OptGroup.__proto__ || Object.getPrototypeOf(OptGroup)).apply(this, arguments));
+  }
+
+  createClass(OptGroup, [{
+    key: 'render',
+    value: function render() {
+      var _props = this.props,
+          children = _props.children,
+          label = _props.label;
+
+      return React.createElement(
+        'ul',
+        null,
+        React.createElement(
+          'li',
+          { className: styles$16.groupname },
+          label
+        ),
+        React.createElement(
+          'ul',
+          null,
+          children
+        )
+      );
+    }
+    // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
+
+  }]);
+  return OptGroup;
+}(PureComponent), _class$35.displayName = 'Option', _class$35.defaultProps = {
+  children: null,
+  label: ''
+}, _class$35.propTypes = {
+  children: index$1.arrayOf(index$1.element),
+  label: index$1.string
+}, _temp$33);
+
+var _class$36;
+var _temp2$4;
+
+/**
+ * Select Component
+ * @author heifade
+ */
+
+var Option = (_temp2$4 = _class$36 = function (_PureComponent) {
+  inherits(Option, _PureComponent);
+
+  function Option() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
+    classCallCheck(this, Option);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = possibleConstructorReturn(this, (_ref = Option.__proto__ || Object.getPrototypeOf(Option)).call.apply(_ref, [this].concat(args))), _this), _this.click = function () {
+      var _this2 = _this,
+          context = _this2.context;
+      var childContext = context.childContext;
+      var _this$props = _this.props,
+          value = _this$props.value,
+          title = _this$props.title,
+          children = _this$props.children;
+
+      childContext.onOptionSelected(value, title || children);
+    }, _temp), possibleConstructorReturn(_this, _ret);
+  }
+  // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
+
+
+  createClass(Option, [{
+    key: 'render',
+    value: function render() {
+      var _props = this.props,
+          children = _props.children,
+          value = _props.value;
+      var context = this.context;
+      var childContext = context.childContext;
+
+
+      var isActived = childContext.getSelectedValue() === value;
+
+      return React.createElement(
+        'li',
+        {
+          className: index$4(styles$16.option, isActived ? styles$16.active : ''),
+          onClick: this.click
+        },
+        children
+      );
+    }
+  }]);
+  return Option;
+}(PureComponent), _class$36.displayName = 'Option', _class$36.defaultProps = {
+  value: '',
+  title: undefined,
+  children: null
+}, _class$36.propTypes = {
+  value: index$1.string.isRequired,
+  title: index$1.string,
+  children: index$1.arrayOf(index$1.element)
+}, _class$36.contextTypes = {
+  childContext: index$1.any
+}, _temp2$4);
+
+var _class$34;
+var _temp$32;
+var _initialiseProps$5;
+
+/**
+ * Select Component
+ * @author heifade
+ */
+var Select = (_temp$32 = _class$34 = function (_PureComponent) {
+  inherits(Select, _PureComponent);
+
+  // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
+  function Select(props) {
+    classCallCheck(this, Select);
+
+    var _this = possibleConstructorReturn(this, (Select.__proto__ || Object.getPrototypeOf(Select)).call(this, props));
+
+    _initialiseProps$5.call(_this);
+
+    var value = _this.props.value || _this.props.defaultValue;
+    var title = _this.getValue(_this.props.children, value);
+
+    _this.state = {
+      value: value,
+      title: title || undefined,
+      dropdownVisible: false // 下接弹层是否显示
+    };
+
+    // 记录上次选择的值，供取消时回滚
+    _this.lastState = {
+      value: _this.state.value,
+      title: _this.state.title
+    };
+    return _this;
+  }
+
+  // 选项选中时回调
+
+
+  // 在子组件中，根据value获取text
+
+
+  createClass(Select, [{
+    key: 'render',
+    value: function render() {
+      var _props = this.props,
+          children = _props.children,
+          disabled = _props.disabled,
+          type = _props.type;
+      var width = this.props.style.width;
+
+
+      if (disabled) {
+        return React$1.createElement(
+          'div',
+          { className: styles$16.select },
+          React$1.createElement(
+            'div',
+            { className: index$4(styles$16.selection, styles$16.disabled), style: { width: width } },
+            this.state.title || React$1.createElement(
+              'span',
+              { className: styles$16.placeholder },
+              this.props.placeholder
+            ),
+            React$1.createElement(Icon, {
+              name: 'arrow-down',
+              size: 14,
+              className: styles$16.selectionDownIcon
+            })
+          )
+        );
+      }
+
+      var selection$$1 = '';
+      if (type === 'dropdown') {
+        // 简单下位
+        selection$$1 = this.state.title || React$1.createElement(
+          'span',
+          { className: styles$16.placeholder },
+          this.props.placeholder
+        );
+      } else if (type === 'combobox') {
+        selection$$1 = React$1.createElement('input', {
+          type: 'text',
+          className: styles$16.comboboxInput,
+          onChange: this.onComboboxInputChanged,
+          placeholder: this.props.placeholder,
+          value: this.state.value
+        });
+      }
+
+      var childrenLength = children.length;
+      var popupVisible = this.state.dropdownVisible;
+
+      return React$1.createElement(
+        'div',
+        { className: styles$16.select },
+        React$1.createElement(
+          Trigger,
+          {
+            action: 'click',
+            popup: React$1.createElement(
+              'div',
+              { className: styles$16.dropdown, style: { width: width } },
+              React$1.createElement(
+                'ul',
+                null,
+                React$1.createElement(
+                  'li',
+                  { className: index$4(styles$16.nooption), style: { display: childrenLength === 0 ? 'block' : 'none' } },
+                  '\u65E0\u5339\u914D\u9009\u9879'
+                ),
+                children
+              )
+            ),
+            placement: ['tl', 'bl'],
+            mouseLeaveDelay: 100,
+            popupVisible: popupVisible,
+            onPopupVisibleChange: this.onDropdownVisibleChanged
+          },
+          React$1.createElement(
+            'div',
+            { className: this.state.value ? styles$16.selectionClose : styles$16.selection, style: { width: width } },
+            selection$$1,
+            React$1.createElement(Icon, {
+              name: popupVisible ? 'arrow-up' : 'arrow-down',
+              size: 14,
+              className: styles$16.selectionDownIcon
+            }),
+            this.state.value ? React$1.createElement(Icon, {
+              name: 'close',
+              size: 14,
+              className: styles$16.selectionCloseIcon,
+              onClick: this.remove
+            }) : ''
+          )
+        )
+      );
+    }
+  }]);
+  return Select;
+}(PureComponent), _class$34.displayName = 'Select', _class$34.OptGroup = OptGroup, _class$34.Option = Option, _class$34.defaultProps = {
+  placeholder: '请选择',
+  type: 'dropdown',
+  style: { width: 200 },
+  disabled: false,
+  // defaultValue:'',
+  children: null,
+  onSearch: function onSearch() {},
+  onChange: function onChange() {},
+  onCancelChange: function onCancelChange() {}
+}, _class$34.propTypes = {
+  placeholder: index$1.string,
+  type: index$1.oneOf(['dropdown', 'combobox']),
+  style: index$1.object,
+  disabled: index$1.bool,
+  value: index$1.string,
+  defaultValue: index$1.string,
+  onSearch: index$1.func,
+  children: index$1.arrayOf(index$1.element),
+  // onSelect: PropTypes.func,
+  onChange: index$1.func,
+  onCancelChange: index$1.func
+}, _class$34.childContextTypes = {
+  childContext: index$1.any
+}, _initialiseProps$5 = function _initialiseProps() {
+  var _this2 = this;
+
+  this.getChildContext = function () {
+    return {
+      childContext: {
+        onOptionSelected: _this2.onOptionSelected,
+        getSelectedValue: _this2.getSelectedValue
+      }
+    };
+  };
+
+  this.componentWillReceiveProps = function (nextProps, nextContext) {
+    if (nextProps.value && nextProps.value !== _this2.state.value) {
+      var value = nextProps.value;
+      var title = _this2.getValue(_this2.props.children, value);
+
+      _this2.setState({
+        value: nextProps.value,
+        title: title
+      });
+    }
+  };
+
+  this.onDropdownVisibleChanged = function (visible) {
+    _this2.setState({
+      dropdownVisible: visible
+    });
+
+    var type = _this2.props.type;
+
+    if (type === 'combobox') {
+      var onCancelChange = _this2.props.onCancelChange;
+
+      if (!visible) {
+        _this2.setState({
+          value: _this2.lastState.value,
+          title: _this2.lastState.title
+        });
+        onCancelChange();
+      }
+    }
+  };
+
+  this.onComboboxInputChanged = function (e) {
+    var value = e.target.value;
+    var onSearch = _this2.props.onSearch;
+
+    if (onSearch) {
+      onSearch(value);
+    }
+    if (value) {
+      _this2.setState({
+        value: value,
+        title: value
+      });
+    } else {
+      // 当全部都删完时，清空历史
+      _this2.lastState = {
+        value: '',
+        title: undefined
+      };
+      _this2.setState({
+        title: '',
+        value: undefined
+      });
+    }
+  };
+
+  this.onOptionSelected = function (value, title) {
+    _this2.setState({
+      dropdownVisible: false
+    });
+    if (typeof _this2.props.value !== 'undefined') {
+      // 受控组件
+      _this2.props.onChange({
+        value: value,
+        title: title
+      });
+    } else {
+      // 非受控组件
+      _this2.setState({
+        value: value,
+        title: title
+      });
+      _this2.props.onChange(value, title);
+    }
+  };
+
+  this.getSelectedValue = function () {
+    return _this2.state.value;
+  };
+
+  this.getValue = function (children, value) {
+    var title = '';
+    React$1.Children.map(children, function (child) {
+      if (title) {
+        return;
+      }
+      if (child.type === OptGroup) {
+        title = _this2.getValue(child.props.children, value);
+      } else if (child.type === Option) {
+        if (child.props.value === value) {
+          title = child.props.title || child.props.children;
+        }
+      } else {
+        title = _this2.getValue(child.props.children, value);
+      }
+    });
+    return title;
+  };
+
+  this.remove = function (e) {
+    if (e) {
+      e.stopPropagation();
+    }
+    _this2.lastState.title = undefined;
+    _this2.lastState.value = '';
+    _this2.setState({
+      value: '',
+      title: undefined
+    });
+
+    var onChange = _this2.props.onChange;
+
+    if (onChange) {
+      onChange({
+        // value: null,
+        // text: null,
+      });
+    }
+  };
+}, _temp$32);
+
+var styles$17 = { "Spin": "_2skC-me", "qui-spin-dot": "_1EZh2dh", "small": "_2x0173l", "large": "_3QD-S4t", "uiFade": "_2EHkGoG", "qui-spin-text": "_2uKi-RX", "qui-spin-container": "_1ZQogri", "qui-spin-blur": "_1m5Kgy8", "qui-spin-loading-wrap": "_2_VO-5x", "qui-spin-wrap": "_2xnXvO0", "quiSpinDot": "_1EZh2dh", "quiSpinText": "_2uKi-RX", "quiSpinContainer": "_1ZQogri", "quiSpinBlur": "_1m5Kgy8", "quiSpinLoadingWrap": "_2_VO-5x", "quiSpinWrap": "_2xnXvO0" };
+
+var _dec$29;
+var _class$37;
+var _class2$29;
+var _temp$34;
+
+/**
+ * Spin Component
+ * @author Northerner
+ */
+var Spin = (_dec$29 = CSSModules(styles$17, { allowMultiple: allowMultiple }), _dec$29(_class$37 = (_temp$34 = _class2$29 = function (_PureComponent) {
+  inherits(Spin, _PureComponent);
+
+  function Spin(props) {
+    classCallCheck(this, Spin);
+
+    var _this = possibleConstructorReturn(this, (Spin.__proto__ || Object.getPrototypeOf(Spin)).call(this, props));
+
+    _this.debounceTimeout = null;
+    _this.delayTimeout = null;
+
+    _this.state = {
+      spinning: props.spinning
+    };
+    return _this;
+  }
+
+  // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
+
+
+  createClass(Spin, [{
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      var _this2 = this;
+
+      var currentSpinning = this.props.spinning;
+      var spinning = nextProps.spinning;
+      var delay = this.props.delay;
+
+
+      if (this.debounceTimeout) {
+        clearTimeout(this.debounceTimeout);
+      }
+      if (currentSpinning && !spinning) {
+        this.debounceTimeout = setTimeout(function () {
+          return _this2.setState({ spinning: spinning });
+        }, 300);
+        if (this.delayTimeout) {
+          clearTimeout(this.delayTimeout);
+        }
+      } else if (spinning && delay && !isNaN(Number(delay))) {
+        this.delayTimeout = setTimeout(function () {
+          return _this2.setState({ spinning: spinning });
+        }, delay);
+      } else {
+        this.setState({ spinning: spinning });
+      }
+    }
+  }, {
+    key: 'isNestedPattern',
+    value: function isNestedPattern() {
+      return !!(this.props && this.props.children);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _props = this.props,
+          children = _props.children,
+          size = _props.size,
+          tip = _props.tip,
+          delay = _props.delay;
+      var spinning = this.state.spinning;
+
+
+      var spinProps = {
+        styleName: 'Spin ' + (size === 'default' ? '' : size)
+      };
+      var conProps = {
+        styleName: 'qui-spin-container ' + (spinning ? 'qui-spin-blur' : '')
+      };
+      var spinElement = React.createElement(
+        'div',
+        spinProps,
+        React.createElement(
+          'span',
+          { styleName: 'qui-spin-dot' },
+          React.createElement('i', null),
+          React.createElement('i', null),
+          React.createElement('i', null),
+          React.createElement('i', null),
+          React.createElement('i', null)
+        ),
+        tip ? React.createElement(
+          'p',
+          { styleName: 'qui-spin-text' },
+          tip
+        ) : null
+      );
+
+      if (this.isNestedPattern()) {
+        return React.createElement(
+          index$14,
+          {
+            component: 'div',
+            transitionName: 'fade',
+            styleName: 'qui-spin-loading-wrap'
+          },
+          spinning && React.createElement(
+            'div',
+            { styleName: 'qui-spin-wrap' },
+            spinElement
+          ),
+          React.createElement(
+            'div',
+            conProps,
+            children
+          )
+        );
+      }
+
+      return spinElement;
+    }
+  }]);
+  return Spin;
+}(PureComponent), _class2$29.displayName = 'Spin', _class2$29.defaultProps = {
+  size: 'default',
+  spinning: true,
+  delay: 0 }, _class2$29.propTypes = {
+  size: index$1.oneOf(['small', 'large', 'default']),
+  spinning: index$1.bool,
+  delay: index$1.number
+}, _temp$34)) || _class$37);
+
+var styles$18 = { "steps__vertical": "_1Z9B0MQ", "steps--main": "_11Rome9", "steps--head": "_2UU-kd6", "steps--tail": "_2vbHRHb", "steps__small": "_2kmh_Rc", "steps--item__finish": "_1VnV_nf", "steps--headinner": "_2JVCbOY", "steps--icon": "_2jVCR-o", "steps--description": "_1DxItRx", "steps--item__process": "YRG4bmD", "steps--item__wait": "XQtgjbi", "steps": "_1hnABRb", "steps--item": "O2T4biQ", "steps__horizontal": "WV34rPt", "steps--title": "_35Vh_F5", "steps--item__error": "_2V3dCtV", "steps--step": "WD5QBi2", "stepsMain": "_11Rome9", "stepsHead": "_2UU-kd6", "stepsTail": "_2vbHRHb", "stepsItem__finish": "_1VnV_nf", "stepsHeadinner": "_2JVCbOY", "stepsIcon": "_2jVCR-o", "stepsDescription": "_1DxItRx", "stepsItem__process": "YRG4bmD", "stepsItem__wait": "XQtgjbi", "stepsItem": "O2T4biQ", "stepsTitle": "_35Vh_F5", "stepsItem__error": "_2V3dCtV", "stepsStep": "WD5QBi2" };
+
+var _dec$31;
+var _class$39;
+var _class2$31;
+var _temp$36;
 
 /**
  * Step Component
  * @author grootfish
  */
-var Step = (_dec$25 = CSSModules(styles$13, { allowMultiple: allowMultiple }), _dec$25(_class$27 = (_temp$27 = _class2$25 = function (_PureComponent) {
+var Step = (_dec$31 = CSSModules(styles$18, { allowMultiple: allowMultiple }), _dec$31(_class$39 = (_temp$36 = _class2$31 = function (_PureComponent) {
   inherits(Step, _PureComponent);
 
   function Step(props) {
@@ -21892,14 +25446,14 @@ var Step = (_dec$25 = CSSModules(styles$13, { allowMultiple: allowMultiple }), _
     }
   }]);
   return Step;
-}(PureComponent), _class2$25.displayName = 'Step', _class2$25.defaultProps = {
+}(PureComponent), _class2$31.displayName = 'Step', _class2$31.defaultProps = {
   status: '',
   title: '',
   description: '',
   stepNumber: '',
   itemWidth: 0,
   adjustMarginRight: 0,
-  isFinishIcon: false }, _class2$25.propTypes = {
+  isFinishIcon: false }, _class2$31.propTypes = {
   status: index$1.string,
   title: index$1.string,
   description: index$1.string,
@@ -21907,18 +25461,18 @@ var Step = (_dec$25 = CSSModules(styles$13, { allowMultiple: allowMultiple }), _
   itemWidth: index$1.oneOfType([index$1.number, index$1.string]),
   adjustMarginRight: index$1.oneOfType([index$1.number, index$1.string]),
   isFinishIcon: index$1.bool
-}, _temp$27)) || _class$27);
+}, _temp$36)) || _class$39);
 
-var _dec$24;
-var _class$26;
-var _class2$24;
-var _temp$26;
+var _dec$30;
+var _class$38;
+var _class2$30;
+var _temp$35;
 
 /**
  * Steps Component
  * @author grootfish
  */
-var Steps$1 = (_dec$24 = CSSModules(styles$13, { allowMultiple: allowMultiple }), _dec$24(_class$26 = (_temp$26 = _class2$24 = function (_PureComponent) {
+var Steps$1 = (_dec$30 = CSSModules(styles$18, { allowMultiple: allowMultiple }), _dec$30(_class$38 = (_temp$35 = _class2$30 = function (_PureComponent) {
   inherits(Steps, _PureComponent);
 
   function Steps(props) {
@@ -21971,21 +25525,23 @@ var Steps$1 = (_dec$24 = CSSModules(styles$13, { allowMultiple: allowMultiple })
   }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
+      var _classnames,
+          _this2 = this;
 
       var _props = this.props,
           children = _props.children,
           direction = _props.direction,
           status = _props.status,
+          size = _props.size,
           current = _props.current,
           isFinishIcon = _props.isFinishIcon,
-          restProps = objectWithoutProperties(_props, ['children', 'direction', 'status', 'current', 'isFinishIcon']);
+          restProps = objectWithoutProperties(_props, ['children', 'direction', 'status', 'size', 'current', 'isFinishIcon']);
 
       var lastIndex = children.length - 1;
       var reLayouted = this.state.lastStepOffsetWidth > 0;
-      var classString = index$4(defineProperty$2({
+      var classString = index$4((_classnames = {
         steps: true
-      }, 'steps__' + direction, true));
+      }, defineProperty$2(_classnames, 'steps__' + direction, true), defineProperty$2(_classnames, 'steps__' + size, size), _classnames));
       return React.createElement(
         'div',
         _extends({ styleName: classString, ref: function ref(node) {
@@ -22016,303 +25572,808 @@ var Steps$1 = (_dec$24 = CSSModules(styles$13, { allowMultiple: allowMultiple })
     }
   }]);
   return Steps;
-}(PureComponent), _class2$24.displayName = 'Steps', _class2$24.Step = Step, _class2$24.defaultProps = {
+}(PureComponent), _class2$30.displayName = 'Steps', _class2$30.Step = Step, _class2$30.defaultProps = {
   direction: 'horizontal',
   current: 0,
   status: 'process',
-  isFinishIcon: false }, _class2$24.propTypes = {
+  isFinishIcon: false,
+  size: '' }, _class2$30.propTypes = {
   direction: index$1.oneOf(['horizontal', 'vertical']),
   current: index$1.number,
   status: index$1.string,
-  isFinishIcon: index$1.bool
-}, _temp$26)) || _class$26);
+  isFinishIcon: index$1.bool,
+  size: index$1.string
+}, _temp$35)) || _class$38);
 
-var styles$14 = { "Spin": "_2skC-me", "qui-spin-dot": "_1EZh2dh", "small": "_2x0173l", "large": "_3QD-S4t", "uiFade": "_2EHkGoG", "qui-spin-text": "_2uKi-RX", "qui-spin-container": "_1ZQogri", "qui-spin-blur": "_1m5Kgy8", "qui-spin-loading-wrap": "_2_VO-5x", "qui-spin-wrap": "_2xnXvO0", "quiSpinDot": "_1EZh2dh", "quiSpinText": "_2uKi-RX", "quiSpinContainer": "_1ZQogri", "quiSpinBlur": "_1m5Kgy8", "quiSpinLoadingWrap": "_2_VO-5x", "quiSpinWrap": "_2xnXvO0" };
+var SPACE_KEY = 32;
+var ENTER_KEY = 13;
 
-var _dec$26;
-var _class$28;
-var _class2$26;
-var _temp$28;
+function getTouchProps(touch) {
+	if (!touch) return {};
+	return {
+		pageX: touch.pageX,
+		pageY: touch.pageY,
+		clientX: touch.clientX,
+		clientY: touch.clientY
+	};
+}
+
+var Mixin$1 = {
+	propTypes: {
+		moveThreshold: index$1.number, // pixels to move before cancelling tap
+		activeDelay: index$1.number, // ms to wait before adding the `-active` class
+		pressDelay: index$1.number, // ms to wait before detecting a press
+		pressMoveThreshold: index$1.number, // pixels to move before cancelling press
+		preventDefault: index$1.bool, // whether to preventDefault on all events
+		stopPropagation: index$1.bool, // whether to stopPropagation on all events
+
+		onTap: index$1.func, // fires when a tap is detected
+		onPress: index$1.func, // fires when a press is detected
+		onTouchStart: index$1.func, // pass-through touch event
+		onTouchMove: index$1.func, // pass-through touch event
+		onTouchEnd: index$1.func, // pass-through touch event
+		onMouseDown: index$1.func, // pass-through mouse event
+		onMouseUp: index$1.func, // pass-through mouse event
+		onMouseMove: index$1.func, // pass-through mouse event
+		onMouseOut: index$1.func, // pass-through mouse event
+		onKeyDown: index$1.func, // pass-through key event
+		onKeyUp: index$1.func },
+
+	// pass-through key event
+	getDefaultProps: function getDefaultProps() {
+		return {
+			activeDelay: 0,
+			moveThreshold: 100,
+			pressDelay: 1000,
+			pressMoveThreshold: 5
+		};
+	},
+
+	getInitialState: function getInitialState() {
+		return {
+			isActive: false,
+			touchActive: false,
+			pinchActive: false
+		};
+	},
+
+	componentWillUnmount: function componentWillUnmount() {
+		this.cleanupScrollDetection();
+		this.cancelPressDetection();
+		this.clearActiveTimeout();
+	},
+
+	processEvent: function processEvent(event) {
+		if (this.props.preventDefault) event.preventDefault();
+		if (this.props.stopPropagation) event.stopPropagation();
+	},
+
+	onTouchStart: function onTouchStart(event) {
+		if (this.props.onTouchStart && this.props.onTouchStart(event) === false) return;
+		this.processEvent(event);
+		window._blockMouseEvents = true;
+		if (event.touches.length === 1) {
+			this._initialTouch = this._lastTouch = getTouchProps(event.touches[0]);
+			this.initScrollDetection();
+			this.initPressDetection(event, this.endTouch);
+			this.initTouchmoveDetection();
+			if (this.props.activeDelay > 0) {
+				this._activeTimeout = setTimeout(this.makeActive, this.props.activeDelay);
+			} else {
+				this.makeActive();
+			}
+		} else if (this.onPinchStart && (this.props.onPinchStart || this.props.onPinchMove || this.props.onPinchEnd) && event.touches.length === 2) {
+			this.onPinchStart(event);
+		}
+	},
+
+	makeActive: function makeActive() {
+		if (!this.isMounted()) return;
+		this.clearActiveTimeout();
+		this.setState({
+			isActive: true
+		});
+	},
+
+	clearActiveTimeout: function clearActiveTimeout() {
+		clearTimeout(this._activeTimeout);
+		this._activeTimeout = false;
+	},
+
+	initScrollDetection: function initScrollDetection() {
+		this._scrollPos = { top: 0, left: 0 };
+		this._scrollParents = [];
+		this._scrollParentPos = [];
+		var node = ReactDOM.findDOMNode(this);
+
+		while (node) {
+			if (node.scrollHeight > node.offsetHeight || node.scrollWidth > node.offsetWidth) {
+				this._scrollParents.push(node);
+				this._scrollParentPos.push(node.scrollTop + node.scrollLeft);
+				this._scrollPos.top += node.scrollTop;
+				this._scrollPos.left += node.scrollLeft;
+			}
+
+			node = node.parentNode;
+		}
+	},
+
+	initTouchmoveDetection: function initTouchmoveDetection() {
+		this._touchmoveTriggeredTimes = 0;
+	},
+
+	cancelTouchmoveDetection: function cancelTouchmoveDetection() {
+		if (this._touchmoveDetectionTimeout) {
+			clearTimeout(this._touchmoveDetectionTimeout);
+			this._touchmoveDetectionTimeout = null;
+			this._touchmoveTriggeredTimes = 0;
+		}
+	},
+
+	calculateMovement: function calculateMovement(touch) {
+		return {
+			x: Math.abs(touch.clientX - this._initialTouch.clientX),
+			y: Math.abs(touch.clientY - this._initialTouch.clientY)
+		};
+	},
+
+	detectScroll: function detectScroll() {
+		var currentScrollPos = { top: 0, left: 0 };
+		for (var i = 0; i < this._scrollParents.length; i++) {
+			currentScrollPos.top += this._scrollParents[i].scrollTop;
+			currentScrollPos.left += this._scrollParents[i].scrollLeft;
+		}
+		return !(currentScrollPos.top === this._scrollPos.top && currentScrollPos.left === this._scrollPos.left);
+	},
+
+	cleanupScrollDetection: function cleanupScrollDetection() {
+		this._scrollParents = undefined;
+		this._scrollPos = undefined;
+	},
+
+	initPressDetection: function initPressDetection(event, callback) {
+		if (!this.props.onPress) return;
+
+		// SyntheticEvent objects are pooled, so persist the event so it can be referenced asynchronously
+		event.persist();
+
+		this._pressTimeout = setTimeout((function () {
+			this.props.onPress(event);
+			callback();
+		}).bind(this), this.props.pressDelay);
+	},
+
+	cancelPressDetection: function cancelPressDetection() {
+		clearTimeout(this._pressTimeout);
+	},
+
+	onTouchMove: function onTouchMove(event) {
+		if (this._initialTouch) {
+			this.processEvent(event);
+
+			if (this.detectScroll()) {
+				return this.endTouch(event);
+			} else {
+				if (this._touchmoveTriggeredTimes++ === 0) {
+					this._touchmoveDetectionTimeout = setTimeout((function () {
+						if (this._touchmoveTriggeredTimes === 1) {
+							this.endTouch(event);
+						}
+					}).bind(this), 64);
+				}
+			}
+
+			this.props.onTouchMove && this.props.onTouchMove(event);
+			this._lastTouch = getTouchProps(event.touches[0]);
+			var movement = this.calculateMovement(this._lastTouch);
+			if (movement.x > this.props.pressMoveThreshold || movement.y > this.props.pressMoveThreshold) {
+				this.cancelPressDetection();
+			}
+			if (movement.x > this.props.moveThreshold || movement.y > this.props.moveThreshold) {
+				if (this.state.isActive) {
+					this.setState({
+						isActive: false
+					});
+				} else if (this._activeTimeout) {
+					this.clearActiveTimeout();
+				}
+			} else {
+				if (!this.state.isActive && !this._activeTimeout) {
+					this.setState({
+						isActive: true
+					});
+				}
+			}
+		} else if (this._initialPinch && event.touches.length === 2 && this.onPinchMove) {
+			this.onPinchMove(event);
+			event.preventDefault();
+		}
+	},
+
+	onTouchEnd: function onTouchEnd(event) {
+		var _this = this;
+
+		if (this._initialTouch) {
+			this.processEvent(event);
+			var afterEndTouch;
+			var movement = this.calculateMovement(this._lastTouch);
+			if (movement.x <= this.props.moveThreshold && movement.y <= this.props.moveThreshold && this.props.onTap) {
+				event.preventDefault();
+				afterEndTouch = function () {
+					var finalParentScrollPos = _this._scrollParents.map(function (node) {
+						return node.scrollTop + node.scrollLeft;
+					});
+					var stoppedMomentumScroll = _this._scrollParentPos.some(function (end, i) {
+						return end !== finalParentScrollPos[i];
+					});
+					if (!stoppedMomentumScroll) {
+						_this.props.onTap(event);
+					}
+				};
+			}
+			this.endTouch(event, afterEndTouch);
+		} else if (this.onPinchEnd && this._initialPinch && event.touches.length + event.changedTouches.length === 2) {
+			this.onPinchEnd(event);
+			event.preventDefault();
+		}
+	},
+
+	endTouch: function endTouch(event, callback) {
+		this.cancelTouchmoveDetection();
+		this.cancelPressDetection();
+		this.clearActiveTimeout();
+		if (event && this.props.onTouchEnd) {
+			this.props.onTouchEnd(event);
+		}
+		this._initialTouch = null;
+		this._lastTouch = null;
+		if (callback) {
+			callback();
+		}
+		if (this.state.isActive) {
+			this.setState({
+				isActive: false
+			});
+		}
+	},
+
+	onMouseDown: function onMouseDown(event) {
+		if (window._blockMouseEvents) {
+			window._blockMouseEvents = false;
+			return;
+		}
+		if (this.props.onMouseDown && this.props.onMouseDown(event) === false) return;
+		this.processEvent(event);
+		this.initPressDetection(event, this.endMouseEvent);
+		this._mouseDown = true;
+		this.setState({
+			isActive: true
+		});
+	},
+
+	onMouseMove: function onMouseMove(event) {
+		if (window._blockMouseEvents || !this._mouseDown) return;
+		this.processEvent(event);
+		this.props.onMouseMove && this.props.onMouseMove(event);
+	},
+
+	onMouseUp: function onMouseUp(event) {
+		if (window._blockMouseEvents || !this._mouseDown) return;
+		this.processEvent(event);
+		this.props.onMouseUp && this.props.onMouseUp(event);
+		this.props.onTap && this.props.onTap(event);
+		this.endMouseEvent();
+	},
+
+	onMouseOut: function onMouseOut(event) {
+		if (window._blockMouseEvents || !this._mouseDown) return;
+		this.processEvent(event);
+		this.props.onMouseOut && this.props.onMouseOut(event);
+		this.endMouseEvent();
+	},
+
+	endMouseEvent: function endMouseEvent() {
+		this.cancelPressDetection();
+		this._mouseDown = false;
+		this.setState({
+			isActive: false
+		});
+	},
+
+	onKeyUp: function onKeyUp(event) {
+		if (!this._keyDown) return;
+		this.processEvent(event);
+		this.props.onKeyUp && this.props.onKeyUp(event);
+		this.props.onTap && this.props.onTap(event);
+		this._keyDown = false;
+		this.cancelPressDetection();
+		this.setState({
+			isActive: false
+		});
+	},
+
+	onKeyDown: function onKeyDown(event) {
+		if (this.props.onKeyDown && this.props.onKeyDown(event) === false) return;
+		if (event.which !== SPACE_KEY && event.which !== ENTER_KEY) return;
+		if (this._keyDown) return;
+		this.initPressDetection(event, this.endKeyEvent);
+		this.processEvent(event);
+		this._keyDown = true;
+		this.setState({
+			isActive: true
+		});
+	},
+
+	endKeyEvent: function endKeyEvent() {
+		this.cancelPressDetection();
+		this._keyDown = false;
+		this.setState({
+			isActive: false
+		});
+	},
+
+	cancelTap: function cancelTap() {
+		this.endTouch();
+		this._mouseDown = false;
+	},
+
+	handlers: function handlers() {
+		return {
+			onTouchStart: this.onTouchStart,
+			onTouchMove: this.onTouchMove,
+			onTouchEnd: this.onTouchEnd,
+			onMouseDown: this.onMouseDown,
+			onMouseUp: this.onMouseUp,
+			onMouseMove: this.onMouseMove,
+			onMouseOut: this.onMouseOut,
+			onKeyDown: this.onKeyDown,
+			onKeyUp: this.onKeyUp
+		};
+	}
+};
+
+var TappableMixin = Mixin$1;
+
+var _extends$5 = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+
+
+
+function getPinchProps(touches) {
+	return {
+		touches: Array.prototype.map.call(touches, function copyTouch(touch) {
+			return { identifier: touch.identifier, pageX: touch.pageX, pageY: touch.pageY };
+		}),
+		center: { x: (touches[0].pageX + touches[1].pageX) / 2, y: (touches[0].pageY + touches[1].pageY) / 2 },
+		angle: Math.atan() * (touches[1].pageY - touches[0].pageY) / (touches[1].pageX - touches[0].pageX) * 180 / Math.PI,
+		distance: Math.sqrt(Math.pow(Math.abs(touches[1].pageX - touches[0].pageX), 2) + Math.pow(Math.abs(touches[1].pageY - touches[0].pageY), 2))
+	};
+}
+
+var Mixin$2 = {
+	propTypes: {
+		onPinchStart: index$1.func, // fires when a pinch gesture is started
+		onPinchMove: index$1.func, // fires on every touch-move when a pinch action is active
+		onPinchEnd: index$1.func // fires when a pinch action ends
+	},
+
+	onPinchStart: function onPinchStart(event) {
+		// in case the two touches didn't start exactly at the same time
+		if (this._initialTouch) {
+			this.endTouch();
+		}
+		var touches = event.touches;
+		this._initialPinch = getPinchProps(touches);
+		this._initialPinch = _extends$5(this._initialPinch, {
+			displacement: { x: 0, y: 0 },
+			displacementVelocity: { x: 0, y: 0 },
+			rotation: 0,
+			rotationVelocity: 0,
+			zoom: 1,
+			zoomVelocity: 0,
+			time: Date.now()
+		});
+		this._lastPinch = this._initialPinch;
+		this.props.onPinchStart && this.props.onPinchStart(this._initialPinch, event);
+	},
+
+	onPinchMove: function onPinchMove(event) {
+		if (this._initialTouch) {
+			this.endTouch();
+		}
+		var touches = event.touches;
+		if (touches.length !== 2) {
+			return this.onPinchEnd(event); // bail out before disaster
+		}
+
+		var currentPinch = touches[0].identifier === this._initialPinch.touches[0].identifier && touches[1].identifier === this._initialPinch.touches[1].identifier ? getPinchProps(touches) // the touches are in the correct order
+		: touches[1].identifier === this._initialPinch.touches[0].identifier && touches[0].identifier === this._initialPinch.touches[1].identifier ? getPinchProps(touches.reverse()) // the touches have somehow changed order
+		: getPinchProps(touches); // something is wrong, but we still have two touch-points, so we try not to fail
+
+		currentPinch.displacement = {
+			x: currentPinch.center.x - this._initialPinch.center.x,
+			y: currentPinch.center.y - this._initialPinch.center.y
+		};
+
+		currentPinch.time = Date.now();
+		var timeSinceLastPinch = currentPinch.time - this._lastPinch.time;
+
+		currentPinch.displacementVelocity = {
+			x: (currentPinch.displacement.x - this._lastPinch.displacement.x) / timeSinceLastPinch,
+			y: (currentPinch.displacement.y - this._lastPinch.displacement.y) / timeSinceLastPinch
+		};
+
+		currentPinch.rotation = currentPinch.angle - this._initialPinch.angle;
+		currentPinch.rotationVelocity = currentPinch.rotation - this._lastPinch.rotation / timeSinceLastPinch;
+
+		currentPinch.zoom = currentPinch.distance / this._initialPinch.distance;
+		currentPinch.zoomVelocity = (currentPinch.zoom - this._lastPinch.zoom) / timeSinceLastPinch;
+
+		this.props.onPinchMove && this.props.onPinchMove(currentPinch, event);
+
+		this._lastPinch = currentPinch;
+	},
+
+	onPinchEnd: function onPinchEnd(event) {
+		// TODO use helper to order touches by identifier and use actual values on touchEnd.
+		var currentPinch = _extends$5({}, this._lastPinch);
+		currentPinch.time = Date.now();
+
+		if (currentPinch.time - this._lastPinch.time > 16) {
+			currentPinch.displacementVelocity = 0;
+			currentPinch.rotationVelocity = 0;
+			currentPinch.zoomVelocity = 0;
+		}
+
+		this.props.onPinchEnd && this.props.onPinchEnd(currentPinch, event);
+
+		this._initialPinch = this._lastPinch = null;
+
+		// If one finger is still on screen, it should start a new touch event for swiping etc
+		// But it should never fire an onTap or onPress event.
+		// Since there is no support swipes yet, this should be disregarded for now
+		// if (event.touches.length === 1) {
+		// 	this.onTouchStart(event);
+		// }
+	}
+};
+
+var PinchableMixin = Mixin$2;
+
+var touchStyles = {
+  WebkitTapHighlightColor: 'rgba(0,0,0,0)',
+  WebkitTouchCallout: 'none',
+  WebkitUserSelect: 'none',
+  KhtmlUserSelect: 'none',
+  MozUserSelect: 'none',
+  msUserSelect: 'none',
+  userSelect: 'none',
+  cursor: 'pointer'
+};
+
+var touchStyles_1$1 = touchStyles;
+
+var _extends$6 = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+
+
+
+
 
 /**
- * Spin Component
- * @author Northerner
+ * Tappable Component
+ * ==================
  */
-var Spin = (_dec$26 = CSSModules(styles$14, { allowMultiple: allowMultiple }), _dec$26(_class$28 = (_temp$28 = _class2$26 = function (_PureComponent) {
-  inherits(Spin, _PureComponent);
+var getComponent = function (mixins) {
+	return index$8({
+		displayName: 'Tappable',
 
-  function Spin(props) {
-    classCallCheck(this, Spin);
+		mixins: mixins,
 
-    var _this = possibleConstructorReturn(this, (Spin.__proto__ || Object.getPrototypeOf(Spin)).call(this, props));
+		propTypes: {
+			component: index$1.any, // component to create
+			className: index$1.string, // optional className
+			classBase: index$1.string, // base for generated classNames
+			classes: index$1.object, // object containing the active and inactive class names
+			style: index$1.object, // additional style properties for the component
+			disabled: index$1.bool // only applies to buttons
+		},
 
-    _this.debounceTimeout = null;
-    _this.delayTimeout = null;
+		getDefaultProps: function getDefaultProps() {
+			return {
+				component: 'span',
+				classBase: 'Tappable'
+			};
+		},
+
+		render: function render() {
+			var props = this.props;
+			var className = props.classBase + (this.state.isActive ? '-active' : '-inactive');
+
+			if (props.className) {
+				className += ' ' + props.className;
+			}
+
+			if (props.classes) {
+				className += ' ' + (this.state.isActive ? props.classes.active : props.classes.inactive);
+			}
+
+			var style = {};
+			_extends$6(style, touchStyles_1$1, props.style);
+
+			var newComponentProps = _extends$6({}, props, {
+				style: style,
+				className: className,
+				disabled: props.disabled,
+				handlers: this.handlers
+			}, this.handlers());
+
+			delete newComponentProps.activeDelay;
+			delete newComponentProps.classBase;
+			delete newComponentProps.classes;
+			delete newComponentProps.handlers;
+			delete newComponentProps.onTap;
+			delete newComponentProps.onPress;
+			delete newComponentProps.onPinchStart;
+			delete newComponentProps.onPinchMove;
+			delete newComponentProps.onPinchEnd;
+			delete newComponentProps.moveThreshold;
+			delete newComponentProps.pressDelay;
+			delete newComponentProps.pressMoveThreshold;
+			delete newComponentProps.preventDefault;
+			delete newComponentProps.stopPropagation;
+			delete newComponentProps.component;
+
+			return React$1.createElement(props.component, newComponentProps, props.children);
+		}
+	});
+};
+
+var _extends$4 = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+
+
+
+
+
+var Component$1 = getComponent([TappableMixin, PinchableMixin]);
+
+var TapAndPinchable = Component$1;
+var touchStyles_1 = touchStyles_1$1;
+var Mixin = _extends$4({}, TappableMixin, {
+  onPinchStart: PinchableMixin.onPinchStart,
+  onPinchMove: PinchableMixin.onPinchMove,
+  onPinchEnd: PinchableMixin.onPinchEnd
+});
+
+TapAndPinchable.touchStyles = touchStyles_1;
+TapAndPinchable.Mixin = Mixin;
+
+var styles$19 = { "tabs__card": "QTFO3vB", "tabs__bar": "_2YCIwDA", "tabs__tab": "_37S7qK8", "active": "_1-_7_w9", "tab__del": "_2GpfxLN", "clearfix": "FLgZnNp", "tabs__left": "_2FxI-4O", "tabs__con": "_2hU1MuY", "tabs__panel": "c57w49P", "inactive": "_16UZ8XT", "tabs__button": "_3zluHoE", "disabled": "_2T7bEco", "tabs__wrap": "Q4sxpvX", "tabs__small": "_3SDTaN3" };
+
+var _dec$33;
+var _class$41;
+var _class2$33;
+var _temp$38;
+
+/**
+ * Tabs Component
+ * @author yan
+ */
+var Tab = (_dec$33 = CSSModules(styles$19, { allowMultiple: allowMultiple }), _dec$33(_class$41 = (_temp$38 = _class2$33 = function (_PureComponent) {
+  inherits(Tab, _PureComponent);
+
+  function Tab(props) {
+    classCallCheck(this, Tab);
+
+    var _this = possibleConstructorReturn(this, (Tab.__proto__ || Object.getPrototypeOf(Tab)).call(this, props));
+
+    _this.deleteButton = function (e) {
+      e.stopPropagation(); //prevent trigger clickTab function
+      _this.props.deleteButton(_this.props.tabKey);
+    };
+
+    _this.clickTab = function () {
+      _this.props.onClick(_this.props.tabKey);
+    };
+
+    _this.deleteButton = _this.deleteButton.bind(_this);
+    _this.clickTab = _this.clickTab.bind(_this);
+    return _this;
+  }
+
+  createClass(Tab, [{
+    key: 'render',
+    value: function render() {
+      var _classNames;
+
+      var props = this.props;
+
+      var closable = props.closable,
+          disabled = props.disabled,
+          status = props.status,
+          tabDeleteButton = props.tabDeleteButton,
+          title = props.title,
+          connectDropTarget = props.connectDropTarget;
+
+      var tabClass = index$4((_classNames = {}, defineProperty$2(_classNames, 'disabled', disabled === true), defineProperty$2(_classNames, 'active', status === 'active'), defineProperty$2(_classNames, 'tabs__tab', true), _classNames));
+
+      var delIcon = React.createElement(Icon, {
+        size: 12,
+        name: 'close',
+        onClick: this.deleteButton
+      });
+
+      return React.createElement(
+        'div',
+        { styleName: tabClass, onClick: this.clickTab },
+        title,
+        tabDeleteButton && closable ? React.createElement(
+          'div',
+          { styleName: 'tab__del' },
+          delIcon
+        ) : null
+      );
+    }
+  }]);
+  return Tab;
+}(PureComponent), _class2$33.displayName = 'Tab', _class2$33.defaultProps = {
+  closable: true
+}, _class2$33.propTypes = {
+  closable: index$1.bool
+}, _temp$38)) || _class$41);
+
+var _dec$32;
+var _class$40;
+var _class2$32;
+var _temp$37;
+var _initialiseProps$6;
+
+/**
+ * Tabs Component
+ * @author yan
+ */
+var Tabs$1 = (_dec$32 = CSSModules(styles$19, { allowMultiple: allowMultiple }), _dec$32(_class$40 = (_temp$37 = _class2$32 = function (_PureComponent) {
+  inherits(Tabs, _PureComponent);
+
+  function Tabs(props) {
+    classCallCheck(this, Tabs);
+
+    var _this = possibleConstructorReturn(this, (Tabs.__proto__ || Object.getPrototypeOf(Tabs)).call(this, props));
+
+    _initialiseProps$6.call(_this);
+
+    _this.onClick = _this.onClick.bind(_this);
+    _this.deleteButton = _this.deleteButton.bind(_this);
+    _this.getPanel = _this.getPanel.bind(_this);
 
     _this.state = {
-      spinning: props.spinning
+      activeKey: props.activeKey || props.defaultActiveKey,
+      children: props.children
     };
     return _this;
   }
 
-  // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
-
-
-  createClass(Spin, [{
+  createClass(Tabs, [{
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
-      var _this2 = this;
-
-      var currentSpinning = this.props.spinning;
-      var spinning = nextProps.spinning;
-      var delay = this.props.delay;
-
-
-      if (this.debounceTimeout) {
-        clearTimeout(this.debounceTimeout);
+      if (nextProps.activeKey !== this.state.activeKey) {
+        this.setState({
+          activeKey: nextProps.activeKey
+        });
       }
-      if (currentSpinning && !spinning) {
-        this.debounceTimeout = setTimeout(function () {
-          return _this2.setState({ spinning: spinning });
-        }, 300);
-        if (this.delayTimeout) {
-          clearTimeout(this.delayTimeout);
-        }
-      } else if (spinning && delay && !isNaN(Number(delay))) {
-        this.delayTimeout = setTimeout(function () {
-          return _this2.setState({ spinning: spinning });
-        }, delay);
-      } else {
-        this.setState({ spinning: spinning });
+      if (nextProps.children !== this.state.children) {
+        this.setState({
+          children: nextProps.children
+        });
       }
-    }
-  }, {
-    key: 'isNestedPattern',
-    value: function isNestedPattern() {
-      return !!(this.props && this.props.children);
     }
   }, {
     key: 'render',
     value: function render() {
-      var _props = this.props,
-          children = _props.children,
-          size = _props.size,
-          tip = _props.tip,
-          delay = _props.delay;
-      var spinning = this.state.spinning;
+      var _classNames;
 
+      var opt = this.getPanel();
+      var props = this.props;
+      var type = props.type,
+          size = props.size,
+          tabPosition = props.tabPosition,
+          otherProps = objectWithoutProperties(props, ['type', 'size', 'tabPosition']);
 
-      var spinProps = {
-        styleName: 'Spin ' + (size === 'default' ? '' : size)
-      };
-      var conProps = {
-        styleName: 'qui-spin-container ' + (spinning ? 'qui-spin-blur' : '')
-      };
-      var spinElement = React.createElement(
+      var cls = index$4((_classNames = {}, defineProperty$2(_classNames, 'tabs__card', type === 'card'), defineProperty$2(_classNames, 'tabs__button', type === 'button'), defineProperty$2(_classNames, 'tabs__small', size === 'small'), defineProperty$2(_classNames, 'tabs__left clearfix', tabPosition === 'left'), defineProperty$2(_classNames, 'tabs__wrap', true), _classNames));
+
+      return React$1.createElement(
         'div',
-        spinProps,
-        React.createElement(
-          'span',
-          { styleName: 'qui-spin-dot' },
-          React.createElement('i', null),
-          React.createElement('i', null),
-          React.createElement('i', null),
-          React.createElement('i', null),
-          React.createElement('i', null)
+        { styleName: cls },
+        React$1.createElement(
+          'div',
+          { styleName: 'tabs__bar' },
+          opt.tab
         ),
-        tip ? React.createElement(
-          'p',
-          { styleName: 'qui-spin-text' },
-          tip
-        ) : null
+        React$1.createElement(
+          'div',
+          { styleName: 'tabs__con' },
+          opt.panel
+        )
       );
-
-      if (this.isNestedPattern()) {
-        return React.createElement(
-          index$13,
-          {
-            component: 'div',
-            transitionName: 'fade',
-            styleName: 'qui-spin-loading-wrap'
-          },
-          spinning && React.createElement(
-            'div',
-            { styleName: 'qui-spin-wrap' },
-            spinElement
-          ),
-          React.createElement(
-            'div',
-            conProps,
-            children
-          )
-        );
-      }
-
-      return spinElement;
     }
   }]);
-  return Spin;
-}(PureComponent), _class2$26.displayName = 'Spin', _class2$26.defaultProps = {
+  return Tabs;
+}(PureComponent), _class2$32.displayName = 'Tabs', _class2$32.defaultProps = {
+  defaultActiveKey: 0,
+  type: 'line',
   size: 'default',
-  spinning: true,
-  delay: 0 }, _class2$26.propTypes = {
-  size: index$1.oneOf(['small', 'large', 'default']),
-  spinning: index$1.bool,
-  delay: index$1.number
-}, _temp$28)) || _class$28);
+  tabPosition: 'top'
+}, _class2$32.propTypes = {
+  type: index$1.oneOf(['line', 'card', 'button']),
+  size: index$1.oneOf(['default', 'small']),
+  tabPosition: index$1.oneOf(['top', 'left']),
+  activeKey: index$1.number,
+  defaultActiveKey: index$1.number
+}, _initialiseProps$6 = function _initialiseProps() {
+  var _this2 = this;
 
-var classCallCheck$1 = createCommonjsModule(function (module, exports) {
-"use strict";
+  this.onClick = function (activeKey) {
+    var props = _this2.props;
 
-exports.__esModule = true;
-
-exports.default = function (instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-};
-});
-
-var _classCallCheck = unwrapExports(classCallCheck$1);
-
-var createClass$1 = createCommonjsModule(function (module, exports) {
-"use strict";
-
-exports.__esModule = true;
-
-
-
-var _defineProperty2 = _interopRequireDefault(defineProperty$4);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = function () {
-  function defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];
-      descriptor.enumerable = descriptor.enumerable || false;
-      descriptor.configurable = true;
-      if ("value" in descriptor) descriptor.writable = true;
-      (0, _defineProperty2.default)(target, descriptor.key, descriptor);
+    if (props.children[activeKey].props.disabled) {
+      return;
     }
-  }
+    if (props.onClick) {
+      props.onClick(activeKey);
+    }
 
-  return function (Constructor, protoProps, staticProps) {
-    if (protoProps) defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) defineProperties(Constructor, staticProps);
-    return Constructor;
+    _this2.setState({
+      activeKey: activeKey,
+      panelUpdateKey: -1
+    });
   };
-}();
-});
 
-var _createClass = unwrapExports(createClass$1);
+  this.deleteButton = function (key) {
+    _this2.props.deleteButton();
+    _this2.setState({
+      panelUpdateKey: key
+    });
+  };
 
-var possibleConstructorReturn$1 = createCommonjsModule(function (module, exports) {
-"use strict";
+  this.getPanel = function () {
+    var that = _this2;
+    var tab = [];
+    var panel = [];
+    Children.forEach(_this2.state.children, function (children, index) {
+      // add tabs
+      var status = void 0,
+          className = void 0;
 
-exports.__esModule = true;
+      status = index === that.state.activeKey ? 'active' : 'inactive';
 
-
-
-var _typeof3 = _interopRequireDefault(_typeof_1);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = function (self, call) {
-  if (!self) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }
-
-  return call && ((typeof call === "undefined" ? "undefined" : (0, _typeof3.default)(call)) === "object" || typeof call === "function") ? call : self;
-};
-});
-
-var _possibleConstructorReturn = unwrapExports(possibleConstructorReturn$1);
-
-// Works with __proto__ only. Old v8 can't work with null proto objects.
-/* eslint-disable no-proto */
-
-var check$1 = function(O, proto){
-  _anObject(O);
-  if(!_isObject(proto) && proto !== null)throw TypeError(proto + ": can't set as prototype!");
-};
-var _setProto = {
-  set: Object.setPrototypeOf || ('__proto__' in {} ? // eslint-disable-line
-    function(test, buggy, set){
-      try {
-        set = _ctx(Function.call, _objectGopd.f(Object.prototype, '__proto__').set, 2);
-        set(test, []);
-        buggy = !(test instanceof Array);
-      } catch(e){ buggy = true; }
-      return function setPrototypeOf(O, proto){
-        check$1(O, proto);
-        if(buggy)O.__proto__ = proto;
-        else set(O, proto);
-        return O;
+      var props = {
+        key: 'tab' + index,
+        tabKey: index,
+        title: children.props.title,
+        status: status,
+        disabled: children.props.disabled,
+        closable: children.props.closable,
+        style: that.state.style,
+        onClick: that.onClick,
+        tabDeleteButton: that.props.tabDeleteButton,
+        deleteButton: that.deleteButton
       };
-    }({}, false) : undefined),
-  check: check$1
-};
 
-// 19.1.3.19 Object.setPrototypeOf(O, proto)
+      tab.push(React$1.createElement(Tab, props));
 
-_export(_export.S, 'Object', {setPrototypeOf: _setProto.set});
+      if (index === that.state.activeKey) {
+        var props = { className: index$4('tabs__panel', status), status: status, key: index };
+        if (that.state.panelUpdateKey === index) {
+          props.update = true;
+        }
+        panel.push(cloneElement(children, props));
+      }
+    });
 
-var setPrototypeOf$2 = _core.Object.setPrototypeOf;
-
-var setPrototypeOf = createCommonjsModule(function (module) {
-module.exports = { "default": setPrototypeOf$2, __esModule: true };
-});
-
-// 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
-_export(_export.S, 'Object', {create: _objectCreate});
-
-var $Object$1 = _core.Object;
-var create$2 = function create(P, D){
-  return $Object$1.create(P, D);
-};
-
-var create = createCommonjsModule(function (module) {
-module.exports = { "default": create$2, __esModule: true };
-});
-
-var inherits$1 = createCommonjsModule(function (module, exports) {
-"use strict";
-
-exports.__esModule = true;
-
-
-
-var _setPrototypeOf2 = _interopRequireDefault(setPrototypeOf);
-
-
-
-var _create2 = _interopRequireDefault(create);
-
-
-
-var _typeof3 = _interopRequireDefault(_typeof_1);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = function (subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : (0, _typeof3.default)(superClass)));
-  }
-
-  subClass.prototype = (0, _create2.default)(superClass && superClass.prototype, {
-    constructor: {
-      value: subClass,
-      enumerable: false,
-      writable: true,
-      configurable: true
-    }
-  });
-  if (superClass) _setPrototypeOf2.default ? (0, _setPrototypeOf2.default)(subClass, superClass) : subClass.__proto__ = superClass;
-};
-});
-
-var _inherits = unwrapExports(inherits$1);
+    return { tab: tab, panel: panel };
+  };
+}, _temp$37)) || _class$40);
 
 function getError(option, xhr) {
   var msg = 'cannot post ' + option.action + ' ' + xhr.status + '\'';
@@ -22413,10 +26474,10 @@ function upload$1(option) {
 }
 
 var now$1 = +new Date();
-var index$24 = 0;
+var index$25 = 0;
 
 function uid() {
-  return "rc-upload-" + now$1 + "-" + ++index$24;
+  return "rc-upload-" + now$1 + "-" + ++index$25;
 }
 
 /* eslint react/no-is-mounted:0 react/sort-comp:0 */
@@ -23152,12 +27213,12 @@ function removeFileItem(file, fileList) {
   return removed;
 }
 
-var styles$15 = { "upload-list-picture-card": "_2MKkXWB", "upload-list-item-info": "ACI5HD8", "upload-list-item-actions": "_3X70GPS", "upload-list-item-error": "_1jGbUaw", "upload-list-item": "_3Njfikd", "pictureShow": "xpw90-A", "upload-list-item-thumbnail": "_27WS6DP", "upload-list-item-name": "_1cVZiOQ", "uploading-text": "_3ki_XOw", "imgshow": "_1tzLhEf", "remove": "Boe8gJv", "eye": "_3gICJJz", "upload-list-item-progress": "_1ik1y6A", "upload-select-picture-card": "_3SaxPHm", "hide": "_2Z7KgL4", "upload-list": "_14NhtWo", "upload-list-text": "_3Mi3sRo", "upload-list-item-done": "_7oltx-C", "upload-list-item-uploading": "_2H0ypTn", "status": "_3qlP1Cd", "upload": "_2UxV0kz", "upload-select-text": "_1maN_Cv", "upload-select": "_1fQz-E_", "uploadListPictureCard": "_2MKkXWB", "uploadListItemInfo": "ACI5HD8", "uploadListItemActions": "_3X70GPS", "uploadListItemError": "_1jGbUaw", "uploadListItem": "_3Njfikd", "uploadListItemThumbnail": "_27WS6DP", "uploadListItemName": "_1cVZiOQ", "uploadingText": "_3ki_XOw", "uploadListItemProgress": "_1ik1y6A", "uploadSelectPictureCard": "_3SaxPHm", "uploadList": "_14NhtWo", "uploadListText": "_3Mi3sRo", "uploadListItemDone": "_7oltx-C", "uploadListItemUploading": "_2H0ypTn", "uploadSelectText": "_1maN_Cv", "uploadSelect": "_1fQz-E_" };
+var styles$20 = { "upload-list-picture-card": "_2MKkXWB", "upload-list-item-info": "ACI5HD8", "upload-list-item-actions": "_3X70GPS", "upload-list-item-error": "_1jGbUaw", "upload-list-item": "_3Njfikd", "pictureShow": "xpw90-A", "upload-list-item-thumbnail": "_27WS6DP", "upload-list-item-name": "_1cVZiOQ", "uploading-text": "_3ki_XOw", "imgshow": "_1tzLhEf", "remove": "Boe8gJv", "eye": "_3gICJJz", "upload-list-item-progress": "_1ik1y6A", "upload-select-picture-card": "_3SaxPHm", "hide": "_2Z7KgL4", "upload-list": "_14NhtWo", "upload-list-text": "_3Mi3sRo", "upload-list-item-done": "_7oltx-C", "upload-list-item-uploading": "_2H0ypTn", "status": "_3qlP1Cd", "upload": "_2UxV0kz", "upload-select-text": "_1maN_Cv", "upload-select": "_1fQz-E_", "uploadListPictureCard": "_2MKkXWB", "uploadListItemInfo": "ACI5HD8", "uploadListItemActions": "_3X70GPS", "uploadListItemError": "_1jGbUaw", "uploadListItem": "_3Njfikd", "uploadListItemThumbnail": "_27WS6DP", "uploadListItemName": "_1cVZiOQ", "uploadingText": "_3ki_XOw", "uploadListItemProgress": "_1ik1y6A", "uploadSelectPictureCard": "_3SaxPHm", "uploadList": "_14NhtWo", "uploadListText": "_3Mi3sRo", "uploadListItemDone": "_7oltx-C", "uploadListItemUploading": "_2H0ypTn", "uploadSelectText": "_1maN_Cv", "uploadSelect": "_1fQz-E_" };
 
-var _dec$28;
-var _class$30;
-var _class2$28;
-var _temp$30;
+var _dec$35;
+var _class$43;
+var _class2$35;
+var _temp$40;
 
 /**
  * UploadList Component
@@ -23174,7 +27235,7 @@ var previewFile = function previewFile(file, callback) {
   reader.readAsDataURL(file);
 };
 
-var UploadList = (_dec$28 = CSSModules(styles$15, { allowMultiple: allowMultiple }), _dec$28(_class$30 = (_temp$30 = _class2$28 = function (_React$Component) {
+var UploadList = (_dec$35 = CSSModules(styles$20, { allowMultiple: allowMultiple }), _dec$35(_class$43 = (_temp$40 = _class2$35 = function (_React$Component) {
   inherits(UploadList, _React$Component);
 
   function UploadList(props) {
@@ -23393,7 +27454,7 @@ var UploadList = (_dec$28 = CSSModules(styles$15, { allowMultiple: allowMultiple
           ),
           actions,
           React$1.createElement(
-            index$13,
+            index$14,
             { transitionName: 'fade', component: '' },
             progress
           )
@@ -23405,7 +27466,7 @@ var UploadList = (_dec$28 = CSSModules(styles$15, { allowMultiple: allowMultiple
       // });
       var animationDirection = listType === 'picture-card' ? 'animate-inline' : 'animate';
       return React$1.createElement(
-        index$13,
+        index$14,
         {
           transitionName: prefixCls + '-' + animationDirection,
           component: 'div',
@@ -23416,7 +27477,7 @@ var UploadList = (_dec$28 = CSSModules(styles$15, { allowMultiple: allowMultiple
     }
   }]);
   return UploadList;
-}(React$1.Component), _class2$28.displayName = 'UploadList', _class2$28.defaultProps = {
+}(React$1.Component), _class2$35.displayName = 'UploadList', _class2$35.defaultProps = {
   listType: 'text', // or picture-card
   items: [],
   onRemove: null,
@@ -23427,9 +27488,10 @@ var UploadList = (_dec$28 = CSSModules(styles$15, { allowMultiple: allowMultiple
   disabled: false,
   progressAttr: {
     strokeWidth: 2,
-    showInfo: false
+    showInfo: false,
+    size: 'mini'
   },
-  locale: {} }, _class2$28.propTypes = {
+  locale: {} }, _class2$35.propTypes = {
   listType: index$1.oneOf('text', 'picture-card'),
   items: index$1.arrayOf(index$1.object),
   onRemove: index$1.func,
@@ -23440,12 +27502,12 @@ var UploadList = (_dec$28 = CSSModules(styles$15, { allowMultiple: allowMultiple
   disabled: index$1.bool,
   progressAttr: index$1.object,
   locale: index$1.object
-}, _temp$30)) || _class$30);
+}, _temp$40)) || _class$43);
 
-var _dec$27;
-var _class$29;
-var _class2$27;
-var _temp$29;
+var _dec$34;
+var _class$42;
+var _class2$34;
+var _temp$39;
 
 /**
  * Upload Component
@@ -23461,7 +27523,7 @@ var defaultLocale = {
   previewFile: '预览文件'
 };
 
-var Upload = (_dec$27 = CSSModules(styles$15, { allowMultiple: allowMultiple }), _dec$27(_class$29 = (_temp$29 = _class2$27 = function (_React$Component) {
+var Upload = (_dec$34 = CSSModules(styles$20, { allowMultiple: allowMultiple }), _dec$34(_class$42 = (_temp$39 = _class2$34 = function (_React$Component) {
   inherits(Upload, _React$Component);
 
   function Upload(props) {
@@ -23672,7 +27734,7 @@ var Upload = (_dec$27 = CSSModules(styles$15, { allowMultiple: allowMultiple }),
           className = _props.className;
 
 
-      var rcUploadProps = index$5({}, {
+      var rcUploadProps = index$6({}, {
         onStart: this.onStart,
         onError: this.onError,
         onProgress: this.onProgress,
@@ -23756,7 +27818,7 @@ var Upload = (_dec$27 = CSSModules(styles$15, { allowMultiple: allowMultiple }),
     }
   }]);
   return Upload;
-}(React$1.Component), _class2$27.displayName = 'Upload', _class2$27.defaultProps = {
+}(React$1.Component), _class2$34.displayName = 'Upload', _class2$34.defaultProps = {
   name: 'file',
   defaultFileList: null,
   action: '',
@@ -23790,7 +27852,7 @@ var Upload = (_dec$27 = CSSModules(styles$15, { allowMultiple: allowMultiple }),
       success: false,
       message: response.msg
     };
-  } }, _class2$27.propTypes = {
+  } }, _class2$34.propTypes = {
   name: index$1.string,
   defaultFileList: index$1.arrayOf(index$1.object),
   fileList: index$1.arrayOf(index$1.object),
@@ -23814,2746 +27876,12 @@ var Upload = (_dec$27 = CSSModules(styles$15, { allowMultiple: allowMultiple }),
   children: index$1.element.isRequired,
   onResponse: index$1.func
   // supportServerRender: PropTypes.bool,
-}, _temp$29)) || _class$29);
-
-var index$25 = function shallowEqual(objA, objB, compare, compareContext) {
-
-    var ret = compare ? compare.call(compareContext, objA, objB) : void 0;
-
-    if(ret !== void 0) {
-        return !!ret;
-    }
-
-    if(objA === objB) {
-        return true;
-    }
-
-    if(typeof objA !== 'object' || !objA ||
-       typeof objB !== 'object' || !objB) {
-        return false;
-    }
-
-    var keysA = Object.keys(objA);
-    var keysB = Object.keys(objB);
-
-    if(keysA.length !== keysB.length) {
-        return false;
-    }
-
-    var bHasOwnProperty = Object.prototype.hasOwnProperty.bind(objB);
-
-    // Test for A's keys different from B.
-    for(var idx = 0; idx < keysA.length; idx++) {
-
-        var key = keysA[idx];
-
-        if(!bHasOwnProperty(key)) {
-            return false;
-        }
-
-        var valueA = objA[key];
-        var valueB = objB[key];
-
-        ret = compare ? compare.call(compareContext, valueA, valueB, key) : void 0;
-
-        if(ret === false ||
-           ret === void 0 && valueA !== valueB) {
-            return false;
-        }
-
-    }
-
-    return true;
-
-};
-
-var styles$16 = { "radio-button": "lUPswOB", "radio-button--inner": "_3hWcrmt", "radio-button__disabled": "_3X8pavo", "radio-button__checked": "_1ereod6", "radio-button--wrapper": "_1Ef7vg1", "radio-button--wrapper__disabled": "_1fdGpBG", "radio-button--wrapper__checked": "_3iHso93", "radio--wrapper": "mMWdf-U", "radio--wrapper__disabled": "_1LDcYMA", "radio": "_21TqesI", "radio__disabled": "_1hhoRJ8", "radio--inner": "_3o1Rgpv", "radio__checked": "_1szddfu", "checkbox__disabled": "_1M9TcZm", "checkbox--inner": "_3Gl9_Qw", "none": "_14pGKgJ", "checkbox": "_1XpDkQN", "checkbox--wrapper": "_2GLX7p1", "checkbox--wrapper__disabled": "xSwX73t", "checkbox--wrapper__checked": "HtPNyzB", "checkbox__checked": "We2e_be", "checkbox--group": "_3Rx63VG", "radio--wrapper__checked": "_35FhbyT", "radioButton": "lUPswOB", "radioButtonInner": "_3hWcrmt", "radioButton__disabled": "_3X8pavo", "radioButton__checked": "_1ereod6", "radioButtonWrapper": "_1Ef7vg1", "radioButtonWrapper__disabled": "_1fdGpBG", "radioButtonWrapper__checked": "_3iHso93", "radioWrapper": "mMWdf-U", "radioWrapper__disabled": "_1LDcYMA", "radioInner": "_3o1Rgpv", "checkboxInner": "_3Gl9_Qw", "checkboxWrapper": "_2GLX7p1", "checkboxWrapper__disabled": "xSwX73t", "checkboxWrapper__checked": "HtPNyzB", "checkboxGroup": "_3Rx63VG", "radioWrapper__checked": "_35FhbyT" };
-
-var _dec$30;
-var _class$32;
-var _class2$30;
-var _temp$32;
-var _initialiseProps$2;
-
-/**
- * Checkbox Component
- * @author grootfish
- */
-var CheckboxGroup = (_dec$30 = CSSModules(styles$16, { allowMultiple: allowMultiple }), _dec$30(_class$32 = (_temp$32 = _class2$30 = function (_PureComponent) {
-  inherits(CheckboxGroup, _PureComponent);
-
-  // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
-  function CheckboxGroup(props) {
-    classCallCheck(this, CheckboxGroup);
-
-    var _this = possibleConstructorReturn(this, (CheckboxGroup.__proto__ || Object.getPrototypeOf(CheckboxGroup)).call(this, props));
-
-    _initialiseProps$2.call(_this);
-
-    var value = 'value' in props ? props.value : props.defaultValue;
-
-    _this.state = {
-      value: value
-    };
-    return _this;
-  }
-
-  createClass(CheckboxGroup, [{
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(nextProps) {
-      if ('value' in nextProps) {
-        this.setState({
-          value: nextProps.value || []
-        });
-      }
-    }
-  }, {
-    key: 'shouldComponentUpdate',
-    value: function shouldComponentUpdate(nextProps, nextState) {
-      return !index$25(this.props, nextProps) || !index$25(this.state, nextState);
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var _this2 = this;
-
-      var props = this.props,
-          state = this.state;
-      var options = props.options,
-          children = props.children;
-
-      if (options && options.length > 0) {
-        children = this.getOptions().map(function (option) {
-          return React.createElement(
-            Checkbox$1,
-            {
-              key: option.value,
-              disabled: 'disabled' in option ? option.disabled : props.disabled,
-              value: option.value,
-              checked: state.value.indexOf(option.value) !== -1,
-              onChange: function onChange() {
-                _this2.toggleOption(option);
-              }
-            },
-            option.label
-          );
-        });
-      }
-
-      return React.createElement(
-        'div',
-        { styleName: 'checkbox--group' },
-        children
-      );
-    }
-  }]);
-  return CheckboxGroup;
-}(PureComponent), _class2$30.displayName = 'CheckboxGroup', _class2$30.defaultProps = {
-  type: 'checkbox',
-  defaultValue: [],
-  optoins: [],
-  onChange: function onChange() {}
-}, _class2$30.propTypes = {
-  defaultValue: index$1.array,
-  value: index$1.array,
-  options: index$1.array,
-  onChange: index$1.func,
-  disabled: index$1.bool
-}, _class2$30.childContextTypes = {
-  checkboxGroup: index$1.any
-}, _initialiseProps$2 = function _initialiseProps() {
-  var _this3 = this;
-
-  this.getChildContext = function () {
-    return {
-      checkboxGroup: {
-        toggleOption: _this3.toggleOption,
-        value: _this3.state.value,
-        disabled: _this3.props.disabled
-      }
-    };
-  };
-
-  this.getOptions = function () {
-    var options = _this3.props.options;
-
-    return options.map(function (option) {
-      if (typeof option === 'string') {
-        return {
-          label: option,
-          value: option
-        };
-      }
-      return option;
-    });
-  };
-
-  this.toggleOption = function (option) {
-    var optionIndex = _this3.state.value.indexOf(option.value);
-    var value = [].concat(toConsumableArray(_this3.state.value));
-
-    if (optionIndex === -1) {
-      value.push(option.value);
-    } else {
-      value.splice(optionIndex, 1);
-    }
-
-    if (!('value' in _this3.props)) {
-      _this3.setState({ value: value });
-    }
-
-    if (_this3.props.onChange) {
-      _this3.props.onChange(value);
-    }
-  };
-}, _temp$32)) || _class$32);
-
-var _dec$29;
-var _class$31;
-var _class2$29;
-var _temp$31;
-var _initialiseProps$1;
-
-/**
- * Checkbox Component
- * @author grootfish
- */
-var Checkbox$1 = (_dec$29 = CSSModules(styles$16, { allowMultiple: allowMultiple }), _dec$29(_class$31 = (_temp$31 = _class2$29 = function (_PureComponent) {
-  inherits(Checkbox, _PureComponent);
-
-  // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
-  function Checkbox(props) {
-    classCallCheck(this, Checkbox);
-
-    var _this = possibleConstructorReturn(this, (Checkbox.__proto__ || Object.getPrototypeOf(Checkbox)).call(this, props));
-
-    _initialiseProps$1.call(_this);
-
-    var checked = 'checked' in props ? props.checked : props.defaultChecked;
-
-    _this.state = {
-      checked: checked
-    };
-    return _this;
-  }
-
-  createClass(Checkbox, [{
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(nextProps) {
-      if ('checked' in nextProps) {
-        this.setState({
-          checked: nextProps.checked
-        });
-      }
-    }
-  }, {
-    key: 'shouldComponentUpdate',
-    value: function shouldComponentUpdate(nextProps, nextState, nextContext) {
-      return !index$25(this.props, nextProps) || !index$25(this.state, nextState) || !index$25(this.context.checkboxGroup, nextContext.checkboxGroup);
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var _classNames, _classNames2;
-
-      var context = this.context,
-          props = this.props,
-          state = this.state;
-      var children = props.children,
-          name = props.name,
-          type = props.type,
-          readOnly = props.readOnly,
-          onClick = props.onClick,
-          onFocus = props.onFocus,
-          onBlur = props.onBlur,
-          prefixCls = props.prefixCls,
-          otherProps = objectWithoutProperties(props, ['children', 'name', 'type', 'readOnly', 'onClick', 'onFocus', 'onBlur', 'prefixCls']);
-
-      var checkboxProps = otherProps;
-      var checked = state.checked;
-      var disabled = props.disabled;
-      var checkboxGroup$$1 = context.checkboxGroup;
-
-      if (checkboxGroup$$1) {
-        this.handleChange = function () {
-          return checkboxGroup$$1.toggleOption({ label: children, value: props.value });
-        };
-        checked = checkboxGroup$$1.value.indexOf(props.value) !== -1;
-        disabled = 'disabled' in props ? props.disabled : checkboxGroup$$1.disabled;
-      }
-
-      var classString = index$4(prefixCls, (_classNames = {}, defineProperty$2(_classNames, prefixCls + '__checked', checked), defineProperty$2(_classNames, prefixCls + '__disabled', disabled), _classNames));
-      var wrapperString = index$4((_classNames2 = {}, defineProperty$2(_classNames2, prefixCls + '--wrapper', true), defineProperty$2(_classNames2, prefixCls + '--wrapper__checked', checked), defineProperty$2(_classNames2, prefixCls + '--wrapper__disabled', disabled), _classNames2));
-      var innerString = index$4(defineProperty$2({}, prefixCls + '--inner', true));
-      return React.createElement(
-        'label',
-        { styleName: wrapperString },
-        React.createElement(
-          'span',
-          { styleName: classString },
-          React.createElement('input', {
-            name: name,
-            type: type,
-            readOnly: readOnly,
-            disabled: disabled,
-            checked: !!checked,
-            onChange: this.handleChange
-          }),
-          React.createElement('span', { styleName: innerString })
-        ),
-        children !== undefined ? React.createElement(
-          'span',
-          null,
-          children
-        ) : null
-      );
-    }
-  }]);
-  return Checkbox;
-}(PureComponent), _class2$29.Group = CheckboxGroup, _class2$29.displayName = 'Checkbox', _class2$29.defaultProps = {
-  prefixCls: 'checkbox',
-  type: 'checkbox',
-  defaultChecked: false,
-  onChange: function onChange() {},
-  onFocus: function onFocus() {},
-  onBlur: function onBlur() {},
-  onClick: function onClick() {}
-}, _class2$29.propTypes = {
-  prefixCls: index$1.string,
-  defaultChecked: index$1.oneOfType([index$1.number, index$1.bool]),
-  onChange: index$1.func,
-  name: index$1.string,
-  type: index$1.string,
-  disabled: index$1.bool,
-  readOnly: index$1.bool
-}, _class2$29.contextTypes = {
-  checkboxGroup: index$1.any
-}, _initialiseProps$1 = function _initialiseProps() {
-  var _this2 = this;
-
-  this.handleChange = function (e) {
-    var props = _this2.props;
-
-    if (props.disabled) {
-      return;
-    }
-    if (!('checked' in props)) {
-      _this2.setState({
-        checked: e.target.checked
-      });
-    }
-    props.onChange({
-      target: _extends({}, props, {
-        checked: e.target.checked
-      }),
-      stopPropagation: function stopPropagation() {
-        e.stopPropagation();
-      },
-      preventDefault: function preventDefault() {
-        e.preventDefault();
-      }
-    });
-  };
-}, _temp$31)) || _class$31);
-
-var styles$17 = { "radio--group": "_2AmYsBu", "radioGroup": "_2AmYsBu" };
-
-var _dec$32;
-var _class$34;
-var _class2$32;
-var _temp$34;
-var _initialiseProps$3;
-
-/**
- * Radio Component
- * @author grootfish
- */
-function getCheckedValue(children) {
-  var value = null;
-  var matched = false;
-  React$1.Children.forEach(children, function (radio) {
-    if (radio && radio.props && radio.props.checked) {
-      value = radio.props.value;
-      matched = true;
-    }
-  });
-  return matched ? { value: value } : undefined;
-}
-
-var RadioGroup = (_dec$32 = CSSModules(styles$17, { allowMultiple: allowMultiple }), _dec$32(_class$34 = (_temp$34 = _class2$32 = function (_PureComponent) {
-  inherits(RadioGroup, _PureComponent);
-
-  // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
-  function RadioGroup(props) {
-    classCallCheck(this, RadioGroup);
-
-    var _this = possibleConstructorReturn(this, (RadioGroup.__proto__ || Object.getPrototypeOf(RadioGroup)).call(this, props));
-
-    _initialiseProps$3.call(_this);
-
-    var value = void 0;
-    if ('value' in props) {
-      value = props.value;
-    } else if ('defaultValue' in props) {
-      value = props.defaultValue;
-    } else {
-      var checkedValue = getCheckedValue(props.children);
-      value = checkedValue && checkedValue.value;
-    }
-
-    _this.state = {
-      value: value
-    };
-    return _this;
-  }
-
-  createClass(RadioGroup, [{
-    key: 'getChildContext',
-    value: function getChildContext() {
-      return {
-        radioGroup: {
-          onChange: this.onRadioChange,
-          value: this.state.value,
-          disabled: this.props.disabled
-        }
-      };
-    }
-  }, {
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(nextProps) {
-      if ('value' in nextProps) {
-        this.setState({
-          value: nextProps.value
-        });
-      } else {
-        var checkedValue = getCheckedValue(nextProps.children);
-        if (checkedValue) {
-          this.setState({ value: checkedValue.value });
-        }
-      }
-    }
-  }, {
-    key: 'shouldComponentUpdate',
-    value: function shouldComponentUpdate(nextProps, nextState) {
-      return !index$25(this.props, nextProps) || !index$25(this.state, nextState);
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var _this2 = this;
-
-      var props = this.props,
-          state = this.state,
-          getOptions = this.getOptions;
-      var options = props.options;
-      var children = props.children;
-
-      if (options && options.length > 0) {
-        children = getOptions().map(function (option) {
-          return React$1.createElement(
-            Radio$1,
-            {
-              key: option.value,
-              disabled: option.disabled || props.disabled,
-              value: option.value,
-              onChange: _this2.onRadioChange,
-              checked: state.value === option.value
-            },
-            option.label
-          );
-        });
-      }
-
-      return React$1.createElement(
-        'div',
-        { styleName: 'radio--group' },
-        children
-      );
-    }
-  }]);
-  return RadioGroup;
-}(PureComponent), _class2$32.displayName = 'RadioGroup', _class2$32.defaultProps = {
-  disabled: false }, _class2$32.propTypes = {
-  disabled: index$1.bool,
-  defaultValue: index$1.any,
-  value: index$1.any,
-  children: index$1.any,
-  onChange: index$1.func,
-  options: index$1.array
-}, _class2$32.childContextTypes = {
-  radioGroup: index$1.any
-}, _initialiseProps$3 = function _initialiseProps() {
-  var _this3 = this;
-
-  this.onRadioChange = function (e) {
-    var lastValue = _this3.state.value;
-    var value = e.target.value;
-
-    if (!('value' in _this3.props)) {
-      _this3.setState({ value: value });
-    }
-
-    var onChange = _this3.props.onChange;
-
-    if (onChange && value !== lastValue) {
-      onChange(e);
-    }
-  };
-
-  this.getOptions = function () {
-    var options = _this3.props.options;
-
-    return options.map(function (option) {
-      if (typeof option === 'string') {
-        return {
-          label: option,
-          value: option
-        };
-      }
-      return option;
-    });
-  };
-}, _temp$34)) || _class$34);
-
-var _dec$33;
-var _class$35;
-var _class2$33;
-var _temp$35;
-
-/**
- * RadioButton Component
- * @author grootfish
- */
-var RadioButton = (_dec$33 = CSSModules(styles$17, { allowMultiple: allowMultiple }), _dec$33(_class$35 = (_temp$35 = _class2$33 = function (_PureComponent) {
-  inherits(RadioButton, _PureComponent);
-
-  // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
-  function RadioButton(props) {
-    classCallCheck(this, RadioButton);
-
-    var _this = possibleConstructorReturn(this, (RadioButton.__proto__ || Object.getPrototypeOf(RadioButton)).call(this, props));
-
-    _this.state = {};
-    return _this;
-  }
-
-  createClass(RadioButton, [{
-    key: 'shouldComponentUpdate',
-    value: function shouldComponentUpdate(nextProps, nextState, nextContext) {
-      return !index$25(this.props, nextProps) || !index$25(this.state, nextState) || !index$25(this.context.radioGroup, nextContext.radioGroup);
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var props = this.props,
-          context = this.context;
-      var radioGroup$$1 = context.radioGroup;
-
-      var radioProps = props;
-      if (radioGroup$$1) {
-        radioProps.onChange = radioGroup$$1.onChange;
-        radioProps.checked = props.value == radioGroup$$1.value;
-        radioProps.disabled = props.disabled || radioGroup$$1.disabled;
-      }
-      return React.createElement(Radio$1, radioProps);
-    }
-  }]);
-  return RadioButton;
-}(PureComponent), _class2$33.displayName = 'RadioButton', _class2$33.defaultProps = {
-  prefixCls: 'radio-button' }, _class2$33.propTypes = {
-  prefixCls: index$1.string
-}, _class2$33.contextTypes = {
-  radioGroup: index$1.any
-}, _temp$35)) || _class$35);
-
-var _dec$31;
-var _class$33;
-var _class2$31;
-var _temp$33;
-
-/**
- * Radio Component
- * @author grootfish
- */
-var Radio$1 = (_dec$31 = CSSModules(styles$17, { allowMultiple: allowMultiple }), _dec$31(_class$33 = (_temp$33 = _class2$31 = function (_PureComponent) {
-  inherits(Radio, _PureComponent);
-
-  // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
-  function Radio(props) {
-    classCallCheck(this, Radio);
-
-    var _this = possibleConstructorReturn(this, (Radio.__proto__ || Object.getPrototypeOf(Radio)).call(this, props));
-
-    _this.state = {};
-    return _this;
-  }
-
-  createClass(Radio, [{
-    key: 'shouldComponentUpdate',
-    value: function shouldComponentUpdate(nextProps, nextState, nextContext) {
-      return !index$25(this.props, nextProps) || !index$25(this.state, nextState) || !index$25(this.context.radioGroup, nextContext.radioGroup);
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var props = this.props,
-          context = this.context;
-      var children = props.children,
-          prefixCls = props.prefixCls,
-          restProps = objectWithoutProperties(props, ['children', 'prefixCls']);
-      var radioGroup$$1 = context.radioGroup;
-
-      var radioProps = restProps;
-
-      if (radioGroup$$1) {
-        radioProps.onChange = radioGroup$$1.onChange;
-        radioProps.checked = props.value == radioGroup$$1.value;
-        radioProps.disabled = props.disabled || radioGroup$$1.disabled;
-      }
-      return React.createElement(
-        Checkbox$1,
-        _extends({}, radioProps, { prefixCls: prefixCls }),
-        children !== undefined ? children : null
-      );
-    }
-  }]);
-  return Radio;
-}(PureComponent), _class2$31.Group = RadioGroup, _class2$31.Button = RadioButton, _class2$31.displayName = 'Radio', _class2$31.defaultProps = {
-  type: 'radio',
-  prefixCls: 'radio' }, _class2$31.propTypes = {
-  type: index$1.string
-}, _class2$31.contextTypes = {
-  radioGroup: index$1.any
-}, _temp$33)) || _class$33);
-
-function noop$5() {}
-
-function defaultParser(input) {
-  return input.replace(/[^\w\.-]+/g, '');
-}
-
-/**
- * When click and hold on a button - the speed of auto changin the value.
- */
-var SPEED = 200;
-
-/**
- * When click and hold on a button - the delay before auto changin the value.
- */
-var DELAY = 600;
-
-var mixin = {
-  getDefaultProps: function getDefaultProps() {
-    return {
-      max: Infinity,
-      min: -Infinity,
-      step: 1,
-      style: {},
-      onChange: noop$5,
-      onKeyDown: noop$5,
-      onFocus: noop$5,
-      onBlur: noop$5,
-      parser: defaultParser
-    };
-  },
-  getInitialState: function getInitialState() {
-    var value = void 0;
-    var props = this.props;
-    if ('value' in props) {
-      value = props.value;
-    } else {
-      value = props.defaultValue;
-    }
-    value = this.toNumber(value);
-    return {
-      inputValue: this.toPrecisionAsStep(value),
-      value: value,
-      focused: props.autoFocus
-    };
-  },
-  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-    if ('value' in nextProps) {
-      this.setState({
-        inputValue: nextProps.value,
-        value: nextProps.value
-      });
-    }
-  },
-  componentWillUnmount: function componentWillUnmount() {
-    this.stop();
-  },
-  onChange: function onChange(e) {
-    var input = this.props.parser(this.getValueFromEvent(e).trim());
-    this.setState({ inputValue: input });
-    this.props.onChange(this.toNumberWhenUserInput(input)); // valid number or invalid string
-  },
-  onFocus: function onFocus() {
-    var _props;
-
-    this.setState({
-      focused: true
-    });
-    (_props = this.props).onFocus.apply(_props, arguments);
-  },
-  onBlur: function onBlur(e) {
-    var _this = this;
-
-    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      args[_key - 1] = arguments[_key];
-    }
-
-    this.setState({
-      focused: false
-    });
-    var value = this.getCurrentValidValue(this.state.inputValue);
-    e.persist(); // fix https://github.com/react-component/input-number/issues/51
-    this.setValue(value, function () {
-      var _props2;
-
-      (_props2 = _this.props).onBlur.apply(_props2, [e].concat(args));
-    });
-  },
-  getCurrentValidValue: function getCurrentValidValue(value) {
-    var val = value;
-    var props = this.props;
-    if (val === '') {
-      val = '';
-    } else if (!this.isNotCompleteNumber(val)) {
-      val = Number(val);
-      if (val < props.min) {
-        val = props.min;
-      }
-      if (val > props.max) {
-        val = props.max;
-      }
-    } else {
-      val = this.state.value;
-    }
-    return this.toNumber(val);
-  },
-  setValue: function setValue(v, callback) {
-    // trigger onChange
-    var newValue = this.isNotCompleteNumber(parseFloat(v, 10)) ? undefined : parseFloat(v, 10);
-    var changed = newValue !== this.state.value;
-    if (!('value' in this.props)) {
-      this.setState({
-        value: newValue,
-        inputValue: this.toPrecisionAsStep(v)
-      }, callback);
-    } else {
-      // always set input value same as value
-      this.setState({
-        inputValue: this.toPrecisionAsStep(this.state.value)
-      }, callback);
-    }
-    if (changed) {
-      this.props.onChange(newValue);
-    }
-  },
-  getPrecision: function getPrecision(value) {
-    if ('precision' in this.props) {
-      return this.props.precision;
-    }
-    var valueString = value.toString();
-    if (valueString.indexOf('e-') >= 0) {
-      return parseInt(valueString.slice(valueString.indexOf('e-') + 2), 10);
-    }
-    var precision = 0;
-    if (valueString.indexOf('.') >= 0) {
-      precision = valueString.length - valueString.indexOf('.') - 1;
-    }
-    return precision;
-  },
-
-
-  // step={1.0} value={1.51}
-  // press +
-  // then value should be 2.51, rather than 2.5
-  // if this.props.precision is undefined
-  // https://github.com/react-component/input-number/issues/39
-  getMaxPrecision: function getMaxPrecision(currentValue) {
-    var ratio = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
-
-    if ('precision' in this.props) {
-      return this.props.precision;
-    }
-    var step = this.props.step;
-
-    var ratioPrecision = this.getPrecision(ratio);
-    var stepPrecision = this.getPrecision(step);
-    var currentValuePrecision = this.getPrecision(currentValue);
-    if (!currentValue) {
-      return ratioPrecision + stepPrecision;
-    }
-    return Math.max(currentValuePrecision, ratioPrecision + stepPrecision);
-  },
-  getPrecisionFactor: function getPrecisionFactor(currentValue) {
-    var ratio = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
-
-    var precision = this.getMaxPrecision(currentValue, ratio);
-    return Math.pow(10, precision);
-  },
-  toPrecisionAsStep: function toPrecisionAsStep(num) {
-    if (this.isNotCompleteNumber(num) || num === '') {
-      return num;
-    }
-    var precision = Math.abs(this.getMaxPrecision(num));
-    if (precision) {
-      return Number(num).toFixed(precision);
-    }
-    return num.toString();
-  },
-
-
-  // '1.' '1x' 'xx' '' => are not complete numbers
-  isNotCompleteNumber: function isNotCompleteNumber(num) {
-    return isNaN(num) || num === '' || num === null || num && num.toString().indexOf('.') === num.toString().length - 1;
-  },
-  toNumber: function toNumber(num) {
-    if (this.isNotCompleteNumber(num)) {
-      return num;
-    }
-    if ('precision' in this.props) {
-      return Number(Number(num).toFixed(this.props.precision));
-    }
-    return Number(num);
-  },
-
-
-  // '1.0' '1.00'  => may be a inputing number
-  toNumberWhenUserInput: function toNumberWhenUserInput(num) {
-    // num.length > 16 => prevent input large number will became Infinity
-    if ((/\.\d*0$/.test(num) || num.length > 16) && this.state.focused) {
-      return num;
-    }
-    return this.toNumber(num);
-  },
-  upStep: function upStep(val, rat) {
-    var _props3 = this.props,
-        step = _props3.step,
-        min = _props3.min;
-
-    var precisionFactor = this.getPrecisionFactor(val, rat);
-    var precision = Math.abs(this.getMaxPrecision(val, rat));
-    var result = void 0;
-    if (typeof val === 'number') {
-      result = ((precisionFactor * val + precisionFactor * step * rat) / precisionFactor).toFixed(precision);
-    } else {
-      result = min === -Infinity ? step : min;
-    }
-    return this.toNumber(result);
-  },
-  downStep: function downStep(val, rat) {
-    var _props4 = this.props,
-        step = _props4.step,
-        min = _props4.min;
-
-    var precisionFactor = this.getPrecisionFactor(val, rat);
-    var precision = Math.abs(this.getMaxPrecision(val, rat));
-    var result = void 0;
-    if (typeof val === 'number') {
-      result = ((precisionFactor * val - precisionFactor * step * rat) / precisionFactor).toFixed(precision);
-    } else {
-      result = min === -Infinity ? -step : min;
-    }
-    return this.toNumber(result);
-  },
-  step: function step(type, e) {
-    var ratio = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
-
-    if (e) {
-      e.preventDefault();
-    }
-    var props = this.props;
-    if (props.disabled) {
-      return;
-    }
-    var value = this.getCurrentValidValue(this.state.inputValue) || 0;
-    if (this.isNotCompleteNumber(value)) {
-      return;
-    }
-    var val = this[type + 'Step'](value, ratio);
-    if (val > props.max) {
-      val = props.max;
-    } else if (val < props.min) {
-      val = props.min;
-    }
-    this.setValue(val);
-    this.setState({
-      focused: true
-    });
-  },
-  stop: function stop() {
-    if (this.autoStepTimer) {
-      clearTimeout(this.autoStepTimer);
-    }
-  },
-  down: function down(e, ratio, recursive) {
-    var _this2 = this;
-
-    if (e.persist) {
-      e.persist();
-    }
-    this.stop();
-    this.step('down', e, ratio);
-    this.autoStepTimer = setTimeout(function () {
-      _this2.down(e, ratio, true);
-    }, recursive ? SPEED : DELAY);
-  },
-  up: function up(e, ratio, recursive) {
-    var _this3 = this;
-
-    if (e.persist) {
-      e.persist();
-    }
-    this.stop();
-    this.step('up', e, ratio);
-    this.autoStepTimer = setTimeout(function () {
-      _this3.up(e, ratio, true);
-    }, recursive ? SPEED : DELAY);
-  }
-};
-
-var objectWithoutProperties$1 = createCommonjsModule(function (module, exports) {
-"use strict";
-
-exports.__esModule = true;
-
-exports.default = function (obj, keys) {
-  var target = {};
-
-  for (var i in obj) {
-    if (keys.indexOf(i) >= 0) continue;
-    if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;
-    target[i] = obj[i];
-  }
-
-  return target;
-};
-});
-
-var _objectWithoutProperties = unwrapExports(objectWithoutProperties$1);
-
-function PressEvent(nativeEvent) {
-    var _this = this;
-
-    this.nativeEvent = nativeEvent;
-    ['type', 'currentTarget', 'target', 'touches', 'changedTouches'].forEach(function (m) {
-        _this[m] = nativeEvent[m];
-    });
-    if (!nativeEvent.$pressSeq) {
-        nativeEvent.$pressSeq = 1;
-    } else {
-        nativeEvent.$pressSeq += 1;
-    }
-    this.$pressSeq = nativeEvent.$pressSeq;
-}
-index$5(PressEvent.prototype, {
-    preventDefault: function preventDefault() {
-        this.nativeEvent.preventDefault();
-    },
-    stopPropagation: function stopPropagation() {
-        var nativeEvent = this.nativeEvent,
-            $pressSeq = this.$pressSeq;
-
-        if (nativeEvent.$stopPressSeq) {
-            return;
-        }
-        nativeEvent.$stopPressSeq = $pressSeq;
-    }
-});
-function shouldFirePress(e) {
-    var nativeEvent = e.nativeEvent,
-        $pressSeq = e.$pressSeq;
-
-    if (!nativeEvent.$stopPressSeq) {
-        return true;
-    }
-    return nativeEvent.$stopPressSeq >= $pressSeq;
-}
-
-// inspired by react-native
-function keyMirror(obj) {
-    Object.keys(obj).forEach(function (k) {
-        return obj[k] = k;
-    });
-    return obj;
-}
-function copy$1(from, list) {
-    var to = {};
-    list.forEach(function (k) {
-        to[k] = from[k];
-    });
-    return to;
-}
-function extractSingleTouch(_nativeEvent) {
-    var nativeEvent = _nativeEvent;
-    if (nativeEvent.nativeEvent) {
-        nativeEvent = nativeEvent.nativeEvent;
-    }
-    var touches = nativeEvent.touches;
-    var changedTouches = nativeEvent.changedTouches;
-    var hasTouches = touches && touches.length > 0;
-    var hasChangedTouches = changedTouches && changedTouches.length > 0;
-    return !hasTouches && hasChangedTouches ? changedTouches[0] : hasTouches ? touches[0] : nativeEvent;
-}
-/**
- * Touchable states.
- */
-var States = keyMirror({
-    NOT_RESPONDER: null,
-    RESPONDER_INACTIVE_PRESS_IN: null,
-    RESPONDER_INACTIVE_PRESS_OUT: null,
-    RESPONDER_ACTIVE_PRESS_IN: null,
-    RESPONDER_ACTIVE_PRESS_OUT: null,
-    RESPONDER_ACTIVE_LONG_PRESS_IN: null,
-    RESPONDER_ACTIVE_LONG_PRESS_OUT: null,
-    ERROR: null
-});
-/**
- * Quick lookup map for states that are considered to be "active"
- */
-var IsActive = {
-    RESPONDER_ACTIVE_PRESS_OUT: true,
-    RESPONDER_ACTIVE_PRESS_IN: true
-};
-/**
- * Quick lookup for states that are considered to be "pressing" and are
- * therefore eligible to result in a "selection" if the press stops.
- */
-var IsPressingIn = {
-    RESPONDER_INACTIVE_PRESS_IN: true,
-    RESPONDER_ACTIVE_PRESS_IN: true,
-    RESPONDER_ACTIVE_LONG_PRESS_IN: true
-};
-var IsLongPressingIn = {
-    RESPONDER_ACTIVE_LONG_PRESS_IN: true
-};
-/**
- * Inputs to the state machine.
- */
-var Signals = keyMirror({
-    DELAY: null,
-    RESPONDER_GRANT: null,
-    RESPONDER_RELEASE: null,
-    RESPONDER_TERMINATED: null,
-    ENTER_PRESS_RECT: null,
-    LEAVE_PRESS_RECT: null,
-    LONG_PRESS_DETECTED: null
-});
-/**
- * Mapping from States x Signals => States
- */
-var Transitions = {
-    NOT_RESPONDER: {
-        DELAY: States.ERROR,
-        RESPONDER_GRANT: States.RESPONDER_INACTIVE_PRESS_IN,
-        RESPONDER_RELEASE: States.ERROR,
-        RESPONDER_TERMINATED: States.ERROR,
-        ENTER_PRESS_RECT: States.ERROR,
-        LEAVE_PRESS_RECT: States.ERROR,
-        LONG_PRESS_DETECTED: States.ERROR
-    },
-    RESPONDER_INACTIVE_PRESS_IN: {
-        DELAY: States.RESPONDER_ACTIVE_PRESS_IN,
-        RESPONDER_GRANT: States.ERROR,
-        RESPONDER_RELEASE: States.NOT_RESPONDER,
-        RESPONDER_TERMINATED: States.NOT_RESPONDER,
-        ENTER_PRESS_RECT: States.RESPONDER_INACTIVE_PRESS_IN,
-        LEAVE_PRESS_RECT: States.RESPONDER_INACTIVE_PRESS_OUT,
-        LONG_PRESS_DETECTED: States.ERROR
-    },
-    RESPONDER_INACTIVE_PRESS_OUT: {
-        DELAY: States.RESPONDER_ACTIVE_PRESS_OUT,
-        RESPONDER_GRANT: States.ERROR,
-        RESPONDER_RELEASE: States.NOT_RESPONDER,
-        RESPONDER_TERMINATED: States.NOT_RESPONDER,
-        ENTER_PRESS_RECT: States.RESPONDER_INACTIVE_PRESS_IN,
-        LEAVE_PRESS_RECT: States.RESPONDER_INACTIVE_PRESS_OUT,
-        LONG_PRESS_DETECTED: States.ERROR
-    },
-    RESPONDER_ACTIVE_PRESS_IN: {
-        DELAY: States.ERROR,
-        RESPONDER_GRANT: States.ERROR,
-        RESPONDER_RELEASE: States.NOT_RESPONDER,
-        RESPONDER_TERMINATED: States.NOT_RESPONDER,
-        ENTER_PRESS_RECT: States.RESPONDER_ACTIVE_PRESS_IN,
-        LEAVE_PRESS_RECT: States.RESPONDER_ACTIVE_PRESS_OUT,
-        LONG_PRESS_DETECTED: States.RESPONDER_ACTIVE_LONG_PRESS_IN
-    },
-    RESPONDER_ACTIVE_PRESS_OUT: {
-        DELAY: States.ERROR,
-        RESPONDER_GRANT: States.ERROR,
-        RESPONDER_RELEASE: States.NOT_RESPONDER,
-        RESPONDER_TERMINATED: States.NOT_RESPONDER,
-        ENTER_PRESS_RECT: States.RESPONDER_ACTIVE_PRESS_IN,
-        LEAVE_PRESS_RECT: States.RESPONDER_ACTIVE_PRESS_OUT,
-        LONG_PRESS_DETECTED: States.ERROR
-    },
-    RESPONDER_ACTIVE_LONG_PRESS_IN: {
-        DELAY: States.ERROR,
-        RESPONDER_GRANT: States.ERROR,
-        RESPONDER_RELEASE: States.NOT_RESPONDER,
-        RESPONDER_TERMINATED: States.NOT_RESPONDER,
-        ENTER_PRESS_RECT: States.RESPONDER_ACTIVE_LONG_PRESS_IN,
-        LEAVE_PRESS_RECT: States.RESPONDER_ACTIVE_LONG_PRESS_OUT,
-        LONG_PRESS_DETECTED: States.RESPONDER_ACTIVE_LONG_PRESS_IN
-    },
-    RESPONDER_ACTIVE_LONG_PRESS_OUT: {
-        DELAY: States.ERROR,
-        RESPONDER_GRANT: States.ERROR,
-        RESPONDER_RELEASE: States.NOT_RESPONDER,
-        RESPONDER_TERMINATED: States.NOT_RESPONDER,
-        ENTER_PRESS_RECT: States.RESPONDER_ACTIVE_LONG_PRESS_IN,
-        LEAVE_PRESS_RECT: States.RESPONDER_ACTIVE_LONG_PRESS_OUT,
-        LONG_PRESS_DETECTED: States.ERROR
-    },
-    error: {
-        DELAY: States.NOT_RESPONDER,
-        RESPONDER_GRANT: States.RESPONDER_INACTIVE_PRESS_IN,
-        RESPONDER_RELEASE: States.NOT_RESPONDER,
-        RESPONDER_TERMINATED: States.NOT_RESPONDER,
-        ENTER_PRESS_RECT: States.NOT_RESPONDER,
-        LEAVE_PRESS_RECT: States.NOT_RESPONDER,
-        LONG_PRESS_DETECTED: States.NOT_RESPONDER
-    }
-};
-// ==== Typical Constants for integrating into UI components ====
-// const HIT_EXPAND_PX = 20;
-// const HIT_VERT_OFFSET_PX = 10;
-var HIGHLIGHT_DELAY_MS = 130;
-var PRESS_EXPAND_PX = 20;
-var LONG_PRESS_THRESHOLD = 500;
-var LONG_PRESS_DELAY_MS = LONG_PRESS_THRESHOLD - HIGHLIGHT_DELAY_MS;
-var LONG_PRESS_ALLOWED_MOVEMENT = 10;
-var lastClickTime = 0;
-var pressDelay = 200;
-function isAllowPress() {
-    // avoid click penetration
-    return Date.now() - lastClickTime >= pressDelay;
-}
-
-var Touchable = function (_React$Component) {
-    _inherits(Touchable, _React$Component);
-
-    function Touchable() {
-        _classCallCheck(this, Touchable);
-
-        var _this = _possibleConstructorReturn(this, (Touchable.__proto__ || Object.getPrototypeOf(Touchable)).apply(this, arguments));
-
-        _this.state = {
-            active: false
-        };
-        _this.onTouchStart = function (e) {
-            _this.callChildEvent('onTouchStart', e);
-            _this.lockMouse = true;
-            if (_this.releaseLockTimer) {
-                clearTimeout(_this.releaseLockTimer);
-            }
-            _this.touchableHandleResponderGrant(e.nativeEvent);
-        };
-        _this.onTouchMove = function (e) {
-            _this.callChildEvent('onTouchMove', e);
-            _this.touchableHandleResponderMove(e.nativeEvent);
-        };
-        _this.onTouchEnd = function (e) {
-            _this.callChildEvent('onTouchEnd', e);
-            _this.releaseLockTimer = setTimeout(function () {
-                _this.lockMouse = false;
-            }, 300);
-            _this.touchableHandleResponderRelease(new PressEvent(e.nativeEvent));
-        };
-        _this.onTouchCancel = function (e) {
-            _this.callChildEvent('onTouchCancel', e);
-            _this.releaseLockTimer = setTimeout(function () {
-                _this.lockMouse = false;
-            }, 300);
-            _this.touchableHandleResponderTerminate(e.nativeEvent);
-        };
-        _this.onMouseDown = function (e) {
-            _this.callChildEvent('onMouseDown', e);
-            if (_this.lockMouse) {
-                return;
-            }
-            _this.touchableHandleResponderGrant(e.nativeEvent);
-            document.addEventListener('mousemove', _this.touchableHandleResponderMove, false);
-            document.addEventListener('mouseup', _this.onMouseUp, false);
-        };
-        _this.onMouseUp = function (e) {
-            document.removeEventListener('mousemove', _this.touchableHandleResponderMove, false);
-            document.removeEventListener('mouseup', _this.onMouseUp, false);
-            _this.touchableHandleResponderRelease(new PressEvent(e));
-        };
-        _this.touchableHandleResponderMove = function (e) {
-            if (!_this.touchable.startMouse) {
-                return;
-            }
-            // Measurement may not have returned yet.
-            if (!_this.touchable.dimensionsOnActivate || _this.touchable.touchState === States.NOT_RESPONDER) {
-                return;
-            }
-            // Not enough time elapsed yet, wait for highlight -
-            // this is just a perf optimization.
-            if (_this.touchable.touchState === States.RESPONDER_INACTIVE_PRESS_IN) {
-                return;
-            }
-            var touch = extractSingleTouch(e);
-            var pageX = touch && touch.pageX;
-            var pageY = touch && touch.pageY;
-            if (_this.pressInLocation) {
-                var movedDistance = _this._getDistanceBetweenPoints(pageX, pageY, _this.pressInLocation.pageX, _this.pressInLocation.pageY);
-                if (movedDistance > LONG_PRESS_ALLOWED_MOVEMENT) {
-                    _this._cancelLongPressDelayTimeout();
-                }
-            }
-            if (_this.checkTouchWithinActive(e)) {
-                _this._receiveSignal(Signals.ENTER_PRESS_RECT, e);
-                var curState = _this.touchable.touchState;
-                if (curState === States.RESPONDER_INACTIVE_PRESS_IN) {
-                    _this._cancelLongPressDelayTimeout();
-                }
-            } else {
-                _this._cancelLongPressDelayTimeout();
-                _this._receiveSignal(Signals.LEAVE_PRESS_RECT, e);
-            }
-        };
-        return _this;
-    }
-
-    _createClass(Touchable, [{
-        key: 'componentWillMount',
-        value: function componentWillMount() {
-            this.touchable = { touchState: undefined };
-        }
-    }, {
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            this.root = ReactDOM.findDOMNode(this);
-        }
-    }, {
-        key: 'componentDidUpdate',
-        value: function componentDidUpdate() {
-            this.root = ReactDOM.findDOMNode(this);
-            // disabled auto clear active state
-            if (this.props.disabled && this.state.active) {
-                this.setState({
-                    active: false
-                });
-            }
-        }
-    }, {
-        key: 'componentWillUnmount',
-        value: function componentWillUnmount() {
-            if (this.releaseLockTimer) {
-                clearTimeout(this.releaseLockTimer);
-            }
-            if (this.touchableDelayTimeout) {
-                clearTimeout(this.touchableDelayTimeout);
-            }
-            if (this.longPressDelayTimeout) {
-                clearTimeout(this.longPressDelayTimeout);
-            }
-            if (this.pressOutDelayTimeout) {
-                clearTimeout(this.pressOutDelayTimeout);
-            }
-        }
-    }, {
-        key: 'callChildEvent',
-        value: function callChildEvent(event, e) {
-            var childHandle = React$1.Children.only(this.props.children).props[event];
-            if (childHandle) {
-                childHandle(e);
-            }
-        }
-    }, {
-        key: '_remeasureMetricsOnInit',
-        value: function _remeasureMetricsOnInit(e) {
-            var root = this.root;
-
-            var touch = extractSingleTouch(e);
-            var boundingRect = root.getBoundingClientRect();
-            this.touchable = {
-                touchState: this.touchable.touchState,
-                startMouse: {
-                    pageX: touch.pageX,
-                    pageY: touch.pageY
-                },
-                positionOnGrant: {
-                    left: boundingRect.left + window.pageXOffset,
-                    top: boundingRect.top + window.pageYOffset,
-                    width: boundingRect.width,
-                    height: boundingRect.height,
-                    clientLeft: boundingRect.left,
-                    clientTop: boundingRect.top
-                }
-            };
-        }
-    }, {
-        key: 'touchableHandleResponderGrant',
-        value: function touchableHandleResponderGrant(e) {
-            var _this2 = this;
-
-            this.touchable.touchState = States.NOT_RESPONDER;
-            if (this.pressOutDelayTimeout) {
-                clearTimeout(this.pressOutDelayTimeout);
-                this.pressOutDelayTimeout = null;
-            }
-            if (this.props.fixClickPenetration && !isAllowPress()) {
-                return;
-            }
-            this._remeasureMetricsOnInit(e);
-            this._receiveSignal(Signals.RESPONDER_GRANT, e);
-            var delayMS = this.props.delayPressIn;
-            if (delayMS) {
-                this.touchableDelayTimeout = setTimeout(function () {
-                    _this2._handleDelay(e);
-                }, delayMS);
-            } else {
-                this._handleDelay(e);
-            }
-            var longPressEvent = new PressEvent(e);
-            var longDelayMS = this.props.delayLongPress;
-            this.longPressDelayTimeout = setTimeout(function () {
-                _this2._handleLongDelay(longPressEvent);
-            }, longDelayMS + delayMS);
-        }
-    }, {
-        key: 'checkScroll',
-        value: function checkScroll(e) {
-            var positionOnGrant = this.touchable.positionOnGrant;
-            // container or window scroll
-            var boundingRect = this.root.getBoundingClientRect();
-            if (boundingRect.left !== positionOnGrant.clientLeft || boundingRect.top !== positionOnGrant.clientTop) {
-                this._receiveSignal(Signals.RESPONDER_TERMINATED, e);
-                return false;
-            }
-        }
-    }, {
-        key: 'touchableHandleResponderRelease',
-        value: function touchableHandleResponderRelease(e) {
-            if (!this.touchable.startMouse) {
-                return;
-            }
-            var touch = extractSingleTouch(e);
-            if (Math.abs(touch.pageX - this.touchable.startMouse.pageX) > 30 || Math.abs(touch.pageY - this.touchable.startMouse.pageY) > 30) {
-                this._receiveSignal(Signals.RESPONDER_TERMINATED, e);
-                return;
-            }
-            if (this.checkScroll(e) === false) {
-                return;
-            }
-            this._receiveSignal(Signals.RESPONDER_RELEASE, e);
-        }
-    }, {
-        key: 'touchableHandleResponderTerminate',
-        value: function touchableHandleResponderTerminate(e) {
-            if (!this.touchable.startMouse) {
-                return;
-            }
-            this._receiveSignal(Signals.RESPONDER_TERMINATED, e);
-        }
-    }, {
-        key: 'checkTouchWithinActive',
-        value: function checkTouchWithinActive(e) {
-            var positionOnGrant = this.touchable.positionOnGrant;
-            var _props = this.props,
-                _props$pressRetention = _props.pressRetentionOffset,
-                pressRetentionOffset = _props$pressRetention === undefined ? {} : _props$pressRetention,
-                hitSlop = _props.hitSlop;
-
-            var pressExpandLeft = pressRetentionOffset.left;
-            var pressExpandTop = pressRetentionOffset.top;
-            var pressExpandRight = pressRetentionOffset.right;
-            var pressExpandBottom = pressRetentionOffset.bottom;
-            if (hitSlop) {
-                pressExpandLeft += hitSlop.left;
-                pressExpandTop += hitSlop.top;
-                pressExpandRight += hitSlop.right;
-                pressExpandBottom += hitSlop.bottom;
-            }
-            var touch = extractSingleTouch(e);
-            var pageX = touch && touch.pageX;
-            var pageY = touch && touch.pageY;
-            return pageX > positionOnGrant.left - pressExpandLeft && pageY > positionOnGrant.top - pressExpandTop && pageX < positionOnGrant.left + positionOnGrant.width + pressExpandRight && pageY < positionOnGrant.top + positionOnGrant.height + pressExpandBottom;
-        }
-    }, {
-        key: 'callProp',
-        value: function callProp(name, e) {
-            if (this.props[name] && !this.props.disabled) {
-                this.props[name](e);
-            }
-        }
-    }, {
-        key: 'touchableHandleActivePressIn',
-        value: function touchableHandleActivePressIn(e) {
-            this.setActive(true);
-            this.callProp('onPressIn', e);
-        }
-    }, {
-        key: 'touchableHandleActivePressOut',
-        value: function touchableHandleActivePressOut(e) {
-            this.setActive(false);
-            this.callProp('onPressOut', e);
-        }
-    }, {
-        key: 'touchableHandlePress',
-        value: function touchableHandlePress(e) {
-            if (shouldFirePress(e)) {
-                this.callProp('onPress', e);
-            }
-            lastClickTime = Date.now();
-        }
-    }, {
-        key: 'touchableHandleLongPress',
-        value: function touchableHandleLongPress(e) {
-            if (shouldFirePress(e)) {
-                this.callProp('onLongPress', e);
-            }
-        }
-    }, {
-        key: 'setActive',
-        value: function setActive(active) {
-            if (this.props.activeClassName || this.props.activeStyle) {
-                this.setState({
-                    active: active
-                });
-            }
-        }
-    }, {
-        key: '_remeasureMetricsOnActivation',
-        value: function _remeasureMetricsOnActivation() {
-            this.touchable.dimensionsOnActivate = this.touchable.positionOnGrant;
-        }
-    }, {
-        key: '_handleDelay',
-        value: function _handleDelay(e) {
-            this.touchableDelayTimeout = null;
-            this._receiveSignal(Signals.DELAY, e);
-        }
-    }, {
-        key: '_handleLongDelay',
-        value: function _handleLongDelay(e) {
-            this.longPressDelayTimeout = null;
-            var curState = this.touchable.touchState;
-            if (curState !== States.RESPONDER_ACTIVE_PRESS_IN && curState !== States.RESPONDER_ACTIVE_LONG_PRESS_IN) {
-                console.error('Attempted to transition from state `' + curState + '` to `' + States.RESPONDER_ACTIVE_LONG_PRESS_IN + '`, which is not supported. This is ' + 'most likely due to `Touchable.longPressDelayTimeout` not being cancelled.');
-            } else {
-                this._receiveSignal(Signals.LONG_PRESS_DETECTED, e);
-            }
-        }
-    }, {
-        key: '_receiveSignal',
-        value: function _receiveSignal(signal, e) {
-            var curState = this.touchable.touchState;
-            var nextState = Transitions[curState] && Transitions[curState][signal];
-            if (!nextState) {
-                return;
-            }
-            if (nextState === States.ERROR) {
-                return;
-            }
-            if (curState !== nextState) {
-                this._performSideEffectsForTransition(curState, nextState, signal, e);
-                this.touchable.touchState = nextState;
-            }
-        }
-    }, {
-        key: '_cancelLongPressDelayTimeout',
-        value: function _cancelLongPressDelayTimeout() {
-            if (this.longPressDelayTimeout) {
-                clearTimeout(this.longPressDelayTimeout);
-                this.longPressDelayTimeout = null;
-            }
-        }
-    }, {
-        key: '_isHighlight',
-        value: function _isHighlight(state) {
-            return state === States.RESPONDER_ACTIVE_PRESS_IN || state === States.RESPONDER_ACTIVE_LONG_PRESS_IN;
-        }
-    }, {
-        key: '_savePressInLocation',
-        value: function _savePressInLocation(e) {
-            var touch = extractSingleTouch(e);
-            var pageX = touch && touch.pageX;
-            var pageY = touch && touch.pageY;
-            this.pressInLocation = { pageX: pageX, pageY: pageY };
-        }
-    }, {
-        key: '_getDistanceBetweenPoints',
-        value: function _getDistanceBetweenPoints(aX, aY, bX, bY) {
-            var deltaX = aX - bX;
-            var deltaY = aY - bY;
-            return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-        }
-    }, {
-        key: '_performSideEffectsForTransition',
-        value: function _performSideEffectsForTransition(curState, nextState, signal, e) {
-            var curIsHighlight = this._isHighlight(curState);
-            var newIsHighlight = this._isHighlight(nextState);
-            var isFinalSignal = signal === Signals.RESPONDER_TERMINATED || signal === Signals.RESPONDER_RELEASE;
-            if (isFinalSignal) {
-                this._cancelLongPressDelayTimeout();
-            }
-            if (!IsActive[curState] && IsActive[nextState]) {
-                this._remeasureMetricsOnActivation();
-            }
-            if (IsPressingIn[curState] && signal === Signals.LONG_PRESS_DETECTED) {
-                this.touchableHandleLongPress(e);
-            }
-            if (newIsHighlight && !curIsHighlight) {
-                this._startHighlight(e);
-            } else if (!newIsHighlight && curIsHighlight) {
-                this._endHighlight(e);
-            }
-            if (IsPressingIn[curState] && signal === Signals.RESPONDER_RELEASE) {
-                var hasLongPressHandler = !!this.props.onLongPress;
-                var pressIsLongButStillCallOnPress = IsLongPressingIn[curState] && (!hasLongPressHandler || !this.props.longPressCancelsPress // or we're told to ignore it.
-                );
-                var shouldInvokePress = !IsLongPressingIn[curState] || pressIsLongButStillCallOnPress;
-                if (shouldInvokePress) {
-                    if (!newIsHighlight && !curIsHighlight) {
-                        // we never highlighted because of delay, but we should highlight now
-                        this._startHighlight(e);
-                        this._endHighlight(e);
-                    }
-                    this.touchableHandlePress(e);
-                }
-            }
-            if (this.touchableDelayTimeout) {
-                clearTimeout(this.touchableDelayTimeout);
-                this.touchableDelayTimeout = null;
-            }
-        }
-    }, {
-        key: '_startHighlight',
-        value: function _startHighlight(e) {
-            this._savePressInLocation(e);
-            this.touchableHandleActivePressIn(e);
-        }
-    }, {
-        key: '_endHighlight',
-        value: function _endHighlight(e) {
-            var _this3 = this;
-
-            if (this.props.delayPressOut) {
-                this.pressOutDelayTimeout = setTimeout(function () {
-                    _this3.touchableHandleActivePressOut(e);
-                }, this.props.delayPressOut);
-            } else {
-                this.touchableHandleActivePressOut(e);
-            }
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _props2 = this.props,
-                children = _props2.children,
-                disabled = _props2.disabled,
-                activeStyle = _props2.activeStyle,
-                activeClassName = _props2.activeClassName;
-
-            var events = disabled ? undefined : copy$1(this, ['onTouchStart', 'onTouchMove', 'onTouchEnd', 'onTouchCancel', 'onMouseDown']);
-            var child = React$1.Children.only(children);
-            if (!disabled && this.state.active) {
-                var _child$props = child.props,
-                    style = _child$props.style,
-                    className = _child$props.className;
-
-                if (activeStyle) {
-                    style = index$5({}, style, activeStyle);
-                }
-                if (activeClassName) {
-                    if (className) {
-                        className += ' ' + activeClassName;
-                    } else {
-                        className = activeClassName;
-                    }
-                }
-                return React$1.cloneElement(child, index$5({
-                    className: className,
-                    style: style
-                }, events));
-            }
-            return React$1.cloneElement(child, events);
-        }
-    }]);
-
-    return Touchable;
-}(React$1.Component);
-
-Touchable.defaultProps = {
-    fixClickPenetration: false,
-    disabled: false,
-    delayPressIn: HIGHLIGHT_DELAY_MS,
-    delayLongPress: LONG_PRESS_DELAY_MS,
-    delayPressOut: 100,
-    pressRetentionOffset: {
-        left: PRESS_EXPAND_PX,
-        right: PRESS_EXPAND_PX,
-        top: PRESS_EXPAND_PX,
-        bottom: PRESS_EXPAND_PX
-    },
-    hitSlop: undefined,
-    longPressCancelsPress: true
-};
-
-var InputHandler = function (_Component) {
-  _inherits(InputHandler, _Component);
-
-  function InputHandler() {
-    _classCallCheck(this, InputHandler);
-
-    return _possibleConstructorReturn(this, (InputHandler.__proto__ || Object.getPrototypeOf(InputHandler)).apply(this, arguments));
-  }
-
-  _createClass(InputHandler, [{
-    key: 'render',
-    value: function render() {
-      var _props = this.props,
-          prefixCls = _props.prefixCls,
-          disabled = _props.disabled,
-          otherProps = _objectWithoutProperties(_props, ['prefixCls', 'disabled']);
-
-      return React$1.createElement(
-        Touchable,
-        { disabled: disabled, activeClassName: prefixCls + '-handler-active' },
-        React$1.createElement('span', otherProps)
-      );
-    }
-  }]);
-
-  return InputHandler;
-}(Component);
-
-InputHandler.propTypes = {
-  prefixCls: index$1.string,
-  disabled: index$1.bool
-};
-
-function noop$4() {}
-
-function preventDefault(e) {
-  e.preventDefault();
-}
-
-var InputNumber$2 = index$8({
-  propTypes: {
-    focusOnUpDown: index$1.bool,
-    onChange: index$1.func,
-    onKeyDown: index$1.func,
-    onKeyUp: index$1.func,
-    prefixCls: index$1.string,
-    disabled: index$1.bool,
-    onFocus: index$1.func,
-    onBlur: index$1.func,
-    readOnly: index$1.bool,
-    max: index$1.number,
-    min: index$1.number,
-    step: index$1.oneOfType([index$1.number, index$1.string]),
-    upHandler: index$1.node,
-    downHandler: index$1.node,
-    useTouch: index$1.bool,
-    formatter: index$1.func,
-    parser: index$1.func,
-    onMouseEnter: index$1.func,
-    onMouseLeave: index$1.func,
-    onMouseOver: index$1.func,
-    onMouseOut: index$1.func,
-    precision: index$1.number
-  },
-
-  mixins: [mixin],
-
-  getDefaultProps: function getDefaultProps() {
-    return {
-      focusOnUpDown: true,
-      useTouch: false,
-      prefixCls: 'rc-input-number'
-    };
-  },
-  componentDidMount: function componentDidMount() {
-    this.componentDidUpdate();
-  },
-  componentWillUpdate: function componentWillUpdate() {
-    try {
-      this.start = this.refs.input.selectionStart;
-      this.end = this.refs.input.selectionEnd;
-    } catch (e) {
-      // Fix error in Chrome:
-      // Failed to read the 'selectionStart' property from 'HTMLInputElement'
-      // http://stackoverflow.com/q/21177489/3040605
-    }
-  },
-  componentDidUpdate: function componentDidUpdate() {
-    if (this.props.focusOnUpDown && this.state.focused) {
-      var selectionRange = this.refs.input.setSelectionRange;
-      if (selectionRange && typeof selectionRange === 'function' && this.start !== undefined && this.end !== undefined && this.start !== this.end) {
-        this.refs.input.setSelectionRange(this.start, this.end);
-      } else {
-        this.focus();
-      }
-    }
-  },
-  onKeyDown: function onKeyDown(e) {
-    if (e.keyCode === 38) {
-      var ratio = this.getRatio(e);
-      this.up(e, ratio);
-      this.stop();
-    } else if (e.keyCode === 40) {
-      var _ratio = this.getRatio(e);
-      this.down(e, _ratio);
-      this.stop();
-    }
-    var onKeyDown = this.props.onKeyDown;
-
-    if (onKeyDown) {
-      for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        args[_key - 1] = arguments[_key];
-      }
-
-      onKeyDown.apply(undefined, [e].concat(args));
-    }
-  },
-  onKeyUp: function onKeyUp(e) {
-    this.stop();
-    var onKeyUp = this.props.onKeyUp;
-
-    if (onKeyUp) {
-      for (var _len2 = arguments.length, args = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-        args[_key2 - 1] = arguments[_key2];
-      }
-
-      onKeyUp.apply(undefined, [e].concat(args));
-    }
-  },
-  getRatio: function getRatio(e) {
-    var ratio = 1;
-    if (e.metaKey || e.ctrlKey) {
-      ratio = 0.1;
-    } else if (e.shiftKey) {
-      ratio = 10;
-    }
-    return ratio;
-  },
-  getValueFromEvent: function getValueFromEvent(e) {
-    return e.target.value;
-  },
-  focus: function focus() {
-    this.refs.input.focus();
-  },
-  formatWrapper: function formatWrapper(num) {
-    if (this.props.formatter) {
-      return this.props.formatter(num);
-    }
-    return num;
-  },
-  render: function render() {
-    var _classNames;
-
-    var props = _extends$2({}, this.props);
-    var prefixCls = props.prefixCls,
-        disabled = props.disabled,
-        readOnly = props.readOnly,
-        useTouch = props.useTouch;
-
-    var classes = index$4((_classNames = {}, _defineProperty$2(_classNames, prefixCls, true), _defineProperty$2(_classNames, props.className, !!props.className), _defineProperty$2(_classNames, prefixCls + '-disabled', disabled), _defineProperty$2(_classNames, prefixCls + '-focused', this.state.focused), _classNames));
-    var upDisabledClass = '';
-    var downDisabledClass = '';
-    var value = this.state.value;
-
-    if (value) {
-      if (!isNaN(value)) {
-        var val = Number(value);
-        if (val >= props.max) {
-          upDisabledClass = prefixCls + '-handler-up-disabled';
-        }
-        if (val <= props.min) {
-          downDisabledClass = prefixCls + '-handler-down-disabled';
-        }
-      } else {
-        upDisabledClass = prefixCls + '-handler-up-disabled';
-        downDisabledClass = prefixCls + '-handler-down-disabled';
-      }
-    }
-
-    var editable = !props.readOnly && !props.disabled;
-
-    // focus state, show input value
-    // unfocus state, show valid value
-    var inputDisplayValue = void 0;
-    if (this.state.focused) {
-      inputDisplayValue = this.state.inputValue;
-    } else {
-      inputDisplayValue = this.toPrecisionAsStep(this.state.value);
-    }
-
-    if (inputDisplayValue === undefined || inputDisplayValue === null) {
-      inputDisplayValue = '';
-    }
-
-    var upEvents = void 0;
-    var downEvents = void 0;
-    if (useTouch) {
-      upEvents = {
-        onTouchStart: editable && !upDisabledClass ? this.up : noop$4,
-        onTouchEnd: this.stop
-      };
-      downEvents = {
-        onTouchStart: editable && !downDisabledClass ? this.down : noop$4,
-        onTouchEnd: this.stop
-      };
-    } else {
-      upEvents = {
-        onMouseDown: editable && !upDisabledClass ? this.up : noop$4,
-        onMouseUp: this.stop,
-        onMouseLeave: this.stop
-      };
-      downEvents = {
-        onMouseDown: editable && !downDisabledClass ? this.down : noop$4,
-        onMouseUp: this.stop,
-        onMouseLeave: this.stop
-      };
-    }
-    var inputDisplayValueFormat = this.formatWrapper(inputDisplayValue);
-    var isUpDisabled = !!upDisabledClass || disabled || readOnly;
-    var isDownDisabled = !!downDisabledClass || disabled || readOnly;
-    // ref for test
-    return React$1.createElement(
-      'div',
-      {
-        className: classes,
-        style: props.style,
-        onMouseEnter: props.onMouseEnter,
-        onMouseLeave: props.onMouseLeave,
-        onMouseOver: props.onMouseOver,
-        onMouseOut: props.onMouseOut
-      },
-      React$1.createElement(
-        'div',
-        { className: prefixCls + '-handler-wrap' },
-        React$1.createElement(
-          InputHandler,
-          _extends$2({
-            ref: 'up',
-            disabled: isUpDisabled,
-            prefixCls: prefixCls,
-            unselectable: 'unselectable'
-          }, upEvents, {
-            role: 'button',
-            'aria-label': 'Increase Value',
-            'aria-disabled': !!isUpDisabled,
-            className: prefixCls + '-handler ' + prefixCls + '-handler-up ' + upDisabledClass
-          }),
-          this.props.upHandler || React$1.createElement('span', {
-            unselectable: 'unselectable',
-            className: prefixCls + '-handler-up-inner',
-            onClick: preventDefault
-          })
-        ),
-        React$1.createElement(
-          InputHandler,
-          _extends$2({
-            ref: 'down',
-            disabled: isDownDisabled,
-            prefixCls: prefixCls,
-            unselectable: 'unselectable'
-          }, downEvents, {
-            role: 'button',
-            'aria-label': 'Decrease Value',
-            'aria-disabled': !!isDownDisabled,
-            className: prefixCls + '-handler ' + prefixCls + '-handler-down ' + downDisabledClass
-          }),
-          this.props.downHandler || React$1.createElement('span', {
-            unselectable: 'unselectable',
-            className: prefixCls + '-handler-down-inner',
-            onClick: preventDefault
-          })
-        )
-      ),
-      React$1.createElement(
-        'div',
-        {
-          className: prefixCls + '-input-wrap',
-          role: 'spinbutton',
-          'aria-valuemin': props.min,
-          'aria-valuemax': props.max,
-          'aria-valuenow': value
-        },
-        React$1.createElement('input', {
-          type: props.type,
-          placeholder: props.placeholder,
-          onClick: props.onClick,
-          className: prefixCls + '-input',
-          autoComplete: 'off',
-          onFocus: this.onFocus,
-          onBlur: this.onBlur,
-          onKeyDown: editable ? this.onKeyDown : noop$4,
-          onKeyUp: editable ? this.onKeyUp : noop$4,
-          autoFocus: props.autoFocus,
-          maxLength: props.maxLength,
-          readOnly: props.readOnly,
-          disabled: props.disabled,
-          max: props.max,
-          min: props.min,
-          name: props.name,
-          id: props.id,
-          onChange: this.onChange,
-          ref: 'input',
-          value: inputDisplayValueFormat
-        })
-      )
-    );
-  }
-});
-
-var _class$36;
-var _temp$36;
-
-/**
- * InputNumber Component
- * @author yan
- */
-// import CSSModules from 'react-css-modules';
-// @CSSModules(styles, { allowMultiple })
-var InputNumber = (_temp$36 = _class$36 = function (_PureComponent) {
-  inherits(InputNumber, _PureComponent);
-
-  function InputNumber(props) {
-    classCallCheck(this, InputNumber);
-
-    var _this = possibleConstructorReturn(this, (InputNumber.__proto__ || Object.getPrototypeOf(InputNumber)).call(this, props));
-
-    _this.state = {};
-    return _this;
-  }
-
-  createClass(InputNumber, [{
-    key: 'render',
-    value: function render() {
-      var _props = this.props,
-          className = _props.className,
-          size = _props.size,
-          otherProps = objectWithoutProperties(_props, ['className', 'size']);
-
-
-      var inputNumberClass = 'input-number-' + size;
-
-      return React.createElement(InputNumber$2, _extends({ className: inputNumberClass }, otherProps));
-    }
-  }]);
-  return InputNumber;
-}(PureComponent), _class$36.displayName = 'InputNumber', _class$36.defaultProps = {
-  step: 1,
-  size: 'normal'
-}, _class$36.propTypes = {
-  min: index$1.number,
-  max: index$1.number,
-  value: index$1.number,
-  step: index$1.oneOfType([index$1.number, index$1.string]),
-  defaultValue: index$1.number,
-  onChange: index$1.func,
-  disabled: index$1.bool,
-  size: index$1.oneOf(['normal', 'large', 'small']),
-  formatter: index$1.func,
-  parser: index$1.func,
-  placeholder: index$1.string,
-  className: index$1.string
-}, _temp$36);
-
-var SPACE_KEY = 32;
-var ENTER_KEY = 13;
-
-function getTouchProps(touch) {
-	if (!touch) return {};
-	return {
-		pageX: touch.pageX,
-		pageY: touch.pageY,
-		clientX: touch.clientX,
-		clientY: touch.clientY
-	};
-}
-
-var Mixin$1 = {
-	propTypes: {
-		moveThreshold: index$1.number, // pixels to move before cancelling tap
-		activeDelay: index$1.number, // ms to wait before adding the `-active` class
-		pressDelay: index$1.number, // ms to wait before detecting a press
-		pressMoveThreshold: index$1.number, // pixels to move before cancelling press
-		preventDefault: index$1.bool, // whether to preventDefault on all events
-		stopPropagation: index$1.bool, // whether to stopPropagation on all events
-
-		onTap: index$1.func, // fires when a tap is detected
-		onPress: index$1.func, // fires when a press is detected
-		onTouchStart: index$1.func, // pass-through touch event
-		onTouchMove: index$1.func, // pass-through touch event
-		onTouchEnd: index$1.func, // pass-through touch event
-		onMouseDown: index$1.func, // pass-through mouse event
-		onMouseUp: index$1.func, // pass-through mouse event
-		onMouseMove: index$1.func, // pass-through mouse event
-		onMouseOut: index$1.func, // pass-through mouse event
-		onKeyDown: index$1.func, // pass-through key event
-		onKeyUp: index$1.func },
-
-	// pass-through key event
-	getDefaultProps: function getDefaultProps() {
-		return {
-			activeDelay: 0,
-			moveThreshold: 100,
-			pressDelay: 1000,
-			pressMoveThreshold: 5
-		};
-	},
-
-	getInitialState: function getInitialState() {
-		return {
-			isActive: false,
-			touchActive: false,
-			pinchActive: false
-		};
-	},
-
-	componentWillUnmount: function componentWillUnmount() {
-		this.cleanupScrollDetection();
-		this.cancelPressDetection();
-		this.clearActiveTimeout();
-	},
-
-	processEvent: function processEvent(event) {
-		if (this.props.preventDefault) event.preventDefault();
-		if (this.props.stopPropagation) event.stopPropagation();
-	},
-
-	onTouchStart: function onTouchStart(event) {
-		if (this.props.onTouchStart && this.props.onTouchStart(event) === false) return;
-		this.processEvent(event);
-		window._blockMouseEvents = true;
-		if (event.touches.length === 1) {
-			this._initialTouch = this._lastTouch = getTouchProps(event.touches[0]);
-			this.initScrollDetection();
-			this.initPressDetection(event, this.endTouch);
-			this.initTouchmoveDetection();
-			if (this.props.activeDelay > 0) {
-				this._activeTimeout = setTimeout(this.makeActive, this.props.activeDelay);
-			} else {
-				this.makeActive();
-			}
-		} else if (this.onPinchStart && (this.props.onPinchStart || this.props.onPinchMove || this.props.onPinchEnd) && event.touches.length === 2) {
-			this.onPinchStart(event);
-		}
-	},
-
-	makeActive: function makeActive() {
-		if (!this.isMounted()) return;
-		this.clearActiveTimeout();
-		this.setState({
-			isActive: true
-		});
-	},
-
-	clearActiveTimeout: function clearActiveTimeout() {
-		clearTimeout(this._activeTimeout);
-		this._activeTimeout = false;
-	},
-
-	initScrollDetection: function initScrollDetection() {
-		this._scrollPos = { top: 0, left: 0 };
-		this._scrollParents = [];
-		this._scrollParentPos = [];
-		var node = ReactDOM.findDOMNode(this);
-
-		while (node) {
-			if (node.scrollHeight > node.offsetHeight || node.scrollWidth > node.offsetWidth) {
-				this._scrollParents.push(node);
-				this._scrollParentPos.push(node.scrollTop + node.scrollLeft);
-				this._scrollPos.top += node.scrollTop;
-				this._scrollPos.left += node.scrollLeft;
-			}
-
-			node = node.parentNode;
-		}
-	},
-
-	initTouchmoveDetection: function initTouchmoveDetection() {
-		this._touchmoveTriggeredTimes = 0;
-	},
-
-	cancelTouchmoveDetection: function cancelTouchmoveDetection() {
-		if (this._touchmoveDetectionTimeout) {
-			clearTimeout(this._touchmoveDetectionTimeout);
-			this._touchmoveDetectionTimeout = null;
-			this._touchmoveTriggeredTimes = 0;
-		}
-	},
-
-	calculateMovement: function calculateMovement(touch) {
-		return {
-			x: Math.abs(touch.clientX - this._initialTouch.clientX),
-			y: Math.abs(touch.clientY - this._initialTouch.clientY)
-		};
-	},
-
-	detectScroll: function detectScroll() {
-		var currentScrollPos = { top: 0, left: 0 };
-		for (var i = 0; i < this._scrollParents.length; i++) {
-			currentScrollPos.top += this._scrollParents[i].scrollTop;
-			currentScrollPos.left += this._scrollParents[i].scrollLeft;
-		}
-		return !(currentScrollPos.top === this._scrollPos.top && currentScrollPos.left === this._scrollPos.left);
-	},
-
-	cleanupScrollDetection: function cleanupScrollDetection() {
-		this._scrollParents = undefined;
-		this._scrollPos = undefined;
-	},
-
-	initPressDetection: function initPressDetection(event, callback) {
-		if (!this.props.onPress) return;
-
-		// SyntheticEvent objects are pooled, so persist the event so it can be referenced asynchronously
-		event.persist();
-
-		this._pressTimeout = setTimeout((function () {
-			this.props.onPress(event);
-			callback();
-		}).bind(this), this.props.pressDelay);
-	},
-
-	cancelPressDetection: function cancelPressDetection() {
-		clearTimeout(this._pressTimeout);
-	},
-
-	onTouchMove: function onTouchMove(event) {
-		if (this._initialTouch) {
-			this.processEvent(event);
-
-			if (this.detectScroll()) {
-				return this.endTouch(event);
-			} else {
-				if (this._touchmoveTriggeredTimes++ === 0) {
-					this._touchmoveDetectionTimeout = setTimeout((function () {
-						if (this._touchmoveTriggeredTimes === 1) {
-							this.endTouch(event);
-						}
-					}).bind(this), 64);
-				}
-			}
-
-			this.props.onTouchMove && this.props.onTouchMove(event);
-			this._lastTouch = getTouchProps(event.touches[0]);
-			var movement = this.calculateMovement(this._lastTouch);
-			if (movement.x > this.props.pressMoveThreshold || movement.y > this.props.pressMoveThreshold) {
-				this.cancelPressDetection();
-			}
-			if (movement.x > this.props.moveThreshold || movement.y > this.props.moveThreshold) {
-				if (this.state.isActive) {
-					this.setState({
-						isActive: false
-					});
-				} else if (this._activeTimeout) {
-					this.clearActiveTimeout();
-				}
-			} else {
-				if (!this.state.isActive && !this._activeTimeout) {
-					this.setState({
-						isActive: true
-					});
-				}
-			}
-		} else if (this._initialPinch && event.touches.length === 2 && this.onPinchMove) {
-			this.onPinchMove(event);
-			event.preventDefault();
-		}
-	},
-
-	onTouchEnd: function onTouchEnd(event) {
-		var _this = this;
-
-		if (this._initialTouch) {
-			this.processEvent(event);
-			var afterEndTouch;
-			var movement = this.calculateMovement(this._lastTouch);
-			if (movement.x <= this.props.moveThreshold && movement.y <= this.props.moveThreshold && this.props.onTap) {
-				event.preventDefault();
-				afterEndTouch = function () {
-					var finalParentScrollPos = _this._scrollParents.map(function (node) {
-						return node.scrollTop + node.scrollLeft;
-					});
-					var stoppedMomentumScroll = _this._scrollParentPos.some(function (end, i) {
-						return end !== finalParentScrollPos[i];
-					});
-					if (!stoppedMomentumScroll) {
-						_this.props.onTap(event);
-					}
-				};
-			}
-			this.endTouch(event, afterEndTouch);
-		} else if (this.onPinchEnd && this._initialPinch && event.touches.length + event.changedTouches.length === 2) {
-			this.onPinchEnd(event);
-			event.preventDefault();
-		}
-	},
-
-	endTouch: function endTouch(event, callback) {
-		this.cancelTouchmoveDetection();
-		this.cancelPressDetection();
-		this.clearActiveTimeout();
-		if (event && this.props.onTouchEnd) {
-			this.props.onTouchEnd(event);
-		}
-		this._initialTouch = null;
-		this._lastTouch = null;
-		if (callback) {
-			callback();
-		}
-		if (this.state.isActive) {
-			this.setState({
-				isActive: false
-			});
-		}
-	},
-
-	onMouseDown: function onMouseDown(event) {
-		if (window._blockMouseEvents) {
-			window._blockMouseEvents = false;
-			return;
-		}
-		if (this.props.onMouseDown && this.props.onMouseDown(event) === false) return;
-		this.processEvent(event);
-		this.initPressDetection(event, this.endMouseEvent);
-		this._mouseDown = true;
-		this.setState({
-			isActive: true
-		});
-	},
-
-	onMouseMove: function onMouseMove(event) {
-		if (window._blockMouseEvents || !this._mouseDown) return;
-		this.processEvent(event);
-		this.props.onMouseMove && this.props.onMouseMove(event);
-	},
-
-	onMouseUp: function onMouseUp(event) {
-		if (window._blockMouseEvents || !this._mouseDown) return;
-		this.processEvent(event);
-		this.props.onMouseUp && this.props.onMouseUp(event);
-		this.props.onTap && this.props.onTap(event);
-		this.endMouseEvent();
-	},
-
-	onMouseOut: function onMouseOut(event) {
-		if (window._blockMouseEvents || !this._mouseDown) return;
-		this.processEvent(event);
-		this.props.onMouseOut && this.props.onMouseOut(event);
-		this.endMouseEvent();
-	},
-
-	endMouseEvent: function endMouseEvent() {
-		this.cancelPressDetection();
-		this._mouseDown = false;
-		this.setState({
-			isActive: false
-		});
-	},
-
-	onKeyUp: function onKeyUp(event) {
-		if (!this._keyDown) return;
-		this.processEvent(event);
-		this.props.onKeyUp && this.props.onKeyUp(event);
-		this.props.onTap && this.props.onTap(event);
-		this._keyDown = false;
-		this.cancelPressDetection();
-		this.setState({
-			isActive: false
-		});
-	},
-
-	onKeyDown: function onKeyDown(event) {
-		if (this.props.onKeyDown && this.props.onKeyDown(event) === false) return;
-		if (event.which !== SPACE_KEY && event.which !== ENTER_KEY) return;
-		if (this._keyDown) return;
-		this.initPressDetection(event, this.endKeyEvent);
-		this.processEvent(event);
-		this._keyDown = true;
-		this.setState({
-			isActive: true
-		});
-	},
-
-	endKeyEvent: function endKeyEvent() {
-		this.cancelPressDetection();
-		this._keyDown = false;
-		this.setState({
-			isActive: false
-		});
-	},
-
-	cancelTap: function cancelTap() {
-		this.endTouch();
-		this._mouseDown = false;
-	},
-
-	handlers: function handlers() {
-		return {
-			onTouchStart: this.onTouchStart,
-			onTouchMove: this.onTouchMove,
-			onTouchEnd: this.onTouchEnd,
-			onMouseDown: this.onMouseDown,
-			onMouseUp: this.onMouseUp,
-			onMouseMove: this.onMouseMove,
-			onMouseOut: this.onMouseOut,
-			onKeyDown: this.onKeyDown,
-			onKeyUp: this.onKeyUp
-		};
-	}
-};
-
-var TappableMixin = Mixin$1;
-
-var _extends$5 = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-
-
-
-function getPinchProps(touches) {
-	return {
-		touches: Array.prototype.map.call(touches, function copyTouch(touch) {
-			return { identifier: touch.identifier, pageX: touch.pageX, pageY: touch.pageY };
-		}),
-		center: { x: (touches[0].pageX + touches[1].pageX) / 2, y: (touches[0].pageY + touches[1].pageY) / 2 },
-		angle: Math.atan() * (touches[1].pageY - touches[0].pageY) / (touches[1].pageX - touches[0].pageX) * 180 / Math.PI,
-		distance: Math.sqrt(Math.pow(Math.abs(touches[1].pageX - touches[0].pageX), 2) + Math.pow(Math.abs(touches[1].pageY - touches[0].pageY), 2))
-	};
-}
-
-var Mixin$2 = {
-	propTypes: {
-		onPinchStart: index$1.func, // fires when a pinch gesture is started
-		onPinchMove: index$1.func, // fires on every touch-move when a pinch action is active
-		onPinchEnd: index$1.func // fires when a pinch action ends
-	},
-
-	onPinchStart: function onPinchStart(event) {
-		// in case the two touches didn't start exactly at the same time
-		if (this._initialTouch) {
-			this.endTouch();
-		}
-		var touches = event.touches;
-		this._initialPinch = getPinchProps(touches);
-		this._initialPinch = _extends$5(this._initialPinch, {
-			displacement: { x: 0, y: 0 },
-			displacementVelocity: { x: 0, y: 0 },
-			rotation: 0,
-			rotationVelocity: 0,
-			zoom: 1,
-			zoomVelocity: 0,
-			time: Date.now()
-		});
-		this._lastPinch = this._initialPinch;
-		this.props.onPinchStart && this.props.onPinchStart(this._initialPinch, event);
-	},
-
-	onPinchMove: function onPinchMove(event) {
-		if (this._initialTouch) {
-			this.endTouch();
-		}
-		var touches = event.touches;
-		if (touches.length !== 2) {
-			return this.onPinchEnd(event); // bail out before disaster
-		}
-
-		var currentPinch = touches[0].identifier === this._initialPinch.touches[0].identifier && touches[1].identifier === this._initialPinch.touches[1].identifier ? getPinchProps(touches) // the touches are in the correct order
-		: touches[1].identifier === this._initialPinch.touches[0].identifier && touches[0].identifier === this._initialPinch.touches[1].identifier ? getPinchProps(touches.reverse()) // the touches have somehow changed order
-		: getPinchProps(touches); // something is wrong, but we still have two touch-points, so we try not to fail
-
-		currentPinch.displacement = {
-			x: currentPinch.center.x - this._initialPinch.center.x,
-			y: currentPinch.center.y - this._initialPinch.center.y
-		};
-
-		currentPinch.time = Date.now();
-		var timeSinceLastPinch = currentPinch.time - this._lastPinch.time;
-
-		currentPinch.displacementVelocity = {
-			x: (currentPinch.displacement.x - this._lastPinch.displacement.x) / timeSinceLastPinch,
-			y: (currentPinch.displacement.y - this._lastPinch.displacement.y) / timeSinceLastPinch
-		};
-
-		currentPinch.rotation = currentPinch.angle - this._initialPinch.angle;
-		currentPinch.rotationVelocity = currentPinch.rotation - this._lastPinch.rotation / timeSinceLastPinch;
-
-		currentPinch.zoom = currentPinch.distance / this._initialPinch.distance;
-		currentPinch.zoomVelocity = (currentPinch.zoom - this._lastPinch.zoom) / timeSinceLastPinch;
-
-		this.props.onPinchMove && this.props.onPinchMove(currentPinch, event);
-
-		this._lastPinch = currentPinch;
-	},
-
-	onPinchEnd: function onPinchEnd(event) {
-		// TODO use helper to order touches by identifier and use actual values on touchEnd.
-		var currentPinch = _extends$5({}, this._lastPinch);
-		currentPinch.time = Date.now();
-
-		if (currentPinch.time - this._lastPinch.time > 16) {
-			currentPinch.displacementVelocity = 0;
-			currentPinch.rotationVelocity = 0;
-			currentPinch.zoomVelocity = 0;
-		}
-
-		this.props.onPinchEnd && this.props.onPinchEnd(currentPinch, event);
-
-		this._initialPinch = this._lastPinch = null;
-
-		// If one finger is still on screen, it should start a new touch event for swiping etc
-		// But it should never fire an onTap or onPress event.
-		// Since there is no support swipes yet, this should be disregarded for now
-		// if (event.touches.length === 1) {
-		// 	this.onTouchStart(event);
-		// }
-	}
-};
-
-var PinchableMixin = Mixin$2;
-
-var touchStyles = {
-  WebkitTapHighlightColor: 'rgba(0,0,0,0)',
-  WebkitTouchCallout: 'none',
-  WebkitUserSelect: 'none',
-  KhtmlUserSelect: 'none',
-  MozUserSelect: 'none',
-  msUserSelect: 'none',
-  userSelect: 'none',
-  cursor: 'pointer'
-};
-
-var touchStyles_1$1 = touchStyles;
-
-var _extends$6 = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-
-
-
-
-
-/**
- * Tappable Component
- * ==================
- */
-var getComponent = function (mixins) {
-	return index$8({
-		displayName: 'Tappable',
-
-		mixins: mixins,
-
-		propTypes: {
-			component: index$1.any, // component to create
-			className: index$1.string, // optional className
-			classBase: index$1.string, // base for generated classNames
-			classes: index$1.object, // object containing the active and inactive class names
-			style: index$1.object, // additional style properties for the component
-			disabled: index$1.bool // only applies to buttons
-		},
-
-		getDefaultProps: function getDefaultProps() {
-			return {
-				component: 'span',
-				classBase: 'Tappable'
-			};
-		},
-
-		render: function render() {
-			var props = this.props;
-			var className = props.classBase + (this.state.isActive ? '-active' : '-inactive');
-
-			if (props.className) {
-				className += ' ' + props.className;
-			}
-
-			if (props.classes) {
-				className += ' ' + (this.state.isActive ? props.classes.active : props.classes.inactive);
-			}
-
-			var style = {};
-			_extends$6(style, touchStyles_1$1, props.style);
-
-			var newComponentProps = _extends$6({}, props, {
-				style: style,
-				className: className,
-				disabled: props.disabled,
-				handlers: this.handlers
-			}, this.handlers());
-
-			delete newComponentProps.activeDelay;
-			delete newComponentProps.classBase;
-			delete newComponentProps.classes;
-			delete newComponentProps.handlers;
-			delete newComponentProps.onTap;
-			delete newComponentProps.onPress;
-			delete newComponentProps.onPinchStart;
-			delete newComponentProps.onPinchMove;
-			delete newComponentProps.onPinchEnd;
-			delete newComponentProps.moveThreshold;
-			delete newComponentProps.pressDelay;
-			delete newComponentProps.pressMoveThreshold;
-			delete newComponentProps.preventDefault;
-			delete newComponentProps.stopPropagation;
-			delete newComponentProps.component;
-
-			return React$1.createElement(props.component, newComponentProps, props.children);
-		}
-	});
-};
-
-var _extends$4 = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-
-
-
-
-
-var Component$1 = getComponent([TappableMixin, PinchableMixin]);
-
-var TapAndPinchable = Component$1;
-var touchStyles_1 = touchStyles_1$1;
-var Mixin = _extends$4({}, TappableMixin, {
-  onPinchStart: PinchableMixin.onPinchStart,
-  onPinchMove: PinchableMixin.onPinchMove,
-  onPinchEnd: PinchableMixin.onPinchEnd
-});
-
-TapAndPinchable.touchStyles = touchStyles_1;
-TapAndPinchable.Mixin = Mixin;
-
-var styles$18 = { "tabs__card": "QTFO3vB", "tabs__bar": "_2YCIwDA", "tabs__tab": "_37S7qK8", "active": "_1-_7_w9", "tab__del": "_2GpfxLN", "clearfix": "FLgZnNp", "tabs__left": "_2FxI-4O", "tabs__con": "_2hU1MuY", "tabs__panel": "c57w49P", "inactive": "_16UZ8XT", "tabs__button": "_3zluHoE", "disabled": "_2T7bEco", "tabs__wrap": "Q4sxpvX", "tabs__small": "_3SDTaN3" };
-
-var _dec$35;
-var _class$38;
-var _class2$35;
-var _temp$38;
-
-/**
- * Tabs Component
- * @author yan
- */
-var Tab = (_dec$35 = CSSModules(styles$18, { allowMultiple: allowMultiple }), _dec$35(_class$38 = (_temp$38 = _class2$35 = function (_PureComponent) {
-  inherits(Tab, _PureComponent);
-
-  function Tab(props) {
-    classCallCheck(this, Tab);
-
-    var _this = possibleConstructorReturn(this, (Tab.__proto__ || Object.getPrototypeOf(Tab)).call(this, props));
-
-    _this.deleteButton = function (e) {
-      e.stopPropagation(); //prevent trigger clickTab function
-      _this.props.deleteButton(_this.props.tabKey);
-    };
-
-    _this.clickTab = function () {
-      _this.props.onClick(_this.props.tabKey);
-    };
-
-    _this.deleteButton = _this.deleteButton.bind(_this);
-    _this.clickTab = _this.clickTab.bind(_this);
-    return _this;
-  }
-
-  createClass(Tab, [{
-    key: 'render',
-    value: function render() {
-      var _classNames;
-
-      var props = this.props;
-
-      var closable = props.closable,
-          disabled = props.disabled,
-          status = props.status,
-          tabDeleteButton = props.tabDeleteButton,
-          title = props.title,
-          connectDropTarget = props.connectDropTarget;
-
-      var tabClass = index$4((_classNames = {}, defineProperty$2(_classNames, 'disabled', disabled === true), defineProperty$2(_classNames, 'active', status === 'active'), defineProperty$2(_classNames, 'tabs__tab', true), _classNames));
-
-      var delIcon = React.createElement(Icon, {
-        size: 12,
-        name: 'close',
-        onClick: this.deleteButton
-      });
-
-      return React.createElement(
-        'div',
-        { styleName: tabClass, onClick: this.clickTab },
-        title,
-        tabDeleteButton && closable ? React.createElement(
-          'div',
-          { styleName: 'tab__del' },
-          delIcon
-        ) : null
-      );
-    }
-  }]);
-  return Tab;
-}(PureComponent), _class2$35.displayName = 'Tab', _class2$35.defaultProps = {
-  closable: true
-}, _class2$35.propTypes = {
-  closable: index$1.bool
-}, _temp$38)) || _class$38);
-
-var _dec$34;
-var _class$37;
-var _class2$34;
-var _temp$37;
-var _initialiseProps$4;
-
-/**
- * Tabs Component
- * @author yan
- */
-var Tabs$1 = (_dec$34 = CSSModules(styles$18, { allowMultiple: allowMultiple }), _dec$34(_class$37 = (_temp$37 = _class2$34 = function (_PureComponent) {
-  inherits(Tabs, _PureComponent);
-
-  function Tabs(props) {
-    classCallCheck(this, Tabs);
-
-    var _this = possibleConstructorReturn(this, (Tabs.__proto__ || Object.getPrototypeOf(Tabs)).call(this, props));
-
-    _initialiseProps$4.call(_this);
-
-    _this.onClick = _this.onClick.bind(_this);
-    _this.deleteButton = _this.deleteButton.bind(_this);
-    _this.getPanel = _this.getPanel.bind(_this);
-
-    _this.state = {
-      activeKey: props.activeKey || props.defaultActiveKey,
-      children: props.children
-    };
-    return _this;
-  }
-
-  createClass(Tabs, [{
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(nextProps) {
-      if (nextProps.activeKey !== this.state.activeKey) {
-        this.setState({
-          activeKey: nextProps.activeKey
-        });
-      }
-      if (nextProps.children !== this.state.children) {
-        this.setState({
-          children: nextProps.children
-        });
-      }
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var _classNames;
-
-      var opt = this.getPanel();
-      var props = this.props;
-      var type = props.type,
-          size = props.size,
-          tabPosition = props.tabPosition,
-          otherProps = objectWithoutProperties(props, ['type', 'size', 'tabPosition']);
-
-      var cls = index$4((_classNames = {}, defineProperty$2(_classNames, 'tabs__card', type === 'card'), defineProperty$2(_classNames, 'tabs__button', type === 'button'), defineProperty$2(_classNames, 'tabs__small', size === 'small'), defineProperty$2(_classNames, 'tabs__left clearfix', tabPosition === 'left'), defineProperty$2(_classNames, 'tabs__wrap', true), _classNames));
-
-      return React$1.createElement(
-        'div',
-        { styleName: cls },
-        React$1.createElement(
-          'div',
-          { styleName: 'tabs__bar' },
-          opt.tab
-        ),
-        React$1.createElement(
-          'div',
-          { styleName: 'tabs__con' },
-          opt.panel
-        )
-      );
-    }
-  }]);
-  return Tabs;
-}(PureComponent), _class2$34.displayName = 'Tabs', _class2$34.defaultProps = {
-  defaultActiveKey: 0,
-  type: 'line',
-  size: 'default',
-  tabPosition: 'top'
-}, _class2$34.propTypes = {
-  type: index$1.oneOf(['line', 'card', 'button']),
-  size: index$1.oneOf(['default', 'small']),
-  tabPosition: index$1.oneOf(['top', 'left']),
-  activeKey: index$1.number,
-  defaultActiveKey: index$1.number
-}, _initialiseProps$4 = function _initialiseProps() {
-  var _this2 = this;
-
-  this.onClick = function (activeKey) {
-    var props = _this2.props;
-
-    if (props.children[activeKey].props.disabled) {
-      return;
-    }
-    if (props.onClick) {
-      props.onClick(activeKey);
-    }
-
-    _this2.setState({
-      activeKey: activeKey,
-      panelUpdateKey: -1
-    });
-  };
-
-  this.deleteButton = function (key) {
-    _this2.props.deleteButton();
-    _this2.setState({
-      panelUpdateKey: key
-    });
-  };
-
-  this.getPanel = function () {
-    var that = _this2;
-    var tab = [];
-    var panel = [];
-    Children.forEach(_this2.state.children, function (children, index) {
-      // add tabs
-      var status = void 0,
-          className = void 0;
-
-      status = index === that.state.activeKey ? 'active' : 'inactive';
-
-      var props = {
-        key: 'tab' + index,
-        tabKey: index,
-        title: children.props.title,
-        status: status,
-        disabled: children.props.disabled,
-        closable: children.props.closable,
-        style: that.state.style,
-        onClick: that.onClick,
-        tabDeleteButton: that.props.tabDeleteButton,
-        deleteButton: that.deleteButton
-      };
-
-      tab.push(React$1.createElement(Tab, props));
-
-      if (index === that.state.activeKey) {
-        var props = { className: index$4('tabs__panel', status), status: status, key: index };
-        if (that.state.panelUpdateKey === index) {
-          props.update = true;
-        }
-        panel.push(cloneElement(children, props));
-      }
-    });
-
-    return { tab: tab, panel: panel };
-  };
-}, _temp$37)) || _class$37);
+}, _temp$39)) || _class$42);
 
 /**
  * QUARK-UI Components
  * @author ryan.bian
  */
 
-export { Alert, Breadcrumb$1 as Breadcrumb, Button, DatePicker$1 as DatePicker, Dropdown, Icon, Input$1 as Input, Menu$2 as Menu, index$23 as Message, Modal, Pagination, Progress, Steps$1 as Steps, Trigger, Spin, Upload, Checkbox$1 as Checkbox, Radio$1 as Radio, InputNumber, Tabs$1 as Tabs };
+export { Alert, Animation, Breadcrumb$1 as Breadcrumb, Button, Checkbox$1 as Checkbox, DatePicker$1 as DatePicker, Dropdown, Icon, Input$1 as Input, InputNumber, Menu$2 as Menu, index$24 as Message, Modal, Pagination, Progress, Radio$1 as Radio, Select, Spin, Steps$1 as Steps, Tabs$1 as Tabs, Trigger, Upload };
 //# sourceMappingURL=index.js.map

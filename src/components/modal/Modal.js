@@ -2,71 +2,22 @@
  * Modal Component
  * @author ryan.bian
  */
-import ReactDOM from 'react-dom';
 import { Component } from 'react';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
-import Button from '../button';
+import classnames from 'classnames';
 import { allowMultiple } from '../../constants';
 import styles from './Modal.css';
 import renderTo from '../../enhancer/render-to';
+import Button from '../button';
 import Mask from './Mask';
 import Icon from '../icon';
-
-const renderNoticeModal = (type, config = {
-  title: '',
-  content: '',
-  closable: false,
-}) => {
-  const wrapNode = document.createElement('div');
-  const colorArr = {
-    info: '#3b98e0',
-    success: '#73da7d',
-    error: '#e6445e',
-    warning: '#ffd31a',
-  };
-  document.body.appendChild(wrapNode);
-  const modalProps = {
-    title: (<p><Icon name={type} size={26} color={colorArr[type]} />
-      <span>{config.title || type}</span>
-      { config.closable ?
-        <a
-          styleName="modal__closable"
-          href=""
-          onClick={(e) => {
-            e.preventDefault();
-            ReactDOM.unmountComponentAtNode(wrapNode);
-            document.body.removeChild(wrapNode);
-          }}
-        ><Icon name="close" size={18} color="#a6a6a6" /></a>
-            : null
-          }
-    </p>),
-    visible: true,
-    closable: false,
-    footer: (
-      <Button
-        key="confirm"
-        type="primary"
-        onClick={() => {
-          ReactDOM.unmountComponentAtNode(wrapNode);
-          document.body.removeChild(wrapNode);
-        }}
-      >我知道了</Button>
-    ),
-  };
-  ReactDOM.render(
-    <Modal {...modalProps}>
-
-      {config.content}
-    </Modal>
-  , wrapNode);
-};
+import Animation from '../animation';
+import renderNoticeModal from './noticeModal';
 
 @renderTo()
 @CSSModules(styles, { allowMultiple })
 class Modal extends Component {
-
   static displayName = 'Modal'
 
   static defaultProps = {
@@ -110,28 +61,32 @@ class Modal extends Component {
   static warning(config) {
     renderNoticeModal('warning', config);
   }
-
   constructor(props) {
     super(props);
-    this.state = {};
-    this.handleOk = this.handleOk.bind(this);
-    this.handleCancel = this.handleCancel.bind(this);
+    this.state = {
+      maskVisible: props.visible,
+    };
   }
 
-  componentDidUpdate(prevProps) {
-    if (!this.props.visible && prevProps.visible) {
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.visible && this.props.visible) {
       this.props.afterClose();
+    }
+    if (nextProps.visible && !this.props.visible) {
+      this.setState({
+        maskVisible: true,
+      });
     }
   }
 
-  handleOk(e) {
+  handleOk = (e) => {
     const { onOk } = this.props;
     if (onOk) {
       onOk(e);
     }
   }
 
-  handleCancel(e) {
+  handleCancel = (e) => {
     const { onCancel } = this.props;
     if (onCancel) {
       onCancel(e);
@@ -153,7 +108,7 @@ class Modal extends Component {
                 e.preventDefault();
                 this.handleCancel(e);
               }}
-            ><Icon name="close" size={18} color="#a6a6a6" /></a>
+            ><Icon name="close" size={18} /></a>
             : null
           }
         </div>
@@ -170,14 +125,14 @@ class Modal extends Component {
         type="secondary"
         onClick={this.handleCancel}
       >
-        取消
+        取&emsp;消
       </Button>,
       <Button
         key="confirm"
         type="primary"
         onClick={this.handleOk}
       >
-        确定
+        确&emsp;定
       </Button>,
     ];
     return footer === undefined ? (
@@ -186,24 +141,38 @@ class Modal extends Component {
   }
 
   render() {
-    const { visible, width, children } = this.props;
+    const { width, visible, children } = this.props;
+    const { maskVisible } = this.state;
     const modalProps = {
       style: {
         width,
       },
-      styleName: `modal${visible ? '--visible' : ''}`,
-
-    }; {
-      return (
-        <Mask visible={visible}>
+      styleName: classnames('modal', {
+        'modal--visible': visible,
+      }),
+    };
+    return (
+      <Mask visible={maskVisible}>
+        <Animation
+          in={visible}
+          motion={'flipX'}
+          style={{
+            height: '100%',
+          }}
+          onExited={() => {
+            this.setState({
+              maskVisible: false,
+            });
+          }}
+        >
           <div {...modalProps}>
             { this.renderHeader() }
             <div styleName="modal__content">{children}</div>
             { this.renderFooter() }
           </div>
-        </Mask>
-      );
-    }
+        </Animation>
+      </Mask>
+    );
   }
 }
 

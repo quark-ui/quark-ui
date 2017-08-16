@@ -24,5 +24,4 @@ export default class MessageDemo extends Component {
       </div>
     );
   }
-
 }

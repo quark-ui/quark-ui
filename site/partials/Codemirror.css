@@ -1,0 +1,9 @@
+.ReactCodeMirror {
+  height: 100%;
+}
+.ReactCodeMirror--focused {
+
+}
+:global(.CodeMirror) {
+  height: 100%!important;
+}

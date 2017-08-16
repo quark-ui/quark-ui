@@ -37,6 +37,11 @@
     }
   }
 
+  & .pagination__ellipsis {
+    width: 34px;
+    text-align: center;
+  }
+
   & .pagination__pages > li {
     margin: 0 1px;
   }
@@ -142,4 +147,7 @@
     text-align: center;
     color: var(--text-color);
   }
+}
+.pagination__jumperField:hover {
+  border-color: var(--brand-primary);
 }

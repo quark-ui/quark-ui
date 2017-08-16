@@ -59,7 +59,7 @@ var index = createCommonjsModule(function (module) {
 
 var allowMultiple = true;
 
-var styles = { "steps__vertical": "_1Z9B0MQ", "steps--main": "_11Rome9", "steps--head": "_2UU-kd6", "steps--description": "_1DxItRx", "steps--tail": "_2vbHRHb", "steps--item__finish": "_1VnV_nf", "steps--headinner": "_2JVCbOY", "steps--icon": "_2jVCR-o", "steps--item__process": "YRG4bmD", "steps--item__wait": "XQtgjbi", "steps": "_1hnABRb", "steps--item": "O2T4biQ", "steps__horizontal": "WV34rPt", "steps--title": "_35Vh_F5", "steps--item__error": "_2V3dCtV", "steps--step": "WD5QBi2", "stepsMain": "_11Rome9", "stepsHead": "_2UU-kd6", "stepsDescription": "_1DxItRx", "stepsTail": "_2vbHRHb", "stepsItem__finish": "_1VnV_nf", "stepsHeadinner": "_2JVCbOY", "stepsIcon": "_2jVCR-o", "stepsItem__process": "YRG4bmD", "stepsItem__wait": "XQtgjbi", "stepsItem": "O2T4biQ", "stepsTitle": "_35Vh_F5", "stepsItem__error": "_2V3dCtV", "stepsStep": "WD5QBi2" };
+var styles = { "steps__vertical": "_1Z9B0MQ", "steps--main": "_11Rome9", "steps--head": "_2UU-kd6", "steps--tail": "_2vbHRHb", "steps__small": "_2kmh_Rc", "steps--item__finish": "_1VnV_nf", "steps--headinner": "_2JVCbOY", "steps--icon": "_2jVCR-o", "steps--description": "_1DxItRx", "steps--item__process": "YRG4bmD", "steps--item__wait": "XQtgjbi", "steps": "_1hnABRb", "steps--item": "O2T4biQ", "steps__horizontal": "WV34rPt", "steps--title": "_35Vh_F5", "steps--item__error": "_2V3dCtV", "steps--step": "WD5QBi2", "stepsMain": "_11Rome9", "stepsHead": "_2UU-kd6", "stepsTail": "_2vbHRHb", "stepsItem__finish": "_1VnV_nf", "stepsHeadinner": "_2JVCbOY", "stepsIcon": "_2jVCR-o", "stepsDescription": "_1DxItRx", "stepsItem__process": "YRG4bmD", "stepsItem__wait": "XQtgjbi", "stepsItem": "O2T4biQ", "stepsTitle": "_35Vh_F5", "stepsItem__error": "_2V3dCtV", "stepsStep": "WD5QBi2" };
 
 var styles$1 = { "Icon": "_2jSl5RJ" };
 
@@ -1181,21 +1181,23 @@ var Steps$1 = (_dec = CSSModules(styles, { allowMultiple: allowMultiple }), _dec
   }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
+      var _classnames,
+          _this2 = this;
 
       var _props = this.props,
           children = _props.children,
           direction = _props.direction,
           status = _props.status,
+          size = _props.size,
           current = _props.current,
           isFinishIcon = _props.isFinishIcon,
-          restProps = objectWithoutProperties(_props, ['children', 'direction', 'status', 'current', 'isFinishIcon']);
+          restProps = objectWithoutProperties(_props, ['children', 'direction', 'status', 'size', 'current', 'isFinishIcon']);
 
       var lastIndex = children.length - 1;
       var reLayouted = this.state.lastStepOffsetWidth > 0;
-      var classString = index(defineProperty({
+      var classString = index((_classnames = {
         steps: true
-      }, 'steps__' + direction, true));
+      }, defineProperty(_classnames, 'steps__' + direction, true), defineProperty(_classnames, 'steps__' + size, size), _classnames));
       return React.createElement(
         'div',
         _extends({ styleName: classString, ref: function ref(node) {
@@ -1230,11 +1232,13 @@ var Steps$1 = (_dec = CSSModules(styles, { allowMultiple: allowMultiple }), _dec
   direction: 'horizontal',
   current: 0,
   status: 'process',
-  isFinishIcon: false }, _class2.propTypes = {
+  isFinishIcon: false,
+  size: '' }, _class2.propTypes = {
   direction: PropTypes.oneOf(['horizontal', 'vertical']),
   current: PropTypes.number,
   status: PropTypes.string,
-  isFinishIcon: PropTypes.bool
+  isFinishIcon: PropTypes.bool,
+  size: PropTypes.string
 }, _temp)) || _class);
 
 export default Steps$1;

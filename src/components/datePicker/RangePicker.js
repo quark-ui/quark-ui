@@ -34,12 +34,23 @@ class RangePicker extends PureComponent {
     const value = props.value || props.defaultValue || [moment(), moment()];
     this.state = {
       rangeValue: value,
+      paneVisible: false,
     };
   }
 
-  changeDateInternal = (changeData, position) => {
-    const { rangeValue } = this.state;
-    rangeValue[position] = moment(rangeValue[position]).set(changeData);
+  handleClickField = () => {
+    this.setState({
+      paneVisible: true,
+    });
+  }
+
+  handlePickerVisibleChange = (visible) => {
+    this.setState({
+      paneVisible: visible,
+    });
+  }
+
+  changeDateInternal = (rangeValue) => {
     if (typeof this.props.value !== 'undefined') {
       // 受控组件
       this.props.onChange(rangeValue);
@@ -54,17 +65,20 @@ class RangePicker extends PureComponent {
 
   render() {
     const { disabled, format, fieldSize, fieldWidth } = this.props;
-    const { rangeValue } = this.state;
+    const { rangeValue, paneVisible } = this.state;
     const pickerProps = {
       rangeDate: rangeValue,
       type: 'range',
       changeDate: this.changeDateInternal,
+      paneVisible,
+      onVisibleChange: this.handlePickerVisibleChange,
     };
     const fieldStyle = {};
     const field = {
       // type: 'text',
       disabled,
       size: fieldSize,
+      onClick: this.handleClickField,
     };
     if (fieldWidth) {
       assign(fieldStyle, {

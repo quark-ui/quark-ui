@@ -35,6 +35,7 @@ class DatePicker extends PureComponent {
     super(props);
     this.state = {
       value: moment(props.value || props.defaultValue),
+      paneVisible: false,
     };
   }
   componentWillReceiveProps(nextProps) {
@@ -51,7 +52,20 @@ class DatePicker extends PureComponent {
   shouldComponentUpdate(nextProps, nextState) {
     if (!isEqual(nextProps, this.props)) return true;
     if (!this.state.value.isSame(nextState.value)) return true;
+    if (this.state.paneVisible !== nextState.paneVisible) return true;
     return false;
+  }
+
+  handleClickField = () => {
+    this.setState({
+      paneVisible: true,
+    });
+  }
+
+  handlePickerVisibleChange = (visible) => {
+    this.setState({
+      paneVisible: visible,
+    });
   }
 
   changeDateInternal = (changeData) => {
@@ -67,16 +81,21 @@ class DatePicker extends PureComponent {
       });
       this.props.onChange(newValue);
     }
+    this.setState({
+      paneVisible: false,
+    });
   }
 
   render() {
-    const { value } = this.state;
+    const { value, paneVisible } = this.state;
     const { pickerType, disabled, format, disabledDate, fieldSize, fieldWidth } = this.props;
     const pickerProps = {
       date: value,
       changeDate: this.changeDateInternal,
       type: pickerType,
       disabledDate,
+      paneVisible,
+      onVisibleChange: this.handlePickerVisibleChange,
     };
     const fieldStyle = {};
     if (fieldWidth) {
@@ -90,6 +109,7 @@ class DatePicker extends PureComponent {
       value: value.format(format),
       size: fieldSize,
       style: fieldStyle,
+      onClick: this.handleClickField,
     };
     return disabled ? <Input {...inputProps} /> : (
       <Picker {...pickerProps}>

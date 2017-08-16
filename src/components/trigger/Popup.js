@@ -4,9 +4,10 @@
  */
 import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { spring, TransitionMotion, presets } from 'react-motion';
+import classnames from 'classnames';
 import renderTo from '../../enhancer/render-to';
 import styles from './Trigger.css';
+import Animation from '../animation';
 
 @renderTo()
 export default class Popup extends PureComponent {
@@ -17,7 +18,6 @@ export default class Popup extends PureComponent {
     position: [0, 0],
     popupRef: null,
     visible: false,
-    ready: false,
     onMouseEnter() {},
     onMouseLeave() {},
   }
@@ -27,65 +27,62 @@ export default class Popup extends PureComponent {
     position: PropTypes.arrayOf(PropTypes.number),
     popupRef: PropTypes.func,
     visible: PropTypes.bool,
-    ready: PropTypes.bool,
     onMouseEnter: PropTypes.func,
     onMouseLeave: PropTypes.func,
   }
-  willLeave() {
-    return {
-      opacity: spring(0, presets.stiff),
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      popupVisible: props.visible,
     };
   }
-  willEnter() {
-    return {
-      opacity: 0,
-    };
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.visible && !this.props.visible) {
+      this.setState({
+        popupVisible: true,
+      });
+    }
   }
+
   render() {
-    const { children, popupRef, position, visible, ready, ...otherProps } = this.props;
+    const { children, popupRef, position, visible, ...otherProps } = this.props;
+    const { popupVisible } = this.state;
     const wrapProps = {
       ref: popupRef,
-      className: styles.popup,
-      style: {
-        left: position[0],
-        top: position[1],
-        visibility: ready ? 'visible' : 'hidden',
-      },
-    };
-    const innerProps = {
-      // style: stylePos,
+      className: classnames(styles.popup, {
+        [styles['popup--hidden']]: !popupVisible,
+      }),
+      // style: {
+      //   left: position[0],
+      //   top: position[1],
+      // },
       ...otherProps,
     };
     return (
-      <TransitionMotion
-        willLeave={this.willLeave}
-        willEnter={this.willEnter}
-        styles={visible ? [
-          {
-            key: 'popup',
-            style: {
-              opacity: spring(1, presets.stiff),
-            },
-          },
-        ] : []}
+      <Animation
+        duration={300}
+        timingFunction={'ease-in-out'}
+        in={visible}
+        motion={'fade'}
+        mountOnEnter
+        appear
+        onExited={() => {
+          this.setState({
+            popupVisible: false,
+          });
+        }}
+        style={{
+          position: 'absolute',
+          left: position[0],
+          top: position[1],
+        }}
       >
-        {
-          interpolatedStyles =>
-            <div {...wrapProps}>
-              {
-                interpolatedStyles.map(({ key, style }) =>
-                  <div
-                    key={key}
-                    style={style}
-                    {...innerProps}
-                  >
-                    {children}
-                  </div>,
-                )
-              }
-            </div>
-        }
-      </TransitionMotion>
+        <div {...wrapProps}>
+          {children}
+        </div>
+      </Animation>
     );
   }
 }

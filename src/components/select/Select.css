@@ -1,101 +1,115 @@
 .select {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
 
-    position: relative;
-    display: inline-block;
-
-    & .selection {
-        width: 200px;
-        border: solid 1px #dddddd;
-        border-radius: 4px;
-        height: 34px;
-        line-height: 34px;
-        padding: 0 5px;
-        cursor: pointer;
-        box-sizing: border-box;
-        position:relative;
-        font-size: 14px;
-
-        & .selectionDownIcon{
-            position: absolute;
-            right: 5px;
-            top: 11px;
-            transform: scale(0.8);
-        }
-        & .selectionCloseIcon{
-            position: absolute;
-            right: 20px;
-            top: 10px;
-            transform: scale(0.8);
-
-            &:hover {
-                color: var(--brand-primary-light);
-            }
-            &:active {
-                color: var(--brand-primary-dark);
-            }
-        }
-
-        & .placeholder{
-            color: #bcbcbc;
-        }
-
-        & .comboboxInput {
-            border: none;
-            width: 100%;
-            box-sizing: border-box;
-            height: 30px;
-            font-size: 14px;
-        }
-
-        &.disabled{
-            border: solid 1px #eee;
-            color: #eee;
-            cursor: not-allowed;
-        }
-
-        &:hover {
-            border-color: var(--brand-primary-light);
-        }
-    }
-}
-
-.dropdown{
-    box-sizing: border-box;
+  & .selection ,& .selectionClose{
+    width: 200px;
+    border: solid 1px var(--border-color);
     border-radius: 4px;
-    border: solid 1px #ccc;
-    width: 100%;
-    max-height: 200px;
-    overflow: auto;
-    margin-top: 5px;
-    box-shadow: 0 1px 6px rgba(0,0,0,.2);
-    background-color: #fff;
+    height: 34px;
+    line-height: 34px;
+    padding: 0 5px;
+    cursor: pointer;
+    box-sizing: border-box;
+    position: relative;
+    font-size: 14px;
 
-    & .option {
-        padding: 10px;
-        cursor: pointer;
+    & .selectionDownIcon {
+      position: absolute;
+      right: 5px;
+      top: 11px;
+      transform: scale(0.8);
+    }
+    & .selectionCloseIcon {
+      display: none;
+      position: absolute;
+      right: 20px;
+      top: 10px;
+      transform: scale(0.8);
 
-        &:hover {
-            background-color: #f6f8fc;
-        }
-        &.active {
-            color: #ffffff;
-            background-color: var(--brand-primary-dark);
-        }
+      &:hover {
+        color: var(--brand-primary-light);
+      }
+      &:active {
+        color: var(--brand-primary-dark);
+      }
     }
 
-    & .nooption {
-        padding: 10px;
-        color: #bcbcbc;
+    & .placeholder {
+      color: #bcbcbc;
     }
 
-    & .groupname {
-        padding: 10px;
-        color: #bcbcbc;
-
-        &+ul li {
-            padding-left: 20px;
-        }
+    & .comboboxInput {
+      border: none;
+      width: 100%;
+      box-sizing: border-box;
+      height: 30px;
+      font-size: 14px;
     }
+
+    &.disabled {
+      border: solid 1px #eee;
+      color: #eee;
+      cursor: not-allowed;
+    }
+
+    &:hover {
+      border-color: var(--brand-primary-light);
+    }
+  }
+
+
+  & .selectionClose{
+    &:hover .selectionDownIcon{
+        display: none;
+    }
+    &:hover .selectionCloseIcon{
+      display: block;
+      position: absolute;
+      right: 5px;
+      top: 11px;
+      transform: scale(0.8);
+    }
+  }
+  
 }
 
+.dropdown {
+  box-sizing: border-box;
+  border-radius: 4px;
+  border: solid 1px #ccc;
+  width: 100%;
+  max-height: 200px;
+  overflow: auto;
+  margin-top: 5px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, .2);
+  background-color: #fff;
 
+  & .option {
+    padding: 10px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #f6f8fc;
+    }
+    &.active {
+      color: #ffffff;
+      background-color: var(--brand-primary-dark);
+    }
+  }
+
+  & .nooption {
+    padding: 10px;
+    color: #bcbcbc;
+  }
+
+  & .groupname {
+    padding: 10px;
+    color: #bcbcbc;
+
+    & + ul li {
+      padding-left: 20px;
+    }
+  }
+}

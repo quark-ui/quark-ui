@@ -30,7 +30,9 @@ export default class InputDemo extends Component {
         <h3>大小</h3>
         <p>三种大小的数字输入框</p>
           <Input size="large" placeholder="large size" />
+          <p></p>
           <Input size="normal" placeholder="normal size" />
+          <p></p>
           <Input size="small" placeholder="small size" />
         <h3>禁用</h3>
         <p>输入框禁用</p>
@@ -40,7 +42,9 @@ export default class InputDemo extends Component {
         <h3>搜索框</h3>
         <p>带有搜索按钮的输入框</p>
           <Search size="large" placeholder="input search text" style={{ width: 240 }} />
+          <p></p>
           <Search placeholder="input search text" style={{ width: 240 }} />
+          <p></p>
           <Search size="small" placeholder="input search text" style={{ width: 240 }} />
         <h3>文本域</h3>
         <p>用于多行输入</p>
@@ -55,6 +59,7 @@ export default class InputDemo extends Component {
             value={this.state.value}
             onChange={this.onChangeCard}
           />
+          <p></p>
           <CardInput
             size="normal"
             mask="111111-111111-111111-111111"

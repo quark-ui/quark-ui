@@ -1,6 +1,6 @@
-import Modal from '../Modal';
-import Button from 'quark-ui/button';
 import { Component } from 'react';
+import Modal from '../Modal';
+import Button from '../../button';
 
 export default class ModalDemo extends Component {
   constructor(props) {
@@ -25,8 +25,17 @@ export default class ModalDemo extends Component {
     const modalProps = {
       title: '标题',
       visible,
-      onOk: () => { this.closeModal(); },
-      onCancel: () => { this.closeModal(); },
+      onOk: () => {
+        this.closeModal();
+        console.log('onOK');
+      },
+      onCancel: () => {
+        this.closeModal();
+        console.log('onCancel');
+      },
+      afterClose() {
+        console.log('afterClose');
+      },
     };
     return (
       <div className="markdown-block">
@@ -45,7 +54,7 @@ export default class ModalDemo extends Component {
               closable: true,
             });
           }}
-        >info</Button>
+        >info</Button>&emsp;
         <Button
           type="secondary"
           onClick={() => {
@@ -53,7 +62,7 @@ export default class ModalDemo extends Component {
               content: '这是成功消息',
             });
           }}
-        >success</Button>
+        >success</Button>&emsp;
         <Button
           type="secondary"
           onClick={() => {
@@ -61,7 +70,7 @@ export default class ModalDemo extends Component {
               content: '这是错误提示',
             });
           }}
-        >error</Button>
+        >error</Button>&emsp;
         <Button
           type="secondary"
           onClick={() => {

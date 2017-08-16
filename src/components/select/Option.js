@@ -13,13 +13,13 @@ export default class Option extends PureComponent {
 
   static defaultProps = {
     value: '',
-    text: '',
+    title: undefined,
     children: null,
   };
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
   static propTypes = {
-    value: PropTypes.string,
-    text: PropTypes.string,
+    value: PropTypes.string.isRequired,
+    title: PropTypes.string,
     children: PropTypes.arrayOf(PropTypes.element),
   };
 
@@ -30,12 +30,12 @@ export default class Option extends PureComponent {
   click = () => {
     const { context } = this;
     const { childContext } = context;
-    const { value, text } = this.props;
-    childContext.onOptionSelected(value, text);
+    const { value, title, children } = this.props;
+    childContext.onOptionSelected(value, title || children);
   };
 
   render() {
-    const { children, text, value } = this.props;
+    const { children, value } = this.props;
     const { context } = this;
     const { childContext } = context;
 
@@ -46,7 +46,7 @@ export default class Option extends PureComponent {
         className={classnames(styles.option, isActived ? styles.active : '')}
         onClick={this.click}
       >
-        {children || text}
+        {children}
       </li>
     );
   }

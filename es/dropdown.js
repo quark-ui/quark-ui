@@ -2,6 +2,7 @@ import { Children, PureComponent, cloneElement } from 'react';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
 import ReactDOM from 'react-dom';
+import Transition from 'react-transition-group/Transition';
 
 /*
 object-assign
@@ -97,6 +98,61 @@ var allowMultiple = true;
 
 var ALIGN_ENUM = new Set(['tl', 'tr', 'tc', 'bl', 'br', 'bc', 'cl', 'cr']);
 
+function createCommonjsModule(fn, module) {
+	return module = { exports: {} }, fn(module, module.exports), module.exports;
+}
+
+var index$1 = createCommonjsModule(function (module) {
+/*!
+  Copyright (c) 2016 Jed Watson.
+  Licensed under the MIT License (MIT), see
+  http://jedwatson.github.io/classnames
+*/
+/* global define */
+
+(function () {
+	'use strict';
+
+	var hasOwn = {}.hasOwnProperty;
+
+	function classNames () {
+		var classes = [];
+
+		for (var i = 0; i < arguments.length; i++) {
+			var arg = arguments[i];
+			if (!arg) continue;
+
+			var argType = typeof arg;
+
+			if (argType === 'string' || argType === 'number') {
+				classes.push(arg);
+			} else if (Array.isArray(arg)) {
+				classes.push(classNames.apply(null, arg));
+			} else if (argType === 'object') {
+				for (var key in arg) {
+					if (hasOwn.call(arg, key) && arg[key]) {
+						classes.push(key);
+					}
+				}
+			}
+		}
+
+		return classes.join(' ');
+	}
+
+	if ('object' !== 'undefined' && module.exports) {
+		module.exports = classNames;
+	} else if (typeof undefined === 'function' && typeof undefined.amd === 'object' && undefined.amd) {
+		// register as 'classnames', consistent with npm package name
+		undefined('classnames', [], function () {
+			return classNames;
+		});
+	} else {
+		window.classNames = classNames;
+	}
+}());
+});
+
 /**
  * Copyright 2015, Yahoo! Inc.
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
@@ -123,7 +179,7 @@ var KNOWN_STATICS = {
 
 var isGetOwnPropertySymbolsAvailable = typeof Object.getOwnPropertySymbols === 'function';
 
-var index$1 = function hoistNonReactStatics(targetComponent, sourceComponent, customStatics) {
+var index$2 = function hoistNonReactStatics(targetComponent, sourceComponent, customStatics) {
     if (typeof sourceComponent !== 'string') { // don't hoist over string (html) components
         var keys = Object.getOwnPropertyNames(sourceComponent);
 
@@ -174,7 +230,20 @@ var createClass = function () {
 
 
 
+var defineProperty = function (obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
 
+  return obj;
+};
 
 var _extends = Object.assign || function (target) {
   for (var i = 1; i < arguments.length; i++) {
@@ -331,15 +400,114 @@ function renderTo() {
       return EnhancedComponent;
     }(PureComponent);
 
-    index$1(EnhancedComponent, WrappedComponent);
+    index$2(EnhancedComponent, WrappedComponent);
     return EnhancedComponent;
   };
 }
 
-var styles = { "trigger": "_3A_xDs1", "trigger--wrap": "_1fJcokE", "popup": "_3WT1yrT", "triggerWrap": "_1fJcokE" };
+var styles = { "trigger": "_3A_xDs1", "trigger--wrap": "_1fJcokE", "popup": "_3WT1yrT", "popup--hidden": "_3CuSPSp", "triggerWrap": "_1fJcokE", "popupHidden": "_3CuSPSp" };
+
+var styles$1 = { "fade--entering": "_1mp5FXi", "fadeIn": "gbiUlUN", "fade--entered": "_26DcFZN", "fade--exiting": "_2wSC5er", "fadeOut": "_2OnzTOe", "fade--exited": "_2K6mlzL", "flipX": "sCG0bzF", "flipX--entering": "_3cdJQI5", "flipInX": "_1FsXcPX", "flipX--entered": "qGmSxIW", "flipX--exiting": "_3NfjJC-", "flipOutX": "_24wLE9d", "flipX--exited": "_24MsE6n", "slideUp": "_1oUCufa", "slideUp--entering": "_1mO_SWR", "slideInUp": "_12qhs-A", "slideUp--entered": "_3-WipgH", "slideUp--exiting": "_27bTj8j", "slideOutUp": "_20eULFb", "slideUp--exited": "_34-gsuv", "slideDown": "_706TJ5I", "slideDown--entering": "_1ieQGlB", "slideInDown": "_21y5cl_", "slideDown--entered": "_3FYkJ5S", "slideDown--exiting": "desE714", "slideOutDown": "_16Yi8is", "slideDown--exited": "_3FJ4sR6", "zoom": "_2aGrmGr", "zoom--entering": "EdoD2Q2", "zoomIn": "gybKzsL", "zoom--entered": "_3kIgIBr", "zoom--exiting": "k0tHLpV", "zoomOut": "_689sLoR", "zoom--exited": "_6jD7wgI", "bounce": "_38IQtyb", "bounce--entering": "_1_uO8bU", "bounceIn": "_2j4EhAR", "bounce--entered": "_1hNAImH", "bounce--exiting": "Hpxa8Tt", "bounceOut": "_2yWAe_R", "bounce--exited": "_3VDKDtK", "fadeEntering": "_1mp5FXi", "fadeEntered": "_26DcFZN", "fadeExiting": "_2wSC5er", "fadeExited": "_2K6mlzL", "flipXEntering": "_3cdJQI5", "flipXEntered": "qGmSxIW", "flipXExiting": "_3NfjJC-", "flipXExited": "_24MsE6n", "slideUpEntering": "_1mO_SWR", "slideUpEntered": "_3-WipgH", "slideUpExiting": "_27bTj8j", "slideUpExited": "_34-gsuv", "slideDownEntering": "_1ieQGlB", "slideDownEntered": "_3FYkJ5S", "slideDownExiting": "desE714", "slideDownExited": "_3FJ4sR6", "zoomEntering": "EdoD2Q2", "zoomEntered": "_3kIgIBr", "zoomExiting": "k0tHLpV", "zoomExited": "_6jD7wgI", "bounceEntering": "_1_uO8bU", "bounceEntered": "_1hNAImH", "bounceExiting": "Hpxa8Tt", "bounceExited": "_3VDKDtK" };
+
+var MOTIONS = ['fade', 'flipX', 'slideUp', 'slideDown', 'zoom', 'bounce'];
+
+var TIMING_FUNCTION = {
+  ease: 'cubic-bezier(.25, .1, .25, 1)',
+  linear: 'cubic-bezier(0,0,1,1)',
+  'ease-in': 'cubic-bezier(.42,0,1,1)',
+  'ease-out': 'cubic-bezier(0,0,.58,1)',
+  'ease-in-out': 'cubic-bezier(.42,0,.58,1)'
+};
+
+var _class$3;
+var _temp$3;
+
+/**
+ * Animation Component
+ * @author ryan.bian
+ */
+var Animation = (_temp$3 = _class$3 = function (_PureComponent) {
+  inherits(Animation, _PureComponent);
+
+  function Animation() {
+    classCallCheck(this, Animation);
+    return possibleConstructorReturn(this, (Animation.__proto__ || Object.getPrototypeOf(Animation)).apply(this, arguments));
+  }
+
+  createClass(Animation, [{
+    key: 'render',
+    value: function render() {
+      var _props = this.props,
+          duration = _props.duration,
+          motion = _props.motion,
+          timingFunction = _props.timingFunction,
+          style = _props.style,
+          children = _props.children,
+          otherProps = objectWithoutProperties(_props, ['duration', 'motion', 'timingFunction', 'style', 'children']);
+
+      var transitionProps = _extends({
+        in: this.props.in,
+        timeout: duration
+      }, otherProps);
+      var defaultStyle = _extends({}, style, {
+        animationDuration: duration + 'ms',
+        animationTimingFunction: TIMING_FUNCTION[timingFunction]
+      });
+      return React.createElement(
+        Transition,
+        transitionProps,
+        function (status) {
+          return React.createElement(
+            'div',
+            {
+              style: defaultStyle,
+              className: index$1(styles$1[motion], styles$1[motion + '--' + status])
+            },
+            children
+          );
+        }
+      );
+    }
+
+    // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
+
+  }]);
+  return Animation;
+}(PureComponent), _class$3.displayName = 'Animation', _class$3.defaultProps = {
+  duration: 500,
+  motion: 'fade',
+  timingFunction: 'linear',
+  style: undefined,
+  in: PropTypes.bool,
+  mountOnEnter: false,
+  unmountOnExit: false,
+  enter: true,
+  exit: true,
+  onEnter: function onEnter() {},
+  onEntering: function onEntering() {},
+  onEntered: function onEntered() {},
+  onExit: function onExit() {},
+  onExiting: function onExiting() {},
+  onExited: function onExited() {}
+}, _class$3.propTypes = {
+  duration: PropTypes.number,
+  motion: PropTypes.oneOf(MOTIONS),
+  timingFunction: PropTypes.oneOf(Object.keys(TIMING_FUNCTION)),
+  style: PropTypes.object,
+  in: PropTypes.bool,
+  mountOnEnter: PropTypes.bool,
+  unmountOnExit: PropTypes.bool,
+  enter: PropTypes.bool,
+  exit: PropTypes.bool,
+  onEnter: PropTypes.func,
+  onEntering: PropTypes.func,
+  onEntered: PropTypes.func,
+  onExit: PropTypes.func,
+  onExiting: PropTypes.func,
+  onExited: PropTypes.func
+}, _temp$3);
 
 var _dec$2;
-var _dec2$1;
 var _class$2;
 var _class2$2;
 var _temp$2;
@@ -348,45 +516,76 @@ var _temp$2;
  * Popup Component
  * @author ryan.bian
  */
-var Popup = (_dec$2 = renderTo(), _dec2$1 = CSSModules(styles, { allowMultiple: allowMultiple }), _dec$2(_class$2 = _dec2$1(_class$2 = (_temp$2 = _class2$2 = function (_PureComponent) {
+var Popup = (_dec$2 = renderTo(), _dec$2(_class$2 = (_temp$2 = _class2$2 = function (_PureComponent) {
   inherits(Popup, _PureComponent);
 
-  function Popup() {
+  function Popup(props) {
     classCallCheck(this, Popup);
-    return possibleConstructorReturn(this, (Popup.__proto__ || Object.getPrototypeOf(Popup)).apply(this, arguments));
+
+    var _this = possibleConstructorReturn(this, (Popup.__proto__ || Object.getPrototypeOf(Popup)).call(this, props));
+
+    _this.state = {
+      popupVisible: props.visible
+    };
+    return _this;
   }
 
+  // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
+
+
   createClass(Popup, [{
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      if (nextProps.visible && !this.props.visible) {
+        this.setState({
+          popupVisible: true
+        });
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       var _props = this.props,
           children = _props.children,
           popupRef = _props.popupRef,
           position = _props.position,
           visible = _props.visible,
-          onMouseEnter = _props.onMouseEnter,
-          onMouseLeave = _props.onMouseLeave;
+          otherProps = objectWithoutProperties(_props, ['children', 'popupRef', 'position', 'visible']);
+      var popupVisible = this.state.popupVisible;
 
-      var stylePos = {
-        left: position[0],
-        top: position[1]
-      };
-      var wrapProps = {
+      var wrapProps = _extends({
         ref: popupRef,
-        styleName: 'popup',
-        style: stylePos,
-        onMouseEnter: onMouseEnter,
-        onMouseLeave: onMouseLeave
-      };
-      return visible ? React.createElement(
-        'div',
-        wrapProps,
-        children
-      ) : null;
+        className: index$1(styles.popup, defineProperty({}, styles['popup--hidden'], !popupVisible))
+      }, otherProps);
+      return React.createElement(
+        Animation,
+        {
+          duration: 300,
+          timingFunction: 'ease-in-out',
+          'in': visible,
+          motion: 'fade',
+          mountOnEnter: true,
+          appear: true,
+          onExited: function onExited() {
+            _this2.setState({
+              popupVisible: false
+            });
+          },
+          style: {
+            position: 'absolute',
+            left: position[0],
+            top: position[1]
+          }
+        },
+        React.createElement(
+          'div',
+          wrapProps,
+          children
+        )
+      );
     }
-
-    // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
-
   }]);
   return Popup;
 }(PureComponent), _class2$2.displayName = 'Popup', _class2$2.defaultProps = {
@@ -401,7 +600,7 @@ var Popup = (_dec$2 = renderTo(), _dec2$1 = CSSModules(styles, { allowMultiple: 
   visible: PropTypes.bool,
   onMouseEnter: PropTypes.func,
   onMouseLeave: PropTypes.func
-}, _temp$2)) || _class$2) || _class$2);
+}, _temp$2)) || _class$2);
 
 /**
  * 绑定事件
@@ -426,6 +625,7 @@ var _dec$1;
 var _class$1;
 var _class2$1;
 var _temp$1;
+var _initialiseProps;
 
 /**
  * Trigger Component
@@ -440,61 +640,12 @@ var Trigger = (_dec$1 = CSSModules(styles, { allowMultiple: allowMultiple }), _d
 
     var _this = possibleConstructorReturn(this, (Trigger.__proto__ || Object.getPrototypeOf(Trigger)).call(this, props));
 
-    _this.checkClosable = function (e) {
-      if (!_this.node || _this.node.contains(e.target)) return;
-      if (_this.popNode && !_this.popNode.contains(e.target)) {
-        _this.handleClickTrigger();
-      }
-    };
-
-    _this.handleMouseEnter = function () {
-      if (_this.leaveTimer) {
-        clearTimeout(_this.leaveTimer);
-        _this.leaveTimer = null;
-      }
-      var mouseEnterDelay = _this.props.mouseEnterDelay;
-
-      _this.enterTimer = setTimeout(function () {
-        _this.setState({
-          active: true
-        });
-      }, mouseEnterDelay);
-    };
-
-    _this.handleMouseLeave = function () {
-      if (_this.enterTimer) {
-        clearTimeout(_this.enterTimer);
-        _this.enterTimer = null;
-      }
-      var mouseLeaveDelay = _this.props.mouseLeaveDelay;
-
-      _this.leaveTimer = setTimeout(function () {
-        _this.setState({
-          active: false
-        });
-      }, mouseLeaveDelay);
-    };
-
-    _this.handleClickTrigger = function (e) {
-      if (e) {
-        e.preventDefault();
-      }
-      _this.setState({
-        active: !_this.state.active
-      }, function () {
-        if (_this.state.active) {
-          // bind close listener
-          on(document.body, 'click', _this.checkClosable);
-        } else {
-          // unbind close listener
-          off(document.body, 'click', _this.checkClosable);
-        }
-      });
-    };
+    _initialiseProps.call(_this);
 
     _this.state = {
       position: [],
-      active: false
+      active: Trigger.getVisibleStateByProps(props),
+      ready: false
     };
     return _this;
   }
@@ -505,14 +656,31 @@ var Trigger = (_dec$1 = CSSModules(styles, { allowMultiple: allowMultiple }), _d
       this.applyPlacement(this.props);
     }
   }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      var _this2 = this;
+
+      if (Trigger.isPopupVisibleDefined(nextProps)) {
+        this.setState({
+          active: Trigger.getVisibleStateByProps(nextProps)
+        }, function () {
+          if (_this2.state.active) {
+            on(document.body, 'click', _this2.checkClosable);
+          } else {
+            off(document.body, 'click', _this2.checkClosable);
+          }
+        });
+      }
+    }
+  }, {
     key: 'componentDidUpdate',
     value: function componentDidUpdate(prevProps, prevState) {
-      var _this2 = this;
+      var _this3 = this;
 
       if (!prevState.active && this.state.active) {
         setTimeout(function () {
-          _this2.applyPlacement(_this2.props);
-        }, 0);
+          _this3.applyPlacement(_this3.props);
+        }, 100);
       }
     }
   }, {
@@ -526,6 +694,12 @@ var Trigger = (_dec$1 = CSSModules(styles, { allowMultiple: allowMultiple }), _d
 
       var selfRect = Trigger.getTargetRect(this.node);
       var popupRect = Trigger.getTargetRect(this.popNode);
+      if (popupRect.width === 0 && popupRect.height === 0) {
+        this.setState({
+          ready: false
+        });
+        return;
+      }
       var scrollX = window.pageXOffset || document.documentElement.scrollLeft;
       var scrollY = window.pageYOffset || document.documentElement.scrollTop;
       var x = scrollX;
@@ -577,15 +751,23 @@ var Trigger = (_dec$1 = CSSModules(styles, { allowMultiple: allowMultiple }), _d
           break;
       }
       var offset = this.props.offset;
+      var position = this.state.position;
 
-      this.setState({
-        position: [x + offset[0], y + offset[1]]
-      });
+      var newState = {
+        ready: true
+      };
+      var newPostition = [x + offset[0], y + offset[1]];
+      if (position[0] !== newPostition[0] || position[0] !== newPostition[0]) {
+        index(newState, {
+          position: newPostition
+        });
+      }
+      this.setState(newState);
     }
   }, {
     key: 'renderPopup',
     value: function renderPopup() {
-      var _this3 = this;
+      var _this4 = this;
 
       var action = this.props.action;
       var _state = this.state,
@@ -594,10 +776,10 @@ var Trigger = (_dec$1 = CSSModules(styles, { allowMultiple: allowMultiple }), _d
 
       var popupProps = {
         ref: function ref(n) {
-          return _this3.popup = n;
+          return _this4.popup = n;
         },
         popupRef: function popupRef(n) {
-          return _this3.popNode = n;
+          return _this4.popNode = n;
         },
         position: position,
         visible: active
@@ -617,7 +799,7 @@ var Trigger = (_dec$1 = CSSModules(styles, { allowMultiple: allowMultiple }), _d
   }, {
     key: 'render',
     value: function render() {
-      var _this4 = this;
+      var _this5 = this;
 
       var _props = this.props,
           action = _props.action,
@@ -625,7 +807,7 @@ var Trigger = (_dec$1 = CSSModules(styles, { allowMultiple: allowMultiple }), _d
 
       var triggerProps = {
         ref: function ref(n) {
-          return _this4.node = n;
+          return _this5.node = n;
         },
         styleName: 'trigger--wrap'
       };
@@ -657,83 +839,108 @@ var Trigger = (_dec$1 = CSSModules(styles, { allowMultiple: allowMultiple }), _d
   placement: ['tl', 'bl'],
   offset: [0, 0],
   popup: '',
+  popupVisible: undefined,
   mouseEnterDelay: 0,
-  mouseLeaveDelay: 100 }, _class2$1.propTypes = {
+  mouseLeaveDelay: 100,
+  onPopupVisibleChange: function onPopupVisibleChange() {}
+}, _class2$1.propTypes = {
   action: PropTypes.oneOf(['hover', 'click']),
   placement: PropTypes.arrayOf(PropTypes.oneOf(Array.from(ALIGN_ENUM))),
   offset: PropTypes.arrayOf(PropTypes.number),
-  popup: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+  popup: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired,
+  popupVisible: PropTypes.bool,
   mouseEnterDelay: PropTypes.number,
-  mouseLeaveDelay: PropTypes.number
+  mouseLeaveDelay: PropTypes.number,
+  onPopupVisibleChange: PropTypes.func
 }, _class2$1.getTargetRect = function (target) {
   return target.getBoundingClientRect();
+}, _class2$1.getVisibleStateByProps = function (props) {
+  return Trigger.isPopupVisibleDefined(props) ? props.popupVisible : false;
+}, _class2$1.isPopupVisibleDefined = function (props) {
+  return typeof props.popupVisible !== 'undefined';
+}, _initialiseProps = function _initialiseProps() {
+  var _this6 = this;
+
+  this.checkClosable = function (e) {
+    if (!_this6.node || _this6.node.contains(e.target)) return;
+    if (_this6.popNode && !_this6.popNode.contains(e.target)) {
+      _this6.handleClickTrigger();
+    }
+  };
+
+  this.handleMouseEnter = function () {
+    if (_this6.leaveTimer) {
+      clearTimeout(_this6.leaveTimer);
+      _this6.leaveTimer = null;
+    }
+    var mouseEnterDelay = _this6.props.mouseEnterDelay;
+
+    _this6.enterTimer = setTimeout(function () {
+      if (Trigger.isPopupVisibleDefined(_this6.props)) {
+        _this6.props.onPopupVisibleChange(true);
+      } else {
+        _this6.setState({
+          active: true
+        }, function () {
+          _this6.props.onPopupVisibleChange(true);
+        });
+      }
+    }, mouseEnterDelay);
+  };
+
+  this.handleMouseLeave = function () {
+    if (_this6.enterTimer) {
+      clearTimeout(_this6.enterTimer);
+      _this6.enterTimer = null;
+    }
+    var mouseLeaveDelay = _this6.props.mouseLeaveDelay;
+
+    _this6.leaveTimer = setTimeout(function () {
+      if (Trigger.isPopupVisibleDefined(_this6.props)) {
+        _this6.props.onPopupVisibleChange(false);
+      } else {
+        _this6.setState({
+          active: false
+        }, function () {
+          _this6.props.onPopupVisibleChange(false);
+        });
+      }
+    }, mouseLeaveDelay);
+  };
+
+  this.handleClickTrigger = function (e) {
+    if (e) {
+      e.preventDefault();
+    }
+    if (Trigger.isPopupVisibleDefined(_this6.props)) {
+      _this6.props.onPopupVisibleChange(!_this6.state.active);
+    } else {
+      _this6.setState({
+        active: !_this6.state.active
+      }, function () {
+        if (_this6.state.active) {
+          // bind close listener
+          on(document.body, 'click', _this6.checkClosable);
+        } else {
+          // unbind close listener
+          off(document.body, 'click', _this6.checkClosable);
+        }
+        _this6.props.onPopupVisibleChange(_this6.state.active);
+      });
+    }
+  };
 }, _temp$1)) || _class$1);
 
-function createCommonjsModule(fn, module) {
-	return module = { exports: {} }, fn(module, module.exports), module.exports;
-}
+var styles$2 = { "danger": "_1IZL9la", "dashed": "_3YSE_nE", "secondary": "_16NdYXA", "primary": "_1rlU5o-", "base": "CTy3CHb", "small": "_1FNLWX0", "normal": "_1O7JoXn", "large": "_1JYFbqn", "disabled": "_3P6QXVt", "button--primary": "_11KqluX CTy3CHb _1rlU5o-", "button--secondary": "_1QjCEA1 CTy3CHb _16NdYXA", "button--dashed": "_1Ko5_w4 CTy3CHb _3YSE_nE", "button--danger": "_16108o6 CTy3CHb _1IZL9la", "button--disabled": "_3dqIZEv CTy3CHb _3P6QXVt", "button--large": "_3KW6hMp _1JYFbqn", "button--normal": "_3mBVgjk _1O7JoXn", "button--small": "_2HVyQfI _1FNLWX0", "buttonPrimary": "_11KqluX CTy3CHb _1rlU5o-", "buttonSecondary": "_1QjCEA1 CTy3CHb _16NdYXA", "buttonDashed": "_1Ko5_w4 CTy3CHb _3YSE_nE", "buttonDanger": "_16108o6 CTy3CHb _1IZL9la", "buttonDisabled": "_3dqIZEv CTy3CHb _3P6QXVt", "buttonLarge": "_3KW6hMp _1JYFbqn", "buttonNormal": "_3mBVgjk _1O7JoXn", "buttonSmall": "_2HVyQfI _1FNLWX0" };
 
-var index$2 = createCommonjsModule(function (module) {
-/*!
-  Copyright (c) 2016 Jed Watson.
-  Licensed under the MIT License (MIT), see
-  http://jedwatson.github.io/classnames
-*/
-/* global define */
-
-(function () {
-	'use strict';
-
-	var hasOwn = {}.hasOwnProperty;
-
-	function classNames () {
-		var classes = [];
-
-		for (var i = 0; i < arguments.length; i++) {
-			var arg = arguments[i];
-			if (!arg) continue;
-
-			var argType = typeof arg;
-
-			if (argType === 'string' || argType === 'number') {
-				classes.push(arg);
-			} else if (Array.isArray(arg)) {
-				classes.push(classNames.apply(null, arg));
-			} else if (argType === 'object') {
-				for (var key in arg) {
-					if (hasOwn.call(arg, key) && arg[key]) {
-						classes.push(key);
-					}
-				}
-			}
-		}
-
-		return classes.join(' ');
-	}
-
-	if ('object' !== 'undefined' && module.exports) {
-		module.exports = classNames;
-	} else if (typeof undefined === 'function' && typeof undefined.amd === 'object' && undefined.amd) {
-		// register as 'classnames', consistent with npm package name
-		undefined('classnames', [], function () {
-			return classNames;
-		});
-	} else {
-		window.classNames = classNames;
-	}
-}());
-});
-
-var styles$1 = { "danger": "_1IZL9la", "dashed": "_3YSE_nE", "secondary": "_16NdYXA", "primary": "_1rlU5o-", "base": "CTy3CHb", "small": "_1FNLWX0", "normal": "_1O7JoXn", "large": "_1JYFbqn", "disabled": "_3P6QXVt", "button--primary": "_11KqluX CTy3CHb _1rlU5o-", "button--secondary": "_1QjCEA1 CTy3CHb _16NdYXA", "button--dashed": "_1Ko5_w4 CTy3CHb _3YSE_nE", "button--danger": "_16108o6 CTy3CHb _1IZL9la", "button--disabled": "_3dqIZEv CTy3CHb _3P6QXVt", "button--large": "_3KW6hMp _1JYFbqn", "button--normal": "_3mBVgjk _1O7JoXn", "button--small": "_2HVyQfI _1FNLWX0", "buttonPrimary": "_11KqluX CTy3CHb _1rlU5o-", "buttonSecondary": "_1QjCEA1 CTy3CHb _16NdYXA", "buttonDashed": "_1Ko5_w4 CTy3CHb _3YSE_nE", "buttonDanger": "_16108o6 CTy3CHb _1IZL9la", "buttonDisabled": "_3dqIZEv CTy3CHb _3P6QXVt", "buttonLarge": "_3KW6hMp _1JYFbqn", "buttonNormal": "_3mBVgjk _1O7JoXn", "buttonSmall": "_2HVyQfI _1FNLWX0" };
-
-var _class$3;
-var _temp$3;
+var _class$4;
+var _temp$4;
 
 /**
  * Button Component
  * @author ryan.bian
  */
-var Button = (_temp$3 = _class$3 = function (_PureComponent) {
+var Button = (_temp$4 = _class$4 = function (_PureComponent) {
   inherits(Button, _PureComponent);
 
   function Button() {
@@ -752,7 +959,7 @@ var Button = (_temp$3 = _class$3 = function (_PureComponent) {
           otherProps = objectWithoutProperties(_props, ['children', 'type', 'size', 'disabled']);
 
       var btnProps = _extends({}, otherProps, {
-        className: index$2(styles$1['button--' + (disabled$$1 ? 'disabled' : type)], styles$1['button--' + size])
+        className: index$1(styles$2['button--' + (disabled$$1 ? 'disabled' : type)], styles$2['button--' + size])
       });
       return React.createElement(
         'button',
@@ -765,20 +972,20 @@ var Button = (_temp$3 = _class$3 = function (_PureComponent) {
 
   }]);
   return Button;
-}(PureComponent), _class$3.displayName = 'Button', _class$3.defaultProps = {
+}(PureComponent), _class$4.displayName = 'Button', _class$4.defaultProps = {
   type: 'primary',
-  size: 'normal' }, _class$3.propTypes = {
+  size: 'normal' }, _class$4.propTypes = {
   type: PropTypes.oneOf(['primary', 'secondary', 'dashed', 'danger']),
   size: PropTypes.oneOf(['normal', 'large', 'small'])
-}, _temp$3);
+}, _temp$4);
 
-var styles$2 = { "dropdown--buttonWrap": "gLXAOiI", "dropdown--menuItem": "_2pDhaod", "dropdown": "_2wHqwX6", "dropdown--menu": "Hze9W1M", "dropdownButtonWrap": "gLXAOiI", "dropdownMenuItem": "_2pDhaod", "dropdownMenu": "Hze9W1M" };
+var styles$3 = { "dropdown--buttonWrap": "gLXAOiI", "dropdown--menuItem": "_2pDhaod", "dropdown": "_2wHqwX6", "dropdown--menu": "Hze9W1M", "dropdownButtonWrap": "gLXAOiI", "dropdownMenuItem": "_2pDhaod", "dropdownMenu": "Hze9W1M" };
 
 var _dec$3;
-var _class$4;
+var _class$5;
 var _class2$3;
-var _temp$4;
-var _dec2$2;
+var _temp$5;
+var _dec2$1;
 var _class3$1;
 var _class4$1;
 var _temp2$1;
@@ -787,7 +994,7 @@ var _temp2$1;
  * Dropdown.Menu Component
  * @author ryan.bian
  */
-var Menu = (_dec$3 = CSSModules(styles$2, { allowMultiple: allowMultiple }), _dec$3(_class$4 = (_temp$4 = _class2$3 = function (_PureComponent) {
+var Menu = (_dec$3 = CSSModules(styles$3, { allowMultiple: allowMultiple }), _dec$3(_class$5 = (_temp$5 = _class2$3 = function (_PureComponent) {
   inherits(Menu, _PureComponent);
 
   function Menu(props) {
@@ -817,8 +1024,8 @@ var Menu = (_dec$3 = CSSModules(styles$2, { allowMultiple: allowMultiple }), _de
     }
   }]);
   return Menu;
-}(PureComponent), _class2$3.displayName = 'Menu', _class2$3.defaultProps = {}, _class2$3.propTypes = {}, _temp$4)) || _class$4);
-var Item = (_dec2$2 = CSSModules(styles$2, { allowMultiple: allowMultiple }), _dec2$2(_class3$1 = (_temp2$1 = _class4$1 = function (_PureComponent2) {
+}(PureComponent), _class2$3.displayName = 'Menu', _class2$3.defaultProps = {}, _class2$3.propTypes = {}, _temp$5)) || _class$5);
+var Item = (_dec2$1 = CSSModules(styles$3, { allowMultiple: allowMultiple }), _dec2$1(_class3$1 = (_temp2$1 = _class4$1 = function (_PureComponent2) {
   inherits(Item, _PureComponent2);
 
   function Item(props) {
@@ -891,7 +1098,7 @@ var _temp2;
  * Dropdown Component
  * @author ryan.bian
  */
-var Dropdown = (_dec = CSSModules(styles$2, { allowMultiple: allowMultiple }), _dec(_class = (_temp = _class2 = function (_PureComponent) {
+var Dropdown = (_dec = CSSModules(styles$3, { allowMultiple: allowMultiple }), _dec(_class = (_temp = _class2 = function (_PureComponent) {
   inherits(Dropdown, _PureComponent);
 
   function Dropdown(props) {
@@ -939,7 +1146,7 @@ var Dropdown = (_dec = CSSModules(styles$2, { allowMultiple: allowMultiple }), _
   overlay: PropTypes.instanceOf(Menu),
   placement: PropTypes.oneOf(['bottomLeft', 'bottomCenter', 'bottomRight', 'topLeft', 'topCenter', 'topRight'])
 }, _temp)) || _class);
-var DropdownButton = (_dec2 = CSSModules(styles$2, { allowMultiple: allowMultiple }), _dec2(_class3 = (_temp2 = _class4 = function (_PureComponent2) {
+var DropdownButton = (_dec2 = CSSModules(styles$3, { allowMultiple: allowMultiple }), _dec2(_class3 = (_temp2 = _class4 = function (_PureComponent2) {
   inherits(DropdownButton, _PureComponent2);
 
   function DropdownButton(props) {

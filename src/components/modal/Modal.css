@@ -3,7 +3,7 @@
  * @author ryan.bian
  */
 .mask {
-  display: none;
+  /* display: none; */
 }
 .mask--visible {
   position: fixed;
@@ -11,21 +11,22 @@
   top: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, .3)!important;
+  background: rgba(0, 0, 0, .3) !important;
 }
 .modal {
-  display: none;
-}
-.modal--visible {
+  /* display: none; */
   position: absolute;
   left: 0;
   right: 0;
   top: 50%;
   margin: 0 auto;
-  display: block;
   background-color: #fff;
-  border: 1px solid border-color;
+  border-radius: 3px;
+  border: 1px solid var(--border-color);
   transform: translateY(-50%);
+}
+.modal--visible {
+  display: block;
 }
 
 .modal__header {
@@ -35,40 +36,49 @@
   color: #333;
   text-align: left;
 }
-.modal__header p{
+.modal__header p {
   display: inline-block;
 }
-.modal__header>p>span{
+.modal__header > p > span {
   padding-left: 10px;
   vertical-align: 3px;
 }
 .modal__closable {
   position: absolute;
   right: 15px;
-  color: #a6a6a6;
-}
-.modal__closable:hover{
-  text-decoration: none;
+  & svg {
+    fill: #999;
+  }
+  &:active {
+    & svg {
+      fill: #666 !important;
+    }
+  }
 }
 .modal__footer {
-  margin: 16px 16px;
+  margin: 16px;
   text-align: right;
+  & button {
+    margin-left: 16px;
+    min-width: 80px;
+    text-align: center;
+  }
 }
-.modal__footer button{
-  /*width: 80px;*/
-  margin-left: 16px;
-}
-.modal__content{
+.modal__content {
   width: 370px;
   padding: 0px 20px;
   word-wrap: break-word;
   font-size: 14px;
   margin-bottom: 40px;
 }
-.modal__icon{
+.modal__icon {
   margin-bottom: 20px;
 }
-.modal--info .modal__content{}
-.modal--success .modal__content{}
-.modal--error .modal__content{}
-.modal--warning .modal__content{}
+.modal--info .modal__content {
+}
+.modal--success .modal__content {
+}
+.modal--error .modal__content {
+}
+.modal--warning .modal__content {
+}
