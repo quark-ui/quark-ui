@@ -2,261 +2,258 @@
  * Upload Style
  * @author heifade
  */
-:root{
-    --upload-card-width: 111px;
-    --upload-card-height: 111px;
+:root {
+  --upload-card-width: 111px;
+  --upload-card-height: 111px;
 }
 
-
 .upload {
-    &, & *, & *:after, & *:before {
-        box-sizing: border-box;
-    }
-    & .upload-select{
-        display: inline-block;
-    }
-    & .upload-select-text{
-
-    }
+  &,
+  & *,
+  & *:after,
+  & *:before {
+    box-sizing: border-box;
+  }
+  & .upload-select {
+    display: inline-block;
+  }
+  & .upload-select-text {
+  }
 }
 
 .upload-list {
-    & *, & *:after, & *:before {
-        box-sizing: border-box;
-    }
-    & .upload-list-item {
-        overflow: hidden;
-        margin-top: 8px;
-        font-size: 12px;
-        position: relative;
-        height: 24px;
-        width: 300px;
+  & *,
+  & *:after,
+  & *:before {
+    box-sizing: border-box;
+  }
+  & .upload-list-item {
+    overflow: hidden;
+    margin-top: 8px;
+    font-size: 12px;
+    position: relative;
+    height: 24px;
+    width: 300px;
 
-        & .remove {
-            position: absolute;
-            top: 6px;
-            right: 4px;
-            opacity: 0;
-            cursor: pointer;
-        }
-
-        & .upload-list-item-info {
-            line-height: 24px;
-            padding: 0 12px 0 4px;
-            transition: background-color .3s;
-            
-            & .status {
-                position: absolute;
-                top: 5px;
-                color: #979797;
-            }
-        }
-        
-        & .upload-list-item-name {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            padding-left: 16px;
-            width: 100%;
-            display: inline-block;
-        }
-
-        & .upload-list-item-progress {
-            line-height: 0;
-            font-size: 12px;
-            position: absolute;
-            width: 100%;
-            bottom: 0px;
-            top: 10px;
-        }
-
-        &:hover {
-            & .remove {
-                opacity: 1;
-            }
-            & .upload-list-item-info {
-                background-color: #f6f8fc;
-            }
-        }
-    }
-    
-
-    & .upload-list-item-uploading{
-
-    }
-    & .upload-list-item-done {
-
-    }
-    & .upload-list-item-error {
-        color: #fe3824;
+    & .remove {
+      position: absolute;
+      top: 6px;
+      right: 4px;
+      opacity: 0;
+      cursor: pointer;
     }
 
-    & .upload-list-text{
+    & .upload-list-item-info {
+      line-height: 24px;
+      padding: 0 12px 0 4px;
+      transition: background-color .3s;
 
+      & .status {
+        position: absolute;
+        top: 5px;
+        color: #979797;
+      }
     }
+
+    & .upload-list-item-name {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      padding-left: 16px;
+      width: 100%;
+      display: inline-block;
+    }
+
+    & .upload-list-item-progress {
+      line-height: 0;
+      font-size: 12px;
+      position: absolute;
+      width: 100%;
+      bottom: 0px;
+      top: 10px;
+    }
+
+    &:hover {
+      & .remove {
+        opacity: 1;
+      }
+      & .upload-list-item-info {
+        background-color: #f6f8fc;
+      }
+    }
+  }
+
+  & .upload-list-item-uploading {
+  }
+  & .upload-list-item-done {
+  }
+  & .upload-list-item-error {
+    color: #fe3824;
+  }
+
+  & .upload-list-text {
+  }
 }
 
 @keyframes pictureShow {
-    0% {
-        transform: scale(0.7);
-        opacity: 0.3;
-    }
-    100%{
-        transform: scale(1);
-        opacity: 1;
-    }
+  0% {
+    transform: scale(0.7);
+    opacity: 0.3;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .upload-select-picture-card {
+  width: var(--upload-card-width);
+  height: var(--upload-card-height);
+  border-radius: 4px;
+  background-color: #f5f5f5;
+  border: 1px dashed #999999;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+  display: inline-block;
+  vertical-align: top;
+  color: #666666;
+  transform: scale(1);
+  transition: transform 0.3s;
+
+  & > :global(.upload) {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  & > :global(.upload-disabled) {
+    cursor: not-allowed;
+  }
+  &:hover {
+    border-color: var(--brand-primary-light);
+    color: var(--brand-primary-light);
+  }
+  &:active {
+    border-color: var(--brand-primary-dark);
+    color: var(--brand-primary-dark);
+  }
+  &.hide {
+    transform: scale(0);
+    transition: transform 0.3s;
+  }
+}
+
+.upload-list-picture-card {
+  display: inline;
+
+  &,
+  & *,
+  & *:after,
+  & *:before {
+    box-sizing: border-box;
+  }
+
+  &:after {
+    clear: both;
+  }
+
+  & .upload-list-item {
+    float: left;
     width: var(--upload-card-width);
     height: var(--upload-card-height);
+    margin: 0 8px 8px 0;
+
+    padding: 8px;
     border-radius: 4px;
-    background-color: #f5f5f5;
-    border: 1px dashed #999999;
-    text-align: center;
-    cursor: pointer;
-    transition: border-color 0.3s ease;
-    display: inline-block;
-    vertical-align: top;
-    color: #666666;
-    transform: scale(1);
-    transition: transform 0.3s;
+    border: 1px solid #d9d9d9;
+    position: relative;
 
-    & > :global(.upload) {
+    & .upload-list-item-info {
+      height: 100%;
+      padding: 0;
+      position: relative;
+
+      & .upload-list-item-thumbnail {
         width: 100%;
         height: 100%;
-        display: block;
+        position: static;
+        top: 8px;
+        left: 8px;
+
+        & img {
+          overflow: hidden;
+          border-radius: 4px;
+          display: block;
+          width: 100%;
+          height: 100%;
+          position: static;
+          border-style: none;
+        }
+      }
+      & .upload-list-item-name {
+        display: none;
+      }
+      /*上传中*/
+      & .uploading-text {
+        line-height: calc(var(--upload-card-height) - 18px);
+        text-align: center;
+      }
+      /*缩略图*/
+      & .imgshow {
+        animation: pictureShow;
+        animation-duration: 0.3s;
+      }
+    }
+    & .upload-list-item-info:hover + .upload-list-item-actions,
+    & .upload-list-item-actions:hover {
+      opacity: 1;
     }
 
-    & > :global(.upload-disabled){
-        cursor: not-allowed;
+    & .remove,
+    & .eye {
+      position: static;
+      cursor: pointer;
+      color: #fff;
+      margin: 0 12px;
     }
-    &:hover{
-        border-color: var(--brand-primary-light);
-        color: var(--brand-primary-light);
+
+    &:hover .upload-list-item-info:before {
+      transition: opacity .3s;
+      opacity: 1;
     }
-    &:active {
-        border-color: var(--brand-primary-dark);
-        color: var(--brand-primary-dark);
+
+    & .upload-list-item-progress {
+      width: calc(var(--upload-card-width) - 18px);
+      bottom: 20px;
     }
-    &.hide{
-        transform: scale(0);
-        transition: transform 0.3s;
-    }
+  }
+
+  & .upload-list-item-error {
+    color: var(--fail-color);
+    border-color: var(--fail-color);
+  }
+
+  & .upload-list-item-actions {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    white-space: nowrap;
+    opacity: 0;
+    transition: all .3s;
+  }
+
+  & .upload-list-item-info:before {
+    content: ' ';
+    position: absolute;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: all .3s;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    border-radius: 2px;
+  }
 }
-
-
-.upload-list-picture-card{
-    display: inline;
-
-    &, & *, & *:after, & *:before {
-        box-sizing: border-box;
-    }
-
-    &:after {
-        clear: both;
-    }
-
-    & .upload-list-item{
-        float: left;
-        width: var(--upload-card-width);
-        height: var(--upload-card-height);
-        margin: 0 8px 8px 0;
-
-        padding: 8px;
-        border-radius: 4px;
-        border: 1px solid #d9d9d9;
-        position: relative;
-
-        & .upload-list-item-info{
-            height: 100%;
-            padding: 0;
-            position: relative;
-
-            & .upload-list-item-thumbnail{
-                width: 100%;
-                height: 100%;
-                position: static;
-                top: 8px;
-                left: 8px;
-
-                & img{
-                    overflow: hidden;
-                    border-radius: 4px;
-                    display: block;
-                    width: 100%;
-                    height: 100%;
-                    position: static;
-                    border-style: none;
-                }
-            }
-            & .upload-list-item-name{
-                display: none;
-            }
-            /*上传中*/
-            & .uploading-text{
-                line-height: calc( var(--upload-card-height) - 18px);
-                text-align: center;
-            }
-            /*缩略图*/
-            & .imgshow{
-                animation: pictureShow;
-                animation-duration: 0.3s;
-            }
-        }
-        & .upload-list-item-info:hover + .upload-list-item-actions,
-        & .upload-list-item-actions:hover {
-            opacity: 1;
-        }
-
-        & .remove, & .eye {
-            position: static;
-            cursor: pointer;
-            color: #ffffff;
-            margin: 0 12px;
-        }
-
-        &:hover .upload-list-item-info:before{
-            transition: opacity .3s;
-            opacity: 1;
-        }
-
-        & .upload-list-item-progress {
-            width: calc( var(--upload-card-width) - 18px);
-            bottom: 20px;
-        }
-    }
-
-    & .upload-list-item-error {
-        color: #fe3824;
-        border-color: #f04134;
-    }
-
-    & .upload-list-item-actions{
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 10;
-        white-space: nowrap;
-        opacity: 0;
-        transition: all .3s;
-    }
-
-    & .upload-list-item-info:before{
-        content: ' ';
-        position: absolute;
-        z-index: 1;
-        background-color: rgba(0, 0, 0, 0.5);
-        transition: all .3s;
-        width: 100%;
-        height: 100%;
-        opacity: 0;
-        border-radius: 2px;
-    }
-}
-
-
-
-
-

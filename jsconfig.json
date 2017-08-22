@@ -1,10 +1,10 @@
 {
-    "compilerOptions":{
-        "experimentalDecorators": true
-    },
-    "excludes": [
-        "node_modules",
-        "es",
-        "lib"
-    ]
+  "compilerOptions":{
+    "experimentalDecorators": true
+  },
+  "exclude": [
+    "node_modules",
+    "es",
+    "lib"
+  ]
 }

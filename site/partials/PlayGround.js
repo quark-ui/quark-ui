@@ -5,12 +5,14 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { transform } from 'babel-standalone';
 import classnames from 'classnames';
-import 'codemirror/mode/javascript/javascript';
+import 'codemirror/mode/jsx/jsx';
 import PropTypes from 'prop-types';
 import Transition from 'react-transition-group/Transition';
 import CodeMirror from './Codemirror';
 import * as QuarkUI from '../../src/index';
 import RunningIcon from '../icons/run.svg';
+import defaultRepl from '!raw-loader!../repl/default';
+
 
 import styles from './PlayGround.css';
 
@@ -61,12 +63,17 @@ export default class PlayGround extends Component {
   async loadRepl() {
     const { componentName } = this.props;
     try {
-      const repl = await import(`!raw-loader!../../src/components/${componentName}/repl/index`);
+      const repl = await import(`!raw-loader!../repl/${componentName}`);
       this.setState({
         repl,
       });
       this.executeCode(repl);
-    } catch (e) {}
+    } catch (e) {
+      this.setState({
+        repl: defaultRepl,
+      });
+      this.executeCode(defaultRepl);
+    }
   }
   executeCode(code) {
     const scope = this.buildScope();
@@ -99,7 +106,7 @@ export default class PlayGround extends Component {
         this.executeCode(newCode);
       },
       options: {
-        mode: 'javascript',
+        mode: 'jsx',
         lineNumbers: true,
         theme: 'material',
         tabSize: 2,

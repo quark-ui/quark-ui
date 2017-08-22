@@ -1,0 +1,31 @@
+{
+  "presets": [
+    "es2015",
+    "stage-0",
+    "react"
+  ],
+  "plugins": [
+    "transform-decorators-legacy",
+    "transform-runtime",
+    "css-modules-transform"
+  ],
+  "env": {
+    "build": {
+      "optional": [
+        "optimisation",
+        "minification"
+      ]
+    },
+    "test": {
+      "plugins": [
+        [
+          "babel-plugin-webpack-loaders",
+          {
+            "config": "./conf/webpack.conf.js",
+            "verbose": false
+          }
+        ]
+      ]
+    }
+  }
+}
