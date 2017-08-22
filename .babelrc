@@ -7,7 +7,8 @@
   "plugins": [
     "transform-decorators-legacy",
     "transform-runtime",
-    "css-modules-transform"
+    "css-modules-transform",
+    "inline-react-svg"
   ],
   "env": {
     "build": {
