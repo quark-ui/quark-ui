@@ -1,3 +1,4 @@
+import React from 'react';
 import account from './account.svg';
 import arrowDown from './arrow-down.svg';
 import arrowLeft from './arrow-left.svg';

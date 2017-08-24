@@ -2,7 +2,7 @@
  * Modal Component
  * @author ryan.bian
  */
-import { Component } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
 import classnames from 'classnames';
