@@ -2,15 +2,13 @@
  * Line Component
  * @author ryan.bian
  */
+import React from 'react';
 import classnames from 'classnames';
 import { defaultProps, propTypes } from './propDefine';
 import Icon from '../icon';
 import styles from './Progress.css';
 
 const Line = ({ percent, status, size, showInfo }) => {
-  console.log(showInfo);
-
-
   const lineProps = {
     className: classnames(
       styles[`progress__${showInfo ? 'showinfo' : 'line'}`],
@@ -51,7 +49,7 @@ const Line = ({ percent, status, size, showInfo }) => {
           <span className={styles.progress__lineIndicator}>
             {indicator}
           </span>
-        : null
+          : null
       }
     </div>
   );
