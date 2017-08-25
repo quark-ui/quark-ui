@@ -2,7 +2,7 @@
  * Spin Component
  * @author Northerner
  */
-import { PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
 import Animate from 'rc-animate';

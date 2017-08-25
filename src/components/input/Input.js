@@ -2,7 +2,7 @@
  * Input Component
  * @author yan
  */
-import { PureComponent, cloneElement } from 'react';
+import React, { PureComponent, cloneElement } from 'react';
 import PropTypes from 'prop-types';
 import assign from 'object-assign';
 import CSSModules from 'react-css-modules';

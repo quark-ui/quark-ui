@@ -34,11 +34,11 @@ describe('steps-test-describe----------', () => {
   it('step status is finish && step title', () => {
     const props = {};
     const app = shallow(
-        <Step status="finish" title="步骤1" />
+        <Step status="finish" title="步骤1" description="这是一段很长很长很长的描述性文字" />
     );
     expect(app.find(`.${styles['steps--item__finish']}`).length).to.equal(1);
     expect(app.find(`.${styles['steps--item']}`).text()).to.equal('步骤1');
-
+    expect(app.find(`.${styles['steps--description']}`).length).to.equal(1);
   });
 
 
