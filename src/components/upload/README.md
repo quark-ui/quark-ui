@@ -28,7 +28,7 @@ Upload Component.
 |onRemove|Function(file): boolean 或 Promise|null|点击移除文件时的回调，返回值为 false 时不移除。支持返回一个 Promise 对象，Promise 对象 resolve(false) 或 reject 时不移除。|
 |disabled|bool|false|是否禁用|
 |withCredentials|bool|false|上传请求时是否携带 cookie|
-|onResponse|Function(response)|默认根据下面结构处理：{"result":"success","msg":"上传成功"}|根据服务端返回的内容，判断是否上传成功|
+|onResponse|Function(response)|默认根据下面结构处理：{"result":"success","msg":"上传成功", url:"http://abc.jpg"}|根据服务端返回的内容，判断是否上传成功|
 
 
 
