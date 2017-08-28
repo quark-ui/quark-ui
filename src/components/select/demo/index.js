@@ -15,6 +15,13 @@ class SelectDemo1 extends Component {
     };
   }
 
+  onChange = ({ title, value }) => {
+    this.setState({
+      value,
+      title,
+    });
+  }
+
   setDisabled = () => {
     this.setState({
       disabled: !this.state.disabled,
@@ -24,13 +31,6 @@ class SelectDemo1 extends Component {
   setSelect = () => {
     this.setState({
       value: 'B',
-    });
-  }
-
-  onChange = ({ title, value }) => {
-    this.setState({
-      value,
-      title,
     });
   }
 
@@ -55,7 +55,7 @@ class SelectDemo1 extends Component {
 
         <h3>非受控</h3>
         <p />
-        <Select style={{ width: 250 }} disabled={disabled} defaultValue="B"onChange={m => console.log(m)}>
+        <Select style={{ width: 250 }} disabled={disabled} defaultValue="C" onChange={this.onChange}>
           <Option value="A">AA</Option>
           <Option value="B">BB</Option>
           <Option value="C">CC</Option>
@@ -295,17 +295,17 @@ class SelectDemo3 extends Component {
   }
 }
 
-export default class UploadDemo extends Component {
+export default class SelectDemo extends Component {
   render() {
     return (
       <div className="markdown-block">
         <SelectDemo1 />
         <br /><br />
-        <SelectDemo4 />
+        {/* <SelectDemo4 /> */}
         <br /><br />
         <SelectDemo2 />
         <br /><br />
-        <SelectDemo3 />
+        {/* <SelectDemo3 /> */}
       </div>
     );
   }

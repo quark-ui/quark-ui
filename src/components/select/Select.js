@@ -141,7 +141,7 @@ export default class Select extends PureComponent {
         value,
         title,
       });
-    }else {
+    } else {
       // 非受控组件
       this.setState({
         value,

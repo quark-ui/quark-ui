@@ -3,7 +3,7 @@
  * @author heifade
  */
 
-import { PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import styles from './Select.css';
@@ -38,8 +38,9 @@ export default class Option extends PureComponent {
     const { children, value } = this.props;
     const { context } = this;
     const { childContext } = context;
-
     const isActived = childContext.getSelectedValue() === value;
+
+    console.log(66, childContext.getSelectedValue(), value);
 
     return (
       <li
