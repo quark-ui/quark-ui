@@ -3,7 +3,7 @@
  * @author heifade
  */
 import React, { PureComponent } from 'react';
-import { Subject } from 'rxjs';
+import debounce from 'lodash/debounce';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import Icon from '../icon/Icon';
@@ -74,7 +74,15 @@ export default class Select extends PureComponent {
       dropdownVisible: false, // 下拉弹层是否显示
     };
 
-    this.initSearchTextStream();
+    this.searchTextDebounced = debounce((searchTextString) => {
+      const { onSearch } = this.props;
+      if (onSearch) {
+        onSearch(searchTextString);
+      }
+      this.setState({
+        dropdownVisible: true,
+      });
+    }, 300);
   }
 
   getChildContext = () => ({
@@ -121,14 +129,15 @@ export default class Select extends PureComponent {
         });
         onCancelChange();
       } else {
-        this.searchTextStream.next(this.state.searchText);
+        this.searchTextDebounced(this.state.searchText);
       }
     }
   }
 
   onComboboxInputChanged = (e) => {
     const value = e.target.value;
-    this.searchTextStream.next(value);
+    this.searchTextDebounced(value);
+
     if (value) {
       this.setState({
         // value,
@@ -201,23 +210,6 @@ export default class Select extends PureComponent {
     return text;
   }
 
-  initSearchTextStream() {
-    const { onSearch } = this.props;
-    this.searchTextStream = new Subject();
-    this.searchTextStream
-      .debounceTime(300)
-      .distinctUntilChanged()
-      .subscribe((searchText) => {
-        if (onSearch) {
-          onSearch(searchText);
-
-          this.setState({
-            dropdownVisible: true,
-          });
-        }
-      });
-  }
-
   remove = (e) => {
     if (e) {
       e.stopPropagation();
@@ -228,6 +220,8 @@ export default class Select extends PureComponent {
       searchText: null,
       textOfLastSelected: null,
     });
+
+    this.searchTextDebounced('');
 
     const { onChange } = this.props;
     if (onChange) {
