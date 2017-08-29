@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow, mount, render } from 'enzyme';
 import { expect, should } from 'chai';
 import Spin from '../Spin';
-import Alert from '../../Alert';
+import Alert from '../../alert';
 import styles from '../Spin.css';
 
 describe('spin-test-describe----------', () => {
