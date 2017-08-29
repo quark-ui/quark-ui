@@ -4,7 +4,7 @@ import { expect, should } from 'chai';
 import sinon from 'sinon';
 import Input from '../Input';
 import CardInput from '../CardInput';
-import Icon from '../../Icon';
+import Icon from '../../icon';
 import styles from '../Input.css';
 
 describe('input-test-describe----------', () => {
