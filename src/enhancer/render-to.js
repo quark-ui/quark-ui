@@ -3,7 +3,7 @@
  * render Component into target node
  * @author: ryan.bian
  */
-import { PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import ReactDOM from 'react-dom';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 

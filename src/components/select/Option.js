@@ -3,24 +3,24 @@
  * @author heifade
  */
 
-import { PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import styles from './Select.css';
 
-export default class Option extends PureComponent {
+export default class Option extends Component {
   static displayName = 'Option';
 
   static defaultProps = {
     value: '',
-    title: undefined,
+    text: undefined,
     children: null,
   };
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
   static propTypes = {
     value: PropTypes.string.isRequired,
-    title: PropTypes.string,
-    children: PropTypes.arrayOf(PropTypes.element),
+    text: PropTypes.string,
+    children: PropTypes.any,
   };
 
   static contextTypes = {
@@ -30,15 +30,14 @@ export default class Option extends PureComponent {
   click = () => {
     const { context } = this;
     const { childContext } = context;
-    const { value, title, children } = this.props;
-    childContext.onOptionSelected(value, title || children);
+    const { value, text, children } = this.props;
+    childContext.onOptionSelected(value, text || children);
   };
 
   render() {
     const { children, value } = this.props;
     const { context } = this;
     const { childContext } = context;
-
     const isActived = childContext.getSelectedValue() === value;
 
     return (

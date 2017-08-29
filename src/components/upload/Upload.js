@@ -192,6 +192,7 @@ class Upload extends React.Component {
       const resultData = this.props.onResponse(response);
       if (resultData.success) {
         targetItem.status = 'done';
+        targetItem.url = resultData.url;
       } else {
         targetItem.status = 'error';
         targetItem.response = resultData.message;
@@ -332,7 +333,6 @@ class Upload extends React.Component {
     // });
 
     const uploadButton = (
-      // <div styleName={`${prefixCls} ${prefixCls}-select ${prefixCls}-select-${listType} `} style={{ display: children ? '' : 'none' }}>
       <div styleName={`${prefixCls} ${prefixCls}-select ${prefixCls}-select-${listType} ${children ? '' : 'hide'}`}>
         <RcUpload {...rcUploadProps} ref="upload" />
       </div>
