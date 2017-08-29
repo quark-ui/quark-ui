@@ -3,6 +3,7 @@
  * @author heifade
  */
 import React, { PureComponent } from 'react';
+import debounce from 'lodash/debounce';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import Icon from '../icon/Icon';
@@ -21,7 +22,7 @@ export default class Select extends PureComponent {
     type: 'dropdown',
     style: { width: 200 },
     disabled: false,
-    // defaultValue:'',
+    text: null,
     children: null,
     onSearch: () => {},
     onChange: () => {},
@@ -38,6 +39,7 @@ export default class Select extends PureComponent {
     style: PropTypes.object,
     disabled: PropTypes.bool,
     value: PropTypes.string,
+    text: PropTypes.string,
     defaultValue: PropTypes.string,
     onSearch: PropTypes.func,
     children: PropTypes.arrayOf(PropTypes.element),
@@ -54,20 +56,33 @@ export default class Select extends PureComponent {
     super(props);
 
     const value = this.props.value || this.props.defaultValue;
-    const title = this.getValue(this.props.children, value);
-
+    const { type } = this.props;
+    let text = null;
+    let searchText = null;
+    if (type === 'combobox') {
+      text = this.props.text || null;
+      searchText = this.props.text || null;
+    } else {
+      text = this.getValue(this.props.children, value);
+    }
 
     this.state = {
-      value,
-      title: title || undefined,
-      dropdownVisible: false, // 下接弹层是否显示
+      value, // 值
+      text, // 显示文本,
+      searchText, // (combobox专用) 搜索文本
+      textOfLastSelected: null, // (combobox专用)，上次选中时的文本内容。用于取消选择时恢复到上次选中的文本
+      dropdownVisible: false, // 下拉弹层是否显示
     };
 
-    // 记录上次选择的值，供取消时回滚
-    this.lastState = {
-      value: this.state.value,
-      title: this.state.title,
-    };
+    this.searchTextDebounced = debounce((searchTextString) => {
+      const { onSearch } = this.props;
+      if (onSearch) {
+        onSearch(searchTextString);
+      }
+      this.setState({
+        dropdownVisible: true,
+      });
+    }, 300);
   }
 
   getChildContext = () => ({
@@ -78,13 +93,24 @@ export default class Select extends PureComponent {
   });
 
   componentWillReceiveProps = (nextProps, nextContext) => {
-    if (nextProps.value && nextProps.value !== this.state.value) {
-      const value = nextProps.value;
-      const title = this.getValue(this.props.children, value);
-
+    const { value, text } = nextProps;
+    if (this.props.type === 'combobox') {
+      if (text !== this.state.text) {
+        this.setState({
+          text,
+          searchText: text,
+          textOfLastSelected: text,
+        });
+      }
+      if (value !== this.state.value) {
+        this.setState({
+          value,
+        });
+      }
+    } else if (value !== this.state.value) {
       this.setState({
-        value: nextProps.value,
-        title,
+        value,
+        text: this.getValue(this.props.children, value),
       });
     }
   }
@@ -93,64 +119,72 @@ export default class Select extends PureComponent {
     this.setState({
       dropdownVisible: visible,
     });
-
     const { type } = this.props;
     if (type === 'combobox') {
       const { onCancelChange } = this.props;
       if (!visible) {
         this.setState({
-          value: this.lastState.value,
-          title: this.lastState.title,
+          text: this.state.textOfLastSelected,
+          searchText: this.state.textOfLastSelected,
         });
         onCancelChange();
+      } else {
+        this.searchTextDebounced(this.state.searchText);
       }
     }
   }
 
   onComboboxInputChanged = (e) => {
     const value = e.target.value;
-    const { onSearch } = this.props;
-    if (onSearch) {
-      onSearch(value);
-    }
+    this.searchTextDebounced(value);
+
     if (value) {
       this.setState({
-        value,
-        title: value,
+        // value,
+        searchText: value,
       });
     } else { // 当全部都删完时，清空历史
-      this.lastState = {
-        value: '',
-        title: undefined,
-      };
       this.setState({
-        title: '',
-        value: undefined,
+        text: null,
+        searchText: null,
+        value: null,
+        textOfLastSelected: null,
       });
+
+      const { onChange } = this.props;
+      if (onChange) {
+        onChange({
+          value: null,
+          text: null,
+        });
+      }
     }
   }
 
   // 选项选中时回调
-  onOptionSelected = (value, title) => {
+  onOptionSelected = (value, text) => {
     this.setState({
       dropdownVisible: false,
     });
-    if (typeof this.props.value !== 'undefined') {
-      // 受控组件
-      this.props.onChange({
-        value,
-        title,
-      });
-    }else {
+    if (!('value' in this.props)) {
       // 非受控组件
       this.setState({
         value,
-        title,
+        text,
       });
-      this.props.onChange(
+    }
+
+    this.setState({
+      searchText: text,
+      textOfLastSelected: text,
+    });
+
+    const { onChange } = this.props;
+    if (onChange) {
+      onChange({
         value,
-        title,
-      );
+        text,
+      });
     }
   }
 
@@ -158,40 +192,42 @@ export default class Select extends PureComponent {
 
   // 在子组件中，根据value获取text
   getValue = (children, value) => {
-    let title = '';
+    let text = '';
     React.Children.map(children, (child) => {
-      if (title) {
+      if (text) {
         return;
       }
       if (child.type === OptGroup) {
-        title = this.getValue(child.props.children, value);
+        text = this.getValue(child.props.children, value);
       } else if (child.type === Option) {
         if (child.props.value === value) {
-          title = child.props.title || child.props.children;
+          text = child.props.text || child.props.children;
         }
       } else {
-        title = this.getValue(child.props.children, value);
+        text = this.getValue(child.props.children, value);
       }
     });
-    return title;
+    return text;
   }
 
   remove = (e) => {
     if (e) {
       e.stopPropagation();
     }
-    this.lastState.title = undefined;
-    this.lastState.value = '';
     this.setState({
-      value: '',
-      title: undefined,
+      value: null,
+      text: null,
+      searchText: null,
+      textOfLastSelected: null,
     });
+
+    this.searchTextDebounced('');
 
     const { onChange } = this.props;
     if (onChange) {
       onChange({
-        // value: null,
-        // text: null,
+        value: null,
+        text: null,
       });
     }
   }
@@ -205,7 +241,7 @@ export default class Select extends PureComponent {
         <div className={styles.select} >
           <div className={classnames(styles.selection, styles.disabled)} style={{ width }}>
             {
-              this.state.title || <span className={styles.placeholder}>
+              this.state.text || <span className={styles.placeholder}>
                 { this.props.placeholder }
               </span>
             }
@@ -221,7 +257,7 @@ export default class Select extends PureComponent {
 
     let selection = '';
     if (type === 'dropdown') { // 简单下位
-      selection = this.state.title || <span className={styles.placeholder}>
+      selection = this.state.text || <span className={styles.placeholder}>
         { this.props.placeholder }
       </span>;
     } else if (type === 'combobox') {
@@ -230,7 +266,7 @@ export default class Select extends PureComponent {
         className={styles.comboboxInput}
         onChange={this.onComboboxInputChanged}
         placeholder={this.props.placeholder}
-        value={this.state.value}
+        value={this.state.searchText || ''}
       />);
     }
 

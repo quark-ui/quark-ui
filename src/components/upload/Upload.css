@@ -35,6 +35,11 @@
     height: 24px;
     width: 300px;
 
+    & .btn-remove {
+      background: none;
+      border: none;
+    }
+
     & .remove {
       position: absolute;
       top: 6px;
@@ -203,6 +208,13 @@
       & .imgshow {
         animation: pictureShow;
         animation-duration: 0.3s;
+
+        width: 93px;
+        height: 93px;
+
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center center;
       }
     }
     & .upload-list-item-info:hover + .upload-list-item-actions,

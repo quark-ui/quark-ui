@@ -24,11 +24,12 @@ class UploadDemo1 extends Component {
       multiple: true,
       disabled: false,
       onResponse(response) {
-        response = { result: 'success', msg: '上传成功！' };
+        response = { result: 'success', msg: '上传成功！', url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png' };
         if (response.result === 'success') {
           return {
             success: true,
             message: '上传成功',
+            url: response.url,
           };
         }
 
@@ -79,11 +80,12 @@ class UploadDemo2 extends Component {
       multiple: true,
       disabled: false,
       onResponse(response) {
-        response = { result: 'success', msg: '上传成功！' };
+        response = { result: 'success', msg: '上传成功！', url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png' };
         if (response.result === 'success') {
           return {
             success: true,
             message: '上传成功',
+            url: response.url,
           };
         }
 
@@ -155,11 +157,12 @@ class UploadDemo3 extends Component {
       action: '//jsonplaceholder.typicode.com/posts/',
       disabled: false,
       onResponse(response) {
-        response = { result: 'success', msg: '上传成功！' };
+        response = { result: 'success', msg: '上传成功！', url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png' };
         if (response.result === 'success') {
           return {
             success: true,
             message: '上传成功',
+            url: response.url, // 上传成功的图片路径
           };
         }
 
@@ -222,6 +225,10 @@ class UploadDemo4 extends Component {
       }],
     };
   }
+  // 点击查看源图时触发
+  handlePreview = (file) => {
+    window.open(file.url);
+  }
 
   handleChange = (info) => {
     this.setState({ fileList: info.fileList });
@@ -247,11 +254,12 @@ class UploadDemo4 extends Component {
       onChange: this.handleChange,
       beforeUpload: this.beforeUpload,
       onResponse(response) {
-        response = { result: 'success', msg: '上传成功！' };
+        response = { result: 'success', msg: '上传成功！', url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png' }; // mock数据
         if (response.result === 'success') {
           return {
             success: true,
             message: '上传成功',
+            url: response.url, // 上传成功的图片路径
           };
         }
 

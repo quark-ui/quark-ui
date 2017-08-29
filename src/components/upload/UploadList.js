@@ -135,7 +135,8 @@ export default class UploadList extends React.Component {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <img src={file.thumbUrl || file.url} alt={file.name} styleName="imgshow" />
+            {/* <img src={file.thumbUrl || file.url} alt={file.name} styleName="imgshow" /> */}
+            <div styleName={'imgshow'} style={{ backgroundImage: `url(${file.thumbUrl || file.url})` }} />
           </a>
         );
       }
@@ -198,6 +199,7 @@ export default class UploadList extends React.Component {
     // picture-card 删除按钮
     const removeIcon = showRemoveIcon && !disabled ? (
       <button
+        styleName={'btn-remove'}
         title={locale.removeFile}
         onClick={() => this.handleClose(file)}
       >
@@ -207,6 +209,7 @@ export default class UploadList extends React.Component {
     // text 删除按钮
     const removeIconCross = showRemoveIcon && !disabled ? (
       <button
+        styleName={'btn-remove'}
         title={locale.removeFile}
         onClick={() => this.handleClose(file)}
       >
