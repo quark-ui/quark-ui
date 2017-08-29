@@ -2,7 +2,7 @@
  * Tabs Component
  * @author yan
  */
-import { PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
 import classNames from 'classnames';
@@ -36,7 +36,7 @@ export default class Tab extends PureComponent {
   }
 
   deleteButton = (e) => {
-    e.stopPropagation();
+    // e.stopPropagation();
     this.props.deleteButton(this.props.tabKey);
   }
 

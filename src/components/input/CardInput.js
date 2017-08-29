@@ -80,8 +80,8 @@ class CardInput extends PureComponent {
   static defaultProps = {
     size: 'normal',
     disabled: false,
+    mask: '1111-1111-1111-1111',
     value: '',
-    onChange() {},
   };
 
   static propTypes = {

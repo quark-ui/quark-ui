@@ -17,6 +17,6 @@ describe('message-test-describe----------', () => {
     const app = mount(<Message />);
     expect(Message.prototype.componentDidMount.calledOnce).to.equal(true);
   })
-
+  
 });
 

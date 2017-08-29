@@ -1,10 +1,7 @@
 import React from 'react';
 import { shallow, mount, render } from 'enzyme';
 import { expect, should } from 'chai';
-import sinon from 'sinon';
 import Animation from '../Animation';
-import Transition from 'react-transition-group/Transition';
-
 import styles from '../Animation.css';
 
 describe('animation-test-describe----------', () => {
@@ -14,16 +11,12 @@ describe('animation-test-describe----------', () => {
       timingFunction: 'ease',
       motion:'fade'
     }
-    
-    const app = shallow(
-    <Animation {...props}>
-      <div>123</div>
-    </Animation>  
+    const app = mount(
+      <Animation {...props}>
+        <div>123</div>
+      </Animation>  
     );
-
-    console.log(app.debug());
-
-    expect(app.find('Transition')).to.equal(true);
+    expect(app.find(`.${styles['fade--entered']}`).length).to.equal(1);
   });
 
 });

@@ -9,9 +9,22 @@ describe('alert-test-describe----------', () => {
     const props = {
       type: 'success',
       message: 'message',
+      description: '123',
     };
     const app = shallow(<Alert {...props} />);
     expect(app.hasClass(styles.alert__success)).to.equal(true);
+    expect(app.state('closed')).to.equal(false);
+    expect(app.find(`span.${styles['alert--description']}`).text()).to.equal('123');
+    expect(app.state('closed')).to.equal(false);
+  });
+
+  it('alert type is oneOf  info, success, error, warning ', () => {
+    const props = {
+      type: 'info',
+      message: 'message',
+    };
+    const app = shallow(<Alert {...props} />);
+    expect(app.hasClass(styles.alert__info)).to.equal(true);
   });
 
 
@@ -45,7 +58,7 @@ describe('alert-test-describe----------', () => {
       type: 'success',
       message: 'message',
       closable: true,
-      closeText:'close',
+      closeText: 'close',
     };
     const app = mount(
       <Alert {...props} />
@@ -57,13 +70,13 @@ describe('alert-test-describe----------', () => {
     const props = {
       type: 'success',
       message: 'message',
-      closable: true
+      closable: true,
     };
     const app = mount(
       <Alert {...props} />
     );
     app.find(`span.${styles['alert--close']}`).simulate('click');
-    expect(app.find(`.${styles['alert']}`).length).to.equal(0);
+    expect(app.find(`.${styles[' alert ']}`).length).to.equal(0);
 
   });
 
