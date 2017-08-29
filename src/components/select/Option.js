@@ -20,7 +20,7 @@ export default class Option extends Component {
   static propTypes = {
     value: PropTypes.string.isRequired,
     text: PropTypes.string,
-    children: PropTypes.arrayOf(PropTypes.element),
+    children: PropTypes.any,
   };
 
   static contextTypes = {
