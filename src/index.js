@@ -47,3 +47,4 @@ export { default as Trigger } from './components/trigger/';
 
 export { default as Upload } from './components/upload/';
 
+export { default as Notification } from './components/notification/';

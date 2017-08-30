@@ -2,7 +2,7 @@
  * Input Component
  * @author yan
  */
-import { PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import InputMask from 'inputmask-core';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
@@ -80,8 +80,8 @@ class CardInput extends PureComponent {
   static defaultProps = {
     size: 'normal',
     disabled: false,
+    mask: '1111-1111-1111-1111',
     value: '',
-    onChange() {},
   };
 
   static propTypes = {
