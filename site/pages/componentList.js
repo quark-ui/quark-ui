@@ -66,6 +66,10 @@ export default {
         name: 'Progress',
         icon: 'progress',
         title: '进度条',
+      }, {
+        name: 'Notification',
+        icon: 'notification',
+        title: '通知提示',
       }],
   }, {
     group: 'Navigation',

@@ -8,7 +8,7 @@ export default class SpinDemo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isShow1: false,
+      isShow1: true,
       isShow2: false,
     };
   }
