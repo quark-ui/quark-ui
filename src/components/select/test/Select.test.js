@@ -1,7 +1,7 @@
 //npm run test-unit './src/components/select/test/Select.test.js'
 
 /**
- * Progress test
+ * Select test
  * @author heifade
  */
 import React from 'react';
@@ -12,7 +12,7 @@ import Option from '../Option';
 import styles from '../Select.css';
 
 describe('Select-test-describe----------', () => {
-  it('Select can render', () => {
+  it('Select type of dropdown can render', () => {
     const select = mount(<Select>
       <Option value="A">AA</Option>
       <Option value="B">BB</Option>
@@ -20,7 +20,20 @@ describe('Select-test-describe----------', () => {
     </Select>);
 
     expect(select.hasClass(styles['select'])).to.equal(true);
+
+
+    // expect(select.hasClass(styles['select'])).to.equal(true);
+
+    console.log(select.debug());
+
   });
 
-  
+
+
+  // it('Select type of combobox can render', () => {
+  //   const select = mount(<Select type="combobox">
+  //   </Select>);
+
+  //   expect(select.hasClass(styles['select'])).to.equal(true);
+  // });
 });
