@@ -17,18 +17,17 @@ describe('checkbox-test-describe----------', () => {
       checked: true,
     };
     const checkbox = shallow(<Checkbox {...data} />);
-    expect(checkbox.hasClass(styles['checkbox--wrapper__checked'])).to.equal(
-      true,
-    );
+    checkbox.simulate('change');
+    expect(checkbox.hasClass(styles['checkbox--wrapper__checked'])).to.equal(true);
   });
   it('checkbox defaultChecked is true', () => {
     const data = {
       defaultChecked: true,
     };
     const checkbox = shallow(<Checkbox {...data} />);
-    expect(checkbox.hasClass(styles['checkbox--wrapper__checked'])).to.equal(
-      true,
-    );
+    expect(checkbox.hasClass(styles['checkbox--wrapper__checked'])).to.equal(true);
+    checkbox.instance().componentWillReceiveProps({'checked': false});
+    expect(checkbox.hasClass(styles['checkbox--wrapper__checked'])).to.equal(false);
   });
 
   it('checkbox----ischecked- then cancle, no checked props', () => {
@@ -41,9 +40,7 @@ describe('checkbox-test-describe----------', () => {
     };
     let checkbox = mount(<Checkbox {...data} />);
     checkbox.find('input').simulate('change', { target: { checked: false } });
-    expect(checkbox.hasClass(styles['checkbox--wrapper__checked'])).to.equal(
-      false,
-    );
+    expect(checkbox.hasClass(styles['checkbox--wrapper__checked'])).to.equal(false);
   });
 
   it('checkbox----disable defaultChecked- then cancle , ischecked', () => {
@@ -56,27 +53,17 @@ describe('checkbox-test-describe----------', () => {
     };
     let checkbox = mount(<Checkbox {...data} />);
     checkbox.find('input').simulate('change', { target: { checked: false } });
-    expect(checkbox.hasClass(styles['checkbox--wrapper__checked'])).to.equal(
-      true,
-    );
-    expect(checkbox.hasClass(styles['checkbox--wrapper__disabled'])).to.equal(
-      true,
-    );
+    expect(checkbox.hasClass(styles['checkbox--wrapper__checked'])).to.equal(true);
+    expect(checkbox.hasClass(styles['checkbox--wrapper__disabled'])).to.equal(true);
   });
 
-  it('checkbox----disable defaultChecked- then cancle , ischecked', () => {
+  it('checkbox----checked , onChange ', () => {
     const data = {
-      disabled: true,
-      defaultChecked: true,
-      onChange: (e) => {
-        checkbox.setState({ checked: e.target.checked });
-      },
+      checked: true
     };
     let checkbox = mount(<Checkbox {...data} />);
-    checkbox.simulate('change', { target: { checked: false } });
-    expect(checkbox.hasClass(styles['checkbox--wrapper__checked'])).to.equal(
-      true,
-    );
+    checkbox.simulate('change');
+    expect(checkbox.hasClass(styles['checkbox--wrapper__checked'])).to.equal(true);
   });
 });
 
@@ -111,26 +98,39 @@ describe('checkboxgroup test', () => {
     };
     const checkboxgroup = mount(<CheckboxGroup {...data} />);
     checkboxgroup.setState({ value: defaultCheckedList });
-    // console.log(checkboxgroup.debug());
-    // checkboxgroup.toggleOption(plainOptions[0]);
-    // console.log(checkboxgroup.at(0).props(),99);
+    checkboxgroup.setProps({ value: defaultCheckedList });
     expect(checkboxgroup.children()).to.have.length(plainOptions.length);
   });
 
   it('checkboxgroup has checkbox', () => {
     const data = {
-      disabled: true,
+      disabled: true
     };
     const checkboxgroup = mount(
       <CheckboxGroup {...data}>
-        <Checkbox />
+        <Checkbox value="a"/>
       </CheckboxGroup>,
     );
-    expect(
-      checkboxgroup
-        .find('Checkbox')
-        .hasClass(styles['checkbox--wrapper__disabled']),
-    ).to.equal(true);
+    expect(checkboxgroup.find('Checkbox').hasClass(styles['checkbox--wrapper__disabled'])).to.equal(true);
+  });
+
+  it('checkboxgroup has checkbox-------toggleOption', () => {
+    const data = {
+      onChange : (e) => { 
+        console.log(e,111111);
+      }
+    };
+    const checkboxgroup = mount(
+      <CheckboxGroup {...data}>
+        <Checkbox value="a"/>
+      </CheckboxGroup>,
+    );
+    expect(checkboxgroup.find('Checkbox').hasClass(styles['checkbox--wrapper'])).to.equal(true);
+
+    checkboxgroup.setState({value:['11','22','33']});
+    checkboxgroup.instance().toggleOption({value:'44'});
+    expect(checkboxgroup.state().value.length).to.equal(4);
+    
   });
 
   it('checkboxGroup----has checkbox, checkbox option----', () => {
@@ -139,7 +139,7 @@ describe('checkboxgroup test', () => {
       { label: 'Pear', value: '2', disabled: false },
       { label: 'Orange', value: '3', disabled: false },
     ];
-    const defaultCheckedList = ['Apple', 'Orange'];
+    const defaultCheckedList = ['Apple'];
 
     const checkboxgroup = mount(
       <CheckboxGroup>
@@ -147,8 +147,7 @@ describe('checkboxgroup test', () => {
       </CheckboxGroup>,
     );
     checkboxgroup.setProps({ value: defaultCheckedList });
-    // checkboxgroup.setState({value: defaultCheckedList});
-    // console.log(checkboxgroup.debug());
+    checkboxgroup.setState({value: defaultCheckedList});
     checkboxgroup.find('Checkbox').simulate('change');
     expect(checkboxgroup.children()).to.have.length(1);
   });
