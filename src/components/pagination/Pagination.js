@@ -2,7 +2,7 @@
  * Pagination Component
  * @author ryan.bian
  */
-import { PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
 import classnames from 'classnames';

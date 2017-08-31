@@ -29,4 +29,5 @@ build
 .history
 coverage
 mochawesome-report
+.nyc_output
 .coveralls.yml

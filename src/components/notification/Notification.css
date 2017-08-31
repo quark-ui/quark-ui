@@ -1,0 +1,78 @@
+/**
+ * Alert Style
+ * @author yanwei
+ */
+.notification--box{
+    position: fixed;
+    z-index: 1000;
+    width: 335px;
+}
+.notification--box--topLeft{
+
+}
+.notification--box--topRight{
+    
+}
+.notification--box--bottomLeft{
+    
+}
+.notification--box--bottomRight{
+    
+}
+.notification{
+    padding: 16px;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.2);
+    background: #fff;
+    line-height: 1.5;
+    position: relative;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+.notification--content{
+  display:inline-block;
+  vertical-align: middle;
+  font-size:14px;
+}
+.notification--icon{
+    & > .notification--content{
+        margin-left: 50px;
+    }
+}
+.notification__mes{
+    padding-right: 24px;
+    font-size: 14px;
+    color: rgba(0,0,0,.85);
+    margin-bottom: 4px;
+    line-height: 20px;
+    display: inline-block;
+}
+.notification__des{
+    margin-bottom: 4px;
+    font-size: 12px;
+    color: rgba(0,0,0,.65);
+}
+.notification__icon{
+  top: 16px;
+  left: 24px;
+  position: absolute;
+}
+
+.notification--close{
+    cursor: pointer;
+    position: absolute;
+    right: 16px;
+    top: 10px;
+    color: rgba(0,0,0,.43);
+    outline: none;
+    text-decoration: none;
+}
+
+.notification__btn{
+}
+.notification--icon{
+    display:inline-block;
+    vertical-align: middle;
+}
+
+
