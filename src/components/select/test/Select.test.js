@@ -11,6 +11,7 @@ import Select from '../Select';
 import Option from '../Option';
 import styles from '../Select.css';
 
+
 describe('Select-test-describe----------', () => {
 
   class SelectTest extends Component {
@@ -55,7 +56,7 @@ describe('Select-test-describe----------', () => {
 
     expect(select.hasClass(styles['select'])).to.equal(true);
 
-    let triggerBtn = select.find(`Trigger`).first();
+    let triggerBtn = select.find(`span`).first();
 
     triggerBtn.simulate('click');
 
