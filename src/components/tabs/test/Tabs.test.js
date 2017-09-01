@@ -58,8 +58,24 @@ describe('tabs-test-describe----------', () => {
         <Panel title={<span><Icon size={18} name="account" />Tab 1</span>} key="1">Tab 1</Panel>
       </Tabs>
     );
-    expect(app.find('Tab').length).to.equal(1);
+    expect(app.find(`.${styles['tabs__tab']}`).length).to.equal(1);
+  });
+  it('Tabs props onClick ', () => {
+    const onClick = sinon.spy();
+    const deleteButton = sinon.spy();
 
+    const props = {
+      activeKey: '1',
+      onClick,
+      deleteButton,
+    }
+    const app = mount(
+      <Tabs {...props}>
+        <Panel title="1" key="1" closable>Tab 1</Panel>
+      </Tabs>
+    );
+    // app.find(`.${styles['tabs__tab']}`).simulate('click');
+    // expect(onClick.calledOnce).to.equal(true);
   });
   it('tabs size is small && type is card && tabPosition is left', () => {
     const panes = [
