@@ -29,6 +29,8 @@ export { default as Message } from './components/message/';
 
 export { default as Modal } from './components/modal/';
 
+export { default as Notification } from './components/notification/';
+
 export { default as Pagination } from './components/pagination/';
 
 export { default as Progress } from './components/progress/';
@@ -47,4 +49,5 @@ export { default as Trigger } from './components/trigger/';
 
 export { default as Upload } from './components/upload/';
 
-export { default as Notification } from './components/notification/';
+export { default as Tooltip } from './components/tooltip/';
+

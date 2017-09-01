@@ -1,0 +1,15 @@
+/**
+ * Tooltip Style
+ * @author lhf
+ */
+.tooltip {
+
+}
+.trigger{
+ 	display: inline-block;	
+ }
+.tooltip--popup{
+	padding: 5px;
+	background: rgba(0,0,0,0.3);
+	color: #fff;
+}

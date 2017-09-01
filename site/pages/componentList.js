@@ -70,6 +70,10 @@ export default {
         name: 'Notification',
         icon: 'notification',
         title: '通知提示',
+      }, {
+        name: 'Tooltip',
+        icon: 'tooltip',
+        title: '文字提示',
       }],
   }, {
     group: 'Navigation',
