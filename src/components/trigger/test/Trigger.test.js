@@ -33,5 +33,29 @@ describe('trigger-test-describe----------', () => {
     );
     expect(app.find(`.${styles['trigger--wrap']}`).length).to.equal(1);
   });
+
+  it('action is hover', () => {
+    const onClick = sinon.spy();
+    const onPopupVisibleChange = sinon.spy();
+    const props = {
+      onClick,
+    };
+    const app = mount(
+      <Trigger
+        action={'hover'}
+        popup={
+          <div {...props} >click me to close</div>
+        }
+        popupVisible
+        placement={['cr', 'cl']}
+        onPopupVisibleChange={onPopupVisibleChange}
+      >
+        <Button>click</Button>
+      </Trigger>
+    );
+    expect(app.find(`.${styles['trigger--wrap']}`).length).to.equal(1);
+  });
+
+
 });
 

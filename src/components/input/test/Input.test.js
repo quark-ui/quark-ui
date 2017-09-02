@@ -67,59 +67,106 @@ describe('input-test-describe----------', () => {
 });
 
 describe('cardInput-test-describe----------', () => {
-
-  
-  // it('calls componentWillMount',()=>{
-  //   const props = {
-  //     mask: "1111-1111-1111-1111",
-  //     value: "1234-1234-1234-1234",
-  //   }
-
-  //   sinon.spy(CardInput.prototype, 'componentWillMount');
-  //   const app = mount(<CardInput {...props} />);
-
-  //   console.log(app.debug());
-
-  //   expect(CardInput.prototype.componentWillMount.calledOnce).to.equal(true);
-  // })
-
-
   it('propTypes  can do',()=>{
     const props = {
-      size: "large",
-      mask: "1111-1111-1111-1111",
-      value: '1234-1234-1234-1234',
+      mask: "A111-1111-1111-1111",
+      value: 'A234-1234-1234-1234',
+      placeholderChar: '',
+      formatCharacters: {
+        'A': null
+      },
       disabled: true,
-    }
+    };
+    const app = shallow(<CardInput {...props} />);
+    expect(app.hasClass(styles['input__disabled'])).to.equal(true);
+  });
 
+  it('mask  is null',()=>{
+    const props = {
+      size: "large",
+    };
     const app = shallow(<CardInput {...props} />);
     expect(app.hasClass(styles['input__large'])).to.equal(true);
-    expect(app.hasClass(styles['input__disabled'])).to.equal(true);
-  })
-
+  });
 
   it('input change value',()=>{
-    // const onChange = sinon.spy();
+    const props = {
+      size: "large",
+      mask: "1111-1111-1111-1112",
+      value: '1234-1234-1234-1234',
+    };
+    const app = shallow(<CardInput {...props} />);
+    app.find('input').simulate('change', { target: { value: '1111-1111-1111-1113' } });
+  });
 
-    // const props = {
-    //   mask: "1111-1111-1111-1111",
-    //   value: "1234-1234-1234-1234",
-    //   onChange: (e) => {
-    //     app.setState({ value: e.target.value });
-    //     console.log(value)
-    //   },
-    // }
+  it('input change value is mask value',()=>{
+    const props = {
+      size: "large",
+      mask: "1111-1111-1111-1113",
+      value: '1234-1234-1234-1234',
+    };
+    const app = shallow(<CardInput {...props} />);
+    app.find('input').simulate('change', { target: { value: '1111-1111-1111-1113' } });
+  });
 
-    // let app = shallow(<CardInput {...props} />);
-    // console.log('1111111111',app.debug());
-    // app.find('input').simulate('change', { target: { value: '4567-4567-4567-4567' } });
+  it('props onChange',()=>{
+    const onChange = sinon.spy();
+    const props = {
+      size: "large",
+      mask: "1111-1111-1111-1113",
+      value: '1234-1234-1234-1234',
+      onChange,
+    };
+    const app = shallow(<CardInput {...props} />);
+    app.find('input').simulate('change', { target: { value: '1111-1111-1111-1113' } });
+    expect(onChange.calledOnce).to.equal(true);
+  });
 
+  it('onKeyDown && e.metaKey || e.altKey || e.ctrlKey || e.key === Enter', () => {
+    const props = {
+      size: "large",
+      mask: "1111-1111-1111-1113",
+      value: '1234-1234-1234-1234',
+    };
+    const app = shallow(<CardInput {...props} />);
+    app.find('input').simulate('keyPress', { ctrlKey: '1', preventDefault() {} });
+    app.find('input').simulate('shiftKey', { metaKey: '1', preventDefault() {} });
+    app.find('input').simulate('keyPress', { key: 'Enter', preventDefault() {} });
+    app.find('input').simulate('keyDown', { key: '1', preventDefault() {} });
+    // app.find('input').simulate('keyPress', { key: 'Backspace', preventDefault() {} });
+  });
 
-    // console.log('222222222222222222',app.debug());
-    // expect(app.find('input').props.value).to.equal('4567-4567-4567-4567');
+  it('isUndo have shiftKey', () => {
+    const props = {
+      size: "large",
+      mask: "1111-1111-1111-1113",
+      value: '1234-1234-1234-1234',
+    };
+    const app = shallow(<CardInput {...props} />);
+    app.find('input').simulate('keyDown', { ctrlKey: '1', shiftKey: '1', preventDefault() {} });
+  });
 
-  })
+  it('isUndo no shiftKey', () => {
+    const props = {
+      size: "large",
+      mask: "1111-1111-1111-1113",
+      value: '1234-1234-1234-1234',
+    };
+    const app = shallow(<CardInput {...props} />);
+    app.find('input').simulate('keyDown', { ctrlKey: '1', preventDefault() {} });
+  });
 
+  it('input onPaste', () => {
+    const onChange = sinon.spy();
+    const props = {
+      size: "large",
+      mask: "1111-1111-1111-1113",
+      value: '1234-1234-1234-1234',
+      onChange,
+    };
+    const app = shallow(<CardInput {...props} />);
+    app.find('input').simulate('onPaste', { preventDefault() {} });
+  });
 
 
 });
