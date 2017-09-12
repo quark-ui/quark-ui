@@ -24,9 +24,9 @@ export default class Select extends PureComponent {
     disabled: false,
     text: null,
     children: null,
-    onSearch: () => {},
-    onChange: () => {},
-    onCancelChange: () => {},
+    onSearch: null,
+    onChange: null,
+    onCancelChange: null,
   };
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
@@ -129,7 +129,9 @@ export default class Select extends PureComponent {
           text: this.state.textOfLastSelected,
           searchText: this.state.textOfLastSelected,
         });
-        onCancelChange();
+        if(onCancelChange) {
+          onCancelChange();
+        }
       } else {
         this.searchTextDebounced(this.state.searchText);
       }
@@ -221,9 +223,10 @@ export default class Select extends PureComponent {
       text: null,
       searchText: null,
       textOfLastSelected: null,
+      dropdownVisible: false,
     });
 
-    this.searchTextDebounced('');
+    // this.searchTextDebounced('');
 
     const { onChange } = this.props;
     if (onChange) {

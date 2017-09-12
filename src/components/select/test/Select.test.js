@@ -9,6 +9,7 @@ import { shallow, mount, render } from 'enzyme';
 import { expect, should } from 'chai';
 import Select from '../Select';
 import Option from '../Option';
+import OptGroup from '../OptGroup';
 import styles from '../Select.css';
 
 
@@ -30,11 +31,6 @@ describe('Select-test-describe----------', () => {
         text,
       });
     }
-    setDisabled = () => {
-      this.setState({
-        disabled: !this.state.disabled,
-      });
-    }
     setSelect = () => {
       this.setState({
         value: 'B',
@@ -47,6 +43,48 @@ describe('Select-test-describe----------', () => {
         <Select style={{ width: 250 }} disabled={disabled} defaultValue="A" value={value} onChange={this.onChange}>
           <Option value="A">AA</Option>
           <Option value="B">BB</Option>
+          <Option value="C">CC</Option>
+          <Option value="D">DD</Option>
+        </Select>
+      );
+    }
+  }
+
+
+  
+  class SelectOptGroupTest extends Component {
+    constructor() {
+      super();
+      this.state = {
+        disabled: false,
+        value: null,
+        text: null,
+      };
+    }
+    onChange = ({ text, value }) => {
+      this.setState({
+        value,
+        text,
+      });
+    }
+
+    render() {
+      const { value, disabled } = this.state;
+      return (
+        <Select style={{ width: 250 }} disabled={disabled} defaultValue="A" value={value} onChange={this.onChange}>
+          <OptGroup label="分组1">
+            <Option value="A">AA</Option>
+            <Option value="B">BB</Option>
+          </OptGroup>
+          <OptGroup label="分组2">
+            <Option value="C">CC</Option>
+            <Option value="D">DD</Option>
+          </OptGroup>
+          <OptGroup label="分组3">
+            <Option value="E">EE</Option>
+            <Option value="F">FF</Option>
+            <Option value="G">GG</Option>
+          </OptGroup>
         </Select>
       );
     }
@@ -64,11 +102,6 @@ describe('Select-test-describe----------', () => {
     onChange = ({ text, value }) => {
       
     }
-    setDisabled = () => {
-      this.setState({
-        disabled: !this.state.disabled,
-      });
-    }
 
     render() {
       const { value, disabled } = this.state;
@@ -76,6 +109,8 @@ describe('Select-test-describe----------', () => {
         <Select style={{ width: 250 }} disabled={disabled} defaultValue="B" onChange={this.onChange}>
           <Option value="A">AA</Option>
           <Option value="B">BB</Option>
+          <Option value="C">CC</Option>
+          <Option value="D">DD</Option>
         </Select>
       );
     }
@@ -87,8 +122,8 @@ describe('Select-test-describe----------', () => {
       super();
       this.state = {
         disabled: false,
-        value: null,
-        text: null,
+        value: 'aa',
+        text: 'aa',
         searchData: [],
       };
     }
@@ -116,11 +151,6 @@ describe('Select-test-describe----------', () => {
         text,
       });
     }
-    setDisabled = () => {
-      this.setState({
-        disabled: !this.state.disabled,
-      });
-    }
     
 
     render() {
@@ -145,10 +175,53 @@ describe('Select-test-describe----------', () => {
   }
 
 
+  it('Select type of combobox can render', () => {
+    const select = mount(<ComboboxTest />);
+
+    expect(select.hasClass(styles['select'])).to.equal(true);
+
+    let searchTextBox = select.find(`.${styles['comboboxInput']}`).first();
+
+    select.find(`.${styles.selectionCloseIcon}`).simulate('click');
+    expect(select.find(`.${styles['selection']}`).find(`.${styles['comboboxInput']}`).prop('placeholder') ).to.equal('请输入查询条件');
+
+
+    searchTextBox.get(0).value = '1';
+    searchTextBox.simulate('change');
+    // 这里由于debounce的原因没法同步测试
+
+    searchTextBox.get(0).value = '';
+    searchTextBox.simulate('change');
+    // 这里由于debounce的原因没法同步测试
+
+    select.setState({
+      text: '11',
+    });
+
+    expect(searchTextBox.get(0).value).to.equal('11');
+
+    // document.body.click();
+
+  });
+
+
   it('Select type of dropdown disabled can render', () => {
     const select = mount(<Select style={{ width: 250 }} disabled={true} defaultValue="C">
       <Option value="A">AA</Option>
       <Option value="B">BB</Option>
+      <Option value="C">CC</Option>
+      <Option value="D">DD</Option>
+    </Select>);
+
+    expect(select.find(`.${styles.selection}`).hasClass(`${styles.disabled}`)).to.equal(true);
+  });
+
+  it('Select type of dropdown placeholder disabled can render', () => {
+    const select = mount(<Select style={{ width: 250 }} disabled={true} defaultValue="E" placeholder={"请选择"}>
+      <Option value="A">AA</Option>
+      <Option value="B">BB</Option>
+      <Option value="C">CC</Option>
+      <Option value="D">DD</Option>
     </Select>);
 
     expect(select.find(`.${styles.selection}`).hasClass(`${styles.disabled}`)).to.equal(true);
@@ -161,9 +234,11 @@ describe('Select-test-describe----------', () => {
 
     let triggerBtn = select.find(`span`).first();
     triggerBtn.simulate('click');
+
+    let dropdowns = global.document.getElementsByClassName(`${styles.dropdown}`);
     
-    expect(global.document.getElementsByClassName(`${styles.dropdown}`).length).to.equal(1); // 有1个下拉弹框
-    expect(global.document.getElementsByClassName(`${styles.option}`).length).to.equal(2);  // 有2个选项(AA,BB)
+    expect(dropdowns.length).to.equal(1); // 有1个下拉弹框
+    expect(dropdowns[0].getElementsByClassName(`${styles.option}`).length).to.equal(4);
 
     //选中A
     select.setState({
@@ -174,7 +249,14 @@ describe('Select-test-describe----------', () => {
     expect(option.innerHTML).to.equal('BB');
     option.click();
     expect(triggerBtn.find(`.${styles['selectionClose']}`).find('span').text()).to.equal('BB');
+
+
+    select.find(`.${styles.selectionCloseIcon}`).simulate('click');
+
+    expect(triggerBtn.find(`.${styles['selection']}`).find(`span.${styles['placeholder']}`).text()).to.equal('请选择');
   });
+
+  
 
   it('Select type of dropdown notControl can render', () => {
     const select = mount(<SelectNotControlTest />);
@@ -190,45 +272,37 @@ describe('Select-test-describe----------', () => {
     });
 
     let option = global.document.body.getElementsByClassName(`${styles['active']}`)[0];
-
-    console.log(global.document.body.getElementsByClassName(`${styles['active']}`).length);
-
     expect(option.innerHTML).to.equal('BB');
-
-
     option.click();
-
     expect(triggerBtn.find(`.${styles['selectionClose']}`).find('span').text()).to.equal('BB');
-
-
   });
 
-
-  it('Select type of combobox can render', () => {
-    const select = mount(<ComboboxTest />);
+  it('Select type of dropdown with OptGroup can render', () => {
+    const select = mount(<SelectOptGroupTest />);
 
     expect(select.hasClass(styles['select'])).to.equal(true);
 
-    let searchTextBox = select.find(`.${styles['comboboxInput']}`).first();
+    let triggerBtn = select.find(`span`).first();
+    triggerBtn.simulate('click');
 
-    searchTextBox.get(0).value = '1';
-    searchTextBox.simulate('change');
-    // 这里由于debounce的原因没法同步测试
 
-    searchTextBox.get(0).value = '';
-    searchTextBox.simulate('change');
-    // 这里由于debounce的原因没法同步测试
-
+    let dropdowns = global.document.getElementsByClassName(`${styles.dropdown}`);
     
+    expect(dropdowns.length).to.equal(3); // 有3个下拉弹框
+    expect(dropdowns[2].getElementsByClassName(`${styles.option}`).length).to.equal(7);
 
 
-
+    //选中A
     select.setState({
-      text: '11',
+      value: 'B',
     });
 
-    expect(searchTextBox.get(0).value).to.equal('11');
-    
-
+    let option = dropdowns[2].getElementsByClassName(`${styles['active']}`)[0];
+    expect(option.innerHTML).to.equal('BB');
+    option.click();
+    expect(triggerBtn.find(`.${styles['selectionClose']}`).find('span').text()).to.equal('BB');
   });
+
+
+  
 });
