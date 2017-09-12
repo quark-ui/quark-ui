@@ -44,7 +44,7 @@ class SelectDemo1 extends Component {
         <Button onClick={this.setSelect}>{ '选中BB' }</Button>
         <h3>受控</h3>
         <p />
-        <Select style={{ width: 250 }} disabled={disabled} defaultValue="C" value={value} onChange={this.onChange}>
+        <Select style={{ width: 250 }} disabled={disabled} defaultValue="C" value={value} onChange={this.onChange} placeholder={"请选择"}>
           <Option value="A">AA</Option>
           <Option value="B">BB</Option>
           <Option value="C">CC</Option>
@@ -57,7 +57,7 @@ class SelectDemo1 extends Component {
 
         <h3>非受控</h3>
         <p />
-        <Select style={{ width: 250 }} disabled={disabled} defaultValue="C" onChange={this.onChange}>
+        <Select style={{ width: 250 }} disabled={disabled} defaultValue="C" onChange={this.onChange} placeholder={"请选择"}>
           <Option value="A">AA</Option>
           <Option value="B">BB</Option>
           <Option value="C">CC</Option>
@@ -109,7 +109,7 @@ class SelectDemo2 extends Component {
       <div className="markdown-block">
         <h3>分组</h3>
         <p />
-        <Select style={{ width: 250 }} disabled={disabled} value={value} onChange={this.onChange}>
+        <Select style={{ width: 250 }} disabled={disabled} value={value} onChange={this.onChange} placeholder={"请选择"}>
           <OptGroup label="分组1">
             <Option value="A">AA</Option>
             <Option value="B">BB</Option>
@@ -128,7 +128,7 @@ class SelectDemo2 extends Component {
 
         <h3>复杂选项。</h3>
         <p />
-        <Select style={{ width: 250 }} disabled={disabled} value={value} onChange={this.onChange}>
+        <Select style={{ width: 250 }} disabled={disabled} value={value} onChange={this.onChange} placeholder={"请选择"}>
           <Option value="A" text="李大力">
             <div>李大力</div><div>1354534324</div><div>杭州萧山区民和路</div>
           </Option>
@@ -157,7 +157,6 @@ class SelectDemo3 extends Component {
     super();
     this.state = {
       disabled: false,
-      searchFetching: false,
       value: null,
       text: null,
       searchData: [],
@@ -178,7 +177,6 @@ class SelectDemo3 extends Component {
   }
 
   onSearch = (value) => {
-    this.setState({ searchFetching: true });
     const str = querystring.encode({
       code: 'utf-8',
       q: value,
@@ -196,7 +194,6 @@ class SelectDemo3 extends Component {
         });
         this.setState({
           searchData: data,
-          searchFetching: false,
         });
       });
   }

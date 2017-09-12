@@ -108,10 +108,12 @@ export default class Select extends PureComponent {
         });
       }
     } else if (value !== this.state.value) {
-      this.setState({
-        value,
-        text: this.getValue(this.props.children, value),
-      });
+      if ('value' in this.props) {
+        this.setState({
+          value,
+          text: this.getValue(this.props.children, value),
+        });
+      }
     }
   }
 
@@ -231,6 +233,7 @@ export default class Select extends PureComponent {
       });
     }
   }
+  
 
   render() {
     const { children, disabled, type } = this.props;
@@ -241,7 +244,10 @@ export default class Select extends PureComponent {
         <div className={styles.select} >
           <div className={classnames(styles.selection, styles.disabled)} style={{ width }}>
             {
-              this.state.text || <span className={styles.placeholder}>
+              this.state.text ? 
+              <span>{this.state.text}</span>
+              :
+              <span className={styles.placeholder}>
                 { this.props.placeholder }
               </span>
             }
@@ -257,9 +263,14 @@ export default class Select extends PureComponent {
 
     let selection = '';
     if (type === 'dropdown') { // 简单下位
-      selection = this.state.text || <span className={styles.placeholder}>
-        { this.props.placeholder }
-      </span>;
+      if(this.state.text) {
+        selection = <span>{this.state.text}</span>
+      }
+      else {
+        selection = <span className={styles.placeholder}>
+          { this.props.placeholder }
+        </span>;
+      }
     } else if (type === 'combobox') {
       selection = (<input
         type="text"
