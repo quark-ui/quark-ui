@@ -11,7 +11,6 @@ import styles from './Menu.css';
 
 @CSSModules(styles, { allowMultiple })
 class Menu extends PureComponent {
-
   static SubMenu = SubMenu;
   static Item = Item;
   static ItemGroup = ItemGroup;
@@ -22,8 +21,8 @@ class Menu extends PureComponent {
     // className: '',
     type: 'inline',
     colorType: 'warm',
-    selectedKeys: [],
-    defaultOpenKeys: [],
+    // selectedKeys: [],
+    // defaultOpenKeys: [],
     // openKeys: undefined,
     onClick: null,
     // onOpenChange: function() {},
@@ -50,9 +49,9 @@ class Menu extends PureComponent {
     super(props);
 
     let openKeys = null;
-    if ('defaultOpenKeys' in props) {
+    if (props.defaultOpenKeys) {
       openKeys = props.defaultOpenKeys;
-    } else if ('openKeys' in props) {
+    } else if (props.openKeys) {
       openKeys = props.openKeys;
     }
     this.state = {
@@ -61,9 +60,9 @@ class Menu extends PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.type === 'vertical-v' && nextProps.type !== 'vertical-v') {
-      this.switchModeFromInline = true;
-    }
+    // if (this.props.type === 'vertical-v' && nextProps.type !== 'vertical-v') {
+    //   this.switchModeFromInline = true;
+    // }
     if ('openKeys' in nextProps) {
       this.setState({ openKeys: nextProps.openKeys });
     }
@@ -76,13 +75,16 @@ class Menu extends PureComponent {
   }
   handleOpenChange = (openKeys) => {
     this.setOpenKeys(openKeys);
-
     const { onOpenChange } = this.props;
     if (onOpenChange) {
       onOpenChange(openKeys);
     }
   }
   handleClick = (e) => {
+    if (!('selectedKeys' in this.props)) {
+      this.setState({ selectedKeys: [e.key] });
+    }
+
     this.setOpenKeys([]);
     const { onClick } = this.props;
     if (onClick) {
@@ -92,7 +94,7 @@ class Menu extends PureComponent {
 
   render() {
     let props = {};
-    const className = `${this.props.className}`;
+    // const className = `${this.props.className}`;
     let mode = '';
     switch (this.props.type) {
       case 'horizontal-h':
@@ -105,14 +107,16 @@ class Menu extends PureComponent {
         mode = 'vertical';
         break;
       case 'vertical-v':
-        mode = 'inline';
-        break;
       default:
+        mode = 'inline';
         break;
     }
 
     if (mode === 'inline') { // 垂直菜单，子菜单内嵌在菜单区域。
       props = {
+        openKeys: this.state.openKeys,
+        onClick: this.handleClick,
+        onOpenChange: this.handleOpenChange,
         mode,
       };
     } else {

@@ -6,7 +6,7 @@
   outline: none;
   margin-bottom: 0;
   /*padding-left: 0;*/
-  padding: 0px 10px;
+  /* padding: 0px 10px; */
   list-style: none;
   z-index: 1050;
   line-height: 46px;
@@ -29,6 +29,7 @@
     & :global(.menu-item-disabled),
     & :global(.menu-submenu-disabled) :global(.menu-submenu-title) {
       color: #999999;
+      cursor: not-allowed;
     }
     & :global(.menu) {
       border: solid 1px #ffa85c;
@@ -51,17 +52,12 @@
     }
     & :global(.menu-item-disabled),
     & :global(.menu-submenu-disabled) :global(.menu-submenu-title) {
+      cursor: not-allowed;
       color: #666666;
     }
     & :global(.menu) {
       border: solid 1px #64afe8;
     }
-  }
-
-  & :global(.menu-item-disabled),
-  & :global(.menu-submenu-disabled) :global(.menu-submenu-title) {
-    cursor: not-allowed;
-    background: none;
   }
 
   & :global(.menu-item-group-title) {
@@ -99,7 +95,7 @@
 
   /*颜色-暖色*/
   &:global(.color-warm) {
-    background-color: #ffffff; /*一级菜单背景色(白)*/
+    background-color: #f6f6f6; /*一级菜单背景色(白)*/
     color: #666666;
 
     & :global(.menu-item-selected),
@@ -165,17 +161,21 @@
 
   /*颜色-暖色*/
   &:global(.color-warm) {
-    background-color: #ffffff; /*一级菜单背景色(白)*/
+    background-color: #f6f6f6; /*一级菜单背景色(白)*/
     color: #666666;
     & > :global(.menu-item-selected),
     & > :global(.menu-submenu-selected) {
       border-bottom: solid 1px #ff9536;
     }
 
-    & :global(.menu) :global(.menu-item-selected),
     & :global(.menu) :global(.menu-item-active) {
-      background-color: #f6f8fc;
+      color: #ff9536;
     }
+    & :global(.menu) :global(.menu-item-selected) {
+      background-color: #f9f9f9;
+      color: #f27102;
+    }
+    
     & :global(.menu) :global(.menu-item-selected:after) {
       content: "";
       position: absolute;
@@ -260,11 +260,16 @@
   /*颜色-暖色*/
   &:global(.color-warm) {
     color: #666666;
+    background-color: #f6f6f6;
 
-    & :global(.menu-item-selected),
     & :global(.menu-item-active) {
-      background-color: #f6f8fc;
+      color: #ff9536;
     }
+    & :global(.menu-item-selected) {
+      background-color: #ff9536;
+      color: #ffffff;
+    }
+    
 
     /*二级菜单弹出层*/
     & :global(.menu) {
@@ -328,11 +333,16 @@
   /*颜色-暖色*/
   &:global(.color-warm) {
     color: #666666;
+    background-color: #f6f6f6;
 
-    & :global(.menu-item-selected),
     & :global(.menu-item-active) {
-      background-color: #f6f8fc;
+      color: #ff9536;
     }
+    & :global(.menu-item-selected) {
+      background-color: #ff9536;
+      color: #ffffff;
+    }
+    
 
     & :global(.menu-item-selected:after) {
       content: "";
