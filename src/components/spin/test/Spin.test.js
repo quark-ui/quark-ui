@@ -12,12 +12,6 @@ describe('spin-test-describe----------', () => {
     expect(app.find(`.${styles['Spin']}`).length).to.equal(1);
   });
 
-
-  it('set size', () => {
-    const app = shallow(<Spin size="small" />);
-    expect(app.hasClass(styles['small'])).to.equal(true);
-  });
-
   it('propTypes can do', () => {
     const app = shallow(<Spin size="small" tip="loading" />);
     expect(app.find(`p.${styles['qui-spin-text']}`).text()).to.equal('loading');

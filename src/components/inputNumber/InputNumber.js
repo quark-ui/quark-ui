@@ -2,7 +2,7 @@
  * InputNumber Component
  * @author yan
  */
-import { PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import RcInputNumber from 'rc-input-number';
 import styles from './InputNumber.css';
