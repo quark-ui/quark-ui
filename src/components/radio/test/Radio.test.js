@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow, mount, render } from 'enzyme';
 import { expect, should } from 'chai';
+import sinon from 'sinon';
 import Radio from '../index';
 import styles from '../Radio.css';
 import checkBoxStyles from '../../checkbox/Checkbox.css';
@@ -22,15 +23,15 @@ describe('radio-test-describe----------', () => {
     };
     let app = mount(<Radio {...props} />);
     app.find('input').simulate('change', { target: { checked: false } });
-    expect(app.find(`.${checkBoxStyles['radio--wrapper__checked']}`).length).to.equal(0);
+    expect(app.find(`.${checkBoxStyles['radio--wrapper__checked']}`).length).to.equal(1);
   });
 });
 
 describe('RadioGroup-test-describe----------', () => {
-  // it('radioGroup can render', () => {
-  //   const app = shallow(<RadioGroup />);
-  //   expect(app.find(`.${styles['radio--group']}`).length).to.equal(1);
-  // });
+  it('radioGroup can render', () => {
+    const app = shallow(<RadioGroup />);
+    expect(app.find(`.${styles['radio--group']}`).length).to.equal(1);
+  });
 
   it('options is string', () => {
     const plainOptions = ['Apple', 'Pear', 'Orange'];
@@ -40,14 +41,20 @@ describe('RadioGroup-test-describe----------', () => {
 
 
   it('radio checked one', () => {
-    const app = shallow(
-      <RadioGroup>
+    const onChange = sinon.spy();
+    const props = {
+      onChange,
+    };
+    const app = mount(
+      <RadioGroup {...props}>
         <Radio value={1} checked>Option A</Radio>
         <Radio value={2}>Option B</Radio>
         <Radio value={3}>Option C</Radio>
       </RadioGroup>
     );
     expect(app.find('Radio').length).to.equal(3);
+    app.find('input').at(1).simulate('change');
+    expect(onChange.calledOnce).to.equal(true);
   });
 
   it('radioGroup have defaultValue', () => {
@@ -67,14 +74,18 @@ describe('RadioGroup-test-describe----------', () => {
       { label: 'Pear', value: 'Pear' },
       { label: 'Orange', value: 'Orange', disabled: false },
     ];
-
     const props = {
       value: 'Apple',
       disabled: false,
-    }
+    };
     const app = mount(<RadioGroup options={optionsWithDisabled} {...props} />);
     expect(app.find('Radio').length).to.equal(3);
     expect(app.find(`.${checkBoxStyles['radio--wrapper__checked']}`).length).to.equal(1);
+
+    const spy = sinon.spy(RadioGroup.prototype, 'componentWillReceiveProps');
+    expect(spy.calledOnce).to.equal(false);
+    app.setProps({ value : 'Pear' });
+    expect(spy.calledOnce).to.equal(true);
   });
 
   it('RadioGroup have radioButton', () => {

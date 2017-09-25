@@ -54,9 +54,7 @@ describe('breadcrumb-test-describe----------', () => {
     );
     expect(app.find(`.${styles['breadcrumb--icon']}`).children()).to.have.length(1);
   });
-
 });
-
 
 describe('breadcrumbitem-test-describe----------', () => {
 
@@ -66,6 +64,14 @@ describe('breadcrumbitem-test-describe----------', () => {
     );
     expect(app.find(`.${styles['breadcrumb--link']}`).length).to.equal(1);
   });
+
+  it('BreadcrumbItem children is null', () => {
+    const app = shallow(
+      <Breadcrumb.Item />
+    );
+    expect(app.find(`.${styles['breadcrumb--link']}`).length).to.equal(0);
+  });
+
 
   it('BreadcrumbItem have href', () => {
     const app = shallow(
@@ -77,13 +83,10 @@ describe('breadcrumbitem-test-describe----------', () => {
   it('set separator', () => {
     const props = {
       separator: '>',
-    }
+    };
     const app = shallow(
       <Breadcrumb.Item {...props}>home</Breadcrumb.Item>
     );
     expect(app.find(`.${styles['breadcrumb--separator']}`).text()).to.equal('>');
-
   });
-
-
 });

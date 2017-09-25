@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow, mount, render } from 'enzyme';
 import { expect, should } from 'chai';
+import sinon from 'sinon';
 import Spin from '../Spin';
 import Alert from '../../alert';
 import styles from '../Spin.css';
@@ -9,7 +10,7 @@ describe('spin-test-describe----------', () => {
 
   it('spin can render', () => {
     const app = shallow(<Spin />);
-    expect(app.find(`.${styles['Spin']}`).length).to.equal(1);
+    expect(app.find(`.${styles['Spin']}`).length).to.equal(0);
   });
 
   it('propTypes can do', () => {
@@ -18,8 +19,18 @@ describe('spin-test-describe----------', () => {
   });
 
   it('this.props.spinning', () => {
-    const app = shallow(<Spin spinning={false} delay={600} />);
+    const props = {
+      spinning: false,
+      delay: 600,
+    };
+    const app = shallow(<Spin {...props} />);
     expect(app.find(`.${styles['qui-spin-dot']}`).length).to.equal(1);
+
+    const spy = sinon.spy(Spin.prototype, 'componentWillReceiveProps');
+    expect(spy.calledOnce).to.equal(false);
+    app.setProps({ spinning : true });
+    expect(spy.calledOnce).to.equal(true);
+    app.setProps({ spinning : false });
   });
 
 
