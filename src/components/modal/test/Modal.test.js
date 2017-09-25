@@ -7,7 +7,6 @@ import renderNoticeModal from '../noticeModal';
 import Button from '../../button';
 import Mask from '../Mask';
 import styles from '../Modal.css';
-const NoticeModal = renderNoticeModal.NoticeModal;
 
 describe('mask-test-describe----------', () => {
   it('mask should be render', () => {
@@ -23,23 +22,6 @@ describe('mask-test-describe----------', () => {
     expect(app.children().text()).to.equal('123');
   });
 });
-
-describe('renderNoticeModal-test-describe----------', () => {
-  it('NoticeModal should be render', () => {
-    const props = {
-      type: 'info',
-      config: {
-        title: '123',
-        content: '123456',
-        closable: true,
-      },
-    };
-    const app = mount(
-      <NoticeModal {...props}/>
-    );
-  });
-});
-
 
 describe('modal-test-describe----------', () => {
   it('modal onOk', () => {
