@@ -29,7 +29,7 @@ const renderNavGroup = group => (
 );
 
 const renderComponentList = () => (
-  <ul styleName="aside__menu">
+  <ul className={styles.aside__menu}>
     {
       pages.data.map(p =>
         (

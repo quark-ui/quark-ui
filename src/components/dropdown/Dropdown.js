@@ -4,15 +4,12 @@
  */
 import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import CSSModules from 'react-css-modules';
 import Trigger from '../trigger';
 import Button from '../button';
-import { allowMultiple } from '../../constants';
 import styles from './Dropdown.css';
 import Menu from './Menu';
 import Placements from './placements';
 
-@CSSModules(styles, { allowMultiple })
 class Dropdown extends PureComponent {
 
   static displayName = 'Dropdown'
@@ -56,7 +53,6 @@ class Dropdown extends PureComponent {
   }
 }
 
-@CSSModules(styles, { allowMultiple })
 class DropdownButton extends PureComponent {
 
   static displayName = 'DropdownButton'
@@ -81,7 +77,7 @@ class DropdownButton extends PureComponent {
   render() {
     const { children, type, ...otherProps } = this.props;
     return (
-      <div styleName={'dropdown--buttonWrap'}>
+      <div className={styles['dropdown--buttonWrap']}>
         <Button type={type}>{children}</Button>
         <Dropdown {...otherProps}>
           <Button type={type}>arrow</Button>

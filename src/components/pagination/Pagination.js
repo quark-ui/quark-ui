@@ -4,14 +4,11 @@
  */
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import CSSModules from 'react-css-modules';
 import classnames from 'classnames';
 import assign from 'object-assign';
-import { allowMultiple } from '../../constants';
 import styles from './Pagination.css';
 import Icon from '../icon';
 
-@CSSModules(styles, { allowMultiple })
 class Pagination extends PureComponent {
 
   static displayName = 'Pagination'
@@ -74,8 +71,8 @@ class Pagination extends PureComponent {
     const { current } = this.state;
     const active = current === index;
     return {
-      styleName: classnames('pagination__item', {
-        'pagination__item--active': active,
+      className: classnames(styles.pagination__item, {
+        [styles['pagination__item--active']]: active,
       }),
       onClick: active ? null : () => this.handleChangeIndex(index),
     };
@@ -169,7 +166,7 @@ class Pagination extends PureComponent {
       </li>,
     );
     if (start !== firstPage + 1 && start !== firstPage) {
-      items.push(<li key={'front'} styleName="pagination__ellipsis"><Icon name="ellipsis" size={12} /></li>);
+      items.push(<li key={'front'} className={styles.pagination__ellipsis}><Icon name="ellipsis" size={12} /></li>);
     }
     for (let i = start; i <= end; i += 1) {
       const btnProps = this.getItemProps(i);
@@ -180,19 +177,19 @@ class Pagination extends PureComponent {
       );
     }
     if (end !== lastPage - 1 && end !== lastPage) {
-      items.push(<li key={'back'} styleName="pagination__ellipsis"><Icon name="ellipsis" size={12} /></li>);
+      items.push(<li key={'back'} className={styles.pagination__ellipsis}><Icon name="ellipsis" size={12} /></li>);
     }
     items.push(
       <li key={lastPage}>
         <button {...this.getItemProps(lastPage)}>{lastPage}</button>
       </li>,
     );
-    return <ul styleName="pagination__pages">{items}</ul>;
+    return <ul className={styles.pagination__pages}>{items}</ul>;
   }
 
   renderControl(direction) {
     const ctrlProps = {
-      styleName: classnames('pagination__ctrl'),
+      className: styles.pagination__ctrl,
       onClick: direction === 'prev' ? this.handleClickPrev : this.handleClickNext,
     };
     let content;
@@ -210,7 +207,7 @@ class Pagination extends PureComponent {
     if (showSizeChanger) {
       return (
         <select
-          styleName="pagination__sizeChanger"
+          className={styles.pagination__sizeChanger}
           value={pageSize}
           onChange={this.handleChangeIndexPageSize}
         >
@@ -225,12 +222,12 @@ class Pagination extends PureComponent {
     const { showQuickJumper } = this.props;
     const textFieldProps = {
       type: 'text',
-      styleName: 'pagination__jumperField',
+      className: styles.pagination__jumperField,
       onKeyPress: this.handleJumper,
     };
     if (showQuickJumper) {
       return (
-        <span styleName="pagination__jumper">
+        <span className={styles.pagination__jumper}>
           跳至 <input {...textFieldProps} /> 页
         </span>
       );
@@ -241,7 +238,7 @@ class Pagination extends PureComponent {
   renderTotal() {
     const { showTotal, total } = this.props;
     if (showTotal) {
-      return <span styleName="pagination__total">{`共计 ${total} 条`}</span>;
+      return <span className={styles.pagination__total}>{`共计 ${total} 条`}</span>;
     }
     return null;
   }
@@ -251,9 +248,9 @@ class Pagination extends PureComponent {
     const { size } = this.props;
     const smallSize = size === 'small';
     const wrapProps = {
-      styleName: classnames('pagination', {
-        'pagination--small': smallSize,
-        'pagination--normal': !smallSize,
+      className: classnames(styles.pagination, {
+        [styles['pagination--small']]: smallSize,
+        [styles['pagination--normal']]: !smallSize,
       }),
     };
     return (

@@ -4,13 +4,10 @@
  */
 import React,{ PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import CSSModules from 'react-css-modules';
 import shallowEqual from 'shallowequal';
-import { allowMultiple } from '../../constants';
 import Checkbox from './Checkbox';
 import styles from './Checkbox.css';
 
-@CSSModules(styles, { allowMultiple })
 class CheckboxGroup extends PureComponent {
 
   static displayName = 'CheckboxGroup'
@@ -116,7 +113,7 @@ class CheckboxGroup extends PureComponent {
 
 
     return (
-      <div styleName={'checkbox--group'}>
+      <div className={styles['checkbox--group']}>
         {children}
       </div>
     );

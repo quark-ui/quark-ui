@@ -4,18 +4,15 @@
  */
 import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import CSSModules from 'react-css-modules';
 import moment from 'moment';
 import isEqual from 'lodash/isEqual';
 import assign from 'object-assign';
-import { allowMultiple } from '../../constants';
 import styles from './DatePicker.css';
 import { defaultProps, propTypes } from './props';
 import Input from '../input';
 
 import Picker from './Picker';
 
-@CSSModules(styles, { allowMultiple })
 class DatePicker extends PureComponent {
 
   static displayName = 'DatePicker'

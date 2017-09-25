@@ -4,14 +4,12 @@
  */
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import CSSModules from 'react-css-modules';
 import assign from 'object-assign';
-import { allowMultiple, ALIGN_ENUM } from '../../constants';
+import { ALIGN_ENUM } from '../../constants';
 import Popup from './Popup';
 import styles from './Trigger.css';
 import { on, off } from '../../utils/event';
 
-@CSSModules(styles, { allowMultiple })
 class Trigger extends PureComponent {
 
   static displayName = 'Trigger'
@@ -249,7 +247,7 @@ class Trigger extends PureComponent {
     const { action, children } = this.props;
     const triggerProps = {
       ref: n => (this.node = n),
-      styleName: 'trigger--wrap',
+      className: styles['trigger--wrap'],
     };
     if (action === 'hover') {
       assign(triggerProps, {
@@ -262,7 +260,7 @@ class Trigger extends PureComponent {
       });
     }
     return (
-      <div styleName={'trigger'}>
+      <div className={styles.trigger}>
         <span {...triggerProps}>{children}</span>
         { this.renderPopup() }
       </div>

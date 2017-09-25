@@ -1,11 +1,6 @@
-import 'prismjs/themes/prism.css';
-
 import React, { Component, createElement } from 'react';
 import marked from 'meta-marked';
-import Prism from 'prismjs';
-import CSSModules from 'react-css-modules';
 import copy from 'copy-to-clipboard';
-import { allowMultiple } from '../../src/constants';
 import IconGithub from '../icons/github.svg';
 import IconUser from '../icons/user.svg';
 import IconMail from '../icons/email.svg';
@@ -19,13 +14,12 @@ const IconProps = {
   height: 18,
 };
 
-@CSSModules(styles, { allowMultiple })
 export default class ComponentBlock extends Component {
   static renderMetaData = ({ author = {} }, match) => {
     const { name, homepage, email } = author;
     return (
-      <div styleName="Component__meta">
-        <span styleName="meta__tag">
+      <div className={styles.Component__meta}>
+        <span className={styles.meta__tag}>
           <IconGithub {...IconProps} />
           <a
             target="_blank"
@@ -35,14 +29,14 @@ export default class ComponentBlock extends Component {
             HomePage
           </a>
         </span>
-        <span styleName="meta__tag">
+        <span className={styles.meta__tag}>
           <IconUser {...IconProps} />
           <a target="_blank" rel="noopener noreferrer" href={homepage || email}>
             {name}
           </a>
         </span>
         {email
-          ? <span styleName="meta__tag">
+          ? <span className={styles.meta__tag}>
             <IconMail {...IconProps} />
             <a href={`mailto:${email}`}>Email</a>
           </span>
@@ -54,7 +48,7 @@ export default class ComponentBlock extends Component {
     readme: '',
     demo: undefined,
     demoSourceCode: '',
-    showCode: true,
+    showCode: false,
   };
   componentWillMount() {
     const { match } = this.props;
@@ -97,16 +91,15 @@ export default class ComponentBlock extends Component {
     const { meta, html } = marked(readme);
 
     return (
-      <div styleName="Component__wrap">
+      <div className={styles.Component__wrap}>
         {ComponentBlock.renderMetaData(meta, match)}
         <section
-          className="markdown-block"
-          styleName="Component__doc"
+          className={`markdown-block ${styles.Component__doc}`}
           dangerouslySetInnerHTML={{ __html: html }}
         />
 
-        <section styleName="Component__demo">
-          <div styleName="Component__demoHead">
+        <section className={styles.Component__demo}>
+          <div className={styles.Component__demoHead}>
             <h3>DEMO</h3>
             <span>
               <Icon
@@ -125,7 +118,7 @@ export default class ComponentBlock extends Component {
           </div>
           <div className="markdown-demo">
             {this.state.showCode
-              ? <div styleName="Component__demoCode" className="markdown-code">
+              ? <div className={`markdown-code ${styles.Component__demoCode}`}>
                 <pre className="language-javascript">
                   <code
                     className="language-javascript"
@@ -140,7 +133,7 @@ export default class ComponentBlock extends Component {
               </div>
               : null}
             { demo
-              ? <div styleName="Component__demoBox">{createElement(demo)}</div>
+              ? <div className={styles.Component__demoBox}>{createElement(demo)}</div>
               : null}
           </div>
         </section>

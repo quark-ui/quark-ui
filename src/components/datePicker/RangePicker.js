@@ -3,18 +3,15 @@
  * @author ryan.bian
  */
 import { PureComponent } from 'react';
-import CSSModules from 'react-css-modules';
 import moment from 'moment';
 import assign from 'object-assign';
 import momentPropTypes from 'react-moment-proptypes';
 import PropTypes from 'prop-types';
-import { allowMultiple } from '../../constants';
 import styles from './DatePicker.css';
 import Picker from './Picker';
 import { defaultProps, propTypes } from './props';
 import Input from '../input';
 
-@CSSModules(styles, { allowMultiple })
 class RangePicker extends PureComponent {
 
   static displayName = 'RangePicker'

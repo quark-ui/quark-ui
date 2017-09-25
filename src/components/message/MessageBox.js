@@ -2,30 +2,49 @@
  * Message Component
  * @author grootfish
  */
-
-import { PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import ReactDOM from 'react-dom';
-import CSSModules from 'react-css-modules';
 import uniqueId from 'lodash/uniqueId';
 import assign from 'object-assign';
-import { allowMultiple } from '../../constants';
 import Message from './Message';
 import styles from './Message.css';
 
-@CSSModules(styles, { allowMultiple })
-class MessageBox extends PureComponent {
-  static displayName = 'MessageBox'
+export default class MessageBox extends PureComponent {
+  static displayName = 'MessageBox';
 
   static defaultProps = {}
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
   static propTypes = {}
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      messages: [],
+  static newInstance = (properties) => {
+    const { getContainer, ...props } = properties || {};
+    let div;
+    if (getContainer) {
+      div = getContainer();
+    } else {
+      div = document.createElement('div');
+      document.body.appendChild(div);
+    }
+    const DOM = ReactDOM;
+    const messageBox = DOM.render(<MessageBox {...props} />, div);
+    return {
+      msg(noticeProps) {
+        messageBox.add(noticeProps);
+      },
+      removeMsg(key) {
+        messageBox.remove(key);
+      },
+      component: messageBox,
+      destroy() {
+        DOM.unmountComponentAtNode(div);
+        document.body.removeChild(div);
+      },
     };
+  }
+
+  state = {
+    messages: [],
   }
 
   add = (message) => {
@@ -68,37 +87,9 @@ class MessageBox extends PureComponent {
     });
 
     return (
-      <div styleName="message--box" style={props.style}>
+      <div className={styles['message--box']} style={props.style}>
         {Nodes}
       </div>
     );
   }
 }
-
-MessageBox.newInstance = function newInstance(properties) {
-  const { getContainer, ...props } = properties || {};
-  let div;
-  if (getContainer) {
-    div = getContainer();
-  } else {
-    div = document.createElement('div');
-    document.body.appendChild(div);
-  }
-  const DOM = ReactDOM;
-  const messageBox = DOM.render(<MessageBox {...props} />, div);
-  return {
-    msg(noticeProps) {
-      messageBox.add(noticeProps);
-    },
-    removeMsg(key) {
-      messageBox.remove(key);
-    },
-    component: messageBox,
-    destroy() {
-      DOM.unmountComponentAtNode(div);
-      document.body.removeChild(div);
-    },
-  };
-};
-
-export default MessageBox;

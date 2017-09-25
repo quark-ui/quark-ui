@@ -12,20 +12,20 @@
   animation-duration: 0.625s;
   animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 
-  &--entering {
-    animation-name: slideInRight;
-    transform: translate3d(0, 0, 0);
-  }
-  &--entered {
-    transform: translate3d(0, 0, 0);
-  }
-  &--exiting {
-    animation-name: slideOutRight;
-    transform: translate3d(100%, 0, 0);
-  }
-  &--exited {
-    transform: translate3d(100%, 0, 0);
-  }
+}
+.PlayGround__Pane--entering {
+  animation-name: slideInRight;
+  transform: translate3d(0, 0, 0);
+}
+.PlayGround__Pane--entered {
+  transform: translate3d(0, 0, 0);
+}
+.PlayGround__Pane--exiting {
+  animation-name: slideOutRight;
+  transform: translate3d(100%, 0, 0);
+}
+.PlayGround__Pane--exited {
+  transform: translate3d(100%, 0, 0);
 }
 @keyframes slideInRight {
   0% {

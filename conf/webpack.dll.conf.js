@@ -28,6 +28,7 @@ module.exports = {
     }),
     new UglifyJSPlugin({
       sourceMap: true,
+      parallel: true,
     }),
     new HtmlWebpackPlugin({
       title: 'Quark UI',
