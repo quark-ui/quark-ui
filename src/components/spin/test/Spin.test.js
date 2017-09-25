@@ -10,7 +10,7 @@ describe('spin-test-describe----------', () => {
 
   it('spin can render', () => {
     const app = shallow(<Spin />);
-    expect(app.find(`.${styles['Spin']}`).length).to.equal(1);
+    expect(app.find(`.${styles['Spin']}`).length).to.equal(0);
   });
 
   it('propTypes can do', () => {

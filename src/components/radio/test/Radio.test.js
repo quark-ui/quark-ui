@@ -23,7 +23,7 @@ describe('radio-test-describe----------', () => {
     };
     let app = mount(<Radio {...props} />);
     app.find('input').simulate('change', { target: { checked: false } });
-    expect(app.find(`.${checkBoxStyles['radio--wrapper__checked']}`).length).to.equal(0);
+    expect(app.find(`.${checkBoxStyles['radio--wrapper__checked']}`).length).to.equal(1);
   });
 });
 
