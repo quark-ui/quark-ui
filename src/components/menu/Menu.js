@@ -5,11 +5,9 @@
 import React, { PureComponent } from 'react';
 import RcMenu, { Item, SubMenu, ItemGroup } from 'rc-menu';
 import PropTypes from 'prop-types';
-import CSSModules from 'react-css-modules';
-import { allowMultiple } from '../../constants';
+import classnames from 'classnames';
 import styles from './Menu.css';
 
-@CSSModules(styles, { allowMultiple })
 class Menu extends PureComponent {
   static SubMenu = SubMenu;
   static Item = Item;
@@ -127,8 +125,7 @@ class Menu extends PureComponent {
         mode,
       };
     }
-    props.className = `color-${this.props.colorType}`;
-    props.styleName = 'menu';
+    props.className = classnames(`color-${this.props.colorType}`, styles.menu);
     props.prefixCls = 'menu';
     props.inlineIndent = 18;
 
@@ -137,6 +134,5 @@ class Menu extends PureComponent {
     );
   }
 }
-
 
 export default Menu;

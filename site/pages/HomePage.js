@@ -1,6 +1,4 @@
 import { PureComponent } from 'react';
-// import { NavLink } from 'react-router-dom';
-// import assign from 'object-assign';
 
 import Icon from '../../src/components/icon';
 
@@ -10,6 +8,8 @@ import image8 from '../images/8.jpg';
 import image9 from '../images/9.jpg';
 import image10 from '../images/10.jpg';
 import image11 from '../images/11.jpg';
+
+import styles from '../Site.css';
 
 
 // import QuarkUI from '../../index';
@@ -67,7 +67,7 @@ export default class Home extends PureComponent {
 
   static renderContributor = list => (
     list.map(o => (
-      <div key={o.name} styleName="box__img">
+      <div key={o.name} className={styles.box__img}>
         <img src={o.avatar} alt={o.name} />
         <p>{o.name}</p>
       </div>
@@ -75,15 +75,15 @@ export default class Home extends PureComponent {
   )
 
   static renderCubes = () => (
-    <div styleName="home__stage">
-      <div styleName="stage__grid">
+    <div className={styles.home__stage}>
+      <div className={styles.stage__grid}>
         {
           CubeArray.map((c, i) => (
-            <div styleName="cube" key={i}>
-              <div styleName="cube__squisher">
-                <div styleName="cube__face"></div>
-                <div styleName="cube__face"></div>
-                <div styleName="cube__face"></div>
+            <div className={styles.cube} key={i}>
+              <div className={styles.cube__squisher}>
+                <div className={styles.cube__face} />
+                <div className={styles.cube__face} />
+                <div className={styles.cube__face} />
               </div>
             </div>
           ))
@@ -95,43 +95,43 @@ export default class Home extends PureComponent {
   render() {
     return (
       <Layout {...this.props}>
-        <div styleName="home__con">
+        <div className={styles.home__con}>
           {
             Home.renderCubes()
           }
-          <div styleName="home__box">
-            <p styleName="explain">夸克（英语：quark，又译“层子”或“亏子”）是一种基本粒子，也是构成物质的基本单元。取名 QuarkUI，寓意我们将努力提供一套能像 quark 一样成为构成项目的基石的组件库。</p>
+          <div className={styles.home__box}>
+            <p className={styles.explain}>夸克（英语：quark，又译“层子”或“亏子”）是一种基本粒子，也是构成物质的基本单元。取名 QuarkUI，寓意我们将努力提供一套能像 quark 一样成为构成项目的基石的组件库。</p>
             <h1>Advantage</h1>
-            <div styleName="advantages">
-              <div styleName="advantage__block">
+            <div className={styles.advantages}>
+              <div className={styles.advantage__block}>
                 <Icon name="react" size={50} />
                 <p>基于 React，背靠丰富生态社区</p>
               </div>
-              <div styleName="advantage__block">
+              <div className={styles.advantage__block}>
                 <Icon name="theme" size={50} />
                 <p>主题定制，适应不同设计场景</p>
               </div>
-              <div styleName="advantage__block">
+              <div className={styles.advantage__block}>
                 <Icon name="customise" size={50} />
                 <p>脱胎于业务，支撑企业级后台系统</p>
               </div>
             </div>
           </div>
-          <div styleName="home__box">
+          <div className={styles.home__box}>
             <h1>Case</h1>
-            <div styleName="box__exam">
-              <a href="http://katest.ehuodi.com" target="_blank">
+            <div className={styles.box__exam}>
+              <a href="http://katest.ehuodi.com" target="_blank" rel="noopener noreferrer">
                 <img src={image10} alt="" />
               </a>
-              <a href="http://ecargotest.ehuodi.com" target="_blank">
+              <a href="http://ecargotest.ehuodi.com" target="_blank" rel="noopener noreferrer">
                 <img src={image11} alt="" />
               </a>
             </div>
           </div>
-          <div styleName="home__box">
+          <div className={styles.home__box}>
             <h1>Contributor</h1>
             <h2>FED</h2>
-            <div styleName="bog__wrap">
+            <div className={styles.bog__wrap}>
               {
                 Home.renderContributor(Contributor.developer)
               }

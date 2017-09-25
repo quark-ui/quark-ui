@@ -4,14 +4,11 @@
  */
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import CSSModules from 'react-css-modules';
 import classNames from 'classnames';
 
 import Icon from '../icon';
-import { allowMultiple } from '../../constants';
 import styles from './Tabs.css';
 
-@CSSModules(styles, { allowMultiple })
 export default class Tab extends PureComponent {
   static displayName = 'Tab';
 
@@ -56,9 +53,9 @@ export default class Tab extends PureComponent {
     } = props;
 
     const tabClass = classNames({
-      disabled: disabled === true,
-      active: status === 'active',
-      tabs__tab: true,
+      [styles.disabled]: disabled === true,
+      [styles.active]: status === 'active',
+      [styles.tabs__tab]: true,
     });
 
     const delIcon = (
@@ -67,12 +64,12 @@ export default class Tab extends PureComponent {
 
     return (
       <div
-        styleName={tabClass}
+        className={tabClass}
         onClick={this.clickTab}
       >
         {title}
         {tabDeleteButton && closable
-          ? <div styleName={'tab__del'}>
+          ? <div className={styles.tab__del}>
             {delIcon}
           </div>
           : null}

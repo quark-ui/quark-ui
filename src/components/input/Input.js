@@ -5,9 +5,7 @@
 import React, { PureComponent, cloneElement } from 'react';
 import PropTypes from 'prop-types';
 import assign from 'object-assign';
-import CSSModules from 'react-css-modules';
 import classnames from 'classnames';
-import { allowMultiple } from '../../constants';
 import calculateNodeHeight from './calculateNodeHeight';
 import styles from './Input.css';
 
@@ -18,7 +16,6 @@ function fixControlledValue(value) {
   return value;
 }
 
-@CSSModules(styles, { allowMultiple })
 class Input extends PureComponent {
 
   static displayName = 'Input'
@@ -88,21 +85,21 @@ class Input extends PureComponent {
     }
 
     const prefixNode = prefix ? (
-      <span styleName={'input__prefix'}>
+      <span className={styles.input__prefix}>
         {prefix}
       </span>
     ) : null;
 
     const suffixNode = suffix ? (
-      <span styleName={'input__suffix'}>
+      <span className={styles.input__suffix}>
         {suffix}
       </span>
     ) : null;
 
     const inputProps = {
-      styleName: classnames('input__wrapper', {
-        input__wrapper__prefix: prefix,
-        input__wrapper__suffix: suffix,
+      className: classnames(styles.input__wrapper, {
+        [styles.input__wrapper__prefix]: prefix,
+        [styles.input__wrapper__suffix]: suffix,
       }),
     };
 
@@ -123,7 +120,10 @@ class Input extends PureComponent {
     const { type, size, disabled, suffix, autosize, ...otherProps } = props;
     const fieldProps = {
       ...otherProps,
-      styleName: `input__${disabled ? 'disabled' : type} input__${size}`,
+      className: classnames(
+        styles[`input__${disabled ? 'disabled' : type}`],
+        styles[`input__${size}`],
+      ),
       ref: node => (this.input = node),
       disabled,
     };

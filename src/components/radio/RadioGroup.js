@@ -4,9 +4,7 @@
  */
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import CSSModules from 'react-css-modules';
 import shallowEqual from 'shallowequal';
-import { allowMultiple } from '../../constants';
 import styles from './Radio.css';
 import Radio from '../radio';
 
@@ -22,8 +20,6 @@ function getCheckedValue(children) {
   return matched ? { value } : undefined;
 }
 
-
-@CSSModules(styles, { allowMultiple })
 class RadioGroup extends PureComponent {
 
   static displayName = 'RadioGroup'
@@ -137,7 +133,7 @@ class RadioGroup extends PureComponent {
     }
 
     return (
-      <div styleName={'radio--group'}>
+      <div className={styles['radio--group']}>
         {children}
       </div>
     );

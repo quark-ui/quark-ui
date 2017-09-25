@@ -5,14 +5,11 @@
 
 import { PureComponent } from 'react';
 import ReactDOM from 'react-dom';
-import CSSModules from 'react-css-modules';
 import uniqueId from 'lodash/uniqueId';
 import assign from 'object-assign';
-import { allowMultiple } from '../../constants';
 import Message from './Message';
 import styles from './Message.css';
 
-@CSSModules(styles, { allowMultiple })
 class MessageBox extends PureComponent {
   static displayName = 'MessageBox'
 
@@ -68,7 +65,7 @@ class MessageBox extends PureComponent {
     });
 
     return (
-      <div styleName="message--box" style={props.style}>
+      <div className={styles['message--box']} style={props.style}>
         {Nodes}
       </div>
     );

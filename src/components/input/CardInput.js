@@ -5,8 +5,7 @@
 import React, { PureComponent } from 'react';
 import InputMask from 'inputmask-core';
 import PropTypes from 'prop-types';
-import CSSModules from 'react-css-modules';
-import { allowMultiple } from '../../constants';
+import classnames from 'classnames';
 import styles from './Input.css';
 
 const KEYCODE_Z = 90;
@@ -26,10 +25,7 @@ function isRedo(e) {
   );
 }
 function getSelection(el) {
-  let start,
-    end,
-    rangeEl,
-    clone;
+  let start, end, rangeEl, clone;
 
   if (el.selectionStart !== undefined) {
     start = el.selectionStart;
@@ -73,7 +69,6 @@ function setSelection(el, selection) {
   }
 }
 
-@CSSModules(styles, { allowMultiple })
 class CardInput extends PureComponent {
   static displayName = 'CardInput';
 
@@ -105,7 +100,7 @@ class CardInput extends PureComponent {
     this.mask = new InputMask(options);
   }
 
-  onChange = (e) => {
+  onChange = e => {
     const maskValue = this.mask.getValue();
     if (e.target.value !== maskValue) {
       // Cut or delete operations will have shortened the value
@@ -127,7 +122,7 @@ class CardInput extends PureComponent {
     }
   };
 
-  onKeyPress = (e) => {
+  onKeyPress = e => {
     // console.log('onKeyPress', JSON.stringify(getSelection(this.input)), e.key, e.target.value)
 
     // Ignore modified key presses
@@ -151,7 +146,7 @@ class CardInput extends PureComponent {
     }
   };
 
-  onKeyDown = (e) => {
+  onKeyDown = e => {
     // console.log('onKeyDown', JSON.stringify(getSelection(this.input)), e.key, e.target.value)
     if (isUndo(e)) {
       e.preventDefault();
@@ -192,7 +187,7 @@ class CardInput extends PureComponent {
     }
   };
 
-  onPaste = (e) => {
+  onPaste = e => {
     // console.log('onPaste', JSON.stringify(getSelection(this.input)), e.clipboardData.getData('Text'), e.target.value)
     e.preventDefault();
     this.mask.selection = getSelection(this.input);
@@ -221,7 +216,7 @@ class CardInput extends PureComponent {
   });
 
   render() {
-    const ref = r => this.input = r;
+    const ref = r => (this.input = r);
     const maxLength = this.mask.pattern.length;
     const value = this.getDisplayValue();
     const eventHandlers = this.getEventHandlers();
@@ -240,7 +235,10 @@ class CardInput extends PureComponent {
       value,
       size,
       placeholder,
-      styleName: `${disabled ? 'input__disabled' : ''} input__${size}`,
+      className: classnames(
+        styles[`${disabled ? 'input__disabled' : ''}`],
+        styles[`input__${size}`]
+      ),
     };
 
     return <input {...inputProps} />;

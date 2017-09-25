@@ -2,15 +2,12 @@
  * Step Component
  * @author grootfish
  */
-import React,{ PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import CSSModules from 'react-css-modules';
 import classnames from 'classnames';
 import Icon from '../icon';
-import { allowMultiple } from '../../constants';
 import styles from './Steps.css';
 
-@CSSModules(styles, { allowMultiple })
 class Step extends PureComponent {
 
   static displayName = 'Step'
@@ -62,30 +59,30 @@ class Step extends PureComponent {
     let iconNode;
 
     if (status === 'finish' && isFinishIcon) {
-      iconNode = <span styleName={'steps--icon'}>{<Icon name="check" size={14} />}</span>;
+      iconNode = <span className={styles['steps--icon']}>{<Icon name="check" size={14} />}</span>;
     } else {
-      iconNode = <span styleName={'steps--icon'}>{stepNumber}</span>;
+      iconNode = <span className={styles['steps--icon']}>{stepNumber}</span>;
     }
 
     const classString = classnames({
-      'steps--item': true,
-      [`steps--item__${status}`]: true,
+      [styles['steps--item']]: true,
+      [styles[`steps--item__${status}`]]: true,
     });
 
     return (
       <div
         {...restProps}
-        styleName={classString}
+        className={classString}
         style={{ width: itemWidth, marginRight: adjustMarginRight }}
       >
-        <div styleName={'steps--tail'}><i /></div>
-        <div styleName={'steps--step'}>
-          <div styleName={'steps--head'}>
-            <div styleName={'steps--headinner'}>{iconNode}</div>
+        <div className={styles['steps--tail']}><i /></div>
+        <div className={styles['steps--step']}>
+          <div className={styles['steps--head']}>
+            <div className={styles['steps--headinner']}>{iconNode}</div>
           </div>
-          <div styleName={'steps--main'}>
-            <div styleName={'steps--title'}>{title}</div>
-            {description ? <div styleName={'steps--description'}>{description}</div> : null}
+          <div className={styles['steps--main']}>
+            <div className={styles['steps--title']}>{title}</div>
+            {description ? <div className={styles['steps--description']}>{description}</div> : null}
           </div>
         </div>
       </div>

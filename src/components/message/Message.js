@@ -5,12 +5,9 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import CSSModules from 'react-css-modules';
 import Icon from '../icon';
-import { allowMultiple } from '../../constants';
 import styles from './Message.css';
 
-@CSSModules(styles, { allowMultiple })
 class Message extends PureComponent {
 
   static displayName = 'Message'
@@ -62,9 +59,9 @@ class Message extends PureComponent {
     const { type, children } = this.props;
 
     return (
-      <div styleName={classnames('message', `message__${type}`)}>
-        <span styleName={'message--icon'}><Icon name={type} size={14} /></span>
-        <div styleName={'message--content'}>
+      <div className={classnames(styles.message, styles[`message__${type}`])}>
+        <span className={styles['message--icon']}><Icon name={type} size={14} /></span>
+        <div className={styles['message--content']}>
           {children}
         </div>
       </div>

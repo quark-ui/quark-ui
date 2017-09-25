@@ -4,13 +4,10 @@
  */
 import React, { PureComponent, cloneElement, Children } from 'react';
 import PropTypes from 'prop-types';
-import CSSModules from 'react-css-modules';
 import classNames from 'classnames';
 import Tab from './Tab';
-import { allowMultiple } from '../../constants';
 import styles from './Tabs.css';
 
-@CSSModules(styles, { allowMultiple })
 export default class Tabs extends PureComponent {
   static displayName = 'Tabs'
 
@@ -134,19 +131,19 @@ export default class Tabs extends PureComponent {
     const props = this.props;
     const { type, size, tabPosition } = props;
     const cls = classNames({
-      tabs__card: type === 'card',
-      tabs__button: type === 'button',
-      tabs__small: size === 'small',
-      'tabs__left clearfix': tabPosition === 'left',
-      tabs__wrap: true,
+      [styles.tabs__card]: type === 'card',
+      [styles.tabs__button]: type === 'button',
+      [styles.tabs__small]: size === 'small',
+      [`${styles.tabs__lef} ${styles.clearfix}`]: tabPosition === 'left',
+      [styles.tabs__wrap]: true,
     });
 
     return (
-      <div styleName={cls}>
-        <div styleName={'tabs__bar'}>
+      <div className={cls}>
+        <div className={styles.tabs__bar}>
           {opt.tab}
         </div>
-        <div styleName={'tabs__con'}>
+        <div className={styles.tabs__con}>
           {opt.panel}
         </div>
       </div>

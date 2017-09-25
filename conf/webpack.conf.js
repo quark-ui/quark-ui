@@ -18,6 +18,13 @@ const ORANGE_THEME = require('../src/styles/orange');
 
 const TARGET = process.env.npm_lifecycle_event;
 
+const BROWSERS_DEFINE = [
+  'last 5 Chrome versions',
+  'last 5 Firefox versions',
+  'last 2 Safari versions',
+  'last 2 Edge versions',
+];
+
 const common = {
   module: {
     rules: [
@@ -45,7 +52,7 @@ const common = {
                 {
                   modules: false,
                   targets: {
-                    browsers: ['last 2 versions'],
+                    browsers: BROWSERS_DEFINE,
                   },
                   useBuiltIns: true,
                 },
@@ -73,7 +80,7 @@ const common = {
                   {
                     modules: false,
                     targets: {
-                      browsers: ['last 2 versions'],
+                      browsers: BROWSERS_DEFINE,
                     },
                     useBuiltIns: true,
                   },
