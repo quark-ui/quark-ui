@@ -41,14 +41,20 @@ describe('RadioGroup-test-describe----------', () => {
 
 
   it('radio checked one', () => {
-    const app = shallow(
-      <RadioGroup>
+    const onChange = sinon.spy();
+    const props = {
+      onChange,
+    };
+    const app = mount(
+      <RadioGroup {...props}>
         <Radio value={1} checked>Option A</Radio>
         <Radio value={2}>Option B</Radio>
         <Radio value={3}>Option C</Radio>
       </RadioGroup>
     );
     expect(app.find('Radio').length).to.equal(3);
+    app.find('input').at(1).simulate('change');
+    expect(onChange.calledOnce).to.equal(true);
   });
 
   it('radioGroup have defaultValue', () => {

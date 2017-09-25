@@ -109,4 +109,6 @@ const renderNoticeModal = (
   );
 };
 
+renderNoticeModal.NoticeModal = NoticeModal;
 export default renderNoticeModal;
+
