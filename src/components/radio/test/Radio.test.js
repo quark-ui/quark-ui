@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow, mount, render } from 'enzyme';
 import { expect, should } from 'chai';
+import sinon from 'sinon';
 import Radio from '../index';
 import styles from '../Radio.css';
 import checkBoxStyles from '../../checkbox/Checkbox.css';
@@ -27,10 +28,10 @@ describe('radio-test-describe----------', () => {
 });
 
 describe('RadioGroup-test-describe----------', () => {
-  // it('radioGroup can render', () => {
-  //   const app = shallow(<RadioGroup />);
-  //   expect(app.find(`.${styles['radio--group']}`).length).to.equal(1);
-  // });
+  it('radioGroup can render', () => {
+    const app = shallow(<RadioGroup />);
+    expect(app.find(`.${styles['radio--group']}`).length).to.equal(1);
+  });
 
   it('options is string', () => {
     const plainOptions = ['Apple', 'Pear', 'Orange'];
@@ -67,14 +68,18 @@ describe('RadioGroup-test-describe----------', () => {
       { label: 'Pear', value: 'Pear' },
       { label: 'Orange', value: 'Orange', disabled: false },
     ];
-
     const props = {
       value: 'Apple',
       disabled: false,
-    }
+    };
     const app = mount(<RadioGroup options={optionsWithDisabled} {...props} />);
     expect(app.find('Radio').length).to.equal(3);
     expect(app.find(`.${checkBoxStyles['radio--wrapper__checked']}`).length).to.equal(1);
+
+    const spy = sinon.spy(RadioGroup.prototype, 'componentWillReceiveProps');
+    expect(spy.calledOnce).to.equal(false);
+    app.setProps({ value : 'Pear' });
+    expect(spy.calledOnce).to.equal(true);
   });
 
   it('RadioGroup have radioButton', () => {
