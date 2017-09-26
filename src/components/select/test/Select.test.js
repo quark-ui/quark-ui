@@ -151,6 +151,9 @@ describe('Select-test-describe----------', () => {
         text,
       });
     }
+    onCancelChange = () => {
+
+    }
     
 
     render() {
@@ -175,37 +178,11 @@ describe('Select-test-describe----------', () => {
   }
 
 
-  it('Select type of combobox can render', () => {
-    const select = mount(<ComboboxTest />);
-
-    expect(select.hasClass(styles['select'])).to.equal(true);
-
-    let searchTextBox = select.find(`.${styles['comboboxInput']}`).first();
-
-    select.find(`.${styles.selectionCloseIcon}`).simulate('click');
-    expect(select.find(`.${styles['selection']}`).find(`.${styles['comboboxInput']}`).prop('placeholder') ).to.equal('请输入查询条件');
-
-
-    searchTextBox.get(0).value = '1';
-    searchTextBox.simulate('change');
-    // 这里由于debounce的原因没法同步测试
-
-    searchTextBox.get(0).value = '';
-    searchTextBox.simulate('change');
-    // 这里由于debounce的原因没法同步测试
-
-    select.setState({
-      text: '11',
-    });
-
-    expect(searchTextBox.get(0).value).to.equal('11');
-
-    // document.body.click();
-
-  });
+  
 
 
   it('Select type of dropdown disabled can render', () => {
+    document.body.innerHTML = ''; //清除上面产生的内容
     const select = mount(<Select style={{ width: 250 }} disabled={true} defaultValue="C">
       <Option value="A">AA</Option>
       <Option value="B">BB</Option>
@@ -217,6 +194,7 @@ describe('Select-test-describe----------', () => {
   });
 
   it('Select type of dropdown placeholder disabled can render', () => {
+    document.body.innerHTML = ''; //清除上面产生的内容
     const select = mount(<Select style={{ width: 250 }} disabled={true} defaultValue="E" placeholder={"请选择"}>
       <Option value="A">AA</Option>
       <Option value="B">BB</Option>
@@ -228,6 +206,7 @@ describe('Select-test-describe----------', () => {
   });
 
   it('Select type of dropdown can render', () => {
+    document.body.innerHTML = ''; //清除上面产生的内容
     const select = mount(<SelectTest />);
 
     expect(select.hasClass(styles['select'])).to.equal(true);
@@ -259,6 +238,7 @@ describe('Select-test-describe----------', () => {
   
 
   it('Select type of dropdown notControl can render', () => {
+    document.body.innerHTML = ''; //清除上面产生的内容
     const select = mount(<SelectNotControlTest />);
 
     expect(select.hasClass(styles['select'])).to.equal(true);
@@ -278,6 +258,8 @@ describe('Select-test-describe----------', () => {
   });
 
   it('Select type of dropdown with OptGroup can render', () => {
+    document.body.innerHTML = ''; //清除上面产生的内容
+
     const select = mount(<SelectOptGroupTest />);
 
     expect(select.hasClass(styles['select'])).to.equal(true);
@@ -286,10 +268,11 @@ describe('Select-test-describe----------', () => {
     triggerBtn.simulate('click');
 
 
+
     let dropdowns = global.document.getElementsByClassName(`${styles.dropdown}`);
     
-    expect(dropdowns.length).to.equal(3); // 有3个下拉弹框
-    expect(dropdowns[2].getElementsByClassName(`${styles.option}`).length).to.equal(7);
+    expect(dropdowns.length).to.equal(1); // 有1个下拉弹框
+    expect(dropdowns[0].getElementsByClassName(`${styles.option}`).length).to.equal(7);
 
 
     //选中A
@@ -297,10 +280,63 @@ describe('Select-test-describe----------', () => {
       value: 'B',
     });
 
-    let option = dropdowns[2].getElementsByClassName(`${styles['active']}`)[0];
+    let option = dropdowns[0].getElementsByClassName(`${styles['active']}`)[0];
     expect(option.innerHTML).to.equal('BB');
     option.click();
     expect(triggerBtn.find(`.${styles['selectionClose']}`).find('span').text()).to.equal('BB');
+  });
+
+
+
+
+  it('Select type of combobox can render', (done) => {
+
+    document.body.innerHTML = ''; //清除上面产生的内容
+
+    const select = mount(<ComboboxTest />);
+
+    expect(select.hasClass(styles['select'])).to.equal(true);
+
+    let searchTextBox = select.find(`.${styles['comboboxInput']}`).first();
+
+    select.find(`.${styles.selectionCloseIcon}`).simulate('click');
+    expect(select.find(`.${styles['selection']}`).find(`.${styles['comboboxInput']}`).prop('placeholder') ).to.equal('请输入查询条件');
+
+    select.setState({
+      text: '11',
+    });
+
+    expect(searchTextBox.get(0).value).to.equal('11');
+
+    searchTextBox.simulate('click');
+
+    searchTextBox.get(0).value = '2';
+    searchTextBox.simulate('change');
+
+    setTimeout(() => {
+
+      let dropdowns = global.document.getElementsByClassName(`${styles.dropdown}`);
+
+      let list = dropdowns[0].getElementsByClassName(`${styles.option}`);
+      expect(list.length).to.equal(2);
+      expect(list[0].innerHTML).to.equal('2');
+      expect(list[1].innerHTML).to.equal('22');
+
+      searchTextBox.get(0).value = '';
+      searchTextBox.simulate('change');
+
+      setTimeout(() => {
+
+        document.body.click();
+
+
+        done();
+        
+      }, 500);
+
+      
+    }, 500);
+
   });
 
 
