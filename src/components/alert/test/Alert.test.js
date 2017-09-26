@@ -71,14 +71,13 @@ describe('alert-test-describe----------', () => {
       type: 'success',
       message: 'message',
       closable: true,
+      closeText: 'close',
     };
     const app = mount(
       <Alert {...props} />
     );
-    // app.find(`span.${styles['alert--close']}`).simulate('click');
-    // expect(app.find(`.${styles[' alert ']}`).length).to.equal(0);
-
+    app.find(`span.${styles['alert--close']}`).simulate('click');
+    expect(app.find(`.${styles[' alert ']}`).length).to.equal(0);
   });
-
 });
 
