@@ -70,7 +70,6 @@ describe('cardInput-test-describe----------', () => {
   it('propTypes  can do',()=>{
     const props = {
       mask: "A111-1111-1111-1111",
-      value: 'A234-1234-1234-1234',
       placeholderChar: '',
       formatCharacters: {
         'A': null
@@ -89,32 +88,35 @@ describe('cardInput-test-describe----------', () => {
     expect(app.hasClass(styles['input__large'])).to.equal(true);
   });
 
-  it('input change value',()=>{
-    const props = {
-      size: "large",
-      mask: "1111-1111-1111-1112",
-      value: '1234-1234-1234-1234',
-    };
-    const app = shallow(<CardInput {...props} />);
-    app.find('input').simulate('change', { target: { value: '1111-1111-1111-1113' } });
-  });
+  // it('input change value',()=>{
+  //   const onChange = sinon.spy();
+  //   const props = {
+  //     size: "large",
+  //     mask: "1111-1111-1111-1111",
+  //     // value: '1234-1234-1234-1234',
+  //   };
+  //   const app = shallow(<CardInput {...props} />);
+  //   // app.find('input').node.value = '1111-1111-1111-1113';
+  //   // app.find('input').props().onChange({currentTarget: {value: '1111-1111-1111-1113'}}) // NOTE: this works
+  //   app.find('input').simulate('change', { target: { value: '1111-1111-1111-1113' } });
+  //   expect(app.find('input').props().value).to.equal('1234-12341111-1111-1111-1113');
+  // });
 
   it('input change value is mask value',()=>{
     const props = {
       size: "large",
-      mask: "1111-1111-1111-1113",
-      value: '1234-1234-1234-1234',
+      mask: "1111-1111-1111-1111",
     };
     const app = shallow(<CardInput {...props} />);
     app.find('input').simulate('change', { target: { value: '1111-1111-1111-1113' } });
+    console.log(app.debug());
   });
 
   it('props onChange',()=>{
     const onChange = sinon.spy();
     const props = {
       size: "large",
-      mask: "1111-1111-1111-1113",
-      value: '1234-1234-1234-1234',
+      mask: "1111-1111-1111-1111",
       onChange,
     };
     const app = shallow(<CardInput {...props} />);
@@ -123,24 +125,28 @@ describe('cardInput-test-describe----------', () => {
   });
 
   it('onKeyDown && e.metaKey || e.altKey || e.ctrlKey || e.key === Enter', () => {
+    const onChange = sinon.spy();
     const props = {
       size: "large",
-      mask: "1111-1111-1111-1113",
-      value: '1234-1234-1234-1234',
+      mask: "1111-1111-1111-1111",
+      onChange,
     };
     const app = shallow(<CardInput {...props} />);
     app.find('input').simulate('keyPress', { ctrlKey: '1', preventDefault() {} });
+    expect(onChange.calledOnce).to.equal(false);
     app.find('input').simulate('shiftKey', { metaKey: '1', preventDefault() {} });
+    expect(onChange.calledOnce).to.equal(false);
     app.find('input').simulate('keyPress', { key: 'Enter', preventDefault() {} });
+    expect(onChange.calledOnce).to.equal(false);
     app.find('input').simulate('keyDown', { key: '1', preventDefault() {} });
+    expect(onChange.calledOnce).to.equal(false);
     // app.find('input').simulate('keyPress', { key: 'Backspace', preventDefault() {} });
   });
 
   it('isUndo have shiftKey', () => {
     const props = {
       size: "large",
-      mask: "1111-1111-1111-1113",
-      value: '1234-1234-1234-1234',
+      mask: "1111-1111-1111-1111",
     };
     const app = shallow(<CardInput {...props} />);
     app.find('input').simulate('keyDown', { ctrlKey: '1', shiftKey: '1', preventDefault() {} });
@@ -149,8 +155,7 @@ describe('cardInput-test-describe----------', () => {
   it('isUndo no shiftKey', () => {
     const props = {
       size: "large",
-      mask: "1111-1111-1111-1113",
-      value: '1234-1234-1234-1234',
+      mask: "1111-1111-1111-1111",
     };
     const app = shallow(<CardInput {...props} />);
     app.find('input').simulate('keyDown', { ctrlKey: '1', preventDefault() {} });
@@ -160,8 +165,7 @@ describe('cardInput-test-describe----------', () => {
     const onChange = sinon.spy();
     const props = {
       size: "large",
-      mask: "1111-1111-1111-1113",
-      value: '1234-1234-1234-1234',
+      mask: "1111-1111-1111-1111",
       onChange,
     };
     const app = shallow(<CardInput {...props} />);

@@ -69,7 +69,12 @@ class Notice extends PureComponent {
       <div className={cls} style={props.style}>
         <div className={styles['notification--content']}>
           {type ? (
-            <Icon className={styles.notification__icon} name={type} size={24} />
+            <Icon className={
+              classnames({
+                [styles.notification__icon]: 1,
+                [styles[`notification--icon--${type}`]]: type,
+              })} 
+            name={type} size={24} />
           ) : null}
           {icon || null}
           <div className={styles.notification__mes}>{props.message}</div>

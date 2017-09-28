@@ -9,7 +9,6 @@ import classnames from 'classnames';
 import uniqueId from 'lodash/uniqueId';
 import assign from 'object-assign';
 import Notice from './Notice';
-
 import styles from './Notification.css';
 
 class NotificationBox extends PureComponent {
@@ -63,12 +62,15 @@ class NotificationBox extends PureComponent {
       return <Notice {...notice} onClose={onClose} />;
     });
 
-    const cls = classnames({
-      'notification--box': 1,
-      [`notification--box--${placement}`]: placement,
-    });
+    const notificationProps = {
+      style,
+      className: classnames({
+        [styles['notification--box']]: 1,
+        [styles[`notification--box--${placement}`]]: placement,
+      }),
+    };
     return (
-      <div styleName={cls} style={style}>
+      <div {...notificationProps}>
         {Nodes}
       </div>
     );
@@ -77,16 +79,14 @@ class NotificationBox extends PureComponent {
 
 NotificationBox.newInstance = function newInstance(properties) {
   const { getContainer, ...props } = properties || {};
-  let div;
-
-  div = document.createElement('div');
+  const container = document.createElement('div');
   if (getContainer) {
-    document.getElementById(getContainer).appendChild(div);
+    document.getElementById(getContainer).appendChild(container);
   } else {
-    document.body.appendChild(div);
+    document.body.appendChild(container);
   }
   const DOM = ReactDOM;
-  const notificationBox = DOM.render(<NotificationBox {...props} />, div);
+  const notificationBox = DOM.render(<NotificationBox {...props} />, container);
 
   return {
     addNotice(noticeProps) {
@@ -96,9 +96,9 @@ NotificationBox.newInstance = function newInstance(properties) {
       notificationBox.remove(key);
     },
     destroy() {
-      DOM.unmountComponentAtNode(div);
+      DOM.unmountComponentAtNode(container);
       if (!getContainer) {
-        document.body.removeChild(div);
+        document.body.removeChild(container);
       }
     },
   };

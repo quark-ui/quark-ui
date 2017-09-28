@@ -32,7 +32,7 @@ describe('modal-test-describe----------', () => {
       type: 'info',
       title: '标题',
       closable: true,
-      visible: true,
+      visible: false,
       onOk,
       onCancel,
       afterClose,
