@@ -57,6 +57,25 @@ describe('RadioGroup-test-describe----------', () => {
     expect(onChange.calledOnce).to.equal(true);
   });
 
+  it('radio checked one', () => {
+    const onChange = sinon.spy();
+    const props = {
+      value: '2',
+      onChange,
+    };
+    const app = mount(
+      <RadioGroup {...props}>
+        <Radio value={1}>Option A</Radio>
+        <Radio value={2}>Option B</Radio>
+        <Radio value={3}>Option C</Radio>
+      </RadioGroup>
+    );
+    expect(app.find('Radio').length).to.equal(3);
+    app.find('input').at(1).simulate('change');
+    expect(onChange.calledOnce).to.equal(false);
+  });
+
+
   it('radioGroup have defaultValue', () => {
     const app = shallow(
       <RadioGroup defaultValue="1">
