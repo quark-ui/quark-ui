@@ -16,7 +16,6 @@ import defaultRepl from '!raw-loader!../repl/default';
 
 import styles from './PlayGround.css';
 
-
 export default class PlayGround extends Component {
   static defaultProps = {
     componentName: null,
@@ -118,6 +117,7 @@ export default class PlayGround extends Component {
         {
           status => (
             <div
+              key={status}
               className={classnames(
                 styles.PlayGround__Pane,
                 styles[`PlayGround__Pane--${status}`],

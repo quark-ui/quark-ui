@@ -5,15 +5,12 @@
 import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import assign from 'object-assign';
-import CSSModules from 'react-css-modules';
 import classnames from 'classnames';
 import moment from 'moment';
 import momentPropTypes from 'react-moment-proptypes';
 import Icon from '../../icon';
-import { allowMultiple } from '../../../constants';
 import styles from '../DatePicker.css';
 
-@CSSModules(styles, { allowMultiple })
 class DatePane extends PureComponent {
 
   static displayName = 'DatePane'
@@ -68,10 +65,10 @@ class DatePane extends PureComponent {
   renderWeekTitle() {
     const weekdays = moment.weekdaysMin();
     return (
-      <div styleName="datePicker_weekTitle">
+      <div className={styles.datePicker_weekTitle}>
         {
           weekdays.map(w => (
-            <div styleName="datePicker__weekTitleGrid" key={w}>{w}</div>
+            <div className={styles.datePicker__weekTitleGrid} key={w}>{w}</div>
           ))
         }
       </div>
@@ -81,21 +78,21 @@ class DatePane extends PureComponent {
   renderPaneHead() {
     const { date, showYearPane, showMonthPane } = this.props;
     return (
-      <div styleName="datePicker__datePaneHead">
-        <button styleName="datePicker__headControlBtn" onClick={this.handleSubtractYear}>
+      <div className={styles.datePicker__datePaneHead}>
+        <button className={styles.datePicker__headControlBtn} onClick={this.handleSubtractYear}>
           <Icon name="double-arrow-left" size={14} />
         </button>
-        <button styleName="datePicker__headControlBtn" onClick={this.handleSubtractMonth}>
+        <button className={styles.datePicker__headControlBtn} onClick={this.handleSubtractMonth}>
           <Icon name="arrow-left" size={14} />
         </button>
-        <div styleName="datePicker__headJump">
-          <button styleName="datePicker__headJumpBtn" onClick={showMonthPane}>{date.format('MMM')}</button>
-          <button styleName="datePicker__headJumpBtn" onClick={showYearPane}>{date.format('YYYY')}</button>
+        <div className={styles.datePicker__headJump}>
+          <button className={styles.datePicker__headJumpBtn} onClick={showMonthPane}>{date.format('MMM')}</button>
+          <button className={styles.datePicker__headJumpBtn} onClick={showYearPane}>{date.format('YYYY')}</button>
         </div>
-        <button styleName="datePicker__headControlBtn" onClick={this.handleAddMonth}>
+        <button className={styles.datePicker__headControlBtn} onClick={this.handleAddMonth}>
           <Icon name="arrow-right" size={14} />
         </button>
-        <button styleName="datePicker__headControlBtn" onClick={this.handleAddYear}>
+        <button className={styles.datePicker__headControlBtn} onClick={this.handleAddYear}>
           <Icon name="double-arrow-right" size={14} />
         </button>
       </div>
@@ -124,14 +121,14 @@ class DatePane extends PureComponent {
         // last month
         dateNum = moveDate.date();
         assign(gridProps, {
-          styleName: 'datePicker__dayGrid datePicker__dayGrid--lastMonth',
+          className: classnames(styles.datePicker__dayGrid, styles['datePicker__dayGrid--lastMonth']),
           onClick: this.handleClickDate.bind(this, moveYear, month - 1, dateNum),
         });
       } else if (i >= lastDayIndex) {
         // next month
         dateNum = moveDate.date();
         assign(gridProps, {
-          styleName: 'datePicker__dayGrid datePicker__dayGrid--nextMonth',
+          className: classnames(styles.datePicker__dayGrid, styles['datePicker__dayGrid--nextMonth']),
           onClick: this.handleClickDate.bind(this, moveYear, month + 1, dateNum),
         });
       } else {
@@ -139,13 +136,13 @@ class DatePane extends PureComponent {
         dateNum = i + 1;
         const disabled = disabledDate && disabledDate(moveDate);
         assign(gridProps, {
-          styleName: classnames(
-            'datePicker__dayGrid',
-            'datePicker__dayGrid--curMonth',
+          className: classnames(
+            styles.datePicker__dayGrid,
+            styles['datePicker__dayGrid--curMonth'],
             {
-              'datePicker__dayGrid--active': dateNum === curDate && !disabled,
-              'datePicker__dayGrid--disabled': disabled,
-              'datePicker__dayGrid--range': inRange && inRange(moveDate),
+              [styles['datePicker__dayGrid--active']]: dateNum === curDate && !disabled,
+              [styles['datePicker__dayGrid--disabled']]: disabled,
+              [styles['datePicker__dayGrid--range']]: inRange && inRange(moveDate),
             },
           ),
           onClick: disabled ? null : this.handleClickDate.bind(this, moveYear, month, dateNum),
@@ -166,7 +163,7 @@ class DatePane extends PureComponent {
     }
     return (
       weeks.map((w, r) => (
-        <div key={r} styleName="datePicker__weekRow">{w}</div>
+        <div key={r} className={styles.datePicker__weekRow}>{w}</div>
       ))
     );
   }
@@ -174,7 +171,7 @@ class DatePane extends PureComponent {
   render() {
     const { className } = this.props;
     return (
-      <div styleName="datePicker__picker datePicker__datePane" className={className}>
+      <div className={classnames(className, styles.datePicker__picker, styles.datePicker__datePane)}>
         {this.renderPaneHead()}
         {this.renderWeekTitle()}
         {this.renderWeekDays()}

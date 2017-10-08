@@ -1,6 +1,4 @@
 import classnames from 'classnames';
-import Prism from 'prismjs';
-import { lifecycle } from 'recompose';
 import styles from '../Site.css';
 import componentStyles from '../partials/Component.css';
 
@@ -20,9 +18,4 @@ const DocPage = ({ html }) => (
   </Layout>
 );
 
-export default lifecycle({
-  componentDidMount() {
-    console.log('componentDidMount');
-    Prism.highlightAll();
-  }
-})(DocPage);
+export default DocPage;

@@ -9,81 +9,82 @@ let defaultDuration = 4.5;
 let defaultTop = 24;
 let defaultBottom = 24;
 let defaultPlacement = 'topRight';
-let notificationInstance = {};
+const notificationInstance = {};
 let getContainer;
 
 
 export type notificationPlacement = 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight';
 
-function getPlacementStyle(placement){
+function getPlacementStyle(placement) {
   let style;
-  switch(placement){
+  switch (placement){
     case 'topLeft':
-    style ={
-      left:0,
-      top:defaultTop,
-      bottom:'auto',
-    };
-    break;
+      style ={
+        left:0,
+        top:defaultTop,
+        bottom:'auto',
+      };
+      break;
 
     case 'bottomLeft':
-    style ={
-      left:0,
-      top:'auto',
-      bottom:defaultBottom,
-    };
-    break;
+      style ={
+        left:0,
+        top:'auto',
+        bottom:defaultBottom,
+      };
+      break;
 
     case 'bottomRight':
-    style ={
-      right:0,
-      top:'auto',
-      bottom:defaultBottom,
-    };
-    break;
+      style ={
+        right:0,
+        top:'auto',
+        bottom:defaultBottom,
+      };
+      break;
 
     default:
-    style = {
-      right: 0,
-      top: defaultTop,
-      bottom: 'auto',
-    };
+      style = {
+        right: 0,
+        top: defaultTop,
+        bottom: 'auto',
+      };
   }
   return style;
 }
 
 
-function getNotificationInstance(placement){
-  if(notificationInstance[placement]){
-    return notificationInstance[placement]
+function getNotificationInstance(placement) {
+  
+  if (notificationInstance[placement]) {
+    return notificationInstance[placement];
   }
   notificationInstance[placement] = NotificationBox.newInstance({
-    placement:placement,
-    style:getPlacementStyle(placement),
+    placement,
+    style: getPlacementStyle(placement),
     getContainer,
   })
   return notificationInstance[placement];
 }
 
-const api ={
-  open(parms){
-    if(!parms.placement){
+const api = {
+  open(parms) {
+    if (!parms.placement) {
       parms.placement = defaultPlacement;
     }
 
-    if(parms.duration == undefined){
+    if (parms.duration == undefined) {
       parms.duration = defaultDuration;
     }
     getNotificationInstance(parms.placement).addNotice(parms);
   },
-  close(key){
+  close(key) {
     if (notificationInstance[defaultPlacement]) {
       notificationInstance[defaultPlacement].removeNotice(key);
     }
   },
   config(options = {}) {
-    if(options.duration !== undefined){
-      defaultDuration = options.duration
+    if (options.duration !== undefined) {
+      defaultDuration = options.duration;
     }
 
     if (options.top !== undefined) {
@@ -102,12 +103,13 @@ const api ={
       getContainer = options.getContainer;
     }
   },
-  destroy(){
-    Object.keys(notificationInstance).forEach(key =>{
+  destroy() {
+    Object.keys (notificationInstance).forEach(key => {
       notificationInstance[key].destroy();
       delete notificationInstance[key];
-    })
-  }
-}
+    });
+
+  },
+};
 
 export default api;

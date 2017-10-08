@@ -5,15 +5,11 @@
 import React,{ PureComponent } from 'react';
 import shallowEqual from 'shallowequal';
 import PropTypes from 'prop-types';
-import CSSModules from 'react-css-modules';
-import { allowMultiple } from '../../constants';
 import styles from './Radio.css';
 import Checkbox from '../checkbox';
 import RadioGroup from './RadioGroup';
 import RadioButton from './RadioButton';
 
-
-@CSSModules(styles, { allowMultiple })
 class Radio extends PureComponent {
 
   static Group = RadioGroup;

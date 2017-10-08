@@ -1,13 +1,10 @@
-import CSSModules from 'react-css-modules';
 import React, { Component } from 'react';
-import { allowMultiple } from '../../../constants';
 import Upload from '../Upload';
 import Icon from '../../icon/Icon';
 import Button from '../../button/Button';
 import message from '../../message/index';
 import styles from './index.css';
 
-@CSSModules(styles, { allowMultiple })
 class UploadDemo1 extends Component {
   constructor(props) {
     super(props);
@@ -63,7 +60,6 @@ class UploadDemo1 extends Component {
   }
 }
 
-@CSSModules(styles, { allowMultiple })
 class UploadDemo2 extends Component {
   constructor(props) {
     super(props);
@@ -137,7 +133,6 @@ class UploadDemo2 extends Component {
   }
 }
 
-@CSSModules(styles, { allowMultiple })
 class UploadDemo3 extends Component {
   constructor(props) {
     super(props);
@@ -212,7 +207,6 @@ class UploadDemo3 extends Component {
   }
 }
 
-@CSSModules(styles, { allowMultiple })
 class UploadDemo4 extends Component {
   constructor(props) {
     super(props);
@@ -271,9 +265,9 @@ class UploadDemo4 extends Component {
     };
 
     const uploadButton = (
-      <div styleName="upload-btn">
+      <div className={styles['upload-btn']}>
         <Icon name="plus" size={25} />
-        <div styleName="upload-text">上传</div>
+        <div className={styles['upload-text']}>上传</div>
       </div>
     );
     return (

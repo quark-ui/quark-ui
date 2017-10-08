@@ -97,7 +97,7 @@ export default {
       }, {
         name: 'Dropdown',
         icon: 'dropdown',
-        title: '标签页',
+        title: '下拉菜单',
       }],
   }, {
     group: 'other',

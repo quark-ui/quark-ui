@@ -4,13 +4,10 @@
  */
 import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import CSSModules from 'react-css-modules';
-import { allowMultiple } from '../../constants';
 import Input from './Input';
 import styles from './Input.css';
 import Icon from '../icon';
 
-@CSSModules(styles, { allowMultiple })
 export default class Search extends PureComponent {
 
   static displayName = 'Search'

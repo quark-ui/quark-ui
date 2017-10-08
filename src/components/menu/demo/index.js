@@ -1,11 +1,8 @@
-import CSSModules from 'react-css-modules';
 import React, { Component } from 'react';
-import { allowMultiple } from '../../../constants';
 import Menu from '../Menu';
 import Icon from '../../icon/Icon';
 import styles from './index.css';
 
-@CSSModules(styles, { allowMultiple })
 export default class MenuDemo extends Component {
   state = {
     theme: 'dark',
