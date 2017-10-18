@@ -51,15 +51,33 @@ describe('tabs-test-describe----------', () => {
 
   it('defaultActiveKey is exit ', () => {
     const props = {
-      defaultActiveKey: '1',
+      defaultActiveKey: 1,
     }
     const app = mount(
       <Tabs {...props}>
         <Panel title={<span><Icon size={18} name="account" />Tab 1</span>} key="1">Tab 1</Panel>
       </Tabs>
     );
-    expect(app.find('Tab').length).to.equal(1);
+    expect(app.find(`.${styles['tabs__tab']}`).length).to.equal(1);
+  });
+  it('Tabs props onClick ', () => {
+    const onClick = sinon.spy();
+    const deleteButton = sinon.spy();
 
+    const props = {
+      activeKey: 1,
+      onClick,
+      deleteButton,
+    }
+    const app = mount(
+      <Tabs {...props}>
+        <Panel title="1" key="1" closable>Tab 1</Panel>
+        <Panel title="2" key="2" closable>Tab 2</Panel>
+        <Panel title="3" key="3" closable>Tab 3</Panel>
+      </Tabs>
+    );
+    app.find(`.${styles['tabs__tab']}`).at(1).simulate('click');
+    expect(onClick.calledOnce).to.equal(true);
   });
   it('tabs size is small && type is card && tabPosition is left', () => {
     const panes = [
@@ -67,19 +85,24 @@ describe('tabs-test-describe----------', () => {
       { title: 'Tab 2', content: 'Content of Tab 2', key: 2 },
       { title: 'Tab 3', content: 'Content of Tab 3', key: 3, closable: false },
     ];
+    const props = {
+      type: 'card',
+      size: 'small',
+      activeKey: 2,
+      tabDeleteButton: true,
+      tabPosition: 'left',
+    }
     const app = mount(
-      <Tabs
-        type={'card'}
-        size={'small'}
-        activeKey="2"
-        tabDeleteButton
-        tabPosition={'left'}
-      >
+      <Tabs {...props}>
         {panes.map(pane => <Panel title={pane.title} key={pane.key} closable={pane.closable}>{pane.content}</Panel>)}
       </Tabs>
     );
     expect(app.find(`.${styles['tab__del']}`).length).to.equal(1);
+
+    const spy = sinon.spy(Tabs.prototype, 'componentWillReceiveProps');
+    expect(spy.calledOnce).to.equal(false);
+    app.setProps({ activeKey : 3 });
+    // expect(spy.calledOnce).to.equal(true);
+    app.setProps({ activeKey : 5 });
   });
 });
-
-

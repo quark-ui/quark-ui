@@ -6,13 +6,11 @@ import assign from 'object-assign';
 import React from 'react';
 import RcUpload from 'rc-upload';
 import PropTypes from 'prop-types';
-import CSSModules from 'react-css-modules';
-import { allowMultiple } from '../../constants';
+import classnames from 'classnames';
 import { fileToObject, genPercentAdd, getFileItem, removeFileItem } from './utils';
 // import Dragger from './Dragger';
 import UploadList from './UploadList';
 // import { UploadProps, UploadLocale } from './interface';
-// import classNames from 'classnames';
 import styles from './Upload.css';
 
 const defaultLocale = {
@@ -22,7 +20,6 @@ const defaultLocale = {
   previewFile: '预览文件',
 };
 
-@CSSModules(styles, { allowMultiple })
 class Upload extends React.Component {
   static displayName = 'Upload'
 
@@ -235,7 +232,7 @@ class Upload extends React.Component {
   }
 
   handleManualRemove = (file) => {
-    this.refs.upload.abort(file);
+    this.upload.abort(file);
     file.status = 'removed'; // eslint-disable-line
     this.handleRemove(file);
   }
@@ -333,8 +330,18 @@ class Upload extends React.Component {
     // });
 
     const uploadButton = (
-      <div styleName={`${prefixCls} ${prefixCls}-select ${prefixCls}-select-${listType} ${children ? '' : 'hide'}`}>
-        <RcUpload {...rcUploadProps} ref="upload" />
+      <div className={classnames(
+        styles[prefixCls],
+        styles[`${prefixCls}-select`],
+        styles[`${prefixCls}-select-${listType}`],
+        styles[`${children ? '' : 'hide'}`],
+      )}>
+        <RcUpload
+          {...rcUploadProps}
+          ref={(node) => {
+            this.upload = node;
+          }}
+        />
       </div>
     );
 

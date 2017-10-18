@@ -4,13 +4,10 @@
  */
 import React, { PureComponent, Children, cloneElement } from 'react';
 import PropTypes from 'prop-types';
-import CSSModules from 'react-css-modules';
 import classnames from 'classnames';
-import { allowMultiple } from '../../constants';
 import styles from './Steps.css';
 import Step from './Step';
 
-@CSSModules(styles, { allowMultiple })
 class Steps extends PureComponent {
 
   static displayName = 'Steps';
@@ -73,12 +70,12 @@ class Steps extends PureComponent {
     const lastIndex = children.length - 1;
     const reLayouted = this.state.lastStepOffsetWidth > 0;
     const classString = classnames({
-      steps: true,
-      [`steps__${direction}`]: true,
-      [`steps__${size}`]: size,
+      [styles.steps]: true,
+      [styles[`steps__${direction}`]]: true,
+      [styles[`steps__${size}`]]: size,
     });
     return (
-      <div styleName={classString} ref={node => (this.domNode = node)} {...restProps}>
+      <div className={classString} ref={node => (this.domNode = node)} {...restProps}>
         {
           Children.map(children, (ele, idx) => {
             const itemWidth = (direction === 'vertical' || idx === lastIndex || !reLayouted)

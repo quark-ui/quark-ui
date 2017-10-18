@@ -4,12 +4,9 @@
  */
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import CSSModules from 'react-css-modules';
 import Animate from 'rc-animate';
-import { allowMultiple } from '../../constants';
 import styles from './Spin.css';
 
-@CSSModules(styles, { allowMultiple })
 class Spin extends PureComponent {
   static displayName = 'Spin'
 
@@ -69,14 +66,15 @@ class Spin extends PureComponent {
     const { spinning } = this.state;
 
     const spinProps = {
-      styleName: `Spin ${size === 'default' ? '' : size}`,
+      className: styles[`Spin ${size === 'default' ? '' : size}`],
     };
     const conProps = {
-      styleName: `qui-spin-container ${spinning ? 'qui-spin-blur' : ''}`,
+      className: styles[`qui-spin-container ${spinning ? 'qui-spin-blur' : ''}`],
+      key: 'container',
     };
     const spinElement = (
       <div {...spinProps}>
-        <span styleName={'qui-spin-dot'}>
+        <span className={styles['qui-spin-dot']}>
           <i />
           <i />
           <i />
@@ -84,7 +82,7 @@ class Spin extends PureComponent {
           <i />
         </span>
         {
-          tip ? <p styleName={'qui-spin-text'}>{tip}</p> : null
+          tip ? <p className={styles['qui-spin-text']}>{tip}</p> : null
         }
       </div>
     );
@@ -94,9 +92,9 @@ class Spin extends PureComponent {
         <Animate
           component="div"
           transitionName="fade"
-          styleName={'qui-spin-loading-wrap'}
+          className={styles['qui-spin-loading-wrap']}
         >
-          {spinning && <div styleName={'qui-spin-wrap'}>{spinElement}</div>}
+          {spinning && <div key={'wrap'} className={styles['qui-spin-wrap']}>{spinElement}</div>}
           <div {...conProps}>
             {children}
           </div>

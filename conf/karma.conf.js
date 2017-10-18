@@ -1,6 +1,6 @@
 const path = require('path');
 
-module.exports = config => {
+module.exports = (config) => {
   config.set({
     basePath: __dirname,
     frameworks: ['mocha', 'chai'],

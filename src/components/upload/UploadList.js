@@ -4,13 +4,11 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import CSSModules from 'react-css-modules';
+import classnames from 'classnames';
 // import Animate from 'rc-animate';
 import Icon from '../icon/Icon';
-import { allowMultiple } from '../../constants';
 // import Tooltip from '../tooltip';
 import Progress from '../progress/Progress';
-// import classNames from 'classnames';
 // import { UploadListProps } from './interface';
 import styles from './Upload.css';
 
@@ -20,7 +18,6 @@ const previewFile = (file, callback) => {
   reader.readAsDataURL(file);
 };
 
-@CSSModules(styles, { allowMultiple })
 export default class UploadList extends React.Component {
   static displayName = 'UploadList'
 
@@ -117,26 +114,26 @@ export default class UploadList extends React.Component {
       prefixCls,
     } = this.props;
     let progress;
-    let icon = <Icon size={12} styleName={'status'} name={file.status === 'uploading' ? 'attachment' : 'attachment'} />;
+    let icon = <Icon size={12} className={styles.status} name={file.status === 'uploading' ? 'attachment' : 'attachment'} />;
 
     if (listType === 'picture' || listType === 'picture-card') {
       if (file.status === 'uploading' || (!file.thumbUrl && !file.url)) {
         if (listType === 'picture-card') {
-          icon = <div styleName={'uploading-text'}>{locale.uploading}</div>;
+          icon = <div className={styles['uploading-text']}>{locale.uploading}</div>;
         } else {
           icon = <Icon className={`${prefixCls}-list-item-thumbnail`} type="picture" />;
         }
       } else {
         icon = (
           <a
-            styleName={`${prefixCls}-list-item-thumbnail`}
+            className={styles[`${prefixCls}-list-item-thumbnail`]}
             onClick={e => this.handlePreview(file, e)}
             href={file.url || file.thumbUrl}
             target="_blank"
             rel="noopener noreferrer"
           >
             {/* <img src={file.thumbUrl || file.url} alt={file.name} styleName="imgshow" /> */}
-            <div styleName={'imgshow'} style={{ backgroundImage: `url(${file.thumbUrl || file.url})` }} />
+            <div className={styles.imgshow} style={{ backgroundImage: `url(${file.thumbUrl || file.url})` }} />
           </a>
         );
       }
@@ -149,7 +146,7 @@ export default class UploadList extends React.Component {
       ) : null;
 
       progress = (
-        <div styleName={`${prefixCls}-list-item-progress`} key="progress">
+        <div className={styles[`${prefixCls}-list-item-progress`]} key="progress">
           {loadingProgress}
         </div>
       );
@@ -164,7 +161,7 @@ export default class UploadList extends React.Component {
         href={file.url}
         target="_blank"
         rel="noopener noreferrer"
-        styleName={`${prefixCls}-list-item-name`}
+        className={styles[`${prefixCls}-list-item-name`]}
         onClick={e => this.handlePreview(file, e)}
         // title={file.name}
         title={message}
@@ -173,7 +170,7 @@ export default class UploadList extends React.Component {
       </a>
     ) : (
       <span
-        styleName={`${prefixCls}-list-item-name`}
+        className={styles[`${prefixCls}-list-item-name`]}
         // title={file.name}
         title={message}
       >
@@ -193,31 +190,31 @@ export default class UploadList extends React.Component {
         onClick={e => this.handlePreview(file, e)}
         title={locale.previewFile}
       >
-        <Icon name="visible" size={20} styleName={'eye'} />
+        <Icon name="visible" size={20} className={styles.eye} />
       </a>
     ) : null;
     // picture-card 删除按钮
     const removeIcon = showRemoveIcon && !disabled ? (
       <button
-        styleName={'btn-remove'}
+        className={styles['btn-remove']}
         title={locale.removeFile}
         onClick={() => this.handleClose(file)}
       >
-        <Icon name="recycle" size={20} styleName={'remove'} />
+        <Icon name="recycle" size={20} className={styles.remove} />
       </button>
     ) : null;
     // text 删除按钮
     const removeIconCross = showRemoveIcon && !disabled ? (
       <button
-        styleName={'btn-remove'}
+        className={styles['btn-remove']}
         title={locale.removeFile}
         onClick={() => this.handleClose(file)}
       >
-        <Icon name="close" size={10} styleName={'remove'} />
+        <Icon name="close" size={10} className={styles.remove} />
       </button>
     ) : null;
     const actions = (listType === 'picture-card' && file.status !== 'uploading')
-      ? <span styleName={`${prefixCls}-list-item-actions`}>{previewIcon}{removeIcon}</span>
+      ? <span className={styles[`${prefixCls}-list-item-actions`]}>{previewIcon}{removeIcon}</span>
       : removeIconCross;
 
     const iconAndPreview = (file.status === 'error')
@@ -225,8 +222,11 @@ export default class UploadList extends React.Component {
       : <span>{icon}{preview}</span>;
 
     return (
-      <div styleName={`${prefixCls}-list-item ${prefixCls}-list-item-${file.status}`} key={file.uid}>
-        <div styleName={`${prefixCls}-list-item-info`}>
+      <div
+        className={classnames(styles[`${prefixCls}-list-item`], styles[`${prefixCls}-list-item-${file.status}`])}
+        key={file.uid}
+      >
+        <div className={styles[`${prefixCls}-list-item-info`]}>
           {iconAndPreview}
         </div>
         {actions}
@@ -243,7 +243,9 @@ export default class UploadList extends React.Component {
     } = this.props;
 
     return (
-      <div styleName={`${prefixCls}-list ${prefixCls}-list-${listType}`}>
+      <div
+        className={classnames(styles[`${prefixCls}-list`], styles[`${prefixCls}-list-${listType}`])}
+      >
         { items.map(file => this.renderListItem(file)) }
       </div>
     );

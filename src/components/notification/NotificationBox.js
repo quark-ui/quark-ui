@@ -5,62 +5,52 @@
 import { PureComponent } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import CSSModules from 'react-css-modules';
 import classnames from 'classnames';
 import uniqueId from 'lodash/uniqueId';
 import assign from 'object-assign';
 import Notice from './Notice';
-
-import { allowMultiple } from '../../constants';
 import styles from './Notification.css';
 
-
-@CSSModules(styles, { allowMultiple })
 class NotificationBox extends PureComponent {
+  static displayName = 'NotificationBox';
 
-  static displayName = 'NotificationBox'
+  static defaultProps = {};
 
-  static defaultProps = {
-  }
-
-  static propTypes = {
-  }
+  static propTypes = {};
 
   constructor(props) {
     super(props);
     this.state = {
-      notices:[],
+      notices: [],
     };
   }
 
-  add=(notice)=>{
+  add = (notice) => {
     const key = notice.key || uniqueId();
     assign(notice, {
       key,
     });
 
-    this.setState(preState =>{
+    this.setState((preState) => {
       const notices = preState.notices;
-      if(!notices.filter(v=>v.key === key).length){
+      if (!notices.filter(v => v.key === key).length) {
         return {
           notices: notices.concat(notice),
-        }
+        };
       }
       return { notices };
-    })
-  }
+    });
+  };
 
-  remove = (key) =>{
-    this.setState(preState =>{
-      return {
-        notices:preState.notices.filter(notice => notice.key !== key),
-      }
-    })
-  }
+  remove = (key) => {
+    this.setState(preState => ({
+      notices: preState.notices.filter(notice => notice.key !== key),
+    }));
+  };
 
   render() {
     const props = this.props;
-    const{placement,style} = props;
+    const { placement, style } = props;
 
     const Nodes = this.state.notices.map((notice) => {
       const onClose = () => {
@@ -69,52 +59,49 @@ class NotificationBox extends PureComponent {
         }
         this.remove(notice.key);
       };
-      return (
-        <Notice {...notice} onClose={onClose}>
-        </Notice>
-      );
+      return <Notice {...notice} onClose={onClose} />;
     });
 
-    const cls = classnames({
-      ['notification--box']:1,
-      [`notification--box--${placement}`]:placement
-    })
+    const notificationProps = {
+      style,
+      className: classnames({
+        [styles['notification--box']]: 1,
+        [styles[`notification--box--${placement}`]]: placement,
+      }),
+    };
     return (
-      <div styleName={cls} style={style}>
+      <div {...notificationProps}>
         {Nodes}
-      </div> 
-    )
-
+      </div>
+    );
   }
 }
 
-NotificationBox.newInstance = function newInstance(properties){
-  const {getContainer, ...props } = properties || {};
-  let div;
-
-  div = document.createElement('div');
-  if(getContainer){
-    document.getElementById(getContainer).appendChild(div);
+NotificationBox.newInstance = function newInstance(properties) {
+  const { getContainer, ...props } = properties || {};
+  const container = document.createElement('div');
+  if (getContainer) {
+    document.getElementById(getContainer).appendChild(container);
   } else {
-    document.body.appendChild(div);
+    document.body.appendChild(container);
   }
   const DOM = ReactDOM;
-  const notificationBox = DOM.render(<NotificationBox {...props} />,div);
+  const notificationBox = DOM.render(<NotificationBox {...props} />, container);
 
-    return {
-      addNotice(noticeProps) {
-        notificationBox.add(noticeProps);
-      },
-      removeNotice(key) {
-        notificationBox.remove(key);
-      },
-      destroy() {
-        DOM.unmountComponentAtNode(div);
-        if (!getContainer) {
-          document.body.removeChild(div);
-        }
-      },
-    };
-}
+  return {
+    addNotice(noticeProps) {
+      notificationBox.add(noticeProps);
+    },
+    removeNotice(key) {
+      notificationBox.remove(key);
+    },
+    destroy() {
+      DOM.unmountComponentAtNode(container);
+      if (!getContainer) {
+        document.body.removeChild(container);
+      }
+    },
+  };
+};
 
 export default NotificationBox;

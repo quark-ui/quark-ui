@@ -5,18 +5,14 @@
 import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import assign from 'object-assign';
-import CSSModules from 'react-css-modules';
 import classnames from 'classnames';
 import moment from 'moment';
 import momentPropTypes from 'react-moment-proptypes';
 import Icon from '../../icon';
 
-import { allowMultiple } from '../../../constants';
 import styles from '../DatePicker.css';
 
-@CSSModules(styles, { allowMultiple })
 class DecadePane extends PureComponent {
-
   static displayName = 'DecadePane'
 
   static defaultProps = {
@@ -44,7 +40,7 @@ class DecadePane extends PureComponent {
   componentWillReceiveProps(nextProps) {
     this.setState(this.getDecadeRange(nextProps));
   }
-  
+
   getDecadeRange(props) {
     const { decadeYear } = props;
     const startYear = Math.floor(decadeYear / 100) * 100;
@@ -92,12 +88,12 @@ class DecadePane extends PureComponent {
     const from = Math.floor(decadeYear / 10) * 10;
     const currentDecade = [from, from + 9];
     return (
-      <div styleName="datePicker__decadePaneHead">
-        <button styleName="datePicker__headControlBtn" onClick={this.handleSubtractCentury}>
+      <div className={styles.datePicker__decadePaneHead}>
+        <button className={styles.datePicker__headControlBtn} onClick={this.handleSubtractCentury}>
           <Icon name="arrow-left" size={14} />
         </button>
-        <span styleName="datePicker__decadePane--current">{currentDecade.join('-')}</span>
-        <button styleName="datePicker__headControlBtn" onClick={this.handleAddCentury}>
+        <span className={styles['datePicker__decadePane--current']}>{currentDecade.join('-')}</span>
+        <button className={styles.datePicker__headControlBtn} onClick={this.handleAddCentury}>
           <Icon name="arrow-right" size={14} />
         </button>
       </div>
@@ -111,9 +107,9 @@ class DecadePane extends PureComponent {
     for (; i <= endYear + 1; i += 10) {
       const decadeProps = {
         key: i,
-        styleName: classnames('datePicker__decadeGrid', {
-          'datePicker__decadeGrid--jump': i === startYear - 10 || i === endYear + 1,
-          'datePicker__decadeGrid--active': decadeYear >= i && decadeYear <= i + 9,
+        className: classnames(styles.datePicker__decadeGrid, {
+          [styles['datePicker__decadeGrid--jump']]: i === startYear - 10 || i === endYear + 1,
+          [styles['datePicker__decadeGrid--active']]: decadeYear >= i && decadeYear <= i + 9,
         }),
       };
       if (i === startYear - 10 || i === endYear + 1) {
@@ -126,16 +122,16 @@ class DecadePane extends PureComponent {
         });
       }
       decades.push(
-        <button {...decadeProps}>{[i, i + 9].join('-')}</button>
+        <button {...decadeProps}>{[i, i + 9].join('-')}</button>,
       );
     }
-    return <div styleName="datePicker__decadeBody">{decades}</div>;
+    return <div className={styles.datePicker__decadeBody}>{decades}</div>;
   }
 
   render() {
     const { className } = this.props;
     return (
-      <div styleName="datePicker__picker datePicker__decadePane" className={className}>
+      <div className={classnames(className, styles.datePicker__picker, styles.datePicker__decadePane)}>
         { this.renderDecadeHead() }
         { this.renderDecades() }
       </div>

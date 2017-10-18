@@ -4,14 +4,12 @@
  */
 import React,{ PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import CSSModules from 'react-css-modules';
 import shallowEqual from 'shallowequal';
+import assign from 'object-assign';
 import Radio from './Radio';
-import { allowMultiple } from '../../constants';
 import styles from './Radio.css';
 
 
-@CSSModules(styles, { allowMultiple })
 class RadioButton extends PureComponent {
 
   static displayName = 'RadioButton'
@@ -43,14 +41,16 @@ class RadioButton extends PureComponent {
   render() {
     const { props, context } = this;
     const { radioGroup } = context;
-    const radioProps = props;
+    const radioProps = {};
     if (radioGroup) {
-      radioProps.onChange = radioGroup.onChange;
-      radioProps.checked = props.value == radioGroup.value;
-      radioProps.disabled = props.disabled || radioGroup.disabled;
+      assign(radioProps, {
+        onChange: radioGroup.onChange,
+        checked: props.value === radioGroup.value,
+        disabled: props.disabled || radioGroup.disabled,
+      });
     }
     return (
-      <Radio {...radioProps} />
+      <Radio {...props} {...radioProps} />
     );
   }
 }

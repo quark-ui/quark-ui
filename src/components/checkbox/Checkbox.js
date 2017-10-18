@@ -4,14 +4,11 @@
  */
 import React,{ PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import CSSModules from 'react-css-modules';
 import shallowEqual from 'shallowequal';
 import classNames from 'classnames';
-import { allowMultiple } from '../../constants';
 import styles from './Checkbox.css';
 import CheckboxGroup from './CheckboxGroup';
 
-@CSSModules(styles, { allowMultiple })
 class Checkbox extends PureComponent {
 
   static Group = CheckboxGroup;
@@ -26,10 +23,10 @@ class Checkbox extends PureComponent {
     onBlur() {},
     onClick() {},
   }
-
+  
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
   static propTypes = {
-    prefixCls: PropTypes.string,
+    prefixCls: PropTypes.oneOf(['checkbox', 'radio']),
     defaultChecked: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
     onChange: PropTypes.func,
     name: PropTypes.string,
@@ -94,7 +91,6 @@ class Checkbox extends PureComponent {
   render() {
     const { context, props, state } = this;
     const { children, name, type, readOnly, onClick, onFocus, onBlur, prefixCls, ...otherProps } = props;
-    const checkboxProps = otherProps;
     let { checked } = state;
     let { disabled } = props;
     const { checkboxGroup } = context;
@@ -104,21 +100,24 @@ class Checkbox extends PureComponent {
       disabled = 'disabled' in props ? props.disabled : checkboxGroup.disabled;
     }
 
-    const classString = classNames(prefixCls, {
-      [`${prefixCls}__checked`]: checked,
-      [`${prefixCls}__disabled`]: disabled,
+    const classString = classNames(styles[prefixCls], {
+      [styles[`${prefixCls}__checked`]]: checked,
+      [styles[`${prefixCls}__disabled`]]: disabled,
     });
     const wrapperString = classNames({
-      [`${prefixCls}--wrapper`]: true,
-      [`${prefixCls}--wrapper__checked`]: checked,
-      [`${prefixCls}--wrapper__disabled`]: disabled,
+      [styles[`${prefixCls}--wrapper`]]: true,
+      [styles[`${prefixCls}--wrapper__checked`]]: checked,
+      [styles[`${prefixCls}--wrapper__disabled`]]: disabled,
     });
     const innerString = classNames({
-      [`${prefixCls}--inner`]: true,
+      [styles[`${prefixCls}--inner`]]: true,
     });
     return (
-      <label styleName={wrapperString}>
-        <span styleName={classString}>
+      <label
+        htmlFor={name}
+        className={wrapperString}
+      >
+        <span className={classString}>
           <input
             name={name}
             type={type}
@@ -126,8 +125,9 @@ class Checkbox extends PureComponent {
             disabled={disabled}
             checked={!!checked}
             onChange={this.handleChange}
+            {...otherProps}
           />
-          <span styleName={innerString} />
+          <span className={innerString} />
         </span>
         {children !== undefined ? <span>{children}</span> : null}
       </label>

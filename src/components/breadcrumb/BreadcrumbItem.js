@@ -4,11 +4,8 @@
  */
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import CSSModules from 'react-css-modules';
-import { allowMultiple } from '../../constants';
 import styles from './Breadcrumb.css';
 
-@CSSModules(styles, { allowMultiple })
 class BreadcrumbItem extends PureComponent {
 
   static displayName = 'BreadcrumbItem'
@@ -36,7 +33,7 @@ class BreadcrumbItem extends PureComponent {
 
     const breadcrumbItemProps = {
       ...restProps,
-      styleName: 'breadcrumb--link',
+      className: styles['breadcrumb--link'],
     };
 
     let link;
@@ -50,7 +47,7 @@ class BreadcrumbItem extends PureComponent {
       return (
         <span>
           {link}
-          <span styleName={'breadcrumb--separator'}>{separator}</span>
+          <span className={styles['breadcrumb--separator']}>{separator}</span>
         </span>
       );
     }

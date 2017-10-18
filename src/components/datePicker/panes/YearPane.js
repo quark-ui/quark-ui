@@ -5,18 +5,14 @@
 import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import assign from 'object-assign';
-import CSSModules from 'react-css-modules';
 import classnames from 'classnames';
 import Icon from '../../icon';
 import moment from 'moment';
 import momentPropTypes from 'react-moment-proptypes';
 
-import { allowMultiple } from '../../../constants';
 import styles from '../DatePicker.css';
 
-@CSSModules(styles, { allowMultiple })
 class YearPane extends PureComponent {
-
   static displayName = 'YearPane'
 
   static defaultProps = {
@@ -97,9 +93,9 @@ class YearPane extends PureComponent {
     const years = [];
     for (i; i <= endYear; i += 1) {
       const yearProps = {
-        styleName: classnames('datePicker__yearGrid', {
-          'datePicker__yearGrid--active': currentYear === i,
-          'datePicker__yearGrid--jump': startYear === i || endYear === i,
+        className: classnames(styles.datePicker__yearGrid, {
+          [styles['datePicker__yearGrid--active']]: currentYear === i,
+          [styles['datePicker__yearGrid--jump']]: startYear === i || endYear === i,
         }),
         key: i,
       };
@@ -117,7 +113,7 @@ class YearPane extends PureComponent {
       );
     }
     return (
-      <div styleName="datePicker__yearBody">{years}</div>
+      <div className={styles.datePicker__yearBody}>{years}</div>
     );
   }
 
@@ -126,12 +122,12 @@ class YearPane extends PureComponent {
     const { currentYear, startYear, endYear } = this.state;
     const decade = [startYear + 1, endYear - 1];
     return (
-      <div styleName="datePicker__yearPaneHead">
-        <button styleName="datePicker__headControlBtn" onClick={this.handleSubtractDecade}>
+      <div className={styles.datePicker__yearPaneHead}>
+        <button className={styles.datePicker__headControlBtn} onClick={this.handleSubtractDecade}>
           <Icon name="arrow-left" size={14} />
         </button>
-        <button styleName="datePicker__headJumpBtn" onClick={showDecadePane.bind(this, currentYear)}>{decade.join('-')}</button>
-        <button styleName="datePicker__headControlBtn" onClick={this.handleAddDecade}>
+        <button className={styles.datePicker__headJumpBtn} onClick={showDecadePane.bind(this, currentYear)}>{decade.join('-')}</button>
+        <button className={styles.datePicker__headControlBtn} onClick={this.handleAddDecade}>
           <Icon name="arrow-right" size={14} />
         </button>
       </div>
@@ -141,7 +137,12 @@ class YearPane extends PureComponent {
   render() {
     const { className } = this.props;
     return (
-      <div styleName="datePicker__picker datePicker__yearPane" className={className}>
+      <div className={classnames(
+        className,
+        styles.datePicker__picker,
+        styles.datePicker__yearPane,
+      )}
+      >
         { this.renderYearHead() }
         { this.renderYears() }
       </div>

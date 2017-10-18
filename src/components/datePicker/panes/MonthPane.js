@@ -5,16 +5,13 @@
 import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import assign from 'object-assign';
-import CSSModules from 'react-css-modules';
 import classnames from 'classnames';
 import Icon from '../../icon';
 import moment from 'moment';
 import momentPropTypes from 'react-moment-proptypes';
 
-import { allowMultiple } from '../../../constants';
 import styles from '../DatePicker.css';
 
-@CSSModules(styles, { allowMultiple })
 class MonthPane extends PureComponent {
 
   static displayName = 'MonthPane'
@@ -59,12 +56,12 @@ class MonthPane extends PureComponent {
   renderMonthHead() {
     const { date, showYearPane } = this.props;
     return (
-      <div styleName="datePicker__monthPaneHead">
-        <button styleName="datePicker__headControlBtn" onClick={this.handleSubtractYear}>
+      <div className={styles.datePicker__monthPaneHead}>
+        <button className={styles.datePicker__headControlBtn} onClick={this.handleSubtractYear}>
           <Icon name="arrow-left" size={14} />
         </button>
-        <button styleName="datePicker__headJumpBtn" onClick={showYearPane}>{date.format('YYYY')}</button>
-        <button styleName="datePicker__headControlBtn" onClick={this.handleAddYear}>
+        <button className={styles.datePicker__headJumpBtn} onClick={showYearPane}>{date.format('YYYY')}</button>
+        <button className={styles.datePicker__headControlBtn} onClick={this.handleAddYear}>
           <Icon name="arrow-right" size={14} />
         </button>
       </div>
@@ -75,14 +72,14 @@ class MonthPane extends PureComponent {
     const months = moment.monthsShort();
     const curMonth = this.props.date.format('MMM');
     return (
-      <div styleName="datePicker__monthBody">
+      <div className={styles.datePicker__monthBody}>
         {
           months.map((month) => {
             const monthProps = {
               key: month,
               onClick: this.onChangeMonth.bind(this, month),
-              styleName: classnames('datePicker__monthGrid', {
-                'datePicker__monthGrid--active': month === curMonth,
+              className: classnames(styles.datePicker__monthGrid, {
+                [styles['datePicker__monthGrid--active']]: month === curMonth,
               }),
             };
             return <button {...monthProps} >{month}</button>;
@@ -95,7 +92,7 @@ class MonthPane extends PureComponent {
   render() {
     const { className } = this.props;
     return (
-      <div styleName="datePicker__picker datePicker__monthPane" className={className}>
+      <div className={`${styles.datePicker__picker} ${styles.datePicker__monthPane} ${className}`}>
         { this.renderMonthHead() }
         { this.renderMonths() }
       </div>

@@ -4,13 +4,11 @@
  */
 import { createElement, PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import CSSModules from 'react-css-modules';
 import moment from 'moment';
 import momentPropTypes from 'react-moment-proptypes';
 import assign from 'object-assign';
 import partialRight from 'lodash/partialRight';
 import Trigger from '../trigger';
-import { allowMultiple } from '../../constants';
 import styles from './DatePicker.css';
 import DatePane from './panes/DatePane';
 import MonthPane from './panes/MonthPane';
@@ -18,7 +16,6 @@ import YearPane from './panes/YearPane';
 import DecadePane from './panes/DecadePane';
 import Button from '../button';
 
-@CSSModules(styles, { allowMultiple })
 class Picker extends PureComponent {
 
   static displayName = 'Picker'

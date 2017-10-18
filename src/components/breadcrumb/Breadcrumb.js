@@ -4,13 +4,10 @@
  */
 import React, { PureComponent, cloneElement } from 'react';
 import PropTypes from 'prop-types';
-import CSSModules from 'react-css-modules';
 import Icon from '../icon';
 
-import { allowMultiple } from '../../constants';
 import styles from './Breadcrumb.css';
 
-@CSSModules(styles, { allowMultiple })
 class Breadcrumb extends PureComponent {
 
   static displayName = 'Breadcrumb'
@@ -59,8 +56,8 @@ class Breadcrumb extends PureComponent {
     });
 
     return (
-      <div styleName={'breadcrumb'} {...restProps}>
-        <span styleName={'breadcrumb--icon'}>
+      <div className={styles.breadcrumb} {...restProps}>
+        <span className={styles['breadcrumb--icon']}>
           {hasHomeIcon ? <span><Icon name="home" size={12} onClick={this.onHome} /></span> : null}
           {hasBackIcon ? <span><Icon name="arrow-left" size={12} onClick={this.onBack} /></span> : null}
         </span>
