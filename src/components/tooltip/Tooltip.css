@@ -9,7 +9,67 @@
  	display: inline-block;	
  }
 .tooltip--popup{
-	padding: 5px;
-	background: rgba(0,0,0,0.3);
+	padding: 3px 5px;
+	background: rgba(0,0,0,1);
 	color: #fff;
+}
+.tooltip--popup--left,.tooltip--popup--leftTop,.tooltip--popup--leftBottom{
+	margin-right: 8px;
+}
+.tooltip--popup--right,.tooltip--popup--rightTop,.tooltip--popup--rightBottom{
+	margin-left: 8px;
+}
+.tooltip--popup--top,.tooltip--popup--topLeft,.tooltip--popup--topRight{
+	margin-top: -5px;
+	margin-bottom: 8px;
+}
+.tooltip--popup--bottom,.tooltip--popup--bottomLeft,.tooltip--popup--bottomRight{
+	margin-top: 8px;
+}
+.tooltip--popup--arrow{
+	position: absolute;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+}
+.tooltip--popup--left .tooltip--popup--arrow,.tooltip--popup--leftTop .tooltip--popup--arrow,.tooltip--popup--leftBottom .tooltip--popup--arrow{
+	right: 3px;
+    border-width: 5px 0 5px 5px;
+    border-left-color: rgba(0,0,0,.75);
+}
+.tooltip--popup--right .tooltip--popup--arrow,.tooltip--popup--rightTop .tooltip--popup--arrow,.tooltip--popup--rightBottom .tooltip--popup--arrow{
+	left: 3px;
+    border-width: 5px 5px 5px 0;
+    border-right-color: rgba(0,0,0,.75);
+}
+.tooltip--popup--top .tooltip--popup--arrow,.tooltip--popup--topLeft .tooltip--popup--arrow,.tooltip--popup--topRight .tooltip--popup--arrow{
+	bottom: 3px;
+    border-width: 5px 5px 0 5px;
+    border-top-color: rgba(0,0,0,.75);
+}
+.tooltip--popup--bottom .tooltip--popup--arrow,.tooltip--popup--bottomLeft .tooltip--popup--arrow,.tooltip--popup--bottomRight .tooltip--popup--arrow{
+	top: 3px;
+    border-width: 0 5px 5px 5px;
+    border-bottom-color: rgba(0,0,0,.75);
+}
+.tooltip--popup--left .tooltip--popup--arrow,.tooltip--popup--right .tooltip--popup--arrow{
+	top: 50%;
+	margin-top: -5px;
+}
+.tooltip--popup--leftTop .tooltip--popup--arrow,.tooltip--popup--rightTop .tooltip--popup--arrow{
+	top: 3px;
+}
+.tooltip--popup--leftBottom .tooltip--popup--arrow,.tooltip--popup--rightBottom .tooltip--popup--arrow{
+	bottom: 3px;
+}
+.tooltip--popup--top .tooltip--popup--arrow,.tooltip--popup--bottom .tooltip--popup--arrow{
+	left: 50%;
+	margin-left: -5px;
+}
+.tooltip--popup--topLeft .tooltip--popup--arrow,.tooltip--popup--bottomLeft .tooltip--popup--arrow{
+	left: 5px;
+}
+.tooltip--popup--topRight .tooltip--popup--arrow,.tooltip--popup--bottomRight .tooltip--popup--arrow{
+	right: 5px;
 }

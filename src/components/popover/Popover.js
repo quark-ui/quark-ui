@@ -1,31 +1,34 @@
 /**
- * Tooltip Component
+ * Popover Component
  * @author lhf
  */
 import React,{ PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Trigger from '../trigger';
-import classnames from 'classnames';
+import Trigger from '../Trigger';
+import Button from '../Button';
 import CSSModules from 'react-css-modules';
+import classnames from 'classnames';
 import { allowMultiple } from '../../constants';
-import styles from './Tooltip.css';
+import styles from './Popover.css';
 import PLACEMENT_ENUM from './placements.js';
 
-@CSSModules(styles, { allowMultiple })
-class Tooltip extends PureComponent {
 
-  static displayName = 'Tooltip'
+@CSSModules(styles, { allowMultiple })
+class Popover extends PureComponent {
+
+  static displayName = 'Popover'
 
   static defaultProps = {
-    tips: '',
+    title:'',
     action : 'hover',
     placement : 'top',
-    toolElement : ''
+    hasButton : false,
+    popovers : ''
   }
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
   static propTypes = {
-    tips: PropTypes.oneOfType([
+    title: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.element,
     ]),
@@ -44,13 +47,12 @@ class Tooltip extends PureComponent {
       'rightTop',
       'rightBottom'
     ]),
-    toolElement: PropTypes.oneOfType([
+    hasButton: PropTypes.bool,
+    popovers: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.element,
-    ])
+    ]),
   }
-
-
 
   constructor(props) {
     super(props);
@@ -58,27 +60,34 @@ class Tooltip extends PureComponent {
   }
 
   render() {
-    const { action, placement, tips, toolElement,children} = this.props;
-    const stylename = classnames(styles['tooltip--popup'],styles[`tooltip--popup--${placement}`]);
+    const { action, placement, title, hasButton, popovers, children} = this.props;
+    const poptitle = title ? (<p className={styles['popover--popup-title']}>{title}</p>) : '';
+    const button = hasButton ? (<div><Button size='small' type="secondary">关闭</Button></div>) : '';
+
+    const stylename = classnames(styles['popover--popup'], styles[`popover--popup--${placement}`]);
 
     return (
       
       <Trigger
-          style={{display:'inline-block'}}
           action={action}
           popup={
             <div  className={stylename}>
-              <div className={styles['tooltip--popup--arrow']}></div>
-              <div className={styles['tooltip--popup--inner']}>{tips}</div>
+              <div className={styles['popover--popup--arrow']}></div>
+              <div className={styles['popover--popup--inner']}>
+                {title ? <p className={styles['popover--popup-title']}>{title}</p> : ''}
+                <div>{popovers}</div>
+                <div>{button}</div>      
+              </div>
             </div>
           }
           placement={PLACEMENT_ENUM[placement].points}
           mouseLeaveDelay={100}
         >
-          {toolElement ? toolElement : children}
+          {children}
         </Trigger>
     );
+    
   }
 }
 
-export default Tooltip;
+export default Popover;

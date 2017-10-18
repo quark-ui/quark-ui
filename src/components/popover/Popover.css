@@ -1,0 +1,82 @@
+/**
+ * Popover Style
+ * @author lhf
+ */
+.popover {
+
+}
+.popover--popup{
+	padding: 5px 8px;
+	background: rgba(255,255,255,1);
+    color: #333;
+    border: 1px solid #cecece;
+	border-radius: 3px;
+}
+.popover--popup .popover--popup-title{
+	margin: 0px -10px;
+	padding-left: 10px;
+	border-bottom: 1px solid #cecece;
+}
+.popover--popup .popover--popup--arrow{
+	position: absolute;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+}
+.popover--popup .popover--popup--inner{
+	/* padding: 10px 0px; */
+}
+.popover--popup--left,.popover--popup--leftTop,.popover--popup--leftBottom{
+	margin-right: 8px;
+}
+.popover--popup--right,.popover--popup--rightTop,.popover--popup--rightBottom{
+	margin-left: 8px;
+}
+.popover--popup--top,.popover--popup--topLeft,.popover--popup--topRight{
+	margin-top: -5px;
+	margin-bottom: 8px;
+}
+.popover--popup--bottom,.popover--popup--bottomLeft,.popover--popup--bottomRight{
+	margin-top: 8px;
+}
+.popover--popup--left .popover--popup--arrow,.popover--popup--leftTop .popover--popup--arrow,.popover--popup--leftBottom .popover--popup--arrow{
+	right: 3px;
+    border-width: 5px 0 5px 5px;
+    border-left-color: rgba(206, 206, 206,.75);
+}
+.popover--popup--right .popover--popup--arrow,.popover--popup--rightTop .popover--popup--arrow,.popover--popup--rightBottom .popover--popup--arrow{
+	left: 3px;
+    border-width: 5px 5px 5px 0;
+    border-right-color: rgba(206, 206, 206,.75);
+}
+.popover--popup--top .popover--popup--arrow,.popover--popup--topLeft .popover--popup--arrow,.popover--popup--topRight .popover--popup--arrow{
+	bottom: 3px;
+    border-width: 5px 5px 0 5px;
+    border-top-color: rgba(206, 206, 206,.75);
+}
+.popover--popup--bottom .popover--popup--arrow,.popover--popup--bottomLeft .popover--popup--arrow,.popover--popup--bottomRight .popover--popup--arrow{
+	top: 3px;
+    border-width: 0 5px 5px 5px;
+    border-bottom-color: rgba(206, 206, 206, 0.75);
+}
+.popover--popup--left .popover--popup--arrow,.popover--popup--right .popover--popup--arrow{
+	top: 50%;
+	margin-top: -5px;
+}
+.popover--popup--leftTop .popover--popup--arrow,.popover--popup--rightTop .popover--popup--arrow{
+	top: 3px;
+}
+.popover--popup--leftBottom .popover--popup--arrow,.popover--popup--rightBottom .popover--popup--arrow{
+	bottom: 3px;
+}
+.popover--popup--top .popover--popup--arrow,.popover--popup--bottom .popover--popup--arrow{
+	left: 50%;
+	margin-left: -5px;
+}
+.popover--popup--topLeft .popover--popup--arrow,.popover--popup--bottomLeft .popover--popup--arrow{
+	left: 5px;
+}
+.popover--popup--topRight .popover--popup--arrow,.popover--popup--bottomRight .popover--popup--arrow{
+	right: 5px;
+}

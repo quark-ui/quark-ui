@@ -74,6 +74,10 @@ export default {
         name: 'Tooltip',
         icon: 'tooltip',
         title: '文字提示',
+      }, {
+        name: 'Popover',
+        icon: 'popover',
+        title: '气泡卡片',
       }],
   }, {
     group: 'Navigation',

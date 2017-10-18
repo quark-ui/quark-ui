@@ -35,6 +35,8 @@ export { default as Pagination } from './components/pagination/';
 
 export { default as Progress } from './components/progress/';
 
+export { default as Popover } from './components/popover/';
+
 export { default as Radio } from './components/radio/';
 
 export { default as Select } from './components/select/';
@@ -45,9 +47,9 @@ export { default as Steps } from './components/steps/';
 
 export { default as Tabs } from './components/tabs/';
 
+export { default as Tooltip } from './components/tooltip/';
+
 export { default as Trigger } from './components/trigger/';
 
 export { default as Upload } from './components/upload/';
-
-export { default as Tooltip } from './components/tooltip/';
 
