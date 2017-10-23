@@ -31,7 +31,7 @@ const Contributor = {
       name: '董建德',
     },
     {
-      avatar: '//github.com/olivianate.png?size=64',
+      avatar: '//github.com/october-yan.png?size=64',
       name: '闫伟',
     },
     {
