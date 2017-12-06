@@ -1,14 +1,11 @@
-import React$1, { Children, PureComponent, cloneElement } from 'react';
+import React, { Children, PureComponent, cloneElement } from 'react';
 import PropTypes from 'prop-types';
-import reactDom from 'react-dom';
-import reactTappable from 'react-tappable';
-import CSSModules from 'react-css-modules';
 
 function createCommonjsModule(fn, module) {
 	return module = { exports: {} }, fn(module, module.exports), module.exports;
 }
 
-var index = createCommonjsModule(function (module) {
+var classnames = createCommonjsModule(function (module) {
 /*!
   Copyright (c) 2016 Jed Watson.
   Licensed under the MIT License (MIT), see
@@ -280,6 +277,27 @@ var attachment = function attachment(props) {
     }, props),
     React.createElement('path', {
       d: 'M7.859 2.974c-.306.306-.57.568-1.017 1.01-1.924 1.9-2.42 2.431-2.818 3.107-.548.93-.432 1.722.36 2.495 1.45 1.414 2.286.913 5.686-2.522.382-.386.598-.604.852-.857 1.742-1.743 2.15-3.44.348-5.133-1.422-1.336-3.176-1.206-5.095.301-1.365 1.36-1.365 1.36-2.845 2.84C.11 7.435 0 9.842 2.212 11.793c2.221 1.96 4.781 1.487 8.638-2.37a.5.5 0 1 0-.708-.707c-3.52 3.52-5.5 3.887-7.269 2.327-1.75-1.545-1.671-3.285 1.164-6.12l2.8-2.8c1.519-1.19 2.728-1.28 3.748-.321 1.288 1.21 1.026 2.3-.37 3.697-.255.255-.473.473-.856.86-2.944 2.976-3.474 3.293-4.277 2.51-.466-.455-.508-.743-.197-1.272.332-.564.826-1.09 2.66-2.903.448-.442.714-.706 1.02-1.013a.5.5 0 1 0-.706-.708z'
+    })
+  );
+};
+
+var car = function car(props) {
+  return React.createElement(
+    'svg',
+    _extends({
+      className: 'icon',
+      viewBox: '0 0 1382 1024',
+      xmlns: 'http://www.w3.org/2000/svg',
+      width: '269.922',
+      height: '200'
+    }, props),
+    React.createElement(
+      'defs',
+      null,
+      React.createElement('style', null)
+    ),
+    React.createElement('path', {
+      d: 'M1301.58 403.994c-.05 0-.05-.026 0 0a1112.5 1112.5 0 0 0-47.743-63.488l-2.048-2.484h.384l-15.923-18.739-.23-.256a828.365 828.365 0 0 0-60.11-64.281c-42.01-39.68-62.515-45.03-77.004-45.03H875.34c-6.17 0-12.288.665-18.227 1.945v-99.072a87.066 87.066 0 0 0-86.99-86.989H112.59A87.066 87.066 0 0 0 25.6 112.589v683.776a87.066 87.066 0 0 0 86.989 86.963h100.659c16.077 75.622 84.122 131.507 162.304 131.507 78.208 0 146.253-55.885 162.304-131.507h232.192a86.528 86.528 0 0 0 52.634-17.715 86.272 86.272 0 0 0 52.582 17.715h21.811c16.051 75.622 84.122 131.507 162.279 131.507 78.156 0 146.252-55.885 162.33-131.507h48.127a87.066 87.066 0 0 0 86.989-86.989V520.218c0-12.237-3.149-31.59-27.52-73.19-7.68-13.108-16.998-27.598-27.7-43.009zM375.63 946.074a97.229 97.229 0 0 1-97.101-97.127c0-53.555 43.52-97.152 97.075-97.152a97.28 97.28 0 0 1 97.152 97.152 97.28 97.28 0 0 1-97.152 97.127zM788.3 296.704v499.635c0 10.087-8.167 18.253-18.227 18.253H537.882a165.632 165.632 0 0 0-157.159-131.456h-.512v.051h-1.05c-.127 0-.255-.051-.332 0h-8.09a165.504 165.504 0 0 0-157.337 131.456H112.538A18.253 18.253 0 0 1 94.31 796.39V112.59c0-10.061 8.192-18.253 18.253-18.253h657.485c10.06 0 18.253 8.192 18.253 18.253v184.115zm271.104 649.37a97.28 97.28 0 0 1-97.127-97.127 97.28 97.28 0 0 1 97.152-97.152 97.28 97.28 0 0 1 97.127 97.152 97.28 97.28 0 0 1-97.127 97.127zm228.608-149.735c0 10.087-8.192 18.253-18.253 18.253h-48.051c-15.155-71.117-76.595-125.542-149.76-131.02v.306l-.256-.05-.23-.026-.231-.052-.23-.05c-.026 0-.128 0-.23-.052l-1.153-.18h-1.459c-.333 0-.691 0-.973-.05h-2.227s-.077 0-.102-.052h-.052v-.179.18l-.153-.026h-.435v-.103.103h-1.204c-.076 0-.23-.051-.358 0h-6.605v.025l-.23-.076v.076h-.051v-.076l-.18.128h-.05v-.128l-.18.179-.23-.18v.18-.18l-.18.129h-.05v-.128l-.18.076v-.076l-.256.05h-5.197l-1.152.18v-.102h-.179v.153l-.256-.153v.179h-.026v-.18l-.179.257v-.256h-.205v.256h-.025v-.256h-.205l-1.536.102c-72.5 6.144-133.222 60.288-148.224 130.893h-21.786a18.253 18.253 0 0 1-18.252-18.253V296.704c0-10.06 8.192-18.227 18.252-18.227h220.314c3.558 1.74 14.848 8.448 38.272 31.232l5.274 5.197h-106.01a87.066 87.066 0 0 0-86.989 86.963v105.216a87.066 87.066 0 0 0 86.989 86.989h254.9v202.265h-.257zm0-271.053h-254.9a18.253 18.253 0 0 1-18.252-18.227V401.843c0-10.086 8.192-18.253 18.253-18.253h167.116a1047.168 1047.168 0 0 1 24.192 31.028c13.568 18.15 26.112 36.07 36.173 51.89l4.66-2.482-4.353 2.918 9.703-5.734-9.523 6.041 4.608 7.424c19.788 32.384 22.144 44.39 22.374 45.952v4.66h-.051z'
     })
   );
 };
@@ -606,6 +624,27 @@ var info = function info(props) {
   );
 };
 
+var local = function local(props) {
+  return React.createElement(
+    'svg',
+    _extends({
+      className: 'icon',
+      viewBox: '0 0 1024 1024',
+      xmlns: 'http://www.w3.org/2000/svg',
+      width: '200',
+      height: '200'
+    }, props),
+    React.createElement(
+      'defs',
+      null,
+      React.createElement('style', null)
+    ),
+    React.createElement('path', {
+      d: 'M512 256.331c-77.997 0-141.228 63.227-141.228 141.224S434.002 538.783 512 538.783s141.23-63.23 141.23-141.228S589.997 256.331 512 256.331zm0 225.96c-46.797 0-84.737-37.934-84.737-84.737 0-46.796 37.94-84.733 84.737-84.733 46.8 0 84.737 37.936 84.737 84.733-.001 46.804-37.937 84.737-84.737 84.737zm0-423.68c-187.194 0-338.946 151.75-338.946 338.943C173.054 584.751 512 962.467 512 962.467S850.946 584.75 850.946 397.554c0-187.193-151.75-338.942-338.946-338.942zM229.545 397.556C229.545 241.564 356.006 115.1 512 115.1c155.997 0 282.455 126.464 282.455 282.455C794.455 539.025 512 905.977 512 905.977S229.545 537.054 229.545 397.555z'
+    })
+  );
+};
+
 var paper = function paper(props) {
   return React.createElement(
     'svg',
@@ -913,6 +952,7 @@ var ICONS = {
   'arrow-right': arrowRight,
   'arrow-up': arrowUp,
   attachment: attachment,
+  car: car,
   caution: caution,
   check: check,
   clock: clock,
@@ -928,6 +968,7 @@ var ICONS = {
   finance: finance,
   home: home,
   info: info,
+  local: local,
   paper: paper,
   plus: plus,
   question: question,
@@ -982,7 +1023,7 @@ var Icon = (_temp$2 = _class$2 = function (_PureComponent) {
           fontSize: size,
           fill: color
         },
-        className: index(className, styles.Icon),
+        className: classnames(className, styles.Icon),
         'aria-hidden': true
       }, otherProps);
       var IconNode = ICONS[name];
@@ -999,20 +1040,16 @@ var Icon = (_temp$2 = _class$2 = function (_PureComponent) {
   color: PropTypes.string
 }, _temp$2);
 
-var allowMultiple = true;
-
 var styles$1 = { "tabs__card": "QTFO3vB", "tabs__bar": "_2YCIwDA", "tabs__tab": "_37S7qK8", "active": "_1-_7_w9", "tab__del": "_2GpfxLN", "clearfix": "FLgZnNp", "tabs__left": "_2FxI-4O", "tabs__con": "_2hU1MuY", "tabs__panel": "c57w49P", "inactive": "_16UZ8XT", "tabs__button": "_3zluHoE", "disabled": "_2T7bEco", "tabs__wrap": "Q4sxpvX", "tabs__small": "_3SDTaN3" };
 
-var _dec$1;
 var _class$1;
-var _class2$1;
 var _temp$1;
 
 /**
  * Tabs Component
  * @author yan
  */
-var Tab = (_dec$1 = CSSModules(styles$1, { allowMultiple: allowMultiple }), _dec$1(_class$1 = (_temp$1 = _class2$1 = function (_PureComponent) {
+var Tab = (_temp$1 = _class$1 = function (_PureComponent) {
   inherits(Tab, _PureComponent);
 
   function Tab(props) {
@@ -1021,7 +1058,7 @@ var Tab = (_dec$1 = CSSModules(styles$1, { allowMultiple: allowMultiple }), _dec
     var _this = possibleConstructorReturn(this, (Tab.__proto__ || Object.getPrototypeOf(Tab)).call(this, props));
 
     _this.deleteButton = function (e) {
-      e.stopPropagation(); //prevent trigger clickTab function
+      // e.stopPropagation();
       _this.props.deleteButton(_this.props.tabKey);
     };
 
@@ -1042,42 +1079,45 @@ var Tab = (_dec$1 = CSSModules(styles$1, { allowMultiple: allowMultiple }), _dec
       var props = this.props;
 
       var closable = props.closable,
-          disabled$$1 = props.disabled,
+          disabled = props.disabled,
           status = props.status,
           tabDeleteButton = props.tabDeleteButton,
-          title = props.title,
-          connectDropTarget = props.connectDropTarget;
+          title = props.title;
 
-      var tabClass = index((_classNames = {}, defineProperty(_classNames, 'disabled', disabled$$1 === true), defineProperty(_classNames, 'active', status === 'active'), defineProperty(_classNames, 'tabs__tab', true), _classNames));
 
-      var delIcon = React.createElement(Icon, {
-        size: 12,
-        name: 'close',
-        onClick: this.deleteButton
-      });
+      var tabClass = classnames((_classNames = {}, defineProperty(_classNames, styles$1.disabled, disabled === true), defineProperty(_classNames, styles$1.active, status === 'active'), defineProperty(_classNames, styles$1.tabs__tab, true), _classNames));
+
+      var delIcon = React.createElement(Icon, { size: 12, name: 'close', onClick: this.deleteButton });
 
       return React.createElement(
         'div',
-        { styleName: tabClass, onClick: this.clickTab },
+        {
+          className: tabClass,
+          onClick: this.clickTab
+        },
         title,
         tabDeleteButton && closable ? React.createElement(
           'div',
-          { styleName: 'tab__del' },
+          { className: styles$1.tab__del },
           delIcon
         ) : null
       );
     }
   }]);
   return Tab;
-}(PureComponent), _class2$1.displayName = 'Tab', _class2$1.defaultProps = {
-  closable: true
-}, _class2$1.propTypes = {
-  closable: PropTypes.bool
-}, _temp$1)) || _class$1);
+}(PureComponent), _class$1.displayName = 'Tab', _class$1.defaultProps = {
+  closable: true,
+  tabKey: null,
+  deleteButton: function deleteButton() {},
+  onClick: function onClick() {}
+}, _class$1.propTypes = {
+  closable: PropTypes.bool,
+  tabKey: PropTypes.string,
+  deleteButton: PropTypes.func,
+  onClick: PropTypes.func
+}, _temp$1);
 
-var _dec;
 var _class;
-var _class2;
 var _temp;
 var _initialiseProps;
 
@@ -1085,7 +1125,7 @@ var _initialiseProps;
  * Tabs Component
  * @author yan
  */
-var Tabs$1 = (_dec = CSSModules(styles$1, { allowMultiple: allowMultiple }), _dec(_class = (_temp = _class2 = function (_PureComponent) {
+var Tabs$1 = (_temp = _class = function (_PureComponent) {
   inherits(Tabs, _PureComponent);
 
   function Tabs(props) {
@@ -1129,34 +1169,33 @@ var Tabs$1 = (_dec = CSSModules(styles$1, { allowMultiple: allowMultiple }), _de
       var props = this.props;
       var type = props.type,
           size = props.size,
-          tabPosition = props.tabPosition,
-          otherProps = objectWithoutProperties(props, ['type', 'size', 'tabPosition']);
+          tabPosition = props.tabPosition;
 
-      var cls = index((_classNames = {}, defineProperty(_classNames, 'tabs__card', type === 'card'), defineProperty(_classNames, 'tabs__button', type === 'button'), defineProperty(_classNames, 'tabs__small', size === 'small'), defineProperty(_classNames, 'tabs__left clearfix', tabPosition === 'left'), defineProperty(_classNames, 'tabs__wrap', true), _classNames));
+      var cls = classnames((_classNames = {}, defineProperty(_classNames, styles$1.tabs__card, type === 'card'), defineProperty(_classNames, styles$1.tabs__button, type === 'button'), defineProperty(_classNames, styles$1.tabs__small, size === 'small'), defineProperty(_classNames, styles$1.tabs__lef + ' ' + styles$1.clearfix, tabPosition === 'left'), defineProperty(_classNames, styles$1.tabs__wrap, true), _classNames));
 
-      return React$1.createElement(
+      return React.createElement(
         'div',
-        { styleName: cls },
-        React$1.createElement(
+        { className: cls },
+        React.createElement(
           'div',
-          { styleName: 'tabs__bar' },
+          { className: styles$1.tabs__bar },
           opt.tab
         ),
-        React$1.createElement(
+        React.createElement(
           'div',
-          { styleName: 'tabs__con' },
+          { className: styles$1.tabs__con },
           opt.panel
         )
       );
     }
   }]);
   return Tabs;
-}(PureComponent), _class2.displayName = 'Tabs', _class2.defaultProps = {
+}(PureComponent), _class.displayName = 'Tabs', _class.defaultProps = {
   defaultActiveKey: 0,
   type: 'line',
   size: 'default',
   tabPosition: 'top'
-}, _class2.propTypes = {
+}, _class.propTypes = {
   type: PropTypes.oneOf(['line', 'card', 'button']),
   size: PropTypes.oneOf(['default', 'small']),
   tabPosition: PropTypes.oneOf(['top', 'left']),
@@ -1189,43 +1228,50 @@ var Tabs$1 = (_dec = CSSModules(styles$1, { allowMultiple: allowMultiple }), _de
   };
 
   this.getPanel = function () {
-    var that = _this2;
+    var _state = _this2.state,
+        activeKey = _state.activeKey,
+        panelUpdateKey = _state.panelUpdateKey,
+        style = _state.style;
+    var tabDeleteButton = _this2.props.tabDeleteButton;
+
     var tab = [];
     var panel = [];
-    Children.forEach(_this2.state.children, function (children, index$$1) {
+
+    var tabProps = {
+      style: style,
+      onClick: _this2.onClick,
+      tabDeleteButton: tabDeleteButton,
+      deleteButton: _this2.deleteButton
+    };
+
+    Children.forEach(_this2.state.children, function (children, index) {
       // add tabs
-      var status = void 0,
-          className = void 0;
-
-      status = index$$1 === that.state.activeKey ? 'active' : 'inactive';
-
-      var props = {
-        key: 'tab' + index$$1,
-        tabKey: index$$1,
+      var status = index === activeKey ? 'active' : 'inactive';
+      var selfProps = {
+        key: 'tab' + index,
+        tabKey: index,
         title: children.props.title,
         status: status,
         disabled: children.props.disabled,
-        closable: children.props.closable,
-        style: that.state.style,
-        onClick: that.onClick,
-        tabDeleteButton: that.props.tabDeleteButton,
-        deleteButton: that.deleteButton
+        closable: children.props.closable
       };
 
-      tab.push(React$1.createElement(Tab, props));
+      tab.push(React.createElement(Tab, _extends({}, tabProps, selfProps)));
 
-      if (index$$1 === that.state.activeKey) {
-        var props = { className: index('tabs__panel', status), status: status, key: index$$1 };
-        if (that.state.panelUpdateKey === index$$1) {
-          props.update = true;
-        }
-        panel.push(cloneElement(children, props));
+      if (index === activeKey) {
+        var panelProps = {
+          className: classnames('tabs__panel', status),
+          status: status,
+          key: index,
+          update: panelUpdateKey === index
+        };
+        panel.push(cloneElement(children, panelProps));
       }
     });
 
     return { tab: tab, panel: panel };
   };
-}, _temp)) || _class);
+}, _temp);
 
 export default Tabs$1;
 //# sourceMappingURL=tabs.js.map

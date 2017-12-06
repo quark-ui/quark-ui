@@ -1,11 +1,8 @@
-import { PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import CSSModules from 'react-css-modules';
 import Animate from 'rc-animate';
 
-var allowMultiple = true;
-
-var styles = { "Spin": "_2skC-me", "qui-spin-dot": "_1EZh2dh", "small": "_2x0173l", "large": "_3QD-S4t", "uiFade": "_2EHkGoG", "qui-spin-text": "_2uKi-RX", "qui-spin-container": "_1ZQogri", "qui-spin-blur": "_1m5Kgy8", "qui-spin-loading-wrap": "_2_VO-5x", "qui-spin-wrap": "_2xnXvO0", "quiSpinDot": "_1EZh2dh", "quiSpinText": "_2uKi-RX", "quiSpinContainer": "_1ZQogri", "quiSpinBlur": "_1m5Kgy8", "quiSpinLoadingWrap": "_2_VO-5x", "quiSpinWrap": "_2xnXvO0" };
+var styles = { "Spin": "_2skC-me", "qui-spin-dot": "_1EZh2dh", "small": "_2x0173l", "large": "_3QD-S4t", "uiFade": "_2EHkGoG", "qui-spin-text": "_2uKi-RX", "qui-spin-container": "_1ZQogri", "qui-spin-blur": "_1m5Kgy8", "qui-spin-loading-wrap": "_2_VO-5x", "qui-spin-wrap": "_2xnXvO0" };
 
 var classCallCheck = function (instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -73,16 +70,14 @@ var possibleConstructorReturn = function (self, call) {
   return call && (typeof call === "object" || typeof call === "function") ? call : self;
 };
 
-var _dec;
 var _class;
-var _class2;
 var _temp;
 
 /**
  * Spin Component
  * @author Northerner
  */
-var Spin = (_dec = CSSModules(styles, { allowMultiple: allowMultiple }), _dec(_class = (_temp = _class2 = function (_PureComponent) {
+var Spin = (_temp = _class = function (_PureComponent) {
   inherits(Spin, _PureComponent);
 
   function Spin(props) {
@@ -147,17 +142,18 @@ var Spin = (_dec = CSSModules(styles, { allowMultiple: allowMultiple }), _dec(_c
 
 
       var spinProps = {
-        styleName: 'Spin ' + (size === 'default' ? '' : size)
+        className: styles['Spin ' + (size === 'default' ? '' : size)]
       };
       var conProps = {
-        styleName: 'qui-spin-container ' + (spinning ? 'qui-spin-blur' : '')
+        className: styles['qui-spin-container ' + (spinning ? 'qui-spin-blur' : '')],
+        key: 'container'
       };
       var spinElement = React.createElement(
         'div',
         spinProps,
         React.createElement(
           'span',
-          { styleName: 'qui-spin-dot' },
+          { className: styles['qui-spin-dot'] },
           React.createElement('i', null),
           React.createElement('i', null),
           React.createElement('i', null),
@@ -166,7 +162,7 @@ var Spin = (_dec = CSSModules(styles, { allowMultiple: allowMultiple }), _dec(_c
         ),
         tip ? React.createElement(
           'p',
-          { styleName: 'qui-spin-text' },
+          { className: styles['qui-spin-text'] },
           tip
         ) : null
       );
@@ -177,11 +173,11 @@ var Spin = (_dec = CSSModules(styles, { allowMultiple: allowMultiple }), _dec(_c
           {
             component: 'div',
             transitionName: 'fade',
-            styleName: 'qui-spin-loading-wrap'
+            className: styles['qui-spin-loading-wrap']
           },
           spinning && React.createElement(
             'div',
-            { styleName: 'qui-spin-wrap' },
+            { key: 'wrap', className: styles['qui-spin-wrap'] },
             spinElement
           ),
           React.createElement(
@@ -196,14 +192,14 @@ var Spin = (_dec = CSSModules(styles, { allowMultiple: allowMultiple }), _dec(_c
     }
   }]);
   return Spin;
-}(PureComponent), _class2.displayName = 'Spin', _class2.defaultProps = {
+}(PureComponent), _class.displayName = 'Spin', _class.defaultProps = {
   size: 'default',
   spinning: true,
-  delay: 0 }, _class2.propTypes = {
+  delay: 0 }, _class.propTypes = {
   size: PropTypes.oneOf(['small', 'large', 'default']),
   spinning: PropTypes.bool,
   delay: PropTypes.number
-}, _temp)) || _class);
+}, _temp);
 
 export default Spin;
 //# sourceMappingURL=spin.js.map

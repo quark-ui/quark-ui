@@ -12,6 +12,7 @@ import styles from './ThemePicker.css';
 const AvailableColors = {
   Blue: { h: 206, s: 74, v: 88 },
   Orange: { h: 28, s: 79, v: 100 },
+  Red: { h: 359, s: 86, v: 76 },
 };
 const IconProps = {
   width: 18,

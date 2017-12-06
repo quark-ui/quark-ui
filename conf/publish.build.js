@@ -16,12 +16,19 @@ const postcss = require('postcss');
 // theme
 const DEFAULT_THEME = require('../src/styles/theme');
 const ORANGE_THEME = require('../src/styles/orange');
+const RED_THEME = require('../src/styles/red');
 
 // css module name pattern
 const CSSMODULE_NAME_PATTERN = '[hash:base64:7]';
 
+const themes = {
+  default: DEFAULT_THEME,
+  orange: ORANGE_THEME,
+  red: RED_THEME,
+};
+
 // get cssnext config
-const getCssnextConfig = (theme = DEFAULT_THEME) => ({
+const getCssnextConfig = (theme = 'default') => ({
   features: {
     browsers: [
       '> 1%',
@@ -29,7 +36,7 @@ const getCssnextConfig = (theme = DEFAULT_THEME) => ({
       'ie >= 8',
     ],
     customProperties: {
-      variables: theme,
+      variables: themes[theme],
     },
   },
 });
@@ -38,11 +45,16 @@ const cwd = process.cwd();
 const cssExportMap = {};
 const componentList = fs.readdirSync(path.join(cwd, './src/components'));
 
-const generateCSS = (name) => {
+const generateCSS = (name, theme) => {
   const src = name ? `./src/components/${name}/${upperFirst(name)}.css` : './src/index.css';
-  const dest = name ? `./lib/${name}.orange.css` : './lib/index.orange.css';
+  let dest;
+  if (theme) {
+    dest = name ? `./lib/${name}.${theme}.css` : `./lib/index.${theme}.css`;
+  } else {
+    dest = name ? `./lib/${name}.css` : './lib/index.css';
+  }
   const cssPlugins = [
-    cssnext(getCssnextConfig(ORANGE_THEME)),
+    cssnext(getCssnextConfig(theme)),
     postcssModules({
       generateScopedName: CSSMODULE_NAME_PATTERN,
     }),
@@ -58,6 +70,9 @@ const generateCSS = (name) => {
       })
       .then((res) => {
         fs.writeFile(dest, res.css);
+      })
+      .catch((e) => {
+        console.error(`generateCSS failed with name: ${name}, theme: ${theme}`, e);
       });
   });
 };
@@ -110,6 +125,7 @@ const plugins = [
       'transform-decorators-legacy',
       'inline-react-svg',
     ],
+    babelrc: false,
   }),
 ];
 
@@ -138,7 +154,8 @@ const build = (name) => {
     });
   }).catch(err => console.error(err));
 
-  generateCSS(name);
+  generateCSS(name, 'orange');
+  generateCSS(name, 'red');
 };
 
 // build separate component
@@ -182,4 +199,6 @@ rollup.rollup({
   });
 }).catch(err => console.error(err));
 
-generateCSS();
+generateCSS(false);
+generateCSS(false, 'orange');
+generateCSS(false, 'red');

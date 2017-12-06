@@ -1,6 +1,5 @@
-import { PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import CSSModules from 'react-css-modules';
 import ReactDOM from 'react-dom';
 import Transition from 'react-transition-group/Transition';
 
@@ -67,7 +66,7 @@ function shouldUseNative() {
 	}
 }
 
-var index = shouldUseNative() ? Object.assign : function (target, source) {
+var objectAssign = shouldUseNative() ? Object.assign : function (target, source) {
 	var from;
 	var to = toObject(target);
 	var symbols;
@@ -94,15 +93,13 @@ var index = shouldUseNative() ? Object.assign : function (target, source) {
 	return to;
 };
 
-var allowMultiple = true;
-
 var ALIGN_ENUM = new Set(['tl', 'tr', 'tc', 'bl', 'br', 'bc', 'cl', 'cr']);
 
 function createCommonjsModule(fn, module) {
 	return module = { exports: {} }, fn(module, module.exports), module.exports;
 }
 
-var index$1 = createCommonjsModule(function (module) {
+var classnames = createCommonjsModule(function (module) {
 /*!
   Copyright (c) 2016 Jed Watson.
   Licensed under the MIT License (MIT), see
@@ -169,34 +166,49 @@ var REACT_STATICS = {
 };
 
 var KNOWN_STATICS = {
-    name: true,
-    length: true,
-    prototype: true,
-    caller: true,
-    arguments: true,
-    arity: true
+  name: true,
+  length: true,
+  prototype: true,
+  caller: true,
+  callee: true,
+  arguments: true,
+  arity: true
 };
 
-var isGetOwnPropertySymbolsAvailable = typeof Object.getOwnPropertySymbols === 'function';
+var defineProperty = Object.defineProperty;
+var getOwnPropertyNames = Object.getOwnPropertyNames;
+var getOwnPropertySymbols$1 = Object.getOwnPropertySymbols;
+var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
+var getPrototypeOf = Object.getPrototypeOf;
+var objectPrototype = getPrototypeOf && getPrototypeOf(Object);
 
-var index$2 = function hoistNonReactStatics(targetComponent, sourceComponent, customStatics) {
+var hoistNonReactStatics = function hoistNonReactStatics(targetComponent, sourceComponent, blacklist) {
     if (typeof sourceComponent !== 'string') { // don't hoist over string (html) components
-        var keys = Object.getOwnPropertyNames(sourceComponent);
 
-        /* istanbul ignore else */
-        if (isGetOwnPropertySymbolsAvailable) {
-            keys = keys.concat(Object.getOwnPropertySymbols(sourceComponent));
+        if (objectPrototype) {
+            var inheritedComponent = getPrototypeOf(sourceComponent);
+            if (inheritedComponent && inheritedComponent !== objectPrototype) {
+                hoistNonReactStatics(targetComponent, inheritedComponent, blacklist);
+            }
+        }
+
+        var keys = getOwnPropertyNames(sourceComponent);
+
+        if (getOwnPropertySymbols$1) {
+            keys = keys.concat(getOwnPropertySymbols$1(sourceComponent));
         }
 
         for (var i = 0; i < keys.length; ++i) {
-            if (!REACT_STATICS[keys[i]] && !KNOWN_STATICS[keys[i]] && (!customStatics || !customStatics[keys[i]])) {
-                try {
-                    targetComponent[keys[i]] = sourceComponent[keys[i]];
-                } catch (error) {
-
-                }
+            var key = keys[i];
+            if (!REACT_STATICS[key] && !KNOWN_STATICS[key] && (!blacklist || !blacklist[key])) {
+                var descriptor = getOwnPropertyDescriptor(sourceComponent, key);
+                try { // Avoid failures from read-only properties
+                    defineProperty(targetComponent, key, descriptor);
+                } catch (e) {}
             }
         }
+
+        return targetComponent;
     }
 
     return targetComponent;
@@ -230,7 +242,7 @@ var createClass = function () {
 
 
 
-var defineProperty = function (obj, key, value) {
+var defineProperty$1 = function (obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
       value: value,
@@ -400,14 +412,14 @@ function renderTo() {
       return EnhancedComponent;
     }(PureComponent);
 
-    index$2(EnhancedComponent, WrappedComponent);
+    hoistNonReactStatics(EnhancedComponent, WrappedComponent);
     return EnhancedComponent;
   };
 }
 
-var styles = { "trigger": "_3A_xDs1", "trigger--wrap": "_1fJcokE", "popup": "_3WT1yrT", "popup--hidden": "_3CuSPSp", "triggerWrap": "_1fJcokE", "popupHidden": "_3CuSPSp" };
+var styles = { "trigger": "_3A_xDs1", "trigger--wrap": "_1fJcokE", "popup": "_3WT1yrT", "popup--hidden": "_3CuSPSp" };
 
-var styles$1 = { "fade--entering": "_1mp5FXi", "fadeIn": "gbiUlUN", "fade--entered": "_26DcFZN", "fade--exiting": "_2wSC5er", "fadeOut": "_2OnzTOe", "fade--exited": "_2K6mlzL", "flipX": "sCG0bzF", "flipX--entering": "_3cdJQI5", "flipInX": "_1FsXcPX", "flipX--entered": "qGmSxIW", "flipX--exiting": "_3NfjJC-", "flipOutX": "_24wLE9d", "flipX--exited": "_24MsE6n", "slideUp": "_1oUCufa", "slideUp--entering": "_1mO_SWR", "slideInUp": "_12qhs-A", "slideUp--entered": "_3-WipgH", "slideUp--exiting": "_27bTj8j", "slideOutUp": "_20eULFb", "slideUp--exited": "_34-gsuv", "slideDown": "_706TJ5I", "slideDown--entering": "_1ieQGlB", "slideInDown": "_21y5cl_", "slideDown--entered": "_3FYkJ5S", "slideDown--exiting": "desE714", "slideOutDown": "_16Yi8is", "slideDown--exited": "_3FJ4sR6", "zoom": "_2aGrmGr", "zoom--entering": "EdoD2Q2", "zoomIn": "gybKzsL", "zoom--entered": "_3kIgIBr", "zoom--exiting": "k0tHLpV", "zoomOut": "_689sLoR", "zoom--exited": "_6jD7wgI", "bounce": "_38IQtyb", "bounce--entering": "_1_uO8bU", "bounceIn": "_2j4EhAR", "bounce--entered": "_1hNAImH", "bounce--exiting": "Hpxa8Tt", "bounceOut": "_2yWAe_R", "bounce--exited": "_3VDKDtK", "fadeEntering": "_1mp5FXi", "fadeEntered": "_26DcFZN", "fadeExiting": "_2wSC5er", "fadeExited": "_2K6mlzL", "flipXEntering": "_3cdJQI5", "flipXEntered": "qGmSxIW", "flipXExiting": "_3NfjJC-", "flipXExited": "_24MsE6n", "slideUpEntering": "_1mO_SWR", "slideUpEntered": "_3-WipgH", "slideUpExiting": "_27bTj8j", "slideUpExited": "_34-gsuv", "slideDownEntering": "_1ieQGlB", "slideDownEntered": "_3FYkJ5S", "slideDownExiting": "desE714", "slideDownExited": "_3FJ4sR6", "zoomEntering": "EdoD2Q2", "zoomEntered": "_3kIgIBr", "zoomExiting": "k0tHLpV", "zoomExited": "_6jD7wgI", "bounceEntering": "_1_uO8bU", "bounceEntered": "_1hNAImH", "bounceExiting": "Hpxa8Tt", "bounceExited": "_3VDKDtK" };
+var styles$1 = { "fade--entering": "_1mp5FXi", "fadeIn": "gbiUlUN", "fade--entered": "_26DcFZN", "fade--exiting": "_2wSC5er", "fadeOut": "_2OnzTOe", "fade--exited": "_2K6mlzL", "flipX": "sCG0bzF", "flipX--entering": "_3cdJQI5", "flipInX": "_1FsXcPX", "flipX--entered": "qGmSxIW", "flipX--exiting": "_3NfjJC-", "flipOutX": "_24wLE9d", "flipX--exited": "_24MsE6n", "slideUp": "_1oUCufa", "slideUp--entering": "_1mO_SWR", "slideInUp": "_12qhs-A", "slideUp--entered": "_3-WipgH", "slideUp--exiting": "_27bTj8j", "slideOutUp": "_20eULFb", "slideUp--exited": "_34-gsuv", "slideDown": "_706TJ5I", "slideDown--entering": "_1ieQGlB", "slideInDown": "_21y5cl_", "slideDown--entered": "_3FYkJ5S", "slideDown--exiting": "desE714", "slideOutDown": "_16Yi8is", "slideDown--exited": "_3FJ4sR6", "zoom": "_2aGrmGr", "zoom--entering": "EdoD2Q2", "zoomIn": "gybKzsL", "zoom--entered": "_3kIgIBr", "zoom--exiting": "k0tHLpV", "zoomOut": "_689sLoR", "zoom--exited": "_6jD7wgI", "bounce": "_38IQtyb", "bounce--entering": "_1_uO8bU", "bounceIn": "_2j4EhAR", "bounce--entered": "_1hNAImH", "bounce--exiting": "Hpxa8Tt", "bounceOut": "_2yWAe_R", "bounce--exited": "_3VDKDtK" };
 
 var MOTIONS = ['fade', 'flipX', 'slideUp', 'slideDown', 'zoom', 'bounce'];
 
@@ -461,7 +473,7 @@ var Animation = (_temp$2 = _class$2 = function (_PureComponent) {
             'div',
             {
               style: defaultStyle,
-              className: index$1(styles$1[motion], styles$1[motion + '--' + status])
+              className: classnames(styles$1[motion], styles$1[motion + '--' + status])
             },
             children
           );
@@ -507,16 +519,16 @@ var Animation = (_temp$2 = _class$2 = function (_PureComponent) {
   onExited: PropTypes.func
 }, _temp$2);
 
-var _dec$1;
+var _dec;
 var _class$1;
-var _class2$1;
+var _class2;
 var _temp$1;
 
 /**
  * Popup Component
  * @author ryan.bian
  */
-var Popup = (_dec$1 = renderTo(), _dec$1(_class$1 = (_temp$1 = _class2$1 = function (_PureComponent) {
+var Popup = (_dec = renderTo(), _dec(_class$1 = (_temp$1 = _class2 = function (_PureComponent) {
   inherits(Popup, _PureComponent);
 
   function Popup(props) {
@@ -557,7 +569,7 @@ var Popup = (_dec$1 = renderTo(), _dec$1(_class$1 = (_temp$1 = _class2$1 = funct
 
       var wrapProps = _extends({
         ref: popupRef,
-        className: index$1(styles.popup, defineProperty({}, styles['popup--hidden'], !popupVisible))
+        className: classnames(styles.popup, defineProperty$1({}, styles['popup--hidden'], !popupVisible))
       }, otherProps);
       return React.createElement(
         Animation,
@@ -588,13 +600,13 @@ var Popup = (_dec$1 = renderTo(), _dec$1(_class$1 = (_temp$1 = _class2$1 = funct
     }
   }]);
   return Popup;
-}(PureComponent), _class2$1.displayName = 'Popup', _class2$1.defaultProps = {
+}(PureComponent), _class2.displayName = 'Popup', _class2.defaultProps = {
   position: [0, 0],
   popupRef: null,
   visible: false,
   onMouseEnter: function onMouseEnter() {},
   onMouseLeave: function onMouseLeave() {}
-}, _class2$1.propTypes = {
+}, _class2.propTypes = {
   position: PropTypes.arrayOf(PropTypes.number),
   popupRef: PropTypes.func,
   visible: PropTypes.bool,
@@ -621,9 +633,7 @@ var off = function off(node, type, listener) {
   node.removeEventListener(type, listener, false);
 };
 
-var _dec;
 var _class;
-var _class2;
 var _temp;
 var _initialiseProps;
 
@@ -631,7 +641,7 @@ var _initialiseProps;
  * Trigger Component
  * @author ryan.bian
  */
-var Trigger = (_dec = CSSModules(styles, { allowMultiple: allowMultiple }), _dec(_class = (_temp = _class2 = function (_PureComponent) {
+var Trigger = (_temp = _class = function (_PureComponent) {
   inherits(Trigger, _PureComponent);
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
@@ -758,7 +768,7 @@ var Trigger = (_dec = CSSModules(styles, { allowMultiple: allowMultiple }), _dec
       };
       var newPostition = [x + offset[0], y + offset[1]];
       if (position[0] !== newPostition[0] || position[0] !== newPostition[0]) {
-        index(newState, {
+        objectAssign(newState, {
           position: newPostition
         });
       }
@@ -785,7 +795,7 @@ var Trigger = (_dec = CSSModules(styles, { allowMultiple: allowMultiple }), _dec
         visible: active
       };
       if (action === 'hover') {
-        index(popupProps, {
+        objectAssign(popupProps, {
           onMouseEnter: this.handleMouseEnter,
           onMouseLeave: this.handleMouseLeave
         });
@@ -809,21 +819,21 @@ var Trigger = (_dec = CSSModules(styles, { allowMultiple: allowMultiple }), _dec
         ref: function ref(n) {
           return _this5.node = n;
         },
-        styleName: 'trigger--wrap'
+        className: styles['trigger--wrap']
       };
       if (action === 'hover') {
-        index(triggerProps, {
+        objectAssign(triggerProps, {
           onMouseEnter: this.handleMouseEnter,
           onMouseLeave: this.handleMouseLeave
         });
       } else if (action === 'click') {
-        index(triggerProps, {
+        objectAssign(triggerProps, {
           onClick: this.handleClickTrigger
         });
       }
       return React.createElement(
         'div',
-        { styleName: 'trigger' },
+        { className: styles.trigger },
         React.createElement(
           'span',
           triggerProps,
@@ -834,7 +844,7 @@ var Trigger = (_dec = CSSModules(styles, { allowMultiple: allowMultiple }), _dec
     }
   }]);
   return Trigger;
-}(PureComponent), _class2.displayName = 'Trigger', _class2.defaultProps = {
+}(PureComponent), _class.displayName = 'Trigger', _class.defaultProps = {
   action: 'hover',
   placement: ['tl', 'bl'],
   offset: [0, 0],
@@ -843,7 +853,7 @@ var Trigger = (_dec = CSSModules(styles, { allowMultiple: allowMultiple }), _dec
   mouseEnterDelay: 0,
   mouseLeaveDelay: 100,
   onPopupVisibleChange: function onPopupVisibleChange() {}
-}, _class2.propTypes = {
+}, _class.propTypes = {
   action: PropTypes.oneOf(['hover', 'click']),
   placement: PropTypes.arrayOf(PropTypes.oneOf(Array.from(ALIGN_ENUM))),
   offset: PropTypes.arrayOf(PropTypes.number),
@@ -852,11 +862,11 @@ var Trigger = (_dec = CSSModules(styles, { allowMultiple: allowMultiple }), _dec
   mouseEnterDelay: PropTypes.number,
   mouseLeaveDelay: PropTypes.number,
   onPopupVisibleChange: PropTypes.func
-}, _class2.getTargetRect = function (target) {
+}, _class.getTargetRect = function (target) {
   return target.getBoundingClientRect();
-}, _class2.getVisibleStateByProps = function (props) {
+}, _class.getVisibleStateByProps = function (props) {
   return Trigger.isPopupVisibleDefined(props) ? props.popupVisible : false;
-}, _class2.isPopupVisibleDefined = function (props) {
+}, _class.isPopupVisibleDefined = function (props) {
   return typeof props.popupVisible !== 'undefined';
 }, _initialiseProps = function _initialiseProps() {
   var _this6 = this;
@@ -929,7 +939,7 @@ var Trigger = (_dec = CSSModules(styles, { allowMultiple: allowMultiple }), _dec
       });
     }
   };
-}, _temp)) || _class);
+}, _temp);
 
 export default Trigger;
 //# sourceMappingURL=trigger.js.map

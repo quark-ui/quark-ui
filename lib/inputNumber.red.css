@@ -1,0 +1,222 @@
+/**
+ * InputNumber Style
+ * @author yan
+ */
+/*@import "../../styles/theme.css";*/
+.DOQ1glJ {
+  opacity: 0.72;
+  color: #ccc !important;
+  cursor: not-allowed;
+}
+.rc-input-number {
+    position: relative;
+	padding: 6px 7px;
+	width: 100%;
+	cursor: text;
+	line-height: 1.5;
+	color: #666;
+	background-color: #fff;
+	background-image: none;
+	transition: all .3s;
+	margin: 0;
+	padding: 0;
+	font-size: 12px;
+	height: 28px;
+	display: inline-block;
+	border: 1px solid #e6e6e6;
+	border-radius: 3px;
+	width:94px;
+}
+.rc-input-number:focus {
+	border-color: rgb(201, 62, 65);
+	outline: 0;
+}
+.rc-input-number[disabled] {
+	background-color: #f7f7f7;
+	opacity: 1;
+	cursor: not-allowed;
+	color: rgba(0, 0, 0, .25)
+}
+.rc-input-number[disabled]:hover{
+	border-color: rgb(201, 62, 65);
+}
+.input-number-large {
+	padding: 5px 7px;
+}
+.input-number-normal {
+	padding: 2px 7px;
+}
+.input-number-small {
+	height: 26px
+}
+.rc-input-number-handler {
+	text-align: center;
+	line-height: 0;
+	height: 50%;
+	overflow: hidden;
+	color: rgba(0, 0, 0, .43);
+	position: relative;
+	transition: all .1s linear;
+	display: block;
+	width: 100%;
+	font-weight: 700
+}
+.rc-input-number-handler:active {
+	background: #f4f4f4
+}
+.rc-input-number-handler:hover .rc-input-number-handler-down-inner,
+.rc-input-number-handler:hover .rc-input-number-handler-up-inner {
+	color: rgb(201, 62, 65)
+}
+.rc-input-number-handler-down-inner,
+.rc-input-number-handler-up-inner {
+	font-style: normal;
+	vertical-align: baseline;
+	text-align: center;
+	text-transform: none;
+	line-height: 1;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	line-height: 12px;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	position: absolute;
+	width: 12px;
+	height: 12px;
+	transition: all .1s linear;
+	display: inline-block;
+	font-size: 12px;
+	font-size: 7px\9;
+	-webkit-transform: scale(.58333333) rotate(0deg);
+	transform: scale(.58333333) rotate(0deg);
+	-ms-filter: "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=1, M12=0, M21=0, M22=1)";
+	zoom: 1;
+	right: 4px;
+	color: rgba(0, 0, 0, .43)
+}
+.rc-input-number-handler-down-inner:before,
+.rc-input-number-handler-up-inner:before {
+	display: block;
+	font-family: anticon!important
+}
+:root ._2l6KXkk,:root .iw8GqMd {
+	-webkit-filter: none;
+	filter: none;
+	font-size: 12px
+}
+.rc-input-number:hover {
+	border-color: rgb(201, 62, 65);
+}
+.rc-input-number-focused {
+	border-color: rgb(201, 62, 65);
+	outline: 0;
+}
+.rc-input-number-disabled {
+	background-color: #f7f7f7;
+	opacity: 1;
+	cursor: not-allowed;
+	color: rgba(0, 0, 0, .25)
+}
+.rc-input-number-disabled:hover {
+	border-color: #e2e2e2
+}
+.rc-input-number-input {
+	width: 80%;
+	text-align: left;
+	outline: 0;
+	-moz-appearance: textfield;
+	height: 26px;
+	transition: all .3s linear;
+	color: #666;
+	background-color: #fff;
+	border: 0;
+	border-radius: 4px;
+	padding: 0 7px
+}
+.rc-input-number-input[disabled] {
+	background-color: #f7f7f7;
+	opacity: 1;
+	cursor: not-allowed;
+	color: rgba(0, 0, 0, .25)
+}
+.rc-input-number-input[disabled]:hover {
+	border-color: #e2e2e2
+}
+.rc-input-number-handler-wrap {
+	border-left: 1px solid #ddd;
+	width: 22px;
+	height: 100%;
+	background: #fff;
+	position: absolute;
+	top: 0;
+	right: 0;
+	opacity: 0;
+	border-radius: 0 4px 4px 0;
+	transition: opacity .24s linear .1s
+}
+.rc-input-number-handler-wrap:hover .rc-input-number-handler {
+	/*height: 40%*/
+}
+.rc-input-number:hover .rc-input-number-handler-wrap {
+	opacity: 1
+}
+.rc-input-number-handler-up {
+	cursor: pointer
+}
+.rc-input-number-handler-up-inner {
+	top: 50%;
+	margin-top: -6px
+}
+.rc-input-number-handler-up-inner:before {
+	text-align: center;
+	content: "^"
+}
+.rc-input-number-handler-up:hover {
+	/*height: 60%!important*/
+}
+.rc-input-number-handler-down {
+	border-top: 1px solid #d9d9d9;
+	top: -1px;
+	cursor: pointer
+}
+.rc-input-number-handler-down-inner {
+	top: 50%;
+	margin-top: -6px
+}
+.rc-input-number-handler-down-inner:before {
+	text-align: center;
+	content: "\2228"
+}
+.rc-input-number-handler-down:hover {
+	color: rgb(201, 62, 65);
+	/*height: 60%!important*/
+}
+.rc-input-number-disabled .rc-input-number-handler-down-inner,
+.rc-input-number-disabled .rc-input-number-handler-up-inner,
+.rc-input-number-handler-down-disabled .rc-input-number-handler-down-inner,
+.rc-input-number-handler-down-disabled .rc-input-number-handler-up-inner,
+.rc-input-number-handler-up-disabled .rc-input-number-handler-down-inner,
+.rc-input-number-handler-up-disabled .rc-input-number-handler-up-inner {
+	opacity: .72;
+	color: #ccc!important;
+	cursor: not-allowed
+}
+.rc-input-number-disabled .rc-input-number-input {
+	opacity: .72;
+	cursor: not-allowed;
+	background-color: #f7f7f7
+}
+.rc-input-number-disabled .rc-input-number-handler-wrap {
+	display: none
+}
+.rc-input-number-disabled .rc-input-number-handler {
+	/*opacity: .72;*/
+	color: #ccc!important;
+	cursor: not-allowed
+}
+
+
+

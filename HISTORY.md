@@ -1,3 +1,10 @@
+## v0.0.2 (2017-12-6)
+---
+NEW:
+  - red theme
+  - new icon: car & local
+
+
 ## v0.0.1 (2017-07-25)
 
 Optimization:

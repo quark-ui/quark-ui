@@ -1,9 +1,61 @@
 import React, { PureComponent } from 'react';
 import RcMenu, { Item, ItemGroup, SubMenu } from 'rc-menu';
 import PropTypes from 'prop-types';
-import CSSModules from 'react-css-modules';
 
-var allowMultiple = true;
+function createCommonjsModule(fn, module) {
+	return module = { exports: {} }, fn(module, module.exports), module.exports;
+}
+
+var classnames = createCommonjsModule(function (module) {
+/*!
+  Copyright (c) 2016 Jed Watson.
+  Licensed under the MIT License (MIT), see
+  http://jedwatson.github.io/classnames
+*/
+/* global define */
+
+(function () {
+	'use strict';
+
+	var hasOwn = {}.hasOwnProperty;
+
+	function classNames () {
+		var classes = [];
+
+		for (var i = 0; i < arguments.length; i++) {
+			var arg = arguments[i];
+			if (!arg) continue;
+
+			var argType = typeof arg;
+
+			if (argType === 'string' || argType === 'number') {
+				classes.push(arg);
+			} else if (Array.isArray(arg)) {
+				classes.push(classNames.apply(null, arg));
+			} else if (argType === 'object') {
+				for (var key in arg) {
+					if (hasOwn.call(arg, key) && arg[key]) {
+						classes.push(key);
+					}
+				}
+			}
+		}
+
+		return classes.join(' ');
+	}
+
+	if ('object' !== 'undefined' && module.exports) {
+		module.exports = classNames;
+	} else if (typeof undefined === 'function' && typeof undefined.amd === 'object' && undefined.amd) {
+		// register as 'classnames', consistent with npm package name
+		undefined('classnames', [], function () {
+			return classNames;
+		});
+	} else {
+		window.classNames = classNames;
+	}
+}());
+});
 
 var styles = { "menu": "_37XJzyY" };
 
@@ -87,9 +139,7 @@ var possibleConstructorReturn = function (self, call) {
   return call && (typeof call === "object" || typeof call === "function") ? call : self;
 };
 
-var _dec;
 var _class;
-var _class2;
 var _temp;
 var _initialiseProps;
 
@@ -97,7 +147,7 @@ var _initialiseProps;
  * Menu Component
  * @author heifade
  */
-var Menu = (_dec = CSSModules(styles, { allowMultiple: allowMultiple }), _dec(_class = (_temp = _class2 = function (_PureComponent) {
+var Menu = (_temp = _class = function (_PureComponent) {
   inherits(Menu, _PureComponent);
 
   function Menu(props) {
@@ -108,9 +158,9 @@ var Menu = (_dec = CSSModules(styles, { allowMultiple: allowMultiple }), _dec(_c
     _initialiseProps.call(_this);
 
     var openKeys = null;
-    if ('defaultOpenKeys' in props) {
+    if (props.defaultOpenKeys) {
       openKeys = props.defaultOpenKeys;
-    } else if ('openKeys' in props) {
+    } else if (props.openKeys) {
       openKeys = props.openKeys;
     }
     _this.state = {
@@ -122,9 +172,9 @@ var Menu = (_dec = CSSModules(styles, { allowMultiple: allowMultiple }), _dec(_c
   createClass(Menu, [{
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
-      if (this.props.type === 'vertical-v' && nextProps.type !== 'vertical-v') {
-        this.switchModeFromInline = true;
-      }
+      // if (this.props.type === 'vertical-v' && nextProps.type !== 'vertical-v') {
+      //   this.switchModeFromInline = true;
+      // }
       if ('openKeys' in nextProps) {
         this.setState({ openKeys: nextProps.openKeys });
       }
@@ -140,7 +190,7 @@ var Menu = (_dec = CSSModules(styles, { allowMultiple: allowMultiple }), _dec(_c
     key: 'render',
     value: function render() {
       var props = {};
-      var className = '' + this.props.className;
+      // const className = `${this.props.className}`;
       var mode = '';
       switch (this.props.type) {
         case 'horizontal-h':
@@ -153,15 +203,17 @@ var Menu = (_dec = CSSModules(styles, { allowMultiple: allowMultiple }), _dec(_c
           mode = 'vertical';
           break;
         case 'vertical-v':
-          mode = 'inline';
-          break;
         default:
+          mode = 'inline';
           break;
       }
 
       if (mode === 'inline') {
         // 垂直菜单，子菜单内嵌在菜单区域。
         props = {
+          openKeys: this.state.openKeys,
+          onClick: this.handleClick,
+          onOpenChange: this.handleOpenChange,
           mode: mode
         };
       } else {
@@ -172,8 +224,7 @@ var Menu = (_dec = CSSModules(styles, { allowMultiple: allowMultiple }), _dec(_c
           mode: mode
         };
       }
-      props.className = 'color-' + this.props.colorType;
-      props.styleName = 'menu';
+      props.className = classnames('color-' + this.props.colorType, styles.menu);
       props.prefixCls = 'menu';
       props.inlineIndent = 18;
 
@@ -181,24 +232,25 @@ var Menu = (_dec = CSSModules(styles, { allowMultiple: allowMultiple }), _dec(_c
     }
   }]);
   return Menu;
-}(PureComponent), _class2.SubMenu = SubMenu, _class2.Item = Item, _class2.ItemGroup = ItemGroup, _class2.displayName = 'Menu', _class2.defaultProps = {
+}(PureComponent), _class.SubMenu = SubMenu, _class.Item = Item, _class.ItemGroup = ItemGroup, _class.displayName = 'Menu', _class.defaultProps = {
   // className: '',
   type: 'inline',
   colorType: 'warm',
-  selectedKeys: [],
-  defaultOpenKeys: [],
+  // selectedKeys: [],
+  // defaultOpenKeys: [],
   // openKeys: undefined,
   onClick: null
   // onOpenChange: function() {},
 
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
-}, _class2.propTypes = {
+}, _class.propTypes = {
   // className: PropTypes.string,
   type: PropTypes.oneOf(['horizontal-h', // 水平菜单，子菜单水平
   'horizontal-v', // 水平菜单，子菜单垂直
   'vertical-h', // 垂直菜单，子菜单水平向右弹出
-  'vertical-v']),
+  'vertical-v'] // 垂直菜单，子菜单内嵌在菜单区域
+  ),
   colorType: PropTypes.oneOf(['warm', 'cold']),
   selectedKeys: PropTypes.arrayOf(PropTypes.string),
   defaultOpenKeys: PropTypes.arrayOf(PropTypes.string),
@@ -210,7 +262,6 @@ var Menu = (_dec = CSSModules(styles, { allowMultiple: allowMultiple }), _dec(_c
 
   this.handleOpenChange = function (openKeys) {
     _this2.setOpenKeys(openKeys);
-
     var onOpenChange = _this2.props.onOpenChange;
 
     if (onOpenChange) {
@@ -219,6 +270,10 @@ var Menu = (_dec = CSSModules(styles, { allowMultiple: allowMultiple }), _dec(_c
   };
 
   this.handleClick = function (e) {
+    if (!('selectedKeys' in _this2.props)) {
+      _this2.setState({ selectedKeys: [e.key] });
+    }
+
     _this2.setOpenKeys([]);
     var onClick = _this2.props.onClick;
 
@@ -226,7 +281,7 @@ var Menu = (_dec = CSSModules(styles, { allowMultiple: allowMultiple }), _dec(_c
       onClick(e);
     }
   };
-}, _temp)) || _class);
+}, _temp);
 
 export default Menu;
 //# sourceMappingURL=menu.js.map
