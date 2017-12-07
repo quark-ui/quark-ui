@@ -1,0 +1,141 @@
+/**
+ * Progress Style
+ * @author heifade
+ */
+.nd0QJ7p {
+  position: relative;
+  margin: 5px 0
+  /*padding-right: 42px;*/
+  
+}
+.nd0QJ7p, .nd0QJ7p *, .nd0QJ7p *:after, .nd0QJ7p *:before {
+  box-sizing: border-box
+  
+}
+._3JkNO59 {
+  position: relative;
+  margin: 5px 0;
+  padding-right: 42px
+  
+}
+._3JkNO59, ._3JkNO59 *, ._3JkNO59 *:after, ._3JkNO59 *:before {
+  box-sizing: border-box
+  
+}
+.IL7D3Op {
+  background-color: #ececec;
+}
+._27NBzV3 {
+  height: 100%;
+  transition: width ease-out .625s;
+}
+._1YQZnrM {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding-left: 6px;
+  width: 42px;
+}
+._28IlOCf {
+}
+._28IlOCf .IL7D3Op, ._28IlOCf ._27NBzV3 {
+  height: 14px;
+  border-radius: 7px
+  
+}
+._28IlOCf ._1YQZnrM {
+  line-height: 14px
+  
+}
+._2Gk1yz_ {
+  padding-top: 5px;
+  padding-bottom: 5px
+}
+._2Gk1yz_ .IL7D3Op, ._2Gk1yz_ ._27NBzV3 {
+  height: 2px;
+  border-radius: 1px
+  
+}
+.cFwj8pO {
+}
+.cFwj8pO ._27NBzV3 {
+  position: relative;
+  background-color: rgb(194, 27, 30);
+  background: linear-gradient(45deg, rgb(194, 27, 30), rgb(181, 0, 3))
+  
+}
+.cFwj8pO ._27NBzV3:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: #fff;
+  border-radius: inherit;
+  -webkit-animation: _2uAdRt5 2.4s cubic-bezier(.23, 1, .32, 1) infinite;
+          animation: _2uAdRt5 2.4s cubic-bezier(.23, 1, .32, 1) infinite
+  
+}
+.cFwj8pO ._1YQZnrM {
+  color: #666
+  
+}
+._2iMadZh {
+}
+._2iMadZh ._27NBzV3 {
+  background-color: #6ac00b
+  
+}
+._2iMadZh svg {
+  color: #6ac00b
+  
+}
+._1Gn0LqM {
+}
+._1Gn0LqM ._27NBzV3 {
+  background-color: #fe3824
+  
+}
+._1Gn0LqM svg {
+  color: #fe3824
+  
+}
+._2rhabTG {
+}
+._2rhabTG ._27NBzV3 {
+  visibility: hidden
+  
+}
+._2rhabTG svg {
+  color: #bcbcbc
+  
+}
+@-webkit-keyframes _2uAdRt5 {
+  0% {
+    opacity: .1;
+    width: 0%;
+  }
+  20% {
+    opacity: .5;
+    width: 0;
+  }
+  to {
+    opacity: 0;
+    width: 100%;
+  }
+}
+@keyframes _2uAdRt5 {
+  0% {
+    opacity: .1;
+    width: 0%;
+  }
+  20% {
+    opacity: .5;
+    width: 0;
+  }
+  to {
+    opacity: 0;
+    width: 100%;
+  }
+}

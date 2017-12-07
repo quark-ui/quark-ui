@@ -1,6 +1,6 @@
-import React$1, { PureComponent } from 'react';
+import React, { Component, PureComponent } from 'react';
+import debounce from 'lodash/debounce';
 import PropTypes from 'prop-types';
-import CSSModules from 'react-css-modules';
 import ReactDOM from 'react-dom';
 import Transition from 'react-transition-group/Transition';
 
@@ -8,7 +8,7 @@ function createCommonjsModule(fn, module) {
 	return module = { exports: {} }, fn(module, module.exports), module.exports;
 }
 
-var index = createCommonjsModule(function (module) {
+var classnames = createCommonjsModule(function (module) {
 /*!
   Copyright (c) 2016 Jed Watson.
   Licensed under the MIT License (MIT), see
@@ -322,6 +322,27 @@ var attachment = function attachment(props) {
     }, props),
     React.createElement('path', {
       d: 'M7.859 2.974c-.306.306-.57.568-1.017 1.01-1.924 1.9-2.42 2.431-2.818 3.107-.548.93-.432 1.722.36 2.495 1.45 1.414 2.286.913 5.686-2.522.382-.386.598-.604.852-.857 1.742-1.743 2.15-3.44.348-5.133-1.422-1.336-3.176-1.206-5.095.301-1.365 1.36-1.365 1.36-2.845 2.84C.11 7.435 0 9.842 2.212 11.793c2.221 1.96 4.781 1.487 8.638-2.37a.5.5 0 1 0-.708-.707c-3.52 3.52-5.5 3.887-7.269 2.327-1.75-1.545-1.671-3.285 1.164-6.12l2.8-2.8c1.519-1.19 2.728-1.28 3.748-.321 1.288 1.21 1.026 2.3-.37 3.697-.255.255-.473.473-.856.86-2.944 2.976-3.474 3.293-4.277 2.51-.466-.455-.508-.743-.197-1.272.332-.564.826-1.09 2.66-2.903.448-.442.714-.706 1.02-1.013a.5.5 0 1 0-.706-.708z'
+    })
+  );
+};
+
+var car = function car(props) {
+  return React.createElement(
+    'svg',
+    _extends({
+      className: 'icon',
+      viewBox: '0 0 1382 1024',
+      xmlns: 'http://www.w3.org/2000/svg',
+      width: '269.922',
+      height: '200'
+    }, props),
+    React.createElement(
+      'defs',
+      null,
+      React.createElement('style', null)
+    ),
+    React.createElement('path', {
+      d: 'M1301.58 403.994c-.05 0-.05-.026 0 0a1112.5 1112.5 0 0 0-47.743-63.488l-2.048-2.484h.384l-15.923-18.739-.23-.256a828.365 828.365 0 0 0-60.11-64.281c-42.01-39.68-62.515-45.03-77.004-45.03H875.34c-6.17 0-12.288.665-18.227 1.945v-99.072a87.066 87.066 0 0 0-86.99-86.989H112.59A87.066 87.066 0 0 0 25.6 112.589v683.776a87.066 87.066 0 0 0 86.989 86.963h100.659c16.077 75.622 84.122 131.507 162.304 131.507 78.208 0 146.253-55.885 162.304-131.507h232.192a86.528 86.528 0 0 0 52.634-17.715 86.272 86.272 0 0 0 52.582 17.715h21.811c16.051 75.622 84.122 131.507 162.279 131.507 78.156 0 146.252-55.885 162.33-131.507h48.127a87.066 87.066 0 0 0 86.989-86.989V520.218c0-12.237-3.149-31.59-27.52-73.19-7.68-13.108-16.998-27.598-27.7-43.009zM375.63 946.074a97.229 97.229 0 0 1-97.101-97.127c0-53.555 43.52-97.152 97.075-97.152a97.28 97.28 0 0 1 97.152 97.152 97.28 97.28 0 0 1-97.152 97.127zM788.3 296.704v499.635c0 10.087-8.167 18.253-18.227 18.253H537.882a165.632 165.632 0 0 0-157.159-131.456h-.512v.051h-1.05c-.127 0-.255-.051-.332 0h-8.09a165.504 165.504 0 0 0-157.337 131.456H112.538A18.253 18.253 0 0 1 94.31 796.39V112.59c0-10.061 8.192-18.253 18.253-18.253h657.485c10.06 0 18.253 8.192 18.253 18.253v184.115zm271.104 649.37a97.28 97.28 0 0 1-97.127-97.127 97.28 97.28 0 0 1 97.152-97.152 97.28 97.28 0 0 1 97.127 97.152 97.28 97.28 0 0 1-97.127 97.127zm228.608-149.735c0 10.087-8.192 18.253-18.253 18.253h-48.051c-15.155-71.117-76.595-125.542-149.76-131.02v.306l-.256-.05-.23-.026-.231-.052-.23-.05c-.026 0-.128 0-.23-.052l-1.153-.18h-1.459c-.333 0-.691 0-.973-.05h-2.227s-.077 0-.102-.052h-.052v-.179.18l-.153-.026h-.435v-.103.103h-1.204c-.076 0-.23-.051-.358 0h-6.605v.025l-.23-.076v.076h-.051v-.076l-.18.128h-.05v-.128l-.18.179-.23-.18v.18-.18l-.18.129h-.05v-.128l-.18.076v-.076l-.256.05h-5.197l-1.152.18v-.102h-.179v.153l-.256-.153v.179h-.026v-.18l-.179.257v-.256h-.205v.256h-.025v-.256h-.205l-1.536.102c-72.5 6.144-133.222 60.288-148.224 130.893h-21.786a18.253 18.253 0 0 1-18.252-18.253V296.704c0-10.06 8.192-18.227 18.252-18.227h220.314c3.558 1.74 14.848 8.448 38.272 31.232l5.274 5.197h-106.01a87.066 87.066 0 0 0-86.989 86.963v105.216a87.066 87.066 0 0 0 86.989 86.989h254.9v202.265h-.257zm0-271.053h-254.9a18.253 18.253 0 0 1-18.252-18.227V401.843c0-10.086 8.192-18.253 18.253-18.253h167.116a1047.168 1047.168 0 0 1 24.192 31.028c13.568 18.15 26.112 36.07 36.173 51.89l4.66-2.482-4.353 2.918 9.703-5.734-9.523 6.041 4.608 7.424c19.788 32.384 22.144 44.39 22.374 45.952v4.66h-.051z'
     })
   );
 };
@@ -648,6 +669,27 @@ var info = function info(props) {
   );
 };
 
+var local = function local(props) {
+  return React.createElement(
+    'svg',
+    _extends({
+      className: 'icon',
+      viewBox: '0 0 1024 1024',
+      xmlns: 'http://www.w3.org/2000/svg',
+      width: '200',
+      height: '200'
+    }, props),
+    React.createElement(
+      'defs',
+      null,
+      React.createElement('style', null)
+    ),
+    React.createElement('path', {
+      d: 'M512 256.331c-77.997 0-141.228 63.227-141.228 141.224S434.002 538.783 512 538.783s141.23-63.23 141.23-141.228S589.997 256.331 512 256.331zm0 225.96c-46.797 0-84.737-37.934-84.737-84.737 0-46.796 37.94-84.733 84.737-84.733 46.8 0 84.737 37.936 84.737 84.733-.001 46.804-37.937 84.737-84.737 84.737zm0-423.68c-187.194 0-338.946 151.75-338.946 338.943C173.054 584.751 512 962.467 512 962.467S850.946 584.75 850.946 397.554c0-187.193-151.75-338.942-338.946-338.942zM229.545 397.556C229.545 241.564 356.006 115.1 512 115.1c155.997 0 282.455 126.464 282.455 282.455C794.455 539.025 512 905.977 512 905.977S229.545 537.054 229.545 397.555z'
+    })
+  );
+};
+
 var paper = function paper(props) {
   return React.createElement(
     'svg',
@@ -955,6 +997,7 @@ var ICONS = {
   'arrow-right': arrowRight,
   'arrow-up': arrowUp,
   attachment: attachment,
+  car: car,
   caution: caution,
   check: check,
   clock: clock,
@@ -970,6 +1013,7 @@ var ICONS = {
   finance: finance,
   home: home,
   info: info,
+  local: local,
   paper: paper,
   plus: plus,
   question: question,
@@ -1024,7 +1068,7 @@ var Icon = (_temp$1 = _class$1 = function (_PureComponent) {
           fontSize: size,
           fill: color
         },
-        className: index(className, styles.Icon),
+        className: classnames(className, styles.Icon),
         'aria-hidden': true
       }, otherProps);
       var IconNode = ICONS[name];
@@ -1104,7 +1148,7 @@ function shouldUseNative() {
 	}
 }
 
-var index$1 = shouldUseNative() ? Object.assign : function (target, source) {
+var objectAssign = shouldUseNative() ? Object.assign : function (target, source) {
 	var from;
 	var to = toObject(target);
 	var symbols;
@@ -1131,8 +1175,6 @@ var index$1 = shouldUseNative() ? Object.assign : function (target, source) {
 	return to;
 };
 
-var allowMultiple = true;
-
 var ALIGN_ENUM = new Set(['tl', 'tr', 'tc', 'bl', 'br', 'bc', 'cl', 'cr']);
 
 /**
@@ -1151,34 +1193,49 @@ var REACT_STATICS = {
 };
 
 var KNOWN_STATICS = {
-    name: true,
-    length: true,
-    prototype: true,
-    caller: true,
-    arguments: true,
-    arity: true
+  name: true,
+  length: true,
+  prototype: true,
+  caller: true,
+  callee: true,
+  arguments: true,
+  arity: true
 };
 
-var isGetOwnPropertySymbolsAvailable = typeof Object.getOwnPropertySymbols === 'function';
+var defineProperty$1 = Object.defineProperty;
+var getOwnPropertyNames = Object.getOwnPropertyNames;
+var getOwnPropertySymbols$1 = Object.getOwnPropertySymbols;
+var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
+var getPrototypeOf = Object.getPrototypeOf;
+var objectPrototype = getPrototypeOf && getPrototypeOf(Object);
 
-var index$2 = function hoistNonReactStatics(targetComponent, sourceComponent, customStatics) {
+var hoistNonReactStatics = function hoistNonReactStatics(targetComponent, sourceComponent, blacklist) {
     if (typeof sourceComponent !== 'string') { // don't hoist over string (html) components
-        var keys = Object.getOwnPropertyNames(sourceComponent);
 
-        /* istanbul ignore else */
-        if (isGetOwnPropertySymbolsAvailable) {
-            keys = keys.concat(Object.getOwnPropertySymbols(sourceComponent));
+        if (objectPrototype) {
+            var inheritedComponent = getPrototypeOf(sourceComponent);
+            if (inheritedComponent && inheritedComponent !== objectPrototype) {
+                hoistNonReactStatics(targetComponent, inheritedComponent, blacklist);
+            }
+        }
+
+        var keys = getOwnPropertyNames(sourceComponent);
+
+        if (getOwnPropertySymbols$1) {
+            keys = keys.concat(getOwnPropertySymbols$1(sourceComponent));
         }
 
         for (var i = 0; i < keys.length; ++i) {
-            if (!REACT_STATICS[keys[i]] && !KNOWN_STATICS[keys[i]] && (!customStatics || !customStatics[keys[i]])) {
-                try {
-                    targetComponent[keys[i]] = sourceComponent[keys[i]];
-                } catch (error) {
-
-                }
+            var key = keys[i];
+            if (!REACT_STATICS[key] && !KNOWN_STATICS[key] && (!blacklist || !blacklist[key])) {
+                var descriptor = getOwnPropertyDescriptor(sourceComponent, key);
+                try { // Avoid failures from read-only properties
+                    defineProperty$1(targetComponent, key, descriptor);
+                } catch (e) {}
             }
         }
+
+        return targetComponent;
     }
 
     return targetComponent;
@@ -1237,14 +1294,14 @@ function renderTo() {
       return EnhancedComponent;
     }(PureComponent);
 
-    index$2(EnhancedComponent, WrappedComponent);
+    hoistNonReactStatics(EnhancedComponent, WrappedComponent);
     return EnhancedComponent;
   };
 }
 
-var styles$1 = { "trigger": "_3A_xDs1", "trigger--wrap": "_1fJcokE", "popup": "_3WT1yrT", "popup--hidden": "_3CuSPSp", "triggerWrap": "_1fJcokE", "popupHidden": "_3CuSPSp" };
+var styles$1 = { "trigger": "_3A_xDs1", "trigger--wrap": "_1fJcokE", "popup": "_3WT1yrT", "popup--hidden": "_3CuSPSp" };
 
-var styles$2 = { "fade--entering": "_1mp5FXi", "fadeIn": "gbiUlUN", "fade--entered": "_26DcFZN", "fade--exiting": "_2wSC5er", "fadeOut": "_2OnzTOe", "fade--exited": "_2K6mlzL", "flipX": "sCG0bzF", "flipX--entering": "_3cdJQI5", "flipInX": "_1FsXcPX", "flipX--entered": "qGmSxIW", "flipX--exiting": "_3NfjJC-", "flipOutX": "_24wLE9d", "flipX--exited": "_24MsE6n", "slideUp": "_1oUCufa", "slideUp--entering": "_1mO_SWR", "slideInUp": "_12qhs-A", "slideUp--entered": "_3-WipgH", "slideUp--exiting": "_27bTj8j", "slideOutUp": "_20eULFb", "slideUp--exited": "_34-gsuv", "slideDown": "_706TJ5I", "slideDown--entering": "_1ieQGlB", "slideInDown": "_21y5cl_", "slideDown--entered": "_3FYkJ5S", "slideDown--exiting": "desE714", "slideOutDown": "_16Yi8is", "slideDown--exited": "_3FJ4sR6", "zoom": "_2aGrmGr", "zoom--entering": "EdoD2Q2", "zoomIn": "gybKzsL", "zoom--entered": "_3kIgIBr", "zoom--exiting": "k0tHLpV", "zoomOut": "_689sLoR", "zoom--exited": "_6jD7wgI", "bounce": "_38IQtyb", "bounce--entering": "_1_uO8bU", "bounceIn": "_2j4EhAR", "bounce--entered": "_1hNAImH", "bounce--exiting": "Hpxa8Tt", "bounceOut": "_2yWAe_R", "bounce--exited": "_3VDKDtK", "fadeEntering": "_1mp5FXi", "fadeEntered": "_26DcFZN", "fadeExiting": "_2wSC5er", "fadeExited": "_2K6mlzL", "flipXEntering": "_3cdJQI5", "flipXEntered": "qGmSxIW", "flipXExiting": "_3NfjJC-", "flipXExited": "_24MsE6n", "slideUpEntering": "_1mO_SWR", "slideUpEntered": "_3-WipgH", "slideUpExiting": "_27bTj8j", "slideUpExited": "_34-gsuv", "slideDownEntering": "_1ieQGlB", "slideDownEntered": "_3FYkJ5S", "slideDownExiting": "desE714", "slideDownExited": "_3FJ4sR6", "zoomEntering": "EdoD2Q2", "zoomEntered": "_3kIgIBr", "zoomExiting": "k0tHLpV", "zoomExited": "_6jD7wgI", "bounceEntering": "_1_uO8bU", "bounceEntered": "_1hNAImH", "bounceExiting": "Hpxa8Tt", "bounceExited": "_3VDKDtK" };
+var styles$2 = { "fade--entering": "_1mp5FXi", "fadeIn": "gbiUlUN", "fade--entered": "_26DcFZN", "fade--exiting": "_2wSC5er", "fadeOut": "_2OnzTOe", "fade--exited": "_2K6mlzL", "flipX": "sCG0bzF", "flipX--entering": "_3cdJQI5", "flipInX": "_1FsXcPX", "flipX--entered": "qGmSxIW", "flipX--exiting": "_3NfjJC-", "flipOutX": "_24wLE9d", "flipX--exited": "_24MsE6n", "slideUp": "_1oUCufa", "slideUp--entering": "_1mO_SWR", "slideInUp": "_12qhs-A", "slideUp--entered": "_3-WipgH", "slideUp--exiting": "_27bTj8j", "slideOutUp": "_20eULFb", "slideUp--exited": "_34-gsuv", "slideDown": "_706TJ5I", "slideDown--entering": "_1ieQGlB", "slideInDown": "_21y5cl_", "slideDown--entered": "_3FYkJ5S", "slideDown--exiting": "desE714", "slideOutDown": "_16Yi8is", "slideDown--exited": "_3FJ4sR6", "zoom": "_2aGrmGr", "zoom--entering": "EdoD2Q2", "zoomIn": "gybKzsL", "zoom--entered": "_3kIgIBr", "zoom--exiting": "k0tHLpV", "zoomOut": "_689sLoR", "zoom--exited": "_6jD7wgI", "bounce": "_38IQtyb", "bounce--entering": "_1_uO8bU", "bounceIn": "_2j4EhAR", "bounce--entered": "_1hNAImH", "bounce--exiting": "Hpxa8Tt", "bounceOut": "_2yWAe_R", "bounce--exited": "_3VDKDtK" };
 
 var MOTIONS = ['fade', 'flipX', 'slideUp', 'slideDown', 'zoom', 'bounce'];
 
@@ -1298,7 +1355,7 @@ var Animation = (_temp$4 = _class$4 = function (_PureComponent) {
             'div',
             {
               style: defaultStyle,
-              className: index(styles$2[motion], styles$2[motion + '--' + status])
+              className: classnames(styles$2[motion], styles$2[motion + '--' + status])
             },
             children
           );
@@ -1344,16 +1401,16 @@ var Animation = (_temp$4 = _class$4 = function (_PureComponent) {
   onExited: PropTypes.func
 }, _temp$4);
 
-var _dec$1;
+var _dec;
 var _class$3;
-var _class2$1;
+var _class2;
 var _temp$3;
 
 /**
  * Popup Component
  * @author ryan.bian
  */
-var Popup = (_dec$1 = renderTo(), _dec$1(_class$3 = (_temp$3 = _class2$1 = function (_PureComponent) {
+var Popup = (_dec = renderTo(), _dec(_class$3 = (_temp$3 = _class2 = function (_PureComponent) {
   inherits(Popup, _PureComponent);
 
   function Popup(props) {
@@ -1394,7 +1451,7 @@ var Popup = (_dec$1 = renderTo(), _dec$1(_class$3 = (_temp$3 = _class2$1 = funct
 
       var wrapProps = _extends({
         ref: popupRef,
-        className: index(styles$1.popup, defineProperty({}, styles$1['popup--hidden'], !popupVisible))
+        className: classnames(styles$1.popup, defineProperty({}, styles$1['popup--hidden'], !popupVisible))
       }, otherProps);
       return React.createElement(
         Animation,
@@ -1425,13 +1482,13 @@ var Popup = (_dec$1 = renderTo(), _dec$1(_class$3 = (_temp$3 = _class2$1 = funct
     }
   }]);
   return Popup;
-}(PureComponent), _class2$1.displayName = 'Popup', _class2$1.defaultProps = {
+}(PureComponent), _class2.displayName = 'Popup', _class2.defaultProps = {
   position: [0, 0],
   popupRef: null,
   visible: false,
   onMouseEnter: function onMouseEnter() {},
   onMouseLeave: function onMouseLeave() {}
-}, _class2$1.propTypes = {
+}, _class2.propTypes = {
   position: PropTypes.arrayOf(PropTypes.number),
   popupRef: PropTypes.func,
   visible: PropTypes.bool,
@@ -1458,9 +1515,7 @@ var off = function off(node, type, listener) {
   node.removeEventListener(type, listener, false);
 };
 
-var _dec;
 var _class$2;
-var _class2;
 var _temp$2;
 var _initialiseProps$1;
 
@@ -1468,7 +1523,7 @@ var _initialiseProps$1;
  * Trigger Component
  * @author ryan.bian
  */
-var Trigger = (_dec = CSSModules(styles$1, { allowMultiple: allowMultiple }), _dec(_class$2 = (_temp$2 = _class2 = function (_PureComponent) {
+var Trigger = (_temp$2 = _class$2 = function (_PureComponent) {
   inherits(Trigger, _PureComponent);
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
@@ -1595,7 +1650,7 @@ var Trigger = (_dec = CSSModules(styles$1, { allowMultiple: allowMultiple }), _d
       };
       var newPostition = [x + offset[0], y + offset[1]];
       if (position[0] !== newPostition[0] || position[0] !== newPostition[0]) {
-        index$1(newState, {
+        objectAssign(newState, {
           position: newPostition
         });
       }
@@ -1622,7 +1677,7 @@ var Trigger = (_dec = CSSModules(styles$1, { allowMultiple: allowMultiple }), _d
         visible: active
       };
       if (action === 'hover') {
-        index$1(popupProps, {
+        objectAssign(popupProps, {
           onMouseEnter: this.handleMouseEnter,
           onMouseLeave: this.handleMouseLeave
         });
@@ -1646,21 +1701,21 @@ var Trigger = (_dec = CSSModules(styles$1, { allowMultiple: allowMultiple }), _d
         ref: function ref(n) {
           return _this5.node = n;
         },
-        styleName: 'trigger--wrap'
+        className: styles$1['trigger--wrap']
       };
       if (action === 'hover') {
-        index$1(triggerProps, {
+        objectAssign(triggerProps, {
           onMouseEnter: this.handleMouseEnter,
           onMouseLeave: this.handleMouseLeave
         });
       } else if (action === 'click') {
-        index$1(triggerProps, {
+        objectAssign(triggerProps, {
           onClick: this.handleClickTrigger
         });
       }
       return React.createElement(
         'div',
-        { styleName: 'trigger' },
+        { className: styles$1.trigger },
         React.createElement(
           'span',
           triggerProps,
@@ -1671,7 +1726,7 @@ var Trigger = (_dec = CSSModules(styles$1, { allowMultiple: allowMultiple }), _d
     }
   }]);
   return Trigger;
-}(PureComponent), _class2.displayName = 'Trigger', _class2.defaultProps = {
+}(PureComponent), _class$2.displayName = 'Trigger', _class$2.defaultProps = {
   action: 'hover',
   placement: ['tl', 'bl'],
   offset: [0, 0],
@@ -1680,7 +1735,7 @@ var Trigger = (_dec = CSSModules(styles$1, { allowMultiple: allowMultiple }), _d
   mouseEnterDelay: 0,
   mouseLeaveDelay: 100,
   onPopupVisibleChange: function onPopupVisibleChange() {}
-}, _class2.propTypes = {
+}, _class$2.propTypes = {
   action: PropTypes.oneOf(['hover', 'click']),
   placement: PropTypes.arrayOf(PropTypes.oneOf(Array.from(ALIGN_ENUM))),
   offset: PropTypes.arrayOf(PropTypes.number),
@@ -1689,11 +1744,11 @@ var Trigger = (_dec = CSSModules(styles$1, { allowMultiple: allowMultiple }), _d
   mouseEnterDelay: PropTypes.number,
   mouseLeaveDelay: PropTypes.number,
   onPopupVisibleChange: PropTypes.func
-}, _class2.getTargetRect = function (target) {
+}, _class$2.getTargetRect = function (target) {
   return target.getBoundingClientRect();
-}, _class2.getVisibleStateByProps = function (props) {
+}, _class$2.getVisibleStateByProps = function (props) {
   return Trigger.isPopupVisibleDefined(props) ? props.popupVisible : false;
-}, _class2.isPopupVisibleDefined = function (props) {
+}, _class$2.isPopupVisibleDefined = function (props) {
   return typeof props.popupVisible !== 'undefined';
 }, _initialiseProps$1 = function _initialiseProps() {
   var _this6 = this;
@@ -1766,7 +1821,7 @@ var Trigger = (_dec = CSSModules(styles$1, { allowMultiple: allowMultiple }), _d
       });
     }
   };
-}, _temp$2)) || _class$2);
+}, _temp$2);
 
 var styles$3 = { "dropdown": "_3o8aQDc", "option": "cedYGLy", "active": "_277sAcu", "groupname": "_2l6K4Hj", "nooption": "_2VOOJRO", "select": "_2D7oHJo", "selection": "_1eA_hRH", "selectionClose": "_2VrW67D", "disabled": "_1vBDpEz", "comboboxInput": "_2qf1_gi", "placeholder": "_2y2eMaK", "selectionCloseIcon": "_2WFFW7r", "selectionDownIcon": "_2rJhLTb" };
 
@@ -1828,8 +1883,8 @@ var _temp2;
  * @author heifade
  */
 
-var Option = (_temp2 = _class$6 = function (_PureComponent) {
-  inherits(Option, _PureComponent);
+var Option = (_temp2 = _class$6 = function (_Component) {
+  inherits(Option, _Component);
 
   function Option() {
     var _ref;
@@ -1848,10 +1903,10 @@ var Option = (_temp2 = _class$6 = function (_PureComponent) {
       var childContext = context.childContext;
       var _this$props = _this.props,
           value = _this$props.value,
-          title = _this$props.title,
+          text = _this$props.text,
           children = _this$props.children;
 
-      childContext.onOptionSelected(value, title || children);
+      childContext.onOptionSelected(value, text || children);
     }, _temp), possibleConstructorReturn(_this, _ret);
   }
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
@@ -1866,13 +1921,12 @@ var Option = (_temp2 = _class$6 = function (_PureComponent) {
       var context = this.context;
       var childContext = context.childContext;
 
-
       var isActived = childContext.getSelectedValue() === value;
 
       return React.createElement(
         'li',
         {
-          className: index(styles$3.option, isActived ? styles$3.active : ''),
+          className: classnames(styles$3.option, isActived ? styles$3.active : ''),
           onClick: this.click
         },
         children
@@ -1880,14 +1934,14 @@ var Option = (_temp2 = _class$6 = function (_PureComponent) {
     }
   }]);
   return Option;
-}(PureComponent), _class$6.displayName = 'Option', _class$6.defaultProps = {
+}(Component), _class$6.displayName = 'Option', _class$6.defaultProps = {
   value: '',
-  title: undefined,
+  text: undefined,
   children: null
 }, _class$6.propTypes = {
   value: PropTypes.string.isRequired,
-  title: PropTypes.string,
-  children: PropTypes.arrayOf(PropTypes.element)
+  text: PropTypes.string,
+  children: PropTypes.any
 }, _class$6.contextTypes = {
   childContext: PropTypes.any
 }, _temp2);
@@ -1912,19 +1966,35 @@ var Select = (_temp = _class = function (_PureComponent) {
     _initialiseProps.call(_this);
 
     var value = _this.props.value || _this.props.defaultValue;
-    var title = _this.getValue(_this.props.children, value);
+    var type = _this.props.type;
+
+    var text = null;
+    var searchText = null;
+    if (type === 'combobox') {
+      text = _this.props.text || null;
+      searchText = _this.props.text || null;
+    } else {
+      text = _this.getValue(_this.props.children, value);
+    }
 
     _this.state = {
-      value: value,
-      title: title || undefined,
-      dropdownVisible: false // 下接弹层是否显示
+      value: value, // 值
+      text: text, // 显示文本,
+      searchText: searchText, // (combobox专用) 搜索文本
+      textOfLastSelected: null, // (combobox专用)，上次选中时的文本内容。用于取消选择时恢复到上次选中的文本
+      dropdownVisible: false // 下拉弹层是否显示
     };
 
-    // 记录上次选择的值，供取消时回滚
-    _this.lastState = {
-      value: _this.state.value,
-      title: _this.state.title
-    };
+    _this.searchTextDebounced = debounce(function (searchTextString) {
+      var onSearch = _this.props.onSearch;
+
+      if (onSearch) {
+        onSearch(searchTextString);
+      }
+      _this.setState({
+        dropdownVisible: true
+      });
+    }, 300);
     return _this;
   }
 
@@ -1939,24 +2009,28 @@ var Select = (_temp = _class = function (_PureComponent) {
     value: function render() {
       var _props = this.props,
           children = _props.children,
-          disabled$$1 = _props.disabled,
+          disabled = _props.disabled,
           type = _props.type;
       var width = this.props.style.width;
 
 
-      if (disabled$$1) {
-        return React$1.createElement(
+      if (disabled) {
+        return React.createElement(
           'div',
           { className: styles$3.select },
-          React$1.createElement(
+          React.createElement(
             'div',
-            { className: index(styles$3.selection, styles$3.disabled), style: { width: width } },
-            this.state.title || React$1.createElement(
+            { className: classnames(styles$3.selection, styles$3.disabled), style: { width: width } },
+            this.state.text ? React.createElement(
+              'span',
+              null,
+              this.state.text
+            ) : React.createElement(
               'span',
               { className: styles$3.placeholder },
               this.props.placeholder
             ),
-            React$1.createElement(Icon, {
+            React.createElement(Icon, {
               name: 'arrow-down',
               size: 14,
               className: styles$3.selectionDownIcon
@@ -1965,43 +2039,51 @@ var Select = (_temp = _class = function (_PureComponent) {
         );
       }
 
-      var selection$$1 = '';
+      var selection = '';
       if (type === 'dropdown') {
         // 简单下位
-        selection$$1 = this.state.title || React$1.createElement(
-          'span',
-          { className: styles$3.placeholder },
-          this.props.placeholder
-        );
+        if (this.state.text) {
+          selection = React.createElement(
+            'span',
+            null,
+            this.state.text
+          );
+        } else {
+          selection = React.createElement(
+            'span',
+            { className: styles$3.placeholder },
+            this.props.placeholder
+          );
+        }
       } else if (type === 'combobox') {
-        selection$$1 = React$1.createElement('input', {
+        selection = React.createElement('input', {
           type: 'text',
           className: styles$3.comboboxInput,
           onChange: this.onComboboxInputChanged,
           placeholder: this.props.placeholder,
-          value: this.state.value
+          value: this.state.searchText || ''
         });
       }
 
       var childrenLength = children.length;
       var popupVisible = this.state.dropdownVisible;
 
-      return React$1.createElement(
+      return React.createElement(
         'div',
         { className: styles$3.select },
-        React$1.createElement(
+        React.createElement(
           Trigger,
           {
             action: 'click',
-            popup: React$1.createElement(
+            popup: React.createElement(
               'div',
               { className: styles$3.dropdown, style: { width: width } },
-              React$1.createElement(
+              React.createElement(
                 'ul',
                 null,
-                React$1.createElement(
+                React.createElement(
                   'li',
-                  { className: index(styles$3.nooption), style: { display: childrenLength === 0 ? 'block' : 'none' } },
+                  { className: classnames(styles$3.nooption), style: { display: childrenLength === 0 ? 'block' : 'none' } },
                   '\u65E0\u5339\u914D\u9009\u9879'
                 ),
                 children
@@ -2012,16 +2094,16 @@ var Select = (_temp = _class = function (_PureComponent) {
             popupVisible: popupVisible,
             onPopupVisibleChange: this.onDropdownVisibleChanged
           },
-          React$1.createElement(
+          React.createElement(
             'div',
             { className: this.state.value ? styles$3.selectionClose : styles$3.selection, style: { width: width } },
-            selection$$1,
-            React$1.createElement(Icon, {
+            selection,
+            React.createElement(Icon, {
               name: popupVisible ? 'arrow-up' : 'arrow-down',
               size: 14,
               className: styles$3.selectionDownIcon
             }),
-            this.state.value ? React$1.createElement(Icon, {
+            this.state.value ? React.createElement(Icon, {
               name: 'close',
               size: 14,
               className: styles$3.selectionCloseIcon,
@@ -2038,17 +2120,18 @@ var Select = (_temp = _class = function (_PureComponent) {
   type: 'dropdown',
   style: { width: 200 },
   disabled: false,
-  // defaultValue:'',
+  text: null,
   children: null,
-  onSearch: function onSearch() {},
-  onChange: function onChange() {},
-  onCancelChange: function onCancelChange() {}
+  onSearch: null,
+  onChange: null,
+  onCancelChange: null
 }, _class.propTypes = {
   placeholder: PropTypes.string,
   type: PropTypes.oneOf(['dropdown', 'combobox']),
   style: PropTypes.object,
   disabled: PropTypes.bool,
   value: PropTypes.string,
+  text: PropTypes.string,
   defaultValue: PropTypes.string,
   onSearch: PropTypes.func,
   children: PropTypes.arrayOf(PropTypes.element),
@@ -2070,14 +2153,29 @@ var Select = (_temp = _class = function (_PureComponent) {
   };
 
   this.componentWillReceiveProps = function (nextProps, nextContext) {
-    if (nextProps.value && nextProps.value !== _this2.state.value) {
-      var value = nextProps.value;
-      var title = _this2.getValue(_this2.props.children, value);
+    var value = nextProps.value,
+        text = nextProps.text;
 
-      _this2.setState({
-        value: nextProps.value,
-        title: title
-      });
+    if (_this2.props.type === 'combobox') {
+      if (text !== _this2.state.text) {
+        _this2.setState({
+          text: text,
+          searchText: text,
+          textOfLastSelected: text
+        });
+      }
+      if (value !== _this2.state.value) {
+        _this2.setState({
+          value: value
+        });
+      }
+    } else if (value !== _this2.state.value) {
+      if ('value' in _this2.props) {
+        _this2.setState({
+          value: value,
+          text: _this2.getValue(_this2.props.children, value)
+        });
+      }
     }
   };
 
@@ -2085,7 +2183,6 @@ var Select = (_temp = _class = function (_PureComponent) {
     _this2.setState({
       dropdownVisible: visible
     });
-
     var type = _this2.props.type;
 
     if (type === 'combobox') {
@@ -2093,56 +2190,71 @@ var Select = (_temp = _class = function (_PureComponent) {
 
       if (!visible) {
         _this2.setState({
-          value: _this2.lastState.value,
-          title: _this2.lastState.title
+          text: _this2.state.textOfLastSelected,
+          searchText: _this2.state.textOfLastSelected
         });
-        onCancelChange();
+        if (onCancelChange) {
+          onCancelChange();
+        }
+      } else {
+        _this2.searchTextDebounced(_this2.state.searchText);
       }
     }
   };
 
   this.onComboboxInputChanged = function (e) {
     var value = e.target.value;
-    var onSearch = _this2.props.onSearch;
+    _this2.searchTextDebounced(value);
 
-    if (onSearch) {
-      onSearch(value);
-    }
     if (value) {
       _this2.setState({
-        value: value,
-        title: value
+        // value,
+        searchText: value
       });
     } else {
       // 当全部都删完时，清空历史
-      _this2.lastState = {
-        value: '',
-        title: undefined
-      };
       _this2.setState({
-        title: '',
-        value: undefined
+        text: null,
+        searchText: null,
+        value: null,
+        textOfLastSelected: null
       });
+
+      var onChange = _this2.props.onChange;
+
+      if (onChange) {
+        onChange({
+          value: null,
+          text: null
+        });
+      }
     }
   };
 
-  this.onOptionSelected = function (value, title) {
+  this.onOptionSelected = function (value, text) {
     _this2.setState({
       dropdownVisible: false
     });
-    if (typeof _this2.props.value !== 'undefined') {
-      // 受控组件
-      _this2.props.onChange({
-        value: value,
-        title: title
-      });
-    } else {
+    if (!('value' in _this2.props)) {
       // 非受控组件
       _this2.setState({
         value: value,
-        title: title
+        text: text
       });
-      _this2.props.onChange(value, title);
+    }
+
+    _this2.setState({
+      searchText: text,
+      textOfLastSelected: text
+    });
+
+    var onChange = _this2.props.onChange;
+
+    if (onChange) {
+      onChange({
+        value: value,
+        text: text
+      });
     }
   };
 
@@ -2151,41 +2263,44 @@ var Select = (_temp = _class = function (_PureComponent) {
   };
 
   this.getValue = function (children, value) {
-    var title = '';
-    React$1.Children.map(children, function (child) {
-      if (title) {
+    var text = '';
+    React.Children.map(children, function (child) {
+      if (text) {
         return;
       }
       if (child.type === OptGroup) {
-        title = _this2.getValue(child.props.children, value);
+        text = _this2.getValue(child.props.children, value);
       } else if (child.type === Option) {
         if (child.props.value === value) {
-          title = child.props.title || child.props.children;
+          text = child.props.text || child.props.children;
         }
       } else {
-        title = _this2.getValue(child.props.children, value);
+        text = _this2.getValue(child.props.children, value);
       }
     });
-    return title;
+    return text;
   };
 
   this.remove = function (e) {
     if (e) {
       e.stopPropagation();
     }
-    _this2.lastState.title = undefined;
-    _this2.lastState.value = '';
     _this2.setState({
-      value: '',
-      title: undefined
+      value: null,
+      text: null,
+      searchText: null,
+      textOfLastSelected: null,
+      dropdownVisible: false
     });
+
+    // this.searchTextDebounced('');
 
     var onChange = _this2.props.onChange;
 
     if (onChange) {
       onChange({
-        // value: null,
-        // text: null,
+        value: null,
+        text: null
       });
     }
   };

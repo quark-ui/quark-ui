@@ -1,6 +1,5 @@
-import { Component, PureComponent } from 'react';
+import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import CSSModules from 'react-css-modules';
 import ReactDOM from 'react-dom';
 import Transition from 'react-transition-group/Transition';
 
@@ -8,7 +7,7 @@ function createCommonjsModule(fn, module) {
 	return module = { exports: {} }, fn(module, module.exports), module.exports;
 }
 
-var index = createCommonjsModule(function (module) {
+var classnames = createCommonjsModule(function (module) {
 /*!
   Copyright (c) 2016 Jed Watson.
   Licensed under the MIT License (MIT), see
@@ -59,9 +58,7 @@ var index = createCommonjsModule(function (module) {
 }());
 });
 
-var allowMultiple = true;
-
-var styles = { "modal__closable": "a1dhyEV", "-webkit-mask": "_3v9JpJU", "mask": "_3v9JpJU", "mask--visible": "_10G5ebT", "modal": "LrsEe32", "modal--visible": "_3gon6Oj", "modal__header": "_5faeo8s", "modal__footer": "yb8LdV1", "modal__content": "_3lViuPm", "modal__icon": "_2vid6jg", "modal--info": "_2m2QgJW", "modal--success": "_2Ucmr_b", "modal--error": "_2KpbEF9", "modal--warning": "_3KYqRkO", "WebkitMask": "_3v9JpJU", "maskVisible": "_10G5ebT", "modalVisible": "_3gon6Oj", "modalInfo": "_2m2QgJW", "modalSuccess": "_2Ucmr_b", "modalError": "_2KpbEF9", "modalWarning": "_3KYqRkO" };
+var styles = { "modal__closable": "a1dhyEV", "-webkit-mask": "_3v9JpJU", "mask": "_3v9JpJU", "mask--visible": "_10G5ebT", "modal": "LrsEe32", "modal--visible": "_3gon6Oj", "modal__header": "_5faeo8s", "modal__footer": "yb8LdV1", "modal__content": "_3lViuPm", "modal__icon": "_2vid6jg", "modal--info": "_2m2QgJW", "modal--success": "_2Ucmr_b", "modal--error": "_2KpbEF9", "modal--warning": "_3KYqRkO" };
 
 /**
  * Copyright 2015, Yahoo! Inc.
@@ -79,34 +76,49 @@ var REACT_STATICS = {
 };
 
 var KNOWN_STATICS = {
-    name: true,
-    length: true,
-    prototype: true,
-    caller: true,
-    arguments: true,
-    arity: true
+  name: true,
+  length: true,
+  prototype: true,
+  caller: true,
+  callee: true,
+  arguments: true,
+  arity: true
 };
 
-var isGetOwnPropertySymbolsAvailable = typeof Object.getOwnPropertySymbols === 'function';
+var defineProperty = Object.defineProperty;
+var getOwnPropertyNames = Object.getOwnPropertyNames;
+var getOwnPropertySymbols = Object.getOwnPropertySymbols;
+var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
+var getPrototypeOf = Object.getPrototypeOf;
+var objectPrototype = getPrototypeOf && getPrototypeOf(Object);
 
-var index$1 = function hoistNonReactStatics(targetComponent, sourceComponent, customStatics) {
+var hoistNonReactStatics = function hoistNonReactStatics(targetComponent, sourceComponent, blacklist) {
     if (typeof sourceComponent !== 'string') { // don't hoist over string (html) components
-        var keys = Object.getOwnPropertyNames(sourceComponent);
 
-        /* istanbul ignore else */
-        if (isGetOwnPropertySymbolsAvailable) {
-            keys = keys.concat(Object.getOwnPropertySymbols(sourceComponent));
+        if (objectPrototype) {
+            var inheritedComponent = getPrototypeOf(sourceComponent);
+            if (inheritedComponent && inheritedComponent !== objectPrototype) {
+                hoistNonReactStatics(targetComponent, inheritedComponent, blacklist);
+            }
+        }
+
+        var keys = getOwnPropertyNames(sourceComponent);
+
+        if (getOwnPropertySymbols) {
+            keys = keys.concat(getOwnPropertySymbols(sourceComponent));
         }
 
         for (var i = 0; i < keys.length; ++i) {
-            if (!REACT_STATICS[keys[i]] && !KNOWN_STATICS[keys[i]] && (!customStatics || !customStatics[keys[i]])) {
-                try {
-                    targetComponent[keys[i]] = sourceComponent[keys[i]];
-                } catch (error) {
-
-                }
+            var key = keys[i];
+            if (!REACT_STATICS[key] && !KNOWN_STATICS[key] && (!blacklist || !blacklist[key])) {
+                var descriptor = getOwnPropertyDescriptor(sourceComponent, key);
+                try { // Avoid failures from read-only properties
+                    defineProperty(targetComponent, key, descriptor);
+                } catch (e) {}
             }
         }
+
+        return targetComponent;
     }
 
     return targetComponent;
@@ -140,7 +152,20 @@ var createClass = function () {
 
 
 
+var defineProperty$1 = function (obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
 
+  return obj;
+};
 
 var _extends = Object.assign || function (target) {
   for (var i = 1; i < arguments.length; i++) {
@@ -255,12 +280,12 @@ function renderTo() {
       return EnhancedComponent;
     }(PureComponent);
 
-    index$1(EnhancedComponent, WrappedComponent);
+    hoistNonReactStatics(EnhancedComponent, WrappedComponent);
     return EnhancedComponent;
   };
 }
 
-var styles$1 = { "danger": "_1IZL9la", "dashed": "_3YSE_nE", "secondary": "_16NdYXA", "primary": "_1rlU5o-", "base": "CTy3CHb", "small": "_1FNLWX0", "normal": "_1O7JoXn", "large": "_1JYFbqn", "disabled": "_3P6QXVt", "button--primary": "_11KqluX CTy3CHb _1rlU5o-", "button--secondary": "_1QjCEA1 CTy3CHb _16NdYXA", "button--dashed": "_1Ko5_w4 CTy3CHb _3YSE_nE", "button--danger": "_16108o6 CTy3CHb _1IZL9la", "button--disabled": "_3dqIZEv CTy3CHb _3P6QXVt", "button--large": "_3KW6hMp _1JYFbqn", "button--normal": "_3mBVgjk _1O7JoXn", "button--small": "_2HVyQfI _1FNLWX0", "buttonPrimary": "_11KqluX CTy3CHb _1rlU5o-", "buttonSecondary": "_1QjCEA1 CTy3CHb _16NdYXA", "buttonDashed": "_1Ko5_w4 CTy3CHb _3YSE_nE", "buttonDanger": "_16108o6 CTy3CHb _1IZL9la", "buttonDisabled": "_3dqIZEv CTy3CHb _3P6QXVt", "buttonLarge": "_3KW6hMp _1JYFbqn", "buttonNormal": "_3mBVgjk _1O7JoXn", "buttonSmall": "_2HVyQfI _1FNLWX0" };
+var styles$1 = { "danger": "_1IZL9la", "dashed": "_3YSE_nE", "secondary": "_16NdYXA", "primary": "_1rlU5o-", "base": "CTy3CHb", "small": "_1FNLWX0", "normal": "_1O7JoXn", "large": "_1JYFbqn", "disabled": "_3P6QXVt", "button--primary": "_11KqluX CTy3CHb _1rlU5o-", "button--secondary": "_1QjCEA1 CTy3CHb _16NdYXA", "button--dashed": "_1Ko5_w4 CTy3CHb _3YSE_nE", "button--danger": "_16108o6 CTy3CHb _1IZL9la", "button--disabled": "_3dqIZEv CTy3CHb _3P6QXVt", "button--large": "_3KW6hMp _1JYFbqn", "button--normal": "_3mBVgjk _1O7JoXn", "button--small": "_2HVyQfI _1FNLWX0" };
 
 var _class$1;
 var _temp$1;
@@ -284,11 +309,11 @@ var Button = (_temp$1 = _class$1 = function (_PureComponent) {
           children = _props.children,
           type = _props.type,
           size = _props.size,
-          disabled$$1 = _props.disabled,
+          disabled = _props.disabled,
           otherProps = objectWithoutProperties(_props, ['children', 'type', 'size', 'disabled']);
 
       var btnProps = _extends({}, otherProps, {
-        className: index(styles$1['button--' + (disabled$$1 ? 'disabled' : type)], styles$1['button--' + size])
+        className: classnames(styles$1['button--' + (disabled ? 'disabled' : type)], styles$1['button--' + size])
       });
       return React.createElement(
         'button',
@@ -308,52 +333,26 @@ var Button = (_temp$1 = _class$1 = function (_PureComponent) {
   size: PropTypes.oneOf(['normal', 'large', 'small'])
 }, _temp$1);
 
-var _dec$1;
-var _class$2;
-var _class2$1;
-var _temp$2;
-
 /**
  * Mask Component
  * @author ryan.bian
  */
-var Mask = (_dec$1 = CSSModules(styles, { allowMultiple: allowMultiple }), _dec$1(_class$2 = (_temp$2 = _class2$1 = function (_Component) {
-  inherits(Mask, _Component);
+var Mask = function Mask(_ref) {
+  var visible = _ref.visible,
+      children = _ref.children;
+  return React.createElement(
+    'div',
+    { className: styles['mask' + (visible ? '--visible' : '')] },
+    children
+  );
+};
 
-  function Mask(props) {
-    classCallCheck(this, Mask);
-
-    var _this = possibleConstructorReturn(this, (Mask.__proto__ || Object.getPrototypeOf(Mask)).call(this, props));
-
-    _this.state = {};
-    return _this;
-  }
-  // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
-
-
-  createClass(Mask, [{
-    key: 'render',
-    value: function render() {
-      var _props = this.props,
-          visible = _props.visible,
-          children = _props.children;
-
-      var maskProps = {
-        styleName: 'mask' + (visible ? '--visible' : '')
-      };
-
-      return React.createElement(
-        'div',
-        maskProps,
-        children
-      );
-    }
-  }]);
-  return Mask;
-}(Component), _class2$1.displayName = 'Modal', _class2$1.defaultProps = {
-  visible: false }, _class2$1.propTypes = {
+Mask.defaultProps = {
+  visible: false
+};
+Mask.propTypes = {
   visible: PropTypes.bool
-}, _temp$2)) || _class$2);
+};
 
 var styles$2 = { "Icon": "_2jSl5RJ" };
 
@@ -473,6 +472,27 @@ var attachment = function attachment(props) {
     }, props),
     React.createElement('path', {
       d: 'M7.859 2.974c-.306.306-.57.568-1.017 1.01-1.924 1.9-2.42 2.431-2.818 3.107-.548.93-.432 1.722.36 2.495 1.45 1.414 2.286.913 5.686-2.522.382-.386.598-.604.852-.857 1.742-1.743 2.15-3.44.348-5.133-1.422-1.336-3.176-1.206-5.095.301-1.365 1.36-1.365 1.36-2.845 2.84C.11 7.435 0 9.842 2.212 11.793c2.221 1.96 4.781 1.487 8.638-2.37a.5.5 0 1 0-.708-.707c-3.52 3.52-5.5 3.887-7.269 2.327-1.75-1.545-1.671-3.285 1.164-6.12l2.8-2.8c1.519-1.19 2.728-1.28 3.748-.321 1.288 1.21 1.026 2.3-.37 3.697-.255.255-.473.473-.856.86-2.944 2.976-3.474 3.293-4.277 2.51-.466-.455-.508-.743-.197-1.272.332-.564.826-1.09 2.66-2.903.448-.442.714-.706 1.02-1.013a.5.5 0 1 0-.706-.708z'
+    })
+  );
+};
+
+var car = function car(props) {
+  return React.createElement(
+    'svg',
+    _extends({
+      className: 'icon',
+      viewBox: '0 0 1382 1024',
+      xmlns: 'http://www.w3.org/2000/svg',
+      width: '269.922',
+      height: '200'
+    }, props),
+    React.createElement(
+      'defs',
+      null,
+      React.createElement('style', null)
+    ),
+    React.createElement('path', {
+      d: 'M1301.58 403.994c-.05 0-.05-.026 0 0a1112.5 1112.5 0 0 0-47.743-63.488l-2.048-2.484h.384l-15.923-18.739-.23-.256a828.365 828.365 0 0 0-60.11-64.281c-42.01-39.68-62.515-45.03-77.004-45.03H875.34c-6.17 0-12.288.665-18.227 1.945v-99.072a87.066 87.066 0 0 0-86.99-86.989H112.59A87.066 87.066 0 0 0 25.6 112.589v683.776a87.066 87.066 0 0 0 86.989 86.963h100.659c16.077 75.622 84.122 131.507 162.304 131.507 78.208 0 146.253-55.885 162.304-131.507h232.192a86.528 86.528 0 0 0 52.634-17.715 86.272 86.272 0 0 0 52.582 17.715h21.811c16.051 75.622 84.122 131.507 162.279 131.507 78.156 0 146.252-55.885 162.33-131.507h48.127a87.066 87.066 0 0 0 86.989-86.989V520.218c0-12.237-3.149-31.59-27.52-73.19-7.68-13.108-16.998-27.598-27.7-43.009zM375.63 946.074a97.229 97.229 0 0 1-97.101-97.127c0-53.555 43.52-97.152 97.075-97.152a97.28 97.28 0 0 1 97.152 97.152 97.28 97.28 0 0 1-97.152 97.127zM788.3 296.704v499.635c0 10.087-8.167 18.253-18.227 18.253H537.882a165.632 165.632 0 0 0-157.159-131.456h-.512v.051h-1.05c-.127 0-.255-.051-.332 0h-8.09a165.504 165.504 0 0 0-157.337 131.456H112.538A18.253 18.253 0 0 1 94.31 796.39V112.59c0-10.061 8.192-18.253 18.253-18.253h657.485c10.06 0 18.253 8.192 18.253 18.253v184.115zm271.104 649.37a97.28 97.28 0 0 1-97.127-97.127 97.28 97.28 0 0 1 97.152-97.152 97.28 97.28 0 0 1 97.127 97.152 97.28 97.28 0 0 1-97.127 97.127zm228.608-149.735c0 10.087-8.192 18.253-18.253 18.253h-48.051c-15.155-71.117-76.595-125.542-149.76-131.02v.306l-.256-.05-.23-.026-.231-.052-.23-.05c-.026 0-.128 0-.23-.052l-1.153-.18h-1.459c-.333 0-.691 0-.973-.05h-2.227s-.077 0-.102-.052h-.052v-.179.18l-.153-.026h-.435v-.103.103h-1.204c-.076 0-.23-.051-.358 0h-6.605v.025l-.23-.076v.076h-.051v-.076l-.18.128h-.05v-.128l-.18.179-.23-.18v.18-.18l-.18.129h-.05v-.128l-.18.076v-.076l-.256.05h-5.197l-1.152.18v-.102h-.179v.153l-.256-.153v.179h-.026v-.18l-.179.257v-.256h-.205v.256h-.025v-.256h-.205l-1.536.102c-72.5 6.144-133.222 60.288-148.224 130.893h-21.786a18.253 18.253 0 0 1-18.252-18.253V296.704c0-10.06 8.192-18.227 18.252-18.227h220.314c3.558 1.74 14.848 8.448 38.272 31.232l5.274 5.197h-106.01a87.066 87.066 0 0 0-86.989 86.963v105.216a87.066 87.066 0 0 0 86.989 86.989h254.9v202.265h-.257zm0-271.053h-254.9a18.253 18.253 0 0 1-18.252-18.227V401.843c0-10.086 8.192-18.253 18.253-18.253h167.116a1047.168 1047.168 0 0 1 24.192 31.028c13.568 18.15 26.112 36.07 36.173 51.89l4.66-2.482-4.353 2.918 9.703-5.734-9.523 6.041 4.608 7.424c19.788 32.384 22.144 44.39 22.374 45.952v4.66h-.051z'
     })
   );
 };
@@ -799,6 +819,27 @@ var info = function info(props) {
   );
 };
 
+var local = function local(props) {
+  return React.createElement(
+    'svg',
+    _extends({
+      className: 'icon',
+      viewBox: '0 0 1024 1024',
+      xmlns: 'http://www.w3.org/2000/svg',
+      width: '200',
+      height: '200'
+    }, props),
+    React.createElement(
+      'defs',
+      null,
+      React.createElement('style', null)
+    ),
+    React.createElement('path', {
+      d: 'M512 256.331c-77.997 0-141.228 63.227-141.228 141.224S434.002 538.783 512 538.783s141.23-63.23 141.23-141.228S589.997 256.331 512 256.331zm0 225.96c-46.797 0-84.737-37.934-84.737-84.737 0-46.796 37.94-84.733 84.737-84.733 46.8 0 84.737 37.936 84.737 84.733-.001 46.804-37.937 84.737-84.737 84.737zm0-423.68c-187.194 0-338.946 151.75-338.946 338.943C173.054 584.751 512 962.467 512 962.467S850.946 584.75 850.946 397.554c0-187.193-151.75-338.942-338.946-338.942zM229.545 397.556C229.545 241.564 356.006 115.1 512 115.1c155.997 0 282.455 126.464 282.455 282.455C794.455 539.025 512 905.977 512 905.977S229.545 537.054 229.545 397.555z'
+    })
+  );
+};
+
 var paper = function paper(props) {
   return React.createElement(
     'svg',
@@ -880,7 +921,7 @@ var question2 = function question2(props) {
   );
 };
 
-var react$1 = function react$$1(props) {
+var react = function react(props) {
   return React.createElement(
     'svg',
     _extends({
@@ -1106,6 +1147,7 @@ var ICONS = {
   'arrow-right': arrowRight,
   'arrow-up': arrowUp,
   attachment: attachment,
+  car: car,
   caution: caution,
   check: check,
   clock: clock,
@@ -1121,11 +1163,12 @@ var ICONS = {
   finance: finance,
   home: home,
   info: info,
+  local: local,
   paper: paper,
   plus: plus,
   question: question,
   question2: question2,
-  react: react$1,
+  react: react,
   recycle: recycle,
   search: search,
   setting: setting,
@@ -1138,14 +1181,14 @@ var ICONS = {
   warning: warning
 };
 
-var _class$3;
-var _temp$3;
+var _class$2;
+var _temp$2;
 
 /**
  * Icon Component
  * @author ryan.bian
  */
-var Icon = (_temp$3 = _class$3 = function (_PureComponent) {
+var Icon = (_temp$2 = _class$2 = function (_PureComponent) {
   inherits(Icon, _PureComponent);
 
   function Icon(props) {
@@ -1175,7 +1218,7 @@ var Icon = (_temp$3 = _class$3 = function (_PureComponent) {
           fontSize: size,
           fill: color
         },
-        className: index(className, styles$2.Icon),
+        className: classnames(className, styles$2.Icon),
         'aria-hidden': true
       }, otherProps);
       var IconNode = ICONS[name];
@@ -1183,16 +1226,16 @@ var Icon = (_temp$3 = _class$3 = function (_PureComponent) {
     }
   }]);
   return Icon;
-}(PureComponent), _class$3.displayName = 'Icon', _class$3.defaultProps = {
+}(PureComponent), _class$2.displayName = 'Icon', _class$2.defaultProps = {
   name: '',
   size: 32,
-  color: null }, _class$3.propTypes = {
+  color: null }, _class$2.propTypes = {
   name: PropTypes.string,
   size: PropTypes.number,
   color: PropTypes.string
-}, _temp$3);
+}, _temp$2);
 
-var styles$3 = { "fade--entering": "_1mp5FXi", "fadeIn": "gbiUlUN", "fade--entered": "_26DcFZN", "fade--exiting": "_2wSC5er", "fadeOut": "_2OnzTOe", "fade--exited": "_2K6mlzL", "flipX": "sCG0bzF", "flipX--entering": "_3cdJQI5", "flipInX": "_1FsXcPX", "flipX--entered": "qGmSxIW", "flipX--exiting": "_3NfjJC-", "flipOutX": "_24wLE9d", "flipX--exited": "_24MsE6n", "slideUp": "_1oUCufa", "slideUp--entering": "_1mO_SWR", "slideInUp": "_12qhs-A", "slideUp--entered": "_3-WipgH", "slideUp--exiting": "_27bTj8j", "slideOutUp": "_20eULFb", "slideUp--exited": "_34-gsuv", "slideDown": "_706TJ5I", "slideDown--entering": "_1ieQGlB", "slideInDown": "_21y5cl_", "slideDown--entered": "_3FYkJ5S", "slideDown--exiting": "desE714", "slideOutDown": "_16Yi8is", "slideDown--exited": "_3FJ4sR6", "zoom": "_2aGrmGr", "zoom--entering": "EdoD2Q2", "zoomIn": "gybKzsL", "zoom--entered": "_3kIgIBr", "zoom--exiting": "k0tHLpV", "zoomOut": "_689sLoR", "zoom--exited": "_6jD7wgI", "bounce": "_38IQtyb", "bounce--entering": "_1_uO8bU", "bounceIn": "_2j4EhAR", "bounce--entered": "_1hNAImH", "bounce--exiting": "Hpxa8Tt", "bounceOut": "_2yWAe_R", "bounce--exited": "_3VDKDtK", "fadeEntering": "_1mp5FXi", "fadeEntered": "_26DcFZN", "fadeExiting": "_2wSC5er", "fadeExited": "_2K6mlzL", "flipXEntering": "_3cdJQI5", "flipXEntered": "qGmSxIW", "flipXExiting": "_3NfjJC-", "flipXExited": "_24MsE6n", "slideUpEntering": "_1mO_SWR", "slideUpEntered": "_3-WipgH", "slideUpExiting": "_27bTj8j", "slideUpExited": "_34-gsuv", "slideDownEntering": "_1ieQGlB", "slideDownEntered": "_3FYkJ5S", "slideDownExiting": "desE714", "slideDownExited": "_3FJ4sR6", "zoomEntering": "EdoD2Q2", "zoomEntered": "_3kIgIBr", "zoomExiting": "k0tHLpV", "zoomExited": "_6jD7wgI", "bounceEntering": "_1_uO8bU", "bounceEntered": "_1hNAImH", "bounceExiting": "Hpxa8Tt", "bounceExited": "_3VDKDtK" };
+var styles$3 = { "fade--entering": "_1mp5FXi", "fadeIn": "gbiUlUN", "fade--entered": "_26DcFZN", "fade--exiting": "_2wSC5er", "fadeOut": "_2OnzTOe", "fade--exited": "_2K6mlzL", "flipX": "sCG0bzF", "flipX--entering": "_3cdJQI5", "flipInX": "_1FsXcPX", "flipX--entered": "qGmSxIW", "flipX--exiting": "_3NfjJC-", "flipOutX": "_24wLE9d", "flipX--exited": "_24MsE6n", "slideUp": "_1oUCufa", "slideUp--entering": "_1mO_SWR", "slideInUp": "_12qhs-A", "slideUp--entered": "_3-WipgH", "slideUp--exiting": "_27bTj8j", "slideOutUp": "_20eULFb", "slideUp--exited": "_34-gsuv", "slideDown": "_706TJ5I", "slideDown--entering": "_1ieQGlB", "slideInDown": "_21y5cl_", "slideDown--entered": "_3FYkJ5S", "slideDown--exiting": "desE714", "slideOutDown": "_16Yi8is", "slideDown--exited": "_3FJ4sR6", "zoom": "_2aGrmGr", "zoom--entering": "EdoD2Q2", "zoomIn": "gybKzsL", "zoom--entered": "_3kIgIBr", "zoom--exiting": "k0tHLpV", "zoomOut": "_689sLoR", "zoom--exited": "_6jD7wgI", "bounce": "_38IQtyb", "bounce--entering": "_1_uO8bU", "bounceIn": "_2j4EhAR", "bounce--entered": "_1hNAImH", "bounce--exiting": "Hpxa8Tt", "bounceOut": "_2yWAe_R", "bounce--exited": "_3VDKDtK" };
 
 var MOTIONS = ['fade', 'flipX', 'slideUp', 'slideDown', 'zoom', 'bounce'];
 
@@ -1204,14 +1247,14 @@ var TIMING_FUNCTION = {
   'ease-in-out': 'cubic-bezier(.42,0,.58,1)'
 };
 
-var _class$4;
-var _temp$4;
+var _class$3;
+var _temp$3;
 
 /**
  * Animation Component
  * @author ryan.bian
  */
-var Animation = (_temp$4 = _class$4 = function (_PureComponent) {
+var Animation = (_temp$3 = _class$3 = function (_PureComponent) {
   inherits(Animation, _PureComponent);
 
   function Animation() {
@@ -1246,7 +1289,7 @@ var Animation = (_temp$4 = _class$4 = function (_PureComponent) {
             'div',
             {
               style: defaultStyle,
-              className: index(styles$3[motion], styles$3[motion + '--' + status])
+              className: classnames(styles$3[motion], styles$3[motion + '--' + status])
             },
             children
           );
@@ -1258,7 +1301,7 @@ var Animation = (_temp$4 = _class$4 = function (_PureComponent) {
 
   }]);
   return Animation;
-}(PureComponent), _class$4.displayName = 'Animation', _class$4.defaultProps = {
+}(PureComponent), _class$3.displayName = 'Animation', _class$3.defaultProps = {
   duration: 500,
   motion: 'fade',
   timingFunction: 'linear',
@@ -1274,7 +1317,7 @@ var Animation = (_temp$4 = _class$4 = function (_PureComponent) {
   onExit: function onExit() {},
   onExiting: function onExiting() {},
   onExited: function onExited() {}
-}, _class$4.propTypes = {
+}, _class$3.propTypes = {
   duration: PropTypes.number,
   motion: PropTypes.oneOf(MOTIONS),
   timingFunction: PropTypes.oneOf(Object.keys(TIMING_FUNCTION)),
@@ -1290,9 +1333,9 @@ var Animation = (_temp$4 = _class$4 = function (_PureComponent) {
   onExit: PropTypes.func,
   onExiting: PropTypes.func,
   onExited: PropTypes.func
-}, _temp$4);
+}, _temp$3);
 
-var _class$5;
+var _class$4;
 var _temp2;
 
 var colorArr = {
@@ -1302,7 +1345,7 @@ var colorArr = {
   warning: '#ffd31a'
 };
 
-var NoticeModal = (_temp2 = _class$5 = function (_PureComponent) {
+var NoticeModal = (_temp2 = _class$4 = function (_PureComponent) {
   inherits(NoticeModal, _PureComponent);
 
   function NoticeModal() {
@@ -1350,12 +1393,10 @@ var NoticeModal = (_temp2 = _class$5 = function (_PureComponent) {
             config.title || type
           ),
           config.closable ? React.createElement(
-            'a',
+            'button',
             {
               className: styles.modal__closable,
-              href: '',
-              onClick: function onClick(e) {
-                e.preventDefault();
+              onClick: function onClick() {
                 _this2.setState({
                   visible: false
                 });
@@ -1393,11 +1434,11 @@ var NoticeModal = (_temp2 = _class$5 = function (_PureComponent) {
     }
   }]);
   return NoticeModal;
-}(PureComponent), _class$5.defaultProps = {
+}(PureComponent), _class$4.defaultProps = {
   type: undefined,
   config: undefined,
   afterClose: function afterClose() {}
-}, _class$5.propTypes = {
+}, _class$4.propTypes = {
   type: PropTypes.oneOf(['info', 'success', 'error', 'warning']),
   config: PropTypes.object,
   afterClose: PropTypes.func
@@ -1424,7 +1465,6 @@ var renderNoticeModal = function renderNoticeModal(type) {
 };
 
 var _dec;
-var _dec2;
 var _class;
 var _class2;
 var _temp;
@@ -1433,7 +1473,7 @@ var _temp;
  * Modal Component
  * @author ryan.bian
  */
-var Modal = (_dec = renderTo(), _dec2 = CSSModules(styles, { allowMultiple: allowMultiple }), _dec(_class = _dec2(_class = (_temp = _class2 = function (_Component) {
+var Modal = (_dec = renderTo(), _dec(_class = (_temp = _class2 = function (_Component) {
   inherits(Modal, _Component);
   createClass(Modal, null, [{
     key: 'info',
@@ -1511,12 +1551,12 @@ var Modal = (_dec = renderTo(), _dec2 = CSSModules(styles, { allowMultiple: allo
       if (hasHeader) {
         return React.createElement(
           'div',
-          { styleName: 'modal__header' },
+          { className: styles.modal__header },
           title,
           closable ? React.createElement(
             'a',
             {
-              styleName: 'modal__closable',
+              className: styles.modal__closable,
               href: '',
               onClick: function onClick(e) {
                 e.preventDefault();
@@ -1553,11 +1593,11 @@ var Modal = (_dec = renderTo(), _dec2 = CSSModules(styles, { allowMultiple: allo
       )];
       return footer === undefined ? React.createElement(
         'div',
-        { styleName: 'modal__footer' },
+        { className: styles.modal__footer },
         defaultFooter
       ) : React.createElement(
         'div',
-        { styleName: 'modal__footer' },
+        { className: styles.modal__footer },
         footer
       );
     }
@@ -1570,19 +1610,17 @@ var Modal = (_dec = renderTo(), _dec2 = CSSModules(styles, { allowMultiple: allo
           width = _props2.width,
           visible = _props2.visible,
           children = _props2.children;
-      var maskVisible$$1 = this.state.maskVisible;
+      var maskVisible = this.state.maskVisible;
 
       var modalProps = {
         style: {
           width: width
         },
-        styleName: index('modal', {
-          'modal--visible': visible
-        })
+        className: classnames(styles.modal, defineProperty$1({}, styles['modal--visible'], visible))
       };
       return React.createElement(
         Mask,
-        { visible: maskVisible$$1 },
+        { visible: maskVisible },
         React.createElement(
           Animation,
           {
@@ -1603,7 +1641,7 @@ var Modal = (_dec = renderTo(), _dec2 = CSSModules(styles, { allowMultiple: allo
             this.renderHeader(),
             React.createElement(
               'div',
-              { styleName: 'modal__content' },
+              { className: styles.modal__content },
               children
             ),
             this.renderFooter()
@@ -1632,7 +1670,7 @@ var Modal = (_dec = renderTo(), _dec2 = CSSModules(styles, { allowMultiple: allo
   onCancel: PropTypes.func,
   afterClose: PropTypes.func
 
-}, _temp)) || _class) || _class);
+}, _temp)) || _class);
 
 export default Modal;
 //# sourceMappingURL=modal.js.map

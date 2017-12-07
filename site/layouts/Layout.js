@@ -38,7 +38,7 @@ export default class Layout extends PureComponent {
           Children.map(children, Comp => cloneElement(Comp))
         }
         <footer className={styles.footer}>
-          Copyright © &nbsp;&nbsp;&nbsp;&nbsp;易货嘀研发中心&nbsp;&nbsp;&nbsp;&nbsp;
+          Copyright © &nbsp;&nbsp;&nbsp;&nbsp;易货嘀FED&nbsp;&nbsp;&nbsp;&nbsp;
           <IconUEDLogo {...IconProps} />
           易货嘀UED
         </footer>

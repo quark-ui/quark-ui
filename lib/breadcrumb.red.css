@@ -1,0 +1,65 @@
+/**
+ * Breadcrumb Style
+ * @author grootfish
+ */
+
+._26mKfx- {
+  font-size: 14px
+}
+
+._26mKfx->span {
+  color: #999
+}
+
+._26mKfx->span:last-child {
+  color: #333
+}
+
+._26mKfx->span:last-child ._3v_bQW3 {
+  display: none
+}
+
+._26mKfx- a._35am08f {
+  color: #999
+}
+
+._26mKfx- a._35am08f:hover {
+  color: rgb(194, 27, 30);
+  text-decoration: none
+}
+
+._26mKfx- a._35am08f:avtive {
+  color: rgb(181, 0, 3)
+}
+
+.y-He0IY span {
+  color: #fff;
+  border-radius: 2px;
+  background-color: rgb(194, 27, 30);
+  width: 16px;
+  height: 16px;
+  line-height: 14px;
+  text-align: center;
+  display: inline-block;
+  margin-right: 6px;
+  vertical-align: text-top
+}
+
+.y-He0IY span svg {
+  -webkit-transform: scale(0.75);
+          transform: scale(0.75)
+}
+
+.y-He0IY span:hover {
+  cursor: pointer;
+  background-color: rgb(201, 62, 65);
+  color: #fff
+}
+
+.y-He0IY span:active {
+  background-color: rgb(181, 0, 3)
+}
+
+._3v_bQW3 {
+  margin: 0 5px;
+}

@@ -55,7 +55,10 @@ describe('checkbox-test-describe----------', () => {
       },
     };
     let checkbox = mount(<Checkbox {...data} />);
-    checkbox.find('input').simulate('change', { target: { checked: false } });
+    expect(checkbox.hasClass(styles['checkbox--wrapper__checked'])).to.equal(
+      true,
+    );
+    checkbox.find('input').simulate('click');
     expect(checkbox.hasClass(styles['checkbox--wrapper__checked'])).to.equal(
       true,
     );

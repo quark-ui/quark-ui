@@ -1,8 +1,6 @@
-import React$1, { PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import RcUpload from 'rc-upload';
 import PropTypes from 'prop-types';
-import CSSModules from 'react-css-modules';
-import Animate from 'rc-animate';
 
 /*
 object-assign
@@ -67,7 +65,7 @@ function shouldUseNative() {
 	}
 }
 
-var index = shouldUseNative() ? Object.assign : function (target, source) {
+var objectAssign = shouldUseNative() ? Object.assign : function (target, source) {
 	var from;
 	var to = toObject(target);
 	var symbols;
@@ -94,7 +92,60 @@ var index = shouldUseNative() ? Object.assign : function (target, source) {
 	return to;
 };
 
-var allowMultiple = true;
+function createCommonjsModule(fn, module) {
+	return module = { exports: {} }, fn(module, module.exports), module.exports;
+}
+
+var classnames = createCommonjsModule(function (module) {
+/*!
+  Copyright (c) 2016 Jed Watson.
+  Licensed under the MIT License (MIT), see
+  http://jedwatson.github.io/classnames
+*/
+/* global define */
+
+(function () {
+	'use strict';
+
+	var hasOwn = {}.hasOwnProperty;
+
+	function classNames () {
+		var classes = [];
+
+		for (var i = 0; i < arguments.length; i++) {
+			var arg = arguments[i];
+			if (!arg) continue;
+
+			var argType = typeof arg;
+
+			if (argType === 'string' || argType === 'number') {
+				classes.push(arg);
+			} else if (Array.isArray(arg)) {
+				classes.push(classNames.apply(null, arg));
+			} else if (argType === 'object') {
+				for (var key in arg) {
+					if (hasOwn.call(arg, key) && arg[key]) {
+						classes.push(key);
+					}
+				}
+			}
+		}
+
+		return classes.join(' ');
+	}
+
+	if ('object' !== 'undefined' && module.exports) {
+		module.exports = classNames;
+	} else if (typeof undefined === 'function' && typeof undefined.amd === 'object' && undefined.amd) {
+		// register as 'classnames', consistent with npm package name
+		undefined('classnames', [], function () {
+			return classNames;
+		});
+	} else {
+		window.classNames = classNames;
+	}
+}());
+});
 
 // Fix IE file.status problem
 // via coping a new Object
@@ -154,61 +205,6 @@ function removeFileItem(file, fileList) {
   }
   return removed;
 }
-
-function createCommonjsModule(fn, module) {
-	return module = { exports: {} }, fn(module, module.exports), module.exports;
-}
-
-var index$1 = createCommonjsModule(function (module) {
-/*!
-  Copyright (c) 2016 Jed Watson.
-  Licensed under the MIT License (MIT), see
-  http://jedwatson.github.io/classnames
-*/
-/* global define */
-
-(function () {
-	'use strict';
-
-	var hasOwn = {}.hasOwnProperty;
-
-	function classNames () {
-		var classes = [];
-
-		for (var i = 0; i < arguments.length; i++) {
-			var arg = arguments[i];
-			if (!arg) continue;
-
-			var argType = typeof arg;
-
-			if (argType === 'string' || argType === 'number') {
-				classes.push(arg);
-			} else if (Array.isArray(arg)) {
-				classes.push(classNames.apply(null, arg));
-			} else if (argType === 'object') {
-				for (var key in arg) {
-					if (hasOwn.call(arg, key) && arg[key]) {
-						classes.push(key);
-					}
-				}
-			}
-		}
-
-		return classes.join(' ');
-	}
-
-	if ('object' !== 'undefined' && module.exports) {
-		module.exports = classNames;
-	} else if (typeof undefined === 'function' && typeof undefined.amd === 'object' && undefined.amd) {
-		// register as 'classnames', consistent with npm package name
-		undefined('classnames', [], function () {
-			return classNames;
-		});
-	} else {
-		window.classNames = classNames;
-	}
-}());
-});
 
 var styles = { "Icon": "_2jSl5RJ" };
 
@@ -418,6 +414,27 @@ var attachment = function attachment(props) {
     }, props),
     React.createElement('path', {
       d: 'M7.859 2.974c-.306.306-.57.568-1.017 1.01-1.924 1.9-2.42 2.431-2.818 3.107-.548.93-.432 1.722.36 2.495 1.45 1.414 2.286.913 5.686-2.522.382-.386.598-.604.852-.857 1.742-1.743 2.15-3.44.348-5.133-1.422-1.336-3.176-1.206-5.095.301-1.365 1.36-1.365 1.36-2.845 2.84C.11 7.435 0 9.842 2.212 11.793c2.221 1.96 4.781 1.487 8.638-2.37a.5.5 0 1 0-.708-.707c-3.52 3.52-5.5 3.887-7.269 2.327-1.75-1.545-1.671-3.285 1.164-6.12l2.8-2.8c1.519-1.19 2.728-1.28 3.748-.321 1.288 1.21 1.026 2.3-.37 3.697-.255.255-.473.473-.856.86-2.944 2.976-3.474 3.293-4.277 2.51-.466-.455-.508-.743-.197-1.272.332-.564.826-1.09 2.66-2.903.448-.442.714-.706 1.02-1.013a.5.5 0 1 0-.706-.708z'
+    })
+  );
+};
+
+var car = function car(props) {
+  return React.createElement(
+    'svg',
+    _extends({
+      className: 'icon',
+      viewBox: '0 0 1382 1024',
+      xmlns: 'http://www.w3.org/2000/svg',
+      width: '269.922',
+      height: '200'
+    }, props),
+    React.createElement(
+      'defs',
+      null,
+      React.createElement('style', null)
+    ),
+    React.createElement('path', {
+      d: 'M1301.58 403.994c-.05 0-.05-.026 0 0a1112.5 1112.5 0 0 0-47.743-63.488l-2.048-2.484h.384l-15.923-18.739-.23-.256a828.365 828.365 0 0 0-60.11-64.281c-42.01-39.68-62.515-45.03-77.004-45.03H875.34c-6.17 0-12.288.665-18.227 1.945v-99.072a87.066 87.066 0 0 0-86.99-86.989H112.59A87.066 87.066 0 0 0 25.6 112.589v683.776a87.066 87.066 0 0 0 86.989 86.963h100.659c16.077 75.622 84.122 131.507 162.304 131.507 78.208 0 146.253-55.885 162.304-131.507h232.192a86.528 86.528 0 0 0 52.634-17.715 86.272 86.272 0 0 0 52.582 17.715h21.811c16.051 75.622 84.122 131.507 162.279 131.507 78.156 0 146.252-55.885 162.33-131.507h48.127a87.066 87.066 0 0 0 86.989-86.989V520.218c0-12.237-3.149-31.59-27.52-73.19-7.68-13.108-16.998-27.598-27.7-43.009zM375.63 946.074a97.229 97.229 0 0 1-97.101-97.127c0-53.555 43.52-97.152 97.075-97.152a97.28 97.28 0 0 1 97.152 97.152 97.28 97.28 0 0 1-97.152 97.127zM788.3 296.704v499.635c0 10.087-8.167 18.253-18.227 18.253H537.882a165.632 165.632 0 0 0-157.159-131.456h-.512v.051h-1.05c-.127 0-.255-.051-.332 0h-8.09a165.504 165.504 0 0 0-157.337 131.456H112.538A18.253 18.253 0 0 1 94.31 796.39V112.59c0-10.061 8.192-18.253 18.253-18.253h657.485c10.06 0 18.253 8.192 18.253 18.253v184.115zm271.104 649.37a97.28 97.28 0 0 1-97.127-97.127 97.28 97.28 0 0 1 97.152-97.152 97.28 97.28 0 0 1 97.127 97.152 97.28 97.28 0 0 1-97.127 97.127zm228.608-149.735c0 10.087-8.192 18.253-18.253 18.253h-48.051c-15.155-71.117-76.595-125.542-149.76-131.02v.306l-.256-.05-.23-.026-.231-.052-.23-.05c-.026 0-.128 0-.23-.052l-1.153-.18h-1.459c-.333 0-.691 0-.973-.05h-2.227s-.077 0-.102-.052h-.052v-.179.18l-.153-.026h-.435v-.103.103h-1.204c-.076 0-.23-.051-.358 0h-6.605v.025l-.23-.076v.076h-.051v-.076l-.18.128h-.05v-.128l-.18.179-.23-.18v.18-.18l-.18.129h-.05v-.128l-.18.076v-.076l-.256.05h-5.197l-1.152.18v-.102h-.179v.153l-.256-.153v.179h-.026v-.18l-.179.257v-.256h-.205v.256h-.025v-.256h-.205l-1.536.102c-72.5 6.144-133.222 60.288-148.224 130.893h-21.786a18.253 18.253 0 0 1-18.252-18.253V296.704c0-10.06 8.192-18.227 18.252-18.227h220.314c3.558 1.74 14.848 8.448 38.272 31.232l5.274 5.197h-106.01a87.066 87.066 0 0 0-86.989 86.963v105.216a87.066 87.066 0 0 0 86.989 86.989h254.9v202.265h-.257zm0-271.053h-254.9a18.253 18.253 0 0 1-18.252-18.227V401.843c0-10.086 8.192-18.253 18.253-18.253h167.116a1047.168 1047.168 0 0 1 24.192 31.028c13.568 18.15 26.112 36.07 36.173 51.89l4.66-2.482-4.353 2.918 9.703-5.734-9.523 6.041 4.608 7.424c19.788 32.384 22.144 44.39 22.374 45.952v4.66h-.051z'
     })
   );
 };
@@ -744,6 +761,27 @@ var info = function info(props) {
   );
 };
 
+var local = function local(props) {
+  return React.createElement(
+    'svg',
+    _extends({
+      className: 'icon',
+      viewBox: '0 0 1024 1024',
+      xmlns: 'http://www.w3.org/2000/svg',
+      width: '200',
+      height: '200'
+    }, props),
+    React.createElement(
+      'defs',
+      null,
+      React.createElement('style', null)
+    ),
+    React.createElement('path', {
+      d: 'M512 256.331c-77.997 0-141.228 63.227-141.228 141.224S434.002 538.783 512 538.783s141.23-63.23 141.23-141.228S589.997 256.331 512 256.331zm0 225.96c-46.797 0-84.737-37.934-84.737-84.737 0-46.796 37.94-84.733 84.737-84.733 46.8 0 84.737 37.936 84.737 84.733-.001 46.804-37.937 84.737-84.737 84.737zm0-423.68c-187.194 0-338.946 151.75-338.946 338.943C173.054 584.751 512 962.467 512 962.467S850.946 584.75 850.946 397.554c0-187.193-151.75-338.942-338.946-338.942zM229.545 397.556C229.545 241.564 356.006 115.1 512 115.1c155.997 0 282.455 126.464 282.455 282.455C794.455 539.025 512 905.977 512 905.977S229.545 537.054 229.545 397.555z'
+    })
+  );
+};
+
 var paper = function paper(props) {
   return React.createElement(
     'svg',
@@ -1051,6 +1089,7 @@ var ICONS = {
   'arrow-right': arrowRight,
   'arrow-up': arrowUp,
   attachment: attachment,
+  car: car,
   caution: caution,
   check: check,
   clock: clock,
@@ -1066,6 +1105,7 @@ var ICONS = {
   finance: finance,
   home: home,
   info: info,
+  local: local,
   paper: paper,
   plus: plus,
   question: question,
@@ -1120,7 +1160,7 @@ var Icon = (_temp$2 = _class$2 = function (_PureComponent) {
           fontSize: size,
           fill: color
         },
-        className: index$1(className, styles.Icon),
+        className: classnames(className, styles.Icon),
         'aria-hidden': true
       }, otherProps);
       var IconNode = ICONS[name];
@@ -1151,7 +1191,7 @@ var propTypes = {
   showInfo: PropTypes.bool
 };
 
-var styles$1 = { "progress__line--pause": "_2rhabTG", "progress__line--exception": "_1Gn0LqM", "progress__line--success": "_2iMadZh", "progress__line--normal": "cFwj8pO", "progress__lineIndicator": "_1YQZnrM", "progress__line--normalSize": "_28IlOCf", "progress__line": "nd0QJ7p", "progress__showinfo": "_3JkNO59", "progress__lineOuter": "IL7D3Op", "progress__lineInner": "_27NBzV3", "progress__line--miniSize": "_2Gk1yz_", "progress-animation": "_2uAdRt5", "progress__linePause": "_2rhabTG", "progress__lineException": "_1Gn0LqM", "progress__lineSuccess": "_2iMadZh", "progress__lineNormal": "cFwj8pO", "progress__lineNormalSize": "_28IlOCf", "progress__lineMiniSize": "_2Gk1yz_", "progressAnimation": "_2uAdRt5" };
+var styles$1 = { "progress__line--pause": "_2rhabTG", "progress__line--exception": "_1Gn0LqM", "progress__line--success": "_2iMadZh", "progress__line--normal": "cFwj8pO", "progress__lineIndicator": "_1YQZnrM", "progress__line--normalSize": "_28IlOCf", "progress__line": "nd0QJ7p", "progress__showinfo": "_3JkNO59", "progress__lineOuter": "IL7D3Op", "progress__lineInner": "_27NBzV3", "progress__line--miniSize": "_2Gk1yz_", "progress-animation": "_2uAdRt5" };
 
 /**
  * Line Component
@@ -1163,10 +1203,8 @@ var Line = function Line(_ref) {
       size = _ref.size,
       showInfo = _ref.showInfo;
 
-  console.log(showInfo);
-
   var lineProps = {
-    className: index$1(styles$1['progress__' + (showInfo ? 'showinfo' : 'line')], styles$1['progress__line--' + size + 'Size'], styles$1['progress__line--' + status])
+    className: classnames(styles$1['progress__' + (showInfo ? 'showinfo' : 'line')], styles$1['progress__line--' + size + 'Size'], styles$1['progress__line--' + status])
   };
   var innerProps = {
     className: styles$1['progress__lineInner'],
@@ -1211,9 +1249,7 @@ Line.defaultProps = defaultProps;
 
 Line.propTypes = propTypes;
 
-var _dec$2;
 var _class$3;
-var _class2$2;
 var _temp$3;
 
 /**
@@ -1222,7 +1258,7 @@ var _temp$3;
  */
 // import Circle from './Circle';
 
-var Progress = (_dec$2 = CSSModules(styles$1, { allowMultiple: allowMultiple }), _dec$2(_class$3 = (_temp$3 = _class2$2 = function (_PureComponent) {
+var Progress = (_temp$3 = _class$3 = function (_PureComponent) {
   inherits(Progress, _PureComponent);
 
   function Progress() {
@@ -1241,28 +1277,26 @@ var Progress = (_dec$2 = CSSModules(styles$1, { allowMultiple: allowMultiple }),
       //   Comp = Line;
       // }
 
-      return React$1.createElement(Line, renderProps);
+      return React.createElement(Line, renderProps);
     }
 
     // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
 
   }]);
   return Progress;
-}(PureComponent), _class2$2.displayName = 'Progress', _class2$2.defaultProps = _extends({}, defaultProps), _class2$2.propTypes = _extends({}, propTypes), _temp$3)) || _class$3);
+}(PureComponent), _class$3.displayName = 'Progress', _class$3.defaultProps = _extends({}, defaultProps), _class$3.propTypes = _extends({}, propTypes), _temp$3);
 
-var styles$2 = { "upload-list-picture-card": "_2MKkXWB", "upload-list-item-info": "ACI5HD8", "upload-list-item-actions": "_3X70GPS", "upload-list-item-error": "_1jGbUaw", "upload-list-item": "_3Njfikd", "pictureShow": "xpw90-A", "upload-list-item-thumbnail": "_27WS6DP", "upload-list-item-name": "_1cVZiOQ", "uploading-text": "_3ki_XOw", "imgshow": "_1tzLhEf", "remove": "Boe8gJv", "eye": "_3gICJJz", "upload-list-item-progress": "_1ik1y6A", "upload-select-picture-card": "_3SaxPHm", "hide": "_2Z7KgL4", "upload-list": "_14NhtWo", "upload-list-text": "_3Mi3sRo", "upload-list-item-done": "_7oltx-C", "upload-list-item-uploading": "_2H0ypTn", "status": "_3qlP1Cd", "upload": "_2UxV0kz", "upload-select-text": "_1maN_Cv", "upload-select": "_1fQz-E_", "uploadListPictureCard": "_2MKkXWB", "uploadListItemInfo": "ACI5HD8", "uploadListItemActions": "_3X70GPS", "uploadListItemError": "_1jGbUaw", "uploadListItem": "_3Njfikd", "uploadListItemThumbnail": "_27WS6DP", "uploadListItemName": "_1cVZiOQ", "uploadingText": "_3ki_XOw", "uploadListItemProgress": "_1ik1y6A", "uploadSelectPictureCard": "_3SaxPHm", "uploadList": "_14NhtWo", "uploadListText": "_3Mi3sRo", "uploadListItemDone": "_7oltx-C", "uploadListItemUploading": "_2H0ypTn", "uploadSelectText": "_1maN_Cv", "uploadSelect": "_1fQz-E_" };
+var styles$2 = { "upload-list-picture-card": "_2MKkXWB", "upload-list-item-info": "ACI5HD8", "upload-list-item-actions": "_3X70GPS", "upload-list-item-error": "_1jGbUaw", "upload-list-item": "_3Njfikd", "pictureShow": "xpw90-A", "upload-list-item-thumbnail": "_27WS6DP", "upload-list-item-name": "_1cVZiOQ", "uploading-text": "_3ki_XOw", "imgshow": "_1tzLhEf", "remove": "Boe8gJv", "eye": "_3gICJJz", "upload-list-item-progress": "_1ik1y6A", "upload-select-picture-card": "_3SaxPHm", "hide": "_2Z7KgL4", "upload-list": "_14NhtWo", "upload-list-text": "_3Mi3sRo", "upload-list-item-done": "_7oltx-C", "upload-list-item-uploading": "_2H0ypTn", "btn-remove": "_44to-rK", "status": "_3qlP1Cd", "upload": "_2UxV0kz", "upload-select-text": "_1maN_Cv", "upload-select": "_1fQz-E_" };
 
-var _dec$1;
 var _class$1;
-var _class2$1;
 var _temp$1;
 
 /**
  * UploadList Component
  * @author heifade
  */
+// import Animate from 'rc-animate';
 // import Tooltip from '../tooltip';
-// import classNames from 'classnames';
 // import { UploadListProps } from './interface';
 var previewFile = function previewFile(file, callback) {
   var reader = new FileReader();
@@ -1272,7 +1306,7 @@ var previewFile = function previewFile(file, callback) {
   reader.readAsDataURL(file);
 };
 
-var UploadList = (_dec$1 = CSSModules(styles$2, { allowMultiple: allowMultiple }), _dec$1(_class$1 = (_temp$1 = _class2$1 = function (_React$Component) {
+var UploadList = (_temp$1 = _class$1 = function (_React$Component) {
   inherits(UploadList, _React$Component);
 
   function UploadList(props) {
@@ -1331,190 +1365,188 @@ var UploadList = (_dec$1 = CSSModules(styles$2, { allowMultiple: allowMultiple }
     // 删除
 
   }, {
-    key: 'render',
-    value: function render() {
+    key: 'renderListItem',
+    value: function renderListItem(file) {
       var _this3 = this;
 
       var _props = this.props,
-          prefixCls = _props.prefixCls,
-          _props$items = _props.items,
-          items = _props$items === undefined ? [] : _props$items,
-          listType = _props.listType,
           showPreviewIcon = _props.showPreviewIcon,
           showRemoveIcon = _props.showRemoveIcon,
           locale = _props.locale,
-          disabled = _props.disabled;
+          disabled = _props.disabled,
+          listType = _props.listType,
+          prefixCls = _props.prefixCls;
 
-      var list = items.map(function (file) {
-        var progress = void 0;
-        var icon = React$1.createElement(Icon, { size: 12, styleName: 'status', name: file.status === 'uploading' ? 'attachment' : 'attachment' });
+      var progress = void 0;
+      var icon = React.createElement(Icon, { size: 12, className: styles$2.status, name: file.status === 'uploading' ? 'attachment' : 'attachment' });
 
-        if (listType === 'picture' || listType === 'picture-card') {
-          if (file.status === 'uploading' || !file.thumbUrl && !file.url) {
-            if (listType === 'picture-card') {
-              icon = React$1.createElement(
-                'div',
-                { styleName: 'uploading-text' },
-                locale.uploading
-              );
-            } else {
-              icon = React$1.createElement(Icon, { className: prefixCls + '-list-item-thumbnail', type: 'picture' });
-            }
-          } else {
-            icon = React$1.createElement(
-              'a',
-              {
-                styleName: prefixCls + '-list-item-thumbnail',
-                onClick: function onClick(e) {
-                  return _this3.handlePreview(file, e);
-                },
-                href: file.url || file.thumbUrl,
-                target: '_blank',
-                rel: 'noopener noreferrer'
-              },
-              React$1.createElement('img', { src: file.thumbUrl || file.url, alt: file.name, styleName: 'imgshow' })
+      if (listType === 'picture' || listType === 'picture-card') {
+        if (file.status === 'uploading' || !file.thumbUrl && !file.url) {
+          if (listType === 'picture-card') {
+            icon = React.createElement(
+              'div',
+              { className: styles$2['uploading-text'] },
+              locale.uploading
             );
+          } else {
+            icon = React.createElement(Icon, { className: prefixCls + '-list-item-thumbnail', type: 'picture' });
           }
-        }
-
-        if (file.status === 'uploading') {
-          // show loading icon if upload progress listener is disabled
-          var loadingProgress = 'percent' in file ? React$1.createElement(Progress, _extends({ type: 'line' }, _this3.props.progressAttr, { percent: file.percent })) : null;
-
-          progress = React$1.createElement(
-            'div',
-            { styleName: prefixCls + '-list-item-progress', key: 'progress' },
-            loadingProgress
+        } else {
+          icon = React.createElement(
+            'a',
+            {
+              className: styles$2[prefixCls + '-list-item-thumbnail'],
+              onClick: function onClick(e) {
+                return _this3.handlePreview(file, e);
+              },
+              href: file.url || file.thumbUrl,
+              target: '_blank',
+              rel: 'noopener noreferrer'
+            },
+            React.createElement('div', { className: styles$2.imgshow, style: { backgroundImage: 'url(' + (file.thumbUrl || file.url) + ')' } })
           );
         }
-        // const message = file.response || (file.error && file.error.statusText) || locale.uploadError;
-        var message = file.status === 'error' ? file.response || locale.uploadError : file.response;
+      }
 
-        // console.log(file);
+      if (file.status === 'uploading') {
+        // show loading icon if upload progress listener is disabled
+        var loadingProgress = 'percent' in file ? React.createElement(Progress, _extends({ type: 'line' }, this.props.progressAttr, { percent: file.percent })) : null;
 
-        var preview = file.url ? React$1.createElement(
-          'a',
-          {
-            href: file.url,
-            target: '_blank',
-            rel: 'noopener noreferrer',
-            styleName: prefixCls + '-list-item-name',
-            onClick: function onClick(e) {
-              return _this3.handlePreview(file, e);
-            }
-            // title={file.name}
-            , title: message
-          },
-          file.name
-        ) : React$1.createElement(
-          'span',
-          {
-            styleName: prefixCls + '-list-item-name'
-            // title={file.name}
-            , title: message
-          },
-          file.name
-        );
-        var style = file.url || file.thumbUrl ? undefined : {
-          pointerEvents: 'none',
-          opacity: 0.5
-        };
-        var previewIcon = showPreviewIcon ? React$1.createElement(
-          'a',
-          {
-            href: file.url || file.thumbUrl,
-            target: '_blank',
-            rel: 'noopener noreferrer',
-            style: style,
-            onClick: function onClick(e) {
-              return _this3.handlePreview(file, e);
-            },
-            title: locale.previewFile
-          },
-          React$1.createElement(Icon, { name: 'visible', size: 20, styleName: 'eye' })
-        ) : null;
-        // picture-card 删除按钮
-        var removeIcon = showRemoveIcon && !disabled ? React$1.createElement(
-          'a',
-          {
-            href: 'javascript:void(0)',
-            title: locale.removeFile,
-            onClick: function onClick() {
-              return _this3.handleClose(file);
-            }
-          },
-          React$1.createElement(Icon, { name: 'recycle', size: 20, styleName: 'remove' })
-        ) : null;
-        // text 删除按钮
-        var removeIconCross = showRemoveIcon && !disabled ? React$1.createElement(
-          'a',
-          {
-            href: 'javascript:void(0)',
-            title: locale.removeFile,
-            onClick: function onClick() {
-              return _this3.handleClose(file);
-            }
-          },
-          React$1.createElement(Icon, { name: 'close', size: 10, styleName: 'remove' })
-        ) : null;
-        var actions = listType === 'picture-card' && file.status !== 'uploading' ? React$1.createElement(
-          'span',
-          { styleName: prefixCls + '-list-item-actions' },
-          previewIcon,
-          removeIcon
-        ) : removeIconCross;
-
-        var iconAndPreview = file.status === 'error' ? React$1.createElement(
-          'span',
-          null,
-          icon,
-          preview
-        ) : React$1.createElement(
-          'span',
-          null,
-          icon,
-          preview
-        );
-
-        // const infoUploadingClass = classNames({
-        //   [`${prefixCls}-list-item`]: true,
-        //   [`${prefixCls}-list-item-${file.status}`]: true,
-        // });
-
-        return React$1.createElement(
+        progress = React.createElement(
           'div',
-          { styleName: prefixCls + '-list-item ' + prefixCls + '-list-item-' + file.status, key: file.uid },
-          React$1.createElement(
-            'div',
-            { styleName: prefixCls + '-list-item-info' },
-            iconAndPreview
-          ),
-          actions,
-          React$1.createElement(
-            Animate,
-            { transitionName: 'fade', component: '' },
-            progress
-          )
+          { className: styles$2[prefixCls + '-list-item-progress'], key: 'progress' },
+          loadingProgress
         );
-      });
-      // const listClassNames = classNames({
-      //   [`${prefixCls}-list`]: true,
-      //   [`${prefixCls}-list-${listType}`]: true,
-      // });
-      var animationDirection = listType === 'picture-card' ? 'animate-inline' : 'animate';
-      return React$1.createElement(
-        Animate,
+      }
+      // const message = file.response || (file.error && file.error.statusText) || locale.uploadError;
+      var message = file.status === 'error' ? file.response || locale.uploadError : file.response;
+
+      // console.log(file);
+
+      var preview = file.url ? React.createElement(
+        'a',
         {
-          transitionName: prefixCls + '-' + animationDirection,
-          component: 'div',
-          styleName: prefixCls + '-list ' + prefixCls + '-list-' + listType
+          href: file.url,
+          target: '_blank',
+          rel: 'noopener noreferrer',
+          className: styles$2[prefixCls + '-list-item-name'],
+          onClick: function onClick(e) {
+            return _this3.handlePreview(file, e);
+          }
+          // title={file.name}
+          , title: message
         },
-        list
+        file.name
+      ) : React.createElement(
+        'span',
+        {
+          className: styles$2[prefixCls + '-list-item-name']
+          // title={file.name}
+          , title: message
+        },
+        file.name
+      );
+      var style = file.url || file.thumbUrl ? undefined : {
+        pointerEvents: 'none',
+        opacity: 0.5
+      };
+      var previewIcon = showPreviewIcon ? React.createElement(
+        'a',
+        {
+          href: file.url || file.thumbUrl,
+          target: '_blank',
+          rel: 'noopener noreferrer',
+          style: style,
+          onClick: function onClick(e) {
+            return _this3.handlePreview(file, e);
+          },
+          title: locale.previewFile
+        },
+        React.createElement(Icon, { name: 'visible', size: 20, className: styles$2.eye })
+      ) : null;
+      // picture-card 删除按钮
+      var removeIcon = showRemoveIcon && !disabled ? React.createElement(
+        'button',
+        {
+          className: styles$2['btn-remove'],
+          title: locale.removeFile,
+          onClick: function onClick() {
+            return _this3.handleClose(file);
+          }
+        },
+        React.createElement(Icon, { name: 'recycle', size: 20, className: styles$2.remove })
+      ) : null;
+      // text 删除按钮
+      var removeIconCross = showRemoveIcon && !disabled ? React.createElement(
+        'button',
+        {
+          className: styles$2['btn-remove'],
+          title: locale.removeFile,
+          onClick: function onClick() {
+            return _this3.handleClose(file);
+          }
+        },
+        React.createElement(Icon, { name: 'close', size: 10, className: styles$2.remove })
+      ) : null;
+      var actions = listType === 'picture-card' && file.status !== 'uploading' ? React.createElement(
+        'span',
+        { className: styles$2[prefixCls + '-list-item-actions'] },
+        previewIcon,
+        removeIcon
+      ) : removeIconCross;
+
+      var iconAndPreview = file.status === 'error' ? React.createElement(
+        'span',
+        null,
+        icon,
+        preview
+      ) : React.createElement(
+        'span',
+        null,
+        icon,
+        preview
+      );
+
+      return React.createElement(
+        'div',
+        {
+          className: classnames(styles$2[prefixCls + '-list-item'], styles$2[prefixCls + '-list-item-' + file.status]),
+          key: file.uid
+        },
+        React.createElement(
+          'div',
+          { className: styles$2[prefixCls + '-list-item-info'] },
+          iconAndPreview
+        ),
+        actions,
+        progress
+      );
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this4 = this;
+
+      var _props2 = this.props,
+          prefixCls = _props2.prefixCls,
+          _props2$items = _props2.items,
+          items = _props2$items === undefined ? [] : _props2$items,
+          listType = _props2.listType;
+
+
+      return React.createElement(
+        'div',
+        {
+          className: classnames(styles$2[prefixCls + '-list'], styles$2[prefixCls + '-list-' + listType])
+        },
+        items.map(function (file) {
+          return _this4.renderListItem(file);
+        })
       );
     }
   }]);
   return UploadList;
-}(React$1.Component), _class2$1.displayName = 'UploadList', _class2$1.defaultProps = {
+}(React.Component), _class$1.displayName = 'UploadList', _class$1.defaultProps = {
   listType: 'text', // or picture-card
   items: [],
   onRemove: null,
@@ -1528,7 +1560,7 @@ var UploadList = (_dec$1 = CSSModules(styles$2, { allowMultiple: allowMultiple }
     showInfo: false,
     size: 'mini'
   },
-  locale: {} }, _class2$1.propTypes = {
+  locale: {} }, _class$1.propTypes = {
   listType: PropTypes.oneOf('text', 'picture-card'),
   items: PropTypes.arrayOf(PropTypes.object),
   onRemove: PropTypes.func,
@@ -1537,13 +1569,15 @@ var UploadList = (_dec$1 = CSSModules(styles$2, { allowMultiple: allowMultiple }
   showPreviewIcon: PropTypes.bool,
   showRemoveIcon: PropTypes.bool,
   disabled: PropTypes.bool,
-  progressAttr: PropTypes.object,
+  progressAttr: PropTypes.shape({
+    strokeWidth: PropTypes.number,
+    showInfo: PropTypes.bool,
+    size: PropTypes.string
+  }),
   locale: PropTypes.object
-}, _temp$1)) || _class$1);
+}, _temp$1);
 
-var _dec;
 var _class;
-var _class2;
 var _temp;
 
 /**
@@ -1552,7 +1586,6 @@ var _temp;
  */
 // import Dragger from './Dragger';
 // import { UploadProps, UploadLocale } from './interface';
-// import classNames from 'classnames';
 var defaultLocale = {
   uploading: '上传中...',
   uploadError: '上传失败',
@@ -1560,7 +1593,7 @@ var defaultLocale = {
   previewFile: '预览文件'
 };
 
-var Upload = (_dec = CSSModules(styles$2, { allowMultiple: allowMultiple }), _dec(_class = (_temp = _class2 = function (_React$Component) {
+var Upload = (_temp = _class = function (_React$Component) {
   inherits(Upload, _React$Component);
 
   function Upload(props) {
@@ -1650,6 +1683,7 @@ var Upload = (_dec = CSSModules(styles$2, { allowMultiple: allowMultiple }), _de
         var resultData = _this.props.onResponse(response);
         if (resultData.success) {
           targetItem.status = 'done';
+          targetItem.url = resultData.url;
         } else {
           targetItem.status = 'error';
           targetItem.response = resultData.message;
@@ -1680,7 +1714,7 @@ var Upload = (_dec = CSSModules(styles$2, { allowMultiple: allowMultiple }), _de
     };
 
     _this.handleManualRemove = function (file) {
-      _this.refs.upload.abort(file);
+      _this.upload.abort(file);
       file.status = 'removed'; // eslint-disable-line
       _this.handleRemove(file);
     };
@@ -1760,6 +1794,8 @@ var Upload = (_dec = CSSModules(styles$2, { allowMultiple: allowMultiple }), _de
   }, {
     key: 'render',
     value: function render() {
+      var _this4 = this;
+
       var _props = this.props,
           _props$prefixCls = _props.prefixCls,
           prefixCls = _props$prefixCls === undefined ? '' : _props$prefixCls,
@@ -1771,7 +1807,7 @@ var Upload = (_dec = CSSModules(styles$2, { allowMultiple: allowMultiple }), _de
           className = _props.className;
 
 
-      var rcUploadProps = index({}, {
+      var rcUploadProps = objectAssign({}, {
         onStart: this.onStart,
         onError: this.onError,
         onProgress: this.onProgress,
@@ -1783,7 +1819,7 @@ var Upload = (_dec = CSSModules(styles$2, { allowMultiple: allowMultiple }), _de
       var showRemoveIcon = showUploadList.showRemoveIcon,
           showPreviewIcon = showUploadList.showPreviewIcon;
 
-      var uploadList$$1 = showUploadList ? React$1.createElement(UploadList, {
+      var uploadList = showUploadList ? React.createElement(UploadList, {
         listType: listType,
         items: this.state.fileList,
         onPreview: onPreview,
@@ -1829,33 +1865,35 @@ var Upload = (_dec = CSSModules(styles$2, { allowMultiple: allowMultiple }), _de
       //   [`${prefixCls}-disabled`]: disabled,
       // });
 
-      var uploadButton =
-      // <div styleName={`${prefixCls} ${prefixCls}-select ${prefixCls}-select-${listType} `} style={{ display: children ? '' : 'none' }}>
-      React$1.createElement(
+      var uploadButton = React.createElement(
         'div',
-        { styleName: prefixCls + ' ' + prefixCls + '-select ' + prefixCls + '-select-' + listType + ' ' + (children ? '' : 'hide') },
-        React$1.createElement(RcUpload, _extends({}, rcUploadProps, { ref: 'upload' }))
+        { className: classnames(styles$2[prefixCls], styles$2[prefixCls + '-select'], styles$2[prefixCls + '-select-' + listType], styles$2['' + (children ? '' : 'hide')]) },
+        React.createElement(RcUpload, _extends({}, rcUploadProps, {
+          ref: function ref(node) {
+            _this4.upload = node;
+          }
+        }))
       );
 
       if (listType === 'picture-card') {
-        return React$1.createElement(
+        return React.createElement(
           'div',
           { className: className },
-          uploadList$$1,
+          uploadList,
           uploadButton,
-          React$1.createElement('div', { style: { clear: 'both' } })
+          React.createElement('div', { style: { clear: 'both' } })
         );
       }
-      return React$1.createElement(
+      return React.createElement(
         'div',
         { className: className },
         uploadButton,
-        uploadList$$1
+        uploadList
       );
     }
   }]);
   return Upload;
-}(React$1.Component), _class2.displayName = 'Upload', _class2.defaultProps = {
+}(React.Component), _class.displayName = 'Upload', _class.defaultProps = {
   name: 'file',
   defaultFileList: null,
   action: '',
@@ -1889,7 +1927,7 @@ var Upload = (_dec = CSSModules(styles$2, { allowMultiple: allowMultiple }), _de
       success: false,
       message: response.msg
     };
-  } }, _class2.propTypes = {
+  } }, _class.propTypes = {
   name: PropTypes.string,
   defaultFileList: PropTypes.arrayOf(PropTypes.object),
   fileList: PropTypes.arrayOf(PropTypes.object),
@@ -1913,7 +1951,7 @@ var Upload = (_dec = CSSModules(styles$2, { allowMultiple: allowMultiple }), _de
   children: PropTypes.element.isRequired,
   onResponse: PropTypes.func
   // supportServerRender: PropTypes.bool,
-}, _temp)) || _class);
+}, _temp);
 
 export default Upload;
 //# sourceMappingURL=upload.js.map
