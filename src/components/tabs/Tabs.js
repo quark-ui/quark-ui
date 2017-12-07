@@ -6,9 +6,11 @@ import React, { PureComponent, cloneElement, Children } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Tab from './Tab';
+import Panel from './Panel';
 import styles from './Tabs.css';
 
 export default class Tabs extends PureComponent {
+  static Panel = Panel;
   static displayName = 'Tabs'
 
   static defaultProps = {
