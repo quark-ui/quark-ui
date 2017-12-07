@@ -176,14 +176,14 @@
       color: #f27102;
     }
     
-    & :global(.menu) :global(.menu-item-selected:after) {
+    /* & :global(.menu) :global(.menu-item-selected:after) {
       content: "";
       position: absolute;
       right: 0;
       top: 0;
       bottom: 0;
       border-right: 3px solid #ff9536;
-    }
+    } */
   }
 
   /*颜色-冷色*/
@@ -204,14 +204,14 @@
       background-color: #f6f8fc;
       color: #0c7dd4;
     }
-    & :global(.menu) :global(.menu-item-selected:after) {
+    /* & :global(.menu) :global(.menu-item-selected:after) {
       content: "";
       position: absolute;
       right: 0;
       top: 0;
       bottom: 0;
       border-right: 3px solid #3b98e0;
-    }
+    } */
   }
 
   & > :global(.menu-item) {
@@ -274,14 +274,14 @@
     /*二级菜单弹出层*/
     & :global(.menu) {
       background-color: #ffffff;
-      & :global(.menu-item-selected:after) {
+      /* & :global(.menu-item-selected:after) {
         content: "";
         position: absolute;
         right: 0;
         top: 0;
         bottom: 0;
         border-right: 3px solid #ff9536;
-      }
+      } */
 
       & :global(.menu-item-group-title) {
         color: #999999;
@@ -344,14 +344,14 @@
     }
     
 
-    & :global(.menu-item-selected:after) {
+    /* & :global(.menu-item-selected:after) {
       content: "";
       position: absolute;
       right: 0;
       top: 0;
       bottom: 0;
       border-right: 3px solid #ff9536;
-    }
+    } */
 
     & :global(.menu-item-group-title) {
       color: #999999;
@@ -386,14 +386,14 @@
     background-color: #ecf6fd;
   }
 
-  & :global(.menu-item-selected):after {
+  /* & :global(.menu-item-selected):after {
     content: "";
     position: absolute;
     right: 0;
     top: 0;
     bottom: 0;
     border-right: 3px solid #108ee9;
-  }
+  } */
   & :global(.menu) {
     border: none;
   }
