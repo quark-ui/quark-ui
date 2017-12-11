@@ -151,7 +151,14 @@
 }
 ._37XJzyY.menu-horizontal.color-warm {
   background-color: #f6f6f6;/*一级菜单背景色(白)*/
-  color: #666666
+  color: #666666/* & :global(.menu) :global(.menu-item-selected:after) {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      border-right: 3px solid #ff9536;
+    } */
 }
 ._37XJzyY.menu-horizontal.color-warm > .menu-item-selected,
     ._37XJzyY.menu-horizontal.color-warm > .menu-submenu-selected {
@@ -164,17 +171,16 @@
   background-color: #f9f9f9;
   color: #f27102
 }
-._37XJzyY.menu-horizontal.color-warm .menu .menu-item-selected:after {
-  content: "";
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  border-right: 3px solid #ff9536
-}
 ._37XJzyY.menu-horizontal.color-cold {
   background-color: #242424;/*一级菜单背景色(黑)*/
-  color: #999999
+  color: #999999/* & :global(.menu) :global(.menu-item-selected:after) {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      border-right: 3px solid #3b98e0;
+    } */
 }
 ._37XJzyY.menu-horizontal.color-cold > .menu-item-selected,
     ._37XJzyY.menu-horizontal.color-cold > .menu-submenu-selected {
@@ -187,14 +193,6 @@
 ._37XJzyY.menu-horizontal.color-cold .menu .menu-item-selected {
   background-color: #f6f8fc;
   color: #0c7dd4
-}
-._37XJzyY.menu-horizontal.color-cold .menu .menu-item-selected:after {
-  content: "";
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  border-right: 3px solid #3b98e0
 }
 ._37XJzyY.menu-horizontal > .menu-item {
   display: inline-block;
@@ -247,15 +245,14 @@
   color: #ffffff
 }
 ._37XJzyY.menu-vertical.color-warm .menu {
-  background-color: #ffffff
-}
-._37XJzyY.menu-vertical.color-warm .menu .menu-item-selected:after {
-  content: "";
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  border-right: 3px solid #ff9536
+  background-color: #ffffff/* & :global(.menu-item-selected:after) {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        border-right: 3px solid #ff9536;
+      } */
 }
 ._37XJzyY.menu-vertical.color-warm .menu .menu-item-group-title {
   color: #999999
@@ -295,10 +292,26 @@
   /*颜色-暖色*/
 
   /*颜色-冷色*/
+
+  /* & :global(.menu-item-selected):after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border-right: 3px solid #108ee9;
+  } */
 }
 ._37XJzyY.menu-inline.color-warm {
   color: #666666;
-  background-color: #f6f6f6
+  background-color: #f6f6f6/* & :global(.menu-item-selected:after) {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      border-right: 3px solid #ff9536;
+    } */
 }
 ._37XJzyY.menu-inline.color-warm .menu-item-active {
   color: #ff9536
@@ -306,14 +319,6 @@
 ._37XJzyY.menu-inline.color-warm .menu-item-selected {
   background-color: #ff9536;
   color: #ffffff
-}
-._37XJzyY.menu-inline.color-warm .menu-item-selected:after {
-  content: "";
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  border-right: 3px solid #ff9536
 }
 ._37XJzyY.menu-inline.color-warm .menu-item-group-title {
   color: #999999
@@ -340,14 +345,6 @@
 }
 ._37XJzyY.menu-inline .menu-item-selected {
   background-color: #ecf6fd
-}
-._37XJzyY.menu-inline .menu-item-selected:after {
-  content: "";
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  border-right: 3px solid #108ee9
 }
 ._37XJzyY.menu-inline .menu {
   border: none
