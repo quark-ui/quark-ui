@@ -1,11 +1,11 @@
 import Tooltip from '../Tooltip';
 import Button from '../../button/Button';
 import { Component } from 'react';
-import CSSModules from 'react-css-modules';
+// import CSSModules from 'react-css-modules';
 import { allowMultiple } from '../../../constants';
 import styles from './index.css';
 
-@CSSModules(styles, { allowMultiple })
+// @CSSModules(styles, { allowMultiple })
 export default class TooltipDemo extends Component {
 
   render() {

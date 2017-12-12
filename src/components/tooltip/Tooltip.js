@@ -6,12 +6,12 @@ import React,{ PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Trigger from '../trigger';
 import classnames from 'classnames';
-import CSSModules from 'react-css-modules';
+// import CSSModules from 'react-css-modules';
 import { allowMultiple } from '../../constants';
 import styles from './Tooltip.css';
 import PLACEMENT_ENUM from './placements.js';
 
-@CSSModules(styles, { allowMultiple })
+// @CSSModules(styles, { allowMultiple })
 class Tooltip extends PureComponent {
 
   static displayName = 'Tooltip'

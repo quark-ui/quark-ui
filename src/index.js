@@ -33,9 +33,11 @@ export { default as Notification } from './components/notification/';
 
 export { default as Pagination } from './components/pagination/';
 
-export { default as Progress } from './components/progress/';
-
 export { default as Popover } from './components/popover/';
+
+export { default as Popconfirm } from './components/popconfirm/';
+
+export { default as Progress } from './components/progress/';
 
 export { default as Radio } from './components/radio/';
 

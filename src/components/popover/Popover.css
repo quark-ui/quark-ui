@@ -12,10 +12,21 @@
     border: 1px solid #cecece;
 	border-radius: 3px;
 }
-.popover--popup .popover--popup-title{
+.popover--popup .popover--popup--title{
 	margin: 0px -10px;
 	padding-left: 10px;
 	border-bottom: 1px solid #cecece;
+}
+.popover--popup .popover--popup--footer{
+	margin: 0px -10px;
+	padding-right: 10px;
+	border-top: 1px solid #cecece;
+	text-align: right;
+}
+.popover--popup .popover--popup--footer a{
+	text-decoration: none;
+	display: inline-block;
+	margin-top: 5px;
 }
 .popover--popup .popover--popup--arrow{
 	position: absolute;

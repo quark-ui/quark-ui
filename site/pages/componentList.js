@@ -78,6 +78,10 @@ export default {
         name: 'Popover',
         icon: 'popover',
         title: '气泡卡片',
+      }, {
+        name: 'Popconfirm',
+        icon: 'popconfirm',
+        title: '气泡确认框',
       }],
   }, {
     group: 'Navigation',

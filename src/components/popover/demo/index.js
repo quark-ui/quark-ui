@@ -1,17 +1,18 @@
 import Popover from '../Popover';
 import { Component } from 'react';
 import Button from '../../button/Button';
-import CSSModules from 'react-css-modules';
+// import CSSModules from 'react-css-modules';
 import { allowMultiple } from '../../../constants';
 import styles from './index.css';
 
 export default class PopoverDemo extends Component {
   render() {
+    const ele = (<div><p>top</p><p>这是一个气泡框</p></div>);
     return (
       <div>
         <div className={styles['top-tooltip']}>
-          <div className={styles['top-tooltip-div']}><Popover title="标题" popovers="topLeft" placement="topLeft" hasButton="true" ><Button type="secondary">上左</Button></Popover></div>
-          <div className={styles['top-tooltip-div']}><Popover popovers="top"  placement="top" ><Button type="secondary">上</Button></Popover></div>
+          <div className={styles['top-tooltip-div']}><Popover title="标题" popovers="topLeft" placement="topLeft"  ><Button type="secondary">上左</Button></Popover></div>
+          <div className={styles['top-tooltip-div']}><Popover title="标题" popovers={ele}  placement="top" action="click" hasButton={true}><Button type="secondary">点击</Button></Popover></div>
           <div className={styles['top-tooltip-div']}><Popover popovers="topRight"  placement="topRight" ><Button type="secondary">上右</Button></Popover></div>
         </div>
         <div className={styles['left-tooltip']} >
