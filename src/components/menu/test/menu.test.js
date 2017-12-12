@@ -89,7 +89,7 @@ describe('Menu-test-describe----------', () => {
     const menu = mountMenu({ type: 'horizontal-h', colorType: 'warm', defaultOpenKeys: ['.$m1'], openKeys: null });
     expect(menu.hasClass('menu-horizontal-h')).to.equal(true);
     expect(menu.hasClass('color-warm')).to.equal(true);
-    expect(menu.find('li.menu-item')).to.have.length(2); // 5个菜单项
+    expect(menu.find('li.menu-item')).to.have.length(2); // 2个菜单项
     expect(menu.find('li.menu-item-disabled')).to.have.length(1); // 1个不可用菜单项
 
     expect(menu.find('li.menu-submenu')).to.have.length(3); // 3个子菜单
@@ -102,7 +102,7 @@ describe('Menu-test-describe----------', () => {
     const menu = mountMenu({ type: 'horizontal-h', colorType: 'cold', openKeys: ['.$m1'] });
     expect(menu.hasClass('menu-horizontal-h')).to.equal(true);
     expect(menu.hasClass('color-cold')).to.equal(true);
-    expect(menu.find('li.menu-item')).to.have.length(2); // 5个菜单项
+    expect(menu.find('li.menu-item')).to.have.length(2); // 2个菜单项
     expect(menu.find('li.menu-item-disabled')).to.have.length(1); // 1个不可用菜单项
 
     expect(menu.find('li.menu-submenu')).to.have.length(3); // 3个子菜单
@@ -115,7 +115,7 @@ describe('Menu-test-describe----------', () => {
     const menu = mountMenu({ type: 'horizontal-v', colorType: 'warm', defaultOpenKeys: ['.$m1'] });
     expect(menu.hasClass('menu-horizontal')).to.equal(true);
     expect(menu.hasClass('color-warm')).to.equal(true);
-    expect(menu.find('li.menu-item')).to.have.length(2); // 5个菜单项
+    expect(menu.find('li.menu-item')).to.have.length(2); // 2个菜单项
     expect(menu.find('li.menu-item-disabled')).to.have.length(1); // 1个不可用菜单项
 
     expect(menu.find('li.menu-submenu')).to.have.length(3); // 3个子菜单
@@ -128,7 +128,7 @@ describe('Menu-test-describe----------', () => {
     const menu = mountMenu({ type: 'horizontal-v', colorType: 'cold', defaultOpenKeys: ['.$m1'] });
     expect(menu.hasClass('menu-horizontal')).to.equal(true);
     expect(menu.hasClass('color-cold')).to.equal(true);
-    expect(menu.find('li.menu-item')).to.have.length(2); // 5个菜单项
+    expect(menu.find('li.menu-item')).to.have.length(2); // 2个菜单项
     expect(menu.find('li.menu-item-disabled')).to.have.length(1); // 1个不可用菜单项
 
     expect(menu.find('li.menu-submenu')).to.have.length(3); // 3个子菜单
@@ -141,7 +141,7 @@ describe('Menu-test-describe----------', () => {
     const menu = mountMenu({ type: 'vertical-h', colorType: 'warm', defaultOpenKeys: ['.$m1'] });
     expect(menu.hasClass('menu-vertical')).to.equal(true);
     expect(menu.hasClass('color-warm')).to.equal(true);
-    expect(menu.find('li.menu-item')).to.have.length(2); // 5个菜单项
+    expect(menu.find('li.menu-item')).to.have.length(2); // 2个菜单项
     expect(menu.find('li.menu-item-disabled')).to.have.length(1); // 1个不可用菜单项
 
     expect(menu.find('li.menu-submenu')).to.have.length(3); // 3个子菜单
@@ -154,7 +154,7 @@ describe('Menu-test-describe----------', () => {
     const menu = mountMenu({ type: 'vertical-h', colorType: 'cold', defaultOpenKeys: ['.$m1'] });
     expect(menu.hasClass('menu-vertical')).to.equal(true);
     expect(menu.hasClass('color-cold')).to.equal(true);
-    expect(menu.find('li.menu-item')).to.have.length(2); // 5个菜单项
+    expect(menu.find('li.menu-item')).to.have.length(2); // 2个菜单项
     expect(menu.find('li.menu-item-disabled')).to.have.length(1); // 1个不可用菜单项
 
     expect(menu.find('li.menu-submenu')).to.have.length(3); // 3个子菜单
@@ -167,7 +167,7 @@ describe('Menu-test-describe----------', () => {
     const menu = mountMenu({ type: 'vertical-v', colorType: 'warm', defaultOpenKeys: ['.$m1'] });
     expect(menu.hasClass('menu-inline')).to.equal(true);
     expect(menu.hasClass('color-warm')).to.equal(true);
-    expect(menu.find('li.menu-item')).to.have.length(2); // 5个菜单项
+    expect(menu.find('li.menu-item')).to.have.length(2); // 2个菜单项
     expect(menu.find('li.menu-item-disabled')).to.have.length(1); // 1个不可用菜单项
 
     expect(menu.find('li.menu-submenu')).to.have.length(3); // 3个子菜单
@@ -180,16 +180,13 @@ describe('Menu-test-describe----------', () => {
     const menu = mountMenu({ type: 'vertical-v', colorType: 'cold', openKeys: ['.$m1'] });
     expect(menu.hasClass('menu-inline')).to.equal(true);
     expect(menu.hasClass('color-cold')).to.equal(true);
-    expect(menu.find('li.menu-item')).to.have.length(2); // 5个菜单项
+    expect(menu.find('li.menu-item')).to.have.length(2); // 2个菜单项
     expect(menu.find('li.menu-item-disabled')).to.have.length(1); // 1个不可用菜单项
 
     expect(menu.find('li.menu-submenu')).to.have.length(3); // 3个子菜单
     expect(menu.find('li.menu-submenu-disabled')).to.have.length(1); // 1个不可用子菜单
     expect(menu.findWhere(n => n.name() === 'SubPopupMenu' && n.prop('mode') === 'inline')).to.have.length(3);
 
-    expect(menu.findWhere(n => n.name() === 'li' && n.text() === '二级菜单1')).to.have.length(0);
-    expect(menu.findWhere(n => n.name() === 'li' && n.text() === '二级菜单2')).to.have.length(0);
-    expect(menu.findWhere(n => n.name() === 'li' && n.text() === '二级菜单3')).to.have.length(0);
   });
 
   it('Menu of vertical-v cold item click', () => {

@@ -55,6 +55,16 @@ describe('checkbox-test-describe----------', () => {
     checkbox.find('input').simulate('change', { target: { checked: false } });
     expect(checkbox.hasClass(styles['checkbox--wrapper__checked'])).to.equal(false);
     expect(checkbox.hasClass(styles['checkbox--wrapper__disabled'])).to.equal(true);
+    expect(checkbox.hasClass(styles['checkbox--wrapper__checked'])).to.equal(
+      true,
+    );
+    checkbox.find('input').simulate('click');
+    expect(checkbox.hasClass(styles['checkbox--wrapper__checked'])).to.equal(
+      true,
+    );
+    expect(checkbox.hasClass(styles['checkbox--wrapper__disabled'])).to.equal(
+      true,
+    );
   });
 
   it('checkbox----checked , onChange ', () => {

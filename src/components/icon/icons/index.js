@@ -5,6 +5,7 @@ import arrowLeft from './arrow-left.svg';
 import arrowRight from './arrow-right.svg';
 import arrowUp from './arrow-up.svg';
 import attachment from './attachment.svg';
+import car from './car.svg';
 import caution from './caution.svg';
 import check from './check.svg';
 import clock from './clock.svg';
@@ -20,6 +21,7 @@ import fail from './fail.svg';
 import finance from './finance.svg';
 import home from './home.svg';
 import info from './info.svg';
+import local from './local.svg';
 import paper from './paper.svg';
 import plus from './plus.svg';
 import question from './question.svg';
@@ -43,6 +45,7 @@ const ICONS = {
   'arrow-right': arrowRight,
   'arrow-up': arrowUp,
   attachment,
+  car,
   caution,
   check,
   clock,
@@ -58,6 +61,7 @@ const ICONS = {
   finance,
   home,
   info,
+  local,
   paper,
   plus,
   question,
