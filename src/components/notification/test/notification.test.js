@@ -1,7 +1,6 @@
-//npm run test-unit './src/components/menu/test/menu.test.js'
 import React from 'react';
-import { shallow, mount, render } from 'enzyme';
-import { expect, should } from 'chai';
+import { shallow } from 'enzyme';
+import { expect } from 'chai';
 import sinon from 'sinon';
 import notification from '../index';
 import Notice from '../Notice';
@@ -101,6 +100,7 @@ describe('notification-test-describe----------', () => {
         name={'clock'}
       />,
     });
+    notification.destroy();
     // console.log(document.querySelectorAll('.notification'));
 
     // expect(document.querySelectorAll('.notification').length).toBe(2);
