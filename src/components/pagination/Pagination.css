@@ -51,7 +51,7 @@
     border-color: var(--brand-primary);
     color: var(--neutral-color);
   }
-  & .pagination__item--active:hover {
+  & .pagination__item.pagination__item--active:hover {
     color: var(--neutral-color);
   }
   & .pagination__total {
@@ -114,7 +114,7 @@
     border-color: var(--brand-primary);
     color: var(--neutral-color);
   }
-  & .pagination__item--active:hover {
+  & .pagination__item.pagination__item--active:hover {
     color: var(--neutral-color);
   }
   & .pagination__total {
