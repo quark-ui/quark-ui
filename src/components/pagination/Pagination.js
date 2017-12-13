@@ -46,25 +46,68 @@ class Pagination extends PureComponent {
 
   constructor(props) {
     super(props);
-    this.state = {
-      current: props.current || props.defaultCurrent,
-      pageSize: props.pageSize || props.defaultPageSize,
-    };
+    // this.state = {
+    //   current: props.current || props.defaultCurrent,
+    //   pageSize: props.pageSize || props.defaultPageSize,
+    // };
+    this.state = this.getStateByProps(
+      props.current || props.defaultCurrent,
+      props.pageSize || props.defaultPageSize,
+      props.total,
+    );
   }
 
   componentWillReceiveProps(nextProps) {
-    const state = {};
-    if (typeof nextProps.current !== 'undefined') {
+    // const state = {
+    //   current: this.state.current,
+    //   pageSize: this.state.pageSize,
+    // };
+    // if (typeof nextProps.current !== 'undefined') {
+    //   assign(state, {
+    //     current: nextProps.current,
+    //   });
+    // }
+    // if (typeof nextProps.pageSize !== 'undefined') {
+    //   assign(state, {
+    //     pageSize: nextProps.pageSize,
+    //   });
+    // }
+    // const lastPage = Math.ceil(nextProps.total / state.pageSize);
+    // if (state.current > lastPage) {
+    //   assign(state, {
+    //     current: lastPage,
+    //   });
+    // }
+    // this.setState(state);
+    this.setState(this.getStateByProps(
+      nextProps.current,
+      nextProps.pageSize,
+      nextProps.total,
+    ));
+  }
+
+  getStateByProps(current, pageSize, total) {
+    const state = {
+      current: this.state ? this.state.current : 1,
+      pageSize: this.state ? this.state.pageSize : 1,
+    };
+    if (typeof current !== 'undefined') {
       assign(state, {
-        current: nextProps.current,
+        current,
       });
     }
-    if (typeof nextProps.pageSize !== 'undefined') {
+    if (typeof pageSize !== 'undefined') {
       assign(state, {
-        pageSize: nextProps.pageSize,
+        pageSize,
       });
     }
-    this.setState(state);
+    const lastPage = Math.ceil(total / state.pageSize);
+    if (state.current > lastPage) {
+      assign(state, {
+        current: lastPage,
+      });
+    }
+    return state;
   }
 
   getItemProps(index) {
@@ -135,55 +178,66 @@ class Pagination extends PureComponent {
 
   renderItems() {
     const { total } = this.props;
-    const { current, pageSize } = this.state;
+    const { pageSize } = this.state;
     const items = [];
     const firstPage = 1;
     const lastPage = Math.ceil(total / pageSize);
+    const current = this.state.current > lastPage ? lastPage : this.state.current;
 
-    let start;
-    let end;
-    if (current === firstPage) {
-      start = firstPage + 1;
-      end = firstPage + 1;
-    } else if (current === lastPage) {
-      start = lastPage - 1;
-      end = lastPage - 1;
-    } else {
-      start = current;
-      end = current;
-    }
-    while (true) {
-      if (end - start >= 3
-        || (start <= firstPage + 1 && end >= lastPage - 1)
-      ) break;
-      if (start > firstPage + 1) start -= 1;
-      if (end < lastPage - 1) end += 1;
-    }
-
-    items.push(
-      <li key={firstPage}>
-        <button {...this.getItemProps(firstPage)}>{firstPage}</button>
-      </li>,
-    );
-    if (start !== firstPage + 1 && start !== firstPage) {
-      items.push(<li key={'front'} className={styles.pagination__ellipsis}><Icon name="ellipsis" size={12} /></li>);
-    }
-    for (let i = start; i <= end; i += 1) {
-      const btnProps = this.getItemProps(i);
+    if (total > 1) {
+      let start;
+      let end;
+      if (current === firstPage) {
+        start = firstPage + 1;
+        end = firstPage + 1;
+      } else if (current === lastPage) {
+        start = lastPage - 1;
+        end = lastPage - 1;
+      } else {
+        start = current;
+        end = current;
+      }
+      while (true) {
+        if (end - start >= 3
+          || (start <= firstPage + 1 && end >= lastPage - 1)
+        ) break;
+        if (start > firstPage + 1) start -= 1;
+        if (end < lastPage - 1) end += 1;
+      }
+  
       items.push(
-        <li key={i}>
-          <button {...btnProps}>{i}</button>
+        <li key={firstPage}>
+          <button {...this.getItemProps(firstPage)}>{firstPage}</button>
+        </li>,
+      );
+      if (start !== firstPage + 1 && start !== firstPage) {
+        items.push(<li key={'front'} className={styles.pagination__ellipsis}><Icon name="ellipsis" size={12} /></li>);
+      }
+      for (let i = start; i <= end; i += 1) {
+        const btnProps = this.getItemProps(i);
+        items.push(
+          <li key={i}>
+            <button {...btnProps}>{i}</button>
+          </li>,
+        );
+      }
+      if (end !== lastPage - 1 && end !== lastPage) {
+        items.push(<li key={'back'} className={styles.pagination__ellipsis}><Icon name="ellipsis" size={12} /></li>);
+      }
+      items.push(
+        <li key={lastPage}>
+          <button {...this.getItemProps(lastPage)}>{lastPage}</button>
+        </li>,
+      );
+    } else if (total === 1) {
+      const btnProps = this.getItemProps(1);
+      items.push(
+        <li key={1}>
+          <button {...btnProps}>1</button>
         </li>,
       );
     }
-    if (end !== lastPage - 1 && end !== lastPage) {
-      items.push(<li key={'back'} className={styles.pagination__ellipsis}><Icon name="ellipsis" size={12} /></li>);
-    }
-    items.push(
-      <li key={lastPage}>
-        <button {...this.getItemProps(lastPage)}>{lastPage}</button>
-      </li>,
-    );
+
     return <ul className={styles.pagination__pages}>{items}</ul>;
   }
 
@@ -244,7 +298,6 @@ class Pagination extends PureComponent {
   }
 
   render() {
-    console.info('render');
     const { size } = this.props;
     const smallSize = size === 'small';
     const wrapProps = {
