@@ -146,7 +146,7 @@ var objectAssign = shouldUseNative() ? Object.assign : function (target, source)
 	return to;
 };
 
-var styles = { "pagination--small": "_2CnmpyB", "pagination__jumperField": "_280nkVW", "pagination__jumper": "wBezPz9", "pagination__sizeChanger": "_3O0s4JU", "pagination__total": "_2KQ0PhC", "pagination__item--active": "_1ZyqWB7", "pagination__pages": "cfbKU8w", "pagination__ctrl": "_2tvnb-l", "pagination__item": "jsRFs8b", "pagination--normal": "_3HZDVl5", "pagination__ellipsis": "_13KUpSV", "pagination": "_1L_-sT1" };
+var styles = { "pagination--small": "_2CnmpyB", "pagination__jumperField": "_280nkVW", "pagination__jumper": "wBezPz9", "pagination__sizeChanger": "_3O0s4JU", "pagination__total": "_2KQ0PhC", "pagination__item--active": "_1ZyqWB7", "pagination__item": "jsRFs8b", "pagination__pages": "cfbKU8w", "pagination__ctrl": "_2tvnb-l", "pagination--normal": "_3HZDVl5", "pagination__ellipsis": "_13KUpSV", "pagination": "_1L_-sT1" };
 
 var styles$1 = { "Icon": "_2jSl5RJ" };
 

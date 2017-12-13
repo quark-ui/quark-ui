@@ -57,9 +57,9 @@
   overflow: hidden;
   cursor: pointer;
   color:#999;
-  &:hover{
-    color:#666;
-  }
+}
+.alert--close:hover{
+  color:#666;
 }
 
 .alert__info {

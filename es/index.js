@@ -1930,7 +1930,7 @@ var Animation = (_temp$2 = _class$2 = function (_PureComponent) {
   onExited: propTypes.func
 }, _temp$2);
 
-var styles$3 = { "breadcrumb--icon": "y-He0IY", "breadcrumb": "_26mKfx-", "breadcrumb--separator": "_3v_bQW3", "breadcrumb--link": "_35am08f" };
+var styles$3 = { "breadcrumb": "_26mKfx-", "breadcrumb--link": "_35am08f", "breadcrumb--separator": "_3v_bQW3", "breadcrumb--icon": "y-He0IY" };
 
 var _class$3;
 var _temp$3;
@@ -17766,7 +17766,7 @@ var Modal = (_dec$1 = renderTo(), _dec$1(_class$26 = (_temp$24 = _class2$3 = fun
 
 }, _temp$24)) || _class$26);
 
-var styles$13 = { "pagination--small": "_2CnmpyB", "pagination__jumperField": "_280nkVW", "pagination__jumper": "wBezPz9", "pagination__sizeChanger": "_3O0s4JU", "pagination__total": "_2KQ0PhC", "pagination__item--active": "_1ZyqWB7", "pagination__pages": "cfbKU8w", "pagination__ctrl": "_2tvnb-l", "pagination__item": "jsRFs8b", "pagination--normal": "_3HZDVl5", "pagination__ellipsis": "_13KUpSV", "pagination": "_1L_-sT1" };
+var styles$13 = { "pagination--small": "_2CnmpyB", "pagination__jumperField": "_280nkVW", "pagination__jumper": "wBezPz9", "pagination__sizeChanger": "_3O0s4JU", "pagination__total": "_2KQ0PhC", "pagination__item--active": "_1ZyqWB7", "pagination__item": "jsRFs8b", "pagination__pages": "cfbKU8w", "pagination__ctrl": "_2tvnb-l", "pagination--normal": "_3HZDVl5", "pagination__ellipsis": "_13KUpSV", "pagination": "_1L_-sT1" };
 
 var _class$28;
 var _temp$25;

@@ -43,6 +43,7 @@
 }
 .grid {
   text-align: center;
+  border-radius: 0;
 }
 .titleGrid {
   composes: grid;
