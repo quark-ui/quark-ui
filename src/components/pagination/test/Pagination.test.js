@@ -1,6 +1,6 @@
 import React from 'react';
-import { shallow, mount, render } from 'enzyme';
-import { expect, should } from 'chai';
+import { shallow, mount } from 'enzyme';
+import { expect } from 'chai';
 import sinon from 'sinon';
 import Pagination from '../../pagination';
 import styles from '../Pagination.css';
@@ -129,14 +129,14 @@ describe('pagination-test-describe----------', () => {
   // });
 
   it('this.props.pageSize is undefined', () => {
-    const props = {
-      current: 5,
-      total: 50,
-      showSizeChanger: true,
-      showQuickJumper: true,
-      size: 'small',
-      showTotal: true,
-    };
+    // const props = {
+    //   current: 5,
+    //   total: 50,
+    //   showSizeChanger: true,
+    //   showQuickJumper: true,
+    //   size: 'small',
+    //   showTotal: true,
+    // };
     // const app = mount(<Pagination {...props} />);
 
     // console.log(app.debug());
