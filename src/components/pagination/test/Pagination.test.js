@@ -47,7 +47,7 @@ describe('pagination-test-describe----------', () => {
     const button = app.find('button').first().children();
     button.simulate('click');
     const item = app.find('li').first().children();
-    expect(item.hasClass(styles['pagination__item--active'])).to.equal(true);//第一个选中
+    expect(item.hasClass(styles['pagination__item--active'])).to.equal(true);//点击往前一页，第一个选中
   });
 
   it('pagination---------------last button click', () => {
@@ -60,7 +60,7 @@ describe('pagination-test-describe----------', () => {
     const button = app.find('button').last().children();
     button.simulate('click');
     const item = app.find('li').last().children();
-    expect(item.hasClass(styles['pagination__item--active'])).to.equal(true);//最后一个选中
+    expect(item.hasClass(styles['pagination__item--active'])).to.equal(true);//点击往后一页，最后一个选中
   });
 
   it('pagination set  size small', () => {
@@ -72,6 +72,9 @@ describe('pagination-test-describe----------', () => {
       showQuickJumper: true,
       size: 'small',
       showTotal: true,
+      onChange: (c) => {
+        app.setState({ current: c });
+      },
     };
     const app = mount(<Pagination {...props} />);
     const spy = sinon.spy(Pagination.prototype, 'componentWillReceiveProps');
@@ -79,68 +82,19 @@ describe('pagination-test-describe----------', () => {
     app.setProps({ current : 4 });
     expect(spy.calledOnce).to.equal(true);
     expect(app.find(`.${styles['pagination--small']}`).length).to.equal(1);//迷你
-    
+    expect(app.find('span').length).to.equal(2);//共计多少页和翻页
+    app.find('input').value = 1;
+    let input = app.find('input').get(0);
+    input.value = '1';
+    app.find('input').first().simulate('keyPress', { key: 'Enter' });//输入页码1回车
+    const item = app.find('li').first().children();
+    expect(item.hasClass(styles['pagination__item--active'])).to.equal(true); //第一个选中
+    input = app.find('input').get(0);
+    input.value = 'a';
+    app.find('input').first().simulate('keyPress', { key: 'Enter' });
+    expect(item.hasClass(styles['pagination__item--active'])).to.equal(true); //第一个选中
 
-    // expect(item.hasClass(styles['pagination__item--active'])).to.equal(true);//第一个选中
-    // app.find('button').at(2).simulate('click');
-    // expect(app.props().current).to.equal(5);
-    // app.find('select').simulate('change');
-    
-    // expect(app.props.children[0].type).to.equal('h1');
-    // console.log(app.debug());
-
-    // app.find('button').at(1).simulate('click');
-    // app.find('button').at(6).simulate('click');
-    // app.find('select').simulate('change');
-    // app.find('input').simulate('keyPress', { key: 'Enter' });
-    // app.find('input').simulate('keyPress', { key: 'a' });
-
-    
-  });
-
-  // it('this.state.current is 1', () => {
-  //   const props = {
-  //     current: 1,
-  //     total: 50,
-  //     pageSize: 10,
-  //     showSizeChanger: true,
-  //     showQuickJumper: true,
-  //     size: 'small',
-  //     showTotal: true,
-  //   };
-  //   const app = mount(<Pagination {...props} />);
-  //   const item = app.find('li').first().children();
-  //   expect(item.hasClass(styles['pagination__item--active'])).to.equal(true);//第一个选中状态
-  // });
-
-  // it('this.state.current is last', () => {
-  //   const props = {
-  //     current: 5,
-  //     total: 50,
-  //     pageSize: 10,
-  //     showSizeChanger: true,
-  //     showQuickJumper: true,
-  //     size: 'small',
-  //     showTotal: true,
-  //   };
-  //   const app = mount(<Pagination {...props} />);
-  //   const item = app.find('li').last().children();
-  //   expect(item.hasClass(styles['pagination__item--active'])).to.equal(true);//最后一个选中状态
-  // });
-
-  it('this.props.pageSize is undefined', () => {
-    // const props = {
-    //   current: 5,
-    //   total: 50,
-    //   showSizeChanger: true,
-    //   showQuickJumper: true,
-    //   size: 'small',
-    //   showTotal: true,
-    // };
-    // const app = mount(<Pagination {...props} />);
-
-    // console.log(app.debug());
-    // app.find('select').simulate('change');
+    app.find('select').simulate('change');//选择每页的数量
   });
 });
 
