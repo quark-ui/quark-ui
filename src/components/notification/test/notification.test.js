@@ -48,14 +48,13 @@ describe('notification-test-describe----------', () => {
     };
     const app = shallow(<Notice {...props} onClose={onClose} />);
     expect(app.hasClass(styles.notification)).to.equal(true);
-
     app.find(`span.${styles['notification--close']}`).simulate('click');
-    // expect(app.state('closed')).to.equal(false);
   });
 
   it('notification render', () => {
     notification.open({
       message: 'Notification Title',
+      duration: 0,
     });
     notification.open({
       message: 'Notification Title',
@@ -86,6 +85,9 @@ describe('notification-test-describe----------', () => {
       duration: 0,
       key: '5',
     });
+    
+    expect(document.querySelectorAll('.notification').length).toBe(6);
+    
     notification.open({
       message: 'Notification Title',
       key: '6',
@@ -101,19 +103,6 @@ describe('notification-test-describe----------', () => {
       />,
     });
     notification.destroy();
-    // console.log(document.querySelectorAll('.notification'));
-
-    // expect(document.querySelectorAll('.notification').length).toBe(2);
-
-    // const onClose = () => {};
-    // const props = {
-    //   message: '需要及时知道的系统通知',
-    //   description:
-    //     '文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案',
-    //   duration: 0,
-    // };
-    // const app = shallow(<Notice {...props} onClose={onClose} />);
-    // expect(app.hasClass(styles.notification)).to.equal(true);
   });
 
 
