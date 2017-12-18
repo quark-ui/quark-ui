@@ -25,7 +25,10 @@ function isRedo(e) {
   );
 }
 function getSelection(el) {
-  let start, end, rangeEl, clone;
+  let start;
+  let end;
+  let rangeEl;
+  let clone;
 
   if (el.selectionStart !== undefined) {
     start = el.selectionStart;
@@ -85,14 +88,14 @@ class CardInput extends PureComponent {
     mask: PropTypes.string.isRequired,
     formatCharacters: PropTypes.object,
     placeholderChar: PropTypes.string,
-    onChange: PropTypes.func,
+    onChange: PropTypes.func
   };
 
   componentWillMount() {
     const options = {
       pattern: this.props.mask,
       value: this.props.value,
-      formatCharacters: this.props.formatCharacters,
+      formatCharacters: this.props.formatCharacters
     };
     if (this.props.placeholderChar) {
       options.placeholderChar = this.props.placeholderChar;
@@ -100,7 +103,7 @@ class CardInput extends PureComponent {
     this.mask = new InputMask(options);
   }
 
-  onChange = e => {
+  onChange = (e) => {
     const maskValue = this.mask.getValue();
     if (e.target.value !== maskValue) {
       // Cut or delete operations will have shortened the value
@@ -122,15 +125,11 @@ class CardInput extends PureComponent {
     }
   };
 
-  onKeyPress = e => {
-    // console.log('onKeyPress', JSON.stringify(getSelection(this.input)), e.key, e.target.value)
-
-    // Ignore modified key presses
-    // Ignore enter key to allow form submission
+  onKeyPress = (e) => {
+    console.log(e);
     if (e.metaKey || e.altKey || e.ctrlKey || e.key === 'Enter') {
       return;
     }
-
     e.preventDefault();
     this.mask.selection = getSelection(this.input);
 
@@ -146,7 +145,7 @@ class CardInput extends PureComponent {
     }
   };
 
-  onKeyDown = e => {
+  onKeyDown = (e) => {
     // console.log('onKeyDown', JSON.stringify(getSelection(this.input)), e.key, e.target.value)
     if (isUndo(e)) {
       e.preventDefault();
@@ -187,16 +186,12 @@ class CardInput extends PureComponent {
     }
   };
 
-  onPaste = e => {
-    // console.log('onPaste', JSON.stringify(getSelection(this.input)), e.clipboardData.getData('Text'), e.target.value)
+  onPaste = (e) => {
     e.preventDefault();
     this.mask.selection = getSelection(this.input);
-    // getData value needed for IE also works in FF & Chrome
     if (this.mask.paste(e.clipboardData.getData('Text'))) {
       e.target.value = this.mask.getValue();
-      // Timeout needed for IE
       setSelection(this.input, this.mask.selection);
-      // setTimeout(function(){setSelection(this.input, this.mask.selection)}, 0)
       if (this.props.onChange) {
         this.props.onChange(e);
       }
@@ -237,8 +232,8 @@ class CardInput extends PureComponent {
       placeholder,
       className: classnames(
         styles[`${disabled ? 'input__disabled' : ''}`],
-        styles[`input__${size}`]
-      ),
+        styles[`input__${size}`],
+      )
     };
 
     return <input {...inputProps} />;

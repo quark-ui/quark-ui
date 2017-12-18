@@ -1,6 +1,6 @@
 import React from 'react';
-import { shallow, mount, render } from 'enzyme';
-import { expect, should } from 'chai';
+import { shallow, mount } from 'enzyme';
+import { expect } from 'chai';
 import sinon from 'sinon';
 import Input from '../Input';
 import CardInput from '../CardInput';
@@ -8,169 +8,136 @@ import Icon from '../../icon';
 import styles from '../Input.css';
 
 describe('input-test-describe----------', () => {
-  
-  it('input render',()=>{
-    const props = {
-      type:'text',
-      size: 'normal',
-      placeholder:'请输入',
-      value:'12312',
-      disabled:false,
-      autosize:false,
-    }
-    const app = shallow(<Input {...props} />);
-    expect(app.hasClass(styles['input__wrapper'])).to.equal(true);
-  })
-  
-  it('should require a disabled bool as props', () => {
-    const props = {
-      disabled:true
-    }
-    const app = mount(<Input {...props} />);
+  it('input render', () => { // base
+    const app = shallow(<Input />);
+    expect(app.find(`.${styles['input__wrapper']}`).length).to.equal(1);
+    app.setProps({ disabled:true });// disabled true
     expect(app.find(`input.${styles['disabled']}`).length).to.equal(1);
-  });
-
-
-  it('type is textarea',()=>{
-    const app = shallow(<Input type="textarea" placeholder="请输入" rows={6} />);
-    expect(app.find('textarea').length).to.equal(1);
-  })
-
-
-  it('input has prefix',()=>{
-    const prefix = (<Icon size={12} name={'account'} />);
-    const app = shallow(<Input placeholder="请输入" prefix={prefix} />);
+    app.setProps({ size: 'large' }); // large size
+    expect(app.find('input').first().hasClass(styles['input__large'])).to.equal(true);
+    app.setProps({ size: 'small' }); // small size
+    expect(app.find('input').first().hasClass(styles['input__small'])).to.equal(true);
+    app.setProps({ disabled: 'false' }); // disabled true
+    const prefix = (<Icon size={12} name={'account'} />); // 前置图标
+    app.setProps({ prefix });
     expect(app.find(`span.${styles['input__prefix']}`).length).to.equal(1);
-  })
-
-  it('input has suffix',()=>{
-    const suffix = (<Icon size={12} name={'account'} />);
-    const app = shallow(<Input placeholder="请输入" suffix={suffix} />);
+    const suffix = (<Icon size={12} name={'account'} />); // 后置图标
+    app.setProps({ suffix });
     expect(app.find(`span.${styles['input__suffix']}`).length).to.equal(1);
-  })
-
-  it('textarea change can do',()=>{
+    app.setProps({ value: '123456789' });// 设置value
+  });
+  it('type is textarea', () => { //  文本域多行输入
+    const app = shallow(<Input type="textarea" placeholder="请输入" rows={1} />);
+    expect(app.find('textarea').length).to.equal(1);
+    app.setProps({ autosize: true });
+    app.setProps({ value: '111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111' });
+  });
+  it('textarea change can do', () => { // 调用change
     const onChange = sinon.spy();
-
     const props = {
       type: 'textarea',
       rows: '2',
       onChange,
-    }
-
+    };
     const app = shallow(<Input {...props} />);
     app.find('textarea').simulate('change');
     expect(onChange.calledOnce).to.equal(true);
-
-  })
-
+  });
 });
 
 describe('cardInput-test-describe----------', () => {
-  it('propTypes  can do',()=>{
+  it('propTypes  can do', () => {
     const props = {
-      mask: "A111-1111-1111-1111",
-      placeholderChar: '',
-      formatCharacters: {
-        'A': null
+      value: '1234-1234-1234-1234',
+      onChange: (e) => {
+        const value = e.target.value;
+        app.setState({ value });
       },
-      disabled: true,
     };
     const app = shallow(<CardInput {...props} />);
-    expect(app.hasClass(styles['input__disabled'])).to.equal(true);
+    expect(app.find('input').first().hasClass(styles['input__normal'])).to.equal(true);// normal size
+    
+    app.setProps({ size: 'small' }); // small size
+    expect(app.find('input').first().hasClass(styles['input__small'])).to.equal(true);
+
+    app.setProps({ size: 'large' }); // large size
+    expect(app.find('input').first().hasClass(styles['input__large'])).to.equal(true);
+
+    app.setProps({ disabled: true });
+    expect(app.hasClass(styles['input__disabled'])).to.equal(true); // 不可编辑
+    app.setProps({ disabled: false }); // 可编辑
+    app.setProps({ mask: '11111-11111-11111-11111' });
+
+    app.find('input').first().simulate('keyPress', { key: 'Enter' });
   });
 
-  it('mask  is null',()=>{
+
+  it('mask is A111-1111-1111-1111', () => {
     const props = {
-      size: "large",
+      mask: 'A111-1111-1111-1111',
+      value: '1234-1234-1234-1234',
     };
     const app = shallow(<CardInput {...props} />);
-    expect(app.hasClass(styles['input__large'])).to.equal(true);
+    expect(app.get(0).props.value).to.equal('_234-1234-1234-1234');
   });
 
-  // it('input change value',()=>{
-  //   const onChange = sinon.spy();
-  //   const props = {
-  //     size: "large",
-  //     mask: "1111-1111-1111-1111",
-  //     // value: '1234-1234-1234-1234',
-  //   };
-  //   const app = shallow(<CardInput {...props} />);
-  //   // app.find('input').node.value = '1111-1111-1111-1113';
-  //   // app.find('input').props().onChange({currentTarget: {value: '1111-1111-1111-1113'}}) // NOTE: this works
-  //   app.find('input').simulate('change', { target: { value: '1111-1111-1111-1113' } });
-  //   expect(app.find('input').props().value).to.equal('1234-12341111-1111-1111-1113');
-  // });
-
-  it('input change value is mask value',()=>{
-    const props = {
-      size: "large",
-      mask: "1111-1111-1111-1111",
-    };
-    const app = shallow(<CardInput {...props} />);
-    app.find('input').simulate('change', { target: { value: '1111-1111-1111-1113' } });
-    console.log(app.debug());
-  });
-
-  it('props onChange',()=>{
+  it('props onChange', () => {
     const onChange = sinon.spy();
     const props = {
-      size: "large",
       mask: "1111-1111-1111-1111",
       onChange,
     };
-    const app = shallow(<CardInput {...props} />);
-    app.find('input').simulate('change', { target: { value: '1111-1111-1111-1113' } });
+    const app = mount(<CardInput {...props} />);
+    app.find('input').first().simulate('change', { target: { value: '1111-1111-1111-1113' } });
     expect(onChange.calledOnce).to.equal(true);
   });
 
   it('onKeyDown && e.metaKey || e.altKey || e.ctrlKey || e.key === Enter', () => {
     const onChange = sinon.spy();
     const props = {
-      size: "large",
       mask: "1111-1111-1111-1111",
-      onChange,
+      onChange: (e) =>{
+        const value = e.target.value;
+        app.setState({ value });
+      },
     };
-    const app = shallow(<CardInput {...props} />);
-    app.find('input').simulate('keyPress', { ctrlKey: '1', preventDefault() {} });
-    expect(onChange.calledOnce).to.equal(false);
-    app.find('input').simulate('shiftKey', { metaKey: '1', preventDefault() {} });
-    expect(onChange.calledOnce).to.equal(false);
-    app.find('input').simulate('keyPress', { key: 'Enter', preventDefault() {} });
-    expect(onChange.calledOnce).to.equal(false);
-    app.find('input').simulate('keyDown', { key: '1', preventDefault() {} });
-    expect(onChange.calledOnce).to.equal(false);
-    // app.find('input').simulate('keyPress', { key: 'Backspace', preventDefault() {} });
+    const app = mount(<CardInput {...props} />);
+    const input = app.find('input').get(0);
+    input.value = '1';
+    app.find('input').first().simulate('keyPress', { ctrlKey: '2', preventDefault() {} });
+
+    app.find('input').first().simulate('keyPress', { key: 'Enter', preventDefault() {} });
+    app.find('input').first().simulate('keyDown', { key: '1', preventDefault() {} });
+    app.setProps({ value: '1234-1234-1234-1234' });
+    app.find('input').first().simulate('keyPress', { key: 'Backspace', preventDefault() {} });
   });
 
   it('isUndo have shiftKey', () => {
     const props = {
-      size: "large",
       mask: "1111-1111-1111-1111",
     };
     const app = shallow(<CardInput {...props} />);
-    app.find('input').simulate('keyDown', { ctrlKey: '1', shiftKey: '1', preventDefault() {} });
+    app.find('input').first().simulate('keyDown', { ctrlKey: '1', shiftKey: '1', preventDefault() {} });
+
   });
 
   it('isUndo no shiftKey', () => {
+    const onChange = sinon.spy();
     const props = {
-      size: "large",
       mask: "1111-1111-1111-1111",
+      onChange,
     };
     const app = shallow(<CardInput {...props} />);
-    app.find('input').simulate('keyDown', { ctrlKey: '1', preventDefault() {} });
+    app.find('input').first().simulate('keyDown', { ctrlKey: '1', preventDefault() {} });
   });
 
   it('input onPaste', () => {
     const onChange = sinon.spy();
     const props = {
-      size: "large",
       mask: "1111-1111-1111-1111",
       onChange,
     };
     const app = shallow(<CardInput {...props} />);
-    app.find('input').simulate('onPaste', { preventDefault() {} });
+    app.find('input').first().simulate('onPaste', { preventDefault() {} });
   });
-
-
 });
