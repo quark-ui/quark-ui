@@ -4,7 +4,7 @@
  */
 import React,{ PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Trigger from '../Trigger';
+import Trigger from '../trigger/Trigger';
 import Button from '../button/Button';
 import Popover from '../popover/Popover';
 import classnames from 'classnames';

@@ -4,7 +4,7 @@
  */
 import React,{ PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Trigger from '../trigger';
+import Trigger from '../trigger/Trigger';
 import classnames from 'classnames';
 // import CSSModules from 'react-css-modules';
 import { allowMultiple } from '../../constants';
