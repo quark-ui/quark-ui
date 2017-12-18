@@ -93,8 +93,8 @@ describe('cardInput-test-describe----------', () => {
     const props = {
       mask: "1111-1111-1111-1111",
       onChange: (e) =>{
-        const value = e.target.value;
-        app.setState({ value });
+        // const value = e.target.value;
+        // app.setState({ value });app.setState({ value });
       },
     };
     const app = mount(<CardInput {...props} />);

@@ -126,7 +126,6 @@ class CardInput extends PureComponent {
   };
 
   onKeyPress = (e) => {
-    console.log(e);
     if (e.metaKey || e.altKey || e.ctrlKey || e.key === 'Enter') {
       return;
     }
