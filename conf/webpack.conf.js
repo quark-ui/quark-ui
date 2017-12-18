@@ -6,6 +6,7 @@ const upperFirst = require('lodash/upperFirst');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const merge = require('webpack-merge');
+const cssnext = require('postcss-cssnext');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
@@ -166,18 +167,16 @@ if (TARGET === 'start' || TARGET === 'start-nodash') {
             {
               loader: 'postcss-loader',
               options: {
-                config: {
-                  ctx: {
-                    cssnext: {
-                      browsers: ['last 5 Chrome versions'],
-                      features: {
-                        customProperties: {
-                          variables: DEFAULT_THEME,
-                        },
+                plugins: () => [
+                  cssnext({
+                    browsers: ['last 5 Chrome versions'],
+                    features: {
+                      customProperties: {
+                        variables: DEFAULT_THEME,
                       },
                     },
-                  },
-                },
+                  }),
+                ],
               },
             },
           ],
@@ -257,18 +256,16 @@ if (TARGET === 'gh-pages') {
               {
                 loader: 'postcss-loader',
                 options: {
-                  config: {
-                    ctx: {
-                      cssnext: {
-                        browsers: ['last 5 Chrome versions'],
-                        features: {
-                          customProperties: {
-                            variables: DEFAULT_THEME,
-                          },
+                  plugins: () => [
+                    cssnext({
+                      browsers: ['last 5 Chrome versions'],
+                      features: {
+                        customProperties: {
+                          variables: DEFAULT_THEME,
                         },
                       },
-                    },
-                  },
+                    }),
+                  ],
                 },
               },
             ],
@@ -377,22 +374,20 @@ if (TARGET === 'theme') {
               {
                 loader: 'postcss-loader',
                 options: {
-                  config: {
-                    ctx: {
-                      cssnext: {
-                        features: {
-                          browsers: [
-                            '> 1%',
-                            'last 2 versions',
-                            'ie >= 8',
-                          ],
-                          customProperties: {
-                            variables: ORANGE_THEME,
-                          },
+                  plugins: () => [
+                    cssnext({
+                      features: {
+                        browsers: [
+                          '> 1%',
+                          'last 2 versions',
+                          'ie >= 8',
+                        ],
+                        customProperties: {
+                          variables: ORANGE_THEME,
                         },
                       },
-                    },
-                  },
+                    }),
+                  ],
                 },
               },
             ],

@@ -21,7 +21,7 @@ export default class Tab extends PureComponent {
 
   static propTypes = {
     closable: PropTypes.bool,
-    tabKey: PropTypes.string,
+    tabKey: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     deleteButton: PropTypes.func,
     onClick: PropTypes.func,
   };

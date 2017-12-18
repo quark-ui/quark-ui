@@ -3,9 +3,7 @@ import Icon from '../../icon';
 import Radio from '../../radio';
 import Button from '../../button';
 import Tabs from '../Tabs';
-import Panel from '../Panel';
-
-Tabs.Panel = Panel;
+const Panel = Tabs.Panel;
 
 class TabsDemo1 extends Component {
   constructor(props) {

@@ -1930,7 +1930,7 @@ var Animation = (_temp$2 = _class$2 = function (_PureComponent) {
   onExited: propTypes.func
 }, _temp$2);
 
-var styles$3 = { "breadcrumb--icon": "y-He0IY", "breadcrumb": "_26mKfx-", "breadcrumb--separator": "_3v_bQW3", "breadcrumb--link": "_35am08f" };
+var styles$3 = { "breadcrumb": "_26mKfx-", "breadcrumb--link": "_35am08f", "breadcrumb--separator": "_3v_bQW3", "breadcrumb--icon": "y-He0IY" };
 
 var _class$3;
 var _temp$3;
@@ -17766,7 +17766,7 @@ var Modal = (_dec$1 = renderTo(), _dec$1(_class$26 = (_temp$24 = _class2$3 = fun
 
 }, _temp$24)) || _class$26);
 
-var styles$13 = { "pagination--small": "_2CnmpyB", "pagination__jumperField": "_280nkVW", "pagination__jumper": "wBezPz9", "pagination__sizeChanger": "_3O0s4JU", "pagination__total": "_2KQ0PhC", "pagination__item--active": "_1ZyqWB7", "pagination__pages": "cfbKU8w", "pagination__ctrl": "_2tvnb-l", "pagination__item": "jsRFs8b", "pagination--normal": "_3HZDVl5", "pagination__ellipsis": "_13KUpSV", "pagination": "_1L_-sT1" };
+var styles$13 = { "pagination--small": "_2CnmpyB", "pagination__jumperField": "_280nkVW", "pagination__jumper": "wBezPz9", "pagination__sizeChanger": "_3O0s4JU", "pagination__total": "_2KQ0PhC", "pagination__item": "jsRFs8b", "pagination__item--active": "_1ZyqWB7", "pagination__pages": "cfbKU8w", "pagination__ctrl": "_2tvnb-l", "pagination--normal": "_3HZDVl5", "pagination__ellipsis": "_13KUpSV", "pagination": "_1L_-sT1" };
 
 var _class$28;
 var _temp$25;
@@ -17781,6 +17781,10 @@ var Pagination = (_temp$25 = _class$28 = function (_PureComponent) {
   function Pagination(props) {
     classCallCheck(this, Pagination);
 
+    // this.state = {
+    //   current: props.current || props.defaultCurrent,
+    //   pageSize: props.pageSize || props.defaultPageSize,
+    // };
     var _this = possibleConstructorReturn(this, (Pagination.__proto__ || Object.getPrototypeOf(Pagination)).call(this, props));
 
     _this.handleClickPrev = function () {
@@ -17841,10 +17845,7 @@ var Pagination = (_temp$25 = _class$28 = function (_PureComponent) {
       }
     };
 
-    _this.state = {
-      current: props.current || props.defaultCurrent,
-      pageSize: props.pageSize || props.defaultPageSize
-    };
+    _this.state = _this.getStateByProps(props.current || props.defaultCurrent, props.pageSize || props.defaultPageSize, props.total);
     return _this;
   }
 
@@ -17854,18 +17855,53 @@ var Pagination = (_temp$25 = _class$28 = function (_PureComponent) {
   createClass(Pagination, [{
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
-      var state = {};
-      if (typeof nextProps.current !== 'undefined') {
+      // const state = {
+      //   current: this.state.current,
+      //   pageSize: this.state.pageSize,
+      // };
+      // if (typeof nextProps.current !== 'undefined') {
+      //   assign(state, {
+      //     current: nextProps.current,
+      //   });
+      // }
+      // if (typeof nextProps.pageSize !== 'undefined') {
+      //   assign(state, {
+      //     pageSize: nextProps.pageSize,
+      //   });
+      // }
+      // const lastPage = Math.ceil(nextProps.total / state.pageSize);
+      // if (state.current > lastPage) {
+      //   assign(state, {
+      //     current: lastPage,
+      //   });
+      // }
+      // this.setState(state);
+      this.setState(this.getStateByProps(nextProps.current, nextProps.pageSize, nextProps.total));
+    }
+  }, {
+    key: 'getStateByProps',
+    value: function getStateByProps(current, pageSize, total) {
+      var state = {
+        current: this.state ? this.state.current : 1,
+        pageSize: this.state ? this.state.pageSize : 1
+      };
+      if (typeof current !== 'undefined') {
         objectAssign$1(state, {
-          current: nextProps.current
+          current: current
         });
       }
-      if (typeof nextProps.pageSize !== 'undefined') {
+      if (typeof pageSize !== 'undefined') {
         objectAssign$1(state, {
-          pageSize: nextProps.pageSize
+          pageSize: pageSize
         });
       }
-      this.setState(state);
+      var lastPage = Math.ceil(total / state.pageSize);
+      if (state.current > lastPage) {
+        objectAssign$1(state, {
+          current: lastPage
+        });
+      }
+      return state;
     }
   }, {
     key: 'getItemProps',
@@ -17886,76 +17922,89 @@ var Pagination = (_temp$25 = _class$28 = function (_PureComponent) {
     key: 'renderItems',
     value: function renderItems() {
       var total = this.props.total;
-      var _state = this.state,
-          current = _state.current,
-          pageSize = _state.pageSize;
+      var pageSize = this.state.pageSize;
 
       var items = [];
       var firstPage = 1;
       var lastPage = Math.ceil(total / pageSize);
+      var current = this.state.current > lastPage ? lastPage : this.state.current;
 
-      var start = void 0;
-      var end = void 0;
-      if (current === firstPage) {
-        start = firstPage + 1;
-        end = firstPage + 1;
-      } else if (current === lastPage) {
-        start = lastPage - 1;
-        end = lastPage - 1;
-      } else {
-        start = current;
-        end = current;
-      }
-      while (true) {
-        if (end - start >= 3 || start <= firstPage + 1 && end >= lastPage - 1) break;
-        if (start > firstPage + 1) start -= 1;
-        if (end < lastPage - 1) end += 1;
-      }
+      if (total > 1) {
+        var start = void 0;
+        var end = void 0;
+        if (current === firstPage) {
+          start = firstPage + 1;
+          end = firstPage + 1;
+        } else if (current === lastPage) {
+          start = lastPage - 1;
+          end = lastPage - 1;
+        } else {
+          start = current;
+          end = current;
+        }
+        while (true) {
+          if (end - start >= 3 || start <= firstPage + 1 && end >= lastPage - 1) break;
+          if (start > firstPage + 1) start -= 1;
+          if (end < lastPage - 1) end += 1;
+        }
 
-      items.push(React$1.createElement(
-        'li',
-        { key: firstPage },
-        React$1.createElement(
-          'button',
-          this.getItemProps(firstPage),
-          firstPage
-        )
-      ));
-      if (start !== firstPage + 1 && start !== firstPage) {
         items.push(React$1.createElement(
           'li',
-          { key: 'front', className: styles$13.pagination__ellipsis },
-          React$1.createElement(Icon, { name: 'ellipsis', size: 12 })
-        ));
-      }
-      for (var i = start; i <= end; i += 1) {
-        var btnProps = this.getItemProps(i);
-        items.push(React$1.createElement(
-          'li',
-          { key: i },
+          { key: firstPage },
           React$1.createElement(
             'button',
-            btnProps,
-            i
+            this.getItemProps(firstPage),
+            firstPage
+          )
+        ));
+        if (start !== firstPage + 1 && start !== firstPage) {
+          items.push(React$1.createElement(
+            'li',
+            { key: 'front', className: styles$13.pagination__ellipsis },
+            React$1.createElement(Icon, { name: 'ellipsis', size: 12 })
+          ));
+        }
+        for (var i = start; i <= end; i += 1) {
+          var btnProps = this.getItemProps(i);
+          items.push(React$1.createElement(
+            'li',
+            { key: i },
+            React$1.createElement(
+              'button',
+              btnProps,
+              i
+            )
+          ));
+        }
+        if (end !== lastPage - 1 && end !== lastPage) {
+          items.push(React$1.createElement(
+            'li',
+            { key: 'back', className: styles$13.pagination__ellipsis },
+            React$1.createElement(Icon, { name: 'ellipsis', size: 12 })
+          ));
+        }
+        items.push(React$1.createElement(
+          'li',
+          { key: lastPage },
+          React$1.createElement(
+            'button',
+            this.getItemProps(lastPage),
+            lastPage
+          )
+        ));
+      } else if (total === 1) {
+        var _btnProps = this.getItemProps(1);
+        items.push(React$1.createElement(
+          'li',
+          { key: 1 },
+          React$1.createElement(
+            'button',
+            _btnProps,
+            '1'
           )
         ));
       }
-      if (end !== lastPage - 1 && end !== lastPage) {
-        items.push(React$1.createElement(
-          'li',
-          { key: 'back', className: styles$13.pagination__ellipsis },
-          React$1.createElement(Icon, { name: 'ellipsis', size: 12 })
-        ));
-      }
-      items.push(React$1.createElement(
-        'li',
-        { key: lastPage },
-        React$1.createElement(
-          'button',
-          this.getItemProps(lastPage),
-          lastPage
-        )
-      ));
+
       return React$1.createElement(
         'ul',
         { className: styles$13.pagination__pages },
@@ -18050,7 +18099,6 @@ var Pagination = (_temp$25 = _class$28 = function (_PureComponent) {
     value: function render() {
       var _classnames2;
 
-      console.info('render');
       var size = this.props.size;
 
       var smallSize = size === 'small';
