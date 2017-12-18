@@ -49,10 +49,6 @@ describe('cardInput-test-describe----------', () => {
   it('propTypes  can do', () => {
     const props = {
       value: '1234-1234-1234-1234',
-      onChange: (e) => {
-        const value = e.target.value;
-        app.setState({ value });
-      },
     };
     const app = shallow(<CardInput {...props} />);
     expect(app.find('input').first().hasClass(styles['input__normal'])).to.equal(true);// normal size
