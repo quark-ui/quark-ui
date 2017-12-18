@@ -19,7 +19,7 @@ export default class PopconfirmDemo extends Component {
     return (
       <div>
         <div className={styles['top-tooltip']}>
-          <div className={styles['top-tooltip-div']}><Popconfirm content={warning} placement="topLeft" handleOkClickTrigger={this.handleOkClickTrigger} ><Button type="secondary">上左</Button></Popconfirm></div>
+          <div className={styles['top-tooltip-div']}><Popconfirm content={warning} placement="topLeft" handleOkClickTrigger={this.handleOkClickTrigger} ><Button type="secondary">上左,有ok事件</Button></Popconfirm></div>
           <div className={styles['top-tooltip-div']}><Popconfirm content={warning} placement="top" action="click" handleOkClickTrigger={this.handleOkClickTrigger} confirmVisable = {this.state.visible}><Button type="secondary">点击</Button></Popconfirm></div>
           <div className={styles['top-tooltip-div']}><Popconfirm content={ele}   placement="topRight" ><Button type="secondary">上右</Button></Popconfirm></div>
         </div>

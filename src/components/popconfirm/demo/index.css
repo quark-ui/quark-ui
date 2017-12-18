@@ -2,7 +2,7 @@
     margin-left: 110px;
 }
 button{
-    width: 60px;
+    min-width: 60px;
 }
 .left-tooltip{
     float: left;

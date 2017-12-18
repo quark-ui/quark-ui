@@ -23,7 +23,7 @@ class Popconfirm extends PureComponent {
     placement : 'top',
     content : '',
     confirmVisable : undefined,
-    handleOkClickTrigger (){}
+    handleOkClickTrigger : null
   }
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
@@ -63,21 +63,20 @@ class Popconfirm extends PureComponent {
   }
 
   onHandleCancleClickTrigger = ()=>{
-    console.log('111111111');
-    // off(document.body, 'click', this.checkClosable);
-    // this.props.onPopupVisibleChange(false);
     this.setState({
       visible: false,
     });
   }
 
   onHandleOkClickTrigger = () =>{
-    // console.log(this.state.visible,88888,this.props.confirmVisable,7777);
     if(this.props.handleOkClickTrigger){
-      // console.log(55555555555);
       this.props.handleOkClickTrigger();
       this.setState({
         visible: this.props.confirmVisable,
+      });
+    }else{
+      this.setState({
+        visible: false,
       });
     }
   }
@@ -103,27 +102,9 @@ class Popconfirm extends PureComponent {
       </div>
     </div>)
     }
-    
-
-    // let popconfirm = {
-    //   action : action,
-    //   placement : placement,
-    //   onPopupVisibleChange : this.onPopupVisibleChange,
-    //   popovers : (<div  className={styles['popconfirm']}>
-    //       <div>{content}</div>
-    //       <div className={styles['popconfirm--popup--footer']}>
-    //         <Button size='small' type="secondary" onClick={this.onHandleCancleClickTrigger}>取消</Button>
-    //         <div className={styles['popconfirm-btn']}><Button size='small' type="primary" onClick={this.onHandleOkClickTrigger} >确定</Button></div>
-            
-    //       </div>   
-    //     </div>)
-    // }
-    
 
     return (
       <Trigger {...popcontent}>{children}</Trigger>
-      // <Popover {...popconfirm} >{children}</Popover>
-      
     );
   }
 }

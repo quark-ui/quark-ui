@@ -7,11 +7,13 @@ import {shallow, mount, render} from 'enzyme';
 import {expect,should} from 'chai';
 import Popover from  '../Popover';
 import styles from '../Popover.css';
+import styles2 from '../../animation/Animation.css';
 
 describe('Popover test',()=>{
   it('Popover is ok',()=>{
     const popover = mount(<Popover />);
-    expect(popover.hasClass(styles['popover--popup'])).to.equal(true);
+    let option = global.document.body.getElementsByClassName(`${styles['popover--popup']}`);
+    expect(option.length).to.equal(0);
   });
   it('Popover placement render is ok',()=>{
     const props = {
@@ -23,21 +25,26 @@ describe('Popover test',()=>{
     popover.find(`p`).simulate('click');
     
     let option = global.document.body.getElementsByClassName(`${styles['popover--popup']}`);
-    console.log(option.length,666);
+    let option2 = global.document.body.getElementsByClassName(`${styles2['fade--entering']}`);
     expect(option.length).to.equal(1);
-    // popover.find(`p`).simulate('click');
-    global.document.body.click();
-    console.log(option.length,777);
+    expect(option2.length).to.equal(1);
+    popover.find(`p`).simulate('click');
+    expect(option.length).to.equal(1);
+    expect(option2.length).to.equal(0);
   });
   it('Popover title render is ok',()=>{
     const props = {
       title : 'popover title',
       popovers: 'popover test',
-      placement : 'top'
+      placement : 'top',
+      action : 'click'
     }
     const popover = mount(<Popover {...props} ><p>aaaa</p></Popover>);
-    expect(popover.hasClass(styles['popover--popup-title'])).to.equal(true);
+    popover.find(`p`).simulate('click');
+    let option2 = global.document.body.getElementsByClassName(`${styles2['fade--entering']}`);
+    expect(option2[0].getElementsByClassName(`${styles['popover--popup--title']}`)[0].innerHTML).to.equal('popover title');
   });
+  //关闭按钮生效
   it('Popover button render is ok',()=>{
     const props = {
       title:'test',
@@ -46,19 +53,12 @@ describe('Popover test',()=>{
       hasButton : true,
       action:'click'
     }
-    let popover = mount(<Popover {...props} ><p>aaaa</p></Popover>);
-    console.log(popover.debug(),1111);
+    let popover = mount(<Popover {...props} ><p>bbb</p></Popover>);
     popover.find(`p`).simulate('click');
-    // popover.find('.Trigger__trigger--wrap___38U4l').simulate('click');
-
-    const cl = styles['popover--popup'];
-    // console.log(popover.debug());
-
     let option = global.document.body.getElementsByClassName(`${styles['popover--popup']}`);
-    console.log(option.length,999);
-    console.log(option[option.length-1].getElementsByTagName(`a`),333333);
-    expect(option[option.length-1].contains(`.${styles['popover--popup--footer']}`)).to.equal(true);
-    option[option.length-1].getElementsByTagName(`a`).simulate('click');
-    console.log(option.length,4444);
+    let option2 = global.document.body.getElementsByClassName(`${styles2['fade--entering']}`);
+    let button = option[option.length-1].getElementsByTagName(`a`)[0];
+    button.click();
+    expect(option2.length).to.equal(0);
   });
 });
