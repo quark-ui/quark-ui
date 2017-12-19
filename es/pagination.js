@@ -1293,7 +1293,7 @@ var Pagination = (_temp = _class = function (_PureComponent) {
       var lastPage = Math.ceil(total / pageSize);
       var current = this.state.current > lastPage ? lastPage : this.state.current;
 
-      if (total > 1) {
+      if (lastPage > 1) {
         var start = void 0;
         var end = void 0;
         if (current === firstPage) {
@@ -1356,7 +1356,7 @@ var Pagination = (_temp = _class = function (_PureComponent) {
             lastPage
           )
         ));
-      } else if (total === 1) {
+      } else if (lastPage === 1) {
         var _btnProps = this.getItemProps(1);
         items.push(React.createElement(
           'li',
