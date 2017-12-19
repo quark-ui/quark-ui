@@ -29,7 +29,13 @@ export { default as Message } from './components/message/';
 
 export { default as Modal } from './components/modal/';
 
+export { default as Notification } from './components/notification/';
+
 export { default as Pagination } from './components/pagination/';
+
+export { default as Popover } from './components/popover/';
+
+export { default as Popconfirm } from './components/popconfirm/';
 
 export { default as Progress } from './components/progress/';
 
@@ -43,8 +49,9 @@ export { default as Steps } from './components/steps/';
 
 export { default as Tabs } from './components/tabs/';
 
+export { default as Tooltip } from './components/tooltip/';
+
 export { default as Trigger } from './components/trigger/';
 
 export { default as Upload } from './components/upload/';
 
-export { default as Notification } from './components/notification/';

@@ -70,6 +70,18 @@ export default {
         name: 'Notification',
         icon: 'notification',
         title: '通知提示',
+      }, {
+        name: 'Tooltip',
+        icon: 'tooltip',
+        title: '文字提示',
+      }, {
+        name: 'Popover',
+        icon: 'popover',
+        title: '气泡卡片',
+      }, {
+        name: 'Popconfirm',
+        icon: 'popconfirm',
+        title: '气泡确认框',
       }],
   }, {
     group: 'Navigation',
