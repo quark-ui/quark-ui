@@ -48,9 +48,6 @@ class Breadcrumb extends PureComponent {
   render() {
     const { children, separator, hasBackIcon, hasHomeIcon, ...restProps } = this.props;
     const crumbs = React.Children.map(children, (ele, index) => {
-      if (!ele) {
-        return ele;
-      }
 
       return cloneElement(ele, { separator, key: index });
     });

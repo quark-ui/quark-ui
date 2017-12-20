@@ -46,6 +46,7 @@ describe('breadcrumb-test-describe----------', () => {
       <Breadcrumb hasBackIcon>
         <Breadcrumb.Item>home</Breadcrumb.Item>
         <Breadcrumb.Item>ccc</Breadcrumb.Item>
+        <Breadcrumb.Item href="https://www.baidu.com/">ccc</Breadcrumb.Item>
       </Breadcrumb>);
     expect(app.find(`.${styles['breadcrumb--icon']}`).children()).to.have.length(1);
     app.find('Icon').simulate('click');
@@ -67,7 +68,6 @@ describe('breadcrumb-test-describe----------', () => {
       </Breadcrumb>);
     expect(app.find(`.${styles['breadcrumb']}`).children()).to.have.length(2);
   });
-
 });
 
 describe('breadcrumbitem-test-describe----------', () => {
