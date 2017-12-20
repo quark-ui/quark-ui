@@ -1,3 +1,10 @@
+//npm run test-unit './src/components/pagination/test/pagination.test.js'
+
+/**
+ * Menu test
+ * @author yanwei
+ */
+
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { expect } from 'chai';
