@@ -184,7 +184,7 @@ class Pagination extends PureComponent {
     const lastPage = Math.ceil(total / pageSize);
     const current = this.state.current > lastPage ? lastPage : this.state.current;
 
-    if (total > 1) {
+    if (lastPage > 1) {
       let start;
       let end;
       if (current === firstPage) {
@@ -229,7 +229,7 @@ class Pagination extends PureComponent {
           <button {...this.getItemProps(lastPage)}>{lastPage}</button>
         </li>,
       );
-    } else if (total === 1) {
+    } else if (lastPage === 1) {
       const btnProps = this.getItemProps(1);
       items.push(
         <li key={1}>

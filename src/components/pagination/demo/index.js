@@ -12,7 +12,6 @@ export default class PaginationDemo extends Component {
         <h3>基本</h3>
         <p>基础分页。</p>
         <Pagination current={current} total={0} />
-        <Pagination current={current} total={1} />
         <Pagination current={current} total={50} />
         <h3>更多分页</h3>
         <Pagination

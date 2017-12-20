@@ -1,0 +1,87 @@
+/**
+ * Popconfirm Style
+ * @author lhf
+ */
+.popconfirm {
+    padding: 10px;
+}
+.popconfirm--popup{
+	/* padding: 5px 8px; */
+	background: rgba(255,255,255,1);
+    color: #333;
+    border: 1px solid #cecece;
+	border-radius: 3px;
+}
+.popconfirm .popconfirm--popup--footer{
+	/* margin: 0px -10px; */
+	/* padding-right: 10px; */
+    text-align: right;
+    margin-top: 20px;
+}
+.popconfirm .popconfirm--popup--footer .popconfirm-btn{
+    display: inline-block;
+    margin-left: 10px;
+}
+.popconfirm--popup .popconfirm--popup--arrow{
+	position: absolute;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+}
+.popconfirm--popup .popconfirm--popup--inner{
+	/* padding: 10px 0px; */
+}
+.popconfirm--popup--left,.popconfirm--popup--leftTop,.popconfirm--popup--leftBottom{
+	margin-right: 8px;
+}
+.popconfirm--popup--right,.popconfirm--popup--rightTop,.popconfirm--popup--rightBottom{
+	margin-left: 8px;
+}
+.popconfirm--popup--top,.popconfirm--popup--topLeft,.popconfirm--popup--topRight{
+	margin-top: -5px;
+	margin-bottom: 8px;
+}
+.popconfirm--popup--bottom,.popconfirm--popup--bottomLeft,.popconfirm--popup--bottomRight{
+	margin-top: 8px;
+}
+.popconfirm--popup--left .popconfirm--popup--arrow,.popconfirm--popup--leftTop .popconfirm--popup--arrow,.popconfirm--popup--leftBottom .popconfirm--popup--arrow{
+	right: 3px;
+    border-width: 5px 0 5px 5px;
+    border-left-color: rgba(206, 206, 206,.75);
+}
+.popconfirm--popup--right .popconfirm--popup--arrow,.popconfirm--popup--rightTop .popconfirm--popup--arrow,.popconfirm--popup--rightBottom .popconfirm--popup--arrow{
+	left: 3px;
+    border-width: 5px 5px 5px 0;
+    border-right-color: rgba(206, 206, 206,.75);
+}
+.popconfirm--popup--top .popconfirm--popup--arrow,.popconfirm--popup--topLeft .popconfirm--popup--arrow,.popconfirm--popup--topRight .popconfirm--popup--arrow{
+	bottom: 3px;
+    border-width: 5px 5px 0 5px;
+    border-top-color: rgba(206, 206, 206,.75);
+}
+.popconfirm--popup--bottom .popconfirm--popup--arrow,.popconfirm--popup--bottomLeft .popconfirm--popup--arrow,.popconfirm--popup--bottomRight .popconfirm--popup--arrow{
+	top: 3px;
+    border-width: 0 5px 5px 5px;
+    border-bottom-color: rgba(206, 206, 206, 0.75);
+}
+.popconfirm--popup--left .popconfirm--popup--arrow,.popconfirm--popup--right .popconfirm--popup--arrow{
+	top: 50%;
+	margin-top: -5px;
+}
+.popconfirm--popup--leftTop .popconfirm--popup--arrow,.popconfirm--popup--rightTop .popconfirm--popup--arrow{
+	top: 3px;
+}
+.popconfirm--popup--leftBottom .popconfirm--popup--arrow,.popconfirm--popup--rightBottom .popconfirm--popup--arrow{
+	bottom: 3px;
+}
+.popconfirm--popup--top .popconfirm--popup--arrow,.popconfirm--popup--bottom .popconfirm--popup--arrow{
+	left: 50%;
+	margin-left: -5px;
+}
+.popconfirm--popup--topLeft .popconfirm--popup--arrow,.popconfirm--popup--bottomLeft .popconfirm--popup--arrow{
+	left: 5px;
+}
+.popconfirm--popup--topRight .popconfirm--popup--arrow,.popconfirm--popup--bottomRight .popconfirm--popup--arrow{
+	right: 5px;
+}

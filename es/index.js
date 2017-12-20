@@ -17766,16 +17766,356 @@ var Modal = (_dec$1 = renderTo(), _dec$1(_class$26 = (_temp$24 = _class2$3 = fun
 
 }, _temp$24)) || _class$26);
 
-var styles$13 = { "pagination--small": "_2CnmpyB", "pagination__jumperField": "_280nkVW", "pagination__jumper": "wBezPz9", "pagination__sizeChanger": "_3O0s4JU", "pagination__total": "_2KQ0PhC", "pagination__item": "jsRFs8b", "pagination__item--active": "_1ZyqWB7", "pagination__pages": "cfbKU8w", "pagination__ctrl": "_2tvnb-l", "pagination--normal": "_3HZDVl5", "pagination__ellipsis": "_13KUpSV", "pagination": "_1L_-sT1" };
+var styles$13 = { "notification--box": "_3m7N18w", "notification--box--topLeft": "bOeCbyd", "notification--box--topRight": "_2r6sINq", "notification--box--bottomLeft": "_3RZZMGw", "notification--box--bottomRight": "_22LQ2CL", "notification": "_2wBYzOy", "notification--content": "by1UuYv", "notification--icon": "_28Fcd3T", "notification__mes": "mtwzodI", "notification__des": "_2o7ulNB", "notification__icon": "_2t9Kaoo", "notification--close": "_2FMETPm", "notification__btn": "YoIwia2", "notification--icon--info": "_3qYprwU", "notification--icon--success": "_2_fUG0w", "notification--icon--error": "bzrjmaP", "notification--icon--warning": "_2g06tvg" };
+
+var _class$29;
+var _temp$26;
+
+/**
+ * Alert Component
+ * @author yanwei
+ */
+var Notice = (_temp$26 = _class$29 = function (_PureComponent) {
+  inherits(Notice, _PureComponent);
+
+  function Notice(props) {
+    classCallCheck(this, Notice);
+
+    var _this = possibleConstructorReturn(this, (Notice.__proto__ || Object.getPrototypeOf(Notice)).call(this, props));
+
+    _this.clearCloseTimer = function () {
+      if (_this.closeTimer) {
+        clearTimeout(_this.closeTimer);
+        _this.closeTimer = null;
+      }
+    };
+
+    _this.handleClose = function () {
+      _this.clearCloseTimer();
+      _this.props.onClose();
+    };
+
+    _this.state = {};
+    return _this;
+  }
+
+  // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
+
+
+  createClass(Notice, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      if (this.props.duration) {
+        this.closeTimer = setTimeout(function () {
+          _this2.handleClose();
+        }, this.props.duration * 1000);
+      }
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      this.clearCloseTimer();
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _classnames, _classnames2;
+
+      var props = this.props;
+      var type = props.type,
+          icon = props.icon,
+          btn = props.btn,
+          children = props.children;
+
+      var cls = classnames((_classnames = {}, defineProperty(_classnames, styles$13.notification, 1), defineProperty(_classnames, styles$13['notification--icon'], type || icon), _classnames));
+
+      return React$1.createElement(
+        'div',
+        { className: cls, style: props.style },
+        React$1.createElement(
+          'div',
+          { className: styles$13['notification--content'] },
+          type ? React$1.createElement(Icon, { className: classnames((_classnames2 = {}, defineProperty(_classnames2, styles$13.notification__icon, 1), defineProperty(_classnames2, styles$13['notification--icon--' + type], type), _classnames2)),
+            name: type, size: 24 }) : null,
+          icon || null,
+          React$1.createElement(
+            'div',
+            { className: styles$13.notification__mes },
+            props.message
+          ),
+          React$1.createElement(
+            'div',
+            { className: styles$13.notification__des },
+            props.description
+          ),
+          btn ? React$1.createElement(
+            'div',
+            { className: styles$13.notification__btn },
+            btn
+          ) : null
+        ),
+        React$1.createElement(
+          'span',
+          {
+            onClick: this.handleClose,
+            className: styles$13['notification--close']
+          },
+          React$1.createElement(Icon, { name: 'close', size: 14 })
+        )
+      );
+    }
+  }]);
+  return Notice;
+}(PureComponent), _class$29.displayName = 'Notice', _class$29.defaultProps = {
+  onEnd: function onEnd() {},
+  onClose: function onClose() {},
+
+  duration: 4.5
+}, _class$29.propTypes = {
+  message: propTypes.string,
+  description: propTypes.string,
+  duration: propTypes.number,
+  btn: propTypes.node,
+  icon: propTypes.node,
+  onClose: propTypes.func
+}, _temp$26);
 
 var _class$28;
 var _temp$25;
 
 /**
+ * Alert Component
+ * @author yanwei
+ */
+var NotificationBox = (_temp$25 = _class$28 = function (_PureComponent) {
+  inherits(NotificationBox, _PureComponent);
+
+  function NotificationBox(props) {
+    classCallCheck(this, NotificationBox);
+
+    var _this = possibleConstructorReturn(this, (NotificationBox.__proto__ || Object.getPrototypeOf(NotificationBox)).call(this, props));
+
+    _this.add = function (notice) {
+      var key = notice.key || uniqueId_1();
+      objectAssign$1(notice, {
+        key: key
+      });
+
+      _this.setState(function (preState) {
+        var notices = preState.notices;
+        if (!notices.filter(function (v) {
+          return v.key === key;
+        }).length) {
+          return {
+            notices: notices.concat(notice)
+          };
+        }
+        return { notices: notices };
+      });
+    };
+
+    _this.remove = function (key) {
+      _this.setState(function (preState) {
+        return {
+          notices: preState.notices.filter(function (notice) {
+            return notice.key !== key;
+          })
+        };
+      });
+    };
+
+    _this.state = {
+      notices: []
+    };
+    return _this;
+  }
+
+  createClass(NotificationBox, [{
+    key: 'render',
+    value: function render() {
+      var _this2 = this,
+          _classnames;
+
+      var props = this.props;
+      var placement = props.placement,
+          style = props.style;
+
+
+      var Nodes = this.state.notices.map(function (notice) {
+        var onClose = function onClose() {
+          if (notice.onClose) {
+            notice.onClose();
+          }
+          _this2.remove(notice.key);
+        };
+        return React$1.createElement(Notice, _extends({}, notice, { onClose: onClose }));
+      });
+
+      var notificationProps = {
+        style: style,
+        className: classnames((_classnames = {}, defineProperty(_classnames, styles$13['notification--box'], 1), defineProperty(_classnames, styles$13['notification--box--' + placement], placement), _classnames))
+      };
+      return React$1.createElement(
+        'div',
+        notificationProps,
+        Nodes
+      );
+    }
+  }]);
+  return NotificationBox;
+}(PureComponent), _class$28.displayName = 'NotificationBox', _class$28.defaultProps = {}, _class$28.propTypes = {}, _temp$25);
+
+
+NotificationBox.newInstance = function newInstance(properties) {
+  var _ref = properties || {},
+      getContainer = _ref.getContainer,
+      props = objectWithoutProperties(_ref, ['getContainer']);
+
+  var container = document.createElement('div');
+  if (getContainer) {
+    document.getElementById(getContainer).appendChild(container);
+  } else {
+    document.body.appendChild(container);
+  }
+  var DOM = ReactDOM;
+  var notificationBox = DOM.render(React$1.createElement(NotificationBox, props), container);
+
+  return {
+    addNotice: function addNotice(noticeProps) {
+      notificationBox.add(noticeProps);
+    },
+    removeNotice: function removeNotice(key) {
+      notificationBox.remove(key);
+    },
+    destroy: function destroy() {
+      DOM.unmountComponentAtNode(container);
+      if (!getContainer) {
+        document.body.removeChild(container);
+      }
+    }
+  };
+};
+
+/**
+ * Alert Component
+ * @author yan
+ */
+var defaultDuration$1 = 4.5;
+var defaultTop$1 = 24;
+var defaultBottom = 24;
+var defaultPlacement = 'topRight';
+var notificationInstance = {};
+var getContainer$1 = void 0;
+
+function getPlacementStyle(placement) {
+  var style = void 0;
+  switch (placement) {
+    case 'topLeft':
+      style = {
+        left: 0,
+        top: defaultTop$1,
+        bottom: 'auto'
+      };
+      break;
+
+    case 'bottomLeft':
+      style = {
+        left: 0,
+        top: 'auto',
+        bottom: defaultBottom
+      };
+      break;
+
+    case 'bottomRight':
+      style = {
+        right: 0,
+        top: 'auto',
+        bottom: defaultBottom
+      };
+      break;
+
+    default:
+      style = {
+        right: 0,
+        top: defaultTop$1,
+        bottom: 'auto'
+      };
+  }
+  return style;
+}
+
+function getNotificationInstance(placement) {
+
+  if (notificationInstance[placement]) {
+    return notificationInstance[placement];
+  }
+  notificationInstance[placement] = NotificationBox.newInstance({
+    placement: placement,
+    style: getPlacementStyle(placement),
+    getContainer: getContainer$1
+  });
+  return notificationInstance[placement];
+}
+
+var api = {
+  open: function open(parms) {
+    if (!parms.placement) {
+      parms.placement = defaultPlacement;
+    }
+
+    if (parms.duration == undefined) {
+      parms.duration = defaultDuration$1;
+    }
+    getNotificationInstance(parms.placement).addNotice(parms);
+  },
+  close: function close(key) {
+    if (notificationInstance[defaultPlacement]) {
+      notificationInstance[defaultPlacement].removeNotice(key);
+    }
+  },
+  config: function config() {
+    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+    if (options.duration !== undefined) {
+      defaultDuration$1 = options.duration;
+    }
+
+    if (options.top !== undefined) {
+      defaultTop$1 = options.top;
+    }
+
+    if (options.bottom !== undefined) {
+      defaultBottom = options.bottom;
+    }
+
+    if (options.placement !== undefined) {
+      defaultPlacement = options.placement;
+    }
+
+    if (options.getContainer !== undefined) {
+      getContainer$1 = options.getContainer;
+    }
+  },
+  destroy: function destroy() {
+    Object.keys(notificationInstance).forEach(function (key) {
+      notificationInstance[key].destroy();
+      delete notificationInstance[key];
+    });
+  }
+};
+
+var styles$14 = { "pagination--small": "_2CnmpyB", "pagination__jumperField": "_280nkVW", "pagination__jumper": "wBezPz9", "pagination__sizeChanger": "_3O0s4JU", "pagination__total": "_2KQ0PhC", "pagination__item": "jsRFs8b", "pagination__item--active": "_1ZyqWB7", "pagination__pages": "cfbKU8w", "pagination__ctrl": "_2tvnb-l", "pagination--normal": "_3HZDVl5", "pagination__ellipsis": "_13KUpSV", "pagination": "_1L_-sT1" };
+
+var _class$30;
+var _temp$27;
+
+/**
  * Pagination Component
  * @author ryan.bian
  */
-var Pagination = (_temp$25 = _class$28 = function (_PureComponent) {
+var Pagination = (_temp$27 = _class$30 = function (_PureComponent) {
   inherits(Pagination, _PureComponent);
 
   function Pagination(props) {
@@ -17912,7 +18252,7 @@ var Pagination = (_temp$25 = _class$28 = function (_PureComponent) {
 
       var active = current === index;
       return {
-        className: classnames(styles$13.pagination__item, defineProperty({}, styles$13['pagination__item--active'], active)),
+        className: classnames(styles$14.pagination__item, defineProperty({}, styles$14['pagination__item--active'], active)),
         onClick: active ? null : function () {
           return _this2.handleChangeIndex(index);
         }
@@ -17929,7 +18269,7 @@ var Pagination = (_temp$25 = _class$28 = function (_PureComponent) {
       var lastPage = Math.ceil(total / pageSize);
       var current = this.state.current > lastPage ? lastPage : this.state.current;
 
-      if (total > 1) {
+      if (lastPage > 1) {
         var start = void 0;
         var end = void 0;
         if (current === firstPage) {
@@ -17960,7 +18300,7 @@ var Pagination = (_temp$25 = _class$28 = function (_PureComponent) {
         if (start !== firstPage + 1 && start !== firstPage) {
           items.push(React$1.createElement(
             'li',
-            { key: 'front', className: styles$13.pagination__ellipsis },
+            { key: 'front', className: styles$14.pagination__ellipsis },
             React$1.createElement(Icon, { name: 'ellipsis', size: 12 })
           ));
         }
@@ -17979,7 +18319,7 @@ var Pagination = (_temp$25 = _class$28 = function (_PureComponent) {
         if (end !== lastPage - 1 && end !== lastPage) {
           items.push(React$1.createElement(
             'li',
-            { key: 'back', className: styles$13.pagination__ellipsis },
+            { key: 'back', className: styles$14.pagination__ellipsis },
             React$1.createElement(Icon, { name: 'ellipsis', size: 12 })
           ));
         }
@@ -17992,7 +18332,7 @@ var Pagination = (_temp$25 = _class$28 = function (_PureComponent) {
             lastPage
           )
         ));
-      } else if (total === 1) {
+      } else if (lastPage === 1) {
         var _btnProps = this.getItemProps(1);
         items.push(React$1.createElement(
           'li',
@@ -18007,7 +18347,7 @@ var Pagination = (_temp$25 = _class$28 = function (_PureComponent) {
 
       return React$1.createElement(
         'ul',
-        { className: styles$13.pagination__pages },
+        { className: styles$14.pagination__pages },
         items
       );
     }
@@ -18015,7 +18355,7 @@ var Pagination = (_temp$25 = _class$28 = function (_PureComponent) {
     key: 'renderControl',
     value: function renderControl(direction) {
       var ctrlProps = {
-        className: styles$13.pagination__ctrl,
+        className: styles$14.pagination__ctrl,
         onClick: direction === 'prev' ? this.handleClickPrev : this.handleClickNext
       };
       var content = void 0;
@@ -18042,7 +18382,7 @@ var Pagination = (_temp$25 = _class$28 = function (_PureComponent) {
         return React$1.createElement(
           'select',
           {
-            className: styles$13.pagination__sizeChanger,
+            className: styles$14.pagination__sizeChanger,
             value: pageSize,
             onChange: this.handleChangeIndexPageSize
           },
@@ -18064,13 +18404,13 @@ var Pagination = (_temp$25 = _class$28 = function (_PureComponent) {
 
       var textFieldProps = {
         type: 'text',
-        className: styles$13.pagination__jumperField,
+        className: styles$14.pagination__jumperField,
         onKeyPress: this.handleJumper
       };
       if (showQuickJumper) {
         return React$1.createElement(
           'span',
-          { className: styles$13.pagination__jumper },
+          { className: styles$14.pagination__jumper },
           '\u8DF3\u81F3 ',
           React$1.createElement('input', textFieldProps),
           ' \u9875'
@@ -18088,7 +18428,7 @@ var Pagination = (_temp$25 = _class$28 = function (_PureComponent) {
       if (showTotal) {
         return React$1.createElement(
           'span',
-          { className: styles$13.pagination__total },
+          { className: styles$14.pagination__total },
           '\u5171\u8BA1 ' + total + ' \u6761'
         );
       }
@@ -18103,7 +18443,7 @@ var Pagination = (_temp$25 = _class$28 = function (_PureComponent) {
 
       var smallSize = size === 'small';
       var wrapProps = {
-        className: classnames(styles$13.pagination, (_classnames2 = {}, defineProperty(_classnames2, styles$13['pagination--small'], smallSize), defineProperty(_classnames2, styles$13['pagination--normal'], !smallSize), _classnames2))
+        className: classnames(styles$14.pagination, (_classnames2 = {}, defineProperty(_classnames2, styles$14['pagination--small'], smallSize), defineProperty(_classnames2, styles$14['pagination--normal'], !smallSize), _classnames2))
       };
       return React$1.createElement(
         'div',
@@ -18118,7 +18458,7 @@ var Pagination = (_temp$25 = _class$28 = function (_PureComponent) {
     }
   }]);
   return Pagination;
-}(PureComponent), _class$28.displayName = 'Pagination', _class$28.defaultProps = {
+}(PureComponent), _class$30.displayName = 'Pagination', _class$30.defaultProps = {
   current: undefined,
   defaultCurrent: 1,
   total: 0,
@@ -18132,7 +18472,7 @@ var Pagination = (_temp$25 = _class$28 = function (_PureComponent) {
   pageSizeOptions: [10, 20, 30, 40],
   showQuickJumper: false,
   size: '',
-  showTotal: false }, _class$28.propTypes = {
+  showTotal: false }, _class$30.propTypes = {
   current: propTypes.number,
   defaultCurrent: propTypes.number,
   total: propTypes.number,
@@ -18145,7 +18485,325 @@ var Pagination = (_temp$25 = _class$28 = function (_PureComponent) {
   showQuickJumper: propTypes.bool,
   size: propTypes.string,
   showTotal: propTypes.bool
-}, _temp$25);
+}, _temp$27);
+
+var styles$15 = { "popover": "u4IfOqM", "popover--popup": "uvM55OW", "popover--popup--title": "_3Z-3JOj", "popover--popup--footer": "g5I_0mc", "popover--popup--arrow": "_1ziGm4Y", "popover--popup--inner": "Q2bNQ6s", "popover--popup--left": "bQnXrx4", "popover--popup--leftTop": "_384M3CI", "popover--popup--leftBottom": "_1k6WArE", "popover--popup--right": "_1SxehkN", "popover--popup--rightTop": "_25sZbz2", "popover--popup--rightBottom": "_2OR9ldJ", "popover--popup--top": "_1W5S99R", "popover--popup--topLeft": "LdFw74E", "popover--popup--topRight": "_2kZVKPB", "popover--popup--bottom": "_1kIW2Lp", "popover--popup--bottomLeft": "gjhh1gR", "popover--popup--bottomRight": "_2-gECOY" };
+
+var Placements$2 = {
+  left: {
+    points: ['cr', 'cl']
+  },
+  right: {
+    points: ['cl', 'cr']
+  },
+  top: {
+    points: ['bc', 'tc']
+  },
+  bottom: {
+    points: ['tc', 'bc']
+  },
+  leftTop: {
+    points: ['tr', 'tl']
+  },
+  leftBottom: {
+    points: ['br', 'bl']
+  },
+  rightTop: {
+    points: ['tl', 'tr']
+  },
+  rightBottom: {
+    points: ['bl', 'br']
+  },
+  topLeft: {
+    points: ['bl', 'tl']
+  },
+  topRight: {
+    points: ['br', 'tr']
+  },
+  bottomRight: {
+    points: ['tr', 'br']
+  },
+  bottomLeft: {
+    points: ['tl', 'bl']
+  }
+};
+
+var _class$31;
+var _temp$28;
+
+/**
+ * Popover Component
+ * @author lhf
+ */
+var Popover = (_temp$28 = _class$31 = function (_PureComponent) {
+  inherits(Popover, _PureComponent);
+
+  function Popover(props) {
+    classCallCheck(this, Popover);
+
+    var _this = possibleConstructorReturn(this, (Popover.__proto__ || Object.getPrototypeOf(Popover)).call(this, props));
+
+    _this.handleClickTrigger = function () {
+      // off(document.body, 'click', this.checkClosable);
+      // this.props.onPopupVisibleChange(false);
+      _this.setState({
+        visible: false
+      });
+    };
+
+    _this.onPopupVisibleChange = function (visible) {
+      // console.log('onPopupVisibleChange', visible);
+      _this.setState({
+        visible: visible
+      });
+    };
+
+    _this.state = { visible: false };
+
+    return _this;
+  }
+
+  createClass(Popover, [{
+    key: 'render',
+    value: function render() {
+      var _props = this.props,
+          action = _props.action,
+          placement = _props.placement,
+          title = _props.title,
+          hasButton = _props.hasButton,
+          popovers = _props.popovers,
+          children = _props.children;
+
+      var poptitle = title ? React$1.createElement(
+        'p',
+        { className: styles$15['popover--popup-title'] },
+        title
+      ) : '';
+      // const button = hasButton ? (<div><Button size='small' type="secondary" onClick={this.handleClickTrigger}>关闭</Button></div>) : '';
+      var button = hasButton ? React$1.createElement(
+        'a',
+        { href: 'javascript:void(0);', onClick: this.handleClickTrigger },
+        '\u5173\u95ED'
+      ) : '';
+
+      var stylename = classnames(styles$15['popover--popup'], styles$15['popover--popup--' + placement]);
+
+      var popoverProp = {
+        action: action,
+        placement: Placements$2[placement].points,
+        mouseLeaveDelay: 100,
+        popup: React$1.createElement(
+          'div',
+          { className: stylename },
+          React$1.createElement('div', { className: styles$15['popover--popup--arrow'] }),
+          React$1.createElement(
+            'div',
+            { className: styles$15['popover--popup--inner'] },
+            title ? React$1.createElement(
+              'p',
+              { className: styles$15['popover--popup--title'] },
+              title
+            ) : '',
+            React$1.createElement(
+              'div',
+              null,
+              popovers
+            ),
+            hasButton ? React$1.createElement(
+              'div',
+              { className: styles$15['popover--popup--footer'] },
+              button
+            ) : ''
+          )
+        )
+      };
+      if (hasButton) {
+        popoverProp.onPopupVisibleChange = this.onPopupVisibleChange;
+        popoverProp.popupVisible = this.state.visible;
+      }
+
+      return React$1.createElement(
+        Trigger,
+        popoverProp,
+        children
+      );
+    }
+  }]);
+  return Popover;
+}(PureComponent), _class$31.displayName = 'Popover', _class$31.defaultProps = {
+  title: '',
+  action: 'hover',
+  placement: 'top',
+  hasButton: false,
+  popovers: ''
+}, _class$31.propTypes = {
+  title: propTypes.oneOfType([propTypes.string, propTypes.element]),
+  action: propTypes.oneOf(['click', 'hover']),
+  placement: propTypes.oneOf(['left', 'right', 'top', 'bottom', 'bottomLeft', 'bottomRight', 'leftTop', 'leftBottom', 'topLeft', 'topRight', 'rightTop', 'rightBottom']),
+  hasButton: propTypes.bool,
+  popovers: propTypes.oneOfType([propTypes.string, propTypes.element])
+}, _temp$28);
+
+var styles$16 = { "popconfirm": "_3wZr8G1", "popconfirm--popup": "_2HKPRsi", "popconfirm--popup--footer": "_3zS3sqP", "popconfirm-btn": "_32U_ZXw", "popconfirm--popup--arrow": "_2bXnDTL", "popconfirm--popup--inner": "_2LzFVfh", "popconfirm--popup--left": "ljhTU5P", "popconfirm--popup--leftTop": "_2EE4LwJ", "popconfirm--popup--leftBottom": "pRC-45p", "popconfirm--popup--right": "_2WzOwhv", "popconfirm--popup--rightTop": "_38n-jE-", "popconfirm--popup--rightBottom": "_14w_NeL", "popconfirm--popup--top": "_1dyL6c3", "popconfirm--popup--topLeft": "_1J0_phe", "popconfirm--popup--topRight": "_2DLOrwJ", "popconfirm--popup--bottom": "_3Jpla17", "popconfirm--popup--bottomLeft": "_23mX_di", "popconfirm--popup--bottomRight": "_2LHhMyX" };
+
+var Placements$3 = {
+  left: {
+    points: ['cr', 'cl']
+  },
+  right: {
+    points: ['cl', 'cr']
+  },
+  top: {
+    points: ['bc', 'tc']
+  },
+  bottom: {
+    points: ['tc', 'bc']
+  },
+  leftTop: {
+    points: ['tr', 'tl']
+  },
+  leftBottom: {
+    points: ['br', 'bl']
+  },
+  rightTop: {
+    points: ['tl', 'tr']
+  },
+  rightBottom: {
+    points: ['bl', 'br']
+  },
+  topLeft: {
+    points: ['bl', 'tl']
+  },
+  topRight: {
+    points: ['br', 'tr']
+  },
+  bottomRight: {
+    points: ['tr', 'br']
+  },
+  bottomLeft: {
+    points: ['tl', 'bl']
+  }
+};
+
+var _class$32;
+var _temp$29;
+
+/**
+ * Popconfirm Component
+ * @author lhf
+ */
+var Popconfirm = (_temp$29 = _class$32 = function (_PureComponent) {
+  inherits(Popconfirm, _PureComponent);
+
+  function Popconfirm(props) {
+    classCallCheck(this, Popconfirm);
+
+    var _this = possibleConstructorReturn(this, (Popconfirm.__proto__ || Object.getPrototypeOf(Popconfirm)).call(this, props));
+
+    _this.onPopupVisibleChange = function (visible) {
+      _this.setState({
+        visible: visible
+      });
+    };
+
+    _this.onHandleCancleClickTrigger = function () {
+      _this.setState({
+        visible: false
+      });
+    };
+
+    _this.onHandleOkClickTrigger = function () {
+      if (_this.props.handleOkClickTrigger) {
+        _this.props.handleOkClickTrigger();
+        _this.setState({
+          visible: _this.props.confirmVisable
+        });
+      } else {
+        _this.setState({
+          visible: false
+        });
+      }
+    };
+
+    _this.state = { visible: false };
+    return _this;
+  }
+
+  // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
+
+
+  createClass(Popconfirm, [{
+    key: 'render',
+    value: function render() {
+      var _props = this.props,
+          action = _props.action,
+          placement = _props.placement,
+          content = _props.content,
+          confirmVisable = _props.confirmVisable,
+          children = _props.children;
+
+
+      var stylename = classnames(styles$16['popconfirm'], styles$16['popconfirm--popup'], styles$16['popconfirm--popup--' + placement]);
+      var popcontent = {
+        action: action,
+        placement: Placements$3[placement].points,
+        mouseLeaveDelay: 100,
+        onPopupVisibleChange: this.onPopupVisibleChange,
+        popupVisible: this.state.visible,
+        popup: React$1.createElement(
+          'div',
+          { className: stylename },
+          React$1.createElement('div', { className: styles$16['popconfirm--popup--arrow'] }),
+          React$1.createElement(
+            'div',
+            { className: styles$16['popconfirm--popup--inner'] },
+            React$1.createElement(
+              'div',
+              null,
+              content
+            ),
+            React$1.createElement(
+              'div',
+              { className: styles$16['popconfirm--popup--footer'] },
+              React$1.createElement(
+                Button,
+                { size: 'small', type: 'secondary', onClick: this.onHandleCancleClickTrigger },
+                '\u53D6\u6D88'
+              ),
+              React$1.createElement(
+                'div',
+                { className: styles$16['popconfirm-btn'] },
+                React$1.createElement(
+                  Button,
+                  { size: 'small', type: 'primary', onClick: this.onHandleOkClickTrigger },
+                  '\u786E\u5B9A'
+                )
+              )
+            )
+          )
+        )
+      };
+
+      return React$1.createElement(
+        Trigger,
+        popcontent,
+        children
+      );
+    }
+  }]);
+  return Popconfirm;
+}(PureComponent), _class$32.displayName = 'Popconfirm', _class$32.defaultProps = {
+  action: 'hover',
+  placement: 'top',
+  content: '',
+  confirmVisable: undefined,
+  handleOkClickTrigger: null }, _class$32.propTypes = {
+  action: propTypes.oneOf(['click', 'hover']),
+  placement: propTypes.oneOf(['left', 'right', 'top', 'bottom', 'bottomLeft', 'bottomRight', 'leftTop', 'leftBottom', 'topLeft', 'topRight', 'rightTop', 'rightBottom']),
+  content: propTypes.oneOfType([propTypes.string, propTypes.element]),
+  confirmVisable: propTypes.bool,
+  handleOkClickTrigger: propTypes.func
+}, _temp$29);
 
 var defaultProps$1 = {
   percent: 0,
@@ -18161,7 +18819,7 @@ var propTypes$2 = {
   showInfo: propTypes.bool
 };
 
-var styles$14 = { "progress__line--pause": "_2rhabTG", "progress__line--exception": "_1Gn0LqM", "progress__line--success": "_2iMadZh", "progress__line--normal": "cFwj8pO", "progress__lineIndicator": "_1YQZnrM", "progress__line--normalSize": "_28IlOCf", "progress__line": "nd0QJ7p", "progress__showinfo": "_3JkNO59", "progress__lineOuter": "IL7D3Op", "progress__lineInner": "_27NBzV3", "progress__line--miniSize": "_2Gk1yz_", "progress-animation": "_2uAdRt5" };
+var styles$17 = { "progress__line--pause": "_2rhabTG", "progress__line--exception": "_1Gn0LqM", "progress__line--success": "_2iMadZh", "progress__line--normal": "cFwj8pO", "progress__lineIndicator": "_1YQZnrM", "progress__line--normalSize": "_28IlOCf", "progress__line": "nd0QJ7p", "progress__showinfo": "_3JkNO59", "progress__lineOuter": "IL7D3Op", "progress__lineInner": "_27NBzV3", "progress__line--miniSize": "_2Gk1yz_", "progress-animation": "_2uAdRt5" };
 
 /**
  * Line Component
@@ -18174,10 +18832,10 @@ var Line = function Line(_ref) {
       showInfo = _ref.showInfo;
 
   var lineProps = {
-    className: classnames(styles$14['progress__' + (showInfo ? 'showinfo' : 'line')], styles$14['progress__line--' + size + 'Size'], styles$14['progress__line--' + status])
+    className: classnames(styles$17['progress__' + (showInfo ? 'showinfo' : 'line')], styles$17['progress__line--' + size + 'Size'], styles$17['progress__line--' + status])
   };
   var innerProps = {
-    className: styles$14['progress__lineInner'],
+    className: styles$17['progress__lineInner'],
     style: {
       width: percent + '%'
     }
@@ -18204,12 +18862,12 @@ var Line = function Line(_ref) {
     lineProps,
     React$1.createElement(
       'div',
-      { className: styles$14.progress__lineOuter },
+      { className: styles$17.progress__lineOuter },
       React$1.createElement('div', innerProps)
     ),
     showInfo ? React$1.createElement(
       'span',
-      { className: styles$14.progress__lineIndicator },
+      { className: styles$17.progress__lineIndicator },
       indicator
     ) : null
   );
@@ -18219,8 +18877,8 @@ Line.defaultProps = defaultProps$1;
 
 Line.propTypes = propTypes$2;
 
-var _class$29;
-var _temp$26;
+var _class$33;
+var _temp$30;
 
 /**
  * Progress Component
@@ -18228,7 +18886,7 @@ var _temp$26;
  */
 // import Circle from './Circle';
 
-var Progress = (_temp$26 = _class$29 = function (_PureComponent) {
+var Progress = (_temp$30 = _class$33 = function (_PureComponent) {
   inherits(Progress, _PureComponent);
 
   function Progress() {
@@ -18254,12 +18912,12 @@ var Progress = (_temp$26 = _class$29 = function (_PureComponent) {
 
   }]);
   return Progress;
-}(PureComponent), _class$29.displayName = 'Progress', _class$29.defaultProps = _extends({}, defaultProps$1), _class$29.propTypes = _extends({}, propTypes$2), _temp$26);
+}(PureComponent), _class$33.displayName = 'Progress', _class$33.defaultProps = _extends({}, defaultProps$1), _class$33.propTypes = _extends({}, propTypes$2), _temp$30);
 
-var styles$15 = { "radio--group": "_2AmYsBu" };
+var styles$18 = { "radio--group": "_2AmYsBu" };
 
-var _class$31;
-var _temp$28;
+var _class$35;
+var _temp$32;
 var _initialiseProps$4;
 
 /**
@@ -18278,7 +18936,7 @@ function getCheckedValue(children) {
   return matched ? { value: value } : undefined;
 }
 
-var RadioGroup = (_temp$28 = _class$31 = function (_PureComponent) {
+var RadioGroup = (_temp$32 = _class$35 = function (_PureComponent) {
   inherits(RadioGroup, _PureComponent);
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
@@ -18364,21 +19022,21 @@ var RadioGroup = (_temp$28 = _class$31 = function (_PureComponent) {
 
       return React$1.createElement(
         'div',
-        { className: styles$15['radio--group'] },
+        { className: styles$18['radio--group'] },
         children
       );
     }
   }]);
   return RadioGroup;
-}(PureComponent), _class$31.displayName = 'RadioGroup', _class$31.defaultProps = {
-  disabled: false }, _class$31.propTypes = {
+}(PureComponent), _class$35.displayName = 'RadioGroup', _class$35.defaultProps = {
+  disabled: false }, _class$35.propTypes = {
   disabled: propTypes.bool,
   defaultValue: propTypes.any,
   value: propTypes.any,
   children: propTypes.any,
   onChange: propTypes.func,
   options: propTypes.array
-}, _class$31.childContextTypes = {
+}, _class$35.childContextTypes = {
   radioGroup: propTypes.any
 }, _initialiseProps$4 = function _initialiseProps() {
   var _this3 = this;
@@ -18411,16 +19069,16 @@ var RadioGroup = (_temp$28 = _class$31 = function (_PureComponent) {
       return option;
     });
   };
-}, _temp$28);
+}, _temp$32);
 
-var _class$32;
-var _temp$29;
+var _class$36;
+var _temp$33;
 
 /**
  * RadioButton Component
  * @author grootfish
  */
-var RadioButton = (_temp$29 = _class$32 = function (_PureComponent) {
+var RadioButton = (_temp$33 = _class$36 = function (_PureComponent) {
   inherits(RadioButton, _PureComponent);
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
@@ -18457,21 +19115,21 @@ var RadioButton = (_temp$29 = _class$32 = function (_PureComponent) {
     }
   }]);
   return RadioButton;
-}(PureComponent), _class$32.displayName = 'RadioButton', _class$32.defaultProps = {
-  prefixCls: 'radio-button' }, _class$32.propTypes = {
+}(PureComponent), _class$36.displayName = 'RadioButton', _class$36.defaultProps = {
+  prefixCls: 'radio-button' }, _class$36.propTypes = {
   prefixCls: propTypes.string
-}, _class$32.contextTypes = {
+}, _class$36.contextTypes = {
   radioGroup: propTypes.any
-}, _temp$29);
+}, _temp$33);
 
-var _class$30;
-var _temp$27;
+var _class$34;
+var _temp$31;
 
 /**
  * Radio Component
  * @author grootfish
  */
-var Radio$1 = (_temp$27 = _class$30 = function (_PureComponent) {
+var Radio$1 = (_temp$31 = _class$34 = function (_PureComponent) {
   inherits(Radio, _PureComponent);
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
@@ -18514,13 +19172,13 @@ var Radio$1 = (_temp$27 = _class$30 = function (_PureComponent) {
     }
   }]);
   return Radio;
-}(PureComponent), _class$30.Group = RadioGroup, _class$30.Button = RadioButton, _class$30.displayName = 'Radio', _class$30.defaultProps = {
+}(PureComponent), _class$34.Group = RadioGroup, _class$34.Button = RadioButton, _class$34.displayName = 'Radio', _class$34.defaultProps = {
   type: 'radio',
-  prefixCls: 'radio' }, _class$30.propTypes = {
+  prefixCls: 'radio' }, _class$34.propTypes = {
   type: propTypes.string
-}, _class$30.contextTypes = {
+}, _class$34.contextTypes = {
   radioGroup: propTypes.any
-}, _temp$27);
+}, _temp$31);
 
 /**
  * Gets the timestamp of the number of milliseconds that have elapsed since
@@ -18729,17 +19387,17 @@ function debounce(func, wait, options) {
 
 var debounce_1 = debounce;
 
-var styles$16 = { "dropdown": "_3o8aQDc", "option": "cedYGLy", "active": "_277sAcu", "groupname": "_2l6K4Hj", "nooption": "_2VOOJRO", "select": "_2D7oHJo", "selection": "_1eA_hRH", "selectionClose": "_2VrW67D", "disabled": "_1vBDpEz", "comboboxInput": "_2qf1_gi", "placeholder": "_2y2eMaK", "selectionCloseIcon": "_2WFFW7r", "selectionDownIcon": "_2rJhLTb" };
+var styles$19 = { "dropdown": "_3o8aQDc", "option": "cedYGLy", "active": "_277sAcu", "groupname": "_2l6K4Hj", "nooption": "_2VOOJRO", "select": "_2D7oHJo", "selection": "_1eA_hRH", "selectionClose": "_2VrW67D", "disabled": "_1vBDpEz", "comboboxInput": "_2qf1_gi", "placeholder": "_2y2eMaK", "selectionCloseIcon": "_2WFFW7r", "selectionDownIcon": "_2rJhLTb" };
 
-var _class$34;
-var _temp$31;
+var _class$38;
+var _temp$35;
 
 /**
  * Select Component
  * @author heifade
  */
 
-var OptGroup = (_temp$31 = _class$34 = function (_PureComponent) {
+var OptGroup = (_temp$35 = _class$38 = function (_PureComponent) {
   inherits(OptGroup, _PureComponent);
 
   function OptGroup() {
@@ -18759,7 +19417,7 @@ var OptGroup = (_temp$31 = _class$34 = function (_PureComponent) {
         null,
         React$1.createElement(
           'li',
-          { className: styles$16.groupname },
+          { className: styles$19.groupname },
           label
         ),
         React$1.createElement(
@@ -18773,15 +19431,15 @@ var OptGroup = (_temp$31 = _class$34 = function (_PureComponent) {
 
   }]);
   return OptGroup;
-}(PureComponent), _class$34.displayName = 'Option', _class$34.defaultProps = {
+}(PureComponent), _class$38.displayName = 'Option', _class$38.defaultProps = {
   children: null,
   label: ''
-}, _class$34.propTypes = {
+}, _class$38.propTypes = {
   children: propTypes.arrayOf(propTypes.element),
   label: propTypes.string
-}, _temp$31);
+}, _temp$35);
 
-var _class$35;
+var _class$39;
 var _temp2$5;
 
 /**
@@ -18789,7 +19447,7 @@ var _temp2$5;
  * @author heifade
  */
 
-var Option = (_temp2$5 = _class$35 = function (_Component) {
+var Option = (_temp2$5 = _class$39 = function (_Component) {
   inherits(Option, _Component);
 
   function Option() {
@@ -18832,7 +19490,7 @@ var Option = (_temp2$5 = _class$35 = function (_Component) {
       return React$1.createElement(
         'li',
         {
-          className: classnames(styles$16.option, isActived ? styles$16.active : ''),
+          className: classnames(styles$19.option, isActived ? styles$19.active : ''),
           onClick: this.click
         },
         children
@@ -18840,27 +19498,27 @@ var Option = (_temp2$5 = _class$35 = function (_Component) {
     }
   }]);
   return Option;
-}(Component), _class$35.displayName = 'Option', _class$35.defaultProps = {
+}(Component), _class$39.displayName = 'Option', _class$39.defaultProps = {
   value: '',
   text: undefined,
   children: null
-}, _class$35.propTypes = {
+}, _class$39.propTypes = {
   value: propTypes.string.isRequired,
   text: propTypes.string,
   children: propTypes.any
-}, _class$35.contextTypes = {
+}, _class$39.contextTypes = {
   childContext: propTypes.any
 }, _temp2$5);
 
-var _class$33;
-var _temp$30;
+var _class$37;
+var _temp$34;
 var _initialiseProps$5;
 
 /**
  * Select Component
  * @author heifade
  */
-var Select = (_temp$30 = _class$33 = function (_PureComponent) {
+var Select = (_temp$34 = _class$37 = function (_PureComponent) {
   inherits(Select, _PureComponent);
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
@@ -18923,23 +19581,23 @@ var Select = (_temp$30 = _class$33 = function (_PureComponent) {
       if (disabled) {
         return React$1.createElement(
           'div',
-          { className: styles$16.select },
+          { className: styles$19.select },
           React$1.createElement(
             'div',
-            { className: classnames(styles$16.selection, styles$16.disabled), style: { width: width } },
+            { className: classnames(styles$19.selection, styles$19.disabled), style: { width: width } },
             this.state.text ? React$1.createElement(
               'span',
               null,
               this.state.text
             ) : React$1.createElement(
               'span',
-              { className: styles$16.placeholder },
+              { className: styles$19.placeholder },
               this.props.placeholder
             ),
             React$1.createElement(Icon, {
               name: 'arrow-down',
               size: 14,
-              className: styles$16.selectionDownIcon
+              className: styles$19.selectionDownIcon
             })
           )
         );
@@ -18957,14 +19615,14 @@ var Select = (_temp$30 = _class$33 = function (_PureComponent) {
         } else {
           selection = React$1.createElement(
             'span',
-            { className: styles$16.placeholder },
+            { className: styles$19.placeholder },
             this.props.placeholder
           );
         }
       } else if (type === 'combobox') {
         selection = React$1.createElement('input', {
           type: 'text',
-          className: styles$16.comboboxInput,
+          className: styles$19.comboboxInput,
           onChange: this.onComboboxInputChanged,
           placeholder: this.props.placeholder,
           value: this.state.searchText || ''
@@ -18976,20 +19634,20 @@ var Select = (_temp$30 = _class$33 = function (_PureComponent) {
 
       return React$1.createElement(
         'div',
-        { className: styles$16.select },
+        { className: styles$19.select },
         React$1.createElement(
           Trigger,
           {
             action: 'click',
             popup: React$1.createElement(
               'div',
-              { className: styles$16.dropdown, style: { width: width } },
+              { className: styles$19.dropdown, style: { width: width } },
               React$1.createElement(
                 'ul',
                 null,
                 React$1.createElement(
                   'li',
-                  { className: classnames(styles$16.nooption), style: { display: childrenLength === 0 ? 'block' : 'none' } },
+                  { className: classnames(styles$19.nooption), style: { display: childrenLength === 0 ? 'block' : 'none' } },
                   '\u65E0\u5339\u914D\u9009\u9879'
                 ),
                 children
@@ -19002,17 +19660,17 @@ var Select = (_temp$30 = _class$33 = function (_PureComponent) {
           },
           React$1.createElement(
             'div',
-            { className: this.state.value ? styles$16.selectionClose : styles$16.selection, style: { width: width } },
+            { className: this.state.value ? styles$19.selectionClose : styles$19.selection, style: { width: width } },
             selection,
             React$1.createElement(Icon, {
               name: popupVisible ? 'arrow-up' : 'arrow-down',
               size: 14,
-              className: styles$16.selectionDownIcon
+              className: styles$19.selectionDownIcon
             }),
             this.state.value ? React$1.createElement(Icon, {
               name: 'close',
               size: 14,
-              className: styles$16.selectionCloseIcon,
+              className: styles$19.selectionCloseIcon,
               onClick: this.remove
             }) : ''
           )
@@ -19021,7 +19679,7 @@ var Select = (_temp$30 = _class$33 = function (_PureComponent) {
     }
   }]);
   return Select;
-}(PureComponent), _class$33.displayName = 'Select', _class$33.OptGroup = OptGroup, _class$33.Option = Option, _class$33.defaultProps = {
+}(PureComponent), _class$37.displayName = 'Select', _class$37.OptGroup = OptGroup, _class$37.Option = Option, _class$37.defaultProps = {
   placeholder: '请选择',
   type: 'dropdown',
   style: { width: 200 },
@@ -19031,7 +19689,7 @@ var Select = (_temp$30 = _class$33 = function (_PureComponent) {
   onSearch: null,
   onChange: null,
   onCancelChange: null
-}, _class$33.propTypes = {
+}, _class$37.propTypes = {
   placeholder: propTypes.string,
   type: propTypes.oneOf(['dropdown', 'combobox']),
   style: propTypes.object,
@@ -19044,7 +19702,7 @@ var Select = (_temp$30 = _class$33 = function (_PureComponent) {
   // onSelect: PropTypes.func,
   onChange: propTypes.func,
   onCancelChange: propTypes.func
-}, _class$33.childContextTypes = {
+}, _class$37.childContextTypes = {
   childContext: propTypes.any
 }, _initialiseProps$5 = function _initialiseProps() {
   var _this2 = this;
@@ -19210,18 +19868,18 @@ var Select = (_temp$30 = _class$33 = function (_PureComponent) {
       });
     }
   };
-}, _temp$30);
+}, _temp$34);
 
-var styles$17 = { "Spin": "_2skC-me", "qui-spin-dot": "_1EZh2dh", "small": "_2x0173l", "large": "_3QD-S4t", "uiFade": "_2EHkGoG", "qui-spin-text": "_2uKi-RX", "qui-spin-container": "_1ZQogri", "qui-spin-blur": "_1m5Kgy8", "qui-spin-loading-wrap": "_2_VO-5x", "qui-spin-wrap": "_2xnXvO0" };
+var styles$20 = { "Spin": "_2skC-me", "qui-spin-dot": "_1EZh2dh", "small": "_2x0173l", "large": "_3QD-S4t", "uiFade": "_2EHkGoG", "qui-spin-text": "_2uKi-RX", "qui-spin-container": "_1ZQogri", "qui-spin-blur": "_1m5Kgy8", "qui-spin-loading-wrap": "_2_VO-5x", "qui-spin-wrap": "_2xnXvO0" };
 
-var _class$36;
-var _temp$32;
+var _class$40;
+var _temp$36;
 
 /**
  * Spin Component
  * @author Northerner
  */
-var Spin = (_temp$32 = _class$36 = function (_PureComponent) {
+var Spin = (_temp$36 = _class$40 = function (_PureComponent) {
   inherits(Spin, _PureComponent);
 
   function Spin(props) {
@@ -19286,10 +19944,10 @@ var Spin = (_temp$32 = _class$36 = function (_PureComponent) {
 
 
       var spinProps = {
-        className: styles$17['Spin ' + (size === 'default' ? '' : size)]
+        className: styles$20['Spin ' + (size === 'default' ? '' : size)]
       };
       var conProps = {
-        className: styles$17['qui-spin-container ' + (spinning ? 'qui-spin-blur' : '')],
+        className: styles$20['qui-spin-container ' + (spinning ? 'qui-spin-blur' : '')],
         key: 'container'
       };
       var spinElement = React$1.createElement(
@@ -19297,7 +19955,7 @@ var Spin = (_temp$32 = _class$36 = function (_PureComponent) {
         spinProps,
         React$1.createElement(
           'span',
-          { className: styles$17['qui-spin-dot'] },
+          { className: styles$20['qui-spin-dot'] },
           React$1.createElement('i', null),
           React$1.createElement('i', null),
           React$1.createElement('i', null),
@@ -19306,7 +19964,7 @@ var Spin = (_temp$32 = _class$36 = function (_PureComponent) {
         ),
         tip ? React$1.createElement(
           'p',
-          { className: styles$17['qui-spin-text'] },
+          { className: styles$20['qui-spin-text'] },
           tip
         ) : null
       );
@@ -19317,11 +19975,11 @@ var Spin = (_temp$32 = _class$36 = function (_PureComponent) {
           {
             component: 'div',
             transitionName: 'fade',
-            className: styles$17['qui-spin-loading-wrap']
+            className: styles$20['qui-spin-loading-wrap']
           },
           spinning && React$1.createElement(
             'div',
-            { key: 'wrap', className: styles$17['qui-spin-wrap'] },
+            { key: 'wrap', className: styles$20['qui-spin-wrap'] },
             spinElement
           ),
           React$1.createElement(
@@ -19336,25 +19994,25 @@ var Spin = (_temp$32 = _class$36 = function (_PureComponent) {
     }
   }]);
   return Spin;
-}(PureComponent), _class$36.displayName = 'Spin', _class$36.defaultProps = {
+}(PureComponent), _class$40.displayName = 'Spin', _class$40.defaultProps = {
   size: 'default',
   spinning: true,
-  delay: 0 }, _class$36.propTypes = {
+  delay: 0 }, _class$40.propTypes = {
   size: propTypes.oneOf(['small', 'large', 'default']),
   spinning: propTypes.bool,
   delay: propTypes.number
-}, _temp$32);
+}, _temp$36);
 
-var styles$18 = { "steps__vertical": "_1Z9B0MQ", "steps--main": "_11Rome9", "steps--head": "_2UU-kd6", "steps--tail": "_2vbHRHb", "steps__small": "_2kmh_Rc", "steps--item__finish": "_1VnV_nf", "steps--headinner": "_2JVCbOY", "steps--icon": "_2jVCR-o", "steps--description": "_1DxItRx", "steps--item__process": "YRG4bmD", "steps--item__wait": "XQtgjbi", "steps": "_1hnABRb", "steps--item": "O2T4biQ", "steps__horizontal": "WV34rPt", "steps--title": "_35Vh_F5", "steps--item__error": "_2V3dCtV", "steps--step": "WD5QBi2" };
+var styles$21 = { "steps__vertical": "_1Z9B0MQ", "steps--main": "_11Rome9", "steps--head": "_2UU-kd6", "steps--tail": "_2vbHRHb", "steps__small": "_2kmh_Rc", "steps--item__finish": "_1VnV_nf", "steps--headinner": "_2JVCbOY", "steps--icon": "_2jVCR-o", "steps--description": "_1DxItRx", "steps--item__process": "YRG4bmD", "steps--item__wait": "XQtgjbi", "steps": "_1hnABRb", "steps--item": "O2T4biQ", "steps__horizontal": "WV34rPt", "steps--title": "_35Vh_F5", "steps--item__error": "_2V3dCtV", "steps--step": "WD5QBi2" };
 
-var _class$38;
-var _temp$34;
+var _class$42;
+var _temp$38;
 
 /**
  * Step Component
  * @author grootfish
  */
-var Step = (_temp$34 = _class$38 = function (_PureComponent) {
+var Step = (_temp$38 = _class$42 = function (_PureComponent) {
   inherits(Step, _PureComponent);
 
   function Step(props) {
@@ -19391,18 +20049,18 @@ var Step = (_temp$34 = _class$38 = function (_PureComponent) {
       if (status === 'finish' && isFinishIcon) {
         iconNode = React$1.createElement(
           'span',
-          { className: styles$18['steps--icon'] },
+          { className: styles$21['steps--icon'] },
           React$1.createElement(Icon, { name: 'check', size: 14 })
         );
       } else {
         iconNode = React$1.createElement(
           'span',
-          { className: styles$18['steps--icon'] },
+          { className: styles$21['steps--icon'] },
           stepNumber
         );
       }
 
-      var classString = classnames((_classnames = {}, defineProperty(_classnames, styles$18['steps--item'], true), defineProperty(_classnames, styles$18['steps--item__' + status], true), _classnames));
+      var classString = classnames((_classnames = {}, defineProperty(_classnames, styles$21['steps--item'], true), defineProperty(_classnames, styles$21['steps--item__' + status], true), _classnames));
 
       return React$1.createElement(
         'div',
@@ -19412,32 +20070,32 @@ var Step = (_temp$34 = _class$38 = function (_PureComponent) {
         }),
         React$1.createElement(
           'div',
-          { className: styles$18['steps--tail'] },
+          { className: styles$21['steps--tail'] },
           React$1.createElement('i', null)
         ),
         React$1.createElement(
           'div',
-          { className: styles$18['steps--step'] },
+          { className: styles$21['steps--step'] },
           React$1.createElement(
             'div',
-            { className: styles$18['steps--head'] },
+            { className: styles$21['steps--head'] },
             React$1.createElement(
               'div',
-              { className: styles$18['steps--headinner'] },
+              { className: styles$21['steps--headinner'] },
               iconNode
             )
           ),
           React$1.createElement(
             'div',
-            { className: styles$18['steps--main'] },
+            { className: styles$21['steps--main'] },
             React$1.createElement(
               'div',
-              { className: styles$18['steps--title'] },
+              { className: styles$21['steps--title'] },
               title
             ),
             description ? React$1.createElement(
               'div',
-              { className: styles$18['steps--description'] },
+              { className: styles$21['steps--description'] },
               description
             ) : null
           )
@@ -19446,14 +20104,14 @@ var Step = (_temp$34 = _class$38 = function (_PureComponent) {
     }
   }]);
   return Step;
-}(PureComponent), _class$38.displayName = 'Step', _class$38.defaultProps = {
+}(PureComponent), _class$42.displayName = 'Step', _class$42.defaultProps = {
   status: '',
   title: '',
   description: '',
   stepNumber: '',
   itemWidth: 0,
   adjustMarginRight: 0,
-  isFinishIcon: false }, _class$38.propTypes = {
+  isFinishIcon: false }, _class$42.propTypes = {
   status: propTypes.string,
   title: propTypes.string,
   description: propTypes.string,
@@ -19461,16 +20119,16 @@ var Step = (_temp$34 = _class$38 = function (_PureComponent) {
   itemWidth: propTypes.oneOfType([propTypes.number, propTypes.string]),
   adjustMarginRight: propTypes.oneOfType([propTypes.number, propTypes.string]),
   isFinishIcon: propTypes.bool
-}, _temp$34);
+}, _temp$38);
 
-var _class$37;
-var _temp$33;
+var _class$41;
+var _temp$37;
 
 /**
  * Steps Component
  * @author grootfish
  */
-var Steps$1 = (_temp$33 = _class$37 = function (_PureComponent) {
+var Steps$1 = (_temp$37 = _class$41 = function (_PureComponent) {
   inherits(Steps, _PureComponent);
 
   function Steps(props) {
@@ -19537,7 +20195,7 @@ var Steps$1 = (_temp$33 = _class$37 = function (_PureComponent) {
 
       var lastIndex = children.length - 1;
       var reLayouted = this.state.lastStepOffsetWidth > 0;
-      var classString = classnames((_classnames = {}, defineProperty(_classnames, styles$18.steps, true), defineProperty(_classnames, styles$18['steps__' + direction], true), defineProperty(_classnames, styles$18['steps__' + size], size), _classnames));
+      var classString = classnames((_classnames = {}, defineProperty(_classnames, styles$21.steps, true), defineProperty(_classnames, styles$21['steps__' + direction], true), defineProperty(_classnames, styles$21['steps__' + size], size), _classnames));
       return React$1.createElement(
         'div',
         _extends({ className: classString, ref: function ref(node) {
@@ -19568,29 +20226,29 @@ var Steps$1 = (_temp$33 = _class$37 = function (_PureComponent) {
     }
   }]);
   return Steps;
-}(PureComponent), _class$37.displayName = 'Steps', _class$37.Step = Step, _class$37.defaultProps = {
+}(PureComponent), _class$41.displayName = 'Steps', _class$41.Step = Step, _class$41.defaultProps = {
   direction: 'horizontal',
   current: 0,
   status: 'process',
   isFinishIcon: false,
-  size: '' }, _class$37.propTypes = {
+  size: '' }, _class$41.propTypes = {
   direction: propTypes.oneOf(['horizontal', 'vertical']),
   current: propTypes.number,
   status: propTypes.string,
   isFinishIcon: propTypes.bool,
   size: propTypes.string
-}, _temp$33);
+}, _temp$37);
 
-var styles$19 = { "tabs__card": "QTFO3vB", "tabs__bar": "_2YCIwDA", "tabs__tab": "_37S7qK8", "active": "_1-_7_w9", "tab__del": "_2GpfxLN", "clearfix": "FLgZnNp", "tabs__left": "_2FxI-4O", "tabs__con": "_2hU1MuY", "tabs__panel": "c57w49P", "inactive": "_16UZ8XT", "tabs__button": "_3zluHoE", "disabled": "_2T7bEco", "tabs__wrap": "Q4sxpvX", "tabs__small": "_3SDTaN3" };
+var styles$22 = { "tabs__card": "QTFO3vB", "tabs__bar": "_2YCIwDA", "tabs__tab": "_37S7qK8", "active": "_1-_7_w9", "tab__del": "_2GpfxLN", "clearfix": "FLgZnNp", "tabs__left": "_2FxI-4O", "tabs__con": "_2hU1MuY", "tabs__panel": "c57w49P", "inactive": "_16UZ8XT", "tabs__button": "_3zluHoE", "disabled": "_2T7bEco", "tabs__wrap": "Q4sxpvX", "tabs__small": "_3SDTaN3" };
 
-var _class$40;
-var _temp$36;
+var _class$44;
+var _temp$40;
 
 /**
  * Tabs Component
  * @author yan
  */
-var Tab = (_temp$36 = _class$40 = function (_PureComponent) {
+var Tab = (_temp$40 = _class$44 = function (_PureComponent) {
   inherits(Tab, _PureComponent);
 
   function Tab(props) {
@@ -19626,7 +20284,7 @@ var Tab = (_temp$36 = _class$40 = function (_PureComponent) {
           title = props.title;
 
 
-      var tabClass = classnames((_classNames = {}, defineProperty(_classNames, styles$19.disabled, disabled === true), defineProperty(_classNames, styles$19.active, status === 'active'), defineProperty(_classNames, styles$19.tabs__tab, true), _classNames));
+      var tabClass = classnames((_classNames = {}, defineProperty(_classNames, styles$22.disabled, disabled === true), defineProperty(_classNames, styles$22.active, status === 'active'), defineProperty(_classNames, styles$22.tabs__tab, true), _classNames));
 
       var delIcon = React$1.createElement(Icon, { size: 12, name: 'close', onClick: this.deleteButton });
 
@@ -19639,34 +20297,55 @@ var Tab = (_temp$36 = _class$40 = function (_PureComponent) {
         title,
         tabDeleteButton && closable ? React$1.createElement(
           'div',
-          { className: styles$19.tab__del },
+          { className: styles$22.tab__del },
           delIcon
         ) : null
       );
     }
   }]);
   return Tab;
-}(PureComponent), _class$40.displayName = 'Tab', _class$40.defaultProps = {
+}(PureComponent), _class$44.displayName = 'Tab', _class$44.defaultProps = {
   closable: true,
   tabKey: null,
   deleteButton: function deleteButton() {},
   onClick: function onClick() {}
-}, _class$40.propTypes = {
+}, _class$44.propTypes = {
   closable: propTypes.bool,
-  tabKey: propTypes.string,
+  tabKey: propTypes.oneOfType([propTypes.number, propTypes.string]),
   deleteButton: propTypes.func,
   onClick: propTypes.func
-}, _temp$36);
+}, _temp$40);
 
-var _class$39;
-var _temp$35;
+/**
+ * Tabs Component
+ * @author yan
+ */
+var Panel = function Panel(_ref) {
+  var className = _ref.className,
+      children = _ref.children;
+  return React$1.createElement(
+    'div',
+    { className: styles$22[className] },
+    children
+  );
+};
+
+Panel.defaultProps = {
+  className: ''
+};
+Panel.propTypes = {
+  className: propTypes.string
+};
+
+var _class$43;
+var _temp$39;
 var _initialiseProps$6;
 
 /**
  * Tabs Component
  * @author yan
  */
-var Tabs$1 = (_temp$35 = _class$39 = function (_PureComponent) {
+var Tabs$1 = (_temp$39 = _class$43 = function (_PureComponent) {
   inherits(Tabs, _PureComponent);
 
   function Tabs(props) {
@@ -19712,31 +20391,31 @@ var Tabs$1 = (_temp$35 = _class$39 = function (_PureComponent) {
           size = props.size,
           tabPosition = props.tabPosition;
 
-      var cls = classnames((_classNames = {}, defineProperty(_classNames, styles$19.tabs__card, type === 'card'), defineProperty(_classNames, styles$19.tabs__button, type === 'button'), defineProperty(_classNames, styles$19.tabs__small, size === 'small'), defineProperty(_classNames, styles$19.tabs__lef + ' ' + styles$19.clearfix, tabPosition === 'left'), defineProperty(_classNames, styles$19.tabs__wrap, true), _classNames));
+      var cls = classnames((_classNames = {}, defineProperty(_classNames, styles$22.tabs__card, type === 'card'), defineProperty(_classNames, styles$22.tabs__button, type === 'button'), defineProperty(_classNames, styles$22.tabs__small, size === 'small'), defineProperty(_classNames, styles$22.tabs__lef + ' ' + styles$22.clearfix, tabPosition === 'left'), defineProperty(_classNames, styles$22.tabs__wrap, true), _classNames));
 
       return React$1.createElement(
         'div',
         { className: cls },
         React$1.createElement(
           'div',
-          { className: styles$19.tabs__bar },
+          { className: styles$22.tabs__bar },
           opt.tab
         ),
         React$1.createElement(
           'div',
-          { className: styles$19.tabs__con },
+          { className: styles$22.tabs__con },
           opt.panel
         )
       );
     }
   }]);
   return Tabs;
-}(PureComponent), _class$39.displayName = 'Tabs', _class$39.defaultProps = {
+}(PureComponent), _class$43.Panel = Panel, _class$43.displayName = 'Tabs', _class$43.defaultProps = {
   defaultActiveKey: 0,
   type: 'line',
   size: 'default',
   tabPosition: 'top'
-}, _class$39.propTypes = {
+}, _class$43.propTypes = {
   type: propTypes.oneOf(['line', 'card', 'button']),
   size: propTypes.oneOf(['default', 'small']),
   tabPosition: propTypes.oneOf(['top', 'left']),
@@ -19812,7 +20491,118 @@ var Tabs$1 = (_temp$35 = _class$39 = function (_PureComponent) {
 
     return { tab: tab, panel: panel };
   };
-}, _temp$35);
+}, _temp$39);
+
+var styles$23 = { "tooltip": "_2Mww_xu", "trigger": "UZroG3E", "tooltip--popup": "V2aMWVu", "tooltip--popup--left": "_20wIF4w", "tooltip--popup--leftTop": "_3qG5GhX", "tooltip--popup--leftBottom": "_2Ucy3kk", "tooltip--popup--right": "_1fnQx3i", "tooltip--popup--rightTop": "_2-JgxBT", "tooltip--popup--rightBottom": "RTQJMhq", "tooltip--popup--top": "_1Xf6s3q", "tooltip--popup--topLeft": "wikAxom", "tooltip--popup--topRight": "EUa-ibs", "tooltip--popup--bottom": "_2rU_iO0", "tooltip--popup--bottomLeft": "_3cIyt4Q", "tooltip--popup--bottomRight": "z89Q5Ii", "tooltip--popup--arrow": "_3BKqSvh" };
+
+var Placements$4 = {
+  left: {
+    points: ['cr', 'cl']
+  },
+  right: {
+    points: ['cl', 'cr']
+  },
+  top: {
+    points: ['bc', 'tc']
+  },
+  bottom: {
+    points: ['tc', 'bc']
+  },
+  leftTop: {
+    points: ['tr', 'tl']
+  },
+  leftBottom: {
+    points: ['br', 'bl']
+  },
+  rightTop: {
+    points: ['tl', 'tr']
+  },
+  rightBottom: {
+    points: ['bl', 'br']
+  },
+  topLeft: {
+    points: ['bl', 'tl']
+  },
+  topRight: {
+    points: ['br', 'tr']
+  },
+  bottomRight: {
+    points: ['tr', 'br']
+  },
+  bottomLeft: {
+    points: ['tl', 'bl']
+  }
+};
+
+var _class$45;
+var _temp$41;
+
+/**
+ * Tooltip Component
+ * @author lhf
+ */
+// import CSSModules from 'react-css-modules';
+// @CSSModules(styles, { allowMultiple })
+var Tooltip = (_temp$41 = _class$45 = function (_PureComponent) {
+  inherits(Tooltip, _PureComponent);
+
+  function Tooltip(props) {
+    classCallCheck(this, Tooltip);
+
+    var _this = possibleConstructorReturn(this, (Tooltip.__proto__ || Object.getPrototypeOf(Tooltip)).call(this, props));
+
+    _this.state = {};
+    return _this;
+  }
+
+  // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
+
+
+  createClass(Tooltip, [{
+    key: 'render',
+    value: function render() {
+      var _props = this.props,
+          action = _props.action,
+          placement = _props.placement,
+          tips = _props.tips,
+          toolElement = _props.toolElement,
+          children = _props.children;
+
+      var stylename = classnames(styles$23['tooltip--popup'], styles$23['tooltip--popup--' + placement]);
+
+      return React$1.createElement(
+        Trigger,
+        {
+          style: { display: 'inline-block' },
+          action: action,
+          popup: React$1.createElement(
+            'div',
+            { className: stylename },
+            React$1.createElement('div', { className: styles$23['tooltip--popup--arrow'] }),
+            React$1.createElement(
+              'div',
+              { className: styles$23['tooltip--popup--inner'] },
+              tips
+            )
+          ),
+          placement: Placements$4[placement].points,
+          mouseLeaveDelay: 100
+        },
+        toolElement ? toolElement : children
+      );
+    }
+  }]);
+  return Tooltip;
+}(PureComponent), _class$45.displayName = 'Tooltip', _class$45.defaultProps = {
+  tips: '',
+  action: 'hover',
+  placement: 'top',
+  toolElement: '' }, _class$45.propTypes = {
+  tips: propTypes.oneOfType([propTypes.string, propTypes.element]),
+  action: propTypes.oneOf(['click', 'hover']),
+  placement: propTypes.oneOf(['left', 'right', 'top', 'bottom', 'bottomLeft', 'bottomRight', 'leftTop', 'leftBottom', 'topLeft', 'topRight', 'rightTop', 'rightBottom']),
+  toolElement: propTypes.oneOfType([propTypes.string, propTypes.element])
+}, _temp$41);
 
 function getError(option, xhr) {
   var msg = 'cannot post ' + option.action + ' ' + xhr.status + '\'';
@@ -20664,10 +21454,10 @@ function removeFileItem(file, fileList) {
   return removed;
 }
 
-var styles$20 = { "upload-list-picture-card": "_2MKkXWB", "upload-list-item-info": "ACI5HD8", "upload-list-item-actions": "_3X70GPS", "upload-list-item-error": "_1jGbUaw", "upload-list-item": "_3Njfikd", "pictureShow": "xpw90-A", "upload-list-item-thumbnail": "_27WS6DP", "upload-list-item-name": "_1cVZiOQ", "uploading-text": "_3ki_XOw", "imgshow": "_1tzLhEf", "remove": "Boe8gJv", "eye": "_3gICJJz", "upload-list-item-progress": "_1ik1y6A", "upload-select-picture-card": "_3SaxPHm", "hide": "_2Z7KgL4", "upload-list": "_14NhtWo", "upload-list-text": "_3Mi3sRo", "upload-list-item-done": "_7oltx-C", "upload-list-item-uploading": "_2H0ypTn", "btn-remove": "_44to-rK", "status": "_3qlP1Cd", "upload": "_2UxV0kz", "upload-select-text": "_1maN_Cv", "upload-select": "_1fQz-E_" };
+var styles$24 = { "upload-list-picture-card": "_2MKkXWB", "upload-list-item-info": "ACI5HD8", "upload-list-item-actions": "_3X70GPS", "upload-list-item-error": "_1jGbUaw", "upload-list-item": "_3Njfikd", "pictureShow": "xpw90-A", "upload-list-item-thumbnail": "_27WS6DP", "upload-list-item-name": "_1cVZiOQ", "uploading-text": "_3ki_XOw", "imgshow": "_1tzLhEf", "remove": "Boe8gJv", "eye": "_3gICJJz", "upload-list-item-progress": "_1ik1y6A", "upload-select-picture-card": "_3SaxPHm", "hide": "_2Z7KgL4", "upload-list": "_14NhtWo", "upload-list-text": "_3Mi3sRo", "upload-list-item-done": "_7oltx-C", "upload-list-item-uploading": "_2H0ypTn", "btn-remove": "_44to-rK", "status": "_3qlP1Cd", "upload": "_2UxV0kz", "upload-select-text": "_1maN_Cv", "upload-select": "_1fQz-E_" };
 
-var _class$42;
-var _temp$38;
+var _class$47;
+var _temp$43;
 
 /**
  * UploadList Component
@@ -20684,7 +21474,7 @@ var previewFile = function previewFile(file, callback) {
   reader.readAsDataURL(file);
 };
 
-var UploadList = (_temp$38 = _class$42 = function (_React$Component) {
+var UploadList = (_temp$43 = _class$47 = function (_React$Component) {
   inherits(UploadList, _React$Component);
 
   function UploadList(props) {
@@ -20756,14 +21546,14 @@ var UploadList = (_temp$38 = _class$42 = function (_React$Component) {
           prefixCls = _props.prefixCls;
 
       var progress = void 0;
-      var icon = React$1.createElement(Icon, { size: 12, className: styles$20.status, name: file.status === 'uploading' ? 'attachment' : 'attachment' });
+      var icon = React$1.createElement(Icon, { size: 12, className: styles$24.status, name: file.status === 'uploading' ? 'attachment' : 'attachment' });
 
       if (listType === 'picture' || listType === 'picture-card') {
         if (file.status === 'uploading' || !file.thumbUrl && !file.url) {
           if (listType === 'picture-card') {
             icon = React$1.createElement(
               'div',
-              { className: styles$20['uploading-text'] },
+              { className: styles$24['uploading-text'] },
               locale.uploading
             );
           } else {
@@ -20773,7 +21563,7 @@ var UploadList = (_temp$38 = _class$42 = function (_React$Component) {
           icon = React$1.createElement(
             'a',
             {
-              className: styles$20[prefixCls + '-list-item-thumbnail'],
+              className: styles$24[prefixCls + '-list-item-thumbnail'],
               onClick: function onClick(e) {
                 return _this3.handlePreview(file, e);
               },
@@ -20781,7 +21571,7 @@ var UploadList = (_temp$38 = _class$42 = function (_React$Component) {
               target: '_blank',
               rel: 'noopener noreferrer'
             },
-            React$1.createElement('div', { className: styles$20.imgshow, style: { backgroundImage: 'url(' + (file.thumbUrl || file.url) + ')' } })
+            React$1.createElement('div', { className: styles$24.imgshow, style: { backgroundImage: 'url(' + (file.thumbUrl || file.url) + ')' } })
           );
         }
       }
@@ -20792,7 +21582,7 @@ var UploadList = (_temp$38 = _class$42 = function (_React$Component) {
 
         progress = React$1.createElement(
           'div',
-          { className: styles$20[prefixCls + '-list-item-progress'], key: 'progress' },
+          { className: styles$24[prefixCls + '-list-item-progress'], key: 'progress' },
           loadingProgress
         );
       }
@@ -20807,7 +21597,7 @@ var UploadList = (_temp$38 = _class$42 = function (_React$Component) {
           href: file.url,
           target: '_blank',
           rel: 'noopener noreferrer',
-          className: styles$20[prefixCls + '-list-item-name'],
+          className: styles$24[prefixCls + '-list-item-name'],
           onClick: function onClick(e) {
             return _this3.handlePreview(file, e);
           }
@@ -20818,7 +21608,7 @@ var UploadList = (_temp$38 = _class$42 = function (_React$Component) {
       ) : React$1.createElement(
         'span',
         {
-          className: styles$20[prefixCls + '-list-item-name']
+          className: styles$24[prefixCls + '-list-item-name']
           // title={file.name}
           , title: message
         },
@@ -20840,35 +21630,35 @@ var UploadList = (_temp$38 = _class$42 = function (_React$Component) {
           },
           title: locale.previewFile
         },
-        React$1.createElement(Icon, { name: 'visible', size: 20, className: styles$20.eye })
+        React$1.createElement(Icon, { name: 'visible', size: 20, className: styles$24.eye })
       ) : null;
       // picture-card 删除按钮
       var removeIcon = showRemoveIcon && !disabled ? React$1.createElement(
         'button',
         {
-          className: styles$20['btn-remove'],
+          className: styles$24['btn-remove'],
           title: locale.removeFile,
           onClick: function onClick() {
             return _this3.handleClose(file);
           }
         },
-        React$1.createElement(Icon, { name: 'recycle', size: 20, className: styles$20.remove })
+        React$1.createElement(Icon, { name: 'recycle', size: 20, className: styles$24.remove })
       ) : null;
       // text 删除按钮
       var removeIconCross = showRemoveIcon && !disabled ? React$1.createElement(
         'button',
         {
-          className: styles$20['btn-remove'],
+          className: styles$24['btn-remove'],
           title: locale.removeFile,
           onClick: function onClick() {
             return _this3.handleClose(file);
           }
         },
-        React$1.createElement(Icon, { name: 'close', size: 10, className: styles$20.remove })
+        React$1.createElement(Icon, { name: 'close', size: 10, className: styles$24.remove })
       ) : null;
       var actions = listType === 'picture-card' && file.status !== 'uploading' ? React$1.createElement(
         'span',
-        { className: styles$20[prefixCls + '-list-item-actions'] },
+        { className: styles$24[prefixCls + '-list-item-actions'] },
         previewIcon,
         removeIcon
       ) : removeIconCross;
@@ -20888,12 +21678,12 @@ var UploadList = (_temp$38 = _class$42 = function (_React$Component) {
       return React$1.createElement(
         'div',
         {
-          className: classnames(styles$20[prefixCls + '-list-item'], styles$20[prefixCls + '-list-item-' + file.status]),
+          className: classnames(styles$24[prefixCls + '-list-item'], styles$24[prefixCls + '-list-item-' + file.status]),
           key: file.uid
         },
         React$1.createElement(
           'div',
-          { className: styles$20[prefixCls + '-list-item-info'] },
+          { className: styles$24[prefixCls + '-list-item-info'] },
           iconAndPreview
         ),
         actions,
@@ -20915,7 +21705,7 @@ var UploadList = (_temp$38 = _class$42 = function (_React$Component) {
       return React$1.createElement(
         'div',
         {
-          className: classnames(styles$20[prefixCls + '-list'], styles$20[prefixCls + '-list-' + listType])
+          className: classnames(styles$24[prefixCls + '-list'], styles$24[prefixCls + '-list-' + listType])
         },
         items.map(function (file) {
           return _this4.renderListItem(file);
@@ -20924,7 +21714,7 @@ var UploadList = (_temp$38 = _class$42 = function (_React$Component) {
     }
   }]);
   return UploadList;
-}(React$1.Component), _class$42.displayName = 'UploadList', _class$42.defaultProps = {
+}(React$1.Component), _class$47.displayName = 'UploadList', _class$47.defaultProps = {
   listType: 'text', // or picture-card
   items: [],
   onRemove: null,
@@ -20938,7 +21728,7 @@ var UploadList = (_temp$38 = _class$42 = function (_React$Component) {
     showInfo: false,
     size: 'mini'
   },
-  locale: {} }, _class$42.propTypes = {
+  locale: {} }, _class$47.propTypes = {
   listType: propTypes.oneOf('text', 'picture-card'),
   items: propTypes.arrayOf(propTypes.object),
   onRemove: propTypes.func,
@@ -20953,10 +21743,10 @@ var UploadList = (_temp$38 = _class$42 = function (_React$Component) {
     size: propTypes.string
   }),
   locale: propTypes.object
-}, _temp$38);
+}, _temp$43);
 
-var _class$41;
-var _temp$37;
+var _class$46;
+var _temp$42;
 
 /**
  * Upload Component
@@ -20971,7 +21761,7 @@ var defaultLocale = {
   previewFile: '预览文件'
 };
 
-var Upload = (_temp$37 = _class$41 = function (_React$Component) {
+var Upload = (_temp$42 = _class$46 = function (_React$Component) {
   inherits(Upload, _React$Component);
 
   function Upload(props) {
@@ -21245,7 +22035,7 @@ var Upload = (_temp$37 = _class$41 = function (_React$Component) {
 
       var uploadButton = React$1.createElement(
         'div',
-        { className: classnames(styles$20[prefixCls], styles$20[prefixCls + '-select'], styles$20[prefixCls + '-select-' + listType], styles$20['' + (children ? '' : 'hide')]) },
+        { className: classnames(styles$24[prefixCls], styles$24[prefixCls + '-select'], styles$24[prefixCls + '-select-' + listType], styles$24['' + (children ? '' : 'hide')]) },
         React$1.createElement(Upload$2, _extends({}, rcUploadProps, {
           ref: function ref(node) {
             _this4.upload = node;
@@ -21271,7 +22061,7 @@ var Upload = (_temp$37 = _class$41 = function (_React$Component) {
     }
   }]);
   return Upload;
-}(React$1.Component), _class$41.displayName = 'Upload', _class$41.defaultProps = {
+}(React$1.Component), _class$46.displayName = 'Upload', _class$46.defaultProps = {
   name: 'file',
   defaultFileList: null,
   action: '',
@@ -21305,7 +22095,7 @@ var Upload = (_temp$37 = _class$41 = function (_React$Component) {
       success: false,
       message: response.msg
     };
-  } }, _class$41.propTypes = {
+  } }, _class$46.propTypes = {
   name: propTypes.string,
   defaultFileList: propTypes.arrayOf(propTypes.object),
   fileList: propTypes.arrayOf(propTypes.object),
@@ -21329,352 +22119,12 @@ var Upload = (_temp$37 = _class$41 = function (_React$Component) {
   children: propTypes.element.isRequired,
   onResponse: propTypes.func
   // supportServerRender: PropTypes.bool,
-}, _temp$37);
-
-var styles$21 = { "notification--box": "_3m7N18w", "notification--box--topLeft": "bOeCbyd", "notification--box--topRight": "_2r6sINq", "notification--box--bottomLeft": "_3RZZMGw", "notification--box--bottomRight": "_22LQ2CL", "notification": "_2wBYzOy", "notification--content": "by1UuYv", "notification--icon": "_28Fcd3T", "notification__mes": "mtwzodI", "notification__des": "_2o7ulNB", "notification__icon": "_2t9Kaoo", "notification--close": "_2FMETPm", "notification__btn": "YoIwia2", "notification--icon--info": "_3qYprwU", "notification--icon--success": "_2_fUG0w", "notification--icon--error": "bzrjmaP", "notification--icon--warning": "_2g06tvg" };
-
-var _class$44;
-var _temp$40;
-
-/**
- * Alert Component
- * @author yanwei
- */
-var Notice = (_temp$40 = _class$44 = function (_PureComponent) {
-  inherits(Notice, _PureComponent);
-
-  function Notice(props) {
-    classCallCheck(this, Notice);
-
-    var _this = possibleConstructorReturn(this, (Notice.__proto__ || Object.getPrototypeOf(Notice)).call(this, props));
-
-    _this.clearCloseTimer = function () {
-      if (_this.closeTimer) {
-        clearTimeout(_this.closeTimer);
-        _this.closeTimer = null;
-      }
-    };
-
-    _this.handleClose = function () {
-      _this.clearCloseTimer();
-      _this.props.onClose();
-    };
-
-    _this.state = {};
-    return _this;
-  }
-
-  // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
-
-
-  createClass(Notice, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      if (this.props.duration) {
-        this.closeTimer = setTimeout(function () {
-          _this2.handleClose();
-        }, this.props.duration * 1000);
-      }
-    }
-  }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      this.clearCloseTimer();
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var _classnames, _classnames2;
-
-      var props = this.props;
-      var type = props.type,
-          icon = props.icon,
-          btn = props.btn,
-          children = props.children;
-
-      var cls = classnames((_classnames = {}, defineProperty(_classnames, styles$21.notification, 1), defineProperty(_classnames, styles$21['notification--icon'], type || icon), _classnames));
-
-      return React.createElement(
-        'div',
-        { className: cls, style: props.style },
-        React.createElement(
-          'div',
-          { className: styles$21['notification--content'] },
-          type ? React.createElement(Icon, { className: classnames((_classnames2 = {}, defineProperty(_classnames2, styles$21.notification__icon, 1), defineProperty(_classnames2, styles$21['notification--icon--' + type], type), _classnames2)),
-            name: type, size: 24 }) : null,
-          icon || null,
-          React.createElement(
-            'div',
-            { className: styles$21.notification__mes },
-            props.message
-          ),
-          React.createElement(
-            'div',
-            { className: styles$21.notification__des },
-            props.description
-          ),
-          btn ? React.createElement(
-            'div',
-            { className: styles$21.notification__btn },
-            btn
-          ) : null
-        ),
-        React.createElement(
-          'span',
-          {
-            onClick: this.handleClose,
-            className: styles$21['notification--close']
-          },
-          React.createElement(Icon, { name: 'close', size: 14 })
-        )
-      );
-    }
-  }]);
-  return Notice;
-}(PureComponent), _class$44.displayName = 'Notice', _class$44.defaultProps = {
-  onEnd: function onEnd() {},
-  onClose: function onClose() {},
-
-  duration: 4.5
-}, _class$44.propTypes = {
-  message: propTypes.string,
-  description: propTypes.string,
-  duration: propTypes.number,
-  btn: propTypes.node,
-  icon: propTypes.node,
-  onClose: propTypes.func
-}, _temp$40);
-
-var _class$43;
-var _temp$39;
-
-/**
- * Alert Component
- * @author yanwei
- */
-var NotificationBox = (_temp$39 = _class$43 = function (_PureComponent) {
-  inherits(NotificationBox, _PureComponent);
-
-  function NotificationBox(props) {
-    classCallCheck(this, NotificationBox);
-
-    var _this = possibleConstructorReturn(this, (NotificationBox.__proto__ || Object.getPrototypeOf(NotificationBox)).call(this, props));
-
-    _this.add = function (notice) {
-      var key = notice.key || uniqueId_1();
-      objectAssign$1(notice, {
-        key: key
-      });
-
-      _this.setState(function (preState) {
-        var notices = preState.notices;
-        if (!notices.filter(function (v) {
-          return v.key === key;
-        }).length) {
-          return {
-            notices: notices.concat(notice)
-          };
-        }
-        return { notices: notices };
-      });
-    };
-
-    _this.remove = function (key) {
-      _this.setState(function (preState) {
-        return {
-          notices: preState.notices.filter(function (notice) {
-            return notice.key !== key;
-          })
-        };
-      });
-    };
-
-    _this.state = {
-      notices: []
-    };
-    return _this;
-  }
-
-  createClass(NotificationBox, [{
-    key: 'render',
-    value: function render() {
-      var _this2 = this,
-          _classnames;
-
-      var props = this.props;
-      var placement = props.placement,
-          style = props.style;
-
-
-      var Nodes = this.state.notices.map(function (notice) {
-        var onClose = function onClose() {
-          if (notice.onClose) {
-            notice.onClose();
-          }
-          _this2.remove(notice.key);
-        };
-        return React.createElement(Notice, _extends({}, notice, { onClose: onClose }));
-      });
-
-      var notificationProps = {
-        style: style,
-        className: classnames((_classnames = {}, defineProperty(_classnames, styles$21['notification--box'], 1), defineProperty(_classnames, styles$21['notification--box--' + placement], placement), _classnames))
-      };
-      return React.createElement(
-        'div',
-        notificationProps,
-        Nodes
-      );
-    }
-  }]);
-  return NotificationBox;
-}(PureComponent), _class$43.displayName = 'NotificationBox', _class$43.defaultProps = {}, _class$43.propTypes = {}, _temp$39);
-
-
-NotificationBox.newInstance = function newInstance(properties) {
-  var _ref = properties || {},
-      getContainer = _ref.getContainer,
-      props = objectWithoutProperties(_ref, ['getContainer']);
-
-  var container = document.createElement('div');
-  if (getContainer) {
-    document.getElementById(getContainer).appendChild(container);
-  } else {
-    document.body.appendChild(container);
-  }
-  var DOM = ReactDOM;
-  var notificationBox = DOM.render(React.createElement(NotificationBox, props), container);
-
-  return {
-    addNotice: function addNotice(noticeProps) {
-      notificationBox.add(noticeProps);
-    },
-    removeNotice: function removeNotice(key) {
-      notificationBox.remove(key);
-    },
-    destroy: function destroy() {
-      DOM.unmountComponentAtNode(container);
-      if (!getContainer) {
-        document.body.removeChild(container);
-      }
-    }
-  };
-};
-
-/**
- * Alert Component
- * @author yan
- */
-var defaultDuration$1 = 4.5;
-var defaultTop$1 = 24;
-var defaultBottom = 24;
-var defaultPlacement = 'topRight';
-var notificationInstance = {};
-var getContainer$1 = void 0;
-
-function getPlacementStyle(placement) {
-  var style = void 0;
-  switch (placement) {
-    case 'topLeft':
-      style = {
-        left: 0,
-        top: defaultTop$1,
-        bottom: 'auto'
-      };
-      break;
-
-    case 'bottomLeft':
-      style = {
-        left: 0,
-        top: 'auto',
-        bottom: defaultBottom
-      };
-      break;
-
-    case 'bottomRight':
-      style = {
-        right: 0,
-        top: 'auto',
-        bottom: defaultBottom
-      };
-      break;
-
-    default:
-      style = {
-        right: 0,
-        top: defaultTop$1,
-        bottom: 'auto'
-      };
-  }
-  return style;
-}
-
-function getNotificationInstance(placement) {
-
-  if (notificationInstance[placement]) {
-    return notificationInstance[placement];
-  }
-  notificationInstance[placement] = NotificationBox.newInstance({
-    placement: placement,
-    style: getPlacementStyle(placement),
-    getContainer: getContainer$1
-  });
-  return notificationInstance[placement];
-}
-
-var api = {
-  open: function open(parms) {
-    if (!parms.placement) {
-      parms.placement = defaultPlacement;
-    }
-
-    if (parms.duration == undefined) {
-      parms.duration = defaultDuration$1;
-    }
-    getNotificationInstance(parms.placement).addNotice(parms);
-  },
-  close: function close(key) {
-    if (notificationInstance[defaultPlacement]) {
-      notificationInstance[defaultPlacement].removeNotice(key);
-    }
-  },
-  config: function config() {
-    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-    if (options.duration !== undefined) {
-      defaultDuration$1 = options.duration;
-    }
-
-    if (options.top !== undefined) {
-      defaultTop$1 = options.top;
-    }
-
-    if (options.bottom !== undefined) {
-      defaultBottom = options.bottom;
-    }
-
-    if (options.placement !== undefined) {
-      defaultPlacement = options.placement;
-    }
-
-    if (options.getContainer !== undefined) {
-      getContainer$1 = options.getContainer;
-    }
-  },
-  destroy: function destroy() {
-    Object.keys(notificationInstance).forEach(function (key) {
-      notificationInstance[key].destroy();
-      delete notificationInstance[key];
-    });
-  }
-};
+}, _temp$42);
 
 /**
  * QUARK-UI Components
  * @author ryan.bian
  */
 
-export { Alert, Animation, Breadcrumb$1 as Breadcrumb, Button, Checkbox$1 as Checkbox, DatePicker$1 as DatePicker, Dropdown, Icon, Input$1 as Input, InputNumber, Menu$2 as Menu, index$3 as Message, Modal, Pagination, Progress, Radio$1 as Radio, Select, Spin, Steps$1 as Steps, Tabs$1 as Tabs, Trigger, Upload, api as Notification };
+export { Alert, Animation, Breadcrumb$1 as Breadcrumb, Button, Checkbox$1 as Checkbox, DatePicker$1 as DatePicker, Dropdown, Icon, Input$1 as Input, InputNumber, Menu$2 as Menu, index$3 as Message, Modal, api as Notification, Pagination, Popover, Popconfirm, Progress, Radio$1 as Radio, Select, Spin, Steps$1 as Steps, Tabs$1 as Tabs, Tooltip, Trigger, Upload };
 //# sourceMappingURL=index.js.map

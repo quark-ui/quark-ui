@@ -1,0 +1,22 @@
+.top-tooltip,.bottom-tooltip{
+    margin-left: 110px;
+}
+button{
+    min-width: 60px;
+}
+.left-tooltip{
+    float: left;
+}
+.right-tooltip{
+    margin-left: 360px;
+}
+.bottom-tooltip{
+    margin-top: 10px;
+}
+.top-tooltip .top-tooltip-div,.bottom-tooltip .bottom-tooltip-div{
+    display: inline-block;
+    margin-right: 10px;
+}
+.left-tooltip .left-tooltip-div , .right-tooltip .right-tooltip-div{
+    margin-top: 10px;
+}
