@@ -1,4 +1,4 @@
-//npm run test-unit './src/components/breadcrumb/test/breadcrumb.test.js'
+// npm run test-unit './src/components/breadcrumb/test/breadcrumb.test.js'
 
 /**
  * Menu test
@@ -66,7 +66,7 @@ describe('breadcrumb-test-describe----------', () => {
       <Breadcrumb>
         <MyCom />
       </Breadcrumb>);
-    expect(app.find(`.${styles['breadcrumb']}`).children()).to.have.length(2);
+    expect(app.find(`.${styles["breadcrumb"]}`).children()).to.have.length(2);
   });
 });
 

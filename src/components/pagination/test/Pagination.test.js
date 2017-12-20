@@ -1,4 +1,4 @@
-//npm run test-unit './src/components/pagination/test/pagination.test.js'
+// npm run test-unit './src/components/pagination/test/pagination.test.js'
 
 /**
  * Menu test
