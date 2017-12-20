@@ -11,6 +11,11 @@ describe('checkbox-test-describe----------', () => {
     expect(checkbox.find(`.${styles['checkbox--wrapper']}`).length).to.equal(1);
     expect(checkbox.find('span').length).to.equal(2);
   });
+  it('checkbox children can render', () => {
+    const checkbox = shallow(<Checkbox >A</Checkbox>);
+    expect(checkbox.find(`.${styles['checkbox--wrapper']}`).length).to.equal(1);
+    expect(checkbox.find('span').length).to.equal(3);
+  });
   it('checkbox-----is checked true--', () => {
     const data = {
       prefixCls: 'checkbox',
@@ -20,15 +25,15 @@ describe('checkbox-test-describe----------', () => {
     checkbox.simulate('change');
     expect(checkbox.hasClass(styles['checkbox--wrapper__checked'])).to.equal(true);
   });
-  it('checkbox defaultChecked is true', () => {
-    const data = {
-      defaultChecked: true,
-    };
-    const checkbox = shallow(<Checkbox {...data} />);
-    expect(checkbox.hasClass(styles['checkbox--wrapper__checked'])).to.equal(true);
-    checkbox.instance().componentWillReceiveProps({'checked': false});
-    expect(checkbox.hasClass(styles['checkbox--wrapper__checked'])).to.equal(false);
-  });
+  // it('checkbox defaultChecked is true', () => {
+  //   const data = {
+  //     defaultChecked: true,
+  //   };
+  //   const checkbox = shallow(<Checkbox {...data} />);
+  //   expect(checkbox.hasClass(styles['checkbox--wrapper__checked'])).to.equal(true);
+  //   checkbox.instance().componentWillReceiveProps({'checked': false});
+  //   expect(checkbox.hasClass(styles['checkbox--wrapper__checked'])).to.equal(false);
+  // });
 
   it('checkbox----ischecked- then cancle, no checked props', () => {
     const data = {
@@ -39,6 +44,7 @@ describe('checkbox-test-describe----------', () => {
       },
     };
     let checkbox = mount(<Checkbox {...data} />);
+    expect(checkbox.hasClass(styles['checkbox--wrapper__checked'])).to.equal(true);
     checkbox.find('input').simulate('change', { target: { checked: false } });
     expect(checkbox.hasClass(styles['checkbox--wrapper__checked'])).to.equal(false);
   });
@@ -99,12 +105,17 @@ describe('checkboxgroup test', () => {
     const defaultCheckedList = ['Apple', 'Orange'];
     const data = {
       options: plainOptions,
-      value: defaultCheckedList,
+      value: ['Apple'],
     };
     const checkboxgroup = mount(<CheckboxGroup {...data} />);
     checkboxgroup.setState({ value: defaultCheckedList });
     checkboxgroup.setProps({ value: defaultCheckedList });
+    // console.log(checkboxgroup.debug(),'bbbbbbb');
+    // console.log(checkboxgroup.find(`${styles['checkbox--wrapper__checked']})`).length,'aaaaaaaaa');
     expect(checkboxgroup.children()).to.have.length(plainOptions.length);
+    checkboxgroup.find('input').first().simulate('change');
+    // console.log(checkboxgroup.find(`${styles['checkbox--wrapper__checked']})`).length,'pppppppppppp');
+    // console.log(checkboxgroup.debug(),'yyyyyyyyyyy');
   });
 
   it('checkboxgroup has checkbox', () => {
@@ -122,7 +133,7 @@ describe('checkboxgroup test', () => {
   it('checkboxgroup has checkbox-------toggleOption', () => {
     const data = {
       onChange : (e) => { 
-        console.log(e,111111);
+        console.log(e,3333);
       }
     };
     const checkboxgroup = mount(
@@ -135,7 +146,8 @@ describe('checkboxgroup test', () => {
     checkboxgroup.setState({value:['11','22','33']});
     checkboxgroup.instance().toggleOption({value:'44'});
     expect(checkboxgroup.state().value.length).to.equal(4);
-    
+    checkboxgroup.instance().toggleOption({value:'33'});
+    expect(checkboxgroup.state().value.length).to.equal(3);
   });
 
   it('checkboxGroup----has checkbox, checkbox option----', () => {
@@ -145,15 +157,21 @@ describe('checkboxgroup test', () => {
       { label: 'Orange', value: '3', disabled: false },
     ];
     const defaultCheckedList = ['Apple'];
-
+    const props = {
+      value : ['Apple']
+    }
     const checkboxgroup = mount(
-      <CheckboxGroup>
+      <CheckboxGroup {...props}>
         <Checkbox {...plainOptions[0]} />
+        <Checkbox {...plainOptions[1]} />
+        <Checkbox {...plainOptions[2]} />
       </CheckboxGroup>,
     );
-    checkboxgroup.setProps({ value: defaultCheckedList });
-    checkboxgroup.setState({value: defaultCheckedList});
-    checkboxgroup.find('Checkbox').simulate('change');
-    expect(checkboxgroup.children()).to.have.length(1);
+    // checkboxgroup.setProps({ value: defaultCheckedList });
+    // checkboxgroup.setState({value: defaultCheckedList});
+    // checkboxgroup.find('Checkbox').simulate('change');
+    expect(checkboxgroup.children()).to.have.length(3);
+    checkboxgroup.find('input').first().simulate('click',{ label: 'Apple', value: '1', disabled: false });
+    // console.log(checkboxgroup.find('input').first().debug(),222222);
   });
 });

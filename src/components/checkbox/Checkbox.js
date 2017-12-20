@@ -66,6 +66,7 @@ class Checkbox extends PureComponent {
 
   handleChange = (e) => {
     const { props } = this;
+    console.log(props,888);
     if (props.disabled) {
       return;
     }
