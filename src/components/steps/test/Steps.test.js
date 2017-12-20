@@ -6,7 +6,7 @@
  */
 
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow, mount, unmount } from 'enzyme';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import Steps from '../Steps';
@@ -15,15 +15,18 @@ const Step = Steps.Step;
 
 describe('steps-test-describe----------', () => {
   it('calls componentDidMount', () => {
-    sinon.spy(Steps.prototype, 'componentDidMount');
+    const spy = sinon.spy(Steps.prototype, 'componentDidMount');
+    const spyUnmount = sinon.spy(Steps.prototype, 'componentWillUnmount');
     const app = mount(<Steps>
       <Step title="步骤1" description="这是一段很长很长很长的描述性文字" status="finish" />
       <Step title="步骤2" description="这是一段很长很长很长的描述性文字" status="process" />
       <Step title="步骤3" status="wait" />
       <Step title="步骤4" />
     </Steps>);
-    expect(Steps.prototype.componentDidMount.calledOnce).to.equal(true);
-  })
+    expect(spy.calledOnce).to.equal(true);
+    app.unmount();
+    expect(spyUnmount.calledOnce).to.equal(true);
+  });
 
   it('calls componentDidUpdate', () => {
     const spy = sinon.spy(Steps.prototype, 'componentDidUpdate');
