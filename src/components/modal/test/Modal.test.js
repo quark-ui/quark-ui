@@ -7,7 +7,6 @@ import renderNoticeModal from '../noticeModal';
 import Button from '../../button';
 import Mask from '../Mask';
 import styles from '../Modal.css';
-import { exec } from 'child_process';
 
 describe('mask-test-describe----------', () => {
   it('mask should be render', () => {
@@ -152,7 +151,7 @@ describe('modal-test-head and footer----------', () => {
     let btnCancle = modals[modals.length-1].getElementsByTagName('button')[0];
     let btnOK = modals[modals.length-1].getElementsByTagName('button')[1];
     btnCancle.click();
-
+    btnOK.click();
   });
   it('modal do not has head and footer',()=>{
       const data = {
