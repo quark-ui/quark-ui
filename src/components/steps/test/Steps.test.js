@@ -1,31 +1,43 @@
+// npm run test-unit './src/components/steps/test/Steps.test.js'
+
+/**
+ * Menu test
+ * @author yanwei
+ */
+
 import React from 'react';
-import { shallow, mount, render } from 'enzyme';
-import { expect, should } from 'chai';
-import  sinon from 'sinon';
+import { shallow, mount } from 'enzyme';
+import { expect } from 'chai';
+import sinon from 'sinon';
 import Steps from '../Steps';
 import styles from '../Steps.css';
 const Step = Steps.Step;
 
 describe('steps-test-describe----------', () => {
-
-  it('calls componentDidMount',()=>{
-    sinon.spy(Steps.prototype, 'componentDidMount');
+  it('calls componentDidMount', () => {
+    const spy = sinon.spy(Steps.prototype, 'componentDidMount');
+    const spyUnmount = sinon.spy(Steps.prototype, 'componentWillUnmount');
     const app = mount(<Steps>
       <Step title="步骤1" description="这是一段很长很长很长的描述性文字" status="finish" />
       <Step title="步骤2" description="这是一段很长很长很长的描述性文字" status="process" />
       <Step title="步骤3" status="wait" />
       <Step title="步骤4" />
     </Steps>);
-    expect(Steps.prototype.componentDidMount.calledOnce).to.equal(true);
-  })
+    expect(spy.calledOnce).to.equal(true);
+    app.unmount();
+    expect(spyUnmount.calledOnce).to.equal(true);
+  });
 
-  it('calls componentDidUpdate',()=>{
-    sinon.spy(Steps.prototype, 'componentDidUpdate');
+  it('calls componentDidUpdate', () => {
+    const spy = sinon.spy(Steps.prototype, 'componentDidUpdate');
+    const MyCom = () => <Step title="步骤1" />;
     const app = mount(<Steps>
-      <Step title="步骤1" />
+      <MyCom />
     </Steps>);
-    expect(Steps.prototype.componentDidUpdate.calledOnce).to.equal(false);
-  })
+    expect(spy.calledOnce).to.equal(false);
+    app.setProps({ direction: 'vertical' });
+    expect(spy.calledOnce).to.equal(true);
+  });
 
   it('propTypes can do', () => {
     const props = {};
@@ -36,13 +48,12 @@ describe('steps-test-describe----------', () => {
         <Step title="步骤3" />
         <Step title="步骤4" />
         <Step title="步骤5" />
-      </Steps>
-    );
-    expect(app.hasClass(styles['steps__horizontal'])).to.equal(true);// 横向
+      </Steps>);
+    expect(app.hasClass(styles["steps__horizontal"])).to.equal(true);// 横向
     app.setProps({ direction: 'vertical' });
-    expect(app.hasClass(styles['steps__vertical'])).to.equal(true);// 竖向
+    expect(app.hasClass(styles["steps__vertical"])).to.equal(true);// 竖向
     app.setProps({ size: 'small' });
-    expect(app.hasClass(styles['steps__small'])).to.equal(true); //小尺寸
+    expect(app.hasClass(styles["steps__small"])).to.equal(true); //小尺寸
     app.setProps({ current: 2 });
     expect(app.find(Step).get(0).props.status).to.equal('finish');
     expect(app.find(Step).get(2).props.status).to.equal('process');

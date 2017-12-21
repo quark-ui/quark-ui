@@ -6,4 +6,5 @@ if (typeof document === 'undefined') {
   global.document = document;
   global.window = window;
   global.navigator = navigator;
+  global.location = window.location;
 }
