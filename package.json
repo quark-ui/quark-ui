@@ -1,6 +1,6 @@
 {
   "name": "quark-ui",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Quark UI, Components base on react.",
   "repository": "https://github.com/quark-ui/quark-ui.git",
   "author": "ryan.bian",
@@ -17,11 +17,11 @@
     "lint": "eslint --color -f table ./src",
     "lint-c": "eslint --color -f table",
     "build": "node ./conf/publish.build.js",
-    "test": "mocha --compilers js:babel-core/register --require ./test/setup.js --recursive ./src/**/**/*.test.js",
+    "test": "mocha --compilers js:babel-core/register --require ./test/setup.js --recursive ./src/components/**/*.test.js",
     "test-unit": "mocha --compilers js:babel-core/register --require ./test/setup.js --recursive",
     "test-chrome": "karma start ./conf/karma.conf.js",
     "test-all": "karma start ./conf/karma.conf.js --browers PhantomJS Chrome Firefox",
-    "coverage": "istanbul cover ./node_modules/mocha/bin/_mocha -- --report lcovonly --require ./test/setup.js  ./src/**/**/*.test.js --compilers babel-core/register  -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
+    "coverage": "istanbul cover ./node_modules/mocha/bin/_mocha -- --report lcovonly --require ./test/setup.js  ./src/components/**/*.test.js --compilers babel-core/register  -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
     "test-nyc": "nyc npm test && nyc report --reporter=text-lcov | coveralls"
   },
   "bugs": {

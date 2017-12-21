@@ -23,17 +23,17 @@ export default class InputDemo extends Component {
       <div className="markdown-block">
         <h3>基本</h3>
         <p>输入框</p>
-          <Input placeholder="请输入" defaultValue="12345465" />
+        <Input placeholder="请输入" defaultValue="12345465" />
         <h3>图标</h3>
         <p>图标输入框</p>
-          <Input placeholder="请输入" prefix={prefix} />
+        <Input placeholder="请输入" prefix={prefix} />
         <h3>大小</h3>
         <p>三种大小的数字输入框</p>
-          <Input size="large" placeholder="large size" />
-          <p></p>
-          <Input size="normal" placeholder="normal size" />
-          <p></p>
-          <Input size="small" placeholder="small size" />
+        <Input size="large" placeholder="large size" />
+        <p />
+        <Input size="normal" placeholder="normal size" />
+        <p />
+        <Input size="small" placeholder="small size" />
         <h3>禁用</h3>
         <p>输入框禁用</p>
         <p>
@@ -41,30 +41,30 @@ export default class InputDemo extends Component {
         </p>
         <h3>搜索框</h3>
         <p>带有搜索按钮的输入框</p>
-          <Search size="large" placeholder="input search text" style={{ width: 240 }} />
-          <p></p>
-          <Search placeholder="input search text" style={{ width: 240 }} />
-          <p></p>
-          <Search size="small" placeholder="input search text" style={{ width: 240 }} />
+        <Search size="large" placeholder="input search text" style={{ width: 240 }} />
+        <p></p>
+        <Search placeholder="input search text" style={{ width: 240 }} />
+        <p></p>
+        <Search size="small" placeholder="input search text" style={{ width: 240 }} />
         <h3>文本域</h3>
         <p>用于多行输入</p>
-          <Input type="textarea" placeholder="请输入" autosize rows={1} />
-          <Input type="textarea" placeholder="请输入" rows={6} />
+        <Input type="textarea" placeholder="请输入" autosize rows={1} />
+        <Input type="textarea" placeholder="请输入" rows={6} />
         <h3>格式化</h3>
         <p>针对16或多位格式化输入</p>
-          <CardInput
-            size="large"
-            mask="1111-1111-1111-1111"
-            placeholder="1234-1234-1234-1234"
-            value={this.state.value}
-            onChange={this.onChangeCard}
-          />
-          <p></p>
-          <CardInput
-            size="normal"
-            mask="111111-111111-111111-111111"
-            onChange={this.onChangeCard}
-          />
+        <CardInput
+          size="large"
+          mask="1111-1111-1111-1111"
+          placeholder="1234-1234-1234-1234"
+          value={this.state.value}
+          onChange={this.onChangeCard}
+        />
+        <p></p>
+        <CardInput
+          size="normal"
+          mask="111111-111111-111111-111111"
+          onChange={this.onChangeCard}
+        />
       </div>
     );
   }

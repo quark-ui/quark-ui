@@ -1112,10 +1112,31 @@ var Tab = (_temp$1 = _class$1 = function (_PureComponent) {
   onClick: function onClick() {}
 }, _class$1.propTypes = {
   closable: PropTypes.bool,
-  tabKey: PropTypes.string,
+  tabKey: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   deleteButton: PropTypes.func,
   onClick: PropTypes.func
 }, _temp$1);
+
+/**
+ * Tabs Component
+ * @author yan
+ */
+var Panel = function Panel(_ref) {
+  var className = _ref.className,
+      children = _ref.children;
+  return React.createElement(
+    'div',
+    { className: styles$1[className] },
+    children
+  );
+};
+
+Panel.defaultProps = {
+  className: ''
+};
+Panel.propTypes = {
+  className: PropTypes.string
+};
 
 var _class;
 var _temp;
@@ -1190,7 +1211,7 @@ var Tabs$1 = (_temp = _class = function (_PureComponent) {
     }
   }]);
   return Tabs;
-}(PureComponent), _class.displayName = 'Tabs', _class.defaultProps = {
+}(PureComponent), _class.Panel = Panel, _class.displayName = 'Tabs', _class.defaultProps = {
   defaultActiveKey: 0,
   type: 'line',
   size: 'default',
@@ -1273,5 +1294,5 @@ var Tabs$1 = (_temp = _class = function (_PureComponent) {
   };
 }, _temp);
 
-export default Tabs$1;
+export { Panel };export default Tabs$1;
 //# sourceMappingURL=tabs.js.map
