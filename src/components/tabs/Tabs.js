@@ -137,7 +137,7 @@ export default class Tabs extends PureComponent {
       [styles.tabs__button]: type === 'button',
       [styles.tabs__small]: size === 'small',
       [`${styles.tabs__lef} ${styles.clearfix}`]: tabPosition === 'left',
-      [styles.tabs__wrap]: true,
+      [styles.tabs__wrap]: type !== 'card',
     });
 
     return (
