@@ -32,7 +32,7 @@ export default class Tab extends PureComponent {
     this.clickTab = this.clickTab.bind(this);
   }
 
-  deleteButton = (e) => {
+  deleteButton = () => {
     // e.stopPropagation();
     this.props.deleteButton(this.props.tabKey);
   }
