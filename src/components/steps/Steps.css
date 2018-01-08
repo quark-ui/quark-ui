@@ -21,7 +21,7 @@
   display: none;
 }
 
-.steps__horizontal:not(:first-child) .steps--head {
+.steps__horizontal .steps--head {
   padding-left: 10px;
   margin-left: -10px;
 }
