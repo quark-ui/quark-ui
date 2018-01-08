@@ -24,7 +24,7 @@ export default class PaginationDemo extends Component {
         />
         <h3>跳转</h3>
         <p>快速跳转到某一页。</p>
-        <Pagination showTotal total={100} showQuickJumper />
+        <Pagination showTotal total={500000} showQuickJumper />
         <h3>迷你</h3>
         <p>用于弹窗等页面展示区域狭小的场景。</p>
         <h3>受控方式</h3>
