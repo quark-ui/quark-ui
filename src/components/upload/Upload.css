@@ -27,66 +27,70 @@
   & *:before {
     box-sizing: border-box;
   }
+  
+  & .upload-list-item {
+    overflow: hidden;
+    margin-top: 8px;
+    font-size: 12px;
+    position: relative;
+
+    & .btn-remove {
+      background: none;
+      border: none;
+    }
+
+    & .remove {
+      position: absolute;
+      top: 6px;
+      right: 4px;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    & .upload-list-item-info {
+      line-height: 24px;
+      padding: 0 12px 0 4px;
+      transition: background-color .3s;
+
+      & .status {
+        position: absolute;
+        top: 5px;
+        color: #979797;
+      }
+    }
+
+    & .upload-list-item-name {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      padding-left: 16px;
+      width: 100%;
+      display: inline-block;
+    }
+
+    & .upload-list-item-progress {
+      line-height: 0;
+      font-size: 12px;
+      position: absolute;
+      width: 100%;
+      bottom: 0px;
+      top: 10px;
+    }
+
+    &:hover {
+      & .remove {
+        opacity: 1;
+      }
+      & .upload-list-item-info {
+        background-color: #f6f8fc;
+      }
+    }
+  }
+  
   &.upload-list-text {
     & .upload-list-item {
-      overflow: hidden;
-      margin-top: 8px;
-      font-size: 12px;
-      position: relative;
       height: 24px;
       width: 300px;
-
-      & .btn-remove {
-        background: none;
-        border: none;
-      }
-
-      & .remove {
-        position: absolute;
-        top: 6px;
-        right: 4px;
-        opacity: 0;
-        cursor: pointer;
-      }
-
-      & .upload-list-item-info {
-        line-height: 24px;
-        padding: 0 12px 0 4px;
-        transition: background-color .3s;
-
-        & .status {
-          position: absolute;
-          top: 5px;
-          color: #979797;
-        }
-      }
-
-      & .upload-list-item-name {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        padding-left: 16px;
-        width: 100%;
-        display: inline-block;
-      }
-
-      & .upload-list-item-progress {
-        line-height: 0;
-        font-size: 12px;
-        position: absolute;
-        width: 100%;
-        bottom: 0px;
-        top: 10px;
-      }
-
-      &:hover {
-        & .remove {
-          opacity: 1;
-        }
-        & .upload-list-item-info {
-          background-color: #f6f8fc;
-        }
-      }
     }
   }
 
