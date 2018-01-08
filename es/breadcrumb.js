@@ -1080,9 +1080,6 @@ var Breadcrumb$1 = (_temp = _class = function (_PureComponent) {
           restProps = objectWithoutProperties(_props, ['children', 'separator', 'hasBackIcon', 'hasHomeIcon']);
 
       var crumbs = React.Children.map(children, function (ele, index) {
-        if (!ele) {
-          return ele;
-        }
 
         return cloneElement(ele, { separator: separator, key: index });
       });

@@ -1040,7 +1040,7 @@ var Icon = (_temp$2 = _class$2 = function (_PureComponent) {
   color: PropTypes.string
 }, _temp$2);
 
-var styles$1 = { "tabs__card": "QTFO3vB", "tabs__bar": "_2YCIwDA", "tabs__tab": "_37S7qK8", "active": "_1-_7_w9", "tab__del": "_2GpfxLN", "clearfix": "FLgZnNp", "tabs__left": "_2FxI-4O", "tabs__con": "_2hU1MuY", "tabs__panel": "c57w49P", "inactive": "_16UZ8XT", "tabs__button": "_3zluHoE", "disabled": "_2T7bEco", "tabs__wrap": "Q4sxpvX", "tabs__small": "_3SDTaN3" };
+var styles$1 = { "tabs__card": "QTFO3vB", "tabs__bar": "_2YCIwDA", "tabs__tab": "_37S7qK8", "disabled": "_2T7bEco", "active": "_1-_7_w9", "tab__del": "_2GpfxLN", "clearfix": "FLgZnNp", "tabs__left": "_2FxI-4O", "tabs__con": "_2hU1MuY", "tabs__panel": "c57w49P", "inactive": "_16UZ8XT", "tabs__button": "_3zluHoE", "tabs__wrap": "Q4sxpvX", "tabs__small": "_3SDTaN3" };
 
 var _class$1;
 var _temp$1;
@@ -1057,7 +1057,7 @@ var Tab = (_temp$1 = _class$1 = function (_PureComponent) {
 
     var _this = possibleConstructorReturn(this, (Tab.__proto__ || Object.getPrototypeOf(Tab)).call(this, props));
 
-    _this.deleteButton = function (e) {
+    _this.deleteButton = function () {
       // e.stopPropagation();
       _this.props.deleteButton(_this.props.tabKey);
     };
@@ -1192,7 +1192,7 @@ var Tabs$1 = (_temp = _class = function (_PureComponent) {
           size = props.size,
           tabPosition = props.tabPosition;
 
-      var cls = classnames((_classNames = {}, defineProperty(_classNames, styles$1.tabs__card, type === 'card'), defineProperty(_classNames, styles$1.tabs__button, type === 'button'), defineProperty(_classNames, styles$1.tabs__small, size === 'small'), defineProperty(_classNames, styles$1.tabs__lef + ' ' + styles$1.clearfix, tabPosition === 'left'), defineProperty(_classNames, styles$1.tabs__wrap, true), _classNames));
+      var cls = classnames((_classNames = {}, defineProperty(_classNames, styles$1.tabs__card, type === 'card'), defineProperty(_classNames, styles$1.tabs__button, type === 'button'), defineProperty(_classNames, styles$1.tabs__small, size === 'small'), defineProperty(_classNames, styles$1.tabs__lef + ' ' + styles$1.clearfix, tabPosition === 'left'), defineProperty(_classNames, styles$1.tabs__wrap, type !== 'card'), _classNames));
 
       return React.createElement(
         'div',

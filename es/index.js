@@ -1983,9 +1983,6 @@ var Breadcrumb$1 = (_temp$3 = _class$3 = function (_PureComponent) {
           restProps = objectWithoutProperties(_props, ['children', 'separator', 'hasBackIcon', 'hasHomeIcon']);
 
       var crumbs = React$1.Children.map(children, function (ele, index) {
-        if (!ele) {
-          return ele;
-        }
 
         return cloneElement(ele, { separator: separator, key: index });
       });
@@ -20239,7 +20236,7 @@ var Steps$1 = (_temp$37 = _class$41 = function (_PureComponent) {
   size: propTypes.string
 }, _temp$37);
 
-var styles$22 = { "tabs__card": "QTFO3vB", "tabs__bar": "_2YCIwDA", "tabs__tab": "_37S7qK8", "active": "_1-_7_w9", "tab__del": "_2GpfxLN", "clearfix": "FLgZnNp", "tabs__left": "_2FxI-4O", "tabs__con": "_2hU1MuY", "tabs__panel": "c57w49P", "inactive": "_16UZ8XT", "tabs__button": "_3zluHoE", "disabled": "_2T7bEco", "tabs__wrap": "Q4sxpvX", "tabs__small": "_3SDTaN3" };
+var styles$22 = { "tabs__card": "QTFO3vB", "tabs__bar": "_2YCIwDA", "tabs__tab": "_37S7qK8", "disabled": "_2T7bEco", "active": "_1-_7_w9", "tab__del": "_2GpfxLN", "clearfix": "FLgZnNp", "tabs__left": "_2FxI-4O", "tabs__con": "_2hU1MuY", "tabs__panel": "c57w49P", "inactive": "_16UZ8XT", "tabs__button": "_3zluHoE", "tabs__wrap": "Q4sxpvX", "tabs__small": "_3SDTaN3" };
 
 var _class$44;
 var _temp$40;
@@ -20256,7 +20253,7 @@ var Tab = (_temp$40 = _class$44 = function (_PureComponent) {
 
     var _this = possibleConstructorReturn(this, (Tab.__proto__ || Object.getPrototypeOf(Tab)).call(this, props));
 
-    _this.deleteButton = function (e) {
+    _this.deleteButton = function () {
       // e.stopPropagation();
       _this.props.deleteButton(_this.props.tabKey);
     };
@@ -20391,7 +20388,7 @@ var Tabs$1 = (_temp$39 = _class$43 = function (_PureComponent) {
           size = props.size,
           tabPosition = props.tabPosition;
 
-      var cls = classnames((_classNames = {}, defineProperty(_classNames, styles$22.tabs__card, type === 'card'), defineProperty(_classNames, styles$22.tabs__button, type === 'button'), defineProperty(_classNames, styles$22.tabs__small, size === 'small'), defineProperty(_classNames, styles$22.tabs__lef + ' ' + styles$22.clearfix, tabPosition === 'left'), defineProperty(_classNames, styles$22.tabs__wrap, true), _classNames));
+      var cls = classnames((_classNames = {}, defineProperty(_classNames, styles$22.tabs__card, type === 'card'), defineProperty(_classNames, styles$22.tabs__button, type === 'button'), defineProperty(_classNames, styles$22.tabs__small, size === 'small'), defineProperty(_classNames, styles$22.tabs__lef + ' ' + styles$22.clearfix, tabPosition === 'left'), defineProperty(_classNames, styles$22.tabs__wrap, type !== 'card'), _classNames));
 
       return React$1.createElement(
         'div',
@@ -21454,7 +21451,7 @@ function removeFileItem(file, fileList) {
   return removed;
 }
 
-var styles$24 = { "upload-list-picture-card": "_2MKkXWB", "upload-list-item-info": "ACI5HD8", "upload-list-item-actions": "_3X70GPS", "upload-list-item-error": "_1jGbUaw", "upload-list-item": "_3Njfikd", "pictureShow": "xpw90-A", "upload-list-item-thumbnail": "_27WS6DP", "upload-list-item-name": "_1cVZiOQ", "uploading-text": "_3ki_XOw", "imgshow": "_1tzLhEf", "remove": "Boe8gJv", "eye": "_3gICJJz", "upload-list-item-progress": "_1ik1y6A", "upload-select-picture-card": "_3SaxPHm", "hide": "_2Z7KgL4", "upload-list": "_14NhtWo", "upload-list-text": "_3Mi3sRo", "upload-list-item-done": "_7oltx-C", "upload-list-item-uploading": "_2H0ypTn", "btn-remove": "_44to-rK", "status": "_3qlP1Cd", "upload": "_2UxV0kz", "upload-select-text": "_1maN_Cv", "upload-select": "_1fQz-E_" };
+var styles$24 = { "upload-list-picture-card": "_2MKkXWB", "upload-list-item-info": "ACI5HD8", "upload-list-item-actions": "_3X70GPS", "upload-list-item-error": "_1jGbUaw", "upload-list-item": "_3Njfikd", "pictureShow": "xpw90-A", "upload-list-item-thumbnail": "_27WS6DP", "upload-list-item-name": "_1cVZiOQ", "uploading-text": "_3ki_XOw", "imgshow": "_1tzLhEf", "remove": "Boe8gJv", "eye": "_3gICJJz", "upload-list-item-progress": "_1ik1y6A", "upload-select-picture-card": "_3SaxPHm", "hide": "_2Z7KgL4", "upload-list": "_14NhtWo", "upload-list-item-done": "_7oltx-C", "upload-list-item-uploading": "_2H0ypTn", "upload-list-text": "_3Mi3sRo", "btn-remove": "_44to-rK", "status": "_3qlP1Cd", "upload": "_2UxV0kz", "upload-select-text": "_1maN_Cv", "upload-select": "_1fQz-E_" };
 
 var _class$47;
 var _temp$43;
