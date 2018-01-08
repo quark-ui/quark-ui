@@ -30,7 +30,6 @@
   
   & .upload-list-item {
     overflow: hidden;
-    margin-top: 8px;
     font-size: 12px;
     position: relative;
 
@@ -91,6 +90,7 @@
     & .upload-list-item {
       height: 24px;
       width: 300px;
+      margin-top: 8px;
     }
   }
 
