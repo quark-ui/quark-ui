@@ -165,8 +165,8 @@
 
   & .upload-list-item {
     float: left;
-    width: var(--upload-card-width);
-    height: var(--upload-card-height);
+    width: var(--upload-card-width) !important;
+    height: var(--upload-card-height) !important;
     margin: 0 8px 8px 0;
 
     padding: 8px;
