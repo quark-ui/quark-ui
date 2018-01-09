@@ -1494,7 +1494,7 @@
 }
 
 ._3HZDVl5 ._2tvnb-l, ._3HZDVl5 .jsRFs8b {
-  width: 34px;
+  min-width: 34px;
   height: 34px;
   background-color: #fff;
   border: 1px solid #e6e6e6;
@@ -1809,7 +1809,7 @@
   display: none;
 }
 
-.WV34rPt:not(:first-child) ._2UU-kd6 {
+.WV34rPt ._2UU-kd6 {
   padding-left: 10px;
   margin-left: -10px;
 }
