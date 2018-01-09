@@ -1738,6 +1738,12 @@
 ._3KYqRkO ._3lViuPm {
 }
 
+/**
+ * Radio Style
+ * @author grootfish
+ */
+
+._2AmYsBu{}
 ._1Z9B0MQ ._11Rome9 {
     min-height: 72px;
     overflow: hidden;
@@ -1954,12 +1960,6 @@
     display: block;
 }
 
-/**
- * Radio Style
- * @author grootfish
- */
-
-._2AmYsBu{}
 .mhJTXha ._3ZvcDzC,
   .mhJTXha ._2PKGdIS,
   .mhJTXha .JvjXwwi {
@@ -2977,11 +2977,27 @@
       display: block
 }
 
+.QTFO3vB ._2YCIwDA ._37S7qK8._2T7bEco:hover {
+      cursor: default
+}
+
+.QTFO3vB ._2YCIwDA ._37S7qK8._2T7bEco {
+      color: var(--inactive-color)
+}
+
 .QTFO3vB ._2YCIwDA ._37S7qK8._1-_7_w9:after {
-      border-bottom-color: #fff
+      position: absolute;
+      color: rgb(58, 152, 224);
+      content: '';
+      height: 1px;
+      width: 100%;
+      left: 0;
+      border-bottom: solid 2px #fff;
+      bottom: -1px
 }
 
 .QTFO3vB ._2YCIwDA ._37S7qK8._1-_7_w9 {
+      position: relative;
       background: #fff;
       -webkit-transform: translateZ(0);
       transform: translateZ(0);
@@ -3171,6 +3187,8 @@
 }
 
 .QTFO3vB {
+  position: relative;
+  font-size: 14px
 }
 
 .QTFO3vB ._2YCIwDA {
@@ -3180,13 +3198,20 @@
 }
 
 .QTFO3vB ._2YCIwDA ._37S7qK8 {
+      position: relative;
+      display: inline-block;
+      height: 100%;
       margin: 0;
+      padding: 8px 20px;
       border: 1px solid #ddd;
       border-bottom: 0;
       border-radius: 4px 4px 0 0;
       background: #f9f9f9;
       margin-right: 2px;
-      transition: all .3s cubic-bezier(.645, .045, .355, 1)
+      transition: all .3s cubic-bezier(.645, .045, .355, 1);
+      cursor: pointer;
+      text-decoration: none;
+      color: #666
 }
 
 .QTFO3vB ._2YCIwDA ._37S7qK8 > ._2GpfxLN {
