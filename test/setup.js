@@ -1,4 +1,8 @@
 import { JSDOM } from 'jsdom';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 if (typeof document === 'undefined') {
   const { window } = new JSDOM('<!DOCTYPE html><html><body></body></html>');
