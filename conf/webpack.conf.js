@@ -11,7 +11,6 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const WebpackChunkHash = require('webpack-chunk-hash');
-const DashboardPlugin = require('webpack-dashboard/plugin');
 
 const DEFAULT_THEME = require('../src/styles/theme');
 const ORANGE_THEME = require('../src/styles/orange');
@@ -129,7 +128,7 @@ const siteConfig = {
 };
 
 let config;
-if (TARGET === 'start' || TARGET === 'start-nodash') {
+if (TARGET === 'start') {
   const host = ip.address();
   config = merge.strategy({
     entry: 'prepend',
@@ -194,7 +193,6 @@ if (TARGET === 'start' || TARGET === 'start-nodash') {
       ],
     },
     plugins: [
-      new DashboardPlugin(),
       new webpack.HotModuleReplacementPlugin(),
       new webpack.DefinePlugin({
         BASEPATH: JSON.stringify('/'),

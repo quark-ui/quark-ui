@@ -4,10 +4,11 @@
  */
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import styles from './Breadcrumb.css';
+import injectSheet from 'react-jss';
+import styles from './style';
 
+@injectSheet(styles)
 class BreadcrumbItem extends PureComponent {
-
   static displayName = 'BreadcrumbItem'
 
   static defaultProps = {
@@ -29,11 +30,11 @@ class BreadcrumbItem extends PureComponent {
   }
 
   render() {
-    const { children, separator, ...restProps } = this.props;
+    const { classes, children, separator, ...restProps } = this.props;
 
     const breadcrumbItemProps = {
       ...restProps,
-      className: styles['breadcrumb--link'],
+      className: classes.link,
     };
 
     let link;
@@ -45,10 +46,10 @@ class BreadcrumbItem extends PureComponent {
 
     if (children) {
       return (
-        <span>
+        <li className={classes.item}>
           {link}
-          <span className={styles['breadcrumb--separator']}>{separator}</span>
-        </span>
+          <span className={classes.separator}>{separator}</span>
+        </li>
       );
     }
 

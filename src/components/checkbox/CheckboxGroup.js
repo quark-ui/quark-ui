@@ -2,13 +2,15 @@
  * Checkbox Component
  * @author grootfish
  */
-import React,{ PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import shallowEqual from 'shallowequal';
+import injectSheet from 'react-jss';
 import Checkbox from './Checkbox';
-import styles from './Checkbox.css';
+import styles from './style';
 
-class CheckboxGroup extends PureComponent {
+@injectSheet(styles)
+class CheckboxGroup extends Component {
 
   static displayName = 'CheckboxGroup'
 
@@ -96,7 +98,8 @@ class CheckboxGroup extends PureComponent {
 
   render() {
     const { props, state } = this;
-    let { options, children } = props;
+    const { classes, options } = props;
+    let children;
     if (options && options.length > 0) {
       children = this.getOptions().map(option => (
         <Checkbox
@@ -109,11 +112,13 @@ class CheckboxGroup extends PureComponent {
           {option.label}
         </Checkbox>
       ));
+    } else {
+      children = props.children;
     }
 
 
     return (
-      <div className={styles['checkbox--group']}>
+      <div className={classes['checkbox--group']}>
         {children}
       </div>
     );

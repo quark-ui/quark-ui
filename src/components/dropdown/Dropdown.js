@@ -59,14 +59,14 @@ class DropdownButton extends PureComponent {
 
   static defaultProps = {
     ...Dropdown.defaultProps,
-    type: Button.defaultProps.type,
+    type: Button.InnerComponent.defaultProps.type,
     placement: 'bottomRight',
   }
 
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
   static propTypes = {
     ...Dropdown.propTypes,
-    type: Button.propTypes.type,
+    type: Button.InnerComponent.propTypes.type,
   }
 
   constructor(props) {

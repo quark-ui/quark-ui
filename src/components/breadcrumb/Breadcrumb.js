@@ -4,12 +4,12 @@
  */
 import React, { PureComponent, cloneElement } from 'react';
 import PropTypes from 'prop-types';
+import injectSheet from 'react-jss';
 import Icon from '../icon';
+import styles from './style';
 
-import styles from './Breadcrumb.css';
-
+@injectSheet(styles)
 class Breadcrumb extends PureComponent {
-
   static displayName = 'Breadcrumb'
 
   static defaultProps = {
@@ -18,7 +18,7 @@ class Breadcrumb extends PureComponent {
     hasHomeIcon: false,
   }
 
-    // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
+  // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
   static propTypes = {
     separator: PropTypes.node,
     hasBackIcon: PropTypes.bool,
@@ -46,19 +46,21 @@ class Breadcrumb extends PureComponent {
   }
 
   render() {
-    const { children, separator, hasBackIcon, hasHomeIcon, ...restProps } = this.props;
+    const { classes, children, separator, hasBackIcon, hasHomeIcon, ...restProps } = this.props;
     const crumbs = React.Children.map(children, (ele, index) => {
 
       return cloneElement(ele, { separator, key: index });
     });
 
     return (
-      <div className={styles.breadcrumb} {...restProps}>
-        <span className={styles['breadcrumb--icon']}>
+      <div className={classes.breadcrumb} {...restProps}>
+        <span className={classes.icon}>
           {hasHomeIcon ? <span><Icon name="home" size={12} onClick={this.onHome} /></span> : null}
           {hasBackIcon ? <span><Icon name="arrow-left" size={12} onClick={this.onBack} /></span> : null}
         </span>
-        {crumbs}
+        <ul>
+          {crumbs}
+        </ul>
       </div>
     );
   }

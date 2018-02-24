@@ -2,11 +2,13 @@
  * Radio Component
  * @author grootfish
  */
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import shallowEqual from 'shallowequal';
-import styles from './Radio.css';
+import injectSheet from 'react-jss';
 import Radio from '../radio';
+
+import styles from '../checkbox/style';
 
 function getCheckedValue(children) {
   let value = null;
@@ -20,7 +22,8 @@ function getCheckedValue(children) {
   return matched ? { value } : undefined;
 }
 
-class RadioGroup extends PureComponent {
+@injectSheet(styles)
+class RadioGroup extends Component {
 
   static displayName = 'RadioGroup'
 
@@ -116,7 +119,7 @@ class RadioGroup extends PureComponent {
   render() {
     const { props, state, getOptions } = this;
     const { options } = props;
-    let { children } = props;
+    let { classes, children } = props;
     if (options && options.length > 0) {
       children = getOptions().map(option => (
         <Radio
@@ -128,12 +131,11 @@ class RadioGroup extends PureComponent {
         >
           {option.label}
         </Radio>
-          ),
-      );
+      ));
     }
 
     return (
-      <div className={styles['radio--group']}>
+      <div className={classes['radio--group']}>
         {children}
       </div>
     );

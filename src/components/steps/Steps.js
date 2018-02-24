@@ -51,7 +51,7 @@ class Steps extends PureComponent {
   }
 
   calcStepOffsetWidth = () => {
-    if (this.domNode.children.length > 0) {
+    if (this.domNode && this.domNode.children.length > 0) {
       if (this.calcTimeout) {
         clearTimeout(this.calcTimeout);
       }

@@ -2,14 +2,17 @@
  * Checkbox Component
  * @author grootfish
  */
-import React,{ PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import shallowEqual from 'shallowequal';
 import classNames from 'classnames';
-import styles from './Checkbox.css';
+import injectSheet from 'react-jss';
 import CheckboxGroup from './CheckboxGroup';
 
-class Checkbox extends PureComponent {
+import styles from './style';
+
+@injectSheet(styles)
+class Checkbox extends Component {
 
   static Group = CheckboxGroup;
   static displayName = 'Checkbox';
@@ -26,7 +29,7 @@ class Checkbox extends PureComponent {
   
   // https://facebook.github.io/react/docs/typechecking-with-proptypes.html
   static propTypes = {
-    prefixCls: PropTypes.oneOf(['checkbox', 'radio']),
+    prefixCls: PropTypes.oneOf(['checkbox', 'radio', 'radio-button']),
     defaultChecked: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
     onChange: PropTypes.func,
     name: PropTypes.string,
@@ -90,7 +93,7 @@ class Checkbox extends PureComponent {
 
   render() {
     const { context, props, state } = this;
-    const { children, name, type, readOnly, onClick, onFocus, onBlur, prefixCls, ...otherProps } = props;
+    const { classes, children, name, type, readOnly, onClick, onFocus, onBlur, prefixCls, theme, ...otherProps } = props;
     let { checked } = state;
     let { disabled } = props;
     const { checkboxGroup } = context;
@@ -100,17 +103,17 @@ class Checkbox extends PureComponent {
       disabled = 'disabled' in props ? props.disabled : checkboxGroup.disabled;
     }
 
-    const classString = classNames(styles[prefixCls], {
-      [styles[`${prefixCls}__checked`]]: checked,
-      [styles[`${prefixCls}__disabled`]]: disabled,
+    const classString = classNames(classes[prefixCls], {
+      [classes[`${prefixCls}__checked`]]: checked,
+      [classes[`${prefixCls}__disabled`]]: disabled,
     });
     const wrapperString = classNames({
-      [styles[`${prefixCls}--wrapper`]]: true,
-      [styles[`${prefixCls}--wrapper__checked`]]: checked,
-      [styles[`${prefixCls}--wrapper__disabled`]]: disabled,
+      [classes[`${prefixCls}--wrapper`]]: true,
+      [classes[`${prefixCls}--wrapper__checked`]]: checked,
+      [classes[`${prefixCls}--wrapper__disabled`]]: disabled,
     });
     const innerString = classNames({
-      [styles[`${prefixCls}--inner`]]: true,
+      [classes[`${prefixCls}--inner`]]: true,
     });
     return (
       <label

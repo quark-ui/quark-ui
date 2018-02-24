@@ -20,4 +20,9 @@ module.exports = assign({
   'brand-primary-lightest': hsv(BrandColors.BRAND_COLOR_LIGHTEST),
   /* 品牌色——深 */
   'brand-primary-dark': hsv(BrandColors.BRAND_COLOR_DARK),
+
+  'alert-info-bg': '#E8F6FF',
+  'alert-success-bg': '#F5FFE9',
+  'alert-error-bg': '#FFEBE8',
+  'alert-warning-bg': '#FFFAE8',
 }, staticVariables);

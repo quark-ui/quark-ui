@@ -2,16 +2,14 @@
  * Radio Component
  * @author grootfish
  */
-import React,{ PureComponent } from 'react';
+import React, { Component } from 'react';
 import shallowEqual from 'shallowequal';
 import PropTypes from 'prop-types';
-import styles from './Radio.css';
 import Checkbox from '../checkbox';
 import RadioGroup from './RadioGroup';
 import RadioButton from './RadioButton';
 
-class Radio extends PureComponent {
-
+class Radio extends Component {
   static Group = RadioGroup;
   static Button = RadioButton;
 

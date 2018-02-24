@@ -7,6 +7,21 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "Mocha Tests",
+            "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+            "args": [
+                "--require",
+                "babel-core/register",
+                "--require",
+                "./test/setup.js",
+                "--recursive",
+                "./src/components/**/*.test.js"
+            ],
+            "internalConsoleOptions": "openOnSessionStart"
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "Launch Program",
             "program": "${workspaceRoot}\\conf\\rollup.conf.js"
         }

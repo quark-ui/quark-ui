@@ -7,10 +7,6 @@
   cursor: pointer;
   font-size: 14px;
   display: inline-block;
-  &.checkbox--wrapper__checked {
-  }
-  &.checkbox--wrapper__disabled {
-  }
 }
 
 .checkbox {

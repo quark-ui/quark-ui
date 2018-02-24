@@ -4,14 +4,14 @@
  * Menu test
  * @author yanwei
  */
-
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import Steps from '../Steps';
 import styles from '../Steps.css';
-const Step = Steps.Step;
+
+const { Step } = Steps;
 
 describe('steps-test-describe----------', () => {
   it('calls componentDidMount', () => {
@@ -41,19 +41,18 @@ describe('steps-test-describe----------', () => {
 
   it('propTypes can do', () => {
     const props = {};
-    const app = shallow(
-      <Steps {...props}>
-        <Step title="步骤1" />
-        <Step title="步骤2" />
-        <Step title="步骤3" />
-        <Step title="步骤4" />
-        <Step title="步骤5" />
-      </Steps>);
-    expect(app.hasClass(styles["steps__horizontal"])).to.equal(true);// 横向
+    const app = shallow(<Steps {...props}>
+      <Step title="步骤1" />
+      <Step title="步骤2" />
+      <Step title="步骤3" />
+      <Step title="步骤4" />
+      <Step title="步骤5" />
+                        </Steps>);
+    expect(app.hasClass(styles.steps__horizontal)).to.equal(true);// 横向
     app.setProps({ direction: 'vertical' });
-    expect(app.hasClass(styles["steps__vertical"])).to.equal(true);// 竖向
+    expect(app.hasClass(styles.steps__vertical)).to.equal(true);// 竖向
     app.setProps({ size: 'small' });
-    expect(app.hasClass(styles["steps__small"])).to.equal(true); //小尺寸
+    expect(app.hasClass(styles.steps__small)).to.equal(true); // 小尺寸
     app.setProps({ current: 2 });
     expect(app.find(Step).get(0).props.status).to.equal('finish');
     expect(app.find(Step).get(2).props.status).to.equal('process');
@@ -85,7 +84,7 @@ describe('step-test-describe----------', () => {
     app.setProps({ status: 'finish' });
     app.setProps({ isFinishIcon: true });
     const item = app.find('span').first();
-    expect(item.hasClass(styles['steps--icon'])).to.equal(true); // 
+    expect(item.hasClass(styles['steps--icon'])).to.equal(true); //
     expect(app.find(`.${styles['steps--item__finish']}`).length).to.equal(1);
     app.setProps({ status: 'process' });
     expect(app.find(`.${styles['steps--item__process']}`).length).to.equal(1);

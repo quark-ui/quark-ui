@@ -5,16 +5,20 @@
 import 'babel-polyfill';
 import ReactDOM from 'react-dom';
 import React from 'react';
+import { ThemeProvider } from 'react-jss';
 
 /* eslint-disable import/no-unresolved, import/extensions */
 import { AppContainer } from 'react-hot-loader';
 
 import App from './Site';
+import theme from '../src/styles/theme';
 
 const render = (Component) => {
   ReactDOM.render(
     <AppContainer>
-      <Component />
+      <ThemeProvider theme={theme}>
+        <Component />
+      </ThemeProvider>
     </AppContainer>,
     document.getElementById('App'),
   );

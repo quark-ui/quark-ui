@@ -2,16 +2,13 @@
  * RadioButton Component
  * @author grootfish
  */
-import React,{ PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import shallowEqual from 'shallowequal';
 import assign from 'object-assign';
 import Radio from './Radio';
-import styles from './Radio.css';
 
-
-class RadioButton extends PureComponent {
-
+class RadioButton extends Component {
   static displayName = 'RadioButton'
 
   static defaultProps = {
