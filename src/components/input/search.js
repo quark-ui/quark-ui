@@ -5,7 +5,7 @@
 import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Input from './Input';
-import styles from './Input.css';
+// import styles from './Input.css';
 import Icon from '../icon';
 
 export default class Search extends PureComponent {
@@ -34,7 +34,7 @@ export default class Search extends PureComponent {
     const searchSuffix = (
       <Icon
         size={12}
-        name={'search'}
+        name="search"
         onClick={this.onSearch}
       />
     );

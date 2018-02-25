@@ -8,10 +8,13 @@ import assign from 'object-assign';
 import classnames from 'classnames';
 import moment from 'moment';
 import momentPropTypes from 'react-moment-proptypes';
+import injectSheet from 'react-jss';
+import styles from '../style';
 import Icon from '../../icon';
 
-import styles from '../DatePicker.css';
+// import styles from '../DatePicker.css';
 
+@injectSheet(styles)
 class DecadePane extends PureComponent {
   static displayName = 'DecadePane'
 
@@ -41,22 +44,12 @@ class DecadePane extends PureComponent {
     this.setState(this.getDecadeRange(nextProps));
   }
 
-  getDecadeRange(props) {
-    const { decadeYear } = props;
-    const startYear = Math.floor(decadeYear / 100) * 100;
-    const endYear = startYear + 99;
-    return {
-      startYear,
-      endYear,
-      decadeYear,
-    };
-  }
-
+  
   onChangeDecade(startYear) {
     this.props.changeYear(startYear);
     this.props.showYearPane();
   }
-
+  
   onJumpCentury(backward) {
     const { startYear, endYear, decadeYear } = this.state;
     const newState = {};
@@ -76,6 +69,17 @@ class DecadePane extends PureComponent {
     this.setState(newState);
   }
 
+  getDecadeRange(props) {
+    const { decadeYear } = props;
+    const startYear = Math.floor(decadeYear / 100) * 100;
+    const endYear = startYear + 99;
+    return {
+      startYear,
+      endYear,
+      decadeYear,
+    };
+  }
+
   handleSubtractCentury = () => {
     this.onJumpCentury(true);
   }
@@ -88,12 +92,12 @@ class DecadePane extends PureComponent {
     const from = Math.floor(decadeYear / 10) * 10;
     const currentDecade = [from, from + 9];
     return (
-      <div className={styles.datePicker__decadePaneHead}>
-        <button className={styles.datePicker__headControlBtn} onClick={this.handleSubtractCentury}>
+      <div className={this.props.classes.datePicker__decadePaneHead}>
+        <button className={this.props.classes.datePicker__headControlBtn} onClick={this.handleSubtractCentury}>
           <Icon name="arrow-left" size={14} />
         </button>
-        <span className={styles['datePicker__decadePane--current']}>{currentDecade.join('-')}</span>
-        <button className={styles.datePicker__headControlBtn} onClick={this.handleAddCentury}>
+        <span className={this.props.classes['datePicker__decadePane--current']}>{currentDecade.join('-')}</span>
+        <button className={this.props.classes.datePicker__headControlBtn} onClick={this.handleAddCentury}>
           <Icon name="arrow-right" size={14} />
         </button>
       </div>
@@ -102,14 +106,15 @@ class DecadePane extends PureComponent {
 
   renderDecades() {
     const decades = [];
+    const { classes } = this.props;
     const { startYear, endYear, decadeYear } = this.state;
     let i = startYear - 10;
     for (; i <= endYear + 1; i += 10) {
       const decadeProps = {
         key: i,
-        className: classnames(styles.datePicker__decadeGrid, {
-          [styles['datePicker__decadeGrid--jump']]: i === startYear - 10 || i === endYear + 1,
-          [styles['datePicker__decadeGrid--active']]: decadeYear >= i && decadeYear <= i + 9,
+        className: classnames(classes.datePicker__decadeGrid, {
+          [classes['datePicker__decadeGrid--jump']]: i === startYear - 10 || i === endYear + 1,
+          [classes['datePicker__decadeGrid--active']]: decadeYear >= i && decadeYear <= i + 9,
         }),
       };
       if (i === startYear - 10 || i === endYear + 1) {
@@ -125,13 +130,13 @@ class DecadePane extends PureComponent {
         <button {...decadeProps}>{[i, i + 9].join('-')}</button>,
       );
     }
-    return <div className={styles.datePicker__decadeBody}>{decades}</div>;
+    return <div className={classes.datePicker__decadeBody}>{decades}</div>;
   }
 
   render() {
-    const { className } = this.props;
+    const { className, classes } = this.props;
     return (
-      <div className={classnames(className, styles.datePicker__picker, styles.datePicker__decadePane)}>
+      <div className={classnames(className, classes.datePicker__picker, classes.datePicker__decadePane)}>
         { this.renderDecadeHead() }
         { this.renderDecades() }
       </div>

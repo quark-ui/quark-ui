@@ -4,9 +4,27 @@
  */
 import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Input from './Input';
-import styles from './Input.css';
+import injectSheet from 'react-jss';
+// import styles from './Input.css';
 
+const styles = theme => ({
+  input__group: {
+    position: 'relative',
+    display: 'table',
+    borderCollapse: 'separate',
+    borderSpacing: 0,
+    width: '100%',
+    '& > input': {
+      display: 'inline-block',
+      float: 'left',
+      flex: '0 0 auto',
+      margin: 0,
+      padding: 0,
+    },
+  },
+});
+
+@injectSheet(styles)
 export default class Group extends PureComponent {
   static displayName = 'Group';
 
@@ -26,10 +44,10 @@ export default class Group extends PureComponent {
 
   render() {
     const props = this.props;
-    const { size, ...otherProps } = props;
+    const { classes, size, ...otherProps } = props;
     const btnProps = {
       ...otherProps,
-      className: styles.input__group,
+      className: classes.input__group,
     };
 
     return <div {...btnProps}>{props.children}</div>;

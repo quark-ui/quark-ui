@@ -6,7 +6,8 @@ import React, { PureComponent } from 'react';
 import InputMask from 'inputmask-core';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import styles from './Input.css';
+import injectSheet from 'react-jss';
+// import styles from './Input.css';
 
 const KEYCODE_Z = 90;
 const KEYCODE_Y = 89;
@@ -72,6 +73,68 @@ function setSelection(el, selection) {
   }
 }
 
+const styles = theme => ({
+  base: {
+    width: '100%',
+    margin: 0,
+    height: 28,
+    cursor: 'text',
+    fontSize: 14,
+    lineHeight: 1.5,
+    color: theme['text-color'],
+    backgroundColor: '#fff',
+    backgroundImage: 'none',
+    border: `1px solid ${theme['border-color']}`,
+    borderRadius: 4,
+    transition: 'all .3s',
+    boxSizing: 'border-box',
+    '&:focus, &:hover': {
+      borderColor: theme['brand-primary-light'],
+    },
+    '&::-moz-placeholder': {
+      color: '#bcbcbc',
+      opacity: 1,
+    },
+    '&:-ms-input-placeholder': {
+      color: '#bcbcbc',
+    },
+    '&::-webkit-input-placeholder': {
+      color: '#bcbcbc',
+    },
+  },
+  input__disabled: {
+    composes: ['$base', '$disabled'],
+  },
+  input__large: {
+    composes: ['$base', '$large'],
+  },
+  input__normal: {
+    composes: ['$base', '$normal'],
+  },
+  input__small: {
+    composes: ['$base', '$small'],
+  },
+  disabled: {
+    background: '#f5f5f5',
+    borderColor: theme['border-color'],
+    color: '#999',
+    cursor: 'not-allowed',
+  },
+  normal: {
+    padding: '6px 7px',
+    height: 34,
+  },
+  large: {
+    padding: '6px 7px',
+    height: 40,
+  },
+  small: {
+    padding: '1px 7px',
+    height: 26,
+  },
+});
+
+@injectSheet(styles)
 class CardInput extends PureComponent {
   static displayName = 'CardInput';
 
@@ -220,7 +283,7 @@ class CardInput extends PureComponent {
       placeholder = this.mask.emptyValue,
     } = this.props;
 
-    const { placeholderChar, formatCharacters, ...cleanedProps } = this.props;
+    const { classes, placeholderChar, formatCharacters, ...cleanedProps } = this.props;
     const inputProps = {
       ...cleanedProps,
       ...eventHandlers,
@@ -230,9 +293,9 @@ class CardInput extends PureComponent {
       size,
       placeholder,
       className: classnames(
-        styles[`${disabled ? 'input__disabled' : ''}`],
-        styles[`input__${size}`],
-      )
+        classes[`${disabled ? 'input__disabled' : ''}`],
+        classes[`input__${size}`],
+      ),
     };
 
     return <input {...inputProps} />;

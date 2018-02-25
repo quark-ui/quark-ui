@@ -2,19 +2,21 @@
  * DatePicker Component
  * @author ryan.bian
  */
-import { PureComponent } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import isEqual from 'lodash/isEqual';
 import assign from 'object-assign';
-import styles from './DatePicker.css';
+// import injectSheet from 'react-jss';
+// import styles from './style';
+// import styles from './DatePicker.css';
 import { defaultProps, propTypes } from './props';
 import Input from '../input';
 
 import Picker from './Picker';
 
-class DatePicker extends PureComponent {
-
+// @injectSheet(styles)
+class DatePicker extends Component {
   static displayName = 'DatePicker'
 
   static defaultProps = assign({}, defaultProps, {

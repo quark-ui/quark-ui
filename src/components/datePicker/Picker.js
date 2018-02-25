@@ -8,14 +8,17 @@ import moment from 'moment';
 import momentPropTypes from 'react-moment-proptypes';
 import assign from 'object-assign';
 import partialRight from 'lodash/partialRight';
+import injectSheet from 'react-jss';
+import styles from './style';
 import Trigger from '../trigger';
-import styles from './DatePicker.css';
+// import styles from './DatePicker.css';
 import DatePane from './panes/DatePane';
 import MonthPane from './panes/MonthPane';
 import YearPane from './panes/YearPane';
 import DecadePane from './panes/DecadePane';
 import Button from '../button';
 
+@injectSheet(styles)
 class Picker extends PureComponent {
 
   static displayName = 'Picker'
@@ -297,7 +300,7 @@ class Picker extends PureComponent {
   }
 
   render() {
-    const { children, type, paneVisible } = this.props;
+    const { classes, children, type, paneVisible } = this.props;
     const {
       date,
       rangeDate,
@@ -309,12 +312,12 @@ class Picker extends PureComponent {
     let popup;
     if (type === 'range') {
       popup = (
-        <div className={styles.rangePicker}>
-          <div className={styles.rangePicker__picker}>
+        <div className={classes.rangePicker}>
+          <div className={classes.rangePicker__picker}>
             {this.renderPane(rangeDate[0], currentRangePane[0], decadeYears[0], 0, styles['picker--start'])}
             {this.renderPane(rangeDate[1], currentRangePane[1], decadeYears[1], 1, styles['picker--end'])}
           </div>
-          <div className={styles.rangePicker__quickSelect}>
+          <div className={classes.rangePicker__quickSelect}>
             <Button
               size="small"
               type="secondary"
@@ -337,7 +340,7 @@ class Picker extends PureComponent {
               }}
             >本月</Button>
           </div>
-          <div className={styles.rangePicker__action}>
+          <div className={classes.rangePicker__action}>
             <Button type="secondary" onClick={this.cancelAction}>取消</Button>
             <Button type="primary" onClick={this.confirmAction}>确定</Button>
           </div>

@@ -4,14 +4,14 @@
  */
 import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import injectSheet from 'react-jss';
 import Trigger from '../trigger';
 import Button from '../button';
-import styles from './Dropdown.css';
+import styles from './style';
 import Menu from './Menu';
 import Placements from './placements';
 
 class Dropdown extends PureComponent {
-
   static displayName = 'Dropdown'
 
   static defaultProps = {
@@ -53,6 +53,7 @@ class Dropdown extends PureComponent {
   }
 }
 
+@injectSheet(styles)
 class DropdownButton extends PureComponent {
 
   static displayName = 'DropdownButton'
@@ -75,9 +76,9 @@ class DropdownButton extends PureComponent {
   }
 
   render() {
-    const { children, type, ...otherProps } = this.props;
+    const { classes, children, type, ...otherProps } = this.props;
     return (
-      <div className={styles['dropdown--buttonWrap']}>
+      <div className={classes['dropdown--buttonWrap']}>
         <Button type={type}>{children}</Button>
         <Dropdown {...otherProps}>
           <Button type={type}>arrow</Button>

@@ -7,7 +7,7 @@ import moment from 'moment';
 import assign from 'object-assign';
 import momentPropTypes from 'react-moment-proptypes';
 import PropTypes from 'prop-types';
-import styles from './DatePicker.css';
+// import styles from './DatePicker.css';
 import Picker from './Picker';
 import { defaultProps, propTypes } from './props';
 import Input from '../input';

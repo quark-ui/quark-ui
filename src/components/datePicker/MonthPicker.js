@@ -4,7 +4,7 @@
  */
 import { PureComponent } from 'react';
 import assign from 'object-assign';
-import styles from './DatePicker.css';
+// import styles from './DatePicker.css';
 import DatePicker from './DatePicker';
 import { defaultProps, propTypes } from './props';
 

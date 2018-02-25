@@ -4,8 +4,10 @@
  */
 import { PureComponent, Children, cloneElement } from 'react';
 import PropTypes from 'prop-types';
-import styles from './Dropdown.css';
+import injectSheet from 'react-jss';
+import styles from './style';
 
+@injectSheet(styles)
 class Menu extends PureComponent {
 
   static displayName = 'Menu'
@@ -23,15 +25,16 @@ class Menu extends PureComponent {
   }
 
   render() {
-    const { children } = this.props;
+    const { classes, children } = this.props;
     return (
-      <ul className={styles['dropdown--menu']}>
+      <ul className={classes['dropdown--menu']}>
         { Children.map(children, Comp => cloneElement(Comp)) }
       </ul>
     );
   }
 }
 
+@injectSheet(styles)
 class Item extends PureComponent {
 
   static displayName = 'Item'
@@ -49,9 +52,9 @@ class Item extends PureComponent {
   }
 
   render() {
-    const { children } = this.props;
+    const { classes, children } = this.props;
     return (
-      <li className={styles['dropdown--menuItem']}>{children}</li>
+      <li className={classes['dropdown--menuItem']}>{children}</li>
     );
   }
 }

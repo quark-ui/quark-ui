@@ -6,8 +6,9 @@ import React, { PureComponent, cloneElement } from 'react';
 import PropTypes from 'prop-types';
 import assign from 'object-assign';
 import classnames from 'classnames';
+import injectSheet from 'react-jss';
 import calculateNodeHeight from './calculateNodeHeight';
-import styles from './Input.css';
+// import styles from './Input.css';
 
 function fixControlledValue(value) {
   if (typeof value === 'undefined' || value === null) {
@@ -16,8 +17,127 @@ function fixControlledValue(value) {
   return value;
 }
 
-class Input extends PureComponent {
+const styles = theme => ({
+  base: {
+    width: '100%',
+    margin: 0,
+    height: 28,
+    cursor: 'text',
+    fontSize: 14,
+    lineHeight: 1.5,
+    color: theme['text-color'],
+    backgroundColor: '#fff',
+    backgroundImage: 'none',
+    border: `1px solid ${theme['border-color']}`,
+    borderRadius: 4,
+    transition: 'all .3s',
+    boxSizing: 'border-box',
+    '&:focus, &:hover': {
+      borderColor: theme['brand-primary-light'],
+    },
+    '&::-moz-placeholder': {
+      color: '#bcbcbc',
+      opacity: 1,
+    },
+    '&:-ms-input-placeholder': {
+      color: '#bcbcbc',
+    },
+    '&::-webkit-input-placeholder': {
+      color: '#bcbcbc',
+    },
+  },
+  input__text: {
+    composes: '$base',
+  },
+  input__textarea: {
+    composes: '$base',
+    height: 'auto!important',
+  },
+  input__disabled: {
+    composes: ['$base', '$disabled'],
+  },
+  input__large: {
+    composes: ['$base', '$large'],
+  },
+  input__normal: {
+    composes: ['$base', '$normal'],
+  },
+  input__small: {
+    composes: ['$base', '$small'],
+  },
+  disabled: {
+    background: '#f5f5f5',
+    borderColor: theme['border-color'],
+    color: '#999',
+    cursor: 'not-allowed',
+  },
+  normal: {
+    padding: '6px 7px',
+    height: 34,
+  },
+  large: {
+    padding: '6px 7px',
+    height: 40,
+  },
+  small: {
+    padding: '1px 7px',
+    height: 26,
+  },
+  input__prefix: {
+    position: 'absolute',
+    top: '50%',
+    left: 7,
+    transform: 'translateY(-50%)',
+    zIndex: 2,
+    lineHeight: 0,
+    color: theme['text-color'],
+    transition: 'all .3s',
+  },
+  input__suffix: {
+    position: 'absolute',
+    top: '50%',
+    right: 7,
+    transform: 'translateY(-50%)',
+    zIndex: 2,
+    lineHeight: 0,
+    color: theme['text-color'],
+    transition: 'all .3s',
+  },
+  input__wrapper: {
+    position: 'relative',
+    display: 'inline-block',
+    width: '100%',
+    '&:hover': {
+      '& > input': {
+        borderColor: theme['brand-primary-light'],
+      },
+      '& > .input__suffix': {
+        cursor: 'pointer',
+      },
+      '& > .input__suffix:hover': {
+        color: theme['brand-primary-light'],
+      },
+      '& > .input__prefix': {
+      },
+      '& > .input__prefix:hover': {
+        color: theme['brand-primary-light'],
+      },
+    },
+  },
+  input__wrapper__suffix: {
+    '& > input': {
+      paddingRight: 30,
+    },
+  },
+  input__wrapper__prefix: {
+    '& > input': {
+      paddingLeft: 30,
+    },
+  },
+});
 
+@injectSheet(styles)
+class Input extends PureComponent {
   static displayName = 'Input'
 
   static defaultProps = {
@@ -79,27 +199,27 @@ class Input extends PureComponent {
 
 
   renderLabeledIcon(children) {
-    const { type, prefix, suffix, style } = this.props;
+    const { classes, type, prefix, suffix, style } = this.props;
     if (type === 'textarea' || !('prefix' in this.props || 'suffix' in this.props)) {
       return children;
     }
 
     const prefixNode = prefix ? (
-      <span className={styles.input__prefix}>
+      <span className={classes.input__prefix}>
         {prefix}
       </span>
     ) : null;
 
     const suffixNode = suffix ? (
-      <span className={styles.input__suffix}>
+      <span className={classes.input__suffix}>
         {suffix}
       </span>
     ) : null;
 
     const inputProps = {
-      className: classnames(styles.input__wrapper, {
-        [styles.input__wrapper__prefix]: prefix,
-        [styles.input__wrapper__suffix]: suffix,
+      className: classnames(classes.input__wrapper, {
+        [classes.input__wrapper__prefix]: prefix,
+        [classes.input__wrapper__suffix]: suffix,
       }),
     };
 
@@ -117,12 +237,12 @@ class Input extends PureComponent {
 
   render() {
     const props = this.props;
-    const { type, size, disabled, suffix, autosize, ...otherProps } = props;
+    const { classes, type, size, disabled, suffix, autosize, ...otherProps } = props;
     const fieldProps = {
       ...otherProps,
       className: classnames(
-        styles[`input__${disabled ? 'disabled' : type}`],
-        styles[`input__${size}`],
+        classes[`input__${disabled ? 'disabled' : type}`],
+        classes[`input__${size}`],
       ),
       ref: node => (this.input = node),
       disabled,
