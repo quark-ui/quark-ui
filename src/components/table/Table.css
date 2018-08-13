@@ -1,0 +1,230 @@
+.demo-wrap {
+  width: 600px;
+}
+.table {
+  font-family: "Chinese Quote", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue",
+    Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol";
+  font-size: 14px;
+  font-variant: tabular-nums;
+  line-height: 1.5;
+  color: rgba(0, 0, 0, 0.65);
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  position: relative;
+  clear: both;
+}
+
+.table table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  text-align: left;
+  border-radius: 4px 4px 0 0;
+}
+
+.table-thead > tr > th {
+  background: #fafafa;
+  -webkit-transition: background 0.3s ease;
+  transition: background 0.3s ease;
+  text-align: left;
+  color: rgba(0, 0, 0, 0.85);
+  font-weight: 500;
+  border-bottom: 1px solid #e8e8e8;
+}
+.table-thead > tr > th[colspan] {
+  text-align: center;
+}
+.table-thead > tr > th .anticon-filter,
+.table-thead > tr > th .table-filter-icon {
+  position: relative;
+  margin-left: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.45);
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  width: 14px;
+  font-weight: normal;
+  vertical-align: text-bottom;
+}
+.table-thead > tr > th .anticon-filter:hover,
+.table-thead > tr > th .table-filter-icon:hover {
+  color: rgba(0, 0, 0, 0.65);
+}
+.table-thead > tr > th .table-column-sorter + .anticon-filter {
+  margin-left: 4px;
+}
+.table-thead > tr > th .table-filter-selected.anticon-filter {
+  color: #1890ff;
+}
+.table-thead > tr > th.table-column-has-filters {
+  overflow: hidden;
+}
+.table-thead > tr:first-child > th:first-child {
+  border-top-left-radius: 4px;
+}
+.table-thead > tr:first-child > th:last-child {
+  border-top-right-radius: 4px;
+}
+.table-thead > tr:not(:last-child) > th[colspan] {
+  border-bottom: 0;
+}
+.table-tbody > tr > td {
+  border-bottom: 1px solid #e8e8e8;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+.table-thead > tr,
+.table-tbody > tr {
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+.table-thead > tr.table-row-hover > td,
+.table-tbody > tr.table-row-hover > td,
+.table-thead > tr:hover > td,
+.table-tbody > tr:hover > td {
+  background: #e6f7ff;
+}
+.table-thead > tr:hover {
+  background: none;
+}
+.table-thead > tr > th,
+.table-tbody > tr > td {
+  padding: 16px 16px;
+  word-break: break-word;
+  -ms-word-break: break-all;
+}
+.table-footer {
+  padding: 16px 16px;
+  background: #fafafa;
+  border-radius: 0 0 4px 4px;
+  position: relative;
+  border-top: 1px solid #e8e8e8;
+}
+.table-footer:before {
+  content: "";
+  height: 1px;
+  background: #fafafa;
+  position: absolute;
+  top: -1px;
+  width: 100%;
+  left: 0;
+}
+.table-fixed-left,
+.table-fixed-right {
+  position: absolute;
+  top: 0;
+  overflow: hidden;
+  -webkit-transition: -webkit-box-shadow 0.3s ease;
+  transition: -webkit-box-shadow 0.3s ease;
+  transition: box-shadow 0.3s ease;
+  transition: box-shadow 0.3s ease, -webkit-box-shadow 0.3s ease;
+  border-radius: 0;
+}
+.table-fixed-right,
+.table-fixed-right table {
+  border-radius: 0 4px 0 0;
+}
+.table-fixed-left,
+.table-fixed-left table {
+  border-radius: 4px 0 0 0;
+}
+.table-fixed-right {
+  right: 0;
+  -webkit-box-shadow: -6px 0 6px -4px rgba(0, 0, 0, 0.15);
+  box-shadow: -6px 0 6px -4px rgba(0, 0, 0, 0.15);
+}
+.table-scroll {
+  overflow: auto;
+  overflow-x: hidden;
+}
+.table-body {
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+.table-body-inner {
+  height: 100%;
+}
+.table-fixed-left .table-body-inner {
+  margin-right: -20px;
+  padding-right: 20px;
+}
+.table-scroll table {
+    width: auto;
+    min-width: 100%;
+}
+
+.table-fixed-left,
+.table-fixed-right {
+  position: absolute;
+  top: 0;
+  overflow: hidden;
+  -webkit-transition: -webkit-box-shadow 0.3s ease;
+  transition: -webkit-box-shadow 0.3s ease;
+  transition: box-shadow 0.3s ease;
+  transition: box-shadow 0.3s ease, -webkit-box-shadow 0.3s ease;
+  border-radius: 0;
+}
+.table-fixed-left table,
+.table-fixed-right table {
+  width: auto;
+  background: #fff;
+}
+.table-fixed-header .table-fixed-left .table-body-outer .table-fixed,
+.table-fixed-header .table-fixed-right .table-body-outer .table-fixed {
+  border-radius: 0;
+}
+.table-fixed-left {
+  left: 0;
+  -webkit-box-shadow: 6px 0 6px -4px rgba(0, 0, 0, 0.15);
+          box-shadow: 6px 0 6px -4px rgba(0, 0, 0, 0.15);
+}
+.table-fixed-left .table-header {
+  overflow-y: hidden;
+}
+.table-fixed-left .table-body-inner {
+  margin-right: -20px;
+  padding-right: 20px;
+}
+.table-fixed-header .table-fixed-left .table-body-inner {
+  padding-right: 0;
+}
+.table-fixed-left,
+.table-fixed-left table {
+  border-radius: 4px 0 0 0;
+}
+.table-fixed-left .table-thead > tr > th:last-child {
+  border-top-right-radius: 0;
+}
+.table-fixed-right {
+  right: 0;
+  -webkit-box-shadow: -6px 0 6px -4px rgba(0, 0, 0, 0.15);
+          box-shadow: -6px 0 6px -4px rgba(0, 0, 0, 0.15);
+}
+.table-fixed-right,
+.table-fixed-right table {
+  border-radius: 0 4px 0 0;
+}
+.table-fixed-right .table-expanded-row {
+  color: transparent;
+  pointer-events: none;
+}
+.table-fixed-right .table-thead > tr > th:first-child {
+  border-top-left-radius: 0;
+}
+.table.table-scroll-position-left .table-fixed-left {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+.table.table-scroll-position-right .table-fixed-right {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+.table.table-scroll-position-middle{
+
+}
