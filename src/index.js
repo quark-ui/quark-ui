@@ -49,6 +49,8 @@ export { default as Steps } from './components/steps/';
 
 export { default as Tabs } from './components/tabs/';
 
+export { default as Table } from './components/table/';
+
 export { default as Tooltip } from './components/tooltip/';
 
 export { default as Trigger } from './components/trigger/';
