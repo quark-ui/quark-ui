@@ -10,7 +10,6 @@ export default class Tbody extends PureComponent {
     fixedColumn: 'scroll',
     root: null,
     currentHoverRow: null,
-    isHover: false,
     fixedColumnsBodyRowsHeight: {},
   }
   static propTypes = {
@@ -37,19 +36,17 @@ export default class Tbody extends PureComponent {
         height: `${fixedColumnsBodyRowsHeight[index]}px` || 'auto',
       };
       const isHover = currentHoverRow === index;
-      tbs.push(
-        <Tr
-          style={styleTr}
-          columns={columns}
-          key={data.key}
-          data={data}
-          fixedColumn={fixedColumn}
-          render={columns.render}
-          index={index}
-          root={root}
-          isHover={isHover}
-        />,
-      );
+      tbs.push(<Tr
+        style={styleTr}
+        columns={columns}
+        key={data.key}
+        data={data}
+        fixedColumn={fixedColumn}
+        render={columns.render}
+        index={index}
+        root={root}
+        isHover={isHover}
+      />);
     });
     return <tbody className={styles['table-tbody']}>{tbs}</tbody>;
   }

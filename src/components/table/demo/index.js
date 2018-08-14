@@ -66,8 +66,8 @@ export default class TableDemo extends Component {
           width: 300,
           render: () => (
             <div>
-              <a href="">Delete</a>
-              <a href="">More actions</a>
+              <a>Delete</a>
+              <a>More actions</a>
             </div>
           ),
         },
@@ -136,8 +136,8 @@ export default class TableDemo extends Component {
           fixed: 'right',
           render: () => (
             <div>
-              <a href="">Delete</a>
-              <a href="">More actions</a>
+              <a>Delete</a>
+              <a>More actions</a>
             </div>
           ),
         },
@@ -249,8 +249,8 @@ export default class TableDemo extends Component {
           width: 300,
           render: () => (
             <div>
-              <a href="">Delete</a>
-              <a href="">More actions</a>
+              <a>Delete</a>
+              <a>More actions</a>
             </div>
           ),
         },

@@ -5,6 +5,13 @@ import Th from './reactable/th';
 import Tbody from './reactable/tbody';
 import Thead from './reactable/thead';
 
-// const Reactable = { Table, Tr, Td, Th, Thead, Tbody };
+const Reactable = {
+  Table,
+  Tr,
+  Td,
+  Th,
+  Thead,
+  Tbody,
+};
 
-export default { Table, Tr, Td, Th, Thead, Tbody };
+export default Reactable;

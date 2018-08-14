@@ -7,7 +7,7 @@ export default class Colgroup extends React.Component {
     const colsRight = [];
     const colsLeft = [];
 
-    columns.map((item) => {
+    columns.forEach((item) => {
       let style = {};
       if (item.width) {
         style = {
