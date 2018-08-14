@@ -1,9 +1,9 @@
-import React from "react";
-import classnames from "classnames";
-import { Td } from "./td";
-import styles from "../Table.css";
+import React, { PureComponent } from 'react';
+import classnames from 'classnames';
+import Td from './td';
+import styles from '../Table.css';
 
-export class Tr extends React.Component {
+export default class Tr extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {};
@@ -24,13 +24,14 @@ export class Tr extends React.Component {
 
   renderColumns(renderProps) {
     const { columns, data, fixedColumn } = renderProps;
-    const tds = [],
-      righttds = [],
-      lefttds = [];
+    const tds = [];
+    const righttds = [];
+    const lefttds = [];
 
-    columns.map((item, index) => {
-      let value, action;
-      if (!!item.render && typeof item.render === "function") {
+    columns.map((item) => {
+      let value;
+      let action;
+      if (!!item.render && typeof item.render === 'function') {
         action = <div>{item.render()}</div>;
       }
       if (data[item.key]) {
@@ -42,17 +43,17 @@ export class Tr extends React.Component {
           {value || action}
         </Td>
       );
-      if (item.fixed && item.fixed === "left") {
+      if (item.fixed && item.fixed === 'left') {
         lefttds.push(td);
-      } else if (item.fixed && item.fixed === "right") {
+      } else if (item.fixed && item.fixed === 'right') {
         righttds.push(td);
       }
       tds.push(td);
     });
 
-    if (fixedColumn === "left") {
+    if (fixedColumn === 'left') {
       return lefttds;
-    } else if (fixedColumn === "right") {
+    } else if (fixedColumn === 'right') {
       return righttds;
     }
     return tds;
@@ -63,12 +64,12 @@ export class Tr extends React.Component {
     return (
       <tr
         data-row-key={index}
-        ref={c => {
+        ref={(c) => {
           this.trRow = c;
         }}
         className={classnames({
-          [styles[`table-row`]]:true,
-          [styles[`table-row-hover`]]: isHover
+          [styles['table-row']]: true,
+          [styles['table-row-hover']]: isHover,
         })}
         style={style}
         onMouseEnter={() => {

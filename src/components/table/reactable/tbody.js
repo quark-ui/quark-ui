@@ -1,8 +1,8 @@
-import React from "react";
-import { Tr } from "./Tr";
-import styles from "../Table.css";
+import React, { PureComponent } from 'react';
+import Tr from './tr';
+import styles from '../Table.css';
 
-export class Tbody extends React.Component {
+export default class Tbody extends PureComponent {
   render() {
     const tbs = [];
     const {
@@ -15,7 +15,7 @@ export class Tbody extends React.Component {
     } = this.props;
     dataSource.forEach((data, index) => {
       const styleTr = {
-        height: fixedColumnsBodyRowsHeight[index] + 'px',
+        height: `${fixedColumnsBodyRowsHeight[index]}px`,
       };
       tbs.push(
         <Tr
@@ -28,10 +28,10 @@ export class Tbody extends React.Component {
           index={index}
           root={root}
           isHover={currentHoverRow === index}
-        />
+        />,
       );
     });
 
-    return <tbody className={styles["table-tbody"]}>{tbs}</tbody>;
+    return <tbody className={styles['table-tbody']}>{tbs}</tbody>;
   }
 }

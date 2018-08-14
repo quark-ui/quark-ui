@@ -1,3 +1,4 @@
-import Reactable from './reactable';
+// import Reactable from './reactable';
 
-export default Reactable;
+// export default Reactable;
+export { default } from './reactable';
