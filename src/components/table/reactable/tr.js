@@ -28,7 +28,7 @@ export default class Tr extends PureComponent {
     const righttds = [];
     const lefttds = [];
 
-    columns.map((item) => {
+    columns.forEach((item) => {
       let value;
       let action;
       if (!!item.render && typeof item.render === 'function') {

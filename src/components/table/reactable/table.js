@@ -12,6 +12,7 @@ export default class Table extends PureComponent {
     this.state = {
       // width: 1000,
       // height: '100%',
+      currentHoverRow: -1,
       fixedColumnsHeadRowsHeight: [],
       fixedColumnsBodyRowsHeight: {},
     };

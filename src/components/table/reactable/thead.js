@@ -1,16 +1,28 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import Th from './th';
 import styles from '../Table.css';
 
 export default class Thead extends PureComponent {
+  static defaultProps = {
+    columns: {},
+    fixedColumn: 'scroll',
+    fixedColumnsHeadRowsHeight: {},
+  }
+  static propTypes = {
+    columns: PropTypes.instanceOf(Array),
+    fixedColumn: PropTypes.string,
+    fixedColumnsHeadRowsHeight: PropTypes.instanceOf(Array),
+  }
+
   renderTh() {
     const ths = [];
     const rightths = [];
     const leftths = [];
     const { fixedColumn, columns } = this.props;
 
-    columns.map((item, index) => {
-      const th = <Th key={index}>{item.title}</Th>;
+    columns.forEach((item) => {
+      const th = <Th key={item.key}>{item.title}</Th>;
       if (item.fixed && item.fixed === 'left') {
         leftths.push(th);
       } else if (item.fixed && item.fixed === 'right') {

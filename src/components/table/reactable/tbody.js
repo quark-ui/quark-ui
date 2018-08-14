@@ -1,8 +1,27 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import Tr from './tr';
 import styles from '../Table.css';
 
 export default class Tbody extends PureComponent {
+  static defaultProps = {
+    dataSource: {},
+    columns: {},
+    fixedColumn: 'scroll',
+    root: null,
+    currentHoverRow: null,
+    isHover: false,
+    fixedColumnsBodyRowsHeight: {},
+  }
+  static propTypes = {
+    dataSource: PropTypes.instanceOf(Array),
+    columns: PropTypes.instanceOf(Array),
+    fixedColumn: PropTypes.string,
+    root: PropTypes.instanceOf(Object),
+    currentHoverRow: PropTypes.number,
+    fixedColumnsBodyRowsHeight: PropTypes.instanceOf(Object),
+  }
+
   render() {
     const tbs = [];
     const {
@@ -15,8 +34,9 @@ export default class Tbody extends PureComponent {
     } = this.props;
     dataSource.forEach((data, index) => {
       const styleTr = {
-        height: `${fixedColumnsBodyRowsHeight[index]}px`,
+        height: `${fixedColumnsBodyRowsHeight[index]}px` || 'auto',
       };
+      const isHover = currentHoverRow === index;
       tbs.push(
         <Tr
           style={styleTr}
@@ -27,7 +47,7 @@ export default class Tbody extends PureComponent {
           render={columns.render}
           index={index}
           root={root}
-          isHover={currentHoverRow === index}
+          isHover={isHover}
         />,
       );
     });
