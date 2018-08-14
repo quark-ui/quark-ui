@@ -1,13 +1,9 @@
 import React from "react";
 
 export class Colgroup extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   renderColgroup() {
     const { fixedColumn, columns } = this.props;
-    const cols = [],
+    let cols = [],
       colsRight = [],
       colsLeft = [];
 
@@ -15,8 +11,8 @@ export class Colgroup extends React.Component {
       let style = {};
       if (item.width) {
         style = {
-          width: item.width || 'auto',
-          minWidth: "100px"
+          width: item.width || "auto",
+          minWidth: "100px",
         };
       }
       if (item.fixed === "right") {
@@ -36,8 +32,6 @@ export class Colgroup extends React.Component {
   }
 
   render() {
-    return (
-      <colgroup>{this.renderColgroup()}</colgroup>
-    );
+    return <colgroup>{this.renderColgroup()}</colgroup>;
   }
 }

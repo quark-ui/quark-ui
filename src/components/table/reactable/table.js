@@ -1,6 +1,6 @@
-import React, { Children } from "react";
+import React from "react";
 import classnames from "classnames";
-import shallowequal from 'shallowequal';
+import shallowequal from "shallowequal";
 import { Colgroup } from "./colgroup";
 import { Thead } from "./thead";
 import { Tbody } from "./tbody";
@@ -12,8 +12,8 @@ export class Table extends React.Component {
     this.state = {
       width: 1000,
       height: "100%",
-      fixedColumnsHeadRowsHeight:[],
-      fixedColumnsBodyRowsHeight:{},
+      fixedColumnsHeadRowsHeight: [],
+      fixedColumnsBodyRowsHeight: {}
     };
     this.hasFixed = this.hasFixColumn(props);
   }
@@ -23,14 +23,13 @@ export class Table extends React.Component {
     this.handleWindowResize();
   }
 
-  componentDidUpdate(){
+  componentDidUpdate() {
     this.handleWindowResize();
   }
   componentWillUnmount() {
     this.tablebody.removeEventListener("scroll", this.handleScroll.bind(this));
   }
-  handleBodyScroll() {}
-  handleScroll(e) {
+  handleScroll() {
     const scrollPositionLeft = this.tablebody.scrollLeft;
     const scrollPositionRight =
       this.tablebody.scrollWidth - this.tablescroll.scrollWidth;
@@ -39,45 +38,50 @@ export class Table extends React.Component {
       scrollPositionRight
     });
   }
-  handleWindowResize=()=>{
+  handleWindowResize = () => {
     this.syncFixedTableRowHeight();
-
-  }
-  syncFixedTableRowHeight=()=>{
+  };
+  syncFixedTableRowHeight = () => {
     const tableRect = this.tableNode.getBoundingClientRect();
     if (tableRect.height !== undefined && tableRect.height <= 0) {
       return;
     }
-    const headRows = this.tablebox.querySelectorAll('thead');
+    const headRows = this.tablebox.querySelectorAll("thead");
     const fixedColumnsHeadRowsHeight = [].map.call(
       headRows,
-      row => row.getBoundingClientRect().height || 'auto',
+      row => row.getBoundingClientRect().height || "auto"
     );
 
-    const bodyRows = this.tablebox.querySelectorAll('tr[data-row-key]') || [];
+    const bodyRows = this.tablebox.querySelectorAll("tr[data-row-key]") || [];
     const fixedColumnsBodyRowsHeight = [].reduce.call(
       bodyRows,
       (acc, row) => {
-        const rowKey = row.getAttribute('data-row-key');
-        const height = row.getBoundingClientRect().height || 'auto';
+        const rowKey = row.getAttribute("data-row-key");
+        const height = row.getBoundingClientRect().height || "auto";
         acc[rowKey] = height;
         return acc;
       },
-      {},
+      {}
     );
 
     if (
-      shallowequal(this.state.fixedColumnsHeadRowsHeight, fixedColumnsHeadRowsHeight) &&
-      shallowequal(this.state.fixedColumnsBodyRowsHeight, fixedColumnsBodyRowsHeight)
+      shallowequal(
+        this.state.fixedColumnsHeadRowsHeight,
+        fixedColumnsHeadRowsHeight
+      ) &&
+      shallowequal(
+        this.state.fixedColumnsBodyRowsHeight,
+        fixedColumnsBodyRowsHeight
+      )
     ) {
       return;
     }
 
     this.setState({
       fixedColumnsHeadRowsHeight,
-      fixedColumnsBodyRowsHeight,
+      fixedColumnsBodyRowsHeight
     });
-  }
+  };
   getDom() {
     return this.root;
   }
@@ -125,17 +129,17 @@ export class Table extends React.Component {
     }
   }
 
-  renderColgroup = (renderColgroupProps, fixedColumn) => {
-    return <Colgroup {...renderColgroupProps} fixedColumn={fixedColumn} />;
-  };
+  renderColgroup = (renderColgroupProps, fixedColumn) => (
+    <Colgroup {...renderColgroupProps} fixedColumn={fixedColumn} />
+  );
 
-  renderThead = (renderHeaderProps, fixedColumn) => {
-    return <Thead {...renderHeaderProps} fixedColumn={fixedColumn} />;
-  };
+  renderThead = (renderHeaderProps, fixedColumn) => (
+    <Thead {...renderHeaderProps} fixedColumn={fixedColumn} />
+  );
 
-  renderTbody = (renderBodyProps, fixedColumn) => {
-    return <Tbody {...renderBodyProps} fixedColumn={fixedColumn} />;
-  };
+  renderTbody = (renderBodyProps, fixedColumn) => (
+    <Tbody {...renderBodyProps} fixedColumn={fixedColumn} />
+  );
 
   renderMainTable(renderColgroupProps, renderHeaderProps, renderBodyProps) {
     let bodyStyle = {};
@@ -150,20 +154,20 @@ export class Table extends React.Component {
       !height
     ) {
       bodyStyle = {
-        overflowX: "scroll"
+        overflowX: "scroll",
       };
     }
     if (height && !this.hasFixed) {
       bodyStyle = {
         overflowY: "scroll",
-        maxHeight: height+'px',
+        maxHeight: height + "px",
       };
     }
 
     if (this.hasFixed && height) {
       bodyStyle = {
         overflow: "scroll",
-        maxHeight: height+'px',
+        maxHeight: height + "px",
       };
     }
 
@@ -316,9 +320,12 @@ export class Table extends React.Component {
     });
 
     return (
-      <div className={tablestyle}
-        ref={(c)=>{this.tableNode = c;}}
-        >
+      <div
+        className={tablestyle}
+        ref={c => {
+          this.tableNode = c;
+        }}
+      >
         <div className={styles["table-content"]}>
           {this.renderMainTable(
             renderColgroupProps,

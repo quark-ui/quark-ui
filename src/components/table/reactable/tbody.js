@@ -1,18 +1,8 @@
 import React from "react";
 import { Tr } from "./Tr";
-const addEventListener = require('rc-util/lib/Dom/addEventListener');
 import styles from "../Table.css";
 
 export class Tbody extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  componentDidMount() {
-
-  }
-  
-
   render() {
     const tbs = [];
     const {
@@ -25,8 +15,8 @@ export class Tbody extends React.Component {
     } = this.props;
     dataSource.forEach((data, index) => {
       const styleTr = {
-        height:fixedColumnsBodyRowsHeight[index] + 'px',
-      }
+        height: fixedColumnsBodyRowsHeight[index] + 'px',
+      };
       tbs.push(
         <Tr
           style={styleTr}

@@ -25,7 +25,7 @@ export default class TableDemo extends Component {
           work: "New York No. 1",
           color: "New York No. 1",
           fruit: "Apples and melons are my favourite fruits.",
-        }
+        },
       ],
       columns:[
         {
@@ -71,9 +71,9 @@ export default class TableDemo extends Component {
               <a href="">More actions</a>
             </div>
           ),
-        }
-      ]
-    }
+        },
+      ],
+    };
     const demo2 = {
       data: [
         {

@@ -4,10 +4,6 @@ import styles from '../Table.css';
 
 
 export class Thead extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   renderTh() {
     const ths = [], rightths = [], leftths= [];
     const { fixedColumn, columns } = this.props;
@@ -36,7 +32,7 @@ export class Thead extends React.Component {
   render() {
     const { fixedColumnsHeadRowsHeight } = this.props;
     const height = {
-      height:fixedColumnsHeadRowsHeight+'px' || 'auto'
+      height: fixedColumnsHeadRowsHeight+'px' || 'auto',
     }
     return (
       <thead className={styles['table-thead']}>
