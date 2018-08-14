@@ -15,7 +15,7 @@ export default class TableDemo extends Component {
           address: "New York No. 1",
           work: "New York No. 1",
           color: "New York No. 1",
-          fruit: "Apples and melons are my favourite fruits."
+          fruit: "Apples and melons are my favourite fruits.",
         },
         {
           key: "2",
@@ -24,7 +24,7 @@ export default class TableDemo extends Component {
           address: "London No. 1",
           work: "New York No. 1",
           color: "New York No. 1",
-          fruit: "Apples and melons are my favourite fruits."
+          fruit: "Apples and melons are my favourite fruits.",
         }
       ],
       columns:[
@@ -38,27 +38,27 @@ export default class TableDemo extends Component {
           title: "Age",
           dataIndex: "age",
           key: "age",
-          width: 250
+          width: 250,
         },
         {
           title: "Address",
           dataIndex: "address",
-          key: "address"
+          key: "address",
         },
         {
           title: "Work",
           dataIndex: "work",
-          key: "work"
+          key: "work",
         },
         {
           title: "Color",
           dataIndex: "color",
-          key: "color"
+          key: "color",
         },
         {
           title: "Fruit",
           dataIndex: "fruit",
-          key: "fruit"
+          key: "fruit",
         },
         {
           title: "Action",
@@ -67,10 +67,10 @@ export default class TableDemo extends Component {
           width: 300,
           render: () => (
             <div>
-              <a href="javascript:;">Delete</a>
-              <a href="javascript:;">More actions</a>
+              <a href="">Delete</a>
+              <a href="">More actions</a>
             </div>
-          )
+          ),
         }
       ]
     }
@@ -83,7 +83,7 @@ export default class TableDemo extends Component {
           address: "New York No. 1NewNewNewNewNew",
           work: "New York No. 1NewNewNewNewNewNewNew",
           color: "New York No. 1NewNewNewNewNewNewNewNew",
-          fruit: "Apples and melons are my favourite fruits.Apples and melons are my favourite fruits."
+          fruit: "Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.",
         },
         {
           key: "2",
@@ -92,7 +92,7 @@ export default class TableDemo extends Component {
           address: "London No. 1NewNewNewNewNewNewNew",
           work: "New York No. 1NewNewNewNewNewNewNewNew",
           color: "New York No. 1NewNewNewNewNewNewNew",
-          fruit: "Apples and melons are my favourite fruits."
+          fruit: "Apples and melons are my favourite fruits.",
         }
       ],
       columns:[
@@ -101,33 +101,33 @@ export default class TableDemo extends Component {
           dataIndex: "name",
           key: "name",
           width: 200,
-          fixed: "left"
+          fixed: "left",
         },
         {
           title: "Age",
           dataIndex: "age",
           key: "age",
-          width: 250
+          width: 250,
         },
         {
           title: "Address",
           dataIndex: "address",
-          key: "address"
+          key: "address",
         },
         {
           title: "Work",
           dataIndex: "work",
-          key: "work"
+          key: "work",
         },
         {
           title: "Color",
           dataIndex: "color",
-          key: "color"
+          key: "color",
         },
         {
           title: "Fruit",
           dataIndex: "fruit",
-          key: "fruit"
+          key: "fruit",
         },
         {
           title: "Action",
@@ -137,10 +137,10 @@ export default class TableDemo extends Component {
           fixed: "right",
           render: () => (
             <div>
-              <a href="javascript:;">Delete</a>
-              <a href="javascript:;">More actions</a>
+              <a href="">Delete</a>
+              <a href="">More actions</a>
             </div>
-          )
+          ),
         }
       ]
     };
@@ -153,7 +153,7 @@ export default class TableDemo extends Component {
           address: "New York No. 1",
           work: "New York No. 1",
           color: "New York No. 1",
-          fruit: "Apples and melons are my "
+          fruit: "Apples and melons are my ",
         },
         {
           key: "2",
@@ -162,7 +162,7 @@ export default class TableDemo extends Component {
           address: "London No. 1",
           work: "New York No. 1",
           color: "New York No. 1",
-          fruit: "Apples and melons are my"
+          fruit: "Apples and melons are my",
         },
         {
           key: "3",
@@ -171,7 +171,7 @@ export default class TableDemo extends Component {
           address: "Sidney No. 1",
           work: "New York No. 1",
           color: "New York No. 1",
-          fruit: "Apples and melons are my"
+          fruit: "Apples and melons are my",
         },
         {
           key: "3",
@@ -180,7 +180,7 @@ export default class TableDemo extends Component {
           address: "Sidney No. 1",
           work: "New York No. 1",
           color: "New York No. 1",
-          fruit: "Apples and melons are my"
+          fruit: "Apples and melons are my",
         },
         {
           key: "3",
@@ -189,7 +189,7 @@ export default class TableDemo extends Component {
           address: "Sidney No. 1",
           work: "New York No. 1",
           color: "New York No. 1",
-          fruit: "Apples and melons are my"
+          fruit: "Apples and melons are my",
         },
         {
           key: "3",
@@ -198,7 +198,7 @@ export default class TableDemo extends Component {
           address: "Sidney No. 1",
           work: "New York No. 1",
           color: "New York No. 1",
-          fruit: "Apples and melons are my"
+          fruit: "Apples and melons are my",
         },
         {
           key: "3",
@@ -207,7 +207,7 @@ export default class TableDemo extends Component {
           address: "Sidney No. 1",
           work: "New York No. 1",
           color: "New York No. 1",
-          fruit: "Apples and melons are my"
+          fruit: "Apples and melons are my",
         }
       ],
       columns:[
@@ -221,27 +221,27 @@ export default class TableDemo extends Component {
           title: "Age",
           dataIndex: "age",
           key: "age",
-          width: 250
+          width: 250,
         },
         {
           title: "Address",
           dataIndex: "address",
-          key: "address"
+          key: "address",
         },
         {
           title: "Work",
           dataIndex: "work",
-          key: "work"
+          key: "work",
         },
         {
           title: "Color",
           dataIndex: "color",
-          key: "color"
+          key: "color",
         },
         {
           title: "Fruit",
           dataIndex: "fruit",
-          key: "fruit"
+          key: "fruit",
         },
         {
           title: "Action",
@@ -250,10 +250,10 @@ export default class TableDemo extends Component {
           width: 300,
           render: () => (
             <div>
-              <a href="javascript:;">Delete</a>
-              <a href="javascript:;">More actions</a>
+              <a href="">Delete</a>
+              <a href="">More actions</a>
             </div>
-          )
+          ),
         }
       ]
     };
