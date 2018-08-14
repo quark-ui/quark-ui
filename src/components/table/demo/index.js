@@ -1,12 +1,8 @@
 import { Component } from "react";
-import styles from "../Table.css";
 import Reactable from "../index";
 const Table = Reactable.Table;
 
 export default class TableDemo extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   render() {
     

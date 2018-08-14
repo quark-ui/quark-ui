@@ -15,7 +15,7 @@ export class Colgroup extends React.Component {
       let style = {};
       if (item.width) {
         style = {
-          width: item.width || auto,
+          width: item.width || 'auto',
           minWidth: "100px"
         };
       }
@@ -27,9 +27,9 @@ export class Colgroup extends React.Component {
       cols.push(<col style={style} key={i} />);
     });
 
-    if (fixedColumn === "right") {
+    if (fixedColumn && fixedColumn === "right") {
       return colsRight;
-    } else if (fixedColumn === "left") {
+    } else if (fixedColumn && fixedColumn === "left") {
       return colsLeft;
     }
     return cols;
