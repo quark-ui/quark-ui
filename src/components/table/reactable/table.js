@@ -12,6 +12,7 @@ export class Table extends React.Component {
     this.state = {
       width: 1000,
       height: "100%",
+      fixedColumnsHeadRowsHeight:[],
       fixedColumnsBodyRowsHeight:{},
     };
     this.hasFixed = this.hasFixColumn(props);
@@ -47,6 +48,12 @@ export class Table extends React.Component {
     if (tableRect.height !== undefined && tableRect.height <= 0) {
       return;
     }
+    const headRows = this.tablebox.querySelectorAll('thead');
+    const fixedColumnsHeadRowsHeight = [].map.call(
+      headRows,
+      row => row.getBoundingClientRect().height || 'auto',
+    );
+
     const bodyRows = this.tablebox.querySelectorAll('tr[data-row-key]') || [];
     const fixedColumnsBodyRowsHeight = [].reduce.call(
       bodyRows,
@@ -60,12 +67,14 @@ export class Table extends React.Component {
     );
 
     if (
+      shallowequal(this.state.fixedColumnsHeadRowsHeight, fixedColumnsHeadRowsHeight) &&
       shallowequal(this.state.fixedColumnsBodyRowsHeight, fixedColumnsBodyRowsHeight)
     ) {
       return;
     }
 
     this.setState({
+      fixedColumnsHeadRowsHeight,
       fixedColumnsBodyRowsHeight,
     });
   }
@@ -266,6 +275,7 @@ export class Table extends React.Component {
     const { props, state } = this;
 
     const renderHeaderProps = {
+      fixedColumnsHeadRowsHeight: state.fixedColumnsHeadRowsHeight,
       columns: props.columns,
       width: props.width,
       key: "thead"

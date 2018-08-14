@@ -34,9 +34,13 @@ export class Thead extends React.Component {
   }
 
   render() {
+    const { fixedColumnsHeadRowsHeight } = this.props;
+    const height = {
+      height:fixedColumnsHeadRowsHeight+'px' || 'auto'
+    }
     return (
       <thead className={styles['table-thead']}>
-        <tr>{this.renderTh()}</tr>
+        <tr style={height}>{this.renderTh()}</tr>
       </thead>
     );
   }
