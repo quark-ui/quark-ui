@@ -10,8 +10,8 @@ export default class Table extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      width: 1000,
-      height: '100%',
+      // width: 1000,
+      // height: '100%',
       fixedColumnsHeadRowsHeight: [],
       fixedColumnsBodyRowsHeight: {},
     };

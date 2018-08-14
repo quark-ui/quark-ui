@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { isUnsafe } from './unsafe';
-import { filterPropsFrom } from './lib/filter_props_from';
+import filterPropsFrom from './lib/filter_props_from';
 
 export default class Td extends PureComponent {
   render() {

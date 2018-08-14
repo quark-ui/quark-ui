@@ -21,7 +21,7 @@ export default class Tbody extends PureComponent {
         <Tr
           style={styleTr}
           columns={columns}
-          key={index}
+          key={data.key}
           data={data}
           fixedColumn={fixedColumn}
           render={columns.render}
@@ -31,7 +31,6 @@ export default class Tbody extends PureComponent {
         />,
       );
     });
-
     return <tbody className={styles['table-tbody']}>{tbs}</tbody>;
   }
 }

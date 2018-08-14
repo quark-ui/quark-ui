@@ -7,7 +7,7 @@ export default class Colgroup extends React.Component {
     const colsRight = [];
     const colsLeft = [];
 
-    columns.map((item, i) => {
+    columns.map((item) => {
       let style = {};
       if (item.width) {
         style = {
@@ -16,11 +16,11 @@ export default class Colgroup extends React.Component {
         };
       }
       if (item.fixed === 'right') {
-        colsRight.push(<col style={style} key={i} />);
+        colsRight.push(<col style={style} key={item.key} />);
       } else if (item.fixed === 'left') {
-        colsLeft.push(<col style={style} key={i} />);
+        colsLeft.push(<col style={style} key={item.key} />);
       }
-      cols.push(<col style={style} key={i} />);
+      cols.push(<col style={style} key={item.key} />);
     });
 
     if (fixedColumn && fixedColumn === 'right') {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Reactable from '../index';
 
-const Table = Reactable.Table;
+const { Table } = Reactable;
 
 export default class TableDemo extends Component {
   render() {
@@ -173,7 +173,7 @@ export default class TableDemo extends Component {
           fruit: 'Apples and melons are my',
         },
         {
-          key: '3',
+          key: '4',
           name: 'Joe Black',
           age: '24 year',
           address: 'Sidney No. 1',
@@ -182,7 +182,7 @@ export default class TableDemo extends Component {
           fruit: 'Apples and melons are my',
         },
         {
-          key: '3',
+          key: '5',
           name: 'Joe Black',
           age: '24 year',
           address: 'Sidney No. 1',
@@ -191,7 +191,7 @@ export default class TableDemo extends Component {
           fruit: 'Apples and melons are my',
         },
         {
-          key: '3',
+          key: '6',
           name: 'Joe Black',
           age: '24 year',
           address: 'Sidney No. 1',
@@ -200,7 +200,7 @@ export default class TableDemo extends Component {
           fruit: 'Apples and melons are my',
         },
         {
-          key: '3',
+          key: '7',
           name: 'Joe Black',
           age: '24 year',
           address: 'Sidney No. 1',
