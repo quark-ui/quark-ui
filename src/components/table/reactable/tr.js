@@ -1,10 +1,19 @@
 import React from "react";
-import classnames from 'classnames';
+import classnames from "classnames";
 import { Td } from "./td";
-import styles from '../Table.css';
-
+import styles from "../Table.css";
 
 export class Tr extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  componentDidMount() {}
+  componentWillReceiveProps() {
+    // console.log(this.trRow.dataset)
+    // console.log(this.trRow.scrollHeight)
+  }
   handleMouseEnter() {
     this.props.root.handleRowHover(this.props.index, true);
   }
@@ -50,17 +59,18 @@ export class Tr extends React.Component {
   }
 
   render() {
-    const { isHover, rowHeight } = this.props;
-    const trStyle = {
-      height: rowHeight,
-      lineHeight: rowHeight
-    };
+    const { isHover, index, style } = this.props;
     return (
       <tr
+        data-row-key={index}
+        ref={c => {
+          this.trRow = c;
+        }}
         className={classnames({
+          [styles[`table-row`]]:true,
           [styles[`table-row-hover`]]: isHover
         })}
-        style={trStyle}
+        style={style}
         onMouseEnter={() => {
           this.handleMouseEnter();
         }}

@@ -1,6 +1,6 @@
 import React, { Children } from "react";
 import classnames from "classnames";
-
+import shallowequal from 'shallowequal';
 import { Colgroup } from "./colgroup";
 import { Thead } from "./thead";
 import { Tbody } from "./tbody";
@@ -11,17 +11,20 @@ export class Table extends React.Component {
     super(props);
     this.state = {
       width: 1000,
-      height: "100%"
+      height: "100%",
+      fixedColumnsBodyRowsHeight:{},
     };
     this.hasFixed = this.hasFixColumn(props);
   }
 
-  componentWillMount() {}
-
-  componentDidMount(nextProps) {
+  componentDidMount() {
     this.tablebody.addEventListener("scroll", this.handleScroll.bind(this));
+    this.handleWindowResize();
   }
 
+  componentDidUpdate(){
+    this.handleWindowResize();
+  }
   componentWillUnmount() {
     this.tablebody.removeEventListener("scroll", this.handleScroll.bind(this));
   }
@@ -35,7 +38,37 @@ export class Table extends React.Component {
       scrollPositionRight
     });
   }
+  handleWindowResize=()=>{
+    this.syncFixedTableRowHeight();
 
+  }
+  syncFixedTableRowHeight=()=>{
+    const tableRect = this.tableNode.getBoundingClientRect();
+    if (tableRect.height !== undefined && tableRect.height <= 0) {
+      return;
+    }
+    const bodyRows = this.tablebox.querySelectorAll('tr[data-row-key]') || [];
+    const fixedColumnsBodyRowsHeight = [].reduce.call(
+      bodyRows,
+      (acc, row) => {
+        const rowKey = row.getAttribute('data-row-key');
+        const height = row.getBoundingClientRect().height || 'auto';
+        acc[rowKey] = height;
+        return acc;
+      },
+      {},
+    );
+
+    if (
+      shallowequal(this.state.fixedColumnsBodyRowsHeight, fixedColumnsBodyRowsHeight)
+    ) {
+      return;
+    }
+
+    this.setState({
+      fixedColumnsBodyRowsHeight,
+    });
+  }
   getDom() {
     return this.root;
   }
@@ -239,6 +272,7 @@ export class Table extends React.Component {
     };
 
     const renderBodyProps = {
+      fixedColumnsBodyRowsHeight: state.fixedColumnsBodyRowsHeight,
       columns: props.columns,
       dataSource: props.dataSource,
       currentHoverRow: state.currentHoverRow,
@@ -272,7 +306,9 @@ export class Table extends React.Component {
     });
 
     return (
-      <div className={tablestyle}>
+      <div className={tablestyle}
+        ref={(c)=>{this.tableNode = c;}}
+        >
         <div className={styles["table-content"]}>
           {this.renderMainTable(
             renderColgroupProps,

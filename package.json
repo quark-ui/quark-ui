@@ -151,7 +151,7 @@
     "react-moment-proptypes": "^1.5.0",
     "react-transition-group": "^2.2.0",
     "recompose": "^0.24.0",
-    "shallowequal": "^1.0.2"
+    "shallowequal": "^1.1.0"
   },
   "peerDependencies": {
     "react": "^15.5.0",

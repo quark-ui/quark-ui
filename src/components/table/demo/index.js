@@ -83,20 +83,20 @@ export default class TableDemo extends Component {
         {
           key: "1",
           name: "John Brown",
-          age: '24 year',
-          address: "New York No. 1",
-          work: "New York No. 1",
-          color: "New York No. 1",
-          fruit: "Apples and melons are my "
+          age: '24year',
+          address: "New York No. 1NewNewNewNewNew",
+          work: "New York No. 1NewNewNewNewNewNewNew",
+          color: "New York No. 1NewNewNewNewNewNewNewNew",
+          fruit: "Apples and melons are my favourite fruits.Apples and melons are my favourite fruits."
         },
         {
           key: "2",
           name: "Jim Green",
-          age: '24 year',
-          address: "London No. 1",
-          work: "New York No. 1",
-          color: "New York No. 1",
-          fruit: "Apples and melons are my"
+          age: '24year',
+          address: "London No. 1NewNewNewNewNewNewNew",
+          work: "New York No. 1NewNewNewNewNewNewNewNew",
+          color: "New York No. 1NewNewNewNewNewNewNew",
+          fruit: "Apples and melons are my favourite fruits."
         }
       ],
       columns:[
@@ -286,7 +286,7 @@ export default class TableDemo extends Component {
         <Table
           dataSource={demo3.data}
           columns={demo3.columns}
-          height='400'
+          height='200'
           ref={c => {
             this.table = c;
           }}

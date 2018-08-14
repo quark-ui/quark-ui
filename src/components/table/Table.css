@@ -84,6 +84,9 @@
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
 }
+.table-row{
+  
+}
 .table-thead > tr.table-row-hover > td,
 .table-tbody > tr.table-row-hover > td,
 .table-thead > tr:hover > td,

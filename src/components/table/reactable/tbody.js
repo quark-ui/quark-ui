@@ -20,12 +20,16 @@ export class Tbody extends React.Component {
       columns,
       fixedColumn,
       root,
-      currentHoverRow
+      currentHoverRow,
+      fixedColumnsBodyRowsHeight,
     } = this.props;
-
     dataSource.forEach((data, index) => {
+      const styleTr = {
+        height:fixedColumnsBodyRowsHeight[index] + 'px',
+      }
       tbs.push(
         <Tr
+          style={styleTr}
           columns={columns}
           key={index}
           data={data}
