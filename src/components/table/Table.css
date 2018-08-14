@@ -88,7 +88,7 @@
 .table-tbody > tr.table-row-hover > td,
 .table-thead > tr:hover > td,
 .table-tbody > tr:hover > td {
-  background: #e6f7ff;
+  background: #f6f8fc;
 }
 .table-thead > tr:hover {
   background: none;

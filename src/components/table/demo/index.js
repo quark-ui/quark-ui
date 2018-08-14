@@ -29,15 +29,6 @@ export default class TableDemo extends Component {
           work: "New York No. 1",
           color: "New York No. 1",
           fruit: "Apples and melons are my favourite fruits."
-        },
-        {
-          key: "3",
-          name: "Joe Black",
-          age: '24 year',
-          address: "Sidney No. 1",
-          work: "New York No. 1",
-          color: "New York No. 1",
-          fruit: "Apples and melons are my favourite fruits."
         }
       ],
       columns:[
@@ -106,19 +97,9 @@ export default class TableDemo extends Component {
           work: "New York No. 1",
           color: "New York No. 1",
           fruit: "Apples and melons are my"
-        },
-        {
-          key: "3",
-          name: "Joe Black",
-          age: '24 year',
-          address: "Sidney No. 1",
-          work: "New York No. 1",
-          color: "New York No. 1",
-          fruit: "Apples and melons are my"
         }
       ],
       columns:[
-
         {
           title: "Name",
           dataIndex: "name",
@@ -183,15 +164,6 @@ export default class TableDemo extends Component {
           name: "Jim Green",
           age: '24 year',
           address: "London No. 1",
-          work: "New York No. 1",
-          color: "New York No. 1",
-          fruit: "Apples and melons are my"
-        },
-        {
-          key: "3",
-          name: "Joe Black",
-          age: '24 year',
-          address: "Sidney No. 1",
           work: "New York No. 1",
           color: "New York No. 1",
           fruit: "Apples and melons are my"
