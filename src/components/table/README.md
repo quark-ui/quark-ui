@@ -12,8 +12,9 @@ author:
 ### Props
 |name|type|default|description|
 |---|---|---|---|
-| width | number | 1000 | 表格的宽度 |
-| height | number | 100% | 表格的高度（除去表头） |
+| width | number | - | 表格的宽度 |
+| height | number | - | 表格的高度（除去表头） |
+| emptyText | string | 暂无数据 | 表格暂无数据 |
 
 ### 列配置项(jsxcolumns)
 |name|type|default|description|

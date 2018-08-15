@@ -13,6 +13,7 @@ export default class Table extends PureComponent {
     this.state = {
       // width: 1000,
       // height: '100%',
+      emptyText: '暂无数据',
       currentHoverRow: -1,
       fixedColumnsHeadRowsHeight: [],
       fixedColumnsBodyRowsHeight: {},
@@ -142,11 +143,13 @@ export default class Table extends PureComponent {
   }
   handleBodyScroll = (e) => {
     this.handleBodyScrollTop(e);
-  }
+  };
+  saveRef = name => (node) => {
+    this[name] = node;
+  };
   renderColgroup = (renderColgroupProps, fixedColumn) => (
     <Colgroup {...renderColgroupProps} fixedColumn={fixedColumn} />
   );
-
   renderThead = (renderHeaderProps, fixedColumn) => (
     <Thead {...renderHeaderProps} fixedColumn={fixedColumn} />
   );
@@ -318,34 +321,32 @@ export default class Table extends PureComponent {
     );
   };
 
-  saveRef = name => (node) => {
-    this[name] = node;
-  };
-
   render() {
     const { props, state } = this;
+    const { dataSource, columns, height, width, emptyText } = props;
 
     const renderHeaderProps = {
       fixedColumnsHeadRowsHeight: state.fixedColumnsHeadRowsHeight,
-      columns: props.columns,
-      height: props.height,
-      width: props.width,
+      columns,
+      height,
+      width,
       key: 'thead',
     };
 
     const renderBodyProps = {
       fixedColumnsBodyRowsHeight: state.fixedColumnsBodyRowsHeight,
-      columns: props.columns,
-      height: props.height,
-      dataSource: props.dataSource,
+      columns,
+      height,
+      dataSource,
       currentHoverRow: state.currentHoverRow,
+      emptyText,
       root: this,
       key: 'tbody',
     };
 
     const renderColgroupProps = {
-      columns: props.columns,
-      height: props.height,
+      columns,
+      height,
       key: 'colgroup',
     };
 
@@ -353,6 +354,7 @@ export default class Table extends PureComponent {
 
     const tablestyle = classnames({
       [styles.table]: true,
+      [styles['table-fixed-header']]: height,
       [styles['table-scroll-position-left']]: !!(
         !scrollPositionLeft || scrollPositionLeft === 0
       ),
@@ -382,18 +384,18 @@ export default class Table extends PureComponent {
             renderHeaderProps,
             renderBodyProps,
           )}
-          {this.renderFixedTable(
+          { dataSource.length ? this.renderFixedTable(
             renderColgroupProps,
             renderHeaderProps,
             renderBodyProps,
             'left',
-          )}
-          {this.renderFixedTable(
+          ) : null}
+          { dataSource.length ? this.renderFixedTable(
             renderColgroupProps,
             renderHeaderProps,
             renderBodyProps,
             'right',
-          )}
+          ) : null}
         </div>
       </div>
     );

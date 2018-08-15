@@ -84,6 +84,9 @@
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
 }
+.table-tbody-empty > tr, .table-tbody-empty > tr > td{
+  text-align: center;
+}
 .table-row{
   
 }
@@ -153,9 +156,15 @@
 .table-body-inner {
   height: 100%;
 }
+.table-fixed-header .table-body-inner {
+  overflow: scroll;
+}
 .table-fixed-left .table-body-inner {
   margin-right: -20px;
   padding-right: 20px;
+}
+.table-fixed-header .table-fixed-left .table-body-inner {
+  padding-right: 0;
 }
 .table-scroll table {
     width: auto;

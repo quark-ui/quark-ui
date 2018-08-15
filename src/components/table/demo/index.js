@@ -5,6 +5,28 @@ const { Table } = Reactable;
 
 export default class TableDemo extends Component {
   render() {
+    const demo = {
+      data: [],
+      columns: [
+        {
+          title: 'Name',
+          dataIndex: 'name',
+          key: 'name',
+          width: 200,
+        },
+        {
+          title: 'Age',
+          dataIndex: 'age',
+          key: 'age',
+          width: 250,
+        },
+        {
+          title: 'Address',
+          dataIndex: 'address',
+          key: 'address',
+        },
+      ],
+    };
     const demo1 = {
       data: [
         {
