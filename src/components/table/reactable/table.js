@@ -13,7 +13,7 @@ export default class Table extends PureComponent {
     this.state = {
       // width: 1000,
       // height: '100%',
-      emptyText: '暂无数据',
+      // emptyText: '暂无数据',
       currentHoverRow: -1,
       fixedColumnsHeadRowsHeight: [],
       fixedColumnsBodyRowsHeight: {},
@@ -127,7 +127,7 @@ export default class Table extends PureComponent {
       });
     }
   }
-  handleBodyScrollTop =(e) => {
+  handleBodyScrollTop = (e) => {
     const target = e.target;
     const { fixedColumnsBodyLeft, fixedColumnsBodyRight } = this;
     if (fixedColumnsBodyLeft && target !== fixedColumnsBodyLeft) {
@@ -140,7 +140,7 @@ export default class Table extends PureComponent {
       this.tablebody.scrollTop = target.scrollTop;
     }
     this.lastScrollTop = target.scrollTop;
-  }
+  };
   handleBodyScroll = (e) => {
     this.handleBodyScrollTop(e);
   };
@@ -244,7 +244,7 @@ export default class Table extends PureComponent {
       </div>
     );
   }
-  renderFixedTable=(
+  renderFixedTable = (
     renderColgroupProps,
     renderHeaderProps,
     renderBodyProps,
@@ -282,10 +282,13 @@ export default class Table extends PureComponent {
     ) : null;
 
     const scrollbarWidth = measureScrollbar();
-    const outerTableStyle = height && scrollbarWidth > 0 ? {
-      marginBottom: `-${scrollbarWidth}px`,
-      paddingBottom: '0',
-    } : null;
+    const outerTableStyle =
+      height && scrollbarWidth > 0
+        ? {
+          marginBottom: `-${scrollbarWidth}px`,
+          paddingBottom: '0',
+        }
+        : null;
 
     let refName;
     if (height) {
@@ -323,7 +326,11 @@ export default class Table extends PureComponent {
 
   render() {
     const { props, state } = this;
-    const { dataSource, columns, height, width, emptyText } = props;
+    const { dataSource,
+      columns,
+      height,
+      width,
+      emptyText } = props;
 
     const renderHeaderProps = {
       fixedColumnsHeadRowsHeight: state.fixedColumnsHeadRowsHeight,
@@ -384,18 +391,22 @@ export default class Table extends PureComponent {
             renderHeaderProps,
             renderBodyProps,
           )}
-          { dataSource.length ? this.renderFixedTable(
-            renderColgroupProps,
-            renderHeaderProps,
-            renderBodyProps,
-            'left',
-          ) : null}
-          { dataSource.length ? this.renderFixedTable(
-            renderColgroupProps,
-            renderHeaderProps,
-            renderBodyProps,
-            'right',
-          ) : null}
+          {dataSource.length
+            ? this.renderFixedTable(
+              renderColgroupProps,
+              renderHeaderProps,
+              renderBodyProps,
+              'left',
+            )
+            : null}
+          {dataSource.length
+            ? this.renderFixedTable(
+              renderColgroupProps,
+              renderHeaderProps,
+              renderBodyProps,
+              'right',
+            )
+            : null}
         </div>
       </div>
     );

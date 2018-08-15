@@ -35,26 +35,23 @@ export default class Tbody extends PureComponent {
       currentHoverRow,
       fixedColumnsBodyRowsHeight,
     } = this.props;
-    console.log(dataSource);
     if (dataSource.length) {
       dataSource.forEach((data, index) => {
         const styleTr = {
           height: `${fixedColumnsBodyRowsHeight[index]}px` || 'auto',
         };
         const isHover = currentHoverRow === index;
-        tbs.push(
-          <Tr
-            style={styleTr}
-            columns={columns}
-            key={data.key}
-            data={data}
-            fixedColumn={fixedColumn}
-            render={columns.render}
-            index={index}
-            root={root}
-            isHover={isHover}
-          />,
-        );
+        tbs.push(<Tr
+          defaultstyle={styleTr}
+          columns={columns}
+          key={data.key}
+          data={data}
+          fixedColumn={fixedColumn}
+          render={columns.render}
+          index={index}
+          root={root}
+          isHover={isHover}
+        />);
       });
       return <tbody className={styles['table-tbody']}>{tbs}</tbody>;
     }

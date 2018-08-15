@@ -1,9 +1,22 @@
 import React, { PureComponent } from 'react';
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
 import Td from './td';
 import styles from '../Table.css';
 
 export default class Tr extends PureComponent {
+  static defaultProps = {
+    index: null,
+    root: null,
+    isHover: null,
+    defaultstyle: null,
+  };
+  static propTypes = {
+    isHover: PropTypes.bool,
+    index: PropTypes.number,
+    root: PropTypes.instanceOf(Object),
+    defaultstyle: PropTypes.instanceOf(Object),
+  };
   constructor(props) {
     super(props);
     this.state = {};
@@ -60,7 +73,7 @@ export default class Tr extends PureComponent {
   }
 
   render() {
-    const { isHover, index, style } = this.props;
+    const { isHover, index, defaultstyle } = this.props;
     return (
       <tr
         data-row-key={index}
@@ -71,7 +84,7 @@ export default class Tr extends PureComponent {
           [styles['table-row']]: true,
           [styles['table-row-hover']]: isHover,
         })}
-        style={style}
+        style={defaultstyle}
         onMouseEnter={() => {
           this.handleMouseEnter();
         }}

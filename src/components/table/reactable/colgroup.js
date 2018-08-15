@@ -1,6 +1,16 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default class Colgroup extends React.Component {
+  static defaultProps = {
+    columns: {},
+    fixedColumn: 'scroll',
+  };
+  static propTypes = {
+    columns: PropTypes.instanceOf(Array),
+    fixedColumn: PropTypes.string,
+  };
+
   renderColgroup() {
     const { fixedColumn, columns } = this.props;
     const cols = [];
