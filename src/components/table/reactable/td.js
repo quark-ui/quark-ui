@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { isUnsafe } from './unsafe';
-import filterPropsFrom from './lib/filter_props_from';
 
 export default class Td extends PureComponent {
   static defaultProps = {
@@ -21,11 +20,10 @@ export default class Td extends PureComponent {
       }
       return (
         <td
-          {...filterPropsFrom(this.props)}
           {...options}
         />
       );
     }
-    return <td {...filterPropsFrom(this.props)}>{this.props.children}</td>;
+    return <td>{this.props.children}</td>;
   }
 }

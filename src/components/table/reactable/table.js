@@ -326,11 +326,13 @@ export default class Table extends PureComponent {
 
   render() {
     const { props, state } = this;
-    const { dataSource,
+    const {
+      dataSource,
       columns,
       height,
       width,
-      emptyText } = props;
+      emptyText,
+    } = props;
 
     const renderHeaderProps = {
       fixedColumnsHeadRowsHeight: state.fixedColumnsHeadRowsHeight,

@@ -66,8 +66,8 @@ export default class TableDemo extends Component {
           width: 300,
           render: () => (
             <div>
-              <a>Delete</a>
-              <a>More actions</a>
+              <a href="#">Delete</a>
+              <a href="#">More actions</a>
             </div>
           ),
         },
