@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Reactable from '../index';
+import Button from '../../button';
 
 const { Table } = Reactable;
 
@@ -63,11 +64,10 @@ export default class TableDemo extends Component {
           title: 'Action',
           dataIndex: 'action',
           key: 'action',
-          width: 300,
+          width: 100,
           render: () => (
             <div>
-              <a href="#">Delete</a>
-              <a href="#">More actions</a>
+              <Button size="small">删除</Button>
             </div>
           ),
         },
@@ -132,12 +132,11 @@ export default class TableDemo extends Component {
           title: 'Action',
           dataIndex: 'action',
           key: 'action',
-          width: 300,
+          width: 100,
           fixed: 'right',
           render: () => (
             <div>
-              <a>Delete</a>
-              <a>More actions</a>
+              <Button size="small">删除</Button>
             </div>
           ),
         },
@@ -247,12 +246,11 @@ export default class TableDemo extends Component {
           title: 'Action',
           dataIndex: 'action',
           key: 'action',
-          width: 300,
+          width: 100,
           fixed: 'right',
           render: () => (
             <div>
-              <a>Delete</a>
-              <a>More actions</a>
+              <Button size="small">删除</Button>
             </div>
           ),
         },

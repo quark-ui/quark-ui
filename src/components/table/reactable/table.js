@@ -128,7 +128,7 @@ export default class Table extends PureComponent {
     }
   }
   handleBodyScrollTop = (e) => {
-    const target = e.target;
+    const target = e.target || {};
     const { fixedColumnsBodyLeft, fixedColumnsBodyRight } = this;
     if (fixedColumnsBodyLeft && target !== fixedColumnsBodyLeft) {
       fixedColumnsBodyLeft.scrollTop = target.scrollTop;
