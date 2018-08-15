@@ -215,6 +215,7 @@ export default class TableDemo extends Component {
           dataIndex: 'name',
           key: 'name',
           width: 200,
+          fixed: 'left',
         },
         {
           title: 'Age',
@@ -247,6 +248,7 @@ export default class TableDemo extends Component {
           dataIndex: 'action',
           key: 'action',
           width: 300,
+          fixed: 'right',
           render: () => (
             <div>
               <a>Delete</a>
@@ -281,7 +283,7 @@ export default class TableDemo extends Component {
         <Table
           dataSource={demo3.data}
           columns={demo3.columns}
-          height="200"
+          height="300"
           ref={(c) => {
             this.table = c;
           }}

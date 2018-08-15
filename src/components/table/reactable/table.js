@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import classnames from 'classnames';
 import shallowequal from 'shallowequal';
+import { measureScrollbar } from './utils';
 import Colgroup from './colgroup';
 import Thead from './thead';
 import Tbody from './tbody';
@@ -125,7 +126,23 @@ export default class Table extends PureComponent {
       });
     }
   }
-
+  handleBodyScrollTop =(e) => {
+    const target = e.target;
+    const { fixedColumnsBodyLeft, fixedColumnsBodyRight } = this;
+    if (fixedColumnsBodyLeft && target !== fixedColumnsBodyLeft) {
+      fixedColumnsBodyLeft.scrollTop = target.scrollTop;
+    }
+    if (fixedColumnsBodyRight && target !== fixedColumnsBodyRight) {
+      fixedColumnsBodyRight.scrollTop = target.scrollTop;
+    }
+    if (this.tablebody && target !== this.tablebody) {
+      this.tablebody.scrollTop = target.scrollTop;
+    }
+    this.lastScrollTop = target.scrollTop;
+  }
+  handleBodyScroll = (e) => {
+    this.handleBodyScrollTop(e);
+  }
   renderColgroup = (renderColgroupProps, fixedColumn) => (
     <Colgroup {...renderColgroupProps} fixedColumn={fixedColumn} />
   );
@@ -196,6 +213,7 @@ export default class Table extends PureComponent {
         ref={(c) => {
           this.tablebody = c;
         }}
+        onScroll={this.handleBodyScroll}
       >
         <table
           className={tablestyle}
@@ -223,52 +241,86 @@ export default class Table extends PureComponent {
       </div>
     );
   }
-
-  renderLeftFixedTable(
+  renderFixedTable=(
     renderColgroupProps,
     renderHeaderProps,
     renderBodyProps,
-  ) {
-    if (!this.hasFixed || !this.hasFixed.hasLeft) {
+    fixed,
+  ) => {
+    if (!this.hasFixed) {
       return null;
     }
-    return (
-      <div className={styles['table-fixed-left']}>
-        <div className={styles['table-body-outer']}>
-          <div className={styles['table-body-inner']}>
-            <table className={styles['table-fixed']}>
-              {this.renderColgroup(renderColgroupProps, 'left')}
-              {this.renderThead(renderHeaderProps, 'left')}
-              {this.renderTbody(renderBodyProps, 'left')}
-            </table>
-          </div>
-        </div>
+    if (fixed === 'right' && !this.hasFixed.hasRight) {
+      return null;
+    }
+    if (fixed === 'left' && !this.hasFixed.hasLeft) {
+      return null;
+    }
+    const { height } = renderBodyProps;
+    const leftbodystyle = height
+      ? {
+        maxHeight: `${height}px`,
+        overflowY: 'scroll',
+      }
+      : {};
+    // 头部固定
+    const fixedheader = height ? (
+      <div className={styles['table-header']}>
+        <table
+          className={styles['table-fixed']}
+          ref={(c) => {
+            this.tableleftbox = c;
+          }}
+        >
+          {this.renderColgroup(renderColgroupProps, fixed)}
+          {this.renderThead(renderHeaderProps, fixed)}
+        </table>
       </div>
-    );
-  }
+    ) : null;
 
-  renderRightFixedTable(
-    renderColgroupProps,
-    renderHeaderProps,
-    renderBodyProps,
-  ) {
-    if (!this.hasFixed || !this.hasFixed.hasRight) {
-      return null;
+    const scrollbarWidth = measureScrollbar();
+    const outerTableStyle = height && scrollbarWidth > 0 ? {
+      marginBottom: `-${scrollbarWidth}px`,
+      paddingBottom: '0',
+    } : null;
+
+    let refName;
+    if (height) {
+      if (fixed === 'left') {
+        refName = 'fixedColumnsBodyLeft';
+      } else if (fixed === 'right') {
+        refName = 'fixedColumnsBodyRight';
+      }
     }
-    return (
-      <div className={styles['table-fixed-right']}>
-        <div className={styles['table-body-outer']}>
-          <div className={styles['table-body-inner']}>
-            <table className={styles['table-fixed']}>
-              {this.renderColgroup(renderColgroupProps, 'right')}
-              {this.renderThead(renderHeaderProps, 'right')}
-              {this.renderTbody(renderBodyProps, 'right')}
-            </table>
-          </div>
+    // body
+    const fixedbody = (
+      <div className={styles['table-body-outer']} style={outerTableStyle}>
+        <div
+          className={styles['table-body-inner']}
+          style={leftbodystyle}
+          onScroll={this.handleBodyScroll}
+          ref={this.saveRef(refName)}
+        >
+          <table className={styles['table-fixed']}>
+            {this.renderColgroup(renderColgroupProps, fixed)}
+            {!height ? this.renderThead(renderHeaderProps, fixed) : null}
+            {this.renderTbody(renderBodyProps, fixed)}
+          </table>
         </div>
       </div>
     );
-  }
+
+    return (
+      <div className={styles[`table-fixed-${fixed}`]}>
+        {fixedheader}
+        {fixedbody}
+      </div>
+    );
+  };
+
+  saveRef = name => (node) => {
+    this[name] = node;
+  };
 
   render() {
     const { props, state } = this;
@@ -330,15 +382,17 @@ export default class Table extends PureComponent {
             renderHeaderProps,
             renderBodyProps,
           )}
-          {this.renderLeftFixedTable(
+          {this.renderFixedTable(
             renderColgroupProps,
             renderHeaderProps,
             renderBodyProps,
+            'left',
           )}
-          {this.renderRightFixedTable(
+          {this.renderFixedTable(
             renderColgroupProps,
             renderHeaderProps,
             renderBodyProps,
+            'right',
           )}
         </div>
       </div>
