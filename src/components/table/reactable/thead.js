@@ -6,7 +6,7 @@ import styles from '../Table.css';
 export default class Thead extends PureComponent {
   static defaultProps = {
     columns: {},
-    rowSelection: {},
+    // rowSelection: {},
     fixedColumn: 'scroll',
     fixedColumnsHeadRowsHeight: {},
   }
