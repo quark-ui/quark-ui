@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import Td from './td';
+import Checkbox from '../../checkbox';
 import styles from '../Table.css';
 
 export default class Tr extends PureComponent {

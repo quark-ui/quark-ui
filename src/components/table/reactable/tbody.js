@@ -9,6 +9,7 @@ export default class Tbody extends PureComponent {
     emptyText: '暂无数据',
     dataSource: {},
     columns: {},
+    rowSelection: {},
     fixedColumn: 'scroll',
     root: null,
     currentHoverRow: null,
@@ -18,6 +19,7 @@ export default class Tbody extends PureComponent {
     emptyText: PropTypes.string,
     dataSource: PropTypes.instanceOf(Array),
     columns: PropTypes.instanceOf(Array),
+    rowSelection: PropTypes.instanceOf(Object),
     fixedColumn: PropTypes.string,
     root: PropTypes.instanceOf(Object),
     currentHoverRow: PropTypes.number,
@@ -30,11 +32,13 @@ export default class Tbody extends PureComponent {
       emptyText,
       dataSource,
       columns,
+      rowSelection,
       fixedColumn,
       root,
       currentHoverRow,
       fixedColumnsBodyRowsHeight,
     } = this.props;
+
     if (dataSource.length) {
       dataSource.forEach((data, index) => {
         const styleTr = {
@@ -44,6 +48,7 @@ export default class Tbody extends PureComponent {
         tbs.push(<Tr
           defaultstyle={styleTr}
           columns={columns}
+          rowSelection={rowSelection}
           key={data.key}
           data={data}
           fixedColumn={fixedColumn}

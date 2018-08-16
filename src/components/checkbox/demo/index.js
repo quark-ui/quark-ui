@@ -11,7 +11,6 @@ const onChange = (e) => {
   console.log(e.target.checked, e.target.value);
 };
 export default class CheckboxDemo extends Component {
-
   constructor(props) {
     super(props);
 

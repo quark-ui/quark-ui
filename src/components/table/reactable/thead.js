@@ -6,11 +6,13 @@ import styles from '../Table.css';
 export default class Thead extends PureComponent {
   static defaultProps = {
     columns: {},
+    rowSelection: {},
     fixedColumn: 'scroll',
     fixedColumnsHeadRowsHeight: {},
   }
   static propTypes = {
     columns: PropTypes.instanceOf(Array),
+    // rowSelection: PropTypes.instanceOf(Object),
     fixedColumn: PropTypes.string,
     fixedColumnsHeadRowsHeight: PropTypes.instanceOf(Array),
   }

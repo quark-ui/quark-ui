@@ -23,19 +23,19 @@ export default class Table extends PureComponent {
 
   componentDidMount() {
     this.handleWindowResize();
-    this.tablebody.addEventListener('scroll', this.handleScroll.bind(this));
+    this.bodyTable.addEventListener('scroll', this.handleScroll.bind(this));
   }
 
   componentDidUpdate() {
     this.handleWindowResize();
   }
   componentWillUnmount() {
-    this.tablebody.removeEventListener('scroll', this.handleScroll.bind(this));
+    this.bodyTable.removeEventListener('scroll', this.handleScroll.bind(this));
   }
   handleScroll() {
-    const scrollPositionLeft = this.tablebody.scrollLeft;
+    const scrollPositionLeft = this.bodyTable.scrollLeft;
     const scrollPositionRight =
-      this.tablebody.scrollWidth - this.tablescroll.scrollWidth;
+      this.bodyTable.scrollWidth - this.tablescroll.scrollWidth;
     this.setState({
       scrollPositionLeft,
       scrollPositionRight,
@@ -129,6 +129,9 @@ export default class Table extends PureComponent {
   }
   handleBodyScrollTop = (e) => {
     const target = e.target || {};
+    if (e.currentTarget !== e.target) {
+      return;
+    }
     const { fixedColumnsBodyLeft, fixedColumnsBodyRight } = this;
     if (fixedColumnsBodyLeft && target !== fixedColumnsBodyLeft) {
       fixedColumnsBodyLeft.scrollTop = target.scrollTop;
@@ -136,13 +139,23 @@ export default class Table extends PureComponent {
     if (fixedColumnsBodyRight && target !== fixedColumnsBodyRight) {
       fixedColumnsBodyRight.scrollTop = target.scrollTop;
     }
-    if (this.tablebody && target !== this.tablebody) {
-      this.tablebody.scrollTop = target.scrollTop;
+    if (this.bodyTable && target !== this.bodyTable) {
+      this.bodyTable.scrollTop = target.scrollTop;
     }
     this.lastScrollTop = target.scrollTop;
   };
+  handleBodyScrollLeft = (e) => {
+    const target = e.target || {};
+    if (e.currentTarget !== e.target) {
+      return;
+    }
+    if (this.headTable && this.bodyTable && target === this.bodyTable) {
+      this.headTable.scrollLeft = target.scrollLeft;
+    }
+  };
   handleBodyScroll = (e) => {
     this.handleBodyScrollTop(e);
+    this.handleBodyScrollLeft(e);
   };
   saveRef = name => (node) => {
     this[name] = node;
@@ -188,15 +201,31 @@ export default class Table extends PureComponent {
       };
     }
 
+    const scrollbarWidth = measureScrollbar();
+    const headeTableStyle =
+    height && scrollbarWidth > 0
+      ? {
+        marginBottom: `-${scrollbarWidth}px`,
+        paddingBottom: '0',
+      }
+      : null;
+
+    const headClass = classnames({
+      [styles['table-fixed']]: !!this.hasFixed,
+    });
     // 头部固定
     const fixedheader = height ? (
-      <div className={styles['table-header']}>
+      <div
+        className={styles['table-header']}
+        ref={(c) => {
+          this.headTable = c;
+        }}
+        style={headeTableStyle}
+        // onScroll={this.handleBodyScroll}
+      >
         <table
-          className={styles['table-fixed']}
+          className={headClass}
           style={scrollWidth}
-          ref={(c) => {
-            this.tablebox = c;
-          }}
         >
           {this.renderColgroup(renderColgroupProps, 'scroll')}
           {this.renderThead(renderHeaderProps, 'scroll')}
@@ -214,7 +243,7 @@ export default class Table extends PureComponent {
         className={styles['table-body']}
         style={bodyStyle}
         ref={(c) => {
-          this.tablebody = c;
+          this.bodyTable = c;
         }}
         onScroll={this.handleBodyScroll}
       >
@@ -224,6 +253,7 @@ export default class Table extends PureComponent {
           ref={(c) => {
             this.tablebox = c;
           }}
+          onScroll={this.handleBodyScroll}
         >
           {this.renderColgroup(renderColgroupProps, 'scroll')}
           {!height ? this.renderThead(renderHeaderProps, 'scroll') : null}
@@ -238,6 +268,7 @@ export default class Table extends PureComponent {
         ref={(c) => {
           this.tablescroll = c;
         }}
+        onScroll={this.handleBodyScroll}
       >
         {fixedheader}
         {fixedbody}
@@ -332,13 +363,14 @@ export default class Table extends PureComponent {
       height,
       width,
       emptyText,
+      rowSelection,
     } = props;
-
     const renderHeaderProps = {
       fixedColumnsHeadRowsHeight: state.fixedColumnsHeadRowsHeight,
       columns,
       height,
       width,
+      rowSelection,
       key: 'thead',
     };
 
@@ -349,6 +381,7 @@ export default class Table extends PureComponent {
       dataSource,
       currentHoverRow: state.currentHoverRow,
       emptyText,
+      rowSelection,
       root: this,
       key: 'tbody',
     };
@@ -356,6 +389,7 @@ export default class Table extends PureComponent {
     const renderColgroupProps = {
       columns,
       height,
+      rowSelection,
       key: 'colgroup',
     };
 
