@@ -83,6 +83,8 @@ export default class TableDemo extends Component {
           work: 'New York No. 1NewNewNewNewNewNewNew',
           color: 'New York No. 1NewNewNewNewNewNewNewNew',
           fruit: 'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
+          foods: 'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
+          school: 'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
         },
         {
           key: '2',
@@ -92,6 +94,8 @@ export default class TableDemo extends Component {
           work: 'New York No. 1NewNewNewNewNewNewNewNew',
           color: 'New York No. 1NewNewNewNewNewNewNew',
           fruit: 'Apples and melons are my favourite fruits.',
+          foods: 'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
+          school: 'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
         },
       ],
       columns: [
@@ -127,6 +131,16 @@ export default class TableDemo extends Component {
           title: 'Fruit',
           dataIndex: 'fruit',
           key: 'fruit',
+        },
+        {
+          title: 'Foods',
+          dataIndex: 'foods',
+          key: 'foods',
+        },
+        {
+          title: 'School',
+          dataIndex: 'school',
+          key: 'school',
         },
         {
           title: 'Action',
@@ -152,6 +166,8 @@ export default class TableDemo extends Component {
           work: 'New York No. 1',
           color: 'New York No. 1',
           fruit: 'Apples and melons are my ',
+          foods: 'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
+          school: 'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
         },
         {
           key: '2',
@@ -161,6 +177,8 @@ export default class TableDemo extends Component {
           work: 'New York No. 1',
           color: 'New York No. 1',
           fruit: 'Apples and melons are my',
+          foods: 'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
+          school: 'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
         },
         {
           key: '3',
@@ -170,6 +188,8 @@ export default class TableDemo extends Component {
           work: 'New York No. 1',
           color: 'New York No. 1',
           fruit: 'Apples and melons are my',
+          foods: 'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
+          school: 'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
         },
         {
           key: '4',
@@ -179,6 +199,8 @@ export default class TableDemo extends Component {
           work: 'New York No. 1',
           color: 'New York No. 1',
           fruit: 'Apples and melons are my',
+          foods: 'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
+          school: 'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
         },
         {
           key: '5',
@@ -188,6 +210,8 @@ export default class TableDemo extends Component {
           work: 'New York No. 1',
           color: 'New York No. 1',
           fruit: 'Apples and melons are my',
+          foods: 'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
+          school: 'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
         },
         {
           key: '6',
@@ -197,6 +221,8 @@ export default class TableDemo extends Component {
           work: 'New York No. 1',
           color: 'New York No. 1',
           fruit: 'Apples and melons are my',
+          foods: 'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
+          school: 'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
         },
         {
           key: '7',
@@ -206,6 +232,8 @@ export default class TableDemo extends Component {
           work: 'New York No. 1',
           color: 'New York No. 1',
           fruit: 'Apples and melons are my',
+          foods: 'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
+          school: 'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
         },
       ],
       columns: [
@@ -241,6 +269,16 @@ export default class TableDemo extends Component {
           title: 'Fruit',
           dataIndex: 'fruit',
           key: 'fruit',
+        },
+        {
+          title: 'Foods',
+          dataIndex: 'foods',
+          key: 'foods',
+        },
+        {
+          title: 'School',
+          dataIndex: 'school',
+          key: 'school',
         },
         {
           title: 'Action',
@@ -351,9 +389,9 @@ export default class TableDemo extends Component {
           key: 'color',
         },
         {
-          title: 'Fruit',
-          dataIndex: 'fruit',
-          key: 'fruit',
+          title: 'School',
+          dataIndex: 'school',
+          key: 'school',
         },
         {
           title: 'Action',
