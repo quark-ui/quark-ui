@@ -46,6 +46,10 @@ export default {
         name: 'Select',
         icon: 'select',
         title: '选择器',
+      }, {
+        name: 'Table',
+        icon: 'Table',
+        title: '表格',
       }],
   }, {
     group: 'View',
