@@ -406,49 +406,6 @@ export default class TableDemo extends Component {
         },
       ],
     };
-    // const demo4 = {
-    //   data: [
-    //     {
-    //       key: '1',
-    //       name: 'John Brown',
-    //       age: '24year',
-    //       address: 'New York No. 1NewNewNewNewNew',
-    //     },
-    //     {
-    //       key: '2',
-    //       name: 'Jim Green',
-    //       age: '24year',
-    //       address: 'London No. 1NewNewNewNewNewNewNew',
-    //     },
-    //   ],
-    //   columns: [
-    //     {
-    //       title: 'Name',
-    //       dataIndex: 'name',
-    //       key: 'name',
-    //       width: 200,
-    //     },
-    //     {
-    //       title: 'Age',
-    //       dataIndex: 'age',
-    //       key: 'age',
-    //       width: 250,
-    //     },
-    //     {
-    //       title: 'Address',
-    //       dataIndex: 'address',
-    //       key: 'address',
-    //     },
-    //   ],
-    // };
-
-    // const rowSelection = {
-    //   onSelect: (checked, selectedRow, selectedRows) => {
-    //     console.log(checked, selectedRow, selectedRows);
-    //   },
-    //   onSelectAll: () => {},
-    // };
-
     return (
       <div>
         <h3>基本</h3>
@@ -489,16 +446,6 @@ export default class TableDemo extends Component {
             this.table = c;
           }}
         />
-        {/* <h3>选择和操作</h3>
-        <p>选择后进行操作，完成后清空选择，通过 rowSelection.selectedRowKeys 来控制选中项。</p>
-        <Table
-          rowSelection={rowSelection}
-          dataSource={demo4.data}
-          columns={demo4.columns}
-          ref={(c) => {
-            this.table = c;
-          }}
-        /> */}
       </div>
     );
   }
