@@ -85,6 +85,7 @@ export default class TableDemo extends Component {
           fruit: 'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
           foods: 'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
           school: 'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
+          interest: 'such as climbing mountains, travelling, watching movie...',
         },
         {
           key: '2',
@@ -96,6 +97,7 @@ export default class TableDemo extends Component {
           fruit: 'Apples and melons are my favourite fruits.',
           foods: 'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
           school: 'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
+          interest: 'such as climbing mountains, travelling, watching movie...',
         },
       ],
       columns: [
@@ -141,6 +143,11 @@ export default class TableDemo extends Component {
           title: 'School',
           dataIndex: 'school',
           key: 'school',
+        },
+        {
+          title: 'Interest',
+          dataIndex: 'interest',
+          key: 'interest',
         },
         {
           title: 'Action',
@@ -168,6 +175,7 @@ export default class TableDemo extends Component {
           fruit: 'Apples and melons are my ',
           foods: 'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
           school: 'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
+          interest: 'such as climbing mountains, travelling, watching movie...',
         },
         {
           key: '2',
@@ -179,6 +187,7 @@ export default class TableDemo extends Component {
           fruit: 'Apples and melons are my',
           foods: 'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
           school: 'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
+          interest: 'such as climbing mountains, travelling, watching movie...',
         },
         {
           key: '3',
@@ -190,6 +199,7 @@ export default class TableDemo extends Component {
           fruit: 'Apples and melons are my',
           foods: 'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
           school: 'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
+          interest: 'such as climbing mountains, travelling, watching movie...',
         },
         {
           key: '4',
@@ -201,6 +211,7 @@ export default class TableDemo extends Component {
           fruit: 'Apples and melons are my',
           foods: 'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
           school: 'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
+          interest: 'such as climbing mountains, travelling, watching movie...',
         },
         {
           key: '5',
@@ -223,6 +234,7 @@ export default class TableDemo extends Component {
           fruit: 'Apples and melons are my',
           foods: 'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
           school: 'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
+          interest: 'such as climbing mountains, travelling, watching movie...',
         },
         {
           key: '7',
@@ -234,6 +246,7 @@ export default class TableDemo extends Component {
           fruit: 'Apples and melons are my',
           foods: 'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
           school: 'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
+          interest: 'such as climbing mountains, travelling, watching movie...',
         },
       ],
       columns: [
@@ -279,6 +292,11 @@ export default class TableDemo extends Component {
           title: 'School',
           dataIndex: 'school',
           key: 'school',
+        },
+        {
+          title: 'Interest',
+          dataIndex: 'interest',
+          key: 'interest',
         },
         {
           title: 'Action',
