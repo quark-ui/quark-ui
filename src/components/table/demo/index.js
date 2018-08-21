@@ -245,21 +245,6 @@ export default class TableDemo extends Component {
           key: 'fruit',
         },
         {
-          title: 'Foods',
-          dataIndex: 'foods',
-          key: 'foods',
-        },
-        {
-          title: 'School',
-          dataIndex: 'school',
-          key: 'school',
-        },
-        {
-          title: 'Interest',
-          dataIndex: 'interest',
-          key: 'interest',
-        },
-        {
           title: 'Action',
           dataIndex: 'action',
           key: 'action',
@@ -408,21 +393,6 @@ export default class TableDemo extends Component {
           key: 'fruit',
         },
         {
-          title: 'Foods',
-          dataIndex: 'foods',
-          key: 'foods',
-        },
-        {
-          title: 'School',
-          dataIndex: 'school',
-          key: 'school',
-        },
-        {
-          title: 'Interest',
-          dataIndex: 'interest',
-          key: 'interest',
-        },
-        {
           title: 'Action',
           dataIndex: 'action',
           key: 'action',
@@ -531,9 +501,9 @@ export default class TableDemo extends Component {
           key: 'color',
         },
         {
-          title: 'School',
-          dataIndex: 'school',
-          key: 'school',
+          title: 'Fruit',
+          dataIndex: 'fruit',
+          key: 'fruit',
         },
         {
           title: 'Action',
@@ -548,6 +518,49 @@ export default class TableDemo extends Component {
         },
       ],
     };
+    // const demo4 = {
+    //   data: [
+    //     {
+    //       key: '1',
+    //       name: 'John Brown',
+    //       age: '24year',
+    //       address: 'New York No. 1NewNewNewNewNew',
+    //     },
+    //     {
+    //       key: '2',
+    //       name: 'Jim Green',
+    //       age: '24year',
+    //       address: 'London No. 1NewNewNewNewNewNewNew',
+    //     },
+    //   ],
+    //   columns: [
+    //     {
+    //       title: 'Name',
+    //       dataIndex: 'name',
+    //       key: 'name',
+    //       width: 200,
+    //     },
+    //     {
+    //       title: 'Age',
+    //       dataIndex: 'age',
+    //       key: 'age',
+    //       width: 250,
+    //     },
+    //     {
+    //       title: 'Address',
+    //       dataIndex: 'address',
+    //       key: 'address',
+    //     },
+    //   ],
+    // };
+
+    // const rowSelection = {
+    //   onSelect: (checked, selectedRow, selectedRows) => {
+    //     console.log(checked, selectedRow, selectedRows);
+    //   },
+    //   onSelectAll: () => {},
+    // };
+
     return (
       <div>
         <h3>基本</h3>
