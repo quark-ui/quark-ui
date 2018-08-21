@@ -25,5 +25,12 @@ author:
 | fixed | string | - | 固定位置，固定在左侧还是右侧,包含‘left’,'right' |
 | render | function | - | 在查看模式下，用户定制渲染的方式，返回一个 jsx 格式|
 
+### 选择功能的配置(rowSelection)
+|name|type|default|description|
+|---|---|---|---|
+| selectedRowKeys | string[] | [] | 指定选中项的 key 数组，需要和 onChange 进行配合 |
+| onSelectChange | Function(selectedRowKeys) | [] | 用户手动选择/取消选择某列的回调 |
+| selections | 'all-data' | - | 配置头部全选 |
+
 
 ### Api
