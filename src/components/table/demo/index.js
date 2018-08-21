@@ -517,49 +517,6 @@ export default class TableDemo extends Component {
         },
       ],
     };
-    // const demo4 = {
-    //   data: [
-    //     {
-    //       key: '1',
-    //       name: 'John Brown',
-    //       age: '24year',
-    //       address: 'New York No. 1NewNewNewNewNew',
-    //     },
-    //     {
-    //       key: '2',
-    //       name: 'Jim Green',
-    //       age: '24year',
-    //       address: 'London No. 1NewNewNewNewNewNewNew',
-    //     },
-    //   ],
-    //   columns: [
-    //     {
-    //       title: 'Name',
-    //       dataIndex: 'name',
-    //       key: 'name',
-    //       width: 200,
-    //     },
-    //     {
-    //       title: 'Age',
-    //       dataIndex: 'age',
-    //       key: 'age',
-    //       width: 250,
-    //     },
-    //     {
-    //       title: 'Address',
-    //       dataIndex: 'address',
-    //       key: 'address',
-    //     },
-    //   ],
-    // };
-
-    // const rowSelection = {
-    //   onSelect: (checked, selectedRow, selectedRows) => {
-    //     console.log(checked, selectedRow, selectedRows);
-    //   },
-    //   onSelectAll: () => {},
-    // };
-
     return (
       <div>
         <h3>基本</h3>
