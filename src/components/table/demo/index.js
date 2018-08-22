@@ -5,7 +5,101 @@ import Button from '../../button';
 const { Table } = Reactable;
 
 export default class TableDemo extends Component {
+  state= {
+    selectedRowKeys: [1, 2],
+    dataSource: [
+      {
+        key: '1',
+        name: 'John Brown',
+        age: '24 year',
+        address: 'New York No. 1',
+        work: 'New York No. 1',
+        color: 'New York No. 1',
+        fruit: 'Apples and melons are my favourite fruits.',
+      },
+      {
+        key: '2',
+        name: 'Jim Green',
+        age: '24 year',
+        address: 'London No. 1',
+        work: 'New York No. 1',
+        color: 'New York No. 1',
+        fruit: 'Apples and melons are my favourite fruits.',
+      },
+      {
+        key: '3',
+        name: 'Jim Green',
+        age: '24 year',
+        address: 'London No. 1',
+        work: 'New York No. 1',
+        color: 'New York No. 1',
+        fruit: 'Apples and melons are my favourite fruits.',
+      },
+    ],
+    columns: [
+      {
+        title: '',
+        dataIndex: 'select',
+        key: 'select',
+        width: 100,
+      },
+      {
+        title: 'Name',
+        dataIndex: 'name',
+        key: 'name',
+        width: 200,
+      },
+      {
+        title: 'Age',
+        dataIndex: 'age',
+        key: 'age',
+        width: 250,
+      },
+      {
+        title: 'Address',
+        dataIndex: 'address',
+        key: 'address',
+      },
+      {
+        title: 'Work',
+        dataIndex: 'work',
+        key: 'work',
+      },
+      {
+        title: 'Color',
+        dataIndex: 'color',
+        key: 'color',
+      },
+      {
+        title: 'Fruit',
+        dataIndex: 'fruit',
+        key: 'fruit',
+      },
+      {
+        title: 'Action',
+        dataIndex: 'action',
+        key: 'action',
+        width: 100,
+        render: () => (
+          <div>
+            <Button size="small">删除</Button>
+          </div>
+        ),
+      },
+    ],
+  }
+  onSelectChange = (selectedRowKeys) => {
+    this.setState({
+      selectedRowKeys,
+    });
+  }
+
   render() {
+    const rowSelection = {
+      selectedRowKeys: this.state.selectedRowKeys,
+      onSelectChange: this.onSelectChange,
+      selections: 'all-data',
+    };
     const demo1 = {
       data: [
         {
@@ -19,6 +113,15 @@ export default class TableDemo extends Component {
         },
         {
           key: '2',
+          name: 'Jim Green',
+          age: '24 year',
+          address: 'London No. 1',
+          work: 'New York No. 1',
+          color: 'New York No. 1',
+          fruit: 'Apples and melons are my favourite fruits.',
+        },
+        {
+          key: '3',
           name: 'Jim Green',
           age: '24 year',
           address: 'London No. 1',
@@ -73,6 +176,7 @@ export default class TableDemo extends Component {
         },
       ],
     };
+
     const demo2 = {
       data: [
         {
@@ -82,7 +186,13 @@ export default class TableDemo extends Component {
           address: 'New York No. 1NewNewNewNewNew',
           work: 'New York No. 1NewNewNewNewNewNewNew',
           color: 'New York No. 1NewNewNewNewNewNewNewNew',
-          fruit: 'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
+          fruit:
+            'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
+          foods:
+            'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
+          school:
+            'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
+          interest: 'such as climbing mountains, travelling, watching movie...',
         },
         {
           key: '2',
@@ -92,6 +202,11 @@ export default class TableDemo extends Component {
           work: 'New York No. 1NewNewNewNewNewNewNewNew',
           color: 'New York No. 1NewNewNewNewNewNewNew',
           fruit: 'Apples and melons are my favourite fruits.',
+          foods:
+            'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
+          school:
+            'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
+          interest: 'such as climbing mountains, travelling, watching movie...',
         },
       ],
       columns: [
@@ -152,6 +267,11 @@ export default class TableDemo extends Component {
           work: 'New York No. 1',
           color: 'New York No. 1',
           fruit: 'Apples and melons are my ',
+          foods:
+            'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
+          school:
+            'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
+          interest: 'such as climbing mountains, travelling, watching movie...',
         },
         {
           key: '2',
@@ -161,6 +281,11 @@ export default class TableDemo extends Component {
           work: 'New York No. 1',
           color: 'New York No. 1',
           fruit: 'Apples and melons are my',
+          foods:
+            'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
+          school:
+            'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
+          interest: 'such as climbing mountains, travelling, watching movie...',
         },
         {
           key: '3',
@@ -170,6 +295,11 @@ export default class TableDemo extends Component {
           work: 'New York No. 1',
           color: 'New York No. 1',
           fruit: 'Apples and melons are my',
+          foods:
+            'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
+          school:
+            'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
+          interest: 'such as climbing mountains, travelling, watching movie...',
         },
         {
           key: '4',
@@ -179,6 +309,11 @@ export default class TableDemo extends Component {
           work: 'New York No. 1',
           color: 'New York No. 1',
           fruit: 'Apples and melons are my',
+          foods:
+            'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
+          school:
+            'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
+          interest: 'such as climbing mountains, travelling, watching movie...',
         },
         {
           key: '5',
@@ -188,6 +323,10 @@ export default class TableDemo extends Component {
           work: 'New York No. 1',
           color: 'New York No. 1',
           fruit: 'Apples and melons are my',
+          foods:
+            'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
+          school:
+            'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
         },
         {
           key: '6',
@@ -197,6 +336,11 @@ export default class TableDemo extends Component {
           work: 'New York No. 1',
           color: 'New York No. 1',
           fruit: 'Apples and melons are my',
+          foods:
+            'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
+          school:
+            'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
+          interest: 'such as climbing mountains, travelling, watching movie...',
         },
         {
           key: '7',
@@ -206,6 +350,11 @@ export default class TableDemo extends Component {
           work: 'New York No. 1',
           color: 'New York No. 1',
           fruit: 'Apples and melons are my',
+          foods:
+            'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
+          school:
+            'Apples and melons are my favourite fruits.Apples and melons are my favourite fruits.',
+          interest: 'such as climbing mountains, travelling, watching movie...',
         },
       ],
       columns: [
@@ -368,49 +517,6 @@ export default class TableDemo extends Component {
         },
       ],
     };
-    // const demo4 = {
-    //   data: [
-    //     {
-    //       key: '1',
-    //       name: 'John Brown',
-    //       age: '24year',
-    //       address: 'New York No. 1NewNewNewNewNew',
-    //     },
-    //     {
-    //       key: '2',
-    //       name: 'Jim Green',
-    //       age: '24year',
-    //       address: 'London No. 1NewNewNewNewNewNewNew',
-    //     },
-    //   ],
-    //   columns: [
-    //     {
-    //       title: 'Name',
-    //       dataIndex: 'name',
-    //       key: 'name',
-    //       width: 200,
-    //     },
-    //     {
-    //       title: 'Age',
-    //       dataIndex: 'age',
-    //       key: 'age',
-    //       width: 250,
-    //     },
-    //     {
-    //       title: 'Address',
-    //       dataIndex: 'address',
-    //       key: 'address',
-    //     },
-    //   ],
-    // };
-
-    // const rowSelection = {
-    //   onSelect: (checked, selectedRow, selectedRows) => {
-    //     console.log(checked, selectedRow, selectedRows);
-    //   },
-    //   onSelectAll: () => {},
-    // };
-
     return (
       <div>
         <h3>基本</h3>
@@ -451,16 +557,16 @@ export default class TableDemo extends Component {
             this.table = c;
           }}
         />
-        {/* <h3>选择和操作</h3>
-        <p>选择后进行操作，完成后清空选择，通过 rowSelection.selectedRowKeys 来控制选中项。</p>
+        <h3>可选择</h3>
+        <p>第一列是联动的选择框。</p>
         <Table
           rowSelection={rowSelection}
-          dataSource={demo4.data}
-          columns={demo4.columns}
+          dataSource={this.state.dataSource}
+          columns={this.state.columns}
           ref={(c) => {
             this.table = c;
           }}
-        /> */}
+        />
       </div>
     );
   }

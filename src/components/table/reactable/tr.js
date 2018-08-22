@@ -2,31 +2,38 @@ import React, { PureComponent } from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import Td from './td';
-// import Checkbox from '../../checkbox';
+import Checkbox from '../../checkbox';
 import styles from '../Table.css';
 
 export default class Tr extends PureComponent {
   static defaultProps = {
     index: null,
+    checked: false,
     root: null,
     isHover: null,
     defaultstyle: null,
+    onSelectChange: null,
   };
   static propTypes = {
     isHover: PropTypes.bool,
     index: PropTypes.number,
+    checked: PropTypes.bool,
     root: PropTypes.instanceOf(Object),
     defaultstyle: PropTypes.instanceOf(Object),
+    onSelectChange: PropTypes.func,
   };
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      checked: this.props.checked || false,
+    };
   }
 
   componentDidMount() {}
-  componentWillReceiveProps() {
-    // console.log(this.trRow.dataset)
-    // console.log(this.trRow.scrollHeight)
+  componentWillReceiveProps(nextprops) {
+    this.setState({
+      checked: nextprops.checked,
+    });
   }
   handleMouseEnter() {
     this.props.root.handleRowHover(this.props.index, true);
@@ -35,13 +42,21 @@ export default class Tr extends PureComponent {
   handleMouseLeave() {
     this.props.root.handleRowHover(this.props.index, false);
   }
-
+  handleToggleChecked = (key, checked, e) => {
+    e.stopPropagation();
+    this.setState({
+      checked,
+    });
+    if (this.props.onSelectChange) {
+      this.props.onSelectChange(key, checked);
+    }
+  };
   renderColumns(renderProps) {
-    const { columns, data, fixedColumn } = renderProps;
+    const { index, columns, data, fixedColumn } = renderProps;
+    const { checked } = this.state;
     const tds = [];
     const righttds = [];
     const lefttds = [];
-
     columns.forEach((item) => {
       let value;
       let action;
@@ -51,12 +66,19 @@ export default class Tr extends PureComponent {
       if (data[item.key]) {
         value = data[item.key];
       }
-
-      const td = (
-        <Td column={item} key={item.key}>
-          {value || action}
-        </Td>
-      );
+      const td =
+        item.key === 'select' ? (
+          <Td column={item} key={item.key}>
+            <Checkbox
+              checked={checked}
+              onChange={e => this.handleToggleChecked(index, !checked, e)}
+            />
+          </Td>
+        ) : (
+          <Td column={item} key={item.key}>
+            {value || action}
+          </Td>
+        );
       if (item.fixed && item.fixed === 'left') {
         lefttds.push(td);
       } else if (item.fixed && item.fixed === 'right') {

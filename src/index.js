@@ -47,9 +47,9 @@ export { default as Spin } from './components/spin/';
 
 export { default as Steps } from './components/steps/';
 
-export { default as Tabs } from './components/tabs/';
-
 export { default as Table } from './components/table/';
+
+export { default as Tabs } from './components/tabs/';
 
 export { default as Tooltip } from './components/tooltip/';
 

@@ -14,6 +14,7 @@ export default class Table extends PureComponent {
       // width: 1000,
       // height: '100%',
       // emptyText: '暂无数据',
+      // dataSource: this.props.dataSource ? this.props.dataSource : {},
       currentHoverRow: -1,
       fixedColumnsHeadRowsHeight: [],
       fixedColumnsBodyRowsHeight: {},
@@ -25,13 +26,13 @@ export default class Table extends PureComponent {
     this.handleWindowResize();
     this.bodyTable.addEventListener('scroll', this.handleScroll.bind(this));
   }
-
   componentDidUpdate() {
     this.handleWindowResize();
   }
   componentWillUnmount() {
     this.bodyTable.removeEventListener('scroll', this.handleScroll.bind(this));
   }
+
   handleScroll() {
     const scrollPositionLeft = this.bodyTable.scrollLeft;
     const scrollPositionRight =
@@ -368,9 +369,12 @@ export default class Table extends PureComponent {
     const renderHeaderProps = {
       fixedColumnsHeadRowsHeight: state.fixedColumnsHeadRowsHeight,
       columns,
+      dataSource,
       height,
       width,
-      rowSelection,
+      selectedRowKeys: rowSelection ? rowSelection.selectedRowKeys : null,
+      onSelectChange: rowSelection ? rowSelection.onSelectChange : null,
+      selections: rowSelection ? rowSelection.selections : null,
       key: 'thead',
     };
 
@@ -381,7 +385,8 @@ export default class Table extends PureComponent {
       dataSource,
       currentHoverRow: state.currentHoverRow,
       emptyText,
-      rowSelection,
+      selectedRowKeys: rowSelection ? rowSelection.selectedRowKeys : null,
+      onSelectChange: rowSelection ? rowSelection.onSelectChange : null,
       root: this,
       key: 'tbody',
     };
