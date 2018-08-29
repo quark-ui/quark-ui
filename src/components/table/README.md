@@ -12,6 +12,7 @@ author:
 ### Props
 |name|type|default|description|
 |---|---|---|---|
+| bordered | boolean | false | 是否展示外边框和列边框 |
 | width | number | - | 表格的宽度 |
 | height | number | - | 表格的高度（除去表头） |
 | emptyText | string | 暂无数据 | 表格暂无数据 |

@@ -32,7 +32,27 @@ export default class Table extends PureComponent {
   componentWillUnmount() {
     this.bodyTable.removeEventListener('scroll', this.handleScroll.bind(this));
   }
-
+  getHeaderRows=(columns, currentRow = 0, rows) => {
+    rows[currentRow] = rows[currentRow] || [];
+    columns.forEach((column) => {
+      if (column.rowSpan && rows.length < column.rowSpan) {
+        while (rows.length < column.rowSpan) {
+          rows.push([]);
+        }
+      }
+      const cell = {
+        key: column.key,
+        className: column.className || '',
+        children: column.title,
+        column,
+      };
+      if (column.children) {
+        this.getHeaderRows(column.children, currentRow + 1, rows);
+      }
+      rows[currentRow].push(cell);
+    });
+    return rows.filter(row => row.length > 0);
+  }
   handleScroll() {
     const scrollPositionLeft = this.bodyTable.scrollLeft;
     const scrollPositionRight =
@@ -359,6 +379,7 @@ export default class Table extends PureComponent {
   render() {
     const { props, state } = this;
     const {
+      bordered,
       dataSource,
       columns,
       height,
@@ -366,9 +387,11 @@ export default class Table extends PureComponent {
       emptyText,
       rowSelection,
     } = props;
+    const rows = this.getHeaderRows(columns, 0, []);
     const renderHeaderProps = {
       fixedColumnsHeadRowsHeight: state.fixedColumnsHeadRowsHeight,
       columns,
+      rows,
       dataSource,
       height,
       width,
@@ -402,6 +425,7 @@ export default class Table extends PureComponent {
 
     const tablestyle = classnames({
       [styles.table]: true,
+      [styles['table-bordered']]: bordered,
       [styles['table-fixed-header']]: height,
       [styles['table-scroll-position-left']]: !!(
         !scrollPositionLeft || scrollPositionLeft === 0

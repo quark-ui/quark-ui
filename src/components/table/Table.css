@@ -247,3 +247,44 @@
   -webkit-box-shadow: none;
           box-shadow: none;
 }
+.table.table-bordered .table-footer {
+  border: 1px solid #e8e8e8;
+}
+.table-bordered .table-title + .table-content,
+.table-bordered .table-title + .table-content table,
+.table-bordered .table-title + .table-content .table-thead > tr:first-child > th {
+  border-radius: 0;
+}
+.table-bordered .table-header > table,
+.table-bordered .table-body > table,
+.table-bordered .table-fixed-left table,
+.table-bordered .table-fixed-right table {
+  border: 1px solid #e8e8e8;
+  border-right: 0;
+  border-bottom: 0;
+}
+.table-bordered.table-empty .table-placeholder {
+  border-left: 1px solid #e8e8e8;
+  border-right: 1px solid #e8e8e8;
+}
+.table-bordered.table-fixed-header .table-header > table {
+  border-bottom: 0;
+}
+.table-bordered.table-fixed-header .table-body > table {
+  border-top: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.table-bordered.table-fixed-header .table-body-inner > table {
+  border-top: 0;
+}
+.table-bordered.table-fixed-header .table-placeholder {
+  border: 0;
+}
+.table-bordered .table-thead > tr:not(:last-child) > th {
+  border-bottom: 1px solid #e8e8e8;
+}
+.table-bordered .table-thead > tr > th,
+.table-bordered .table-tbody > tr > td {
+  border-right: 1px solid #e8e8e8;
+}

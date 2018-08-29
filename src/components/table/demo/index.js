@@ -522,6 +522,7 @@ export default class TableDemo extends Component {
         <h3>基本</h3>
         <p>基础表格。</p>
         <Table
+          bordered
           dataSource={demo1.data}
           columns={demo1.columns}
           ref={(c) => {
