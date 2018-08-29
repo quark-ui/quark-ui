@@ -163,6 +163,36 @@ export default class Table extends PureComponent {
       });
     }
   }
+  handleBodyScrollTop = (e) => {
+    const target = e.target || {};
+    if (e.currentTarget !== e.target) {
+      return;
+    }
+    const { fixedColumnsBodyLeft, fixedColumnsBodyRight } = this;
+    if (fixedColumnsBodyLeft && target !== fixedColumnsBodyLeft) {
+      fixedColumnsBodyLeft.scrollTop = target.scrollTop;
+    }
+    if (fixedColumnsBodyRight && target !== fixedColumnsBodyRight) {
+      fixedColumnsBodyRight.scrollTop = target.scrollTop;
+    }
+    if (this.bodyTable && target !== this.bodyTable) {
+      this.bodyTable.scrollTop = target.scrollTop;
+    }
+    this.lastScrollTop = target.scrollTop;
+  };
+  handleBodyScrollLeft = (e) => {
+    const target = e.target || {};
+    if (e.currentTarget !== e.target) {
+      return;
+    }
+    if (this.headTable && this.bodyTable && target === this.bodyTable) {
+      this.headTable.scrollLeft = target.scrollLeft;
+    }
+  };
+  handleBodyScroll = (e) => {
+    this.handleBodyScrollTop(e);
+    this.handleBodyScrollLeft(e);
+  };
   saveRef = name => (node) => {
     this[name] = node;
   };
