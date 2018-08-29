@@ -25,6 +25,8 @@ author:
 | width | number | - | 列宽 |
 | fixed | string | - | 固定位置，固定在左侧还是右侧,包含‘left’,'right' |
 | render | function | - | 在查看模式下，用户定制渲染的方式，返回一个 jsx 格式|
+| sorter | Function\boolean | - | 排序函数，本地排序使用一个函数(参考 Array.sort 的 compareFunction)，需要服务端排序可设为 true|
+| sortOrder | boolean\string | - | 排序的受控属性，外界可用此控制列的排序，可设置为 'ascend' 'descend' false|
 
 ### 选择功能的配置(rowSelection)
 |name|type|default|description|
