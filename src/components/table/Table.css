@@ -104,6 +104,9 @@
   word-break: break-word;
   -ms-word-break: break-all;
 }
+.table-thead > tr > th.table-column-sort {
+  background: #f5f5f5;
+}
 .table-footer {
   padding: 16px 16px;
   background: #fafafa;
@@ -246,4 +249,86 @@
 .table.table-scroll-position-right .table-fixed-right {
   -webkit-box-shadow: none;
           box-shadow: none;
+}
+.table.table-bordered .table-footer {
+  border: 1px solid #e8e8e8;
+}
+.table-bordered .table-title + .table-content,
+.table-bordered .table-title + .table-content table,
+.table-bordered .table-title + .table-content .table-thead > tr:first-child > th {
+  border-radius: 0;
+}
+.table-bordered .table-header > table,
+.table-bordered .table-body > table,
+.table-bordered .table-fixed-left table,
+.table-bordered .table-fixed-right table {
+  border: 1px solid #e8e8e8;
+  border-right: 0;
+  border-bottom: 0;
+}
+.table-bordered.table-empty .table-placeholder {
+  border-left: 1px solid #e8e8e8;
+  border-right: 1px solid #e8e8e8;
+}
+.table-bordered.table-fixed-header .table-header > table {
+  border-bottom: 0;
+}
+.table-bordered.table-fixed-header .table-body > table {
+  border-top: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.table-bordered.table-fixed-header .table-body-inner > table {
+  border-top: 0;
+}
+.table-bordered.table-fixed-header .table-placeholder {
+  border: 0;
+}
+.table-bordered .table-thead > tr:not(:last-child) > th {
+  border-bottom: 1px solid #e8e8e8;
+}
+.table-bordered .table-thead > tr > th,
+.table-bordered .table-tbody > tr > td {
+  border-right: 1px solid #e8e8e8;
+}
+.table-title {
+  padding: 16px 0;
+  position: relative;
+  top: 1px;
+  border-radius: 4px 4px 0 0;
+}
+.table.table-bordered .table-title {
+  border: 1px solid #e8e8e8;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+.table-title + .table-content {
+  position: relative;
+  border-radius: 4px 4px 0 0;
+  overflow: hidden;
+}
+.table-bordered .table-title + .table-content,
+.table-bordered .table-title + .table-content table,
+.table-bordered .table-title + .table-content .table-thead > tr:first-child > th {
+  border-radius: 0;
+}
+.table-column-sorter {
+  position: relative;
+  margin-left: 8px;
+  display: inline-block;
+  /* width: 14px;
+  height: 14px; */
+  vertical-align: middle;
+  text-align: center;
+  font-weight: normal;
+  color: rgba(0, 0, 0, 0.45);
+}
+.table-column-sorter-up,
+.table-column-sorter-down {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  line-height: 14px;
+  cursor: pointer;
+  position: relative;
 }

@@ -12,6 +12,7 @@ author:
 ### Props
 |name|type|default|description|
 |---|---|---|---|
+| bordered | boolean | false | 是否展示外边框和列边框 |
 | width | number | - | 表格的宽度 |
 | height | number | - | 表格的高度（除去表头） |
 | emptyText | string | 暂无数据 | 表格暂无数据 |
@@ -24,6 +25,8 @@ author:
 | width | number | - | 列宽 |
 | fixed | string | - | 固定位置，固定在左侧还是右侧,包含‘left’,'right' |
 | render | function | - | 在查看模式下，用户定制渲染的方式，返回一个 jsx 格式|
+| sorter | Function\boolean | - | 排序函数，本地排序使用一个函数(参考 Array.sort 的 compareFunction)|
+| sortOrder | boolean\string | - | 排序的受控属性，外界可用此控制列的排序|
 
 ### 选择功能的配置(rowSelection)
 |name|type|default|description|
