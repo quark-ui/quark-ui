@@ -70,7 +70,6 @@ export default class Table extends PureComponent {
     const sortedColumn = this.getSortOrderColumns(columns).filter(
       col => col.sortOrder,
     )[0];
-
     if (sortedColumn) {
       return {
         sortColumn: sortedColumn,
@@ -609,7 +608,6 @@ export default class Table extends PureComponent {
     const dataSource = this.getLocalData();
     // const rows = this.getHeaderRows(columns, 0, []);
     let columns = this.renderColumnsDropdown(this.props.columns);
-
     columns = columns.map((column, i) => {
       const newColumn = { ...column };
       newColumn.key = this.getColumnKey(newColumn, i);
