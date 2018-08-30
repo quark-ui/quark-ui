@@ -5,6 +5,7 @@ import Button from '../../button';
 const { Table } = Reactable;
 export default class TableDemo extends Component {
   state= {
+    loading: true,
     selectedRowKeys: [1, 2],
     dataSource: [
       {
@@ -87,6 +88,14 @@ export default class TableDemo extends Component {
       },
     ],
   }
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({
+        loading: false,
+      });
+    }, 800);
+  }
+
   onChange = (sorter) => {
     this.setState({
       sortedInfo: sorter,
@@ -406,6 +415,7 @@ export default class TableDemo extends Component {
         <h3>基本</h3>
         <p>基础表格。</p>
         <Table
+          loading={this.state.loading}
           {...getRenderTable}
         />
         <h3>表格固定</h3>

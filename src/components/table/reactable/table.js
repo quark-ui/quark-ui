@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import shallowequal from 'shallowequal';
 import { measureScrollbar } from './utils';
 import Icon from '../../icon';
+import Spin from '../../spin';
 import Colgroup from './colgroup';
 import Thead from './thead';
 import Tbody from './tbody';
@@ -30,6 +31,7 @@ export default class Table extends PureComponent {
     super(props);
     this.state = {
       ...this.getSortStateFromColumns(),
+      loading: false,
       // width: 1000,
       // height: '100%',
       // emptyText: '暂无数据',
@@ -68,6 +70,7 @@ export default class Table extends PureComponent {
     const sortedColumn = this.getSortOrderColumns(columns).filter(
       col => col.sortOrder,
     )[0];
+
     if (sortedColumn) {
       return {
         sortColumn: sortedColumn,
@@ -124,7 +127,10 @@ export default class Table extends PureComponent {
     // 优化本地排序
     data = data.slice(0);
     const { sortOrder, sortColumn } = this.state;
-    const sorterFn = (!sortOrder || !sortColumn || typeof sortColumn.sorter !== 'function') ? null : this.getSorterFn;
+    const sorterFn =
+      !sortOrder || !sortColumn || typeof sortColumn.sorter !== 'function'
+        ? null
+        : this.getSorterFn;
 
     if (sorterFn) {
       data = this.recursiveSort(data, sorterFn);
@@ -297,15 +303,19 @@ export default class Table extends PureComponent {
     // 只同时允许一列进行排序，否则会导致排序顺序的逻辑问题
     const isSortColumn = this.isSortColumn(column);
     if (!isSortColumn) {
+      // 当前列未排序
       sortOrder = order;
       sortColumn = column;
     } else {
-      sortOrder = order;
       // 当前列已排序
       if (sortOrder === order) {
         // 切换为未排序状态
         sortOrder = '';
         sortColumn = null;
+      }
+      if (sortOrder !== order) {
+        // 切换为排序状态
+        sortOrder = order;
       }
     }
     const newState = {
@@ -347,7 +357,7 @@ export default class Table extends PureComponent {
             >
               <Icon
                 size={12}
-                name={'arrow-up'}
+                name={'triangle-up'}
                 color={isAscend ? '#3a98e0' : '#cccccc'}
               />
             </span>
@@ -358,7 +368,7 @@ export default class Table extends PureComponent {
             >
               <Icon
                 size={12}
-                name={'arrow-down'}
+                name={'triangle-down'}
                 color={isDescend ? '#3a98e0' : '#cccccc'}
               />
             </span>
@@ -588,6 +598,7 @@ export default class Table extends PureComponent {
     const { props, state } = this;
     const {
       bordered,
+      loading,
       // dataSource,
       // columns,
       height,
@@ -598,6 +609,7 @@ export default class Table extends PureComponent {
     const dataSource = this.getLocalData();
     // const rows = this.getHeaderRows(columns, 0, []);
     let columns = this.renderColumnsDropdown(this.props.columns);
+
     columns = columns.map((column, i) => {
       const newColumn = { ...column };
       newColumn.key = this.getColumnKey(newColumn, i);
@@ -657,14 +669,8 @@ export default class Table extends PureComponent {
         scrollPositionLeft === scrollPositionRight
       ),
     });
-
-    return (
-      <div
-        className={tablestyle}
-        ref={(c) => {
-          this.tableNode = c;
-        }}
-      >
+    const randerTableContent = (
+      <div>
         {this.renderTitle()}
         <div className={styles['table-content']}>
           {this.renderMainTable(
@@ -688,6 +694,23 @@ export default class Table extends PureComponent {
             )}
         </div>
         {this.renderFooter()}
+      </div>
+    );
+
+    return (
+      <div
+        className={tablestyle}
+        ref={(c) => {
+          this.tableNode = c;
+        }}
+      >
+        {loading ? (
+          <Spin size="small" spinning={loading} tip="loading...">
+            {randerTableContent}
+          </Spin>
+        ) : (
+          randerTableContent
+        )}
       </div>
     );
   }
