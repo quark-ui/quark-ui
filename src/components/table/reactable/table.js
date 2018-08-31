@@ -232,7 +232,7 @@ export default class Table extends PureComponent {
     const { columns } = this.props;
     if (this.hasFixed) {
       let width = 0;
-      columns.map((column) => {
+      columns.forEach((column) => {
         width += column.width;
       });
       if (width <= tableRect.width) {
@@ -355,6 +355,9 @@ export default class Table extends PureComponent {
   }
   renderColumnsDropdown(columns) {
     const { sortOrder } = this.state;
+    const down = 'triangle-down';
+    const up = 'triangle-up';
+
     return columns.map((originColumn) => {
       const column = { ...originColumn };
       let sortButton;
@@ -368,7 +371,6 @@ export default class Table extends PureComponent {
         }
         const isAscend = isSortColumn && sortOrder === 'ascend';
         const isDescend = isSortColumn && sortOrder === 'descend';
-
         sortButton = (
           <div className={styles['table-column-sorter']}>
             <span
@@ -378,7 +380,7 @@ export default class Table extends PureComponent {
             >
               <Icon
                 size={12}
-                name={'triangle-up'}
+                name={up}
                 color={isAscend ? '#3a98e0' : '#cccccc'}
               />
             </span>
@@ -389,7 +391,7 @@ export default class Table extends PureComponent {
             >
               <Icon
                 size={12}
-                name={'triangle-down'}
+                name={down}
                 color={isDescend ? '#3a98e0' : '#cccccc'}
               />
             </span>
@@ -444,7 +446,9 @@ export default class Table extends PureComponent {
     let scrollWidth = {};
     if (this.hasFixed) {
       let width = 0;
-      columns.map(column => width += column.width);
+      columns.forEach((column) => {
+        width += column.width;
+      });
       scrollWidth = {
         width,
       };
