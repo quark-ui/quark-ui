@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import shallowequal from 'shallowequal';
 import { measureScrollbar } from './utils';
 import Icon from '../../icon';
+import Spin from '../../spin';
 import Colgroup from './colgroup';
 import Thead from './thead';
 import Tbody from './tbody';
@@ -11,6 +12,7 @@ import styles from '../Table.css';
 
 export default class Table extends PureComponent {
   static defaultProps = {
+    hasfixed: false,
     dataSource: [],
     columns: [],
     title() {},
@@ -19,6 +21,7 @@ export default class Table extends PureComponent {
     childrenColumnName: 'children',
   };
   static propTypes = {
+    hasfixed: PropTypes.bool,
     dataSource: PropTypes.instanceOf(Object),
     columns: PropTypes.instanceOf(Object),
     title: PropTypes.func,
@@ -30,6 +33,7 @@ export default class Table extends PureComponent {
     super(props);
     this.state = {
       ...this.getSortStateFromColumns(),
+      loading: false,
       // width: 1000,
       // height: '100%',
       // emptyText: '暂无数据',
@@ -124,7 +128,10 @@ export default class Table extends PureComponent {
     // 优化本地排序
     data = data.slice(0);
     const { sortOrder, sortColumn } = this.state;
-    const sorterFn = (!sortOrder || !sortColumn || typeof sortColumn.sorter !== 'function') ? null : this.getSorterFn;
+    const sorterFn =
+      !sortOrder || !sortColumn || typeof sortColumn.sorter !== 'function'
+        ? null
+        : this.getSorterFn;
 
     if (sorterFn) {
       data = this.recursiveSort(data, sorterFn);
@@ -220,6 +227,25 @@ export default class Table extends PureComponent {
     }
     return false;
   };
+  syncFixedTableWidth =() => {
+    const tableRect = this.tableNode.getBoundingClientRect();
+    const { columns } = this.props;
+    if (this.hasFixed) {
+      let width = 0;
+      columns.forEach((column) => {
+        width += column.width;
+      });
+      if (width <= tableRect.width) {
+        this.setState({
+          hasfixed: false,
+        });
+      } else {
+        this.setState({
+          hasfixed: true,
+        });
+      }
+    }
+  }
   syncFixedTableRowHeight = () => {
     const tableRect = this.tableNode.getBoundingClientRect();
     if (tableRect.height !== undefined && tableRect.height <= 0) {
@@ -263,6 +289,7 @@ export default class Table extends PureComponent {
   };
   handleWindowResize = () => {
     this.syncFixedTableRowHeight();
+    this.syncFixedTableWidth();
   };
   isSortColumn(column) {
     const { sortColumn } = this.state;
@@ -297,15 +324,19 @@ export default class Table extends PureComponent {
     // 只同时允许一列进行排序，否则会导致排序顺序的逻辑问题
     const isSortColumn = this.isSortColumn(column);
     if (!isSortColumn) {
+      // 当前列未排序
       sortOrder = order;
       sortColumn = column;
     } else {
-      sortOrder = order;
       // 当前列已排序
       if (sortOrder === order) {
         // 切换为未排序状态
         sortOrder = '';
         sortColumn = null;
+      }
+      if (sortOrder !== order) {
+        // 切换为排序状态
+        sortOrder = order;
       }
     }
     const newState = {
@@ -324,6 +355,9 @@ export default class Table extends PureComponent {
   }
   renderColumnsDropdown(columns) {
     const { sortOrder } = this.state;
+    const down = 'triangle-down';
+    const up = 'triangle-up';
+
     return columns.map((originColumn) => {
       const column = { ...originColumn };
       let sortButton;
@@ -337,7 +371,6 @@ export default class Table extends PureComponent {
         }
         const isAscend = isSortColumn && sortOrder === 'ascend';
         const isDescend = isSortColumn && sortOrder === 'descend';
-
         sortButton = (
           <div className={styles['table-column-sorter']}>
             <span
@@ -347,7 +380,7 @@ export default class Table extends PureComponent {
             >
               <Icon
                 size={12}
-                name={'arrow-up'}
+                name={up}
                 color={isAscend ? '#3a98e0' : '#cccccc'}
               />
             </span>
@@ -358,7 +391,7 @@ export default class Table extends PureComponent {
             >
               <Icon
                 size={12}
-                name={'arrow-down'}
+                name={down}
                 color={isDescend ? '#3a98e0' : '#cccccc'}
               />
             </span>
@@ -407,9 +440,20 @@ export default class Table extends PureComponent {
     let bodyStyle = {};
     const { columns, height } = renderBodyProps;
 
-    const scrollWidth = {
-      width: this.hasFixed ? `${columns.length * 200}px` : 'auto',
-    };
+    // const scrollWidth = {
+    //   width: this.hasFixed ? `${columns.length * 200}px` : 'auto',
+    // };
+    let scrollWidth = {};
+    if (this.hasFixed) {
+      let width = 0;
+      columns.forEach((column) => {
+        width += column.width;
+      });
+      scrollWidth = {
+        width,
+      };
+    }
+
     if (
       this.hasFixed &&
       (this.hasFixed.hasRight || this.hasFixed.hasLeft) &&
@@ -586,8 +630,11 @@ export default class Table extends PureComponent {
 
   render() {
     const { props, state } = this;
+    const { hasfixed } = state;
+
     const {
       bordered,
+      loading,
       // dataSource,
       // columns,
       height,
@@ -657,6 +704,33 @@ export default class Table extends PureComponent {
         scrollPositionLeft === scrollPositionRight
       ),
     });
+    const randerTableContent = (
+      <div>
+        {this.renderTitle()}
+        <div className={styles['table-content']}>
+          {this.renderMainTable(
+            renderColgroupProps,
+            renderHeaderProps,
+            renderBodyProps,
+          )}
+          {dataSource.length && hasfixed ?
+            this.renderFixedTable(
+              renderColgroupProps,
+              renderHeaderProps,
+              renderBodyProps,
+              'left',
+            ) : null}
+          {dataSource.length && hasfixed ?
+            this.renderFixedTable(
+              renderColgroupProps,
+              renderHeaderProps,
+              renderBodyProps,
+              'right',
+            ) : null}
+        </div>
+        {this.renderFooter()}
+      </div>
+    );
 
     return (
       <div
@@ -665,29 +739,13 @@ export default class Table extends PureComponent {
           this.tableNode = c;
         }}
       >
-        {this.renderTitle()}
-        <div className={styles['table-content']}>
-          {this.renderMainTable(
-            renderColgroupProps,
-            renderHeaderProps,
-            renderBodyProps,
-          )}
-          {dataSource.length &&
-            this.renderFixedTable(
-              renderColgroupProps,
-              renderHeaderProps,
-              renderBodyProps,
-              'left',
-            )}
-          {dataSource.length &&
-            this.renderFixedTable(
-              renderColgroupProps,
-              renderHeaderProps,
-              renderBodyProps,
-              'right',
-            )}
-        </div>
-        {this.renderFooter()}
+        {loading ? (
+          <Spin size="small" spinning={loading} tip="loading...">
+            {randerTableContent}
+          </Spin>
+        ) : (
+          randerTableContent
+        )}
       </div>
     );
   }

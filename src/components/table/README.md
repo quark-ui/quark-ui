@@ -1,7 +1,7 @@
 ---
 author:
   name: yan
-  homepage: https://github.com/october-yan/
+  homepage: https://github.com/olivianate/
   email: yanw.87@163.com
 ---
 
@@ -15,6 +15,7 @@ author:
 | bordered | boolean | false | 是否展示外边框和列边框 |
 | width | number | - | 表格的宽度 |
 | height | number | - | 表格的高度（除去表头） |
+| loading | boolean | false | 页面是否加载中 |
 | emptyText | string | 暂无数据 | 表格暂无数据 |
 
 ### 列配置项(jsxcolumns)

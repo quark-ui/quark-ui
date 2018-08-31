@@ -5,6 +5,7 @@ import Button from '../../button';
 const { Table } = Reactable;
 export default class TableDemo extends Component {
   state= {
+    loading: true,
     selectedRowKeys: [1, 2],
     dataSource: [
       {
@@ -87,6 +88,14 @@ export default class TableDemo extends Component {
       },
     ],
   }
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({
+        loading: false,
+      });
+    }, 800);
+  }
+
   onChange = (sorter) => {
     this.setState({
       sortedInfo: sorter,
@@ -360,27 +369,49 @@ export default class TableDemo extends Component {
           title: 'Age',
           dataIndex: 'age',
           key: 'age',
-          width: 250,
+          width: 150,
         },
         {
           title: 'Address',
           dataIndex: 'address',
           key: 'address',
+          width: 150,
         },
         {
           title: 'Work',
           dataIndex: 'work',
           key: 'work',
+          width: 150,
         },
         {
           title: 'Color',
           dataIndex: 'color',
           key: 'color',
+          width: 150,
         },
         {
           title: 'Fruit',
           dataIndex: 'fruit',
           key: 'fruit',
+          width: 150,
+        },
+        {
+          title: 'Foods',
+          dataIndex: 'foods',
+          key: 'foods',
+          width: 150,
+        },
+        {
+          title: 'School',
+          dataIndex: 'school',
+          key: 'school',
+          width: 150,
+        },
+        {
+          title: 'Interest',
+          dataIndex: 'interest',
+          key: 'interest',
+          width: 150,
         },
         {
           title: 'Action',
@@ -406,11 +437,14 @@ export default class TableDemo extends Component {
         <h3>基本</h3>
         <p>基础表格。</p>
         <Table
+          bordered
+          loading={this.state.loading}
           {...getRenderTable}
         />
         <h3>表格固定</h3>
         <p>固定头部和列。</p>
         <Table
+          bordered
           dataSource={demo3.data}
           columns={demo3.columns}
           height="300"
@@ -426,6 +460,7 @@ export default class TableDemo extends Component {
         <h3>可选择</h3>
         <p>第一列是联动的选择框。</p>
         <Table
+          bordered
           rowSelection={rowSelection}
           dataSource={this.state.dataSource}
           columns={this.state.columns}
@@ -433,6 +468,7 @@ export default class TableDemo extends Component {
         <h3>排序</h3>
         <p>对某一列数据进行排序，通过指定列的 sorter 函数即可启动排序按钮。sorter: function(a, b) { '{...}' } ， a、b 为比较的两个列数据。</p>
         <Table
+          bordered
           dataSource={demo1.data}
           columns={demo1.columns}
           onChange={this.onChange}

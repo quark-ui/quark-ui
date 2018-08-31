@@ -173,7 +173,7 @@
     min-width: 100%;
 }
 
-.table-fixed-header > .table-content > .table-scroll > .table-body{
+.table-fixed-header .table-content > .table-scroll > .table-body{
   position: relative;
   background: #fff;
 }
