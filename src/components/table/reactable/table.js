@@ -12,6 +12,7 @@ import styles from '../Table.css';
 
 export default class Table extends PureComponent {
   static defaultProps = {
+    hasfixed: false,
     dataSource: [],
     columns: [],
     title() {},
@@ -20,6 +21,7 @@ export default class Table extends PureComponent {
     childrenColumnName: 'children',
   };
   static propTypes = {
+    hasfixed: PropTypes.bool,
     dataSource: PropTypes.instanceOf(Object),
     columns: PropTypes.instanceOf(Object),
     title: PropTypes.func,
@@ -225,6 +227,25 @@ export default class Table extends PureComponent {
     }
     return false;
   };
+  syncFixedTableWidth =() => {
+    const tableRect = this.tableNode.getBoundingClientRect();
+    const { columns } = this.props;
+    if (this.hasFixed) {
+      let width = 0;
+      columns.map((column) => {
+        width += column.width;
+      });
+      if (width <= tableRect.width) {
+        this.setState({
+          hasfixed: false,
+        });
+      } else {
+        this.setState({
+          hasfixed: true,
+        });
+      }
+    }
+  }
   syncFixedTableRowHeight = () => {
     const tableRect = this.tableNode.getBoundingClientRect();
     if (tableRect.height !== undefined && tableRect.height <= 0) {
@@ -268,6 +289,7 @@ export default class Table extends PureComponent {
   };
   handleWindowResize = () => {
     this.syncFixedTableRowHeight();
+    this.syncFixedTableWidth();
   };
   isSortColumn(column) {
     const { sortColumn } = this.state;
@@ -416,9 +438,18 @@ export default class Table extends PureComponent {
     let bodyStyle = {};
     const { columns, height } = renderBodyProps;
 
-    const scrollWidth = {
-      width: this.hasFixed ? `${columns.length * 200}px` : 'auto',
-    };
+    // const scrollWidth = {
+    //   width: this.hasFixed ? `${columns.length * 200}px` : 'auto',
+    // };
+    let scrollWidth = {};
+    if (this.hasFixed) {
+      let width = 0;
+      columns.map(column => width += column.width);
+      scrollWidth = {
+        width,
+      };
+    }
+
     if (
       this.hasFixed &&
       (this.hasFixed.hasRight || this.hasFixed.hasLeft) &&
@@ -595,6 +626,8 @@ export default class Table extends PureComponent {
 
   render() {
     const { props, state } = this;
+    const { hasfixed } = state;
+
     const {
       bordered,
       loading,
@@ -676,20 +709,20 @@ export default class Table extends PureComponent {
             renderHeaderProps,
             renderBodyProps,
           )}
-          {dataSource.length &&
+          {dataSource.length && hasfixed ?
             this.renderFixedTable(
               renderColgroupProps,
               renderHeaderProps,
               renderBodyProps,
               'left',
-            )}
-          {dataSource.length &&
+            ) : null}
+          {dataSource.length && hasfixed ?
             this.renderFixedTable(
               renderColgroupProps,
               renderHeaderProps,
               renderBodyProps,
               'right',
-            )}
+            ) : null}
         </div>
         {this.renderFooter()}
       </div>
